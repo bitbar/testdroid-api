@@ -10,6 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public abstract class APIEntity {
     protected APIClient client;
     protected String selfURI;
+    protected Long id;
     
     /**
      * Sort type used for fetching collections from API.
@@ -32,13 +33,25 @@ public abstract class APIEntity {
             return null;
         }
     }
-    
+
+    public APIEntity() {}
+
+    public APIEntity(Long id) {
+        this.id = id;
+    }
+        
     /**
      * Returns ID of entity if such ID exists.
      * Usually it does not exist for lists. Please use
      * <code>hasId()</code> method to check if ID exists.
      */
-    public abstract Long getId();
+    public Long getId() {
+        return this.id;
+    }
+    
+    public void setId(Long id) {
+        this.id = id;
+    }
     
     /**
      * Returns <code>true</code> if ID exists for this entity.

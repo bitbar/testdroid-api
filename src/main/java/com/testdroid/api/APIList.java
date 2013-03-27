@@ -109,11 +109,6 @@ public class APIList<T> extends APIEntity {
     }
 
     @Override
-    public Long getId() {
-        return null;
-    }
-
-    @Override
     public boolean hasId() {
         return false;
     }

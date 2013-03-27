@@ -11,7 +11,6 @@ import org.codehaus.jackson.annotate.JsonIgnore;
  * @author kajdus
  */
 public class APIProject extends APIEntity {
-    private Long id;
     private APITestRunConfig testRunConfig;
 
     private String getConfigURI() { return selfURI + "/config"; };
@@ -22,12 +21,7 @@ public class APIProject extends APIEntity {
     private String getTrendsURI() { return selfURI + "/trends"; };
     private String getReportsURI() { return selfURI + "/reports/%s"; };
     private String getRunsURI() { return selfURI + "/runs"; };
-    
-    @Override
-    public Long getId() {
-        return id;
-    }
-    
+
     @JsonIgnore
     public APITestRunConfig getTestRunConfig() throws APIException {
         if(testRunConfig == null) {

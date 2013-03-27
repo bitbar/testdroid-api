@@ -14,24 +14,14 @@ import org.codehaus.jackson.annotate.JsonIgnore;
  */
 @XmlRootElement
 public class APIUser extends APIEntity {
-    private Long id;
     private String email;
     private String name;
 
     public APIUser() {}
     public APIUser(Long id, String email, String name) {
-        this.id = id;
+        super(id);
         this.email = email;
         this.name = name;
-    }
-
-    @Override
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getEmail() {
