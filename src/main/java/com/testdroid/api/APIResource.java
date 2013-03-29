@@ -13,6 +13,7 @@ public class APIResource<T extends APIEntity> {
     protected Class<T> type;
     
     public APIResource(APIClient client, String resourceURI, Class<T> type) {
+        this.client = client;
         this.resourceURI = resourceURI;
         this.type = type;
     }

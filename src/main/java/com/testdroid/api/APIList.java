@@ -1,30 +1,41 @@
 package com.testdroid.api;
 
+import com.testdroid.api.APIList.ClusterList;
+import com.testdroid.api.APIList.ProjectList;
+import com.testdroid.api.APIList.TestRunList;
+import com.testdroid.api.APIList.UserList;
 import com.testdroid.api.model.APICluster;
 import com.testdroid.api.model.APIProject;
 import com.testdroid.api.model.APITestRun;
+import com.testdroid.api.model.APIUser;
 import java.util.List;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSeeAlso;
 
 /**
  *
  * @author kajdus
  */
-public class APIList<T> extends APIEntity {
+@XmlRootElement
+@XmlSeeAlso({UserList.class, ProjectList.class, TestRunList.class, ClusterList.class})
+public class APIList<T extends APIEntity> extends APIEntity {
     private String next;
     private String previous;
     private List<T> data;
-    private Long offset;
-    private Long limit;
+    private Integer offset;
+    private Integer limit;
     private Long total;
     private String search;
+    private String sort;
 
     public APIList() {}
-    public APIList(String next, String previous, List<T> data, Long total, String search) {
+    public APIList(String next, String previous, List<T> data, Long total, String search, String sort) {
         this.next = next;
         this.previous = previous;
         this.data = data;
         this.total = total;
         this.search = search;
+        this.sort = sort;
     }
 
     /**
@@ -67,22 +78,22 @@ public class APIList<T> extends APIEntity {
     /**
      * Get offset of data page returned in <code>getData()</code> method.
      */
-    public Long getOffset() {
+    public Integer getOffset() {
         return offset;
     }
 
-    public void setOffset(Long offset) {
+    public void setOffset(Integer offset) {
         this.offset = offset;
     }
 
     /**
      * Get limit of data page returned in <code>getData()</code> method.
      */
-    public Long getLimit() {
+    public Integer getLimit() {
         return limit;
     }
 
-    public void setLimit(Long limit) {
+    public void setLimit(Integer limit) {
         this.limit = limit;
     }
 
@@ -108,6 +119,17 @@ public class APIList<T> extends APIEntity {
         this.search = search;
     }
 
+    /**
+     * Get serialized sort value used during retrieving data returned in <code>getData()</code> method.
+     */
+    public String getSort() {
+        return sort;
+    }
+
+    public void setSort(String sort) {
+        this.sort = sort;
+    }
+
     @Override
     public boolean hasId() {
         return false;
@@ -117,7 +139,8 @@ public class APIList<T> extends APIEntity {
      * API LISTS
      */
     
-    public static class ProjectList extends APIList<APIProject> {  }
-    public static class TestRunList extends APIList<APITestRun> {  }
-    public static class ClusterList extends APIList<APICluster> {  }
+    @XmlRootElement public static class UserList extends APIList<APIUser> {  }
+    @XmlRootElement public static class ProjectList extends APIList<APIProject> {  }
+    @XmlRootElement public static class TestRunList extends APIList<APITestRun> {  }
+    @XmlRootElement public static class ClusterList extends APIList<APICluster> {  }
 }

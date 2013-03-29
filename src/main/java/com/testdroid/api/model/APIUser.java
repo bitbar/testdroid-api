@@ -5,6 +5,7 @@ import com.testdroid.api.APIException;
 import com.testdroid.api.APIList.ClusterList;
 import com.testdroid.api.APIListResource;
 import com.testdroid.api.APIList.ProjectList;
+import com.testdroid.api.APISort;
 import javax.xml.bind.annotation.XmlRootElement;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
@@ -14,14 +15,38 @@ import org.codehaus.jackson.annotate.JsonIgnore;
  */
 @XmlRootElement
 public class APIUser extends APIEntity {
+    
     private String email;
     private String name;
+    private String state;
+    private String country;
+    private String city;
+    private String code;
+    private String address;
+    private String phone;
+    private String organization;
+    private String vatID;
+    private String timeZone;
+    private boolean enabled;
+    private APIRole[] roles;
 
     public APIUser() {}
-    public APIUser(Long id, String email, String name) {
+    public APIUser(Long id, String email, String name, String state, String country, String city, String code, String address, String phone, 
+            String organization, String vatID, String timeZone, boolean enabled, APIRole... roles) {
         super(id);
         this.email = email;
         this.name = name;
+        this.state = state;
+        this.country = country;
+        this.city = city;
+        this.code = code;
+        this.address = address;
+        this.phone = phone;
+        this.organization = organization;
+        this.vatID = vatID;
+        this.timeZone = timeZone;
+        this.enabled = enabled;
+        this.roles = roles;
     }
 
     public String getEmail() {
@@ -39,6 +64,94 @@ public class APIUser extends APIEntity {
     public void setName(String name) {
         this.name = name;
     }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(String organization) {
+        this.organization = organization;
+    }
+
+    public String getVatID() {
+        return vatID;
+    }
+
+    public void setVatID(String vatID) {
+        this.vatID = vatID;
+    }
+
+    public String getTimeZone() {
+        return timeZone;
+    }
+
+    public void setTimeZone(String timeZone) {
+        this.timeZone = timeZone;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public APIRole[] getRoles() {
+        return roles;
+    }
+
+    public void setRoles(APIRole[] roles) {
+        this.roles = roles;
+    }
     
     private String getProjectsURI() { return selfURI + "/projects"; };
     
@@ -48,8 +161,8 @@ public class APIUser extends APIEntity {
     }
     
     @JsonIgnore
-    public APIListResource<ProjectList> getProjectsResource(long offset, long limit, String search) throws APIException {
-        return getListResource(getProjectsURI(), offset, limit, search, ProjectList.class);
+    public APIListResource<ProjectList> getProjectsResource(long offset, long limit, String search, APISort sort) throws APIException {
+        return getListResource(getProjectsURI(), offset, limit, search, sort, ProjectList.class);
     }
     
     public APIProject getProject(Long id) throws APIException {
@@ -62,7 +175,7 @@ public class APIUser extends APIEntity {
     }
     
     @JsonIgnore
-    public APIListResource<ClusterList> getClustersResource(long offset, long limit, String search) throws APIException {
-        return getListResource(getProjectsURI(), offset, limit, search, ClusterList.class);
+    public APIListResource<ClusterList> getClustersResource(long offset, long limit, String search, APISort sort) throws APIException {
+        return getListResource(getProjectsURI(), offset, limit, search, sort, ClusterList.class);
     }
 }

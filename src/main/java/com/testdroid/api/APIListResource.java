@@ -7,12 +7,12 @@ package com.testdroid.api;
 public class APIListResource<T extends APIList> extends APIResource<T> {
     
     public APIListResource(APIClient client, String resourceURI, Class<T> type) {
-        this(client, resourceURI, null, null, null, type);
+        this(client, resourceURI, null, null, null, null, type);
     }
     
-    public APIListResource(APIClient client, String resourceURI, Long offset, Long limit, String search, Class<T> type) {
-        super(client, (offset == null || limit == null || search == null) ? resourceURI : String.format("%s?offset=%s&limit=%s&search=%s", resourceURI, 
-                getNotNullValue(offset), getNotNullValue(limit), getNotNullValue(search)), type);
+    public APIListResource(APIClient client, String resourceURI, Long offset, Long limit, String search, APISort sort, Class<T> type) {
+        super(client, (offset == null && limit == null && search == null && (sort == null || sort.isEmpty())) ? resourceURI : String.format("%s?offset=%s&limit=%s&search=%s&sort=%s", resourceURI, 
+                getNotNullValue(offset), getNotNullValue(limit), getNotNullValue(search), sort != null ? sort.serialize() : null), type);
     }
     
     /**
@@ -45,7 +45,7 @@ public class APIListResource<T extends APIList> extends APIResource<T> {
         if(!isNextAvailable()) {
             return null;
         }
-        return new APIListResource(client, getEntity().getNext(), null, null, null, type);
+        return new APIListResource(client, getEntity().getNext(), null, null, null, null, type);
     }
     
     /**
@@ -70,7 +70,7 @@ public class APIListResource<T extends APIList> extends APIResource<T> {
         if(!isPreviousAvailable()) {
             return null;
         }
-        return new APIListResource(client, getEntity().getPrevious(), null, null, null, type);
+        return new APIListResource(client, getEntity().getPrevious(), null, null, null, null, type);
     }
     
     private static String getNotNullValue(Object obj) {

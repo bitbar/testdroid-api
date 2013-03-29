@@ -4,12 +4,15 @@ import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIException;
 import com.testdroid.api.APIList;
 import com.testdroid.api.APIListResource;
+import com.testdroid.api.APISort;
+import javax.xml.bind.annotation.XmlRootElement;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
  * @author kajdus
  */
+@XmlRootElement
 public class APIProject extends APIEntity {
     private APITestRunConfig testRunConfig;
 
@@ -45,8 +48,8 @@ public class APIProject extends APIEntity {
     }
     
     @JsonIgnore
-    public APIListResource<APIList.ProjectList> getTestRunsResource(long offset, long limit, String search) throws APIException {
-        return getListResource(getRunsURI(), offset, limit, search, APIList.ProjectList.class);
+    public APIListResource<APIList.ProjectList> getTestRunsResource(long offset, long limit, String search, APISort sort) throws APIException {
+        return getListResource(getRunsURI(), offset, limit, search, sort, APIList.ProjectList.class);
     }
 
 }
