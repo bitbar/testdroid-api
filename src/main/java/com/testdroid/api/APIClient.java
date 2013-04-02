@@ -12,6 +12,12 @@ public interface APIClient {
      * @throws APIException on invalid username, password or API error.
      */
     public APIUser me() throws APIException;
+
+    /**
+     * Registers and fetches user from given email.
+     * @throws APIException on invalid email or when user already exists.
+     */
+    public APIUser register(String email) throws APIException;
     
     /**
      * Calls GET request to API

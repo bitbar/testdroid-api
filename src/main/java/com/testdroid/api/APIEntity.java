@@ -1,39 +1,21 @@
 package com.testdroid.api;
 
+import com.testdroid.api.model.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSeeAlso;
+
 
 /**
  *
  * @author kajdus
  */
 @XmlRootElement
+@XmlSeeAlso({APIUser.class,APICluster.class,APIProject.class,APITestRun.class,APITestRunConfig.class})
 public abstract class APIEntity {
     protected APIClient client;
     protected String selfURI;
     protected Long id;
-    
-    /**
-     * Sort type used for fetching collections from API.
-     */
-    public static enum SortType {
-        ASC, DESC;
-        public String getURLValue() {
-            switch(this) {
-                case DESC: return "d";
-                case ASC: default: return "a";
-            }
-        }
         
-        public static SortType fromURLValue(String urlValue) {
-            for(SortType t: SortType.values()) {
-                if(t.getURLValue().equals(urlValue)) {
-                    return t;
-                }
-            }
-            return null;
-        }
-    }
-
     public APIEntity() {}
 
     public APIEntity(Long id) {
@@ -74,11 +56,11 @@ public abstract class APIEntity {
         return new APIListResource<T>(client, uri, type);
     }
     
-    protected <T extends APIList> APIListResource<T> getListResource(String uri, long offset, long limit, String search, Class<T> type) throws APIException {
+    protected <T extends APIList> APIListResource<T> getListResource(String uri, long offset, long limit, String search, APISort sort, Class<T> type) throws APIException {
         if(client == null) {
             throw new APIException("Missing API client");
         }
-        return new APIListResource<T>(client, uri, offset, limit, search, type);
+        return new APIListResource<T>(client, uri, offset, limit, search, sort, type);
     }
     
     protected <T extends APIEntity> T postResource(String uri, Object body, Class<T> type) throws APIException {

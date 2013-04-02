@@ -14,6 +14,9 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.testdroid.api.model.APIUser;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
@@ -234,6 +237,30 @@ public class DefaultAPIClient implements APIClient {
     @Override
     public APIUser me() throws APIException {
         return get("/me", APIUser.class);
+    }
+
+    @Override
+    public APIUser register(String email) throws APIException {
+        APIUser result = post("/users", String.format("email=%s", encodeURL(email)), APIUser.class);
+        result.selfURI = "/me";
+        return result;
+    }
+    
+    private static final String ENCODING = "UTF-8";
+    private static String encodeURL(String name) {
+        try {
+            return URLEncoder.encode(name, ENCODING);
+        } catch (UnsupportedEncodingException ex) {
+        }
+        return name;
+    }
+
+    private static String decodeURL(String name) {
+        try {
+            return URLDecoder.decode(name, ENCODING);
+        } catch (UnsupportedEncodingException ex) {
+        }
+        return name;
     }
 
 }
