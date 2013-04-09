@@ -2,6 +2,7 @@ package com.testdroid.api;
 
 import com.testdroid.api.APIList.UserList;
 import com.testdroid.api.APISort.SortItem;
+import com.testdroid.api.model.APIProject;
 import com.testdroid.api.model.APIUser;
 
 
@@ -20,6 +21,8 @@ public class Test {
             APIListResource<UserList> resource = new APIListResource<UserList>(client, "/users", 0L, 10L, null, 
                     APISort.create(APIUser.class, new SortItem(APISort.Column.USER_EMAIL, APISort.Type.DESC)), UserList.class);
             UserList users = resource.getEntity();
+            APIProject p = user.getProjectsResource().getEntity().getData().get(0);
+            System.out.println(p.getName());
         } catch (APIException ex) {
             ex.printStackTrace();
         }
