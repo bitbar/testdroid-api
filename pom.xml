@@ -12,6 +12,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <nexusRepo>http://10.0.1.10:8081/nexus/content/repositories</nexusRepo>
     </properties>
 
     <build>
@@ -138,11 +139,16 @@
     </repositories>
 
     <distributionManagement>
+        <repository>
+            <id>nexus</id>
+            <name>Testdroid Releases></name>
+            <url>${nexusRepo}/releases</url>
+        </repository>
         <snapshotRepository>
             <uniqueVersion>false</uniqueVersion>
-            <id>intranet-snapshots</id>
-            <name>Snapshots</name>
-            <url>${intranet.repo}/snapshots</url>
+            <id>nexus</id>
+            <name>Testdroid Snapshots</name>
+            <url>${nexusRepo}/snapshots</url>
         </snapshotRepository>
     </distributionManagement>
 </project>
