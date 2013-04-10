@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlSeeAlso;
  * @author kajdus
  */
 @XmlRootElement
-@XmlSeeAlso({APIUser.class,APICluster.class,APIProject.class,APITestRun.class,APITestRunConfig.class})
+@XmlSeeAlso({APIUser.class,APICluster.class,APIProject.class,APITestRun.class,APITestRunConfig.class, APIProjectSharing.class, APIProjectJobConfig.class})
 public abstract class APIEntity {
     protected APIClient client;
     protected String selfURI;
