@@ -72,19 +72,14 @@
         </dependency>
         <dependency>
             <groupId>com.google.oauth-client</groupId>
-            <artifactId>google-oauth-client-java6</artifactId>
-            <version>1.13.1-beta</version>
+            <artifactId>google-oauth-client</artifactId>
+            <version>RELEASE</version>
         </dependency>
         <dependency>
-            <groupId>com.google.api.client</groupId>
+            <groupId>com.google.api-client</groupId>
             <artifactId>google-api-client</artifactId>
-            <version>1.4.1-beta</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.api.client</groupId>
-            <artifactId>google-api-client-http</artifactId>
-            <version>1.2.3-alpha</version>
-        </dependency>
+            <version>RELEASE</version>
+        </dependency>        
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
