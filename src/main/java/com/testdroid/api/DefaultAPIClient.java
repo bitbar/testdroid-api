@@ -35,11 +35,11 @@ public class DefaultAPIClient implements APIClient {
     private static Credential CREDENTIAL = new Credential.Builder(BearerToken.queryParameterAccessMethod()).build();
     private static String API_URI = "/api/v2";
     
-    private String cloudURL;
-    private String apiURL;
-    private String username;
-    private String password;
-    private String accessToken;
+    protected String cloudURL;
+    protected String apiURL;
+    protected String username;
+    protected String password;
+    protected String accessToken;
 
     public DefaultAPIClient(String cloudURL, String username, String password) {
         this.cloudURL = cloudURL;
