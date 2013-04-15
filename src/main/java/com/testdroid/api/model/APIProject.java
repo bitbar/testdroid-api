@@ -3,10 +3,17 @@ package com.testdroid.api.model;
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIException;
 import com.testdroid.api.APIList;
+import com.testdroid.api.APIList.ProjectSharingList;
 import com.testdroid.api.APIListResource;
 import com.testdroid.api.APISort;
+import com.testdroid.api.model.APIFiles.AndroidFiles;
+import com.testdroid.api.model.APIFiles.IOSFiles;
+import com.testdroid.api.model.APIFiles.RemoteControlFiles;
+import com.testdroid.api.model.APIFiles.UIAutomatorFiles;
+import java.io.IOException;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import org.apache.commons.io.IOUtils;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
@@ -17,7 +24,20 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 public class APIProject extends APIEntity {
     
     @XmlType(name = "projectType")
-    public static enum Type { ANDROID, CTS, IOS, UIAUTOMATOR, REMOTECONTROL }
+    public static enum Type { 
+        ANDROID, CTS, IOS, UIAUTOMATOR, REMOTECONTROL;
+        
+        public Class<? extends APIFiles> getFilesClass() {
+            switch(this) {
+                case ANDROID: return AndroidFiles.class;
+                case CTS: return null;
+                case IOS: return IOSFiles.class;
+                case UIAUTOMATOR: return UIAutomatorFiles.class;
+                case REMOTECONTROL: return RemoteControlFiles.class;
+                default: return null;
+            }
+        }
+    }
     
     private String name;
     private String description;
@@ -81,6 +101,9 @@ public class APIProject extends APIEntity {
 
     
     private APITestRunConfig testRunConfig;
+    private APIProjectJobConfig jobConfig;
+    private APIFiles files;
+    private byte[] icon;
 
     private String getConfigURI() { return selfURI + "/config"; };
     private String getJobConfigURI() { return selfURI + "/job-config"; };
@@ -99,13 +122,54 @@ public class APIProject extends APIEntity {
         return testRunConfig;
     }
     
+    @JsonIgnore
+    public APIProjectJobConfig getJobConfig() throws APIException {
+        if(jobConfig == null) {
+            jobConfig = getResource(getJobConfigURI(), APIProjectJobConfig.class).getEntity();
+        }
+        return jobConfig;
+    }
+    
+    @JsonIgnore
+    /**
+     * Returns APIFiles entity about files uploaded to this project.
+     * Depending on <code>type</code> it may be any subclass of <code>APIFiles</code> returned.
+     */
+    public <T extends APIFiles> T getFiles(Class<T> clazz) throws APIException {
+        if(clazz == null || !clazz.isAssignableFrom(type.getFilesClass())) {
+            throw new APIException("This project type does not have requested file types");
+        }
+        if(files == null) {
+            files = getResource(getFilesURI(), clazz).getEntity();
+        }
+        return (T) files;
+    }
+    
+    @JsonIgnore
+    public byte[] getIcon() throws APIException, IOException {
+        if(icon == null) {
+            icon = IOUtils.toByteArray(getResource(getIconURI(), null).getStream());
+        }
+        return icon;
+    }
+    
     public APITestRun run() throws APIException {
         return postResource(getRunsURI(), null, APITestRun.class);
     }
     
     public void update() throws APIException {
-        APIProject project = postResource(selfURI, null, APIProject.class);
-        // rewrite values
+        String body = String.format("name=%s&description=%s&type=%s", encodeURL(name), encodeURL(description), encodeURL(type.name()));
+        APIProject project = postResource(selfURI, body, APIProject.class);
+        this.id = project.id;
+        this.name = project.name;
+        this.description = project.description;
+        this.type = project.type;
+        this.common = project.common;
+        this.sharedById = project.sharedById;
+    }
+    
+    public void delete() throws APIException {
+        deleteResource(selfURI);
     }
 
     @JsonIgnore
@@ -114,8 +178,18 @@ public class APIProject extends APIEntity {
     }
     
     @JsonIgnore
-    public APIListResource<APIList.ProjectList> getTestRunsResource(long offset, long limit, String search, APISort sort) throws APIException {
-        return getListResource(getRunsURI(), offset, limit, search, sort, APIList.ProjectList.class);
+    public APIListResource<APIList.TestRunList> getTestRunsResource(long offset, long limit, String search, APISort sort) throws APIException {
+        return getListResource(getRunsURI(), offset, limit, search, sort, APIList.TestRunList.class);
+    }
+    
+    @JsonIgnore
+    public APIListResource<ProjectSharingList> getProjectsResource() throws APIException {
+        return getListResource(getSharingsURI(), ProjectSharingList.class);
+    }
+    
+    @JsonIgnore
+    public APIListResource<ProjectSharingList> getProjectsResource(long offset, long limit, String search, APISort sort) throws APIException {
+        return getListResource(getSharingsURI(), offset, limit, search, sort, ProjectSharingList.class);
     }
 
 }

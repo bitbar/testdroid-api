@@ -155,6 +155,10 @@ public class APIUser extends APIEntity {
     
     private String getProjectsURI() { return selfURI + "/projects"; };
     
+    public APIProject createProject() throws APIException {
+        return postResource(getProjectsURI(), "", APIProject.class);
+    }
+    
     @JsonIgnore
     public APIListResource<ProjectList> getProjectsResource() throws APIException {
         return getListResource(getProjectsURI(), ProjectList.class);

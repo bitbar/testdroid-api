@@ -4,7 +4,7 @@ package com.testdroid.api;
  *
  * @author kajdus
  */
-public class APIListResource<T extends APIList> extends APIResource<T> {
+public class APIListResource<T extends APIList<? extends APIEntity>> extends APIResource<T> {
     
     public APIListResource(APIClient client, String resourceURI, Class<T> type) {
         this(client, resourceURI, null, null, null, null, type);
@@ -13,6 +13,16 @@ public class APIListResource<T extends APIList> extends APIResource<T> {
     public APIListResource(APIClient client, String resourceURI, Long offset, Long limit, String search, APISort sort, Class<T> type) {
         super(client, (offset == null && limit == null && search == null && (sort == null || sort.isEmpty())) ? resourceURI : String.format("%s?offset=%s&limit=%s&search=%s&sort=%s", resourceURI, 
                 getNotNullValue(offset), getNotNullValue(limit), getNotNullValue(search), sort != null ? sort.serialize() : null), type);
+    }
+
+    @Override
+    public T getEntity() throws APIException {
+        T result = super.getEntity(); //To change body of generated methods, choose Tools | Templates.
+        for(APIEntity item: result.getData()) {
+            item.client = this.client;
+            item.selfURI = String.format("%s/%s", this.resourceURI, item.id);
+        }
+        return result;
     }
     
     /**

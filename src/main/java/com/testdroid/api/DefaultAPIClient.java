@@ -2,21 +2,25 @@ package com.testdroid.api;
 
 import com.google.api.client.auth.oauth2.BearerToken;
 import com.google.api.client.auth.oauth2.Credential;
+import com.google.api.client.http.FileContent;
 import com.google.api.client.http.GenericUrl;
+import com.google.api.client.http.HttpContent;
 import com.google.api.client.http.HttpHeaders;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestFactory;
 import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.client.http.HttpResponse;
 import com.google.api.client.http.HttpTransport;
+import com.google.api.client.http.InputStreamContent;
+import com.google.api.client.http.MultipartRelatedContent;
 import com.google.api.client.http.UrlEncodedContent;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.testdroid.api.model.APIUser;
-import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
+import java.io.InputStream;
+import java.util.Arrays;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
@@ -96,10 +100,43 @@ public class DefaultAPIClient implements APIClient {
         }
     }
     
+    @Override
+    public InputStream get(String uri) throws APIException {
+        try {
+            return getStream(uri);
+        }
+        catch(APIException ex) {
+            if(ex.getStatus() != null && HttpStatus.SC_UNAUTHORIZED == ex.getStatus()) {
+                // Access token may have expired. Clean and try again.
+                accessToken = null;
+                return getStream(uri);
+            }
+            else {
+                throw ex;
+            }
+        }        
+    }
+    
     /**
      * Tries to call API once. Returns expected entity or throws exception.
      */
     private <T extends APIEntity> T getOnce(String uri, Class<T> type) throws APIException {
+        try {
+            // Call request and parse result
+            JAXBContext context = JAXBContext.newInstance(type);
+
+            Unmarshaller unmarshaller = context.createUnmarshaller();
+            T result = (T) unmarshaller.unmarshal(getStream(uri));
+            result.client = this;
+            result.selfURI = uri;
+            return result;
+        }
+        catch(JAXBException ex) {
+            throw new APIException(String.format("Failed to parse response as %s", type.getName()), ex);
+        }
+    }
+    
+    private InputStream getStream(String uri) throws APIException {
         // Build request
         CREDENTIAL.setAccessToken(getAccessToken());
         HttpRequestFactory factory = HTTP_TRANSPORT.createRequestFactory(new HttpRequestInitializer() {
@@ -115,18 +152,11 @@ public class DefaultAPIClient implements APIClient {
              request = factory.buildGetRequest(new GenericUrl(apiURL + uri));
              request.setHeaders(new HttpHeaders().setAccept("application/xml"));
 
-            // Call request and parse result
-            JAXBContext context = JAXBContext.newInstance(type);
-
-            Unmarshaller unmarshaller = context.createUnmarshaller();
             response = request.execute();
-            T result = (T) unmarshaller.unmarshal(response.getContent());
-            result.client = this;
-            result.selfURI = uri;
-            return result;
-        }
-        catch(JAXBException ex) {
-            throw new APIException(response != null ? response.getStatusCode() : null, String.format("Failed to parse response as %s", type.getName()), ex);
+            if(!Arrays.asList(HttpStatus.SC_OK, HttpStatus.SC_ACCEPTED, HttpStatus.SC_CREATED).contains(response.getStatusCode())) {
+                throw new APIException(response.getStatusCode(), String.format("Failed to execute api call: %s", uri));
+            }
+            return response.getContent();
         }
         catch(IOException ex) {
             throw new APIException(String.format("Failed to execute API call: %s", uri), ex);
@@ -136,13 +166,13 @@ public class DefaultAPIClient implements APIClient {
     @Override
     public <T extends APIEntity> T post(String uri, Object body, Class<T> type) throws APIException {
         try {
-            return postOnce(uri, body, type);
+            return postOnce(uri, body, null, type);
         }
         catch(APIException ex) {
             if(ex.getStatus() != null && HttpStatus.SC_UNAUTHORIZED == ex.getStatus()) {
                 // Access token may have expired. Clean and try again.
                 accessToken = null;
-                return postOnce(uri, body, type);
+                return postOnce(uri, body, null, type);
             }
             else {
                 throw ex;
@@ -150,7 +180,7 @@ public class DefaultAPIClient implements APIClient {
         }
     }
 
-    private <T extends APIEntity> T postOnce(String uri, Object body, Class<T> type) throws APIException {
+    private <T extends APIEntity> T postOnce(String uri, Object body, String contentType, Class<T> type) throws APIException {
         // Build request
         CREDENTIAL.setAccessToken(getAccessToken());
         HttpRequestFactory factory = HTTP_TRANSPORT.createRequestFactory(new HttpRequestInitializer() {
@@ -163,8 +193,20 @@ public class DefaultAPIClient implements APIClient {
         HttpRequest request = null;
         HttpResponse response = null;
         try {
-             request = factory.buildPostRequest(new GenericUrl(apiURL + uri), new UrlEncodedContent(body));
+            boolean multipart = contentType != null;
+             HttpContent content = null;
+             if(multipart) {
+                 content = new InputStreamContent(contentType, new FileInputStream((File) body));
+             }
+             else {
+                 content = new UrlEncodedContent(body);
+             }
+             request = factory.buildPostRequest(new GenericUrl(apiURL + uri), content );
              request.setHeaders(new HttpHeaders().setAccept("application/xml"));
+             if(multipart) {
+                 request.getHeaders().setContentType("multipart/form-data; boundary=----WebKitFormBoundaryAkeE9nbp2xKzJT4Q");
+                 request.getHeaders().set("Content-Disposition", "form-data; name=\"file\"; filename=\"test.txt\"");
+             }
 
             // Call request and parse result
             JAXBContext context = JAXBContext.newInstance(type);
@@ -185,6 +227,23 @@ public class DefaultAPIClient implements APIClient {
         }
         catch(IOException ex) {
             throw new APIException(String.format("Failed to execute API call: %s", uri), ex);
+        }
+    }
+    
+    @Override
+    public <T extends APIEntity> T postFile(String uri, String contentType, File file, Class<T> type) throws APIException {
+        try {
+            return postOnce(uri, file, contentType, type);
+        }
+        catch(APIException ex) {
+            if(ex.getStatus() != null && HttpStatus.SC_UNAUTHORIZED == ex.getStatus()) {
+                // Access token may have expired. Clean and try again.
+                accessToken = null;
+                return postOnce(uri, file, contentType, type);
+            }
+            else {
+                throw ex;
+            }
         }
     }
     
@@ -241,26 +300,9 @@ public class DefaultAPIClient implements APIClient {
 
     @Override
     public APIUser register(String email) throws APIException {
-        APIUser result = post("/users", String.format("email=%s", encodeURL(email)), APIUser.class);
+        APIUser result = post("/users", String.format("email=%s", APIEntity.encodeURL(email)), APIUser.class);
         result.selfURI = "/me";
         return result;
     }
     
-    private static final String ENCODING = "UTF-8";
-    private static String encodeURL(String name) {
-        try {
-            return URLEncoder.encode(name, ENCODING);
-        } catch (UnsupportedEncodingException ex) {
-        }
-        return name;
-    }
-
-    private static String decodeURL(String name) {
-        try {
-            return URLDecoder.decode(name, ENCODING);
-        } catch (UnsupportedEncodingException ex) {
-        }
-        return name;
-    }
-
 }
