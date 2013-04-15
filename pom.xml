@@ -12,6 +12,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <nexusRepo>http://10.0.1.10:8081/nexus/content/repositories</nexusRepo>
     </properties>
 
     <build>
@@ -71,19 +72,14 @@
         </dependency>
         <dependency>
             <groupId>com.google.oauth-client</groupId>
-            <artifactId>google-oauth-client-java6</artifactId>
-            <version>1.13.1-beta</version>
+            <artifactId>google-oauth-client</artifactId>
+            <version>RELEASE</version>
         </dependency>
         <dependency>
-            <groupId>com.google.api.client</groupId>
+            <groupId>com.google.api-client</groupId>
             <artifactId>google-api-client</artifactId>
-            <version>1.4.1-beta</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.api.client</groupId>
-            <artifactId>google-api-client-http</artifactId>
-            <version>1.2.3-alpha</version>
-        </dependency>
+            <version>RELEASE</version>
+        </dependency>        
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -138,11 +134,16 @@
     </repositories>
 
     <distributionManagement>
+        <repository>
+            <id>nexus</id>
+            <name>Testdroid Releases></name>
+            <url>${nexusRepo}/releases</url>
+        </repository>
         <snapshotRepository>
             <uniqueVersion>false</uniqueVersion>
-            <id>intranet-snapshots</id>
-            <name>Snapshots</name>
-            <url>${intranet.repo}/snapshots</url>
+            <id>nexus</id>
+            <name>Testdroid Snapshots</name>
+            <url>${nexusRepo}/snapshots</url>
         </snapshotRepository>
     </distributionManagement>
 </project>
