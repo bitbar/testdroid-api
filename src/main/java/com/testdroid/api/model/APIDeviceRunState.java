@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement
 public class APIDeviceRunState extends APIEntity {
     @XmlType public static enum Status { STARTED, EXCLUDED, ERROR, FAILED, SUCCEEDED, NOT_AVAILABLE }
-    @XmlType public static enum Type {
+    @XmlType(name = "stateType") public static enum Type {
         PREPARING, WAITING, DEVICE_WAITING, DEVICE_DOWNLOAD_TESTSESSION, DEVICE_UNINSTALLING_ALL,
         DEVICE_REBOOTING, DEVICE_WIFI_CHECKING, DEVICE_ADD_PERMISSIONS,
         DEVICE_REPACKAGING, DEVICE_TARGET_INSTALLING, DEVICE_TEST_INSTALLING,DEVICE_REMOTECONTROL_RUNNING,
