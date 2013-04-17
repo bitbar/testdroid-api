@@ -12,23 +12,16 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement
 public class APIDeviceRunState extends APIEntity {
     @XmlType public static enum Status { STARTED, EXCLUDED, ERROR, FAILED, SUCCEEDED, NOT_AVAILABLE }
-    @XmlType(name = "stateType") public static enum Type {
-        PREPARING, WAITING, DEVICE_WAITING, DEVICE_DOWNLOAD_TESTSESSION, DEVICE_UNINSTALLING_ALL,
-        DEVICE_REBOOTING, DEVICE_WIFI_CHECKING, DEVICE_ADD_PERMISSIONS,
-        DEVICE_REPACKAGING, DEVICE_TARGET_INSTALLING, DEVICE_TEST_INSTALLING,DEVICE_REMOTECONTROL_RUNNING,
-        DEVICE_RUNNING, DEVICE_SDCARD_COPYING, DEVICE_TARGET_UNINSTALLING, DEVICE_UIAUTOMATOR_RUNNING,
-        DEVICE_TEST_UNINSTALLING, RESULTS_WAITING, RESULTS_PROCESSING, PARSE_LOGCAT
-    }
     
     private Long startTimeMS;
     private Long finishTimeMS;
     private Date retryTime;
     private String failReason;
     private Status status;
-    private Type type;
+    private DeviceRunStateType type;
 
     public APIDeviceRunState() {}
-    public APIDeviceRunState(Long id, Long startTimeMS, Long finishTimeMS, Date retryTime, String failReason, Status status, Type type) {
+    public APIDeviceRunState(Long id, Long startTimeMS, Long finishTimeMS, Date retryTime, String failReason, Status status, DeviceRunStateType type) {
         super(id);
         this.startTimeMS = startTimeMS;
         this.finishTimeMS = finishTimeMS;
@@ -78,11 +71,11 @@ public class APIDeviceRunState extends APIEntity {
         this.status = status;
     }
 
-    public Type getType() {
+    public DeviceRunStateType getDeviceRunStateType() {
         return type;
     }
 
-    public void setType(Type type) {
+    public void setDeviceRunStateType(DeviceRunStateType type) {
         this.type = type;
     }
     

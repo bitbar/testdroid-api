@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.XmlSeeAlso;
  */
 @XmlRootElement
 @XmlSeeAlso({UserList.class, ProjectList.class, TestRunList.class, ClusterList.class, TagList.class, ProjectSharingList.class, ProjectJobConfigList.class,
-    DeviceRunList.class, DeviceRunStateList.class, ScreenshotList.class})
+    DeviceRunList.class, DeviceRunStateList.class, ScreenshotList.class, DeviceList.class, JobConfigList.class})
 public class APIList<T extends APIEntity> extends APIEntity {
     private String next;
     private String previous;
@@ -144,4 +144,6 @@ public class APIList<T extends APIEntity> extends APIEntity {
     @XmlRootElement public static class TagList extends APIList<APITag> {  }
     @XmlRootElement public static class ClusterList extends APIList<APICluster> {  }
     @XmlRootElement public static class ScreenshotList extends APIList<APIScreenshot> {  }
+    @XmlRootElement public static class DeviceList extends APIList<APIDevice> {  }
+    @XmlRootElement public static class JobConfigList extends APIList<APIProjectJobConfig> {  }
 }

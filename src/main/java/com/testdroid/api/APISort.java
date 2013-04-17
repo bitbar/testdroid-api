@@ -37,7 +37,8 @@ public class APISort {
         PROJECT_ID(APIProject.class, "id"), PROJECT_NAME(APIProject.class, "name"), PROJECT_DESCRIPTION(APIProject.class, "description"),
         TEST_RUN_ID(APITestRun.class, "id"), TEST_RUN_CREATED(APITestRun.class, "createTime"), TEST_RUN_NAME(APITestRun.class, "userName"), TEST_RUN_TAG(APITestRun.class, "t.name", NameType.ABSOLUTE),
         TAG_ID(APITag.class, "id"), TAG_NAME(APITag.class, "name"),
-        DEVICE_RUN_ID(APIDeviceRun.class, "id"), DEVICE_RUN_DEVICE(APIDeviceRun.class, "device.userName"), DEVICE_RUN_STATE_STARTED(APIDeviceRunState.class, "startTimeMS");
+        DEVICE_RUN_ID(APIDeviceRun.class, "id"), DEVICE_RUN_DEVICE(APIDeviceRun.class, "device.userName"), DEVICE_RUN_CREATED(APIDeviceRunState.class, "createTime"), 
+        DEVICE_RUN_STATE_STARTED(APIDeviceRunState.class, "startTimeMS");
         
         public static enum NameType { RELATIVE, ABSOLUTE }
         
