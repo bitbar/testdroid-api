@@ -129,22 +129,22 @@ public class APITestRun extends APIEntity {
         return postResource(getTagsURI(), String.format("name=%s", encodeURL(name)), APITag.class);
     }
     
-    public APIListResource<APIList.TagList> getTagsResource() throws APIException {
-        return getListResource(getTagsURI(), APIList.TagList.class);
+    public APIListResource<APITag> getTagsResource() throws APIException {
+        return getListResource(getTagsURI(), APITag.class);
     }
     
     @JsonIgnore
-    public APIListResource<APIList.TagList> getTagsResource(long offset, long limit, String search, APISort sort) throws APIException {
-        return getListResource(getTagsURI(), offset, limit, search, sort, APIList.TagList.class);
+    public APIListResource<APITag> getTagsResource(long offset, long limit, String search, APISort sort) throws APIException {
+        return getListResource(getTagsURI(), offset, limit, search, sort, APITag.class);
     }
 
-    public APIListResource<APIList.DeviceRunList> getDeviceRunsResource() throws APIException {
-        return getListResource(getDeviceRunsURI(), APIList.DeviceRunList.class);
+    public APIListResource<APIDeviceRun> getDeviceRunsResource() throws APIException {
+        return getListResource(getDeviceRunsURI(), APIDeviceRun.class);
     }
     
     @JsonIgnore
-    public APIListResource<APIList.DeviceRunList> getDeviceRunsResource(long offset, long limit, String search, APISort sort) throws APIException {
-        return getListResource(getDeviceRunsURI(), offset, limit, search, sort, APIList.DeviceRunList.class);
+    public APIListResource<APIDeviceRun> getDeviceRunsResource(long offset, long limit, String search, APISort sort) throws APIException {
+        return getListResource(getDeviceRunsURI(), offset, limit, search, sort, APIDeviceRun.class);
     }
     
 }

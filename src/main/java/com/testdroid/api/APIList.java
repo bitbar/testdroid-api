@@ -1,18 +1,13 @@
 package com.testdroid.api;
 
-import com.testdroid.api.APIList.*;
-import com.testdroid.api.model.*;
 import java.util.List;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSeeAlso;
 
 /**
  *
  * @author kajdus
  */
 @XmlRootElement
-@XmlSeeAlso({UserList.class, ProjectList.class, TestRunList.class, ClusterList.class, TagList.class, ProjectSharingList.class, ProjectJobConfigList.class,
-    DeviceRunList.class, DeviceRunStateList.class, ScreenshotList.class, DeviceList.class, JobConfigList.class})
 public class APIList<T extends APIEntity> extends APIEntity {
     private String next;
     private String previous;
@@ -129,21 +124,5 @@ public class APIList<T extends APIEntity> extends APIEntity {
     public boolean hasId() {
         return false;
     }
- 
-    /* 
-     * API LISTS
-     */
-    
-    @XmlRootElement public static class UserList extends APIList<APIUser> {  }
-    @XmlRootElement public static class ProjectList extends APIList<APIProject> {  }
-    @XmlRootElement public static class ProjectSharingList extends APIList<APIProjectSharing> {  }
-    @XmlRootElement public static class ProjectJobConfigList extends APIList<APIProjectJobConfig> {  }
-    @XmlRootElement public static class TestRunList extends APIList<APITestRun> {  }
-    @XmlRootElement public static class DeviceRunList extends APIList<APIDeviceRun> {  }
-    @XmlRootElement public static class DeviceRunStateList extends APIList<APIDeviceRunState> {  }
-    @XmlRootElement public static class TagList extends APIList<APITag> {  }
-    @XmlRootElement public static class ClusterList extends APIList<APICluster> {  }
-    @XmlRootElement public static class ScreenshotList extends APIList<APIScreenshot> {  }
-    @XmlRootElement public static class DeviceList extends APIList<APIDevice> {  }
-    @XmlRootElement public static class JobConfigList extends APIList<APIProjectJobConfig> {  }
+
 }

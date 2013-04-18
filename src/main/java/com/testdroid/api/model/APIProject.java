@@ -3,7 +3,6 @@ package com.testdroid.api.model;
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIException;
 import com.testdroid.api.APIList;
-import com.testdroid.api.APIList.ProjectSharingList;
 import com.testdroid.api.APIListResource;
 import com.testdroid.api.APISort;
 import com.testdroid.api.model.APIFiles.AndroidFiles;
@@ -173,23 +172,23 @@ public class APIProject extends APIEntity {
     }
 
     @JsonIgnore
-    public APIListResource<APIList.TestRunList> getTestRunsResource() throws APIException {
-        return getListResource(getRunsURI(), APIList.TestRunList.class);
+    public APIListResource<APITestRun> getTestRunsResource() throws APIException {
+        return getListResource(getRunsURI(), APITestRun.class);
     }
     
     @JsonIgnore
-    public APIListResource<APIList.TestRunList> getTestRunsResource(long offset, long limit, String search, APISort sort) throws APIException {
-        return getListResource(getRunsURI(), offset, limit, search, sort, APIList.TestRunList.class);
+    public APIListResource<APITestRun> getTestRunsResource(long offset, long limit, String search, APISort sort) throws APIException {
+        return getListResource(getRunsURI(), offset, limit, search, sort, APITestRun.class);
     }
     
     @JsonIgnore
-    public APIListResource<ProjectSharingList> getProjectsResource() throws APIException {
-        return getListResource(getSharingsURI(), ProjectSharingList.class);
+    public APIListResource<APIProjectSharing> getProjectsResource() throws APIException {
+        return getListResource(getSharingsURI(), APIProjectSharing.class);
     }
     
     @JsonIgnore
-    public APIListResource<ProjectSharingList> getProjectsResource(long offset, long limit, String search, APISort sort) throws APIException {
-        return getListResource(getSharingsURI(), offset, limit, search, sort, ProjectSharingList.class);
+    public APIListResource<APIProjectSharing> getProjectsResource(long offset, long limit, String search, APISort sort) throws APIException {
+        return getListResource(getSharingsURI(), offset, limit, search, sort, APIProjectSharing.class);
     }
 
 }

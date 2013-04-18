@@ -141,22 +141,22 @@ public class APIDeviceRun extends APIEntity {
         return client.get(getPerformanceURI());
     }
     
-    public APIListResource<APIList.DeviceRunStateList> getDeviceRunStatesResource() throws APIException {
-        return getListResource(getStatesURI(), APIList.DeviceRunStateList.class);
+    public APIListResource<APIDeviceRunState> getDeviceRunStatesResource() throws APIException {
+        return getListResource(getStatesURI(), APIDeviceRunState.class);
     }
     
     @JsonIgnore
-    public APIListResource<APIList.DeviceRunStateList> getDeviceRunStatesResource(long offset, long limit, String search, APISort sort) throws APIException {
-        return getListResource(getStatesURI(), offset, limit, search, sort, APIList.DeviceRunStateList.class);
+    public APIListResource<APIDeviceRunState> getDeviceRunStatesResource(long offset, long limit, String search, APISort sort) throws APIException {
+        return getListResource(getStatesURI(), offset, limit, search, sort, APIDeviceRunState.class);
     }
     
-    public APIListResource<APIList.ScreenshotList> getScreenshotsResource() throws APIException {
-        return getListResource(getScreenshotsURI(), APIList.ScreenshotList.class);
+    public APIListResource<APIScreenshot> getScreenshotsResource() throws APIException {
+        return getListResource(getScreenshotsURI(), APIScreenshot.class);
     }
     
     @JsonIgnore
-    public APIListResource<APIList.ScreenshotList> getScreenshotsResource(long offset, long limit, String search, APISort sort) throws APIException {
-        return getListResource(getScreenshotsURI(), offset, limit, search, sort, APIList.ScreenshotList.class);
+    public APIListResource<APIScreenshot> getScreenshotsResource(long offset, long limit, String search, APISort sort) throws APIException {
+        return getListResource(getScreenshotsURI(), offset, limit, search, sort, APIScreenshot.class);
     }
     
 }

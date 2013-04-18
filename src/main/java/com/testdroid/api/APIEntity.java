@@ -54,14 +54,14 @@ public abstract class APIEntity {
         return new APIResource<T>(client, uri, type);
     }
     
-    protected <T extends APIList<? extends APIEntity>> APIListResource<T> getListResource(String uri, Class<T> type) throws APIException {
+    protected <T extends APIEntity> APIListResource<T> getListResource(String uri, Class<T> type) throws APIException {
         if(client == null) {
             throw new APIException("Missing API client");
         }
         return new APIListResource<T>(client, uri, type);
     }
     
-    protected <T extends APIList<? extends APIEntity>> APIListResource<T> getListResource(String uri, long offset, long limit, String search, APISort sort, Class<T> type) throws APIException {
+    protected <T extends APIEntity> APIListResource<T> getListResource(String uri, long offset, long limit, String search, APISort sort, Class<T> type) throws APIException {
         if(client == null) {
             throw new APIException("Missing API client");
         }
