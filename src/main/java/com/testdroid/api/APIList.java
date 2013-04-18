@@ -6,6 +6,8 @@ import com.testdroid.api.APIList.TestRunList;
 import com.testdroid.api.APIList.UserList;
 import com.testdroid.api.model.APICluster;
 import com.testdroid.api.model.APIProject;
+import com.testdroid.api.model.APIProjectJobConfig;
+import com.testdroid.api.model.APIProjectSharing;
 import com.testdroid.api.model.APITestRun;
 import com.testdroid.api.model.APIUser;
 import java.util.List;
@@ -141,6 +143,8 @@ public class APIList<T extends APIEntity> extends APIEntity {
     
     @XmlRootElement public static class UserList extends APIList<APIUser> {  }
     @XmlRootElement public static class ProjectList extends APIList<APIProject> {  }
+    @XmlRootElement public static class ProjectSharingList extends APIList<APIProjectSharing> {  }
+    @XmlRootElement public static class ProjectJobConfigList extends APIList<APIProjectJobConfig> {  }
     @XmlRootElement public static class TestRunList extends APIList<APITestRun> {  }
     @XmlRootElement public static class ClusterList extends APIList<APICluster> {  }
 }

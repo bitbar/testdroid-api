@@ -1,5 +1,6 @@
 package com.testdroid.api;
 
+import com.testdroid.api.model.APIProject;
 import com.testdroid.api.model.APIUser;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +34,8 @@ public class APISort {
     }
     
     public static enum Column {
-        USER_ID(APIUser.class, "id"), USER_EMAIL(APIUser.class, "email"), USER_NAME(APIUser.class, "name"), USER_COUNTRY(APIUser.class, "localeCountry");
+        USER_ID(APIUser.class, "id"), USER_EMAIL(APIUser.class, "email"), USER_NAME(APIUser.class, "name"), USER_COUNTRY(APIUser.class, "localeCountry"),
+        PROJECT_ID(APIProject.class, "id"), PROJECT_NAME(APIProject.class, "name"), PROJECT_DESCRIPTION(APIProject.class, "description");
         
         public static enum NameType { RELATIVE, ABSOLUTE }
         
