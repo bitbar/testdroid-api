@@ -1,5 +1,9 @@
 APIUser
+APIFiles
+APIDevice
 APIProject
+APIProjectSharing
+APIProjectJobConfig
 APICluster
 APITestRun
 APITestRunConfig

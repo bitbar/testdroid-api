@@ -17,15 +17,17 @@ public class APIProjectJobConfig extends APIEntity {
     private String content;
     private Integer version;
     private boolean global;
+    private Long projectId;
 
     public APIProjectJobConfig() {}
 
-    public APIProjectJobConfig(Long id, Type type, String content, Integer version, boolean global) {
+    public APIProjectJobConfig(Long id, Type type, String content, Integer version, boolean global, Long projectId) {
         super(id);
         this.type = type;
         this.content = content;
         this.version = version;
         this.global = global;
+        this.projectId = projectId;
     }
 
     public Type getType() {
@@ -58,6 +60,14 @@ public class APIProjectJobConfig extends APIEntity {
 
     public void setGlobal(boolean global) {
         this.global = global;
+    }
+
+    public Long getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(Long projectId) {
+        this.projectId = projectId;
     }
 
 }
