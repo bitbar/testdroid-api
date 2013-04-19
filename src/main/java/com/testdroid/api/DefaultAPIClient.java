@@ -31,9 +31,9 @@ import org.apache.http.HttpStatus;
  */
 public class DefaultAPIClient implements APIClient {
 
-    private static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
-    private static Credential CREDENTIAL = new Credential.Builder(BearerToken.queryParameterAccessMethod()).build();
-    private static String API_URI = "/api/v2";
+    protected static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
+    protected static Credential CREDENTIAL = new Credential.Builder(BearerToken.queryParameterAccessMethod()).build();
+    protected static String API_URI = "/api/v2";
     
     protected String cloudURL;
     protected String apiURL;
@@ -48,7 +48,7 @@ public class DefaultAPIClient implements APIClient {
         this.password = password;
     }
     
-    private String getAccessToken() {
+    protected String getAccessToken() {
         if(accessToken == null) {
             try {
                 accessToken = acquireAccessToken();
