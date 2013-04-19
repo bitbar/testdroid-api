@@ -1,5 +1,7 @@
 package com.testdroid.api;
 
+import java.io.InputStream;
+
 /**
  *
  * @author kajdus
@@ -8,7 +10,7 @@ public class APIResource<T extends APIEntity> {
     
     protected APIClient client;
     private boolean loaded = false;
-    private String resourceURI;
+    protected String resourceURI;
     private T entity;
     protected Class<T> type;
     
@@ -26,6 +28,15 @@ public class APIResource<T extends APIEntity> {
     public T getEntity() throws APIException {
         this.load();
         return entity;
+    }
+    
+    /**
+     * Calls API and returns response stream as a result. No cache is used here.
+     * @return InputStream from API response
+     * @throws APIException on any API errors.
+     */
+    public InputStream getStream() throws APIException {
+        return client.get(resourceURI);
     }
     
     /**
