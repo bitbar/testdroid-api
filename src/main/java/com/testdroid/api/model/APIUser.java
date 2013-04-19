@@ -2,9 +2,7 @@ package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIException;
-import com.testdroid.api.APIList.ClusterList;
 import com.testdroid.api.APIListResource;
-import com.testdroid.api.APIList.ProjectList;
 import com.testdroid.api.APISort;
 import javax.xml.bind.annotation.XmlRootElement;
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -155,14 +153,18 @@ public class APIUser extends APIEntity {
     
     private String getProjectsURI() { return selfURI + "/projects"; };
     
-    @JsonIgnore
-    public APIListResource<ProjectList> getProjectsResource() throws APIException {
-        return getListResource(getProjectsURI(), ProjectList.class);
+    public APIProject createProject() throws APIException {
+        return postResource(getProjectsURI(), "", APIProject.class);
     }
     
     @JsonIgnore
-    public APIListResource<ProjectList> getProjectsResource(long offset, long limit, String search, APISort sort) throws APIException {
-        return getListResource(getProjectsURI(), offset, limit, search, sort, ProjectList.class);
+    public APIListResource<APIProject> getProjectsResource() throws APIException {
+        return getListResource(getProjectsURI(), APIProject.class);
+    }
+    
+    @JsonIgnore
+    public APIListResource<APIProject> getProjectsResource(long offset, long limit, String search, APISort sort) throws APIException {
+        return getListResource(getProjectsURI(), offset, limit, search, sort, APIProject.class);
     }
     
     public APIProject getProject(Long id) throws APIException {
@@ -170,12 +172,12 @@ public class APIUser extends APIEntity {
     }
     
     @JsonIgnore
-    public APIListResource<ClusterList> getClustersResource() throws APIException {
-        return getListResource(getProjectsURI(), ClusterList.class);
+    public APIListResource<APICluster> getClustersResource() throws APIException {
+        return getListResource(getProjectsURI(), APICluster.class);
     }
     
     @JsonIgnore
-    public APIListResource<ClusterList> getClustersResource(long offset, long limit, String search, APISort sort) throws APIException {
-        return getListResource(getProjectsURI(), offset, limit, search, sort, ClusterList.class);
+    public APIListResource<APICluster> getClustersResource(long offset, long limit, String search, APISort sort) throws APIException {
+        return getListResource(getProjectsURI(), offset, limit, search, sort, APICluster.class);
     }
 }
