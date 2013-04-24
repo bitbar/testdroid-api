@@ -78,5 +78,8 @@ public class APIDeviceRunState extends APIEntity {
     public void setDeviceRunStateType(DeviceRunStateType type) {
         this.type = type;
     }
+
+    
+    
     
 }
