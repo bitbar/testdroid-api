@@ -172,12 +172,12 @@ public class APIUser extends APIEntity {
     }
     
     @JsonIgnore
-    public APIListResource<APICluster> getClustersResource() throws APIException {
-        return getListResource(getProjectsURI(), APICluster.class);
+    public APIListResource<APIDeviceGroup> getClustersResource() throws APIException {
+        return getListResource(getProjectsURI(), APIDeviceGroup.class);
     }
     
     @JsonIgnore
-    public APIListResource<APICluster> getClustersResource(long offset, long limit, String search, APISort sort) throws APIException {
-        return getListResource(getProjectsURI(), offset, limit, search, sort, APICluster.class);
+    public APIListResource<APIDeviceGroup> getClustersResource(long offset, long limit, String search, APISort sort) throws APIException {
+        return getListResource(getProjectsURI(), offset, limit, search, sort, APIDeviceGroup.class);
     }
 }
