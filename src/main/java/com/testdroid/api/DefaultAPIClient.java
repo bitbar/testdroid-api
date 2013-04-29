@@ -13,6 +13,7 @@ import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.InputStreamContent;
 import com.google.api.client.http.UrlEncodedContent;
 import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.http.json.JsonHttpContent;
 import com.testdroid.api.model.APIUser;
 import java.io.File;
 import java.io.FileInputStream;
@@ -33,15 +34,16 @@ import org.apache.http.HttpStatus;
  */
 public class DefaultAPIClient implements APIClient {
 
-    private static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
-    private static Credential CREDENTIAL = new Credential.Builder(BearerToken.queryParameterAccessMethod()).build();
-    private static String API_URI = "/api/v2";
+    protected static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
+    protected static Credential CREDENTIAL = new Credential.Builder(BearerToken.queryParameterAccessMethod()).build();
+    protected static String API_URI = "/api/v2";
     
-    private String cloudURL;
-    private String apiURL;
-    private String username;
-    private String password;
-    private String accessToken;
+    protected String cloudURL;
+    protected String apiURL;
+    protected String username;
+    protected String password;
+    protected String accessToken;
+    protected long accessTokenExpireTime = 0;
 
     public DefaultAPIClient(String cloudURL, String username, String password) {
         this.cloudURL = cloudURL;
@@ -50,10 +52,10 @@ public class DefaultAPIClient implements APIClient {
         this.password = password;
     }
     
-    private String getAccessToken() {
-        if(accessToken == null) {
+    protected String getAccessToken() {
+        if(accessToken == null || System.currentTimeMillis() > (accessTokenExpireTime-10) ) {
             try {
-                accessToken = acquireAccessToken();
+                accessToken = acquireAccessToken();                
             }
             catch(APIException ex) {
                 ex.printStackTrace();
@@ -72,8 +74,9 @@ public class DefaultAPIClient implements APIClient {
             if(response.getStatusCode() != 200) {
                 throw new APIException(response.getStatusCode(), "Failed to acquire access token");
             }
-            String content = StringUtils.join(IOUtils.readLines(response.getContent()), "\n");
+            String content = StringUtils.join(IOUtils.readLines(response.getContent()), "\n");            
             JSONObject json = JSONObject.fromObject(content);
+            accessTokenExpireTime = System.currentTimeMillis()+(Long.parseLong(json.optString("expires_in"))*1000);
             return json.optString("access_token");
         }
         catch(IOException ex) {
@@ -178,7 +181,7 @@ public class DefaultAPIClient implements APIClient {
         }
     }
 
-    private <T extends APIEntity> T postOnce(String uri, Object body, String contentType, Class<T> type) throws APIException {
+    protected <T extends APIEntity> T postOnce(String uri, Object body, String contentType, Class<T> type) throws APIException {
         // Build request
         CREDENTIAL.setAccessToken(getAccessToken());
         HttpRequestFactory factory = HTTP_TRANSPORT.createRequestFactory(new HttpRequestInitializer() {
@@ -191,15 +194,20 @@ public class DefaultAPIClient implements APIClient {
         HttpRequest request = null;
         HttpResponse response = null;
         try {
-            boolean multipart = contentType != null;
-             HttpContent content = null;
-             if(multipart) {
-                 content = new InputStreamContent(contentType, new FileInputStream((File) body));
-             }
-             else {
-                 content = new UrlEncodedContent(body);
-             }
-             request = factory.buildPostRequest(new GenericUrl(apiURL + uri), content );
+            boolean multipart = false;
+            HttpContent content = null;
+            
+            if (body instanceof File) {
+                multipart = true;
+                content = new InputStreamContent(contentType, new FileInputStream((File) body));
+            } else if (body instanceof InputStream) {
+                content = new InputStreamContent(contentType, (InputStream) body);
+            } else if (body instanceof APIEntity) {
+                content = new InputStreamContent(contentType, IOUtils.toInputStream(((APIEntity)body).toXML()));
+            } else {
+                content = new UrlEncodedContent(body);
+            }
+             request = factory.buildPostRequest(new GenericUrl(apiURL + uri), content );             
              request.setHeaders(new HttpHeaders().setAccept("application/xml"));
              if(multipart) {
                  request.getHeaders().setContentType("multipart/form-data; boundary=----WebKitFormBoundaryAkeE9nbp2xKzJT4Q");
