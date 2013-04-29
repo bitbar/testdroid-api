@@ -7,12 +7,12 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author kajdus
  */
 @XmlRootElement
-public class APICluster extends APIDeviceProperty {
+public class APIDeviceGroup extends APIDeviceProperty {
     private Long userId;
 
-    public APICluster() {}
+    public APIDeviceGroup() {}
 
-    public APICluster(Long id, String name, String displayName, Integer deviceCount, Integer creditsPrice, Long userId) {
+    public APIDeviceGroup(Long id, String name, String displayName, Integer deviceCount, Integer creditsPrice, Long userId) {
         super(id, name, displayName, deviceCount, creditsPrice);
         this.userId = userId;;
     }

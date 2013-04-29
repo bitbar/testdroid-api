@@ -1,9 +1,17 @@
 package com.testdroid.api;
 
 import com.testdroid.api.model.*;
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 
@@ -13,7 +21,7 @@ import javax.xml.bind.annotation.XmlSeeAlso;
  * @author kajdus
  */
 @XmlRootElement
-@XmlSeeAlso({APIUser.class,APICluster.class,APIProject.class,APITestRun.class,APITestRunConfig.class, APIProjectSharing.class, APIProjectJobConfig.class,
+@XmlSeeAlso({APIUser.class,APIDeviceGroup.class,APIProject.class,APITestRun.class,APITestRunConfig.class, APIProjectSharing.class, APIProjectJobConfig.class,
 APIFiles.class, APIFiles.AndroidFiles.class, APIFiles.IOSFiles.class, APIFiles.UIAutomatorFiles.class,
 APITag.class, APIDeviceRun.class, APIDeviceRunState.class, APISoftwareVersion.class, APIScreenshot.class, APIDevice.class,
 APIDeviceProperty.class})
@@ -98,5 +106,30 @@ public abstract class APIEntity {
         } catch (UnsupportedEncodingException ex) {
         }
         return name;
+    }
+    
+    public String toXML() {
+        try {
+            JAXBContext context = JAXBContext.newInstance(this.getClass());
+            Marshaller marshaller = context.createMarshaller();
+            StringWriter writer = new StringWriter();
+            marshaller.marshal(this, writer);
+            return writer.toString();
+        } catch (JAXBException ex) {
+            Logger.getLogger(APIEntity.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "";
+    }
+    
+    public static  <T extends APIEntity> T fromXML(String xml, Class<T> type) {
+        try {
+            JAXBContext context = JAXBContext.newInstance(type);
+            Unmarshaller unmarshaller = context.createUnmarshaller();
+            StringWriter writer = new StringWriter();
+            return (T)unmarshaller.unmarshal(new StringReader(xml));            
+        } catch (JAXBException ex) {
+            Logger.getLogger(APIEntity.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 }
