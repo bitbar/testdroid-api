@@ -70,6 +70,8 @@ public class DefaultAPIClient implements APIClient {
             HttpRequest request = HTTP_TRANSPORT.createRequestFactory().buildGetRequest(new GenericUrl(
                     String.format("%s/oauth/token?client_id=testdroid-cloud-api&client_secret=qwerty&grant_type=password&username=%s&password=%s",
                     cloudURL, username, password)));
+            request.setConnectTimeout(60000); // one minute
+            request.setReadTimeout(60000); // one minute
             HttpResponse response = request.execute();
             if(response.getStatusCode() != 200) {
                 throw new APIException(response.getStatusCode(), "Failed to acquire access token");
