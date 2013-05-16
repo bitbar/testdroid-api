@@ -38,6 +38,9 @@ public class DefaultAPIClient implements APIClient {
     protected static Credential CREDENTIAL = new Credential.Builder(BearerToken.queryParameterAccessMethod()).build();
     protected static String API_URI = "/api/v2";
     
+    public final static int HTTP_CONNECT_TIMEOUT = 60000;
+    public final static int HTTP_READ_TIMEOUT = 60000;
+    
     protected String cloudURL;
     protected String apiURL;
     protected String username;
@@ -70,6 +73,8 @@ public class DefaultAPIClient implements APIClient {
             HttpRequest request = HTTP_TRANSPORT.createRequestFactory().buildGetRequest(new GenericUrl(
                     String.format("%s/oauth/token?client_id=testdroid-cloud-api&client_secret=qwerty&grant_type=password&username=%s&password=%s",
                     cloudURL, username, password)));
+            request.setConnectTimeout(HTTP_CONNECT_TIMEOUT); // one minute
+            request.setReadTimeout(HTTP_READ_TIMEOUT); // one minute
             HttpResponse response = request.execute();
             if(response.getStatusCode() != 200) {
                 throw new APIException(response.getStatusCode(), "Failed to acquire access token");
