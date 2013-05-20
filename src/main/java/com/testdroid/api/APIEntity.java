@@ -21,10 +21,10 @@ import javax.xml.bind.annotation.XmlSeeAlso;
  * @author kajdus
  */
 @XmlRootElement
-@XmlSeeAlso({APIUser.class,APIDeviceGroup.class,APIProject.class,APITestRun.class,APITestRunConfig.class, APIProjectSharing.class, APIProjectJobConfig.class,
-APIFiles.class, APIFiles.AndroidFiles.class, APIFiles.IOSFiles.class, APIFiles.UIAutomatorFiles.class,
-APITag.class, APIDeviceRun.class, APIDeviceRunState.class, APISoftwareVersion.class, APIScreenshot.class, APIDevice.class,
-APIDeviceProperty.class})
+@XmlSeeAlso({APIUser.class, APIDeviceGroup.class, APIProject.class, APITestRun.class,APITestRunConfig.class, APIProjectSharing.class,
+    APIProjectJobConfig.class, APIFiles.class, APIFiles.AndroidFiles.class, APIFiles.IOSFiles.class, APIFiles.UIAutomatorFiles.class,
+    APITag.class, APIDeviceRun.class, APIDeviceRunState.class, APISoftwareVersion.class, APIScreenshot.class, APIDevice.class,
+    APIDeviceProperty.class, APICluster.class})
 public abstract class APIEntity {
     protected APIClient client;
     protected String selfURI;
@@ -57,38 +57,34 @@ public abstract class APIEntity {
     }
     
     protected <T extends APIEntity> APIResource<T> getResource(String uri, Class<T> type) throws APIException {
-        if(client == null) {
-            throw new APIException("Missing API client");
-        }
+        checkClient(client);
         return new APIResource<T>(client, uri, type);
     }
     
     protected <T extends APIEntity> APIListResource<T> getListResource(String uri, Class<T> type) throws APIException {
-        if(client == null) {
-            throw new APIException("Missing API client");
-        }
+        checkClient(client);
         return new APIListResource<T>(client, uri, type);
     }
     
     protected <T extends APIEntity> APIListResource<T> getListResource(String uri, long offset, long limit, String search, APISort sort, Class<T> type) throws APIException {
-        if(client == null) {
-            throw new APIException("Missing API client");
-        }
+        checkClient(client);
         return new APIListResource<T>(client, uri, offset, limit, search, sort, type);
     }
     
     protected <T extends APIEntity> T postResource(String uri, Object body, Class<T> type) throws APIException {
-        if(client == null) {
-            throw new APIException("Missing API client");
-        }
+        checkClient(client);
         return client.post(uri, body, type);
     }
     
     protected void deleteResource(String uri) throws APIException {
+        checkClient(client);
+        client.delete(uri);
+    }
+    
+    private void checkClient(APIClient client) throws APIException {
         if(client == null) {
             throw new APIException("Missing API client");
         }
-        client.delete(uri);
     }
     
     private static final String ENCODING = "UTF-8";
