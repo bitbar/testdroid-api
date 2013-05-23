@@ -2,6 +2,7 @@ package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIException;
+import com.testdroid.api.APIList;
 import java.util.Date;
 import java.util.Set;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -28,6 +29,8 @@ public class APICluster extends APIEntity {
     private Date stateChangeTime = new Date();        
     
     private Boolean enabled = true;
+    
+    private APIList<APIDevice> devices;
 
     public APICluster() {        
     }
@@ -44,6 +47,12 @@ public class APICluster extends APIEntity {
         this.stateTime = stateTime;
         this.stateChangeTime = stateChangeTime;
         this.enabled = enabled;
+    }
+
+    public APICluster(Long id, String name, APIList<APIDevice> devices) {
+        super(id);
+        this.name = name;
+        this.devices = devices;
     }
     
     public String getName() {
@@ -93,6 +102,13 @@ public class APICluster extends APIEntity {
     public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
     }
-    
+
+    public APIList<APIDevice> getDevices() {
+        return devices;
+    }
+
+    public void setDevices(APIList<APIDevice> devices) {
+        this.devices = devices;
+    }
     
 }
