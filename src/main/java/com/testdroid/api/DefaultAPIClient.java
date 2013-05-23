@@ -152,8 +152,8 @@ public class DefaultAPIClient implements APIClient {
                 CREDENTIAL.initialize(request);
             }
         });
-        HttpRequest request = null;
-        HttpResponse response = null;
+        HttpRequest request;
+        HttpResponse response;
         try {
              request = factory.buildGetRequest(new GenericUrl(apiURL + uri));
              request.setHeaders(new HttpHeaders().setAccept("application/xml"));
@@ -196,11 +196,11 @@ public class DefaultAPIClient implements APIClient {
                 CREDENTIAL.initialize(request);
             }
         });
-        HttpRequest request = null;
+        HttpRequest request;
         HttpResponse response = null;
         try {
             boolean multipart = false;
-            HttpContent content = null;
+            HttpContent content;
             
             if (body instanceof File) {
                 multipart = true;
@@ -224,6 +224,12 @@ public class DefaultAPIClient implements APIClient {
 
             Unmarshaller unmarshaller = context.createUnmarshaller();
             response = request.execute();
+            if(response == null) {
+                throw new APIException("No response from API");
+            }
+            if(response.getStatusCode() < HttpStatus.SC_OK || response.getStatusCode() >= 300 ) {
+                throw new APIException(response.getStatusCode(), "Failed to post resource: " + response.getStatusMessage());
+            }
             T result = (T) unmarshaller.unmarshal(response.getContent());
             result.client = this;
             result.selfURI = uri;
@@ -285,8 +291,8 @@ public class DefaultAPIClient implements APIClient {
                 CREDENTIAL.initialize(request);
             }
         });
-        HttpRequest request = null;
-        HttpResponse response = null;
+        HttpRequest request;
+        HttpResponse response;
         try {
              request = factory.buildDeleteRequest(new GenericUrl(apiURL + uri));
              request.setHeaders(new HttpHeaders().setAccept("application/xml"));
