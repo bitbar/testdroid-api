@@ -20,6 +20,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
@@ -33,7 +35,7 @@ import org.apache.http.HttpStatus;
  * @author kajdus
  */
 public class DefaultAPIClient implements APIClient {
-
+    private final static Logger LOG = Logger.getLogger(DefaultAPIClient.class.getCanonicalName());
     protected static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
     protected static Credential CREDENTIAL = new Credential.Builder(BearerToken.queryParameterAccessMethod()).build();
     protected static String API_URI = "/api/v2";
@@ -59,8 +61,8 @@ public class DefaultAPIClient implements APIClient {
                 accessToken = acquireAccessToken();                
             }
             catch(APIException ex) {
-                ex.printStackTrace();
-                // Do nothing, leave null
+                LOG.log(Level.SEVERE, "Can't acquire a new access token", ex);
+                accessToken=null;
             }
         }
         return accessToken;
