@@ -53,7 +53,8 @@ public class DefaultAPIClient implements APIClient {
     }
     
     protected String getAccessToken() {
-        if(accessToken == null || System.currentTimeMillis() > (accessTokenExpireTime-10) ) {
+        //get new token if old is null or is going to expire in 10 seconds
+        if(accessToken == null || System.currentTimeMillis() > (accessTokenExpireTime-10*1000) ) {
             try {
                 accessToken = acquireAccessToken();                
             }
