@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 @XmlSeeAlso({APIUser.class, APIDeviceGroup.class, APIProject.class, APITestRun.class,APITestRunConfig.class, APIProjectSharing.class,
     APIProjectJobConfig.class, APIFiles.class, APIFiles.AndroidFiles.class, APIFiles.IOSFiles.class, APIFiles.UIAutomatorFiles.class,
     APITag.class, APIDeviceRun.class, APIDeviceRunState.class, APISoftwareVersion.class, APIScreenshot.class, APIDevice.class,
-    APIDeviceProperty.class, APICluster.class})
+    APIDeviceProperty.class})
 public abstract class APIEntity {
     protected APIClient client;
     protected String selfURI;
