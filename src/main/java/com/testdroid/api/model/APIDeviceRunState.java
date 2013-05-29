@@ -13,16 +13,18 @@ import javax.xml.bind.annotation.XmlType;
 public class APIDeviceRunState extends APIEntity {
     @XmlType public static enum Status { STARTED, EXCLUDED, ERROR, FAILED, SUCCEEDED, NOT_AVAILABLE }
     
+    private Long deviceRunId;
+    private DeviceRunStateType type;
     private Long startTimeMS;
     private Long finishTimeMS;
     private Date retryTime;
     private String failReason;
     private Status status;
-    private DeviceRunStateType type;
 
     public APIDeviceRunState() {}
-    public APIDeviceRunState(Long id, Long startTimeMS, Long finishTimeMS, Date retryTime, String failReason, Status status, DeviceRunStateType type) {
+    public APIDeviceRunState(Long id, Long deviceRunId, Long startTimeMS, Long finishTimeMS, Date retryTime, String failReason, Status status, DeviceRunStateType type) {
         super(id);
+        this.deviceRunId = deviceRunId;
         this.startTimeMS = startTimeMS;
         this.finishTimeMS = finishTimeMS;
         this.retryTime = retryTime;
@@ -31,6 +33,15 @@ public class APIDeviceRunState extends APIEntity {
         this.type = type;
     }
 
+    public Long getDeviceRunId() {
+        return deviceRunId;
+    }
+
+    public void setDeviceRunId(Long deviceRunId) {
+        this.deviceRunId = deviceRunId;
+    }
+
+    
     public Long getStartTimeMS() {
         return startTimeMS;
     }
