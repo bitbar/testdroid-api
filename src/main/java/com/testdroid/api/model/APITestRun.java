@@ -16,7 +16,9 @@ import org.codehaus.jackson.annotate.JsonIgnore;
  */
 @XmlRootElement
 public class APITestRun extends APIEntity {
-    @XmlType public static enum State { WAITING, RUNNING, FINISHED }
+    
+    @XmlType(namespace = "APITestRun", name = "APITestRunState")
+    public static enum State { WAITING, RUNNING, FINISHED }
     
     private Integer number;
     private Date createTime;

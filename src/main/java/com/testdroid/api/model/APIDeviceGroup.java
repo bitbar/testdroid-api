@@ -14,7 +14,7 @@ public class APIDeviceGroup extends APIDeviceProperty {
 
     public APIDeviceGroup(Long id, String name, String displayName, Integer deviceCount, Integer creditsPrice, Long userId) {
         super(id, name, displayName, deviceCount, creditsPrice);
-        this.userId = userId;;
+        this.userId = userId;
     }
 
     public Long getUserId() {

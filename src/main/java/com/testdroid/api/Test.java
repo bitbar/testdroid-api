@@ -24,9 +24,9 @@ public class Test {
             System.out.println("USERS COUNT: " + resource.getEntity().getTotal());
             APIProject p = user.getProject(120731L);
             System.out.println(p.getName());
-            AndroidFiles files = p.getFiles(AndroidFiles.class);
-            files.uploadTest(new File("C:\\Users\\Lukasz\\Desktop\\apks\\MoviesTest.apk"));
-            System.out.println(files.getAndroidApp().getOriginalName());
+            //AndroidFiles files = p.getFiles(AndroidFiles.class);
+            //files.uploadTest(new File("C:\\Users\\Lukasz\\Desktop\\apks\\MoviesTest.apk"));
+            //System.out.println(files.getAndroidApp().getOriginalName());
         } catch (APIException ex) {
             ex.printStackTrace();
         }
