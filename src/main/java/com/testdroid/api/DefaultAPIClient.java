@@ -20,8 +20,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
@@ -35,16 +33,20 @@ import org.apache.http.HttpStatus;
  * @author kajdus
  */
 public class DefaultAPIClient implements APIClient {
-    private final static Logger LOG = Logger.getLogger(DefaultAPIClient.class.getCanonicalName());
+
     protected static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
     protected static Credential CREDENTIAL = new Credential.Builder(BearerToken.queryParameterAccessMethod()).build();
     protected static String API_URI = "/api/v2";
+    
+    public final static int HTTP_CONNECT_TIMEOUT = 60000;
+    public final static int HTTP_READ_TIMEOUT = 60000;
     
     protected String cloudURL;
     protected String apiURL;
     protected String username;
     protected String password;
     protected String accessToken;
+    protected String refreshToken;
     protected long accessTokenExpireTime = 0;
 
     public DefaultAPIClient(String cloudURL, String username, String password) {
@@ -55,14 +57,22 @@ public class DefaultAPIClient implements APIClient {
     }
     
     protected String getAccessToken() {
-        //get new token if old is null or is going to expire in 10 seconds
-        if(accessToken == null || System.currentTimeMillis() > (accessTokenExpireTime-10*1000) ) {
+        if(accessToken == null) {
             try {
-                accessToken = acquireAccessToken();                
+                accessToken = acquireAccessToken();
             }
             catch(APIException ex) {
-                LOG.log(Level.SEVERE, "Can't acquire a new access token", ex);
-                accessToken=null;
+                ex.printStackTrace();
+                // Do nothing, leave null
+            }
+        }
+        else if(System.currentTimeMillis() > (accessTokenExpireTime-10*1000) ) {
+            try {
+                accessToken = refreshAccessToken();
+            }
+            catch(APIException ex) {
+                ex.printStackTrace();
+                accessToken = null; // if refreshing failed, then we are not authorized                
             }
         }
         return accessToken;
@@ -71,8 +81,10 @@ public class DefaultAPIClient implements APIClient {
     private String acquireAccessToken() throws APIException {
         try {
             HttpRequest request = HTTP_TRANSPORT.createRequestFactory().buildGetRequest(new GenericUrl(
-                    String.format("%s/oauth/token?client_id=testdroid-cloud-api&client_secret=qwerty&grant_type=password&username=%s&password=%s",
+                    String.format("%s/oauth/token?client_id=testdroid-cloud-api&grant_type=password&username=%s&password=%s",
                     cloudURL, username, password)));
+            request.setConnectTimeout(HTTP_CONNECT_TIMEOUT); // one minute
+            request.setReadTimeout(HTTP_READ_TIMEOUT); // one minute
             HttpResponse response = request.execute();
             if(response.getStatusCode() != 200) {
                 throw new APIException(response.getStatusCode(), "Failed to acquire access token");
@@ -80,6 +92,32 @@ public class DefaultAPIClient implements APIClient {
             String content = StringUtils.join(IOUtils.readLines(response.getContent()), "\n");            
             JSONObject json = JSONObject.fromObject(content);
             accessTokenExpireTime = System.currentTimeMillis()+(Long.parseLong(json.optString("expires_in"))*1000);
+            refreshToken = json.optString("refresh_token");
+            return json.optString("access_token");
+        }
+        catch(IOException ex) {
+            throw new APIException("Failed to acquire access token", ex);
+        }
+    }
+    
+    private String refreshAccessToken() throws APIException {
+        try {
+            if(refreshToken == null) {
+                return null;
+            }
+            HttpRequest request = HTTP_TRANSPORT.createRequestFactory().buildGetRequest(new GenericUrl(
+                    String.format("%s/oauth/token?client_id=testdroid-cloud-api&grant_type=refresh_token&refresh_token=%s",
+                    cloudURL, refreshToken)));
+            request.setConnectTimeout(HTTP_CONNECT_TIMEOUT); // one minute
+            request.setReadTimeout(HTTP_READ_TIMEOUT); // one minute
+            HttpResponse response = request.execute();
+            if(response.getStatusCode() != 200) {
+                throw new APIException(response.getStatusCode(), "Failed to acquire access token");
+            }
+            String content = StringUtils.join(IOUtils.readLines(response.getContent()), "\n");            
+            JSONObject json = JSONObject.fromObject(content);
+            accessTokenExpireTime = System.currentTimeMillis()+(Long.parseLong(json.optString("expires_in"))*1000);
+            refreshToken = json.optString("refresh_token");
             return json.optString("access_token");
         }
         catch(IOException ex) {
