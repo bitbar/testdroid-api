@@ -14,6 +14,7 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 
 /**
@@ -56,31 +57,37 @@ public abstract class APIEntity {
         return true;
     }
     
+    @JsonIgnore
     protected <T extends APIEntity> APIResource<T> getResource(String uri, Class<T> type) throws APIException {
         checkClient(client);
         return new APIResource<T>(client, uri, type);
     }
     
+    @JsonIgnore
     protected <T extends APIEntity> APIListResource<T> getListResource(String uri, Class<T> type) throws APIException {
         checkClient(client);
         return new APIListResource<T>(client, uri, type);
     }
     
+    @JsonIgnore
     protected <T extends APIEntity> APIListResource<T> getListResource(String uri, long offset, long limit, String search, APISort sort, Class<T> type) throws APIException {
         checkClient(client);
         return new APIListResource<T>(client, uri, offset, limit, search, sort, type);
     }
     
+    @JsonIgnore
     protected <T extends APIEntity> T postResource(String uri, Object body, Class<T> type) throws APIException {
         checkClient(client);
         return client.post(uri, body, type);
     }
     
+    @JsonIgnore
     protected void deleteResource(String uri) throws APIException {
         checkClient(client);
         client.delete(uri);
     }
     
+    @JsonIgnore
     private void checkClient(APIClient client) throws APIException {
         if(client == null) {
             throw new APIException("Missing API client");
@@ -88,6 +95,7 @@ public abstract class APIEntity {
     }
     
     private static final String ENCODING = "UTF-8";
+    @JsonIgnore
     public static String encodeURL(String name) {
         try {
             return URLEncoder.encode(name, ENCODING);
@@ -96,6 +104,7 @@ public abstract class APIEntity {
         return name;
     }
 
+    @JsonIgnore
     public static String decodeURL(String name) {
         try {
             return URLDecoder.decode(name, ENCODING);
@@ -104,6 +113,7 @@ public abstract class APIEntity {
         return name;
     }
     
+    @JsonIgnore
     public String toXML() {
         try {
             JAXBContext context = JAXBContext.newInstance(this.getClass());
@@ -117,6 +127,7 @@ public abstract class APIEntity {
         return "";
     }
     
+    @JsonIgnore
     public static  <T extends APIEntity> T fromXML(String xml, Class<T> type) {
         try {
             JAXBContext context = JAXBContext.newInstance(type);

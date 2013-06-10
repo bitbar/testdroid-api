@@ -22,8 +22,8 @@ public class Test {
             APIListResource<APIUser> resource = new APIListResource<APIUser>(client, "/users", 0L, 10L, null, 
                     APISort.create(APIUser.class, new SortItem(APISort.Column.USER_EMAIL, APISort.Type.DESC)), APIUser.class);
             System.out.println("USERS COUNT: " + resource.getEntity().getTotal());
-            APIProject p = user.getProject(120731L);
-            System.out.println(p.getName());
+            //APIProject p = user.getProject(120731L);
+            //System.out.println(p.getName());
             //AndroidFiles files = p.getFiles(AndroidFiles.class);
             //files.uploadTest(new File("C:\\Users\\Lukasz\\Desktop\\apks\\MoviesTest.apk"));
             //System.out.println(files.getAndroidApp().getOriginalName());
