@@ -2,16 +2,7 @@ package com.testdroid.api;
 
 import com.google.api.client.auth.oauth2.BearerToken;
 import com.google.api.client.auth.oauth2.Credential;
-import com.google.api.client.http.GenericUrl;
-import com.google.api.client.http.HttpContent;
-import com.google.api.client.http.HttpHeaders;
-import com.google.api.client.http.HttpRequest;
-import com.google.api.client.http.HttpRequestFactory;
-import com.google.api.client.http.HttpRequestInitializer;
-import com.google.api.client.http.HttpResponse;
-import com.google.api.client.http.HttpTransport;
-import com.google.api.client.http.InputStreamContent;
-import com.google.api.client.http.UrlEncodedContent;
+import com.google.api.client.http.*;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.http.json.JsonHttpContent;
 import com.testdroid.api.model.APIUser;
@@ -198,6 +189,7 @@ public class DefaultAPIClient implements APIClient {
             if(!Arrays.asList(HttpStatus.SC_OK, HttpStatus.SC_ACCEPTED, HttpStatus.SC_CREATED).contains(response.getStatusCode())) {
                 throw new APIException(response.getStatusCode(), String.format("Failed to execute api call: %s", uri));
             }
+
             return response.getContent();
         }
         catch(IOException ex) {
@@ -235,12 +227,19 @@ public class DefaultAPIClient implements APIClient {
         HttpRequest request;
         HttpResponse response = null;
         try {
-            boolean multipart = false;
+
             HttpContent content;
             
             if (body instanceof File) {
-                multipart = true;
                 content = new InputStreamContent(contentType, new FileInputStream((File) body));
+                MultipartFormDataContent multipartContent = new MultipartFormDataContent();
+                FileContent fileContent = new FileContent("file", (File)body);
+
+                MultipartFormDataContent.Part filePart = new MultipartFormDataContent.Part("file", fileContent) ;
+                multipartContent.addPart(filePart);
+
+                content = multipartContent;
+
             } else if (body instanceof InputStream) {
                 content = new InputStreamContent(contentType, (InputStream) body);
             } else if (body instanceof APIEntity) {
@@ -248,12 +247,9 @@ public class DefaultAPIClient implements APIClient {
             } else {
                 content = new UrlEncodedContent(body);
             }
-             request = factory.buildPostRequest(new GenericUrl(apiURL + uri), content );             
-             request.setHeaders(new HttpHeaders().setAccept("application/xml"));
-             if(multipart) {
-                 request.getHeaders().setContentType("multipart/form-data; boundary=----WebKitFormBoundaryAkeE9nbp2xKzJT4Q");
-                 request.getHeaders().set("Content-Disposition", "form-data; name=\"file\"; filename=\"test.txt\"");
-             }
+            request = factory.buildPostRequest(new GenericUrl(apiURL + uri), content );
+            request.setHeaders(new HttpHeaders().setAccept("application/xml"));
+
 
             // Call request and parse result
             JAXBContext context = JAXBContext.newInstance(type);
@@ -357,5 +353,5 @@ public class DefaultAPIClient implements APIClient {
         result.selfURI = "/me";
         return result;
     }
-    
+
 }
