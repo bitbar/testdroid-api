@@ -11,9 +11,9 @@ import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.client.http.HttpResponse;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.InputStreamContent;
+import com.google.api.client.http.MultipartContent;
 import com.google.api.client.http.UrlEncodedContent;
 import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.http.json.JsonHttpContent;
 import com.testdroid.api.model.APIUser;
 import java.io.File;
 import java.io.FileInputStream;
@@ -223,6 +223,9 @@ public class DefaultAPIClient implements APIClient {
     }
 
     protected <T extends APIEntity> T postOnce(String uri, Object body, String contentType, Class<T> type) throws APIException {
+        if(contentType == null) {
+            contentType = "application/xml";
+        }
         // Build request
         CREDENTIAL.setAccessToken(getAccessToken());
         HttpRequestFactory factory = HTTP_TRANSPORT.createRequestFactory(new HttpRequestInitializer() {
@@ -235,25 +238,30 @@ public class DefaultAPIClient implements APIClient {
         HttpRequest request;
         HttpResponse response = null;
         try {
-            boolean multipart = false;
             HttpContent content;
+            HttpHeaders headers = new HttpHeaders();
+            headers.setAccept("application/xml");
             
             if (body instanceof File) {
-                multipart = true;
-                content = new InputStreamContent(contentType, new FileInputStream((File) body));
+                headers.setContentType("multipart/form-data; boundary=----WebKitFormBoundaryAkeE9nbp2xKzJT4Q");
+                MultipartContent multipartContent = new MultipartContent();
+                multipartContent.setBoundary("----WebKitFormBoundaryAkeE9nbp2xKzJT4Q");
+                HttpHeaders multipartHeaders = new HttpHeaders();
+                multipartHeaders.set("Content-Disposition", "form-data; name=\"file\"; filename=\""+((File) body).getName()+"\"");
+                multipartContent.addPart(new MultipartContent.Part(multipartHeaders,
+                        new InputStreamContent("multipart/form-data; boundary=----WebKitFormBoundaryAkeE9nbp2xKzJT4Q", new FileInputStream((File) body))));
+                content = multipartContent;
             } else if (body instanceof InputStream) {
+                headers.setContentType(contentType);
                 content = new InputStreamContent(contentType, (InputStream) body);
             } else if (body instanceof APIEntity) {
                 content = new InputStreamContent(contentType, IOUtils.toInputStream(((APIEntity)body).toXML()));
+                headers.setContentType("application/xml");
             } else {
                 content = new UrlEncodedContent(body);
             }
              request = factory.buildPostRequest(new GenericUrl(apiURL + uri), content );             
-             request.setHeaders(new HttpHeaders().setAccept("application/xml"));
-             if(multipart) {
-                 request.getHeaders().setContentType("multipart/form-data; boundary=----WebKitFormBoundaryAkeE9nbp2xKzJT4Q");
-                 request.getHeaders().set("Content-Disposition", "form-data; name=\"file\"; filename=\"test.txt\"");
-             }
+             request.setHeaders(headers);
 
             // Call request and parse result
             JAXBContext context = JAXBContext.newInstance(type);
