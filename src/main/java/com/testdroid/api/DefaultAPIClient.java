@@ -11,9 +11,9 @@ import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.client.http.HttpResponse;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.InputStreamContent;
+import com.google.api.client.http.MultipartContent;
 import com.google.api.client.http.UrlEncodedContent;
 import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.http.json.JsonHttpContent;
 import com.testdroid.api.model.APIUser;
 import java.io.File;
 import java.io.FileInputStream;
@@ -38,11 +38,15 @@ public class DefaultAPIClient implements APIClient {
     protected static Credential CREDENTIAL = new Credential.Builder(BearerToken.queryParameterAccessMethod()).build();
     protected static String API_URI = "/api/v2";
     
+    public final static int HTTP_CONNECT_TIMEOUT = 60000;
+    public final static int HTTP_READ_TIMEOUT = 60000;
+    
     protected String cloudURL;
     protected String apiURL;
     protected String username;
     protected String password;
     protected String accessToken;
+    protected String refreshToken;
     protected long accessTokenExpireTime = 0;
 
     public DefaultAPIClient(String cloudURL, String username, String password) {
@@ -53,13 +57,22 @@ public class DefaultAPIClient implements APIClient {
     }
     
     protected String getAccessToken() {
-        if(accessToken == null || System.currentTimeMillis() > (accessTokenExpireTime-10) ) {
+        if(accessToken == null) {
             try {
-                accessToken = acquireAccessToken();                
+                accessToken = acquireAccessToken();
             }
             catch(APIException ex) {
                 ex.printStackTrace();
                 // Do nothing, leave null
+            }
+        }
+        else if(System.currentTimeMillis() > (accessTokenExpireTime-10*1000) ) {
+            try {
+                accessToken = refreshAccessToken();
+            }
+            catch(APIException ex) {
+                ex.printStackTrace();
+                accessToken = null; // if refreshing failed, then we are not authorized                
             }
         }
         return accessToken;
@@ -68,8 +81,10 @@ public class DefaultAPIClient implements APIClient {
     private String acquireAccessToken() throws APIException {
         try {
             HttpRequest request = HTTP_TRANSPORT.createRequestFactory().buildGetRequest(new GenericUrl(
-                    String.format("%s/oauth/token?client_id=testdroid-cloud-api&client_secret=qwerty&grant_type=password&username=%s&password=%s",
+                    String.format("%s/oauth/token?client_id=testdroid-cloud-api&grant_type=password&username=%s&password=%s",
                     cloudURL, username, password)));
+            request.setConnectTimeout(HTTP_CONNECT_TIMEOUT); // one minute
+            request.setReadTimeout(HTTP_READ_TIMEOUT); // one minute
             HttpResponse response = request.execute();
             if(response.getStatusCode() != 200) {
                 throw new APIException(response.getStatusCode(), "Failed to acquire access token");
@@ -77,6 +92,32 @@ public class DefaultAPIClient implements APIClient {
             String content = StringUtils.join(IOUtils.readLines(response.getContent()), "\n");            
             JSONObject json = JSONObject.fromObject(content);
             accessTokenExpireTime = System.currentTimeMillis()+(Long.parseLong(json.optString("expires_in"))*1000);
+            refreshToken = json.optString("refresh_token");
+            return json.optString("access_token");
+        }
+        catch(IOException ex) {
+            throw new APIException("Failed to acquire access token", ex);
+        }
+    }
+    
+    private String refreshAccessToken() throws APIException {
+        try {
+            if(refreshToken == null) {
+                return null;
+            }
+            HttpRequest request = HTTP_TRANSPORT.createRequestFactory().buildGetRequest(new GenericUrl(
+                    String.format("%s/oauth/token?client_id=testdroid-cloud-api&grant_type=refresh_token&refresh_token=%s",
+                    cloudURL, refreshToken)));
+            request.setConnectTimeout(HTTP_CONNECT_TIMEOUT); // one minute
+            request.setReadTimeout(HTTP_READ_TIMEOUT); // one minute
+            HttpResponse response = request.execute();
+            if(response.getStatusCode() != 200) {
+                throw new APIException(response.getStatusCode(), "Failed to acquire access token");
+            }
+            String content = StringUtils.join(IOUtils.readLines(response.getContent()), "\n");            
+            JSONObject json = JSONObject.fromObject(content);
+            accessTokenExpireTime = System.currentTimeMillis()+(Long.parseLong(json.optString("expires_in"))*1000);
+            refreshToken = json.optString("refresh_token");
             return json.optString("access_token");
         }
         catch(IOException ex) {
@@ -182,6 +223,9 @@ public class DefaultAPIClient implements APIClient {
     }
 
     protected <T extends APIEntity> T postOnce(String uri, Object body, String contentType, Class<T> type) throws APIException {
+        if(contentType == null) {
+            contentType = "application/xml";
+        }
         // Build request
         CREDENTIAL.setAccessToken(getAccessToken());
         HttpRequestFactory factory = HTTP_TRANSPORT.createRequestFactory(new HttpRequestInitializer() {
@@ -194,25 +238,30 @@ public class DefaultAPIClient implements APIClient {
         HttpRequest request;
         HttpResponse response = null;
         try {
-            boolean multipart = false;
             HttpContent content;
+            HttpHeaders headers = new HttpHeaders();
+            headers.setAccept("application/xml");
             
             if (body instanceof File) {
-                multipart = true;
-                content = new InputStreamContent(contentType, new FileInputStream((File) body));
+                headers.setContentType("multipart/form-data; boundary=----WebKitFormBoundaryAkeE9nbp2xKzJT4Q");
+                MultipartContent multipartContent = new MultipartContent();
+                multipartContent.setBoundary("----WebKitFormBoundaryAkeE9nbp2xKzJT4Q");
+                HttpHeaders multipartHeaders = new HttpHeaders();
+                multipartHeaders.set("Content-Disposition", "form-data; name=\"file\"; filename=\""+((File) body).getName()+"\"");
+                multipartContent.addPart(new MultipartContent.Part(multipartHeaders,
+                        new InputStreamContent("multipart/form-data; boundary=----WebKitFormBoundaryAkeE9nbp2xKzJT4Q", new FileInputStream((File) body))));
+                content = multipartContent;
             } else if (body instanceof InputStream) {
+                headers.setContentType(contentType);
                 content = new InputStreamContent(contentType, (InputStream) body);
             } else if (body instanceof APIEntity) {
                 content = new InputStreamContent(contentType, IOUtils.toInputStream(((APIEntity)body).toXML()));
+                headers.setContentType("application/xml");
             } else {
                 content = new UrlEncodedContent(body);
             }
              request = factory.buildPostRequest(new GenericUrl(apiURL + uri), content );             
-             request.setHeaders(new HttpHeaders().setAccept("application/xml"));
-             if(multipart) {
-                 request.getHeaders().setContentType("multipart/form-data; boundary=----WebKitFormBoundaryAkeE9nbp2xKzJT4Q");
-                 request.getHeaders().set("Content-Disposition", "form-data; name=\"file\"; filename=\"test.txt\"");
-             }
+             request.setHeaders(headers);
 
             // Call request and parse result
             JAXBContext context = JAXBContext.newInstance(type);
