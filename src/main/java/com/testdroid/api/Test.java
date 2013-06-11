@@ -1,7 +1,7 @@
 package com.testdroid.api;
 
 import com.testdroid.api.APISort.SortItem;
-import com.testdroid.api.model.APIFiles.AndroidFiles;
+import com.testdroid.api.model.AndroidFiles;
 import com.testdroid.api.model.APIProject;
 import com.testdroid.api.model.APIUser;
 import java.io.File;
@@ -24,9 +24,9 @@ public class Test {
             System.out.println("USERS COUNT: " + resource.getEntity().getTotal());
             APIProject p = user.getProject(120731L);
             System.out.println(p.getName());
-            //AndroidFiles files = p.getFiles(AndroidFiles.class);
-            //files.uploadTest(new File("C:\\Users\\Lukasz\\Desktop\\apks\\MoviesTest.apk"));
-            //System.out.println(files.getAndroidApp().getOriginalName());
+            AndroidFiles files = p.getFiles(AndroidFiles.class);
+            files.uploadTest(new File("C:\\Users\\Lukasz\\Desktop\\apks\\MoviesTest2.apk"));
+            System.out.println(files.getAndroidTest().getOriginalName());
         } catch (APIException ex) {
             ex.printStackTrace();
         }

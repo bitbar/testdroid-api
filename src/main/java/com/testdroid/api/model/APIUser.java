@@ -54,7 +54,7 @@ public class APIUser extends APIEntity {
     public void setEmail(String email) {
         this.email = email;
     }
-
+    
     public String getName() {
         return name;
     }
@@ -151,8 +151,10 @@ public class APIUser extends APIEntity {
         this.roles = roles;
     }
     
+    @JsonIgnore
     private String getProjectsURI() { return selfURI + "/projects"; };
     
+    @JsonIgnore
     public APIProject createProject() throws APIException {
         return postResource(getProjectsURI(), "", APIProject.class);
     }
@@ -167,6 +169,7 @@ public class APIUser extends APIEntity {
         return getListResource(getProjectsURI(), offset, limit, search, sort, APIProject.class);
     }
     
+    @JsonIgnore
     public APIProject getProject(Long id) throws APIException {
         return getResource(selfURI + "/projects/" + id, APIProject.class).getEntity();
     }
