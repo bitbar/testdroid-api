@@ -1,6 +1,10 @@
 package com.testdroid.api;
 
 import com.testdroid.api.model.*;
+import com.testdroid.api.model.AndroidFiles;
+import com.testdroid.api.model.IOSFiles;
+import com.testdroid.api.model.RemoteControlFiles;
+import com.testdroid.api.model.UIAutomatorFiles;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
@@ -23,8 +27,9 @@ import org.codehaus.jackson.annotate.JsonIgnore;
  */
 @XmlRootElement
 @XmlSeeAlso({APIUser.class, APIDeviceGroup.class, APIProject.class, APITestRun.class,APITestRunConfig.class, APIProjectSharing.class,
-    APIProjectJobConfig.class, APIFiles.class, APIFiles.AndroidFiles.class, APIFiles.IOSFiles.class, APIFiles.UIAutomatorFiles.class,
-    APITag.class, APIDeviceRun.class, APIDeviceRunState.class, APISoftwareVersion.class, APIScreenshot.class, APIDevice.class,
+    APIProjectJobConfig.class, APIFiles.class, AndroidFiles.class, IOSFiles.class, UIAutomatorFiles.class, RemoteControlFiles.class,
+    APIFiles.APIFile.class, APIFiles.AndroidAppFile.class, APIFiles.AndroidTestFile.class, APIFiles.DataFile.class, APIFiles.IOSAppFile.class, APIFiles.IOSTestFile.class,
+    APIFiles.UIAutomatorTestFile.class, APITag.class, APIDeviceRun.class, APIDeviceRunState.class, APISoftwareVersion.class, APIScreenshot.class, APIDevice.class,
     APIDeviceProperty.class})
 public abstract class APIEntity {
     protected APIClient client;
@@ -132,7 +137,6 @@ public abstract class APIEntity {
         try {
             JAXBContext context = JAXBContext.newInstance(type);
             Unmarshaller unmarshaller = context.createUnmarshaller();
-            StringWriter writer = new StringWriter();
             return (T)unmarshaller.unmarshal(new StringReader(xml));            
         } catch (JAXBException ex) {
             Logger.getLogger(APIEntity.class.getName()).log(Level.SEVERE, null, ex);
