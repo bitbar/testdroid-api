@@ -75,11 +75,11 @@ public abstract class APIFiles extends APIEntity {
         }
         
         public void uploadApp(File file) throws APIException {
-            this.androidApp = client.postFile(selfURI, "application/vnd.android.package-archive", file, AndroidAppFile.class);
+            this.androidApp = client.postFile(selfURI + "/application", "application/vnd.android.package-archive", file, AndroidAppFile.class);
         }
         
         public void uploadTest(File file) throws APIException {
-            this.androidTest = client.postFile(selfURI, "application/vnd.android.package-archive", file, AndroidTestFile.class);
+            this.androidTest = client.postFile(selfURI + "/test", "application/vnd.android.package-archive", file, AndroidTestFile.class);
         }
 
     }
