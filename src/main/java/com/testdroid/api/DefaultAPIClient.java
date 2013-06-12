@@ -25,7 +25,18 @@ import org.apache.http.HttpStatus;
 public class DefaultAPIClient implements APIClient {
 
     protected static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
-    protected static Credential CREDENTIAL = new Credential.Builder(BearerToken.queryParameterAccessMethod()).build();
+    protected static Credential getCredential() { return new Credential.Builder(BearerToken.queryParameterAccessMethod()).build(); }
+    protected static HttpRequestFactory getRequestFactory(String accessToken) {
+        final Credential credential = getCredential();
+        credential.setAccessToken(accessToken);
+        return HTTP_TRANSPORT.createRequestFactory(new HttpRequestInitializer() {
+
+            @Override
+            public void initialize(HttpRequest request) throws IOException {
+                credential.initialize(request);
+            }
+        });
+    }
     protected static String API_URI = "/api/v2";
     
     public final static int HTTP_CONNECT_TIMEOUT = 60000;
@@ -169,15 +180,7 @@ public class DefaultAPIClient implements APIClient {
     }
     
     private InputStream getStream(String uri) throws APIException {
-        // Build request
-        CREDENTIAL.setAccessToken(getAccessToken());
-        HttpRequestFactory factory = HTTP_TRANSPORT.createRequestFactory(new HttpRequestInitializer() {
-
-            @Override
-            public void initialize(HttpRequest request) throws IOException {
-                CREDENTIAL.initialize(request);
-            }
-        });
+        HttpRequestFactory factory = getRequestFactory(getAccessToken());
         HttpRequest request;
         HttpResponse response;
         try {
@@ -217,15 +220,7 @@ public class DefaultAPIClient implements APIClient {
         if(contentType == null) {
             contentType = "application/xml";
         }
-        // Build request
-        CREDENTIAL.setAccessToken(getAccessToken());
-        HttpRequestFactory factory = HTTP_TRANSPORT.createRequestFactory(new HttpRequestInitializer() {
-
-            @Override
-            public void initialize(HttpRequest request) throws IOException {
-                CREDENTIAL.initialize(request);
-            }
-        });
+        HttpRequestFactory factory = getRequestFactory(getAccessToken());
         HttpRequest request;
         HttpResponse response = null;
         try {
@@ -316,15 +311,7 @@ public class DefaultAPIClient implements APIClient {
     }
     
     private void deleteOnce(String uri) throws APIException {
-        // Build request
-        CREDENTIAL.setAccessToken(getAccessToken());
-        HttpRequestFactory factory = HTTP_TRANSPORT.createRequestFactory(new HttpRequestInitializer() {
-
-            @Override
-            public void initialize(HttpRequest request) throws IOException {
-                CREDENTIAL.initialize(request);
-            }
-        });
+        HttpRequestFactory factory = getRequestFactory(getAccessToken());
         HttpRequest request;
         HttpResponse response;
         try {
