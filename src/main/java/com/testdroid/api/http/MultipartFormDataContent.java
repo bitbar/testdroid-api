@@ -1,4 +1,4 @@
-package com.testdroid.api;
+package com.testdroid.api.http;
 
 import com.google.api.client.http.*;
 import com.google.api.client.util.Preconditions;

@@ -4,10 +4,9 @@ import com.google.api.client.auth.oauth2.BearerToken;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.http.*;
 import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.http.json.JsonHttpContent;
+import com.testdroid.api.http.MultipartFormDataContent;
 import com.testdroid.api.model.APIUser;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
@@ -215,6 +214,9 @@ public class DefaultAPIClient implements APIClient {
     }
 
     protected <T extends APIEntity> T postOnce(String uri, Object body, String contentType, Class<T> type) throws APIException {
+        if(contentType == null) {
+            contentType = "application/xml";
+        }
         // Build request
         CREDENTIAL.setAccessToken(getAccessToken());
         HttpRequestFactory factory = HTTP_TRANSPORT.createRequestFactory(new HttpRequestInitializer() {
@@ -227,11 +229,11 @@ public class DefaultAPIClient implements APIClient {
         HttpRequest request;
         HttpResponse response = null;
         try {
-
             HttpContent content;
-            
+            HttpHeaders headers = new HttpHeaders();
+            headers.setAccept("application/xml");
             if (body instanceof File) {
-                content = new InputStreamContent(contentType, new FileInputStream((File) body));
+
                 MultipartFormDataContent multipartContent = new MultipartFormDataContent();
                 FileContent fileContent = new FileContent("file", (File)body);
 
@@ -241,6 +243,7 @@ public class DefaultAPIClient implements APIClient {
                 content = multipartContent;
 
             } else if (body instanceof InputStream) {
+                headers.setContentType(contentType);
                 content = new InputStreamContent(contentType, (InputStream) body);
             } else if (body instanceof APIEntity) {
                 content = new InputStreamContent(contentType, IOUtils.toInputStream(((APIEntity)body).toXML()));
@@ -248,8 +251,7 @@ public class DefaultAPIClient implements APIClient {
                 content = new UrlEncodedContent(body);
             }
             request = factory.buildPostRequest(new GenericUrl(apiURL + uri), content );
-            request.setHeaders(new HttpHeaders().setAccept("application/xml"));
-
+            request.setHeaders(headers);
 
             // Call request and parse result
             JAXBContext context = JAXBContext.newInstance(type);
@@ -355,3 +357,5 @@ public class DefaultAPIClient implements APIClient {
     }
 
 }
+
+
