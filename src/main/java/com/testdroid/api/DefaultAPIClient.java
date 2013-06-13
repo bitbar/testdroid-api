@@ -79,7 +79,7 @@ public class DefaultAPIClient implements APIClient {
         return accessToken;
     }
     
-    private String acquireAccessToken() throws APIException {
+    protected String acquireAccessToken() throws APIException {
         try {
             HttpRequest request = HTTP_TRANSPORT.createRequestFactory().buildGetRequest(new GenericUrl(
                     String.format("%s/oauth/token?client_id=testdroid-cloud-api&grant_type=password&username=%s&password=%s",
@@ -101,7 +101,7 @@ public class DefaultAPIClient implements APIClient {
         }
     }
     
-    private String refreshAccessToken() throws APIException {
+    protected String refreshAccessToken() throws APIException {
         try {
             if(refreshToken == null) {
                 return null;
