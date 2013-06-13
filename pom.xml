@@ -1,22 +1,48 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.testdroid</groupId>
     <artifactId>testdroid-api</artifactId>
-    <version>1.2.6-SNAPSHOT</version>
+    <version>1.2.7</version>
     <packaging>jar</packaging>
-
-    <name>Testdroid API</name>
-    <url>http://maven.apache.org</url>
-
+	<name>testdroid-api</name>
+	<url>https://github.com/bitbar/testdroid-api</url>
+	<description>The Testdroid API library for Java</description>
+	<parent>
+	<groupId>org.sonatype.oss</groupId>
+	<artifactId>oss-parent</artifactId>
+	<version>7</version>
+</parent>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <nexusRepo>http://10.0.1.10:8081/nexus/content/repositories</nexusRepo>
     </properties>
-
+	<scm>
+		<connection>scm:git:git://github.com/bitbar/testdroid-api.git</connection>
+		<developerConnection>scm:git:git@github.com/bitbar/testdroid-api.git</developerConnection>
+		<url>https://github.com/bitbar/testdroid-api</url>
+	</scm>
+	<developers>
+		<developer>
+			<name>Lukasz Kajda</name>
+		</developer>
+		<developer>
+			<name>Slawomir Pawluk</name>
+		</developer>
+		<developer>
+			<name>Henri Kivelä</name>
+		</developer>
+		<developer>
+			<name>Sakari Rautiainen</name>
+		</developer>
+	</developers>
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
     <build>
-
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
@@ -73,13 +99,13 @@
         <dependency>
             <groupId>com.google.oauth-client</groupId>
             <artifactId>google-oauth-client</artifactId>
-            <version>RELEASE</version>
+			<version>1.15.0-rc</version>
         </dependency>
         <dependency>
             <groupId>com.google.api-client</groupId>
             <artifactId>google-api-client</artifactId>
-            <version>RELEASE</version>
-        </dependency>        
+			<version>1.15.0-rc</version>
+		</dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -118,32 +144,5 @@
             <type>jar</type>
         </dependency>
     </dependencies>
-    <repositories>
-        <repository>
-            <id>bitbar</id>
-            <url>http://10.0.1.10:8081/nexus/content/repositories/thirdparty</url>
-        </repository>
-        <repository>
-            <id>snapshots</id>
-            <url>http://10.0.1.10:8081/nexus/content/repositories/snapshots</url>
-        </repository>
-        <repository>
-            <id>maven.org</id>
-            <url>http://repo1.maven.org/maven2</url>
-        </repository>
-    </repositories>
-
-    <distributionManagement>
-        <repository>
-            <id>nexus</id>
-            <name>Testdroid Releases></name>
-            <url>${nexusRepo}/releases</url>
-        </repository>
-        <snapshotRepository>
-            <uniqueVersion>false</uniqueVersion>
-            <id>nexus</id>
-            <name>Testdroid Snapshots</name>
-            <url>${nexusRepo}/snapshots</url>
-        </snapshotRepository>
-    </distributionManagement>
+	
 </project>

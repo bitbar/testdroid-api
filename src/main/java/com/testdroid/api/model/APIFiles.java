@@ -55,10 +55,145 @@ public abstract class APIFiles extends APIEntity {
         return getResource(getDataURI(), null).getStream();
     }
     
-    @XmlRootElement 
-    @XmlSeeAlso({APIFiles.APIFile.class, APIFiles.AndroidAppFile.class, APIFiles.AndroidTestFile.class, APIFiles.DataFile.class, 
-        APIFiles.IOSAppFile.class, APIFiles.IOSTestFile.class, APIFiles.UIAutomatorTestFile.class})
-    public static abstract class APIFile extends APIEntity {
+    @XmlRootElement public static class AndroidFiles extends APIFiles {
+        private AndroidAppFile androidApp;
+        private AndroidTestFile androidTest;
+
+        public AndroidFiles() {}
+        public AndroidFiles(Long id, DataFile data, AndroidAppFile androidApp, AndroidTestFile androidTest) {
+            super(id, data);
+            this.androidApp = androidApp;
+            this.androidTest = androidTest;
+        }
+
+        public AndroidAppFile getAndroidApp() {
+            return androidApp;
+        }
+
+        public void setAndroidApp(AndroidAppFile androidApp) {
+            this.androidApp = androidApp;
+        }
+
+        public AndroidTestFile getAndroidTest() {
+            return androidTest;
+        }
+
+        public void setAndroidTest(AndroidTestFile androidTest) {
+            this.androidTest = androidTest;
+        }
+        
+        public void uploadApp(File file) throws APIException {
+            this.androidApp = client.postFile(selfURI + "/application", "application/vnd.android.package-archive", file, AndroidAppFile.class);
+        }
+        
+        public void uploadTest(File file) throws APIException {
+            this.androidTest = client.postFile(selfURI + "/test", "application/vnd.android.package-archive", file, AndroidTestFile.class);
+        }
+
+    }
+    
+    @XmlRootElement public static class IOSFiles extends APIFiles {
+        private IOSAppFile iosApp;
+        private IOSTestFile iosTest;
+
+        public IOSFiles() {}
+        public IOSFiles(Long id, DataFile data, IOSAppFile iosApp, IOSTestFile iosTest) {
+            super(id, data);
+            this.iosApp = iosApp;
+            this.iosTest = iosTest;
+        }
+
+        public IOSAppFile getIosApp() {
+            return iosApp;
+        }
+
+        public void setIosApp(IOSAppFile iosApp) {
+            this.iosApp = iosApp;
+        }
+
+        public IOSTestFile getIosTest() {
+            return iosTest;
+        }
+
+        public void setIosTest(IOSTestFile iosTest) {
+            this.iosTest = iosTest;
+        } 
+        
+        public void uploadApp(File file) throws APIException {
+            this.iosApp = client.postFile(selfURI, "application/vnd.apple.pkpass", file, IOSAppFile.class);
+        }
+        
+        public void uploadTest(File file) throws APIException {
+            this.iosTest = client.postFile(selfURI, "application/zip", file, IOSTestFile.class);
+        }
+
+    }
+    
+    @XmlRootElement public static class UIAutomatorFiles extends APIFiles {
+        private AndroidAppFile androidApp;
+        private UIAutomatorTestFile uiAutomatorTest;
+
+        public UIAutomatorFiles() {}
+        public UIAutomatorFiles(Long id, DataFile data, AndroidAppFile androidApp, UIAutomatorTestFile uiAutomatorTest) {
+            super(id, data);
+            this.androidApp = androidApp;
+            this.uiAutomatorTest = uiAutomatorTest;
+        }
+
+        public AndroidAppFile getAndroidApp() {
+            return androidApp;
+        }
+
+        public void setAndroidApp(AndroidAppFile androidApp) {
+            this.androidApp = androidApp;
+        }
+
+        public UIAutomatorTestFile getUiAutomatorTest() {
+            return uiAutomatorTest;
+        }
+
+        public void setUiAutomatorTest(UIAutomatorTestFile uiAutomatorTest) {
+            this.uiAutomatorTest = uiAutomatorTest;
+        } 
+        
+        public void uploadApp(File file) throws APIException {
+            this.androidApp = client.postFile(selfURI, "application/vnd.android.package-archive", file, AndroidAppFile.class);
+        }
+        
+        public void uploadTest(File file) throws APIException {
+            this.uiAutomatorTest = client.postFile(selfURI, "application/vnd.android.package-archive", file, UIAutomatorTestFile.class);
+        }
+    }
+    
+    @XmlRootElement public static class RemoteControlFiles extends APIFiles {
+        private AndroidAppFile androidApp;
+
+        public RemoteControlFiles() {}
+        public RemoteControlFiles(Long id, DataFile data, AndroidAppFile androidApp) {
+            super(id, data);
+            this.androidApp = androidApp;
+        }
+
+        public AndroidAppFile getAndroidApp() {
+            return androidApp;
+        }
+
+        public void setAndroidApp(AndroidAppFile androidApp) {
+            this.androidApp = androidApp;
+        }      
+        
+        public void uploadApp(File file) throws APIException {
+            this.androidApp = client.postFile(selfURI, "application/vnd.android.package-archive", file, AndroidAppFile.class);
+        }
+        
+
+        @Override
+        public InputStream getTestStream() throws APIException {
+            throw new APIException(HttpStatus.SC_NOT_FOUND, "Remote control project has no test file");
+        }
+    }
+    
+    @XmlRootElement public static abstract class APIFile extends APIEntity {
         private String originalName;
         private Date uploadTime;
         private String readableSize;
