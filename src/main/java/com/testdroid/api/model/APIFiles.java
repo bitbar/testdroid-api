@@ -2,11 +2,13 @@ package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIException;
+import java.io.File;
 import java.io.InputStream;
 import java.util.Date;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlTransient;
+import org.apache.http.HttpStatus;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
