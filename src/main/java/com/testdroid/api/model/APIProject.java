@@ -2,13 +2,8 @@ package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIException;
-import com.testdroid.api.APIList;
 import com.testdroid.api.APIListResource;
 import com.testdroid.api.APISort;
-import com.testdroid.api.model.APIFiles.AndroidFiles;
-import com.testdroid.api.model.APIFiles.IOSFiles;
-import com.testdroid.api.model.APIFiles.RemoteControlFiles;
-import com.testdroid.api.model.APIFiles.UIAutomatorFiles;
 import java.io.IOException;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;

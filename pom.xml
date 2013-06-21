@@ -3,7 +3,7 @@
 
     <groupId>com.testdroid</groupId>
     <artifactId>testdroid-api</artifactId>
-    <version>1.2.7</version>
+    <version>1.2.8</version>
     <packaging>jar</packaging>
 	<name>testdroid-api</name>
 	<url>https://github.com/bitbar/testdroid-api</url>
@@ -29,7 +29,7 @@
 			<name>Slawomir Pawluk</name>
 		</developer>
 		<developer>
-			<name>Henri Kivelä</name>
+			<name>Henri Kivela</name>
 		</developer>
 		<developer>
 			<name>Sakari Rautiainen</name>
