@@ -131,6 +131,7 @@ public class APITestRun extends APIEntity {
         return postResource(getTagsURI(), String.format("name=%s", encodeURL(name)), APITag.class);
     }
     
+    @JsonIgnore
     public APIListResource<APITag> getTagsResource() throws APIException {
         return getListResource(getTagsURI(), APITag.class);
     }
@@ -140,6 +141,7 @@ public class APITestRun extends APIEntity {
         return getListResource(getTagsURI(), offset, limit, search, sort, APITag.class);
     }
 
+    @JsonIgnore
     public APIListResource<APIDeviceRun> getDeviceRunsResource() throws APIException {
         return getListResource(getDeviceRunsURI(), APIDeviceRun.class);
     }
