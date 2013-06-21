@@ -164,18 +164,32 @@ public class DefaultAPIClient implements APIClient {
      * Tries to call API once. Returns expected entity or throws exception.
      */
     private <T extends APIEntity> T getOnce(String uri, Class<T> type) throws APIException {
+        // Build request
+        HttpRequestFactory factory = getRequestFactory(getAccessToken());
+        HttpRequest request;
+        HttpResponse response;
         try {
             // Call request and parse result
             JAXBContext context = JAXBContext.newInstance(type);
+            
+             request = factory.buildGetRequest(new GenericUrl(apiURL + uri));
+             request.setHeaders(new HttpHeaders().setAccept("application/xml"));
 
+            response = request.execute();
+            if(!Arrays.asList(HttpStatus.SC_OK, HttpStatus.SC_ACCEPTED, HttpStatus.SC_CREATED, HttpStatus.SC_NO_CONTENT).contains(response.getStatusCode())) {
+                throw new APIException(response.getStatusCode(), String.format("Failed to execute api call: %s", uri));
+            }
             Unmarshaller unmarshaller = context.createUnmarshaller();
-            T result = (T) unmarshaller.unmarshal(getStream(uri));
+            T result = (T) unmarshaller.unmarshal(response.getContent());
             result.client = this;
             result.selfURI = uri;
             return result;
         }
         catch(JAXBException ex) {
             throw new APIException(String.format("Failed to parse response as %s", type.getName()), ex);
+        }
+        catch(IOException ex) {
+            throw new APIException(String.format("Failed to execute API call: %s", uri), ex);
         }
     }
     
@@ -185,7 +199,6 @@ public class DefaultAPIClient implements APIClient {
         HttpResponse response;
         try {
              request = factory.buildGetRequest(new GenericUrl(apiURL + uri));
-             request.setHeaders(new HttpHeaders().setAccept("application/xml"));
 
             response = request.execute();
             if(!Arrays.asList(HttpStatus.SC_OK, HttpStatus.SC_ACCEPTED, HttpStatus.SC_CREATED).contains(response.getStatusCode())) {
