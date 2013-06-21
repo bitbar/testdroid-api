@@ -7,3 +7,7 @@ APIProjectJobConfig
 APICluster
 APITestRun
 APITestRunConfig
+AndroidFiles
+IOSFiles
+RemoteControlFiles
+UIAutomatorFiles
