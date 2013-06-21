@@ -164,6 +164,7 @@ public class DefaultAPIClient implements APIClient {
      * Tries to call API once. Returns expected entity or throws exception.
      */
     private <T extends APIEntity> T getOnce(String uri, Class<T> type) throws APIException {
+        // Build request
         HttpRequestFactory factory = getRequestFactory(getAccessToken());
         HttpRequest request;
         HttpResponse response;
@@ -175,7 +176,7 @@ public class DefaultAPIClient implements APIClient {
              request.setHeaders(new HttpHeaders().setAccept("application/xml"));
 
             response = request.execute();
-            if(!Arrays.asList(HttpStatus.SC_OK, HttpStatus.SC_ACCEPTED, HttpStatus.SC_CREATED).contains(response.getStatusCode())) {
+            if(!Arrays.asList(HttpStatus.SC_OK, HttpStatus.SC_ACCEPTED, HttpStatus.SC_CREATED, HttpStatus.SC_NO_CONTENT).contains(response.getStatusCode())) {
                 throw new APIException(response.getStatusCode(), String.format("Failed to execute api call: %s", uri));
             }
             Unmarshaller unmarshaller = context.createUnmarshaller();
