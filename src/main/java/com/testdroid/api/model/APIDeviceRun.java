@@ -129,18 +129,22 @@ public class APIDeviceRun extends APIEntity {
     private String getPerformanceURI() { return selfURI + "/performance"; };
     private String getStatesURI() { return selfURI + "/states"; };
     
+    @JsonIgnore
     public InputStream getLogs() throws APIException {
         return client.get(getLogsURI());
     }
     
+    @JsonIgnore
     public InputStream getJunitXml() throws APIException {
         return client.get(getJunitURI());
     }
     
+    @JsonIgnore
     public InputStream getPerformanceData() throws APIException {
         return client.get(getPerformanceURI());
     }
     
+    @JsonIgnore
     public APIListResource<APIDeviceRunState> getDeviceRunStatesResource() throws APIException {
         return getListResource(getStatesURI(), APIDeviceRunState.class);
     }
@@ -150,6 +154,7 @@ public class APIDeviceRun extends APIEntity {
         return getListResource(getStatesURI(), offset, limit, search, sort, APIDeviceRunState.class);
     }
     
+    @JsonIgnore
     public APIListResource<APIScreenshot> getScreenshotsResource() throws APIException {
         return getListResource(getScreenshotsURI(), APIScreenshot.class);
     }
