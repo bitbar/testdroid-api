@@ -20,7 +20,6 @@ public class APIDeviceRunState extends APIEntity {
     private Date retryTime;
     private String failReason;
     private Status status;
-    private 
 
     public APIDeviceRunState() {}
     public APIDeviceRunState(Long id, Long deviceRunId, Long startTimeMS, Long finishTimeMS, Date retryTime, String failReason, Status status, DeviceRunStateType type) {
