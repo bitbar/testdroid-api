@@ -3,6 +3,7 @@ package com.testdroid.api;
 import com.google.api.client.auth.oauth2.BearerToken;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.http.*;
+import com.google.api.client.http.MultipartContent;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.testdroid.api.http.MultipartFormDataContent;
 import com.testdroid.api.model.APIUser;
