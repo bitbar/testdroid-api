@@ -11,13 +11,14 @@ public class APIListResource<T extends APIEntity> extends APIResource<APIList<T>
     
     public APIListResource(APIClient client, String resourceURI, Long offset, Long limit, String search, APISort sort, Class<T> type) {
         super(client, (offset == null && limit == null && search == null && (sort == null || sort.isEmpty())) ? resourceURI : String.format("%s?offset=%s&limit=%s&search=%s&sort=%s", resourceURI, 
-                getNotNullValue(offset), getNotNullValue(limit), getNotNullValue(search), sort != null ? sort.serialize() : null), (Class<APIList<T>>) (Class) APIList.class);
+                getNotNullValue(offset), getNotNullValue(limit), getNotNullValue(APIEntity.encodeURL(search)), sort != null ? sort.serialize() : null), (Class<APIList<T>>) (Class) APIList.class);
     }
 
     @Override
     public APIList<T> getEntity() throws APIException {
         APIList<T> result = super.getEntity(); //To change body of generated methods, choose Tools | Templates.
         for(APIEntity item: result.getData()) {
+            //TODO fix selfURI
             item.client = this.client;
             item.selfURI = String.format("%s/%s", this.resourceURI, item.id);
         }
