@@ -15,6 +15,7 @@
 </parent>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <testdroid.repo>http://nexus/content/repositories</testdroid.repo>
 	</properties>
 	<scm>
 		<connection>scm:git:git://github.com/bitbar/testdroid-api.git</connection>
@@ -144,5 +145,17 @@
 			<type>jar</type>
 		</dependency>
 	</dependencies>
-	
+	<distributionManagement>
+        <repository>
+            <id>testdroid</id>
+            <name>Testdroid Releases></name>
+            <url>${testdroid.repo}/releases</url>
+        </repository>
+        <snapshotRepository>
+            <uniqueVersion>false</uniqueVersion>
+            <id>testdroid</id>
+            <name>Testdroid Snapshots</name>
+            <url>${testdroid.repo}/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>
