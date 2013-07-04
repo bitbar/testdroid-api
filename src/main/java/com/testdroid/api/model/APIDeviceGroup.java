@@ -1,6 +1,10 @@
 package com.testdroid.api.model;
 
+import com.testdroid.api.APIException;
+import com.testdroid.api.APIListResource;
+import com.testdroid.api.APISort;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
@@ -27,5 +31,25 @@ public class APIDeviceGroup extends APIDeviceProperty {
     
     public boolean isPublic() {
         return userId == null;
+    }
+    
+    private String getIncludedDevicesURI() { return selfURI + "/devices"; };
+    
+    @JsonIgnore
+    public APIListResource<APIDevice> getIncludedDevicesResource() throws APIException {
+        return getListResource(getIncludedDevicesURI(), APIDevice.class);
+    }
+    
+    @JsonIgnore
+    public APIListResource<APIDevice> getIncludedDevicesResource(long offset, long limit, String search, APISort sort) throws APIException {
+        return getListResource(getIncludedDevicesURI(), offset, limit, search, sort, APIDevice.class);
+    }
+    
+    public void addDevice(APIDevice device) throws APIException {
+        postResource(getIncludedDevicesURI(), String.format("id=%s" + device.getId()), null);
+    }
+    
+    public void deleteDevice(APIDevice device) throws APIException {
+        deleteResource(getIncludedDevicesURI() + "/" + device.getId());
     }
 }

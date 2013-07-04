@@ -1,6 +1,7 @@
 package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
+import static com.testdroid.api.APIEntity.encodeURL;
 import com.testdroid.api.APIException;
 import com.testdroid.api.APIList;
 import com.testdroid.api.APIListResource;
@@ -150,5 +151,10 @@ public class APITestRun extends APIEntity {
     public APIListResource<APIDeviceRun> getDeviceRunsResource(long offset, long limit, String search, APISort sort) throws APIException {
         return getListResource(getDeviceRunsURI(), offset, limit, search, sort, APIDeviceRun.class);
     }
-    
+
+    public void update() throws APIException {
+        String body = String.format("displayName=%s", encodeURL(displayName));
+        APITestRun testRun = postResource(selfURI, body, APITestRun.class);
+        this.displayName = testRun.displayName;
+    }
 }

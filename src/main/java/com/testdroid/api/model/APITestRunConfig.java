@@ -1,7 +1,8 @@
 package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
-import java.util.Locale;
+import static com.testdroid.api.APIEntity.encodeURL;
+import com.testdroid.api.APIException;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -238,5 +239,34 @@ public class APITestRunConfig extends APIEntity {
     public void setInstrumentationRunner(String instrumentationRunner) {
         this.instrumentationRunner = instrumentationRunner;
     }
-        
+    
+    public void update() throws APIException {
+        String body = String.format("projectId=%s&scheduler=%s&mode=%s&autoScreenshots=%s&screenshotDir=%s&limitationType=%s&limitationValue=%s&" +
+                "withAnnotation=%s&withoutAnnotation=%s&applicationUsername=%s&applicationPassword=%s&usedClusterId=%s&deviceLanguageCode=%s&"+
+                "hookURL=%s&uiAutomatorTestClasses=%s&launchApp=%s&instrumentationRunner=%s", projectId, scheduler != null? encodeURL(scheduler.name()) : "", 
+                mode != null ? encodeURL(mode.name()) : "", encodeURL(autoScreenshots), encodeURL(screenshotDir), limitationType != null ? encodeURL(limitationType.name()) : "", 
+                encodeURL(limitationValue), encodeURL(withAnnotation), encodeURL(withoutAnnotation), encodeURL(applicationUsername), encodeURL(applicationPassword), 
+                usedClusterId, encodeURL(deviceLanguageCode), encodeURL(hookURL), encodeURL(uiAutomatorTestClasses), encodeURL(launchApp), encodeURL(instrumentationRunner));
+        APITestRunConfig config = postResource(selfURI, body, APITestRunConfig.class);
+        this.projectId = config.projectId;
+        this.scheduler = config.scheduler;
+        this.mode = config.mode;
+        this.autoScreenshots = config.autoScreenshots;
+        this.runAvailable = config.runAvailable;
+        this.screenshotDir = config.screenshotDir;
+        this.limitationType = config.limitationType;
+        this.limitationValue = config.limitationValue;
+        this.withAnnotation = config.withAnnotation;
+        this.withoutAnnotation = config.withoutAnnotation;
+        this.applicationUsername = config.applicationUsername;
+        this.applicationPassword = config.applicationPassword;
+        this.usedClusterId = config.usedClusterId;
+        this.creditsPrice = config.creditsPrice;
+        this.deviceLanguageCode = config.deviceLanguageCode;
+        this.hookURL = config.hookURL;
+        this.uiAutomatorTestClasses = config.uiAutomatorTestClasses;
+        this.launchApp = config.launchApp;
+        this.instrumentationRunner = config.instrumentationRunner;
+    }
+    
 }
