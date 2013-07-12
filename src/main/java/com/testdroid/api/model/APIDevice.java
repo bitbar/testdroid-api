@@ -2,6 +2,7 @@ package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  *
@@ -9,6 +10,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement
 public class APIDevice extends APIEntity {
+    
+    @XmlType
+    public static enum Filter { FREE, RECOMMENDED, NEW }
+    
     private String displayName;
     private APISoftwareVersion softwareVersion;
     private Integer creditsPrice;
