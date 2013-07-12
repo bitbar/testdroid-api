@@ -1,5 +1,6 @@
 package com.testdroid.api;
 
+import com.testdroid.api.model.APIDevice;
 import com.testdroid.api.model.APIUser;
 import java.io.File;
 import java.io.InputStream;
@@ -20,6 +21,22 @@ public interface APIClient {
      * @throws APIException on invalid email or when user already exists.
      */
     public APIUser register(String email) throws APIException;
+    
+    /**
+     * return resource for accessing list of devices in Cloud using provided filters
+     * @param filters non-obligatory parameter for filtering devices returned
+     * @return list resource for accessing all devices matching selected filters, if no filter used returns all devcies
+     * @throws APIException on API error
+     */
+    public APIListResource<APIDevice> getDevices(APIDevice.Filter... filters) throws APIException;
+
+    /**
+     * Fetch and return list of devices in Cloud using provided filters
+     * @param filters non-obligatory parameter for filtering devices returned
+     * @return list of all devices matching selected filters, if no filter used returns all devcies
+     * @throws APIException on API error
+     */
+    public APIListResource<APIDevice> getDevices(long offset, long limit, String search, APISort sort, APIDevice.Filter... filters) throws APIException;
     
     /**
      * Calls GET request to API
