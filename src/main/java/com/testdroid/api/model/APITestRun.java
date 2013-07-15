@@ -21,6 +21,9 @@ public class APITestRun extends APIEntity {
     @XmlType(namespace = "APITestRun", name = "APITestRunState")
     public static enum State { WAITING, RUNNING, FINISHED }
     
+    @XmlType(namespace = "APITestRun", name = "APITestRunScreenshotZipState")
+    public static enum ScreenshotZipState { BLANK, PROGRESS, READY }
+    
     private Integer number;
     private Date createTime;
     private String displayName;
@@ -28,9 +31,11 @@ public class APITestRun extends APIEntity {
     private Float successRatio;
     private String startedByDisplayName;
     private State state;
+    private ScreenshotZipState screenshotZipState;
 
     public APITestRun() {}
-    public APITestRun(Long id, Integer number, Date createTime, String displayName, Float executionRatio, Float successRatio, String startedByDisplayName, State state) {
+    public APITestRun(Long id, Integer number, Date createTime, String displayName, Float executionRatio, Float successRatio, String startedByDisplayName, 
+            State state, ScreenshotZipState screenshotZipState) {
         super(id);
         this.number = number;
         this.createTime = createTime;
@@ -39,6 +44,7 @@ public class APITestRun extends APIEntity {
         this.successRatio = successRatio;
         this.startedByDisplayName = startedByDisplayName;
         this.state = state;
+        this.screenshotZipState = screenshotZipState;
     }    
 
     public Integer getNumber() {
@@ -95,6 +101,14 @@ public class APITestRun extends APIEntity {
 
     public void setState(State state) {
         this.state = state;
+    }
+
+    public ScreenshotZipState getScreenshotZipState() {
+        return screenshotZipState;
+    }
+
+    public void setScreenshotZipState(ScreenshotZipState screenshotZipState) {
+        this.screenshotZipState = screenshotZipState;
     }
  
     private APIFiles files;
