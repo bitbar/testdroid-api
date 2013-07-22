@@ -3,9 +3,9 @@ package com.testdroid.api;
 import com.google.api.client.auth.oauth2.BearerToken;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.http.*;
-import com.google.api.client.http.MultipartContent;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.testdroid.api.http.MultipartFormDataContent;
+import com.testdroid.api.model.APIDevice;
 import com.testdroid.api.model.APIUser;
 import java.io.File;
 import java.io.IOException;
@@ -357,6 +357,21 @@ public class DefaultAPIClient implements APIClient {
         APIUser result = post("/users", String.format("email=%s", APIEntity.encodeURL(email)), APIUser.class);
         result.selfURI = "/me";
         return result;
+    }
+
+    
+    private static String getDevicesURI(APIDevice.Filter... filters) {
+        return filters.length > 0 ? String.format("/devices?filter=%s", StringUtils.join(filters, "&filter=")) : "/devices";
+    }
+    
+    @Override
+    public APIListResource<APIDevice> getDevices(APIDevice.Filter... filters) throws APIException {
+        return new APIListResource<APIDevice>(this, getDevicesURI(filters), APIDevice.class);
+    }
+
+    @Override
+    public APIListResource<APIDevice> getDevices(long offset, long limit, String search, APISort sort, APIDevice.Filter... filters) throws APIException {
+        return new APIListResource<APIDevice>(this, getDevicesURI(filters), offset, limit, search, sort, APIDevice.class);
     }
 
 }
