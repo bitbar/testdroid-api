@@ -132,7 +132,12 @@ public abstract class APIEntity {
     
     @JsonIgnore
     public static String format(Date date) {
-        return encodeURL(API_DATE_FORMAT.format(date));
+        return API_DATE_FORMAT.format(date);
+    }
+    
+    @JsonIgnore
+    public static String formatAndEncodeURL(Date date) {
+        return encodeURL(format(date));
     }
     
     @JsonIgnore
