@@ -18,8 +18,8 @@
         <testdroid.repo>http://nexus/content/repositories</testdroid.repo>
 	</properties>
 	<scm>
-		<connection>scm:git:git://github.com/bitbar/testdroid-api.git</connection>
-		<developerConnection>scm:git:git@github.com/bitbar/testdroid-api.git</developerConnection>
+		<connection>scm:git:git://github.com:bitbar/testdroid-api.git</connection>
+		<developerConnection>scm:git:git@github.com:bitbar/testdroid-api.git</developerConnection>
 		<url>https://github.com/bitbar/testdroid-api</url>
 	</scm>
 	<developers>
