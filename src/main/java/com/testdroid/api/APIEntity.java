@@ -10,6 +10,9 @@ import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.bind.JAXBContext;
@@ -35,6 +38,7 @@ public abstract class APIEntity {
     protected APIClient client;
     protected String selfURI;
     protected Long id;
+    private static final DateFormat API_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd_HH:mm");
         
     public APIEntity() {}
 
@@ -124,6 +128,16 @@ public abstract class APIEntity {
         } catch (UnsupportedEncodingException ex) {
         }
         return name;
+    }
+    
+    @JsonIgnore
+    public static String format(Date date) {
+        return API_DATE_FORMAT.format(date);
+    }
+    
+    @JsonIgnore
+    public static String formatAndEncodeURL(Date date) {
+        return encodeURL(format(date));
     }
     
     @JsonIgnore
