@@ -3,7 +3,7 @@
 
     <groupId>com.testdroid</groupId>
     <artifactId>testdroid-api</artifactId>
-    <version>1.3.3-SNAPSHOT</version>
+    <version>1.3.4-SNAPSHOT</version>
     <packaging>jar</packaging>
 	<name>testdroid-api</name>
 	<url>https://github.com/bitbar/testdroid-api</url>
@@ -18,8 +18,8 @@
         <testdroid.repo>http://nexus/content/repositories</testdroid.repo>
 	</properties>
 	<scm>
-		<connection>scm:git:git://github.com/bitbar/testdroid-api.git</connection>
-		<developerConnection>scm:git:git@github.com/bitbar/testdroid-api.git</developerConnection>
+		<connection>scm:git:git://github.com:bitbar/testdroid-api.git</connection>
+		<developerConnection>scm:git:git@github.com:bitbar/testdroid-api.git</developerConnection>
 		<url>https://github.com/bitbar/testdroid-api</url>
 	</scm>
 	<developers>
@@ -148,7 +148,7 @@
 	<distributionManagement>
         <repository>
             <id>testdroid</id>
-            <name>Testdroid Releases></name>
+            <name>Testdroid Releases&gt;</name>
             <url>${testdroid.repo}/releases</url>
         </repository>
         <snapshotRepository>
