@@ -1,7 +1,9 @@
 package com.testdroid.api;
 
 import java.util.List;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -11,6 +13,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class APIList<T extends APIEntity> extends APIEntity {
     private String next;
     private String previous;
+    @XmlElementWrapper
     private List<T> data;
     private Integer offset;
     private Integer limit;
@@ -57,6 +60,7 @@ public class APIList<T extends APIEntity> extends APIEntity {
      * List contains only set of items contrained with <code>offset</code>, 
      * <code>limit</code> and <code>search</code>.
      */
+    @XmlTransient
     public List<T> getData() {
         return data;
     }
