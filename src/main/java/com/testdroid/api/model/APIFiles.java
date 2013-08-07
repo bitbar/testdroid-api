@@ -181,6 +181,13 @@ public abstract class APIFiles extends APIEntity {
         }
     }
 
+    @XmlRootElement public static class CalabashTestFile extends APIFile {
+        public CalabashTestFile() { }
+        public CalabashTestFile(Long id, String originalName, Date uploadTime, String readableSize) {
+            super(id, originalName, uploadTime, readableSize);
+        }
+    }
+
     @XmlRootElement public static class UIAutomatorTestFile extends APIFile {
         private String jarNames;
 

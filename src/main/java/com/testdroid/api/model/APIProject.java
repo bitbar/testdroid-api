@@ -16,11 +16,11 @@ import org.codehaus.jackson.annotate.JsonIgnore;
  */
 @XmlRootElement
 public class APIProject extends APIEntity {
-    
+
     @XmlType(name = "projectType")
-    public static enum Type { 
-        ANDROID, CTS, IOS, UIAUTOMATOR, REMOTECONTROL;
-        
+    public static enum Type {
+        ANDROID, CTS, IOS, UIAUTOMATOR, REMOTECONTROL, CALABASH_ANDROID;
+
         public Class<? extends APIFiles> getFilesClass() {
             switch(this) {
                 case ANDROID: return AndroidFiles.class;
@@ -28,11 +28,12 @@ public class APIProject extends APIEntity {
                 case IOS: return IOSFiles.class;
                 case UIAUTOMATOR: return UIAutomatorFiles.class;
                 case REMOTECONTROL: return RemoteControlFiles.class;
+                case CALABASH_ANDROID: return CalabashFiles.class;
                 default: return null;
             }
         }
     }
-    
+
     private String name;
     private String description;
     private Type type;
