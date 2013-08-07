@@ -33,7 +33,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     APIProjectJobConfig.class, APIFiles.class, AndroidFiles.class, IOSFiles.class, UIAutomatorFiles.class, RemoteControlFiles.class,
     APIFiles.APIFile.class, APIFiles.AndroidAppFile.class, APIFiles.AndroidTestFile.class, APIFiles.DataFile.class, APIFiles.IOSAppFile.class, APIFiles.IOSTestFile.class,
     APIFiles.UIAutomatorTestFile.class, APITag.class, APIDeviceRun.class, APIDeviceRunState.class, APISoftwareVersion.class, APIScreenshot.class, APIDevice.class,
-    APIDeviceProperty.class})
+    APIDeviceProperty.class, APINotificationEmail.class})
 public abstract class APIEntity {
     protected APIClient client;
     protected String selfURI;
