@@ -14,6 +14,22 @@ public class APIDevice extends APIEntity {
     @XmlType
     public static enum Filter { FREE, RECOMMENDED, NEW }
     
+    @XmlType
+    public static enum OsType {
+        IOS("iOS"),
+        ANDROID("Android");
+        
+        private String displayName;
+
+        private OsType(String displayName) {
+            this.displayName = displayName;
+        }
+
+        public String getDisplayName() {
+            return displayName;
+        }
+    }
+    
     private String displayName;
     private APISoftwareVersion softwareVersion;
     private Integer creditsPrice;
@@ -23,11 +39,12 @@ public class APIDevice extends APIEntity {
     private Integer imageWidth;
     private Integer imageHeight;
     private Integer frameExtraWidth;
+    private APIDevice.OsType osType;
 
     public APIDevice() {}
 
     public APIDevice(Long id, String displayName, APISoftwareVersion softwareVersion, Integer creditsPrice, String imagePrefix, Integer imageTop, Integer imageLeft, 
-            Integer imageWidth, Integer imageHeight, Integer frameExtraWidth) {
+            Integer imageWidth, Integer imageHeight, Integer frameExtraWidth, OsType osType) {
         super(id);
         this.displayName = displayName;
         this.softwareVersion = softwareVersion;
@@ -38,6 +55,7 @@ public class APIDevice extends APIEntity {
         this.imageWidth = imageWidth;
         this.imageHeight = imageHeight;
         this.frameExtraWidth = frameExtraWidth;
+        this.osType = osType;
     }
 
     public String getDisplayName() {
@@ -110,6 +128,14 @@ public class APIDevice extends APIEntity {
 
     public void setFrameExtraWidth(Integer frameExtraWidth) {
         this.frameExtraWidth = frameExtraWidth;
+    }
+
+    public OsType getOsType() {
+        return osType;
+    }
+
+    public void setOsType(OsType osType) {
+        this.osType = osType;
     }
     
 }

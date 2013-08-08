@@ -69,6 +69,14 @@ public class APIList<T extends APIEntity> extends APIEntity {
         this.data = data;
     }
 
+    public T get(int index) {
+        return this.data.get(index);
+    }
+    
+    public boolean isEmpty() {
+        return this.data.isEmpty();
+    }
+    
     /**
      * Get offset of data page returned in <code>getData()</code> method.
      */
