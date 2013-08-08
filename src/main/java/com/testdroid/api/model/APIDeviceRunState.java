@@ -11,7 +11,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlRootElement
 public class APIDeviceRunState extends APIEntity {
-    @XmlType public static enum Status { STARTED, EXCLUDED, ERROR, FAILED, SUCCEEDED, NOT_AVAILABLE }
+    @XmlType public static enum Status { STARTED, EXCLUDED, FAILED, SUCCEEDED, NOT_AVAILABLE }
     
     private Long deviceRunId;
     private DeviceRunStateType type;
