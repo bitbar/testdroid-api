@@ -69,6 +69,10 @@ public class APIList<T extends APIEntity> extends APIEntity {
         this.data = data;
     }
 
+    public T get(int index) {
+        return this.data.get(index);
+    }
+    
     /**
      * Get offset of data page returned in <code>getData()</code> method.
      */
