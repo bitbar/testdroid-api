@@ -4,12 +4,14 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 /**
  *
  * @author kajdus
  */
 @XmlRootElement
+@JsonIgnoreProperties(value = {"id"})
 public class APIList<T extends APIEntity> extends APIEntity {
     private String next;
     private String previous;
