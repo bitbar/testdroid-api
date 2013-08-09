@@ -4,6 +4,7 @@ import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIList;
 import java.util.Date;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
 /**
@@ -12,8 +13,9 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlRootElement
 public class APITestCaseRun extends APIEntity {
-    @XmlType
-    public enum Result {
+    
+    @XmlType(namespace = "APITestCaseRun")
+    public static enum Result {
         PASSEED,
         FAILED,
         NOT_AVAILBLE;
@@ -32,7 +34,7 @@ public class APITestCaseRun extends APIEntity {
     public APITestCaseRun() {
     }
 
-    public APITestCaseRun(double duration, Result result, String errorMessage, String stacktrace, Date createTime, APIList<APITestCaseRunStep> steps, String className, String methodName, String suiteName, Long id) {
+    public APITestCaseRun(Long id, double duration, Result result, String errorMessage, String stacktrace, Date createTime, APIList<APITestCaseRunStep> steps, String className, String methodName, String suiteName) {
         super(id);
         this.duration = duration;
         this.result = result;

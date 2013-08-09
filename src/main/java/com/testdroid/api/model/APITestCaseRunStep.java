@@ -3,6 +3,7 @@ package com.testdroid.api.model;
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIList;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
 /**
@@ -12,8 +13,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement
 public class APITestCaseRunStep extends APIEntity {
     
-    @XmlType
-    public enum Type {
+    @XmlType(namespace = "APITestCaseRunStep")
+    public static enum Type {
         CLICK,
         CONFIG,
         INPUT,
@@ -33,7 +34,7 @@ public class APITestCaseRunStep extends APIEntity {
     public APITestCaseRunStep() {
     }
 
-    public APITestCaseRunStep(String description, String fromActivity, String errorMessage, Long duration, Type type, APIList<APIScreenshot> screenshots, Long id) {
+    public APITestCaseRunStep(Long id, String description, String fromActivity, String errorMessage, Long duration, Type type, APIList<APIScreenshot> screenshots) {
         super(id);
         this.description = description;
         this.fromActivity = fromActivity;
