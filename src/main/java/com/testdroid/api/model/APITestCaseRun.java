@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  *
- * @author Sławomir
+ * @author Sławomir Pawluk
  */
 @XmlRootElement
 public class APITestCaseRun extends APIEntity {
