@@ -16,7 +16,7 @@ public class APITestCaseRun extends APIEntity {
     
     @XmlType(namespace = "APITestCaseRun")
     public static enum Result {
-        PASSEED,
+        PASSED,
         FAILED,
         NOT_AVAILBLE;
     }
