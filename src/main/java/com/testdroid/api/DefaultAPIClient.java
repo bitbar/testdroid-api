@@ -7,17 +7,18 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.testdroid.api.http.MultipartFormDataContent;
 import com.testdroid.api.model.APIDevice;
 import com.testdroid.api.model.APIUser;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Arrays;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
 import net.sf.json.JSONObject;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpStatus;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Arrays;
 
 /**
  *
@@ -263,6 +264,8 @@ public class DefaultAPIClient implements APIClient {
             }
             request = factory.buildPostRequest(new GenericUrl(apiURL + uri), content );
             request.setHeaders(headers);
+            //we handle return values in our code
+            request.setThrowExceptionOnExecuteError(false);
 
             // Call request and parse result
             JAXBContext context = JAXBContext.newInstance(type);
@@ -275,6 +278,14 @@ public class DefaultAPIClient implements APIClient {
             if(response.getStatusCode() < HttpStatus.SC_OK || response.getStatusCode() >= 300 ) {
                 throw new APIException(response.getStatusCode(), "Failed to post resource: " + response.getStatusMessage());
             }
+            System.out.println("Result cide:"+response.getStatusCode());
+            InputStream is = response.getContent();
+            if(is == null) {
+                System.out.println("is ==  null");
+            } else {
+                System.out.println("not null");
+            }
+
             T result = (T) unmarshaller.unmarshal(response.getContent());
             result.client = this;
             result.selfURI = uri;
@@ -285,10 +296,29 @@ public class DefaultAPIClient implements APIClient {
             return result;
         }
         catch(JAXBException ex) {
+            System.out.println("JAX:"+ex.toString());
+            if (response != null) {
+                try {
+                    System.out.println("Response content"+response.getContent());
+                } catch (IOException e) {
+                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                }
+            }else {
+                System.out.println("Response is null");
+            }
             throw new APIException(response != null ? response.getStatusCode() : null, String.format("Failed to parse response as %s", type.getName()), ex);
         }
         catch(IOException ex) {
             throw new APIException(String.format("Failed to execute API call: %s", uri), ex);
+        }
+        finally{
+            try {
+                if(response != null) {
+                    response.disconnect();
+                }
+            } catch (IOException e) {
+                //continue silently
+            }
         }
     }
     
