@@ -19,12 +19,12 @@ public class APIList<T extends APIEntity> extends APIEntity {
     private List<T> data;
     private Integer offset;
     private Integer limit;
-    private Long total;
+    private Integer total;
     private String search;
     private String sort;
 
     public APIList() {}
-    public APIList(String next, String previous, List<T> data, Long total, String search, String sort) {
+    public APIList(String next, String previous, List<T> data, Integer total, String search, String sort) {
         this.next = next;
         this.previous = previous;
         this.data = data;
@@ -32,7 +32,7 @@ public class APIList<T extends APIEntity> extends APIEntity {
         this.search = search;
         this.sort = sort;
     }
-
+    
     /**
      * Get full URL of the next page of the collection.
      * Simple call it to fetch next items.
@@ -104,11 +104,11 @@ public class APIList<T extends APIEntity> extends APIEntity {
     /**
      * Get total number of items to be returned - independent from paging.
      */
-    public Long getTotal() {
+    public Integer getTotal() {
         return total;
     }
 
-    public void setTotal(Long total) {
+    public void setTotal(Integer total) {
         this.total = total;
     }
 
