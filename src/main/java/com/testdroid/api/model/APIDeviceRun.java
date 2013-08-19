@@ -8,6 +8,7 @@ import com.testdroid.api.APISort;
 import java.io.InputStream;
 import java.util.Date;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
@@ -16,6 +17,8 @@ import org.codehaus.jackson.annotate.JsonIgnore;
  */
 @XmlRootElement
 public class APIDeviceRun extends APIEntity {
+    @XmlType public static enum RunStatus { WAITING, RUNNING, EXCLUDED, WARNING, FAILED, SUCCEEDED }
+    
     private Date runTime;
     private APIDevice device;
     private Integer testCaseSuccessNo;
@@ -26,10 +29,11 @@ public class APIDeviceRun extends APIEntity {
     private Date startTime; 
     private APIDeviceRunState currentState;
     private APIDeviceRunState interruptedByState;
+    private RunStatus runStatus;
 
     public APIDeviceRun() {}
     public APIDeviceRun(Long id, Date runTime, APIDevice device, Integer testCaseSuccessNo, Integer testCaseAllNo, Integer testCaseCount, APISoftwareVersion softwareVersion, 
-            Date createTime, Date startTime, APIDeviceRunState currentState, APIDeviceRunState interruptedByState) {
+            Date createTime, Date startTime, APIDeviceRunState currentState, APIDeviceRunState interruptedByState, RunStatus runStatus) {
         super(id);
         this.runTime = runTime;
         this.device = device;
@@ -41,6 +45,7 @@ public class APIDeviceRun extends APIEntity {
         this.startTime = startTime;
         this.currentState = currentState;
         this.interruptedByState = interruptedByState;
+        this.runStatus = runStatus;
     }
 
     public Date getRunTime() {
@@ -162,6 +167,14 @@ public class APIDeviceRun extends APIEntity {
     @JsonIgnore
     public APIListResource<APIScreenshot> getScreenshotsResource(long offset, long limit, String search, APISort sort) throws APIException {
         return getListResource(getScreenshotsURI(), offset, limit, search, sort, APIScreenshot.class);
+    }
+
+    public RunStatus getRunStatus() {
+        return runStatus;
+    }
+
+    public void setRunStatus(RunStatus runStatus) {
+        this.runStatus = runStatus;
     }
     
 }

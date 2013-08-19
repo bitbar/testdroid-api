@@ -29,6 +29,7 @@ public class APIDeviceGroup extends APIDeviceProperty {
         this.userId = userId;
     }
     
+    @JsonIgnore
     public boolean isPublic() {
         return userId == null;
     }
