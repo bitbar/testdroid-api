@@ -8,23 +8,12 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlType
 public enum DeviceRunStateType {
-        PREPARING(1), WAITING(2), DEVICE_WAITING(3), DEVICE_DOWNLOAD_TESTSESSION(4), DEVICE_UNINSTALLING_ALL(5),
-        DEVICE_REBOOTING(5), DEVICE_WIFI_CHECKING(5), DEVICE_ADD_PERMISSIONS(5),
-        DEVICE_REPACKAGING(5), DEVICE_TARGET_INSTALLING(5), DEVICE_TEST_INSTALLING(5),DEVICE_REMOTECONTROL_RUNNING(5),
-        DEVICE_RUNNING(5), DEVICE_SDCARD_COPYING(5), DEVICE_TARGET_UNINSTALLING(5), DEVICE_UIAUTOMATOR_RUNNING(5),
-        DEVICE_TEST_UNINSTALLING(5), RESULTS_WAITING(6), RESULTS_PROCESSING(7), PARSE_LOGCAT(5);
-        
-        private int orderNumber;
-        
-        private DeviceRunStateType(int orderNumber) { 
-        	this.orderNumber = orderNumber; 
-        	}
-        
-        public boolean canBeFollowedBy(DeviceRunStateType type) { 
-        	return this.orderNumber <= type.orderNumber;  
-        	
-        }
-        
+        PREPARING, WAITING, DEVICE_WAITING, DEVICE_DOWNLOAD_TESTSESSION, DEVICE_UNINSTALLING_ALL,
+        DEVICE_REBOOTING, DEVICE_WIFI_CHECKING, DEVICE_ADD_PERMISSIONS,
+        DEVICE_REPACKAGING, DEVICE_TARGET_INSTALLING, DEVICE_TEST_INSTALLING,DEVICE_REMOTECONTROL_RUNNING,
+        DEVICE_RUNNING, DEVICE_SDCARD_COPYING, DEVICE_TARGET_UNINSTALLING, DEVICE_UIAUTOMATOR_RUNNING,
+        DEVICE_TEST_UNINSTALLING, RESULTS_WAITING, RESULTS_PROCESSING, PARSE_LOGCAT, ADB_SHELL_COMMAND;
+
         public String getDisplayName() {
             switch(this) {
             	case PARSE_LOGCAT: return "Launching application";
@@ -47,6 +36,7 @@ public enum DeviceRunStateType {
                 case WAITING: return "Waiting in queue for device";
                 case DEVICE_UIAUTOMATOR_RUNNING: return "Running UIAutomator tests";
                 case DEVICE_REMOTECONTROL_RUNNING: return "Remote control";
+                case ADB_SHELL_COMMAND: return "ADB shell command";
                 default: return "Unknown state";
             }
         }

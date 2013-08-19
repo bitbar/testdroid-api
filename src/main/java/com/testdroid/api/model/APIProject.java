@@ -19,7 +19,7 @@ public class APIProject extends APIEntity {
     
     @XmlType(name = "projectType")
     public static enum Type { 
-        ANDROID, CTS, IOS, UIAUTOMATOR, REMOTECONTROL;
+        ANDROID, CTS, IOS, UIAUTOMATOR, REMOTECONTROL, RECORDERONLINE;
         
         public Class<? extends APIFiles> getFilesClass() {
             switch(this) {
@@ -28,6 +28,7 @@ public class APIProject extends APIEntity {
                 case IOS: return IOSFiles.class;
                 case UIAUTOMATOR: return UIAutomatorFiles.class;
                 case REMOTECONTROL: return RemoteControlFiles.class;
+                case RECORDERONLINE: return RecorderOnlineFiles.class;
                 default: return null;
             }
         }
@@ -107,6 +108,7 @@ public class APIProject extends APIEntity {
     private String getTrendsURI() { return selfURI + "/trends"; };
     private String getReportsURI() { return selfURI + "/reports/%s"; };
     private String getRunsURI() { return selfURI + "/runs"; };
+    private String getPublicDeviceGroupsURI() { return selfURI + "/public-device-groups"; }
 
     @JsonIgnore
     public APITestRunConfig getTestRunConfig() throws APIException {
@@ -184,6 +186,10 @@ public class APIProject extends APIEntity {
     @JsonIgnore
     public APIListResource<APIProjectSharing> getProjectsResource(long offset, long limit, String search, APISort sort) throws APIException {
         return getListResource(getSharingsURI(), offset, limit, search, sort, APIProjectSharing.class);
+    }
+    
+    public APIListResource<APIDeviceGroup> getPublicDeviceGroups() throws APIException {
+        return getListResource(getPublicDeviceGroupsURI(), APIDeviceGroup.class);
     }
 
 }

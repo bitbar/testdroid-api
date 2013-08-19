@@ -1,25 +1,30 @@
 package com.testdroid.api;
 
 import java.util.List;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 /**
  *
  * @author kajdus
  */
 @XmlRootElement
+@JsonIgnoreProperties(value = {"id"})
 public class APIList<T extends APIEntity> extends APIEntity {
     private String next;
     private String previous;
+    @XmlElementWrapper
     private List<T> data;
     private Integer offset;
     private Integer limit;
-    private Long total;
+    private Integer total;
     private String search;
     private String sort;
 
     public APIList() {}
-    public APIList(String next, String previous, List<T> data, Long total, String search, String sort) {
+    public APIList(String next, String previous, List<T> data, Integer total, String search, String sort) {
         this.next = next;
         this.previous = previous;
         this.data = data;
@@ -27,7 +32,7 @@ public class APIList<T extends APIEntity> extends APIEntity {
         this.search = search;
         this.sort = sort;
     }
-
+    
     /**
      * Get full URL of the next page of the collection.
      * Simple call it to fetch next items.
@@ -57,6 +62,7 @@ public class APIList<T extends APIEntity> extends APIEntity {
      * List contains only set of items contrained with <code>offset</code>, 
      * <code>limit</code> and <code>search</code>.
      */
+    @XmlTransient
     public List<T> getData() {
         return data;
     }
@@ -65,6 +71,14 @@ public class APIList<T extends APIEntity> extends APIEntity {
         this.data = data;
     }
 
+    public T get(int index) {
+        return this.data.get(index);
+    }
+    
+    public boolean isEmpty() {
+        return this.data.isEmpty();
+    }
+    
     /**
      * Get offset of data page returned in <code>getData()</code> method.
      */
@@ -90,11 +104,11 @@ public class APIList<T extends APIEntity> extends APIEntity {
     /**
      * Get total number of items to be returned - independent from paging.
      */
-    public Long getTotal() {
+    public Integer getTotal() {
         return total;
     }
 
-    public void setTotal(Long total) {
+    public void setTotal(Integer total) {
         this.total = total;
     }
 
