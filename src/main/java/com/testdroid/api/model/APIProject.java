@@ -188,6 +188,7 @@ public class APIProject extends APIEntity {
         return getListResource(getSharingsURI(), offset, limit, search, sort, APIProjectSharing.class);
     }
     
+    @JsonIgnore
     public APIListResource<APIDeviceGroup> getPublicDeviceGroups() throws APIException {
         return getListResource(getPublicDeviceGroupsURI(), APIDeviceGroup.class);
     }
