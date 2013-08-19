@@ -30,7 +30,7 @@ public class APIListResource<T extends APIEntity> extends APIResource<APIList<T>
      * Returns total number of available items in this resource list.
      * @throws APIException on any API errors.
      */
-    public Long getTotal() throws APIException {
+    public Integer getTotal() throws APIException {
         return getEntity().getTotal();
     }
     
