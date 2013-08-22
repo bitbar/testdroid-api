@@ -4,7 +4,10 @@ import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIException;
 import com.testdroid.api.APIListResource;
 import com.testdroid.api.APISort;
+import com.testdroid.api.model.APIFiles.APIFile;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import org.apache.commons.io.IOUtils;
@@ -109,6 +112,9 @@ public class APIProject extends APIEntity {
     private String getReportsURI() { return selfURI + "/reports/%s"; };
     private String getRunsURI() { return selfURI + "/runs"; };
     private String getPublicDeviceGroupsURI() { return selfURI + "/public-device-groups"; }
+    private String getUploadApplicationURI() { return selfURI + "/files/application"; }
+    private String getUploadTestURI() { return selfURI + "/files/test"; }
+    private String getUploadDataURI() { return selfURI + "/files/data"; }
 
     @JsonIgnore
     public APITestRunConfig getTestRunConfig() throws APIException {
@@ -192,5 +198,19 @@ public class APIProject extends APIEntity {
     public APIListResource<APIDeviceGroup> getPublicDeviceGroups() throws APIException {
         return getListResource(getPublicDeviceGroupsURI(), APIDeviceGroup.class);
     }
+    
+    @JsonIgnore
+    public APIFiles.APIFile uploadApplication(File file, String contentType) throws APIException {
+        return postFile(getUploadApplicationURI(), file, contentType, APIFile.class);
+    }
 
+    @JsonIgnore
+    public APIFiles.APIFile uploadTest(File file, String contentType) throws APIException {
+        return postFile(getUploadTestURI(), file, contentType, APIFile.class);
+    }
+    
+    @JsonIgnore
+    public APIFiles.APIFile uploadData(File file, String contentType) throws APIException {
+        return postFile(getUploadDataURI(), file, contentType, APIFile.class);
+    }
 }
