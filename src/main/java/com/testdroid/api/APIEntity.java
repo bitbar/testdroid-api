@@ -5,6 +5,7 @@ import com.testdroid.api.model.AndroidFiles;
 import com.testdroid.api.model.IOSFiles;
 import com.testdroid.api.model.RemoteControlFiles;
 import com.testdroid.api.model.UIAutomatorFiles;
+import java.io.File;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
@@ -88,6 +89,12 @@ public abstract class APIEntity {
     protected <T extends APIEntity> T postResource(String uri, Object body, Class<T> type) throws APIException {
         checkClient(client);
         return client.post(uri, body, type);
+    }
+    
+    @JsonIgnore
+    protected <T extends APIEntity> T postFile(String uri, File file, String contentType, Class<T> type) throws APIException {
+        checkClient(client);
+        return client.postFile(uri, contentType, file, type);
     }
     
     @JsonIgnore
