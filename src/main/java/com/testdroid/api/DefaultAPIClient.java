@@ -237,6 +237,7 @@ public class DefaultAPIClient implements APIClient {
         HttpRequestFactory factory = getRequestFactory(getAccessToken());
         HttpRequest request;
         HttpResponse response = null;
+        String resourceUrl = apiURL + uri;
         try {
             HttpContent content;
             HttpHeaders headers = new HttpHeaders();
@@ -259,9 +260,10 @@ public class DefaultAPIClient implements APIClient {
             } else if (body == null) {
                 content = null;
             } else {
-                content = new UrlEncodedContent(body);
+                resourceUrl = String.format("%s?%s", resourceUrl, body);
+                content = null;
             }
-            request = factory.buildPostRequest(new GenericUrl(apiURL + uri), content );
+            request = factory.buildPostRequest(new GenericUrl(resourceUrl), content );
             request.setHeaders(headers);
 
             // Call request and parse result
