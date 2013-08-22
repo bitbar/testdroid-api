@@ -22,13 +22,14 @@ public class APITestRunConfig extends APIEntity {
     }
     @XmlType
     public static enum Mode {
-        FULL_RUN("Full run"), 
-        APP_CRAWLER("App crawler"), 
-        CTS("CTS"), 
-        IOS("iOS"), 
-        UIAUTOMATOR("UIAutomator"), 
-        REMOTECONTROL("Remote control");
-        
+        FULL_RUN("Full run"),
+        APP_CRAWLER("App crawler"),
+        CTS("CTS"),
+        IOS("iOS"),
+        UIAUTOMATOR("UIAutomator"),
+        REMOTECONTROL("Remote control"),
+        CALABASH("Calabash");
+
         private String friendlyName;
         
         private Mode(String friendlyName){
