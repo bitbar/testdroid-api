@@ -159,6 +159,10 @@ public class APIProject extends APIEntity {
         return postResource(getRunsURI(), null, APITestRun.class);
     }
     
+    public APITestRun run(String name) throws APIException {
+        return postResource(getRunsURI(), String.format("name=%s", name), APITestRun.class);
+    }
+    
     public void update() throws APIException {
         String body = String.format("name=%s&description=%s&type=%s", encodeURL(name), encodeURL(description), encodeURL(type.name()));
         APIProject project = postResource(selfURI, body, APIProject.class);
