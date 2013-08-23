@@ -2,9 +2,12 @@ package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIException;
+import com.testdroid.api.APIList;
 import com.testdroid.api.APIListResource;
 import com.testdroid.api.APISort;
+import java.util.List;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.apache.commons.lang.StringUtils;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
@@ -151,7 +154,18 @@ public class APIUser extends APIEntity {
         this.roles = roles;
     }
     
-    private String getProjectsURI() { return selfURI + "/projects"; };
+    private String getProjectsURI() { return selfURI + "/projects"; }
+    private String getProjectsURI(Long id) { return String.format("%s%s/%s", selfURI, "/projects", id); }
+    private String getDeviceGroupsURI() { return selfURI + "/device-groups"; }
+    private String getNotificationsURI() { return selfURI + "/notifications"; }
+    private String getNotificationsListURI() { return selfURI + "/notifications/list"; }
+    
+    private String getCreateNotificationParams(String email, APINotificationEmail.Type type) {
+        return String.format("email=%s&type=%s", email, type);
+    }
+    private String getCreateNotificationsParams(List<String> emailsList, APINotificationEmail.Type type) {
+        return String.format("emailsList[]=%s&type=%s", StringUtils.join(emailsList, "&emailsList[]="), type);
+    }
     
     public APIProject createProject(APIProject.Type type) throws APIException {
         return postResource(getProjectsURI(), String.format("type=%s", type.name()), APIProject.class);
@@ -172,16 +186,26 @@ public class APIUser extends APIEntity {
     }
     
     public APIProject getProject(Long id) throws APIException {
-        return getResource(selfURI + "/projects/" + id, APIProject.class).getEntity();
+        return getResource(getProjectsURI(id), APIProject.class).getEntity();
     }
     
     @JsonIgnore
-    public APIListResource<APIDeviceGroup> getClustersResource() throws APIException {
-        return getListResource(getProjectsURI(), APIDeviceGroup.class);
+    public APIListResource<APIDeviceGroup> getDeviceGroupsResource() throws APIException {
+        return getListResource(getDeviceGroupsURI(), APIDeviceGroup.class);
     }
     
     @JsonIgnore
-    public APIListResource<APIDeviceGroup> getClustersResource(long offset, long limit, String search, APISort sort) throws APIException {
-        return getListResource(getProjectsURI(), offset, limit, search, sort, APIDeviceGroup.class);
+    public APIListResource<APIDeviceGroup> getDeviceGroupsResource(long offset, long limit, String search, APISort sort) throws APIException {
+        return getListResource(getDeviceGroupsURI(), offset, limit, search, sort, APIDeviceGroup.class);
+    }
+    
+    @JsonIgnore
+    public APINotificationEmail createNotificationEmail(String email, APINotificationEmail.Type type) throws APIException {
+        return postResource(getNotificationsURI(), getCreateNotificationParams(email, type), APINotificationEmail.class);
+    }
+    
+    @JsonIgnore
+    public APIList<APINotificationEmail> createNotificationEmails(List<String> emailsList, APINotificationEmail.Type type) throws APIException {
+        return postResource(getNotificationsListURI(), getCreateNotificationsParams(emailsList, type), APIList.class);
     }
 }
