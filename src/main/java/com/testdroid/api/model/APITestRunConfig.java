@@ -28,7 +28,8 @@ public class APITestRunConfig extends APIEntity {
         IOS("iOS"), 
         UIAUTOMATOR("UIAutomator"), 
         REMOTECONTROL("Remote control"),
-        RECORDERONLINE("Recorder online");
+        RECORDERONLINE("Recorder online"),
+        CALABASH("Calabash");
         
         private String friendlyName;
         
