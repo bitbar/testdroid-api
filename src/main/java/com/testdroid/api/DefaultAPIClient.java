@@ -58,23 +58,21 @@ public class DefaultAPIClient implements APIClient {
         this.password = password;
     }
     
-    protected String getAccessToken() {
+    protected String getAccessToken() throws APIException {
         if(accessToken == null) {
             try {
                 accessToken = acquireAccessToken();
-            }
-            catch(APIException ex) {
+            } catch(APIException ex) {
                 ex.printStackTrace();
-                // Do nothing, leave null
+                throw ex;
             }
-        }
-        else if(System.currentTimeMillis() > (accessTokenExpireTime-10*1000) ) {
+        } else if(System.currentTimeMillis() > (accessTokenExpireTime-10*1000) ) {
             try {
                 accessToken = refreshAccessToken();
-            }
-            catch(APIException ex) {
+            } catch(APIException ex) {
                 ex.printStackTrace();
-                accessToken = null; // if refreshing failed, then we are not authorized                
+                accessToken = null; // if refreshing failed, then we are not authorized   
+                throw ex;
             }
         }
         return accessToken;
