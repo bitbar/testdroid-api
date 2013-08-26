@@ -10,6 +10,7 @@ import com.testdroid.api.model.APIUser;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringReader;
 import java.util.Arrays;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -129,14 +130,12 @@ public class DefaultAPIClient implements APIClient {
     public <T extends APIEntity> T get(String uri, Class<T> type) throws APIException {
         try {
             return getOnce(uri, type);
-        }
-        catch(APIException ex) {
+        } catch(APIException ex) {
             if(ex.getStatus() != null && HttpStatus.SC_UNAUTHORIZED == ex.getStatus()) {
                 // Access token may have expired. Clean and try again.
                 accessToken = null;
                 return getOnce(uri, type);
-            }
-            else {
+            } else {
                 throw ex;
             }
         }
@@ -146,14 +145,12 @@ public class DefaultAPIClient implements APIClient {
     public InputStream get(String uri) throws APIException {
         try {
             return getStream(uri);
-        }
-        catch(APIException ex) {
+        } catch(APIException ex) {
             if(ex.getStatus() != null && HttpStatus.SC_UNAUTHORIZED == ex.getStatus()) {
                 // Access token may have expired. Clean and try again.
                 accessToken = null;
                 return getStream(uri);
-            }
-            else {
+            } else {
                 throw ex;
             }
         }        
@@ -168,26 +165,23 @@ public class DefaultAPIClient implements APIClient {
         HttpRequest request;
         HttpResponse response;
         try {
-            // Call request and parse result
-            JAXBContext context = JAXBContext.newInstance(type);
-            
-             request = factory.buildGetRequest(new GenericUrl(apiURL + uri));
-             request.setHeaders(new HttpHeaders().setAccept("application/xml"));
+            // Call request and parse result            
+            request = factory.buildGetRequest(new GenericUrl(apiURL + uri));
+            request.setHeaders(new HttpHeaders().setAccept("application/xml"));
 
             response = request.execute();
             if(!Arrays.asList(HttpStatus.SC_OK, HttpStatus.SC_ACCEPTED, HttpStatus.SC_CREATED, HttpStatus.SC_NO_CONTENT).contains(response.getStatusCode())) {
                 throw new APIException(response.getStatusCode(), String.format("Failed to execute api call: %s", uri));
             }
-            Unmarshaller unmarshaller = context.createUnmarshaller();
-            T result = (T) unmarshaller.unmarshal(response.getContent());
+            
+            T result = (T) fromXML(response.getContent(), type);            
             result.client = this;
             result.selfURI = uri;
             return result;
-        }
-        catch(JAXBException ex) {
-            throw new APIException(String.format("Failed to parse response as %s", type.getName()), ex);
-        }
-        catch(IOException ex) {
+        } catch(HttpResponseException ex) {
+            APIExceptionMessage exceptionMessage = fromXML(ex.getContent(), APIExceptionMessage.class);
+            throw new APIException(ex.getStatusCode(), exceptionMessage.getMessage(), ex);
+        } catch(IOException ex) {
             throw new APIException(String.format("Failed to execute API call: %s", uri), ex);
         }
     }
@@ -205,8 +199,10 @@ public class DefaultAPIClient implements APIClient {
             }
 
             return response.getContent();
-        }
-        catch(IOException ex) {
+        } catch(HttpResponseException ex) {
+            APIExceptionMessage exceptionMessage = fromXML(ex.getContent(), APIExceptionMessage.class);
+            throw new APIException(ex.getStatusCode(), exceptionMessage.getMessage(), ex);
+        } catch(IOException ex) {
             throw new APIException(String.format("Failed to execute API call: %s", uri), ex);
         }
     }
@@ -215,14 +211,12 @@ public class DefaultAPIClient implements APIClient {
     public <T extends APIEntity> T post(String uri, Object body, Class<T> type) throws APIException {
         try {
             return postOnce(uri, body, null, type);
-        }
-        catch(APIException ex) {
+        } catch(APIException ex) {
             if(ex.getStatus() != null && HttpStatus.SC_UNAUTHORIZED == ex.getStatus()) {
                 // Access token may have expired. Clean and try again.
                 accessToken = null;
                 return postOnce(uri, body, null, type);
-            }
-            else {
+            } else {
                 throw ex;
             }
         }
@@ -234,14 +228,13 @@ public class DefaultAPIClient implements APIClient {
         }
         HttpRequestFactory factory = getRequestFactory(getAccessToken());
         HttpRequest request;
-        HttpResponse response = null;
+        HttpResponse response;
         String resourceUrl = apiURL + uri;
         try {
             HttpContent content;
             HttpHeaders headers = new HttpHeaders();
             headers.setAccept("application/xml");
             if (body instanceof File) {
-
                 MultipartFormDataContent multipartContent = new MultipartFormDataContent();
                 FileContent fileContent = new FileContent("file", (File)body);
 
@@ -249,7 +242,6 @@ public class DefaultAPIClient implements APIClient {
                 multipartContent.addPart(filePart);
 
                 content = multipartContent;
-
             } else if (body instanceof InputStream) {
                 headers.setContentType(contentType);
                 content = new InputStreamContent(contentType, (InputStream) body);
@@ -265,17 +257,17 @@ public class DefaultAPIClient implements APIClient {
             request.setHeaders(headers);
 
             // Call request and parse result
-            JAXBContext context = JAXBContext.newInstance(type);
-
-            Unmarshaller unmarshaller = context.createUnmarshaller();
             response = request.execute();
+            
             if(response == null) {
                 throw new APIException("No response from API");
             }
+            
             if(response.getStatusCode() < HttpStatus.SC_OK || response.getStatusCode() >= 300 ) {
                 throw new APIException(response.getStatusCode(), "Failed to post resource: " + response.getStatusMessage());
             }
-            T result = (T) unmarshaller.unmarshal(response.getContent());
+            
+            T result = (T) fromXML(response.getContent(), type);
             result.client = this;
             result.selfURI = uri;
             // In case of entity creation, we need to update its url
@@ -283,11 +275,10 @@ public class DefaultAPIClient implements APIClient {
                 result.selfURI += String.format("/%s", result.getId());
             }
             return result;
-        }
-        catch(JAXBException ex) {
-            throw new APIException(response != null ? response.getStatusCode() : null, String.format("Failed to parse response as %s", type.getName()), ex);
-        }
-        catch(IOException ex) {
+        } catch(HttpResponseException ex) {
+            APIExceptionMessage exceptionMessage = fromXML(ex.getContent(), APIExceptionMessage.class);
+            throw new APIException(ex.getStatusCode(), exceptionMessage.getMessage(), ex);
+        } catch(IOException ex) {
             throw new APIException(String.format("Failed to execute API call: %s", uri), ex);
         }
     }
@@ -296,14 +287,12 @@ public class DefaultAPIClient implements APIClient {
     public <T extends APIEntity> T postFile(String uri, String contentType, File file, Class<T> type) throws APIException {
         try {
             return postOnce(uri, file, contentType, type);
-        }
-        catch(APIException ex) {
+        } catch(APIException ex) {
             if(ex.getStatus() != null && HttpStatus.SC_UNAUTHORIZED == ex.getStatus()) {
                 // Access token may have expired. Clean and try again.
                 accessToken = null;
                 return postOnce(uri, file, contentType, type);
-            }
-            else {
+            } else {
                 throw ex;
             }
         }
@@ -313,14 +302,12 @@ public class DefaultAPIClient implements APIClient {
     public void delete(String uri) throws APIException {
         try {
             deleteOnce(uri);
-        }
-        catch(APIException ex) {
+        } catch(APIException ex) {
             if(ex.getStatus() != null && HttpStatus.SC_UNAUTHORIZED == ex.getStatus()) {
                 // Access token may have expired. Clean and try again.
                 accessToken = null;
                 deleteOnce(uri);
-            }
-            else {
+            } else {
                 throw ex;
             }
         }
@@ -338,11 +325,14 @@ public class DefaultAPIClient implements APIClient {
             if(response == null) {
                 throw new APIException("No response from API");
             }
-            if(response.getStatusCode() != HttpStatus.SC_OK) {
+            
+            if(response.getStatusCode() != HttpStatus.SC_NO_CONTENT) {
                 throw new APIException(response.getStatusCode(), "Failed to delete resource: " + response.getStatusMessage());
             }
-        }
-        catch(IOException ex) {
+        } catch(HttpResponseException ex) {
+            APIExceptionMessage exceptionMessage = fromXML(ex.getContent(), APIExceptionMessage.class);
+            throw new APIException(ex.getStatusCode(), exceptionMessage.getMessage(), ex);
+        } catch(IOException ex) {
             throw new APIException(String.format("Failed to execute API call: %s", uri), ex);
         }
     }
@@ -374,6 +364,26 @@ public class DefaultAPIClient implements APIClient {
         return new APIListResource<APIDevice>(this, getDevicesURI(filters), offset, limit, search, sort, APIDevice.class);
     }
 
+    private static <T> T fromXML(String xml, Class<T> type) throws APIException {
+        try {
+            JAXBContext context = JAXBContext.newInstance(type);
+            Unmarshaller unmarshaller = context.createUnmarshaller();
+            return (T) unmarshaller.unmarshal(new StringReader(xml));
+        } catch (JAXBException ex) {
+            throw new APIException(String.format("Failed to parse response as %s", type.getName()));
+        }
+    }
+    
+    private static <T> T fromXML(InputStream inputStream, Class<T> type) throws APIException {
+        try {
+            JAXBContext context = JAXBContext.newInstance(type);
+            Unmarshaller unmarshaller = context.createUnmarshaller();
+            return (T) unmarshaller.unmarshal(inputStream);
+        } catch (JAXBException ex) { 
+            throw new APIException(String.format("Failed to parse response as %s", type.getName()));
+        }
+    }
+    
 }
 
 
