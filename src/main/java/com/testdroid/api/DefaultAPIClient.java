@@ -22,7 +22,7 @@ import org.apache.http.HttpStatus;
 
 /**
  *
- * @author kajdus
+ * @author kajdus, Sławomir Pawluk
  */
 public class DefaultAPIClient implements APIClient {
 
