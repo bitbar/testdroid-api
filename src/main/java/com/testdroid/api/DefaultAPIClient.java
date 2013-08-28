@@ -3,6 +3,7 @@ package com.testdroid.api;
 import com.google.api.client.auth.oauth2.BearerToken;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.http.*;
+import com.google.api.client.http.apache.ApacheHttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.testdroid.api.http.MultipartFormDataContent;
 import com.testdroid.api.model.APIDevice;
@@ -10,15 +11,22 @@ import com.testdroid.api.model.APIUser;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.security.GeneralSecurityException;
 import java.io.StringReader;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import net.sf.json.JSONObject;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.http.HttpHost;
 import org.apache.http.HttpStatus;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 /**
  *
@@ -26,22 +34,13 @@ import org.apache.http.HttpStatus;
  */
 public class DefaultAPIClient implements APIClient {
 
-    protected static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
+    
 
     protected static Credential getCredential() {
         return new Credential.Builder(BearerToken.queryParameterAccessMethod()).build();
     }
 
-    protected static HttpRequestFactory getRequestFactory(String accessToken) {
-        final Credential credential = getCredential();
-        credential.setAccessToken(accessToken);
-        return HTTP_TRANSPORT.createRequestFactory(new HttpRequestInitializer() {
-            @Override
-            public void initialize(HttpRequest request) throws IOException {
-                credential.initialize(request);
-            }
-        });
-    }
+    
     protected static String API_URI = "/api/v2";
     public final static int HTTP_CONNECT_TIMEOUT = 60000;
     public final static int HTTP_READ_TIMEOUT = 60000;
@@ -52,14 +51,59 @@ public class DefaultAPIClient implements APIClient {
     protected String accessToken;
     protected String refreshToken;
     protected long accessTokenExpireTime = 0;
-
-    public DefaultAPIClient(String cloudURL, String username, String password) {
+    
+    protected final HttpTransport httpTransport;
+    
+    public DefaultAPIClient(String cloudURL, String username, String password) {                
+        httpTransport = new NetHttpTransport();
+        initializeDefaultAPIClient(cloudURL, username, password);
+    }
+    
+    public DefaultAPIClient(String cloudURL, String username, String password, HttpHost proxy, boolean noCheckCertificate)  {        
+        ApacheHttpTransport.Builder apacheBuilder = null;
+        if (noCheckCertificate) {
+            try {
+                apacheBuilder = new ApacheHttpTransport.Builder().setProxy(proxy).doNotValidateCertificate();                        
+            } catch (GeneralSecurityException ex) {
+                Logger.getLogger(DefaultAPIClient.class.getName()).log(Level.WARNING, "Cannot set not-validating certificate. Certificate will be validating.", ex);
+                apacheBuilder = new ApacheHttpTransport.Builder().setProxy(proxy);
+            }
+        } else {
+            apacheBuilder = new ApacheHttpTransport.Builder().setProxy(proxy);
+        }
+        
+        httpTransport = apacheBuilder.build();
+        initializeDefaultAPIClient(cloudURL, username, password);
+    }
+    
+    public DefaultAPIClient(String cloudURL, String username, String password, HttpHost proxy, String proxyUser, String proxyPassword, boolean noCheckCertificate) {
+        this(cloudURL, username, password, proxy, noCheckCertificate);
+        
+        DefaultHttpClient apacheClient = (DefaultHttpClient)((ApacheHttpTransport)httpTransport).getHttpClient();
+        apacheClient.getCredentialsProvider().setCredentials(
+                new AuthScope(proxy.getHostName(), proxy.getPort()), 
+                new UsernamePasswordCredentials(proxyUser, proxyPassword));
+    }
+    
+    private void initializeDefaultAPIClient(String cloudURL, String username, String password) {
         this.cloudURL = cloudURL;
         this.apiURL = cloudURL + API_URI;
         this.username = username;
         this.password = password;
     }
 
+    protected HttpRequestFactory getRequestFactory(String accessToken) {
+        final Credential credential = getCredential();
+        credential.setAccessToken(accessToken);
+        return httpTransport.createRequestFactory(new HttpRequestInitializer() {
+
+            @Override
+            public void initialize(HttpRequest request) throws IOException {
+                credential.initialize(request);
+            }
+        });
+    }
+    
     protected String getAccessToken() throws APIException {
         if (accessToken == null) {
             try {
@@ -82,11 +126,12 @@ public class DefaultAPIClient implements APIClient {
 
     protected String acquireAccessToken() throws APIException {
         try {
-            HttpRequest request = HTTP_TRANSPORT.createRequestFactory().buildGetRequest(new GenericUrl(
+            HttpRequest request = httpTransport.createRequestFactory().buildGetRequest(new GenericUrl(
                     String.format("%s/oauth/token?client_id=testdroid-cloud-api&grant_type=password&username=%s&password=%s",
                     cloudURL, username, password)));
             request.setConnectTimeout(HTTP_CONNECT_TIMEOUT); // one minute
-            request.setReadTimeout(HTTP_READ_TIMEOUT); // one minute
+            request.setReadTimeout(HTTP_READ_TIMEOUT); // one minute            
+            request.setHeaders(new HttpHeaders().setAccept("application/json")); 
             HttpResponse response = request.execute();
             if (response.getStatusCode() != 200) {
                 throw new APIException(response.getStatusCode(), "Failed to acquire access token");
@@ -106,7 +151,7 @@ public class DefaultAPIClient implements APIClient {
             if (refreshToken == null) {
                 return null;
             }
-            HttpRequest request = HTTP_TRANSPORT.createRequestFactory().buildGetRequest(new GenericUrl(
+            HttpRequest request = httpTransport.createRequestFactory().buildGetRequest(new GenericUrl(
                     String.format("%s/oauth/token?client_id=testdroid-cloud-api&grant_type=refresh_token&refresh_token=%s",
                     cloudURL, refreshToken)));
             request.setConnectTimeout(HTTP_CONNECT_TIMEOUT); // one minute
