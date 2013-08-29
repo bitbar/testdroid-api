@@ -3,7 +3,7 @@
 
     <groupId>com.testdroid</groupId>
     <artifactId>testdroid-api</artifactId>
-    <version>1.3.19-SNAPSHOT</version>
+    <version>1.3.20-SNAPSHOT</version>
     <packaging>jar</packaging>
 	<name>testdroid-api</name>
 	<url>https://github.com/bitbar/testdroid-api</url>
@@ -97,6 +97,11 @@
 			<classifier>jdk15</classifier>
 			<version>2.4</version>
 		</dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.2.5</version>
+        </dependency>
 		<dependency>
 			<groupId>com.google.oauth-client</groupId>
 			<artifactId>google-oauth-client</artifactId>
