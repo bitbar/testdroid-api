@@ -39,7 +39,7 @@ import org.apache.http.protocol.HttpContext;
 
 /**
  *
- * @author kajdus, Sławomir Pawluk
+ * @author kajdus, Sławomir Pawluk, krzysiek
  */
 public class DefaultAPIClient implements APIClient {
 
@@ -298,14 +298,14 @@ public class DefaultAPIClient implements APIClient {
             HttpContent content;
             HttpHeaders headers = new HttpHeaders();
             headers.setAccept("application/xml");
-            if (body instanceof File) {   
+            if (body instanceof File) {
                 MultipartFormDataContent multipartContent = new MultipartFormDataContent();
                 FileContent fileContent = new FileContent(contentType, (File) body);
                 
                 MultipartFormDataContent.Part filePart = new MultipartFormDataContent.Part("file", fileContent);
                 multipartContent.addPart(filePart);
 
-                content = multipartContent;                
+                content = multipartContent;
             } else if (body instanceof InputStream) {
                 headers.setContentType(contentType);
                 content = new InputStreamContent(contentType, (InputStream) body);
