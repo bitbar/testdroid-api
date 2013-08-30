@@ -11,8 +11,8 @@ import com.testdroid.api.model.APIUser;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.security.GeneralSecurityException;
 import java.io.StringReader;
+import java.security.GeneralSecurityException;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,15 +22,24 @@ import javax.xml.bind.Unmarshaller;
 import net.sf.json.JSONObject;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.http.HttpException;
 import org.apache.http.HttpHost;
+import org.apache.http.HttpRequestInterceptor;
 import org.apache.http.HttpStatus;
 import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.ChallengeState;
 import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.AuthCache;
+import org.apache.http.client.protocol.ClientContext;
+import org.apache.http.conn.params.ConnRoutePNames;
+import org.apache.http.impl.auth.BasicScheme;
+import org.apache.http.impl.client.BasicAuthCache;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.protocol.HttpContext;
 
 /**
  *
- * @author kajdus, Sławomir Pawluk
+ * @author kajdus, Sławomir Pawluk, krzysiek
  */
 public class DefaultAPIClient implements APIClient {
 
@@ -39,7 +48,6 @@ public class DefaultAPIClient implements APIClient {
     protected static Credential getCredential() {
         return new Credential.Builder(BearerToken.queryParameterAccessMethod()).build();
     }
-
     
     protected static String API_URI = "/api/v2";
     public final static int HTTP_CONNECT_TIMEOUT = 60000;
@@ -76,13 +84,25 @@ public class DefaultAPIClient implements APIClient {
         initializeDefaultAPIClient(cloudURL, username, password);
     }
     
-    public DefaultAPIClient(String cloudURL, String username, String password, HttpHost proxy, String proxyUser, String proxyPassword, boolean noCheckCertificate) {
+    public DefaultAPIClient(String cloudURL, String username, String password, HttpHost proxy, final String proxyUser, final String proxyPassword, boolean noCheckCertificate) {
         this(cloudURL, username, password, proxy, noCheckCertificate);
         
         DefaultHttpClient apacheClient = (DefaultHttpClient)((ApacheHttpTransport)httpTransport).getHttpClient();
+        apacheClient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
         apacheClient.getCredentialsProvider().setCredentials(
                 new AuthScope(proxy.getHostName(), proxy.getPort()), 
-                new UsernamePasswordCredentials(proxyUser, proxyPassword));
+                new UsernamePasswordCredentials(proxyUser, proxyPassword));        
+                
+        final AuthCache authCache = new BasicAuthCache();
+        final BasicScheme basicAuth = new BasicScheme(ChallengeState.PROXY);
+        authCache.put(proxy, basicAuth);
+        
+        apacheClient.addRequestInterceptor(new HttpRequestInterceptor() {            
+            @Override
+            public void process(org.apache.http.HttpRequest hr, HttpContext hc) throws HttpException, IOException {    
+                hc.setAttribute(ClientContext.AUTH_CACHE, authCache);            
+            }
+        }, 0);
     }
     
     private void initializeDefaultAPIClient(String cloudURL, String username, String password) {
@@ -280,8 +300,8 @@ public class DefaultAPIClient implements APIClient {
             headers.setAccept("application/xml");
             if (body instanceof File) {
                 MultipartFormDataContent multipartContent = new MultipartFormDataContent();
-                FileContent fileContent = new FileContent("file", (File) body);
-
+                FileContent fileContent = new FileContent(contentType, (File) body);
+                
                 MultipartFormDataContent.Part filePart = new MultipartFormDataContent.Part("file", fileContent);
                 multipartContent.addPart(filePart);
 
