@@ -97,8 +97,6 @@ public class APIProject extends APIEntity {
         this.sharedById = sharedById;
     }
 
-
-    
     private APITestRunConfig testRunConfig;
     private APIProjectJobConfig jobConfig;
     private APIFiles files;
@@ -116,7 +114,12 @@ public class APIProject extends APIEntity {
     private String getUploadApplicationURI() { return selfURI + "/files/application"; }
     private String getUploadTestURI() { return selfURI + "/files/test"; }
     private String getUploadDataURI() { return selfURI + "/files/data"; }
+    private String getNotificationsURI() { return selfURI + "/notifications"; }
 
+    private String getCreateRunParameters(String testRunName) {
+        return String.format("name=%s", testRunName);
+    }
+    
     @JsonIgnore
     public APITestRunConfig getTestRunConfig() throws APIException {
         if(testRunConfig == null) {
@@ -133,11 +136,11 @@ public class APIProject extends APIEntity {
         return jobConfig;
     }
     
-    @JsonIgnore
     /**
      * Returns APIFiles entity about files uploaded to this project.
      * Depending on <code>type</code> it may be any subclass of <code>APIFiles</code> returned.
      */
+    @JsonIgnore
     public <T extends APIFiles> T getFiles(Class<T> clazz) throws APIException {
         if(clazz == null || !clazz.isAssignableFrom(type.getFilesClass())) {
             throw new APIException("This project type does not have requested file types");
@@ -156,8 +159,14 @@ public class APIProject extends APIEntity {
         return icon;
     }
     
+    @JsonIgnore
     public APITestRun run() throws APIException {
         return postResource(getRunsURI(), null, APITestRun.class);
+    }
+    
+    @JsonIgnore
+    public APITestRun run(String testRunName) throws APIException {
+        return postResource(getRunsURI(), getCreateRunParameters(encodeURL(testRunName)), APITestRun.class);
     }
     
     public void update() throws APIException {
