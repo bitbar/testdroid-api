@@ -24,6 +24,7 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.map.annotate.JsonView;
 
 /**
  *
@@ -44,6 +45,7 @@ public abstract class APIEntity {
     protected APIClient client;
     protected String selfURI;
     protected Long id;
+    private Class<? extends APIView> view;
     
     public APIEntity() {
     }
@@ -57,6 +59,7 @@ public abstract class APIEntity {
      * lists. Please use
      * <code>hasId()</code> method to check if ID exists.
      */
+    @JsonView(APIView.class)
     public Long getId() {
         return this.id;
     }
@@ -69,6 +72,7 @@ public abstract class APIEntity {
      * Returns
      * <code>true</code> if ID exists for this entity.
      */
+    @JsonView(APIView.class)
     public boolean hasId() {
         return true;
     }
@@ -152,6 +156,21 @@ public abstract class APIEntity {
         return encodeURL(format(date));
     }
 
+    @JsonIgnore
+    public boolean hasView() {
+        return view != null;
+    }
+    
+    @JsonIgnore
+    public Class<? extends APIView> getView() {
+        return view;
+    }
+    
+    @JsonIgnore
+    public void setView(Class<? extends APIView> view) {
+        this.view = view;
+    }
+    
     @JsonIgnore
     public String toXML() {
         try {
