@@ -5,6 +5,7 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.map.annotate.JsonView;
 
 /**
  *
@@ -37,6 +38,7 @@ public class APIList<T extends APIEntity> extends APIEntity {
      * Get full URL of the next page of the collection.
      * Simple call it to fetch next items.
      */
+    @JsonView(APIView.class)
     public String getNext() {
         return next;
     }
@@ -49,6 +51,7 @@ public class APIList<T extends APIEntity> extends APIEntity {
      * Get full URL of the previous page of the collection.
      * Simple call it to fetch previous items.
      */
+    @JsonView(APIView.class)
     public String getPrevious() {
         return previous;
     }
@@ -63,6 +66,7 @@ public class APIList<T extends APIEntity> extends APIEntity {
      * <code>limit</code> and <code>search</code>.
      */
     @XmlTransient
+    @JsonView(APIView.class)
     public List<T> getData() {
         return data;
     }
@@ -71,10 +75,12 @@ public class APIList<T extends APIEntity> extends APIEntity {
         this.data = data;
     }
 
+    @JsonView(APIView.class)
     public T get(int index) {
         return this.data.get(index);
     }
     
+    @JsonView(APIView.class)
     public boolean isEmpty() {
         return this.data.isEmpty();
     }
@@ -82,6 +88,7 @@ public class APIList<T extends APIEntity> extends APIEntity {
     /**
      * Get offset of data page returned in <code>getData()</code> method.
      */
+    @JsonView(APIView.class)
     public Integer getOffset() {
         return offset;
     }
@@ -93,6 +100,7 @@ public class APIList<T extends APIEntity> extends APIEntity {
     /**
      * Get limit of data page returned in <code>getData()</code> method.
      */
+    @JsonView(APIView.class)
     public Integer getLimit() {
         return limit;
     }
@@ -104,6 +112,7 @@ public class APIList<T extends APIEntity> extends APIEntity {
     /**
      * Get total number of items to be returned - independent from paging.
      */
+    @JsonView(APIView.class)
     public Integer getTotal() {
         return total;
     }
@@ -115,6 +124,7 @@ public class APIList<T extends APIEntity> extends APIEntity {
     /**
      * Get search phrase used during retrieving data returned in <code>getData()</code> method.
      */
+    @JsonView(APIView.class)
     public String getSearch() {
         return search;
     }
@@ -126,6 +136,7 @@ public class APIList<T extends APIEntity> extends APIEntity {
     /**
      * Get serialized sort value used during retrieving data returned in <code>getData()</code> method.
      */
+    @JsonView(APIView.class)
     public String getSort() {
         return sort;
     }
@@ -135,6 +146,7 @@ public class APIList<T extends APIEntity> extends APIEntity {
     }
 
     @Override
+    @JsonView(APIView.class)
     public boolean hasId() {
         return false;
     }
