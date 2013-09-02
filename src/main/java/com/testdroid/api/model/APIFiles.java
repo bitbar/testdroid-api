@@ -14,7 +14,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
  * @author kajdus
  */
 @XmlRootElement
-@XmlSeeAlso({AndroidFiles.class, IOSFiles.class, UIAutomatorFiles.class, RemoteControlFiles.class})
+@XmlSeeAlso({AndroidFiles.class, IOSFiles.class, UIAutomatorFiles.class, RemoteControlFiles.class, CalabashFiles.class})
 public abstract class APIFiles extends APIEntity {
     private DataFile data;
 
@@ -177,6 +177,13 @@ public abstract class APIFiles extends APIEntity {
     @XmlRootElement public static class IOSTestFile extends APIFile {
         public IOSTestFile() { }
         public IOSTestFile(Long id, String originalName, Date uploadTime, String readableSize) {
+            super(id, originalName, uploadTime, readableSize);
+        }
+    }
+
+    @XmlRootElement public static class CalabashTestFile extends APIFile {
+        public CalabashTestFile() { }
+        public CalabashTestFile(Long id, String originalName, Date uploadTime, String readableSize) {
             super(id, originalName, uploadTime, readableSize);
         }
     }
