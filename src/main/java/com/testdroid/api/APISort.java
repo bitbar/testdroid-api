@@ -71,7 +71,7 @@ public class APISort {
         public static List<Column> get(Class<? extends APIEntity> type) {
             List<Column> result = new ArrayList<Column>();
             for(Column sc: values()) {
-                if(sc.supportedClass.equals(type)) {
+                if(sc.supportedClass.isAssignableFrom(type)) {
                     result.add(sc);
                 }
             }
