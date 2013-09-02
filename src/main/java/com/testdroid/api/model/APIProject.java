@@ -5,6 +5,8 @@ import com.testdroid.api.APIException;
 import com.testdroid.api.APIListResource;
 import com.testdroid.api.APISort;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import org.apache.commons.io.IOUtils;
@@ -40,7 +42,9 @@ public class APIProject extends APIEntity {
     private boolean common;
     private Long sharedById;
 
-    public APIProject() {}
+    public APIProject() {
+
+    }
     public APIProject(Long id, String name, String description, Type type, Long sharedById, boolean common) {
         super(id);
         this.name = name;
@@ -48,6 +52,7 @@ public class APIProject extends APIEntity {
         this.type = type;
         this.sharedById = sharedById;
         this.common = common;
+        jobConfig = new HashMap<APIProjectJobConfig.Type, APIProjectJobConfig>();
     }
 
     public String getName() {
@@ -96,12 +101,12 @@ public class APIProject extends APIEntity {
 
     
     private APITestRunConfig testRunConfig;
-    private APIProjectJobConfig jobConfig;
+    private Map<APIProjectJobConfig.Type, APIProjectJobConfig> jobConfig;
     private APIFiles files;
     private byte[] icon;
 
     private String getConfigURI() { return selfURI + "/config"; };
-    private String getJobConfigURI() { return selfURI + "/job-config"; };
+    private String getJobConfigURI(APIProjectJobConfig.Type type) { return selfURI + "/job-configs/"+type.toString(); };
     private String getFilesURI() { return selfURI + "/files"; };
     private String getIconURI() { return selfURI + "/icon"; };
     private String getSharingsURI() { return selfURI + "/sharings"; };
@@ -119,11 +124,14 @@ public class APIProject extends APIEntity {
     }
     
     @JsonIgnore
-    public APIProjectJobConfig getJobConfig() throws APIException {
-        if(jobConfig == null) {
-            jobConfig = getResource(getJobConfigURI(), APIProjectJobConfig.class).getEntity();
+    public APIProjectJobConfig getJobConfig(APIProjectJobConfig.Type type) throws APIException {
+        if(jobConfig == null ) {
+            jobConfig = new HashMap<APIProjectJobConfig.Type, APIProjectJobConfig>();
         }
-        return jobConfig;
+        if(jobConfig.get(type) == null) {
+            jobConfig.put(type, getResource(getJobConfigURI(type), APIProjectJobConfig.class).getEntity());
+        }
+        return jobConfig.get(type);
     }
     
     @JsonIgnore
