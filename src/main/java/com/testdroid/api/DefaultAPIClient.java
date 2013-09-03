@@ -161,6 +161,8 @@ public class DefaultAPIClient implements APIClient {
             accessTokenExpireTime = System.currentTimeMillis() + (Long.parseLong(json.optString("expires_in")) * 1000);
             refreshToken = json.optString("refresh_token");
             return json.optString("access_token");
+        } catch (HttpResponseException ex) {
+            throw new APIException(String.format("Failed to acquire access token. Reason: %s", ex.getStatusMessage()), ex);
         } catch (IOException ex) {
             throw new APIException(String.format("Failed to acquire access token. Reason: %s", ex.getMessage()), ex);
         }
