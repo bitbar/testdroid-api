@@ -159,7 +159,6 @@ public class APIUser extends APIEntity {
     private String getDeviceGroupsURI() { return selfURI + "/device-groups"; }
     private String getNotificationsURI() { return selfURI + "/notifications"; }
     private String getNotificationURI(long id) { return selfURI + String.format("/notifications/%s", id); }
-    private String getNotificationsListURI() { return selfURI + "/notifications/list"; }
     
     private String getCreateNotificationParams(String email, APINotificationEmail.Type type) {
         return String.format("email=%s&type=%s", email, type);
@@ -206,13 +205,13 @@ public class APIUser extends APIEntity {
     }
     
     @JsonIgnore
-    public APIList<APINotificationEmail> createNotificationEmails(List<String> emailsList, APINotificationEmail.Type type) throws APIException {
-        return postResource(getNotificationsListURI(), getCreateNotificationsParams(emailsList, type), APIList.class);
+    public APIListResource<APINotificationEmail> getNotificationEmails(long offset, long limit, String search, APISort sort) throws APIException {
+        return getListResource(getNotificationsURI(), offset, limit, search, sort, APINotificationEmail.class);
     }
     
     @JsonIgnore
-    public APIListResource<APINotificationEmail> getNotificationEmails(long offset, long limit, String search, APISort sort) throws APIException {
-        return getListResource(getNotificationsURI(), offset, limit, search, sort, APINotificationEmail.class);
+    public APINotificationEmail updateNotificationEmail(long id, APINotificationEmail.Type type) throws APIException {
+        return postResource(getNotificationURI(id), String.format("type=%s", type), APINotificationEmail.class);
     }
     
     @JsonIgnore
