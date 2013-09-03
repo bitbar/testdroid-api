@@ -158,6 +158,7 @@ public class APIUser extends APIEntity {
     private String getProjectsURI(Long id) { return String.format("%s%s/%s", selfURI, "/projects", id); }
     private String getDeviceGroupsURI() { return selfURI + "/device-groups"; }
     private String getNotificationsURI() { return selfURI + "/notifications"; }
+    private String getNotificationURI(long id) { return selfURI + String.format("/notifications/%s", id); }
     private String getNotificationsListURI() { return selfURI + "/notifications/list"; }
     
     private String getCreateNotificationParams(String email, APINotificationEmail.Type type) {
@@ -207,5 +208,15 @@ public class APIUser extends APIEntity {
     @JsonIgnore
     public APIList<APINotificationEmail> createNotificationEmails(List<String> emailsList, APINotificationEmail.Type type) throws APIException {
         return postResource(getNotificationsListURI(), getCreateNotificationsParams(emailsList, type), APIList.class);
+    }
+    
+    @JsonIgnore
+    public APIListResource<APINotificationEmail> getNotificationEmails(long offset, long limit, String search, APISort sort) throws APIException {
+        return getListResource(getNotificationsURI(), offset, limit, search, sort, APINotificationEmail.class);
+    }
+    
+    @JsonIgnore
+    public void deleteNotificationEmail(long id) throws APIException {
+        deleteResource(getNotificationURI(id));
     }
 }
