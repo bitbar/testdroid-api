@@ -163,10 +163,7 @@ public class APIUser extends APIEntity {
     private String getCreateNotificationParams(String email, APINotificationEmail.Type type) {
         return String.format("email=%s&type=%s", email, type);
     }
-    private String getCreateNotificationsParams(List<String> emailsList, APINotificationEmail.Type type) {
-        return String.format("emailsList[]=%s&type=%s", StringUtils.join(emailsList, "&emailsList[]="), type);
-    }
-    
+        
     public APIProject createProject(APIProject.Type type) throws APIException {
         return postResource(getProjectsURI(), String.format("type=%s", type.name()), APIProject.class);
     }
@@ -203,7 +200,12 @@ public class APIUser extends APIEntity {
     public APINotificationEmail createNotificationEmail(String email, APINotificationEmail.Type type) throws APIException {
         return postResource(getNotificationsURI(), getCreateNotificationParams(email, type), APINotificationEmail.class);
     }
-    
+
+    @JsonIgnore
+    public APIListResource<APINotificationEmail> getNotificationEmails() throws APIException {
+        return getListResource(getNotificationsURI(), APINotificationEmail.class);
+    }
+
     @JsonIgnore
     public APIListResource<APINotificationEmail> getNotificationEmails(long offset, long limit, String search, APISort sort) throws APIException {
         return getListResource(getNotificationsURI(), offset, limit, search, sort, APINotificationEmail.class);
