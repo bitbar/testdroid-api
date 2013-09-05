@@ -247,7 +247,7 @@ public class APITestRunConfig extends APIEntity {
                 mode != null ? encodeURL(mode.name()) : "", encodeURL(autoScreenshots), encodeURL(screenshotDir), limitationType != null ? encodeURL(limitationType.name()) : "", 
                 encodeURL(limitationValue), encodeURL(withAnnotation), encodeURL(withoutAnnotation), encodeURL(applicationUsername), encodeURL(applicationPassword), 
                 usedClusterId, encodeURL(deviceLanguageCode), encodeURL(hookURL), encodeURL(uiAutomatorTestClasses), encodeURL(launchApp), encodeURL(instrumentationRunner));
-        APITestRunConfig config = postResource(selfURI, body, APITestRunConfig.class);
+        APITestRunConfig config = postResource(selfURI+body, null, APITestRunConfig.class);
         this.projectId = config.projectId;
         this.scheduler = config.scheduler;
         this.mode = config.mode;
