@@ -241,7 +241,7 @@ public class APITestRunConfig extends APIEntity {
     }
     
     public void update() throws APIException {
-        String body = String.format("projectId=%s&scheduler=%s&mode=%s&autoScreenshots=%s&screenshotDir=%s&limitationType=%s&limitationValue=%s&" +
+        String body = String.format("?projectId=%s&scheduler=%s&mode=%s&autoScreenshots=%s&screenshotDir=%s&limitationType=%s&limitationValue=%s&" +
                 "withAnnotation=%s&withoutAnnotation=%s&applicationUsername=%s&applicationPassword=%s&usedClusterId=%s&deviceLanguageCode=%s&"+
                 "hookURL=%s&uiAutomatorTestClasses=%s&launchApp=%s&instrumentationRunner=%s", projectId, scheduler != null? encodeURL(scheduler.name()) : "", 
                 mode != null ? encodeURL(mode.name()) : "", encodeURL(autoScreenshots), encodeURL(screenshotDir), limitationType != null ? encodeURL(limitationType.name()) : "", 
