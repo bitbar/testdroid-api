@@ -2,12 +2,9 @@ package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIException;
-import com.testdroid.api.APIList;
 import com.testdroid.api.APIListResource;
 import com.testdroid.api.APISort;
-import java.util.List;
 import javax.xml.bind.annotation.XmlRootElement;
-import org.apache.commons.lang.StringUtils;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
