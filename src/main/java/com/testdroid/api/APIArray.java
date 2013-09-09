@@ -6,7 +6,7 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 /**
  *
- * @author Sławomir
+ * @author Sławomir Pawluk
  */
 @XmlRootElement
 @JsonIgnoreProperties(value = {"id", "hasId"})
