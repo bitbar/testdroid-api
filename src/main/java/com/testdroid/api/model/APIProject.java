@@ -7,7 +7,6 @@ import com.testdroid.api.APISort;
 import com.testdroid.api.model.APIFiles.APIFile;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import org.apache.commons.io.IOUtils;
@@ -21,7 +20,6 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 public class APIProject extends APIEntity {
 
     @XmlType(name = "projectType")
-
     public static enum Type { 
         ANDROID, CTS, IOS, UIAUTOMATOR, REMOTECONTROL, RECORDERONLINE, CALABASH;
         public Class<? extends APIFiles> getFilesClass() {
