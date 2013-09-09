@@ -24,7 +24,15 @@ import org.apache.http.HttpStatus;
  * @author kajdus
  */
 public class DefaultAPIClient implements APIClient {
+    static final JAXBContext context = initContext();
 
+    private static JAXBContext initContext() {
+        try {
+            return JAXBContext.newInstance("com.testdroid.api:com.testdroid.api");
+        } catch (JAXBException e) {
+        }
+        return null;
+    }
     protected static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
     protected static Credential getCredential() { return new Credential.Builder(BearerToken.queryParameterAccessMethod()).build(); }
     protected static HttpRequestFactory getRequestFactory(String accessToken) {
@@ -169,8 +177,7 @@ public class DefaultAPIClient implements APIClient {
         HttpResponse response;
         try {
             // Call request and parse result
-            JAXBContext context = JAXBContext.newInstance(type);
-            
+
              request = factory.buildGetRequest(new GenericUrl(apiURL + uri));
              request.setHeaders(new HttpHeaders().setAccept("application/xml"));
 
@@ -264,8 +271,6 @@ public class DefaultAPIClient implements APIClient {
             request = factory.buildPostRequest(new GenericUrl(resourceUrl), content );
             request.setHeaders(headers);
 
-            // Call request and parse result
-            JAXBContext context = JAXBContext.newInstance(type);
 
             Unmarshaller unmarshaller = context.createUnmarshaller();
             response = request.execute();
