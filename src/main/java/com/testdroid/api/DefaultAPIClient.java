@@ -66,23 +66,21 @@ public class DefaultAPIClient implements APIClient {
         this.password = password;
     }
     
-    protected String getAccessToken() {
+    protected String getAccessToken() throws APIException {
         if(accessToken == null) {
             try {
                 accessToken = acquireAccessToken();
-            }
-            catch(APIException ex) {
+            } catch(APIException ex) {
                 ex.printStackTrace();
-                // Do nothing, leave null
+                throw ex;
             }
-        }
-        else if(System.currentTimeMillis() > (accessTokenExpireTime-10*1000) ) {
+        } else if(System.currentTimeMillis() > (accessTokenExpireTime-10*1000) ) {
             try {
                 accessToken = refreshAccessToken();
-            }
-            catch(APIException ex) {
+            } catch(APIException ex) {
                 ex.printStackTrace();
-                accessToken = null; // if refreshing failed, then we are not authorized                
+                accessToken = null; // if refreshing failed, then we are not authorized   
+                throw ex;
             }
         }
         return accessToken;
@@ -244,6 +242,7 @@ public class DefaultAPIClient implements APIClient {
         HttpRequestFactory factory = getRequestFactory(getAccessToken());
         HttpRequest request;
         HttpResponse response = null;
+        String resourceUrl = apiURL + uri;
         try {
             HttpContent content;
             HttpHeaders headers = new HttpHeaders();
@@ -266,9 +265,10 @@ public class DefaultAPIClient implements APIClient {
             } else if (body == null) {
                 content = null;
             } else {
-                content = new UrlEncodedContent(body);
+                resourceUrl = String.format("%s?%s", resourceUrl, body);
+                content = null;
             }
-            request = factory.buildPostRequest(new GenericUrl(apiURL + uri), content );
+            request = factory.buildPostRequest(new GenericUrl(resourceUrl), content );
             request.setHeaders(headers);
 
 
