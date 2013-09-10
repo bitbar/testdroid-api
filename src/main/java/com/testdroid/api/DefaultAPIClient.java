@@ -38,14 +38,6 @@ import org.apache.http.impl.client.BasicAuthCache;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.HttpContext;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Arrays;
-
 /**
  *
  * @author kajdus, Sławomir Pawluk, krzysiek
@@ -328,8 +320,6 @@ public class DefaultAPIClient implements APIClient {
             }
             request = factory.buildPostRequest(new GenericUrl(resourceUrl), content);
             request.setHeaders(headers);
-            //we handle return values in our code
-            request.setThrowExceptionOnExecuteError(false);
 
             // Call request and parse result
             response = request.execute();
