@@ -149,12 +149,6 @@
 			<version>1.9.7</version>
 			<type>jar</type>
 		</dependency>
-                <!-- For generating API documentation -->
-                <dependency>
-                    <groupId>com.mangofactory</groupId>
-                    <artifactId>swagger-springmvc</artifactId>
-                    <version>0.7.3-SNAPSHOT</version>
-                </dependency>
 	 <dependency>
 	  <groupId>org.codehaus.jackson</groupId>
 	  <artifactId>jackson-mapper-asl</artifactId>
