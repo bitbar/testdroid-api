@@ -172,7 +172,7 @@ public class APIProject extends APIEntity {
     
     @JsonIgnore
     public APITestRun run(String testRunName) throws APIException {
-        return postResource(getRunsURI(), getCreateRunParameters(encodeURL(testRunName)), APITestRun.class);
+        return postResource(getRunsURI(), encodeURL(getCreateRunParameters(testRunName)), APITestRun.class);
     }
     
     public void update() throws APIException {
