@@ -1,8 +1,10 @@
 package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
+import com.testdroid.api.APIView;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import org.codehaus.jackson.map.annotate.JsonView;
 
 /**
  *
@@ -29,7 +31,7 @@ public class APIDevice extends APIEntity {
             return displayName;
         }
     }
-    
+        
     private String displayName;
     private APISoftwareVersion softwareVersion;
     private Integer creditsPrice;
@@ -40,11 +42,15 @@ public class APIDevice extends APIEntity {
     private Integer imageHeight;
     private Integer frameExtraWidth;
     private APIDevice.OsType osType;
+    private String frame80Url;
+    private String frame100Url;
+    private String frame160Url;
+    private String frame400Url;
 
     public APIDevice() {}
 
     public APIDevice(Long id, String displayName, APISoftwareVersion softwareVersion, Integer creditsPrice, String imagePrefix, Integer imageTop, Integer imageLeft, 
-            Integer imageWidth, Integer imageHeight, Integer frameExtraWidth, OsType osType) {
+            Integer imageWidth, Integer imageHeight, Integer frameExtraWidth, OsType osType, String frame80Url, String frame100Url, String frame160Url, String frame400Url) {
         super(id);
         this.displayName = displayName;
         this.softwareVersion = softwareVersion;
@@ -56,8 +62,13 @@ public class APIDevice extends APIEntity {
         this.imageHeight = imageHeight;
         this.frameExtraWidth = frameExtraWidth;
         this.osType = osType;
+        this.frame80Url = frame80Url;
+        this.frame100Url = frame100Url;
+        this.frame160Url = frame160Url;
+        this.frame400Url = frame400Url;
     }
 
+    @JsonView(value = {APIView.AdminView.class, APIView.MonitorView.class})
     public String getDisplayName() {
         return displayName;
     }
@@ -66,6 +77,7 @@ public class APIDevice extends APIEntity {
         this.displayName = displayName;
     }
 
+    @JsonView(APIView.AdminView.class)
     public APISoftwareVersion getSoftwareVersion() {
         return softwareVersion;
     }
@@ -74,6 +86,7 @@ public class APIDevice extends APIEntity {
         this.softwareVersion = softwareVersion;
     }
 
+    @JsonView(APIView.AdminView.class)
     public Integer getCreditsPrice() {
         return creditsPrice;
     }
@@ -82,6 +95,7 @@ public class APIDevice extends APIEntity {
         this.creditsPrice = creditsPrice;
     }
 
+    @JsonView(APIView.AdminView.class)
     public String getImagePrefix() {
         return imagePrefix;
     }
@@ -90,6 +104,7 @@ public class APIDevice extends APIEntity {
         this.imagePrefix = imagePrefix;
     }
 
+    @JsonView(APIView.AdminView.class)
     public Integer getImageTop() {
         return imageTop;
     }
@@ -98,6 +113,7 @@ public class APIDevice extends APIEntity {
         this.imageTop = imageTop;
     }
 
+    @JsonView(APIView.AdminView.class)
     public Integer getImageLeft() {
         return imageLeft;
     }
@@ -106,6 +122,7 @@ public class APIDevice extends APIEntity {
         this.imageLeft = imageLeft;
     }
 
+    @JsonView(APIView.AdminView.class)
     public Integer getImageWidth() {
         return imageWidth;
     }
@@ -114,6 +131,7 @@ public class APIDevice extends APIEntity {
         this.imageWidth = imageWidth;
     }
 
+    @JsonView(APIView.AdminView.class)
     public Integer getImageHeight() {
         return imageHeight;
     }
@@ -122,6 +140,7 @@ public class APIDevice extends APIEntity {
         this.imageHeight = imageHeight;
     }
 
+    @JsonView(APIView.AdminView.class)
     public Integer getFrameExtraWidth() {
         return frameExtraWidth;
     }
@@ -130,12 +149,45 @@ public class APIDevice extends APIEntity {
         this.frameExtraWidth = frameExtraWidth;
     }
 
+    @JsonView(value = {APIView.AdminView.class, APIView.MonitorView.class})
     public OsType getOsType() {
         return osType;
     }
 
     public void setOsType(OsType osType) {
         this.osType = osType;
+    }
+
+    public String getFrame80Url() {
+        return frame80Url;
+    }
+
+    public void setFrame80Url(String frame80Url) {
+        this.frame80Url = frame80Url;
+    }
+
+    public String getFrame100Url() {
+        return frame100Url;
+    }
+
+    public void setFrame100Url(String frame100Url) {
+        this.frame100Url = frame100Url;
+    }
+
+    public String getFrame160Url() {
+        return frame160Url;
+    }
+
+    public void setFrame160Url(String frame160Url) {
+        this.frame160Url = frame160Url;
+    }
+
+    public String getFrame400Url() {
+        return frame400Url;
+    }
+
+    public void setFrame400Url(String frame400Url) {
+        this.frame400Url = frame400Url;
     }
     
 }
