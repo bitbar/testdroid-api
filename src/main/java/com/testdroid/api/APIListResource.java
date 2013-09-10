@@ -21,6 +21,7 @@ public class APIListResource<T extends APIEntity> extends APIResource<APIList<T>
         for(APIEntity item: result.getData()) {
             //TODO fix selfURI
             item.client = this.client;
+
             item.selfURI = String.format("%s/%s", this.resourceURI, item.id);
         }
         return result;
@@ -52,7 +53,7 @@ public class APIListResource<T extends APIEntity> extends APIResource<APIList<T>
      * If no next page is available, returns <code>null</code>.
      * @throws APIException on any API errors.
      */
-    public APIListResource<APIList<T>> getNext() throws APIException {
+    public APIListResource<T> getNext() throws APIException {
         if(!isNextAvailable()) {
             return null;
         }
@@ -77,7 +78,7 @@ public class APIListResource<T extends APIEntity> extends APIResource<APIList<T>
      * If no previous page is available, returns <code>null</code>.
      * @throws APIException on any API errors.
      */
-    public APIListResource<APIList<T>> getPrevious() throws APIException {
+    public APIListResource<T> getPrevious() throws APIException {
         if(!isPreviousAvailable()) {
             return null;
         }
