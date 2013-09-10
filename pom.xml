@@ -74,6 +74,13 @@
                 <groupId>com.atlassian.maven.plugins</groupId>
                 <artifactId>maven-jgitflow-plugin</artifactId>
                 <version>1.0-alpha20</version>
+                <configuration>
+                    <flowInitContext>
+                        <developBranchName>devel</developBranchName>
+                    </flowInitContext>
+                    <noDeploy>true</noDeploy>
+                    <keepBranch>true</keepBranch>
+                </configuration>
             </plugin>
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
