@@ -43,8 +43,6 @@ import org.apache.http.protocol.HttpContext;
  */
 public class DefaultAPIClient implements APIClient {
 
-    
-
     protected static Credential getCredential() {
         return new Credential.Builder(BearerToken.queryParameterAccessMethod()).build();
     }
