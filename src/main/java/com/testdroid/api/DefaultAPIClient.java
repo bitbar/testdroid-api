@@ -19,6 +19,7 @@ import java.util.logging.Logger;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
+
 import net.sf.json.JSONObject;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
@@ -36,6 +37,14 @@ import org.apache.http.impl.auth.BasicScheme;
 import org.apache.http.impl.client.BasicAuthCache;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.HttpContext;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Arrays;
 
 /**
  *
@@ -319,6 +328,8 @@ public class DefaultAPIClient implements APIClient {
             }
             request = factory.buildPostRequest(new GenericUrl(resourceUrl), content);
             request.setHeaders(headers);
+            //we handle return values in our code
+            request.setThrowExceptionOnExecuteError(false);
 
             // Call request and parse result
             response = request.execute();
@@ -330,6 +341,7 @@ public class DefaultAPIClient implements APIClient {
             if (response.getStatusCode() < HttpStatus.SC_OK || response.getStatusCode() >= 300) {
                 throw new APIException(response.getStatusCode(), "Failed to post resource: " + response.getStatusMessage());
             }
+
 
             T result = (T) fromXML(response.getContent(), type);
             result.client = this;
