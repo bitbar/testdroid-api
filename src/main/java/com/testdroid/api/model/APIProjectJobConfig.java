@@ -11,8 +11,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement
 public class APIProjectJobConfig extends APIEntity {
     @XmlType(name = "jobConfigType")
-    public static enum Type { DEFAULT, RESIGNING, INSTATEST, CTS, IOS, UIAUTOMATOR, REMOTECONTROL }
-    
+    public static enum Type { DEFAULT, RESIGNING, INSTATEST, CTS, IOS, UIAUTOMATOR, REMOTECONTROL, CALABASH }
+
     private Type type;
     private String content;
     private Integer version;
