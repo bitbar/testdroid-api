@@ -22,13 +22,15 @@ public class APITestRunConfig extends APIEntity {
     }
     @XmlType
     public static enum Mode {
+
         FULL_RUN("Full run"), 
         APP_CRAWLER("App crawler"), 
         CTS("CTS"), 
         IOS("iOS"), 
         UIAUTOMATOR("UIAutomator"), 
         REMOTECONTROL("Remote control"),
-        RECORDERONLINE("Recorder online");
+        RECORDERONLINE("Recorder online"),
+        CALABASH("Calabash");
         
         private String friendlyName;
         
@@ -60,13 +62,14 @@ public class APITestRunConfig extends APIEntity {
     private String uiAutomatorTestClasses;
     private boolean launchApp;
     private String instrumentationRunner;
+    private boolean checkApp;
 
     public APITestRunConfig() {}
 
     public APITestRunConfig(Long id, Long projectId, Scheduler scheduler, Mode mode, boolean autoScreenshots, boolean runAvailable, 
             String screenshotDir, LimitationType limitationType, String limitationValue, String withAnnotation, String withoutAnnotation, 
             String applicationUsername, String applicationPassword, Long usedClusterId, Integer creditsPrice, String deviceLanguageCode, String hookURL,
-            String uiAutomatorTestClasses, Boolean launchApp, String instrumentationRunner) {
+            String uiAutomatorTestClasses, Boolean launchApp, String instrumentationRunner, Boolean checkApp) {
         super(id);
         this.projectId = projectId;
         this.scheduler = scheduler;
@@ -87,6 +90,7 @@ public class APITestRunConfig extends APIEntity {
         this.uiAutomatorTestClasses = uiAutomatorTestClasses;
         this.launchApp = launchApp;
         this.instrumentationRunner = instrumentationRunner;
+        this.checkApp = checkApp;
     }
 
     public Long getProjectId() {
@@ -240,15 +244,24 @@ public class APITestRunConfig extends APIEntity {
     public void setInstrumentationRunner(String instrumentationRunner) {
         this.instrumentationRunner = instrumentationRunner;
     }
+
+    public boolean isCheckApp() {
+        return checkApp;
+    }
+
+    public void setCheckApp(boolean checkApp) {
+        this.checkApp = checkApp;
+    }
     
     public void update() throws APIException {
         String body = String.format("?projectId=%s&scheduler=%s&mode=%s&autoScreenshots=%s&screenshotDir=%s&limitationType=%s&limitationValue=%s&" +
                 "withAnnotation=%s&withoutAnnotation=%s&applicationUsername=%s&applicationPassword=%s&usedClusterId=%s&deviceLanguageCode=%s&"+
-                "hookURL=%s&uiAutomatorTestClasses=%s&launchApp=%s&instrumentationRunner=%s", projectId, scheduler != null? encodeURL(scheduler.name()) : "", 
+                "hookURL=%s&uiAutomatorTestClasses=%s&launchApp=%s&instrumentationRunner=%s&checkApp=%s", projectId, scheduler != null? encodeURL(scheduler.name()) : "", 
                 mode != null ? encodeURL(mode.name()) : "", encodeURL(autoScreenshots), encodeURL(screenshotDir), limitationType != null ? encodeURL(limitationType.name()) : "", 
                 encodeURL(limitationValue), encodeURL(withAnnotation), encodeURL(withoutAnnotation), encodeURL(applicationUsername), encodeURL(applicationPassword), 
-                usedClusterId, encodeURL(deviceLanguageCode), encodeURL(hookURL), encodeURL(uiAutomatorTestClasses), encodeURL(launchApp), encodeURL(instrumentationRunner));
-        APITestRunConfig config = postResource(selfURI+body, null, APITestRunConfig.class);
+                usedClusterId, encodeURL(deviceLanguageCode), encodeURL(hookURL), encodeURL(uiAutomatorTestClasses), encodeURL(launchApp), encodeURL(instrumentationRunner),
+                encodeURL(checkApp));
+        APITestRunConfig config = postResource(selfURI, body, APITestRunConfig.class);
         this.projectId = config.projectId;
         this.scheduler = config.scheduler;
         this.mode = config.mode;
@@ -268,6 +281,7 @@ public class APITestRunConfig extends APIEntity {
         this.uiAutomatorTestClasses = config.uiAutomatorTestClasses;
         this.launchApp = config.launchApp;
         this.instrumentationRunner = config.instrumentationRunner;
+        this.checkApp = config.checkApp;
     }
     
 }

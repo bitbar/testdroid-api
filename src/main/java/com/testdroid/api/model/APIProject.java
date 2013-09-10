@@ -20,11 +20,10 @@ import org.codehaus.jackson.annotate.JsonIgnore;
  */
 @XmlRootElement
 public class APIProject extends APIEntity {
-    
+
     @XmlType(name = "projectType")
     public static enum Type { 
-        ANDROID, CTS, IOS, UIAUTOMATOR, REMOTECONTROL, RECORDERONLINE;
-        
+        ANDROID, CTS, IOS, UIAUTOMATOR, REMOTECONTROL, RECORDERONLINE, CALABASH;
         public Class<? extends APIFiles> getFilesClass() {
             switch(this) {
                 case ANDROID: return AndroidFiles.class;
@@ -33,11 +32,12 @@ public class APIProject extends APIEntity {
                 case UIAUTOMATOR: return UIAutomatorFiles.class;
                 case REMOTECONTROL: return RemoteControlFiles.class;
                 case RECORDERONLINE: return RecorderOnlineFiles.class;
+                case CALABASH: return CalabashFiles.class;
                 default: return null;
             }
         }
     }
-    
+
     private String name;
     private String description;
     private Type type;
@@ -172,7 +172,7 @@ public class APIProject extends APIEntity {
     
     @JsonIgnore
     public APITestRun run(String testRunName) throws APIException {
-        return postResource(getRunsURI(), getCreateRunParameters(testRunName), APITestRun.class);
+        return postResource(getRunsURI(), encodeURL(getCreateRunParameters(testRunName)), APITestRun.class);
     }
     
     public void update() throws APIException {

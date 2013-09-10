@@ -33,12 +33,25 @@ public class APISort {
     }
     
     public static enum Column {
-        USER_ID(APIUser.class, "id"), USER_EMAIL(APIUser.class, "email"), USER_NAME(APIUser.class, "name"), USER_COUNTRY(APIUser.class, "localeCountry"),
-        PROJECT_ID(APIProject.class, "id"), PROJECT_NAME(APIProject.class, "name"), PROJECT_DESCRIPTION(APIProject.class, "description"),
-        TEST_RUN_ID(APITestRun.class, "id"), TEST_RUN_CREATED(APITestRun.class, "createTime"), TEST_RUN_NAME(APITestRun.class, "userName"), TEST_RUN_TAG(APITestRun.class, "t.name", NameType.ABSOLUTE),
-        TAG_ID(APITag.class, "id"), TAG_NAME(APITag.class, "name"), DEVICE_NAME(APIDevice.class, "userName"),
-        DEVICE_RUN_ID(APIDeviceRun.class, "id"), DEVICE_RUN_DEVICE(APIDeviceRun.class, "device.userName"), DEVICE_RUN_CREATED(APIDeviceRunState.class, "createTime"), 
-        DEVICE_RUN_END_TIME(APIDeviceRun.class, "endTime"), DEVICE_RUN_STATE_STARTED(APIDeviceRunState.class, "startTimeMS");
+        DEVICE_NAME(APIDevice.class, "userName"),
+        DEVICE_RUN_CREATED(APIDeviceRunState.class, "createTime"),
+        DEVICE_RUN_DEVICE(APIDeviceRun.class, "device.userName"),
+        DEVICE_RUN_END_TIME(APIDeviceRun.class, "endTime"),
+        DEVICE_RUN_ID(APIDeviceRun.class, "id"),
+        DEVICE_RUN_STATE_STARTED(APIDeviceRunState.class, "startTimeMS"),
+        PROJECT_DESCRIPTION(APIProject.class, "description"),
+        PROJECT_ID(APIProject.class, "id"),
+        PROJECT_NAME(APIProject.class, "name"),
+        TAG_ID(APITag.class, "id"),
+        TAG_NAME(APITag.class, "name"),
+        TEST_RUN_CREATED(APITestRun.class, "createTime"),
+        TEST_RUN_ID(APITestRun.class, "id"),
+        TEST_RUN_NAME(APITestRun.class, "userName"),
+        TEST_RUN_TAG(APITestRun.class, "t.name", NameType.ABSOLUTE),
+        USER_COUNTRY(APIUser.class, "localeCountry"),
+        USER_EMAIL(APIUser.class, "email"),
+        USER_ID(APIUser.class, "id"),
+        USER_NAME(APIUser.class, "name");
         
         public static enum NameType { RELATIVE, ABSOLUTE }
         
@@ -71,7 +84,7 @@ public class APISort {
         public static List<Column> get(Class<? extends APIEntity> type) {
             List<Column> result = new ArrayList<Column>();
             for(Column sc: values()) {
-                if(sc.supportedClass.equals(type)) {
+                if(sc.supportedClass.isAssignableFrom(type)) {
                     result.add(sc);
                 }
             }
