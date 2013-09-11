@@ -5,6 +5,7 @@ import static com.testdroid.api.APIEntity.encodeURL;
 import com.testdroid.api.APIException;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
@@ -282,6 +283,33 @@ public class APITestRunConfig extends APIEntity {
         this.launchApp = config.launchApp;
         this.instrumentationRunner = config.instrumentationRunner;
         this.checkApp = config.checkApp;
+    }
+
+    @Override
+    @JsonIgnore
+    protected <T extends APIEntity> void clone(T from) {
+        APITestRunConfig apiTestRunConfig = (APITestRunConfig) from;
+        cloneBase(from);
+        this.applicationPassword = apiTestRunConfig.applicationPassword;
+        this.applicationUsername = apiTestRunConfig.applicationUsername;
+        this.autoScreenshots = apiTestRunConfig.autoScreenshots;
+        this.checkApp = apiTestRunConfig.checkApp;
+        this.creditsPrice = apiTestRunConfig.creditsPrice;
+        this.deviceLanguageCode = apiTestRunConfig.deviceLanguageCode;
+        this.hookURL = apiTestRunConfig.hookURL;
+        this.instrumentationRunner = apiTestRunConfig.instrumentationRunner;
+        this.launchApp = apiTestRunConfig.launchApp;
+        this.limitationType = apiTestRunConfig.limitationType;
+        this.limitationValue = apiTestRunConfig.limitationValue;
+        this.mode = apiTestRunConfig.mode;
+        this.projectId = apiTestRunConfig.projectId;
+        this.runAvailable = apiTestRunConfig.runAvailable;
+        this.scheduler = apiTestRunConfig.scheduler;
+        this.screenshotDir = apiTestRunConfig.screenshotDir;
+        this.uiAutomatorTestClasses = apiTestRunConfig.uiAutomatorTestClasses;
+        this.usedClusterId = apiTestRunConfig.usedClusterId;
+        this.withAnnotation = apiTestRunConfig.withAnnotation;
+        this.withoutAnnotation = apiTestRunConfig.withoutAnnotation;
     }
     
 }

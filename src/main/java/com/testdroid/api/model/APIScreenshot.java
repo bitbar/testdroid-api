@@ -3,6 +3,7 @@ package com.testdroid.api.model;
 import com.testdroid.api.APIEntity;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
@@ -48,6 +49,16 @@ public class APIScreenshot extends APIEntity {
 
     public void setType(Type type) {
         this.type = type;
+    }
+
+    @Override
+    @JsonIgnore
+    protected <T extends APIEntity> void clone(T from) {
+        APIScreenshot apiScreenshot = (APIScreenshot) from;
+        cloneBase(from);
+        this.fail = apiScreenshot.fail;
+        this.originalName = apiScreenshot.originalName;
+        this.type = apiScreenshot.type;
     }
     
 }

@@ -3,6 +3,7 @@ package com.testdroid.api.model;
 import com.testdroid.api.APIEntity;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
@@ -70,4 +71,15 @@ public class APIProjectJobConfig extends APIEntity {
         this.projectId = projectId;
     }
 
+    @Override
+    @JsonIgnore
+    protected <T extends APIEntity> void clone(T from) {
+        APIProjectJobConfig apiProjectJobConfig = (APIProjectJobConfig) from;
+        cloneBase(from);
+        this.content = apiProjectJobConfig.content;
+        this.global = apiProjectJobConfig.global;
+        this.projectId = apiProjectJobConfig.projectId;
+        this.type = apiProjectJobConfig.type;
+        this.version = apiProjectJobConfig.version;
+    }
 }
