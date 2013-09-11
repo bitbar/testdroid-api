@@ -37,7 +37,7 @@ import org.codehaus.jackson.map.annotate.JsonView;
     APIFiles.UIAutomatorTestFile.class, APITag.class, APIDeviceRun.class, APIDeviceRunState.class, APISoftwareVersion.class, APIScreenshot.class, APIDevice.class,
     APIDeviceProperty.class, APINotificationEmail.class, APITestCaseRun.class, APITestCaseRunStep.class, APIRecorderOnlineSession.class, APIFiles.CalabashTestFile.class,
     CalabashFiles.class})
-public abstract class APIEntity implements Cloneable {
+public abstract class APIEntity {
 
     private static final DateFormat API_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd_HH:mm");
     private static final String ENCODING = "UTF-8";
