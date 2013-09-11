@@ -1,5 +1,6 @@
 package com.testdroid.api.model;
 
+import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIException;
 import com.testdroid.api.APIListResource;
 import com.testdroid.api.APISort;
@@ -52,5 +53,13 @@ public class APIDeviceGroup extends APIDeviceProperty {
     
     public void deleteDevice(APIDevice device) throws APIException {
         deleteResource(getIncludedDevicesURI() + "/" + device.getId());
+    }
+
+    @Override
+    @JsonIgnore
+    protected <T extends APIEntity> void clone(T from) {
+        super.clone(from);
+        APIDeviceGroup apiDeviceGroup = (APIDeviceGroup) from;
+        this.userId = apiDeviceGroup.userId;
     }
 }

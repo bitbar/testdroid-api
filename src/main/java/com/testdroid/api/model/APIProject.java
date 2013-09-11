@@ -178,12 +178,7 @@ public class APIProject extends APIEntity {
     public void update() throws APIException {
         String body = String.format("name=%s&description=%s&type=%s", encodeURL(name), encodeURL(description), encodeURL(type.name()));
         APIProject project = postResource(selfURI, body, APIProject.class);
-        this.id = project.id;
-        this.name = project.name;
-        this.description = project.description;
-        this.type = project.type;
-        this.common = project.common;
-        this.sharedById = project.sharedById;
+        clone(project);
     }
     
     public void delete() throws APIException {
@@ -228,5 +223,21 @@ public class APIProject extends APIEntity {
     @JsonIgnore
     public APIFiles.APIFile uploadData(File file, String contentType) throws APIException {
         return postFile(getUploadDataURI(), file, contentType, APIFile.class);
+    }
+    
+    @Override
+    @JsonIgnore
+    protected <T extends APIEntity> void clone(T from) {
+        APIProject apiProject = (APIProject) from;
+        cloneBase(from);
+        this.common = apiProject.common;
+        this.description = apiProject.description;
+        this.files = apiProject.files;
+        this.icon = apiProject.icon;
+        this.jobConfig = apiProject.jobConfig;
+        this.name = apiProject.name;
+        this.sharedById = apiProject.sharedById;
+        this.testRunConfig = apiProject.testRunConfig;
+        this.type = apiProject.type;
     }
 }
