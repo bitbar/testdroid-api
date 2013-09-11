@@ -55,7 +55,7 @@ public class APITestRunConfig extends APIEntity {
     private String withoutAnnotation;
     private String applicationUsername;
     private String applicationPassword;
-    private Long usedClusterId;
+    private Long usedDeviceGroupId;
     private Integer creditsPrice;
     private String deviceLanguageCode;
     private String hookURL;
@@ -83,7 +83,7 @@ public class APITestRunConfig extends APIEntity {
         this.withoutAnnotation = withoutAnnotation;
         this.applicationUsername = applicationUsername;
         this.applicationPassword = applicationPassword;
-        this.usedClusterId = usedClusterId;
+        this.usedDeviceGroupId = usedClusterId;
         this.creditsPrice = creditsPrice;
         this.deviceLanguageCode = deviceLanguageCode;
         this.hookURL = hookURL;
@@ -189,12 +189,12 @@ public class APITestRunConfig extends APIEntity {
         this.applicationPassword = applicationPassword;
     }
 
-    public Long getUsedClusterId() {
-        return usedClusterId;
+    public Long getUsedDeviceGroupId() {
+        return usedDeviceGroupId;
     }
 
-    public void setUsedClusterId(Long usedClusterId) {
-        this.usedClusterId = usedClusterId;
+    public void setUsedDeviceGroupId(Long usedDeviceGroupId) {
+        this.usedDeviceGroupId = usedDeviceGroupId;
     }
 
     public Integer getCreditsPrice() {
@@ -259,7 +259,7 @@ public class APITestRunConfig extends APIEntity {
                 "hookURL=%s&uiAutomatorTestClasses=%s&launchApp=%s&instrumentationRunner=%s&checkApp=%s", projectId, scheduler != null? encodeURL(scheduler.name()) : "", 
                 mode != null ? encodeURL(mode.name()) : "", encodeURL(autoScreenshots), encodeURL(screenshotDir), limitationType != null ? encodeURL(limitationType.name()) : "", 
                 encodeURL(limitationValue), encodeURL(withAnnotation), encodeURL(withoutAnnotation), encodeURL(applicationUsername), encodeURL(applicationPassword), 
-                usedClusterId, encodeURL(deviceLanguageCode), encodeURL(hookURL), encodeURL(uiAutomatorTestClasses), encodeURL(launchApp), encodeURL(instrumentationRunner),
+                usedDeviceGroupId, encodeURL(deviceLanguageCode), encodeURL(hookURL), encodeURL(uiAutomatorTestClasses), encodeURL(launchApp), encodeURL(instrumentationRunner),
                 encodeURL(checkApp));
         APITestRunConfig config = postResource(selfURI, body, APITestRunConfig.class);
         this.projectId = config.projectId;
@@ -274,7 +274,7 @@ public class APITestRunConfig extends APIEntity {
         this.withoutAnnotation = config.withoutAnnotation;
         this.applicationUsername = config.applicationUsername;
         this.applicationPassword = config.applicationPassword;
-        this.usedClusterId = config.usedClusterId;
+        this.usedDeviceGroupId = config.usedDeviceGroupId;
         this.creditsPrice = config.creditsPrice;
         this.deviceLanguageCode = config.deviceLanguageCode;
         this.hookURL = config.hookURL;

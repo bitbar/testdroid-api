@@ -46,6 +46,34 @@ public class APIList<T extends APIEntity> extends APIEntity {
     public void setNext(String next) {
         this.next = next;
     }
+    
+    /**
+     * Returns <code>true</code> if next page of items is available.
+     */
+    public boolean isNextAvailable() {
+        return offset + limit < total && !data.isEmpty();
+    }
+    
+    public APIList<T> getNextItems() throws APIException {
+        if(!isNextAvailable()) {
+            return null;
+        }
+        return new APIListResource(client, next, null, null, null, null, data.get(0).getClass()).getEntity();
+    }
+    
+    /**
+     * Returns <code>true</code> if previous page of items is available.
+     */
+    public boolean isPreviousAvailable() {
+        return offset > 0;
+    }
+    
+    public APIList<T> getPreviousItems() throws APIException {
+        if(!isPreviousAvailable()) {
+            return null;
+        }
+        return new APIListResource(client, previous, null, null, null, null, data.get(0).getClass()).getEntity();
+    }
 
     /**
      * Get full URL of the previous page of the collection.
