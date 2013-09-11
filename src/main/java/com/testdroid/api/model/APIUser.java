@@ -194,6 +194,11 @@ public class APIUser extends APIEntity {
     }
     
     @JsonIgnore
+    public APIDeviceGroup createDeviceGroup(String name) throws APIException {
+        return postResource(getDeviceGroupsURI(), String.format("name=%s", encodeURL(name)), APIDeviceGroup.class);
+    }
+    
+    @JsonIgnore
     public APINotificationEmail createNotificationEmail(String email, APINotificationEmail.Type type) throws APIException {
         return postResource(getNotificationsURI(), getCreateNotificationParams(email, type), APINotificationEmail.class);
     }
@@ -217,4 +222,27 @@ public class APIUser extends APIEntity {
     public void deleteNotificationEmail(long id) throws APIException {
         deleteResource(getNotificationURI(id));
     }
+
+    @Override
+    @JsonIgnore
+    protected <T extends APIEntity> void clone(T from) {
+        APIUser apiUser = (APIUser) from;
+        cloneBase(from);
+        this.address = apiUser.address;
+        this.city = apiUser.city;
+        this.code = apiUser.code;
+        this.country = apiUser.country;
+        this.email = apiUser.email;
+        this.enabled = apiUser.enabled;
+        this.name = apiUser.name;
+        this.organization = apiUser.organization;
+        this.phone = apiUser.phone;
+        this.roles = apiUser.roles;
+        this.state = apiUser.state;
+        this.timeZone = apiUser.timeZone;
+        this.vatID = apiUser.vatID;
+    }
+    
+    
+    
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.map.annotate.JsonView;
 
@@ -177,6 +178,21 @@ public class APIList<T extends APIEntity> extends APIEntity {
     @JsonView(APIView.class)
     public boolean hasId() {
         return false;
+    }
+
+    @Override
+    @JsonIgnore
+    protected <S extends APIEntity> void clone(S from) {
+        APIList<T> apiList = (APIList<T>) from;
+        cloneBase(from);
+        this.data = apiList.data;
+        this.limit = apiList.limit;
+        this.next = apiList.next;
+        this.offset = apiList.offset;
+        this.previous = apiList.previous;
+        this.search = apiList.search;
+        this.sort = apiList.sort;
+        this.total = apiList.total;
     }
 
 }

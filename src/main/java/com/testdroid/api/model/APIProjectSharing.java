@@ -2,6 +2,7 @@ package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
@@ -23,6 +24,14 @@ public class APIProjectSharing extends APIEntity {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    @Override
+    @JsonIgnore
+    protected <T extends APIEntity> void clone(T from) {
+        APIProjectSharing apiProjectSharing = (APIProjectSharing) from;
+        cloneBase(from);
+        this.userId = apiProjectSharing.userId;
     }
     
 }

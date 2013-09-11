@@ -5,6 +5,7 @@ import static com.testdroid.api.APIEntity.encodeURL;
 import com.testdroid.api.APIException;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
@@ -262,26 +263,34 @@ public class APITestRunConfig extends APIEntity {
                 usedDeviceGroupId, encodeURL(deviceLanguageCode), encodeURL(hookURL), encodeURL(uiAutomatorTestClasses), encodeURL(launchApp), encodeURL(instrumentationRunner),
                 encodeURL(checkApp));
         APITestRunConfig config = postResource(selfURI, body, APITestRunConfig.class);
-        this.projectId = config.projectId;
-        this.scheduler = config.scheduler;
-        this.mode = config.mode;
-        this.autoScreenshots = config.autoScreenshots;
-        this.runAvailable = config.runAvailable;
-        this.screenshotDir = config.screenshotDir;
-        this.limitationType = config.limitationType;
-        this.limitationValue = config.limitationValue;
-        this.withAnnotation = config.withAnnotation;
-        this.withoutAnnotation = config.withoutAnnotation;
-        this.applicationUsername = config.applicationUsername;
-        this.applicationPassword = config.applicationPassword;
-        this.usedDeviceGroupId = config.usedDeviceGroupId;
-        this.creditsPrice = config.creditsPrice;
-        this.deviceLanguageCode = config.deviceLanguageCode;
-        this.hookURL = config.hookURL;
-        this.uiAutomatorTestClasses = config.uiAutomatorTestClasses;
-        this.launchApp = config.launchApp;
-        this.instrumentationRunner = config.instrumentationRunner;
-        this.checkApp = config.checkApp;
+        clone(config);
+    }
+
+    @Override
+    @JsonIgnore
+    protected <T extends APIEntity> void clone(T from) {
+        APITestRunConfig apiTestRunConfig = (APITestRunConfig) from;
+        cloneBase(from);
+        this.applicationPassword = apiTestRunConfig.applicationPassword;
+        this.applicationUsername = apiTestRunConfig.applicationUsername;
+        this.autoScreenshots = apiTestRunConfig.autoScreenshots;
+        this.checkApp = apiTestRunConfig.checkApp;
+        this.creditsPrice = apiTestRunConfig.creditsPrice;
+        this.deviceLanguageCode = apiTestRunConfig.deviceLanguageCode;
+        this.hookURL = apiTestRunConfig.hookURL;
+        this.instrumentationRunner = apiTestRunConfig.instrumentationRunner;
+        this.launchApp = apiTestRunConfig.launchApp;
+        this.limitationType = apiTestRunConfig.limitationType;
+        this.limitationValue = apiTestRunConfig.limitationValue;
+        this.mode = apiTestRunConfig.mode;
+        this.projectId = apiTestRunConfig.projectId;
+        this.runAvailable = apiTestRunConfig.runAvailable;
+        this.scheduler = apiTestRunConfig.scheduler;
+        this.screenshotDir = apiTestRunConfig.screenshotDir;
+        this.uiAutomatorTestClasses = apiTestRunConfig.uiAutomatorTestClasses;
+        this.usedDeviceGroupId = apiTestRunConfig.usedDeviceGroupId;
+        this.withAnnotation = apiTestRunConfig.withAnnotation;
+        this.withoutAnnotation = apiTestRunConfig.withoutAnnotation;
     }
     
 }
