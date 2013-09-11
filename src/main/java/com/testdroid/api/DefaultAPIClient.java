@@ -47,7 +47,15 @@ public class DefaultAPIClient implements APIClient {
     protected static Credential getCredential() {
         return new Credential.Builder(BearerToken.queryParameterAccessMethod()).build();
     }
-    
+    static final JAXBContext context = initContext();
+
+    private static JAXBContext initContext() {
+        try {
+            return JAXBContext.newInstance("com.testdroid.api:com.testdroid.api");
+        } catch (JAXBException e) {
+        }
+        return null;
+    }
     protected static String API_URI = "/api/v2";
     public final static int HTTP_CONNECT_TIMEOUT = 60000;
     public final static int HTTP_READ_TIMEOUT = 60000;
@@ -431,7 +439,6 @@ public class DefaultAPIClient implements APIClient {
 
     private static <T> T fromXML(String xml, Class<T> type) throws APIException {
         try {
-            JAXBContext context = JAXBContext.newInstance(type);
             Unmarshaller unmarshaller = context.createUnmarshaller();
             return (T) unmarshaller.unmarshal(new StringReader(xml));
         } catch (JAXBException ex) {
@@ -441,7 +448,6 @@ public class DefaultAPIClient implements APIClient {
 
     private static <T> T fromXML(InputStream inputStream, Class<T> type) throws APIException {
         try {
-            JAXBContext context = JAXBContext.newInstance(type);
             Unmarshaller unmarshaller = context.createUnmarshaller();
             return (T) unmarshaller.unmarshal(inputStream);
         } catch (JAXBException ex) {
