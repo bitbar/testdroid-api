@@ -17,7 +17,7 @@ public class APIListResource<T extends APIEntity> extends APIResource<APIList<T>
 
     @Override
     public APIList<T> getEntity() throws APIException {
-        APIList<T> result = super.getEntity(); //To change body of generated methods, choose Tools | Templates.
+        APIList<T> result = super.getEntity();
         for(APIEntity item: result.getData()) {
             //TODO fix selfURI
             item.client = this.client;
@@ -57,7 +57,17 @@ public class APIListResource<T extends APIEntity> extends APIResource<APIList<T>
         if(!isNextAvailable()) {
             return null;
         }
-        return new APIListResource(client, getEntity().getNext(), null, null, null, null, type);
+        String uri =  getEntity().getNext();
+        int paramIndex = uri.indexOf("?");
+        int origParamIndex = resourceURI.indexOf("?");
+        if(origParamIndex != -1) {
+            uri = resourceURI.substring(0,origParamIndex) + uri.substring(paramIndex, uri.length());
+        }
+        else {
+            uri = resourceURI + uri.substring(paramIndex, uri.length());
+        }
+
+        return new APIListResource(client, uri, null, null, null, null, type);
     }
     
     /**
@@ -82,7 +92,16 @@ public class APIListResource<T extends APIEntity> extends APIResource<APIList<T>
         if(!isPreviousAvailable()) {
             return null;
         }
-        return new APIListResource(client, getEntity().getPrevious(), null, null, null, null, type);
+        String uri =  getEntity().getNext();
+        int paramIndex = uri.indexOf("?");
+        int origParamIndex = resourceURI.indexOf("?");
+        if(origParamIndex != -1) {
+            uri = resourceURI.substring(0,origParamIndex) + uri.substring(paramIndex, uri.length());
+        }
+        else {
+            uri = resourceURI + uri.substring(paramIndex, uri.length());
+        }
+        return new APIListResource(client, uri, null, null, null, null, type);
     }
     
     private static String getNotNullValue(Object obj) {
