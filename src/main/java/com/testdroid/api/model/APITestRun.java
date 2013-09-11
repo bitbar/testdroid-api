@@ -169,6 +169,23 @@ public class APITestRun extends APIEntity {
     public void update() throws APIException {
         String body = String.format("displayName=%s", encodeURL(displayName));
         APITestRun testRun = postResource(selfURI, body, APITestRun.class);
-        this.displayName = testRun.displayName;
+        clone(testRun);
+    }
+
+    @Override
+    @JsonIgnore
+    protected <T extends APIEntity> void clone(T from) {
+        APITestRun apiTestRun = (APITestRun) from;
+        cloneBase(from);
+        this.config = apiTestRun.config;
+        this.createTime = apiTestRun.createTime;
+        this.displayName = apiTestRun.displayName;
+        this.executionRatio = apiTestRun.executionRatio;
+        this.files = apiTestRun.files;
+        this.number = apiTestRun.number;
+        this.screenshotZipState = apiTestRun.screenshotZipState;
+        this.startedByDisplayName = apiTestRun.startedByDisplayName;
+        this.state = apiTestRun.state;
+        this.successRatio = apiTestRun.successRatio;
     }
 }

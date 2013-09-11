@@ -1,19 +1,23 @@
 package com.testdroid.api.model;
 
+import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIException;
 import com.testdroid.api.model.APIFiles;
 import java.io.File;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
  * @author kajdus
  */
-@XmlRootElement public class UIAutomatorFiles extends APIFiles {
+@XmlRootElement 
+public class UIAutomatorFiles extends APIFiles {
     private AndroidAppFile androidApp;
     private UIAutomatorTestFile uiAutomatorTest;
 
     public UIAutomatorFiles() {}
+    
     public UIAutomatorFiles(Long id, DataFile data, AndroidAppFile androidApp, UIAutomatorTestFile uiAutomatorTest) {
         super(id, data);
         this.androidApp = androidApp;
@@ -43,4 +47,14 @@ import javax.xml.bind.annotation.XmlRootElement;
     public void uploadTest(File file) throws APIException {
         this.uiAutomatorTest = client.postFile(getTestURI(), "application/vnd.android.package-archive", file, UIAutomatorTestFile.class);
     }
+
+    @Override
+    @JsonIgnore
+    protected <T extends APIEntity> void clone(T from) {
+        super.clone(from);
+        UIAutomatorFiles uiAutomatorFiles = (UIAutomatorFiles) from;
+        this.androidApp = uiAutomatorFiles.androidApp;
+        this.uiAutomatorTest = uiAutomatorFiles.uiAutomatorTest;
+    }
+    
 }

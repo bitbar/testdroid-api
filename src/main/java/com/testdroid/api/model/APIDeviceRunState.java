@@ -4,6 +4,7 @@ import com.testdroid.api.APIEntity;
 import java.util.Date;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
@@ -89,7 +90,18 @@ public class APIDeviceRunState extends APIEntity {
         this.type = type;
     }
 
-    
-    
+    @Override
+    @JsonIgnore
+    protected <T extends APIEntity> void clone(T from) {
+        APIDeviceRunState apiDeviceRunState = (APIDeviceRunState) from;
+        cloneBase(from);
+        this.deviceRunId = apiDeviceRunState.deviceRunId;
+        this.failReason = apiDeviceRunState.failReason;
+        this.finishTimeMS = apiDeviceRunState.finishTimeMS;
+        this.retryTime = apiDeviceRunState.retryTime;
+        this.startTimeMS = apiDeviceRunState.startTimeMS;
+        this.status = apiDeviceRunState.status;
+        this.type = apiDeviceRunState.type;
+    }
     
 }
