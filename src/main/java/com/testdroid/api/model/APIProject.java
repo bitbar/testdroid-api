@@ -120,7 +120,7 @@ public class APIProject extends APIEntity {
     private String getNotificationsURI() { return selfURI + "/notifications"; }
 
     private String getCreateRunParameters(String testRunName) {
-        return String.format("name=%s", testRunName);
+        return String.format("name=%s", encodeURL(testRunName));
     }
     
     @JsonIgnore
@@ -172,7 +172,7 @@ public class APIProject extends APIEntity {
     
     @JsonIgnore
     public APITestRun run(String testRunName) throws APIException {
-        return postResource(getRunsURI(), encodeURL(getCreateRunParameters(testRunName)), APITestRun.class);
+        return postResource(getRunsURI(), getCreateRunParameters(testRunName), APITestRun.class);
     }
     
     public void update() throws APIException {

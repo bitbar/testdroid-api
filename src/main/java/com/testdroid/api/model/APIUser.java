@@ -194,6 +194,11 @@ public class APIUser extends APIEntity {
     }
     
     @JsonIgnore
+    public APIDeviceGroup createDeviceGroup(String name) throws APIException {
+        return postResource(getDeviceGroupsURI(), String.format("name=%s", encodeURL(name)), APIDeviceGroup.class);
+    }
+    
+    @JsonIgnore
     public APINotificationEmail createNotificationEmail(String email, APINotificationEmail.Type type) throws APIException {
         return postResource(getNotificationsURI(), getCreateNotificationParams(email, type), APINotificationEmail.class);
     }
