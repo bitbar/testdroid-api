@@ -2,6 +2,7 @@ package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
@@ -34,6 +35,15 @@ public class APITestRunParameter extends APIEntity {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    @Override
+    @JsonIgnore
+    protected <T extends APIEntity> void clone(T from) {
+        APITestRunParameter apiTestRunParameter = (APITestRunParameter) from;
+        cloneBase(from);
+        this.key = apiTestRunParameter.key;
+        this.value = apiTestRunParameter.value;
     }
     
 }

@@ -2,6 +2,7 @@ package com.testdroid.api;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 /**
@@ -28,6 +29,14 @@ public class APIArray<T> extends APIEntity {
 
     public void setItems(T[] items) {
         this.items = items;
+    }
+
+    @Override
+    @JsonIgnore
+    protected <S extends APIEntity> void clone(S from) {
+        APIArray<T> apiArray = (APIArray<T>) from;
+        cloneBase(from);
+        this.items = apiArray.items;
     }
 
 }

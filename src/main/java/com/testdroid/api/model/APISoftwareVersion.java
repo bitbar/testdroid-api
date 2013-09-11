@@ -2,6 +2,7 @@ package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
@@ -35,5 +36,14 @@ public class APISoftwareVersion extends APIEntity {
     public void setApiLevel(Integer apiLevel) {
         this.apiLevel = apiLevel;
     }
-        
+
+    @Override
+    @JsonIgnore
+    protected <T extends APIEntity> void clone(T from) {
+        APISoftwareVersion apiSoftwareVersion = (APISoftwareVersion) from;
+        cloneBase(from);
+        this.apiLevel = apiSoftwareVersion.apiLevel;
+        this.releaseVersion = apiSoftwareVersion.releaseVersion;
+    }
+    
 }
