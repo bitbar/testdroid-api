@@ -1,15 +1,18 @@
 package com.testdroid.api.model;
 
+import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIException;
 import com.testdroid.api.model.APIFiles;
 import java.io.File;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
  * @author kajdus
  */
-@XmlRootElement public class AndroidFiles extends APIFiles {
+@XmlRootElement 
+public class AndroidFiles extends APIFiles {
     private AndroidAppFile androidApp;
     private AndroidTestFile androidTest;
 
@@ -42,6 +45,15 @@ import javax.xml.bind.annotation.XmlRootElement;
 
     public void uploadTest(File file) throws APIException {
         this.androidTest = client.postFile(getTestURI(), "application/vnd.android.package-archive", file, AndroidTestFile.class);
+    }
+
+    @Override
+    @JsonIgnore
+    protected <T extends APIEntity> void clone(T from) {
+        super.clone(from);
+        AndroidFiles androidFiles = (AndroidFiles) from;
+        this.androidApp = androidFiles.androidApp;
+        this.androidTest = androidFiles.androidTest;
     }
 
 }

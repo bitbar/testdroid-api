@@ -4,6 +4,7 @@ import com.testdroid.api.APIEntity;
 import java.util.Date;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 /**
@@ -71,6 +72,18 @@ public class APIRecorderOnlineSession extends APIEntity {
 
     public void setSessionKey(String sessionKey) {
         this.sessionKey = sessionKey;
+    }
+
+    @Override
+    @JsonIgnore
+    protected <T extends APIEntity> void clone(T from) {
+        APIRecorderOnlineSession apiRecorderOnlineSession = (APIRecorderOnlineSession) from;
+        cloneBase(from);
+        this.endTime = apiRecorderOnlineSession.endTime;
+        this.screenplayContent = apiRecorderOnlineSession.screenplayContent;
+        this.sessionKey = apiRecorderOnlineSession.sessionKey;
+        this.startTime = apiRecorderOnlineSession.startTime;
+        this.updateTime = apiRecorderOnlineSession.updateTime;
     }
     
 }
