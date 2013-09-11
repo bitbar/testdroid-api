@@ -178,12 +178,7 @@ public class APIProject extends APIEntity {
     public void update() throws APIException {
         String body = String.format("name=%s&description=%s&type=%s", encodeURL(name), encodeURL(description), encodeURL(type.name()));
         APIProject project = postResource(selfURI, body, APIProject.class);
-        this.id = project.id;
-        this.name = project.name;
-        this.description = project.description;
-        this.type = project.type;
-        this.common = project.common;
-        this.sharedById = project.sharedById;
+        clone(project);
     }
     
     public void delete() throws APIException {

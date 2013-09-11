@@ -169,7 +169,7 @@ public class APITestRun extends APIEntity {
     public void update() throws APIException {
         String body = String.format("displayName=%s", encodeURL(displayName));
         APITestRun testRun = postResource(selfURI, body, APITestRun.class);
-        this.displayName = testRun.displayName;
+        clone(testRun);
     }
 
     @Override

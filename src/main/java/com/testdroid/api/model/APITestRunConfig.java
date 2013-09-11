@@ -263,26 +263,7 @@ public class APITestRunConfig extends APIEntity {
                 usedClusterId, encodeURL(deviceLanguageCode), encodeURL(hookURL), encodeURL(uiAutomatorTestClasses), encodeURL(launchApp), encodeURL(instrumentationRunner),
                 encodeURL(checkApp));
         APITestRunConfig config = postResource(selfURI, body, APITestRunConfig.class);
-        this.projectId = config.projectId;
-        this.scheduler = config.scheduler;
-        this.mode = config.mode;
-        this.autoScreenshots = config.autoScreenshots;
-        this.runAvailable = config.runAvailable;
-        this.screenshotDir = config.screenshotDir;
-        this.limitationType = config.limitationType;
-        this.limitationValue = config.limitationValue;
-        this.withAnnotation = config.withAnnotation;
-        this.withoutAnnotation = config.withoutAnnotation;
-        this.applicationUsername = config.applicationUsername;
-        this.applicationPassword = config.applicationPassword;
-        this.usedClusterId = config.usedClusterId;
-        this.creditsPrice = config.creditsPrice;
-        this.deviceLanguageCode = config.deviceLanguageCode;
-        this.hookURL = config.hookURL;
-        this.uiAutomatorTestClasses = config.uiAutomatorTestClasses;
-        this.launchApp = config.launchApp;
-        this.instrumentationRunner = config.instrumentationRunner;
-        this.checkApp = config.checkApp;
+        clone(config);
     }
 
     @Override
