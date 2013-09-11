@@ -51,10 +51,12 @@ public class APIList<T extends APIEntity> extends APIEntity {
     /**
      * Returns <code>true</code> if next page of items is available.
      */
+    @JsonIgnore
     public boolean isNextAvailable() {
         return offset + limit < total && !data.isEmpty();
     }
     
+    @JsonIgnore
     public APIList<T> getNextItems() throws APIException {
         if(!isNextAvailable()) {
             return null;
@@ -65,10 +67,12 @@ public class APIList<T extends APIEntity> extends APIEntity {
     /**
      * Returns <code>true</code> if previous page of items is available.
      */
+    @JsonIgnore
     public boolean isPreviousAvailable() {
         return offset > 0;
     }
     
+    @JsonIgnore
     public APIList<T> getPreviousItems() throws APIException {
         if(!isPreviousAvailable()) {
             return null;
