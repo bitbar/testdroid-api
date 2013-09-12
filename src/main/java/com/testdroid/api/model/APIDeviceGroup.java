@@ -36,6 +36,7 @@ public class APIDeviceGroup extends APIDeviceProperty {
     }
     
     private String getIncludedDevicesURI() { return selfURI + "/devices"; };
+    private String getIncludedDevicesURI(Long deviceId) { return selfURI + "/devices/" + deviceId; };
     
     @JsonIgnore
     public APIListResource<APIDevice> getIncludedDevicesResource() throws APIException {
@@ -48,11 +49,11 @@ public class APIDeviceGroup extends APIDeviceProperty {
     }
     
     public void addDevice(APIDevice device) throws APIException {
-        postResource(getIncludedDevicesURI(), String.format("id=%s" + device.getId()), null);
+        postResource(getIncludedDevicesURI(), String.format("id=%s", device.getId()), null);
     }
     
     public void deleteDevice(APIDevice device) throws APIException {
-        deleteResource(getIncludedDevicesURI() + "/" + device.getId());
+        deleteResource(getIncludedDevicesURI(device.getId()));
     }
 
     @Override
