@@ -331,14 +331,19 @@ public class DefaultAPIClient implements APIClient {
                 throw new APIException(response.getStatusCode(), "Failed to post resource: " + response.getStatusMessage());
             }
 
-            T result = (T) fromXML(response.getContent(), type);
-            result.client = this;
-            result.selfURI = uri;
-            // In case of entity creation, we need to update its url
-            if (response.getStatusCode() == HttpStatus.SC_CREATED && result.hasId()) {
-                result.selfURI += String.format("/%s", result.getId());
+            if(type != null) {
+                T result = (T) fromXML(response.getContent(), type);
+                result.client = this;
+                result.selfURI = uri;
+
+                // In case of entity creation, we need to update its url
+                if (response.getStatusCode() == HttpStatus.SC_CREATED && result.hasId()) {
+                    result.selfURI += String.format("/%s", result.getId());
+                }
+                return result;
+            } else { 
+                return null;
             }
-            return result;
         } catch (HttpResponseException ex) {
             APIExceptionMessage exceptionMessage = fromXML(ex.getContent(), APIExceptionMessage.class);
             throw new APIException(ex.getStatusCode(), exceptionMessage.getMessage(), ex);
