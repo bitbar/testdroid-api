@@ -47,6 +47,38 @@ public class APIList<T extends APIEntity> extends APIEntity {
     public void setNext(String next) {
         this.next = next;
     }
+    
+    /**
+     * Returns <code>true</code> if next page of items is available.
+     */
+    @JsonIgnore
+    public boolean isNextAvailable() {
+        return offset + limit < total && !data.isEmpty();
+    }
+    
+    @JsonIgnore
+    public APIList<T> getNextItems() throws APIException {
+        if(!isNextAvailable()) {
+            return null;
+        }
+        return new APIListResource(client, getURI(next), null, null, null, null, data.get(0).getClass()).getEntity();
+    }
+    
+    /**
+     * Returns <code>true</code> if previous page of items is available.
+     */
+    @JsonIgnore
+    public boolean isPreviousAvailable() {
+        return offset > 0;
+    }
+    
+    @JsonIgnore
+    public APIList<T> getPreviousItems() throws APIException {
+        if(!isPreviousAvailable()) {
+            return null;
+        }
+        return new APIListResource(client, getURI(previous), null, null, null, null, data.get(0).getClass()).getEntity();
+    }
 
     /**
      * Get full URL of the previous page of the collection.
@@ -165,6 +197,10 @@ public class APIList<T extends APIEntity> extends APIEntity {
         this.search = apiList.search;
         this.sort = apiList.sort;
         this.total = apiList.total;
+    }
+    
+    private String getURI(String fullURL) {
+        return fullURL.substring(fullURL.indexOf(DefaultAPIClient.API_URI) + DefaultAPIClient.API_URI.length());
     }
 
 }
