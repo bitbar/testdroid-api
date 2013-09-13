@@ -53,6 +53,8 @@
 				<directory>src/main/java</directory>
 				<includes>
 					<include>**/jaxb.index</include>
+                                        <include>fixtures/*.zip</include>
+                                        <include>fixtures/*.apk</include>
 				</includes>
 				<excludes>
 					<exclude>**/*.java</exclude>
