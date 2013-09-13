@@ -13,7 +13,7 @@ import com.testdroid.api.sample.util.Common;
  */
 public class CreateProjectSample {
 
-    public static final APIClient client = Common.createApiClient();
+    public static final APIClient CLIENT = Common.createApiClient();
     
     public static void main(String[] args) {
         APIUser me;
@@ -22,7 +22,7 @@ public class CreateProjectSample {
         APIProject project2;
         try {
             // Get authenticated user
-            me = client.me();
+            me = CLIENT.me();
             
             // Create proejct with selected type
             project = me.createProject(APIProject.Type.ANDROID);
