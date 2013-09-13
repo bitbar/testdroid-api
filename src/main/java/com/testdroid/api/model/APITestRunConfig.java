@@ -5,6 +5,7 @@ import static com.testdroid.api.APIEntity.encodeURL;
 import com.testdroid.api.APIException;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
@@ -55,20 +56,21 @@ public class APITestRunConfig extends APIEntity {
     private String withoutAnnotation;
     private String applicationUsername;
     private String applicationPassword;
-    private Long usedClusterId;
+    private Long usedDeviceGroupId;
     private Integer creditsPrice;
     private String deviceLanguageCode;
     private String hookURL;
     private String uiAutomatorTestClasses;
     private boolean launchApp;
     private String instrumentationRunner;
+    private boolean checkApp;
 
     public APITestRunConfig() {}
 
     public APITestRunConfig(Long id, Long projectId, Scheduler scheduler, Mode mode, boolean autoScreenshots, boolean runAvailable, 
             String screenshotDir, LimitationType limitationType, String limitationValue, String withAnnotation, String withoutAnnotation, 
             String applicationUsername, String applicationPassword, Long usedClusterId, Integer creditsPrice, String deviceLanguageCode, String hookURL,
-            String uiAutomatorTestClasses, Boolean launchApp, String instrumentationRunner) {
+            String uiAutomatorTestClasses, Boolean launchApp, String instrumentationRunner, Boolean checkApp) {
         super(id);
         this.projectId = projectId;
         this.scheduler = scheduler;
@@ -82,13 +84,14 @@ public class APITestRunConfig extends APIEntity {
         this.withoutAnnotation = withoutAnnotation;
         this.applicationUsername = applicationUsername;
         this.applicationPassword = applicationPassword;
-        this.usedClusterId = usedClusterId;
+        this.usedDeviceGroupId = usedClusterId;
         this.creditsPrice = creditsPrice;
         this.deviceLanguageCode = deviceLanguageCode;
         this.hookURL = hookURL;
         this.uiAutomatorTestClasses = uiAutomatorTestClasses;
         this.launchApp = launchApp;
         this.instrumentationRunner = instrumentationRunner;
+        this.checkApp = checkApp;
     }
 
     public Long getProjectId() {
@@ -187,12 +190,12 @@ public class APITestRunConfig extends APIEntity {
         this.applicationPassword = applicationPassword;
     }
 
-    public Long getUsedClusterId() {
-        return usedClusterId;
+    public Long getUsedDeviceGroupId() {
+        return usedDeviceGroupId;
     }
 
-    public void setUsedClusterId(Long usedClusterId) {
-        this.usedClusterId = usedClusterId;
+    public void setUsedDeviceGroupId(Long usedDeviceGroupId) {
+        this.usedDeviceGroupId = usedDeviceGroupId;
     }
 
     public Integer getCreditsPrice() {
@@ -242,34 +245,52 @@ public class APITestRunConfig extends APIEntity {
     public void setInstrumentationRunner(String instrumentationRunner) {
         this.instrumentationRunner = instrumentationRunner;
     }
+
+    public boolean isCheckApp() {
+        return checkApp;
+    }
+
+    public void setCheckApp(boolean checkApp) {
+        this.checkApp = checkApp;
+    }
     
     public void update() throws APIException {
         String body = String.format("projectId=%s&scheduler=%s&mode=%s&autoScreenshots=%s&screenshotDir=%s&limitationType=%s&limitationValue=%s&" +
-                "withAnnotation=%s&withoutAnnotation=%s&applicationUsername=%s&applicationPassword=%s&usedClusterId=%s&deviceLanguageCode=%s&"+
-                "hookURL=%s&uiAutomatorTestClasses=%s&launchApp=%s&instrumentationRunner=%s", projectId, scheduler != null? encodeURL(scheduler.name()) : "", 
+                "withAnnotation=%s&withoutAnnotation=%s&applicationUsername=%s&applicationPassword=%s&usedDeviceGroupId=%s&deviceLanguageCode=%s&"+
+                "hookURL=%s&uiAutomatorTestClasses=%s&launchApp=%s&instrumentationRunner=%s&checkApp=%s", projectId, scheduler != null ? encodeURL(scheduler.name()) : "", 
                 mode != null ? encodeURL(mode.name()) : "", encodeURL(autoScreenshots), encodeURL(screenshotDir), limitationType != null ? encodeURL(limitationType.name()) : "", 
                 encodeURL(limitationValue), encodeURL(withAnnotation), encodeURL(withoutAnnotation), encodeURL(applicationUsername), encodeURL(applicationPassword), 
-                usedClusterId, encodeURL(deviceLanguageCode), encodeURL(hookURL), encodeURL(uiAutomatorTestClasses), encodeURL(launchApp), encodeURL(instrumentationRunner));
+                usedDeviceGroupId, encodeURL(deviceLanguageCode), encodeURL(hookURL), encodeURL(uiAutomatorTestClasses), encodeURL(launchApp), encodeURL(instrumentationRunner),
+                encodeURL(checkApp));
         APITestRunConfig config = postResource(selfURI, body, APITestRunConfig.class);
-        this.projectId = config.projectId;
-        this.scheduler = config.scheduler;
-        this.mode = config.mode;
-        this.autoScreenshots = config.autoScreenshots;
-        this.runAvailable = config.runAvailable;
-        this.screenshotDir = config.screenshotDir;
-        this.limitationType = config.limitationType;
-        this.limitationValue = config.limitationValue;
-        this.withAnnotation = config.withAnnotation;
-        this.withoutAnnotation = config.withoutAnnotation;
-        this.applicationUsername = config.applicationUsername;
-        this.applicationPassword = config.applicationPassword;
-        this.usedClusterId = config.usedClusterId;
-        this.creditsPrice = config.creditsPrice;
-        this.deviceLanguageCode = config.deviceLanguageCode;
-        this.hookURL = config.hookURL;
-        this.uiAutomatorTestClasses = config.uiAutomatorTestClasses;
-        this.launchApp = config.launchApp;
-        this.instrumentationRunner = config.instrumentationRunner;
+        clone(config);
+    }
+
+    @Override
+    @JsonIgnore
+    protected <T extends APIEntity> void clone(T from) {
+        APITestRunConfig apiTestRunConfig = (APITestRunConfig) from;
+        cloneBase(from);
+        this.applicationPassword = apiTestRunConfig.applicationPassword;
+        this.applicationUsername = apiTestRunConfig.applicationUsername;
+        this.autoScreenshots = apiTestRunConfig.autoScreenshots;
+        this.checkApp = apiTestRunConfig.checkApp;
+        this.creditsPrice = apiTestRunConfig.creditsPrice;
+        this.deviceLanguageCode = apiTestRunConfig.deviceLanguageCode;
+        this.hookURL = apiTestRunConfig.hookURL;
+        this.instrumentationRunner = apiTestRunConfig.instrumentationRunner;
+        this.launchApp = apiTestRunConfig.launchApp;
+        this.limitationType = apiTestRunConfig.limitationType;
+        this.limitationValue = apiTestRunConfig.limitationValue;
+        this.mode = apiTestRunConfig.mode;
+        this.projectId = apiTestRunConfig.projectId;
+        this.runAvailable = apiTestRunConfig.runAvailable;
+        this.scheduler = apiTestRunConfig.scheduler;
+        this.screenshotDir = apiTestRunConfig.screenshotDir;
+        this.uiAutomatorTestClasses = apiTestRunConfig.uiAutomatorTestClasses;
+        this.usedDeviceGroupId = apiTestRunConfig.usedDeviceGroupId;
+        this.withAnnotation = apiTestRunConfig.withAnnotation;
+        this.withoutAnnotation = apiTestRunConfig.withoutAnnotation;
     }
     
 }
