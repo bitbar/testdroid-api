@@ -16,9 +16,9 @@ import javax.xml.bind.Unmarshaller;
  */
 public class Common {
 
-    public static final String SERVER_URL = "Fill with server URL";
-    public static final String USERNAME = "Fill with username";
-    public static final String PASSWORD = "Fill with user password";
+    public static final String SERVER_URL = "http://devel";
+    public static final String USERNAME = "admin@localhost";
+    public static final String PASSWORD = "admin";
     
     public static final String ANDROID_FILE_MIME_TYPE = "application/vnd.android.package-archive";
     public static final String ZIP_FILE_MIME_TYPE = "application/zip";
