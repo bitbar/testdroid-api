@@ -45,7 +45,6 @@ public class APIProject extends APIEntity {
     private Long sharedById;
 
     public APIProject() {
-
     }
     public APIProject(Long id, String name, String description, Type type, Long sharedById, boolean common) {
         super(id);
@@ -106,7 +105,7 @@ public class APIProject extends APIEntity {
     private byte[] icon;
 
     private String getConfigURI() { return selfURI + "/config"; };
-    private String getJobConfigURI(APIProjectJobConfig.Type type) { return selfURI + "/job-configs/"+type.toString(); };
+    private String getJobConfigURI(APIProjectJobConfig.Type type) { return selfURI + "/job-configs/" + type.toString(); };
     private String getFilesURI() { return selfURI + "/files"; };
     private String getIconURI() { return selfURI + "/icon"; };
     private String getSharingsURI() { return selfURI + "/sharings"; };
