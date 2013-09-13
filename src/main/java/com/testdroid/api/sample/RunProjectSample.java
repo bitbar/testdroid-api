@@ -60,7 +60,7 @@ public class RunProjectSample {
             // Upload test
             project.uploadTest(new File(RunProjectSample.class.getResource("/fixtures/BitbarSampleAppTest.apk").getPath()), Common.ANDROID_FILE_MIME_TYPE);
             
-            // Upload test data
+            // Upload data
             project.uploadData(new File(RunProjectSample.class.getResource("/fixtures/testData.zip").getPath()), Common.ZIP_FILE_MIME_TYPE);
             
             // Run test run
