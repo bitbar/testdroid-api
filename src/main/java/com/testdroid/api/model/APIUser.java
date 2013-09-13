@@ -1,5 +1,6 @@
 package com.testdroid.api.model;
 
+import com.testdroid.api.APIArray;
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIException;
 import com.testdroid.api.APIListResource;
@@ -156,6 +157,7 @@ public class APIUser extends APIEntity {
     private String getDeviceGroupsURI() { return selfURI + "/device-groups"; }
     private String getNotificationsURI() { return selfURI + "/notifications"; }
     private String getNotificationURI(long id) { return selfURI + String.format("/notifications/%s", id); }
+    private String getAvailbleProjectTypesURI() { return selfURI + "/available-project-types"; }
     
     private String getCreateNotificationParams(String email, APINotificationEmail.Type type) {
         return String.format("email=%s&type=%s", email, type);
