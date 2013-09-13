@@ -112,7 +112,9 @@ public class DefaultAPIClient implements APIClient {
 
     protected HttpRequestFactory getRequestFactory(String accessToken) {
         final Credential credential = getCredential();
-        credential.setAccessToken(accessToken);
+        if(StringUtils.isNotBlank(accessToken)) {
+            credential.setAccessToken(accessToken);
+        }
         return httpTransport.createRequestFactory(new HttpRequestInitializer() {
 
             @Override
@@ -144,6 +146,10 @@ public class DefaultAPIClient implements APIClient {
 
     protected String acquireAccessToken() throws APIException {
         try {
+            if(username == null && password == null) {
+                return "";
+            }
+            
             HttpRequest request = httpTransport.createRequestFactory().buildGetRequest(new GenericUrl(
                     String.format("%s/oauth/token?client_id=testdroid-cloud-api&grant_type=password&username=%s&password=%s",
                     cloudURL, username, password)));
