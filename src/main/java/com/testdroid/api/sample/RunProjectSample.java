@@ -4,7 +4,9 @@ import com.testdroid.api.APIClient;
 import com.testdroid.api.APIException;
 import com.testdroid.api.APIList;
 import com.testdroid.api.model.APIDeviceGroup;
+import com.testdroid.api.model.APIDeviceRun;
 import com.testdroid.api.model.APIProject;
+import com.testdroid.api.model.APITestRun;
 import com.testdroid.api.model.APITestRunConfig;
 import com.testdroid.api.model.APIUser;
 import com.testdroid.api.sample.util.Common;
@@ -64,7 +66,16 @@ public class RunProjectSample {
             project.uploadData(new File(RunProjectSample.class.getResource("/fixtures/testData.zip").getPath()), Common.ZIP_FILE_MIME_TYPE);
             
             // Run test run
-            project.run("My test run name");
+            APITestRun testRun = project.run("My test run name");
+            
+            System.out.println(String.format("Creted testrun with name: %s", testRun.getDisplayName()));
+            System.out.println("Device runs was also created for devices:");
+            
+            for(APIDeviceRun deviceRun: testRun.getDeviceRunsResource().getEntity().getData()) {
+                System.out.println(String.format("Device: %s, created: %s", 
+                        deviceRun.getDevice().getDisplayName(), deviceRun.getCreateTime()));
+            }
+            
         } catch(APIException apie) {
             System.err.println(apie.getMessage());
         }
