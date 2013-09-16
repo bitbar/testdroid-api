@@ -358,6 +358,7 @@ public class DefaultAPIClient implements APIClient {
                 return result;
             } else { 
                 return null;
+
             }
         } catch (HttpResponseException ex) {
             APIExceptionMessage exceptionMessage = fromXML(ex.getContent(), APIExceptionMessage.class);
