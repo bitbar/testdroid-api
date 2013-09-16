@@ -1,6 +1,7 @@
 package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
+import static com.testdroid.api.APIEntity.createUri;
 import com.testdroid.api.APIException;
 import com.testdroid.api.APIListResource;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -59,7 +60,7 @@ public class APIDeviceProperty extends APIEntity {
         this.creditsPrice = creditsPrice;
     }
     
-    private String getDevicesURI() { return selfURI + "/devices"; };
+    private String getDevicesURI() { return createUri(selfURI, "/devices"); };
     
     @JsonIgnore
     public APIListResource<APIDevice> getDevicesResource() throws APIException {

@@ -1,6 +1,7 @@
 package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
+import static com.testdroid.api.APIEntity.createUri;
 import com.testdroid.api.APIException;
 import com.testdroid.api.APIList;
 import com.testdroid.api.APIListResource;
@@ -128,11 +129,11 @@ public class APIDeviceRun extends APIEntity {
         this.interruptedByState = interruptedByState;
     }
     
-    private String getLogsURI() { return selfURI + "/logs"; };
-    private String getScreenshotsURI() { return selfURI + "/screenshots"; };
-    private String getJunitURI() { return selfURI + "/junit.xml"; };
-    private String getPerformanceURI() { return selfURI + "/performance"; };
-    private String getStatesURI() { return selfURI + "/states"; };
+    private String getLogsURI() { return createUri(selfURI, "/logs"); };
+    private String getScreenshotsURI() { return createUri(selfURI, "/screenshots"); };
+    private String getJunitURI() { return createUri(selfURI, "/junit.xml"); };
+    private String getPerformanceURI() { return createUri(selfURI, "/performance"); };
+    private String getStatesURI() { return createUri(selfURI, "/states"); };
     
     @JsonIgnore
     public InputStream getLogs() throws APIException {

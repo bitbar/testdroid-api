@@ -2,6 +2,7 @@ package com.testdroid.api.model;
 
 import com.testdroid.api.APIArray;
 import com.testdroid.api.APIEntity;
+import static com.testdroid.api.APIEntity.createUri;
 import com.testdroid.api.APIException;
 import com.testdroid.api.APIListResource;
 import com.testdroid.api.APISort;
@@ -152,12 +153,12 @@ public class APIUser extends APIEntity {
         this.roles = roles;
     }
     
-    private String getProjectsURI() { return selfURI + "/projects"; }
-    private String getProjectsURI(Long id) { return String.format("%s%s/%s", selfURI, "/projects", id); }
-    private String getDeviceGroupsURI() { return selfURI + "/device-groups"; }
-    private String getNotificationsURI() { return selfURI + "/notifications"; }
-    private String getNotificationURI(long id) { return selfURI + String.format("/notifications/%s", id); }
-    private String getAvailbleProjectTypesURI() { return selfURI + "/available-project-types"; }
+    private String getProjectsURI() { return createUri(selfURI, "/projects"); }
+    private String getProjectsURI(Long id) { return createUri(selfURI, "/projects" + id); }
+    private String getDeviceGroupsURI() { return createUri(selfURI, "/device-groups"); }
+    private String getNotificationsURI() { return createUri(selfURI, "/notifications"); }
+    private String getNotificationURI(long id) { return createUri(selfURI, "/notifications" + id); }
+    private String getAvailbleProjectTypesURI() { return createUri(selfURI, "/available-project-types"); }
         
     private String getCreateNotificationParams(String email, APINotificationEmail.Type type) {
         return String.format("email=%s&type=%s", email, type);

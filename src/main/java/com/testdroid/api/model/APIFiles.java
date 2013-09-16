@@ -1,6 +1,7 @@
 package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
+import static com.testdroid.api.APIEntity.createUri;
 import com.testdroid.api.APIException;
 import java.io.InputStream;
 import java.util.Date;
@@ -33,9 +34,9 @@ public abstract class APIFiles extends APIEntity {
         this.data = data;
     }
     
-    protected String getDataURI() { return selfURI + "/data"; };
-    protected String getApplicationURI() { return selfURI + "/application"; };
-    protected String getTestURI() { return selfURI + "/test"; };
+    protected String getDataURI() { return createUri(selfURI, "/data"); };
+    protected String getApplicationURI() { return createUri(selfURI, "/application"); };
+    protected String getTestURI() { return createUri(selfURI, "/test"); };
     
     @JsonIgnore
     @XmlTransient
