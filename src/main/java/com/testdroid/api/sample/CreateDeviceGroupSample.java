@@ -15,7 +15,7 @@ import com.testdroid.api.sample.util.Common;
  */
 public class CreateDeviceGroupSample {
 
-    public static final APIClient CLIENT = Common.createApiClient("http://devel", "admin@localhost", "admin");
+    public static final APIClient CLIENT = Common.createApiClient();
     
     public static void main(String[] args) {
         try {
