@@ -79,6 +79,7 @@
                     <flowInitContext>
                         <developBranchName>devel</developBranchName>
                     </flowInitContext>
+                    <allowUntracked>true</allowUntracked>
                     <noDeploy>true</noDeploy>
                     <keepBranch>true</keepBranch>
                 </configuration>
