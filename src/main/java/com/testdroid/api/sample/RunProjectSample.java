@@ -20,7 +20,7 @@ import java.io.File;
  */
 public class RunProjectSample {
     
-    public static final APIClient CLIENT = Common.createApiClient("http://devel", "admin@localhost", "admin");
+    public static final APIClient CLIENT = Common.createApiClient();
     public static final String HOOK_URL = "some URL";
     
     public static void main(String[] args) {
