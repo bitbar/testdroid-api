@@ -346,6 +346,10 @@ public class DefaultAPIClient implements APIClient {
                 throw new APIException(response.getStatusCode(), "Failed to post resource: " + response.getStatusMessage());
             }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
             if(type != null) {
                 T result = (T) fromXML(response.getContent(), type);
                 result.client = this;
