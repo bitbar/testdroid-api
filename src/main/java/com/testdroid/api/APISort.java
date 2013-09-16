@@ -33,12 +33,18 @@ public class APISort {
     }
     
     public static enum Column {
+        DEVICE_GROUP_ID(APIDeviceGroup.class, "id"),
+        DEVICE_GROUP_NAME(APIDeviceGroup.class, "displayName"),
         DEVICE_NAME(APIDevice.class, "userName"),
+        DEVICE_PROPERTY_NAME(APIDeviceProperty.class, "displayName"),
         DEVICE_RUN_CREATED(APIDeviceRunState.class, "createTime"),
         DEVICE_RUN_DEVICE(APIDeviceRun.class, "device.userName"),
         DEVICE_RUN_END_TIME(APIDeviceRun.class, "endTime"),
         DEVICE_RUN_ID(APIDeviceRun.class, "id"),
         DEVICE_RUN_STATE_STARTED(APIDeviceRunState.class, "startTimeMS"),
+        NOTIFICATION_EMAIL_EMAIL(APINotificationEmail.class, "email"),
+        NOTIFICATION_EMAIL_ID(APINotificationEmail.class, "id"),
+        NOTIFICATION_EMAIL_PROJECT_NAME(APINotificationEmail.class, "p.name"),
         PROJECT_DESCRIPTION(APIProject.class, "description"),
         PROJECT_ID(APIProject.class, "id"),
         PROJECT_NAME(APIProject.class, "name"),

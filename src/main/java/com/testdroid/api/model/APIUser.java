@@ -1,6 +1,8 @@
 package com.testdroid.api.model;
 
+import com.testdroid.api.APIArray;
 import com.testdroid.api.APIEntity;
+import static com.testdroid.api.APIEntity.createUri;
 import com.testdroid.api.APIException;
 import com.testdroid.api.APIListResource;
 import com.testdroid.api.APISort;
@@ -151,14 +153,18 @@ public class APIUser extends APIEntity {
         this.roles = roles;
     }
     
-    private String getProjectsURI() { return selfURI + "/projects"; }
-    private String getProjectsURI(Long id) { return String.format("%s%s/%s", selfURI, "/projects", id); }
-    private String getDeviceGroupsURI() { return selfURI + "/device-groups"; }
-    private String getNotificationsURI() { return selfURI + "/notifications"; }
-    private String getNotificationURI(long id) { return selfURI + String.format("/notifications/%s", id); }
-    
+    private String getProjectsURI() { return createUri(selfURI, "/projects"); }
+    private String getProjectsURI(Long id) { return createUri(selfURI, "/projects" + id); }
+    private String getDeviceGroupsURI() { return createUri(selfURI, "/device-groups"); }
+    private String getNotificationsURI() { return createUri(selfURI, "/notifications"); }
+    private String getNotificationURI(long id) { return createUri(selfURI, "/notifications" + id); }
+    private String getAvailbleProjectTypesURI() { return createUri(selfURI, "/available-project-types"); }
+        
     private String getCreateNotificationParams(String email, APINotificationEmail.Type type) {
         return String.format("email=%s&type=%s", email, type);
+    }
+    private String getUpdateUserParams(String address, String city, String code, String country, String email, String name, String organization, String phone, String state, String timeZone, String vatId) {
+        return String.format("address=%s&city=%s&code=%s&country=%s&email=%s&name=%s&organization=%s&phone=%s&state=%s&timeZone=%s&vatId=%s", encodeURL(address), encodeURL(city), encodeURL(code), encodeURL(country), encodeURL(email), encodeURL(name), encodeURL(organization), encodeURL(phone), encodeURL(state), encodeURL(timeZone), encodeURL(vatId));
     }
         
     public APIProject createProject(APIProject.Type type) throws APIException {
@@ -167,6 +173,11 @@ public class APIUser extends APIEntity {
     
     public APIProject createProject(APIProject.Type type, String name) throws APIException {
         return postResource(getProjectsURI(), String.format("type=%s&name=%s", type.name(), encodeURL(name)), APIProject.class);
+    }
+    
+    public void update() throws APIException {
+        APIUser user = postResource(selfURI, getUpdateUserParams(address, city, code, country, email, name, organization, phone, state, timeZone, vatID), APIUser.class);
+        clone(user);
     }
     
     @JsonIgnore
@@ -194,6 +205,11 @@ public class APIUser extends APIEntity {
     }
     
     @JsonIgnore
+    public APIDeviceGroup createDeviceGroup(String name) throws APIException {
+        return postResource(getDeviceGroupsURI(), String.format("name=%s", encodeURL(name)), APIDeviceGroup.class);
+    }
+    
+    @JsonIgnore
     public APINotificationEmail createNotificationEmail(String email, APINotificationEmail.Type type) throws APIException {
         return postResource(getNotificationsURI(), getCreateNotificationParams(email, type), APINotificationEmail.class);
     }
@@ -217,4 +233,27 @@ public class APIUser extends APIEntity {
     public void deleteNotificationEmail(long id) throws APIException {
         deleteResource(getNotificationURI(id));
     }
+
+    @Override
+    @JsonIgnore
+    protected <T extends APIEntity> void clone(T from) {
+        APIUser apiUser = (APIUser) from;
+        cloneBase(from);
+        this.address = apiUser.address;
+        this.city = apiUser.city;
+        this.code = apiUser.code;
+        this.country = apiUser.country;
+        this.email = apiUser.email;
+        this.enabled = apiUser.enabled;
+        this.name = apiUser.name;
+        this.organization = apiUser.organization;
+        this.phone = apiUser.phone;
+        this.roles = apiUser.roles;
+        this.state = apiUser.state;
+        this.timeZone = apiUser.timeZone;
+        this.vatID = apiUser.vatID;
+    }
+    
+    
+    
 }

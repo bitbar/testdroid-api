@@ -1,6 +1,7 @@
 package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
+import static com.testdroid.api.APIEntity.createUri;
 import static com.testdroid.api.APIEntity.encodeURL;
 import com.testdroid.api.APIException;
 import com.testdroid.api.APIList;
@@ -113,10 +114,10 @@ public class APITestRun extends APIEntity {
  
     private APIFiles files;
     private APITestRunConfig config;
-    private String getFilesURI() { return selfURI + "/files"; };
-    private String getConfigURI() { return selfURI + "/config"; };
-    private String getTagsURI() { return selfURI + "/tags"; };
-    private String getDeviceRunsURI() { return selfURI + "/device-runs"; };
+    private String getFilesURI() { return createUri(selfURI, "/files"); };
+    private String getConfigURI() { return createUri(selfURI, "/config"); };
+    private String getTagsURI() { return createUri(selfURI, "/tags"); };
+    private String getDeviceRunsURI() { return createUri(selfURI, "/device-runs"); };
     
     @JsonIgnore
     /**
@@ -169,6 +170,23 @@ public class APITestRun extends APIEntity {
     public void update() throws APIException {
         String body = String.format("displayName=%s", encodeURL(displayName));
         APITestRun testRun = postResource(selfURI, body, APITestRun.class);
-        this.displayName = testRun.displayName;
+        clone(testRun);
+    }
+
+    @Override
+    @JsonIgnore
+    protected <T extends APIEntity> void clone(T from) {
+        APITestRun apiTestRun = (APITestRun) from;
+        cloneBase(from);
+        this.config = apiTestRun.config;
+        this.createTime = apiTestRun.createTime;
+        this.displayName = apiTestRun.displayName;
+        this.executionRatio = apiTestRun.executionRatio;
+        this.files = apiTestRun.files;
+        this.number = apiTestRun.number;
+        this.screenshotZipState = apiTestRun.screenshotZipState;
+        this.startedByDisplayName = apiTestRun.startedByDisplayName;
+        this.state = apiTestRun.state;
+        this.successRatio = apiTestRun.successRatio;
     }
 }

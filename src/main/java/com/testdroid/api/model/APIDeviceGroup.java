@@ -1,5 +1,7 @@
 package com.testdroid.api.model;
 
+import com.testdroid.api.APIEntity;
+import static com.testdroid.api.APIEntity.createUri;
 import com.testdroid.api.APIException;
 import com.testdroid.api.APIListResource;
 import com.testdroid.api.APISort;
@@ -34,7 +36,8 @@ public class APIDeviceGroup extends APIDeviceProperty {
         return userId == null;
     }
     
-    private String getIncludedDevicesURI() { return selfURI + "/devices"; };
+    private String getIncludedDevicesURI() { return createUri(selfURI, "/devices"); };
+    private String getIncludedDevicesURI(Long deviceId) { return createUri(selfURI, "/devices/" + deviceId); };
     
     @JsonIgnore
     public APIListResource<APIDevice> getIncludedDevicesResource() throws APIException {
@@ -47,10 +50,18 @@ public class APIDeviceGroup extends APIDeviceProperty {
     }
     
     public void addDevice(APIDevice device) throws APIException {
-        postResource(getIncludedDevicesURI(), String.format("id=%s" + device.getId()), null);
+        postResource(getIncludedDevicesURI(), String.format("id=%s", device.getId()), null);
     }
     
     public void deleteDevice(APIDevice device) throws APIException {
-        deleteResource(getIncludedDevicesURI() + "/" + device.getId());
+        deleteResource(getIncludedDevicesURI(device.getId()));
+    }
+
+    @Override
+    @JsonIgnore
+    protected <T extends APIEntity> void clone(T from) {
+        super.clone(from);
+        APIDeviceGroup apiDeviceGroup = (APIDeviceGroup) from;
+        this.userId = apiDeviceGroup.userId;
     }
 }

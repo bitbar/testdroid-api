@@ -5,6 +5,7 @@ import com.testdroid.api.APIList;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
@@ -91,4 +92,18 @@ public class APITestCaseRunStep extends APIEntity {
     public void setScreenshots(APIList<APIScreenshot> screenshots) {
         this.screenshots = screenshots;
     }
+
+    @Override
+    @JsonIgnore
+    protected <T extends APIEntity> void clone(T from) {
+        APITestCaseRunStep apiTestCaseRunStep = (APITestCaseRunStep) from;
+        cloneBase(from);
+        this.description = apiTestCaseRunStep.description;
+        this.duration = apiTestCaseRunStep.duration;
+        this.errorMessage = apiTestCaseRunStep.errorMessage;
+        this.fromActivity = apiTestCaseRunStep.fromActivity;
+        this.screenshots = apiTestCaseRunStep.screenshots;
+        this.type = apiTestCaseRunStep.type;
+    }
+    
 }

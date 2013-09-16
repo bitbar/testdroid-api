@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
@@ -117,6 +118,22 @@ public class APITestCaseRun extends APIEntity {
 
     public void setSuiteName(String suiteName) {
         this.suiteName = suiteName;
+    }
+
+    @Override
+    @JsonIgnore
+    protected <T extends APIEntity> void clone(T from) {
+        APITestCaseRun apiTestCaseRun = (APITestCaseRun) from;
+        cloneBase(from);
+        this.className = apiTestCaseRun.className;
+        this.createTime = apiTestCaseRun.createTime;
+        this.duration = apiTestCaseRun.duration;
+        this.errorMessage = apiTestCaseRun.errorMessage;
+        this.methodName = apiTestCaseRun.methodName;
+        this.result = apiTestCaseRun.result;
+        this.stacktrace = apiTestCaseRun.stacktrace;
+        this.steps = apiTestCaseRun.steps;
+        this.suiteName = apiTestCaseRun.suiteName;
     }
     
 }

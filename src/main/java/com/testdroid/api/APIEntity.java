@@ -45,7 +45,7 @@ public abstract class APIEntity {
     protected APIClient client;
     protected String selfURI;
     protected Long id;
-    private Class<? extends APIView> view;
+    protected Class<? extends APIView> view;
     
     public APIEntity() {
     }
@@ -113,6 +113,12 @@ public abstract class APIEntity {
         client.delete(uri);
     }
 
+    @JsonIgnore
+    public void refresh() throws APIException {
+        checkClient(client);
+        clone(client.get(selfURI, getClass()));
+    }
+    
     @JsonIgnore
     private void checkClient(APIClient client) throws APIException {
         if (client == null) {
@@ -195,5 +201,24 @@ public abstract class APIEntity {
             Logger.getLogger(APIEntity.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+
+    @JsonIgnore
+    protected abstract <T extends APIEntity> void clone(T from);
+    
+    @JsonIgnore
+    protected <T extends APIEntity> void cloneBase(T from) {
+        this.id = from.id;
+        this.view = from.view;
+    }
+    
+    @JsonIgnore
+    public static String createUri(String preUri, String postUri) {
+        if(preUri.contains("?")) {
+            String[] parts = preUri.split("\\?");
+            return String.format("%s%s?%s", parts[0], postUri, parts[1]);
+        } else {
+            return String.format("%s%s", preUri, postUri);
+        }
     }
 }
