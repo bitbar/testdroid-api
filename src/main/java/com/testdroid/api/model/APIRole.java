@@ -3,6 +3,7 @@ package com.testdroid.api.model;
 import com.testdroid.api.APIEntity;
 import java.util.Date;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
@@ -15,6 +16,7 @@ public class APIRole extends APIEntity {
     private Date expireTime;
 
     public APIRole() {}
+    
     public APIRole(Long id, String name, Integer useLimit, Date expireTime) {
         super(id);
         this.name = name;
@@ -52,6 +54,16 @@ public class APIRole extends APIEntity {
     
     public boolean isLimitUsed() {
         return getUseLimit() != null && getUseLimit() <= 0;
+    }
+
+    @Override
+    @JsonIgnore
+    protected <T extends APIEntity> void clone(T from) {
+        APIRole apiRole = (APIRole) from;
+        cloneBase(from);
+        this.expireTime = apiRole.expireTime;
+        this.name = apiRole.name;
+        this.useLimit = apiRole.useLimit;
     }
 
 }

@@ -4,6 +4,7 @@ import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIView;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.map.annotate.JsonView;
 
 /**
@@ -12,7 +13,7 @@ import org.codehaus.jackson.map.annotate.JsonView;
  */
 @XmlRootElement
 public class APIDevice extends APIEntity {
-    
+
     @XmlType
     public static enum Filter { FREE, RECOMMENDED, NEW }
     
@@ -188,6 +189,27 @@ public class APIDevice extends APIEntity {
 
     public void setFrame400Url(String frame400Url) {
         this.frame400Url = frame400Url;
+    }
+    
+    @Override
+    @JsonIgnore
+    protected <T extends APIEntity> void clone(T from) {
+        APIDevice apiDevice = (APIDevice) from;
+        cloneBase(from);
+        this.creditsPrice = apiDevice.creditsPrice;
+        this.displayName = apiDevice.displayName;
+        this.frame80Url = apiDevice.frame80Url;
+        this.frame100Url = apiDevice.frame100Url;
+        this.frame160Url = apiDevice.frame160Url;
+        this.frame400Url = apiDevice.frame400Url;
+        this.frameExtraWidth = apiDevice.frameExtraWidth;
+        this.imageHeight = apiDevice.imageHeight;
+        this.imageLeft = apiDevice.imageLeft;
+        this.imagePrefix = apiDevice.imagePrefix;
+        this.imageTop = apiDevice.imageTop;
+        this.imageWidth = apiDevice.imageWidth;
+        this.osType = apiDevice.osType;
+        this.softwareVersion = apiDevice.softwareVersion;
     }
     
 }

@@ -121,7 +121,9 @@ public class DefaultAPIClient implements APIClient {
 
     protected HttpRequestFactory getRequestFactory(String accessToken) {
         final Credential credential = getCredential();
-        credential.setAccessToken(accessToken);
+        if(StringUtils.isNotBlank(accessToken)) {
+            credential.setAccessToken(accessToken);
+        }
         return httpTransport.createRequestFactory(new HttpRequestInitializer() {
 
             @Override
@@ -153,6 +155,10 @@ public class DefaultAPIClient implements APIClient {
 
     protected String acquireAccessToken() throws APIException {
         try {
+            if(username == null && password == null) {
+                return "";
+            }
+            
             HttpRequest request = httpTransport.createRequestFactory().buildGetRequest(new GenericUrl(
                     String.format("%s/oauth/token?client_id=testdroid-cloud-api&grant_type=password&username=%s&password=%s",
                     cloudURL, username, password)));
@@ -340,15 +346,19 @@ public class DefaultAPIClient implements APIClient {
                 throw new APIException(response.getStatusCode(), "Failed to post resource: " + response.getStatusMessage());
             }
 
+            if(type != null) {
+                T result = (T) fromXML(response.getContent(), type);
+                result.client = this;
+                result.selfURI = uri;
 
-            T result = (T) fromXML(response.getContent(), type);
-            result.client = this;
-            result.selfURI = uri;
-            // In case of entity creation, we need to update its url
-            if (response.getStatusCode() == HttpStatus.SC_CREATED && result.hasId()) {
-                result.selfURI += String.format("/%s", result.getId());
+                // In case of entity creation, we need to update its url
+                if (response.getStatusCode() == HttpStatus.SC_CREATED && result.hasId()) {
+                    result.selfURI += String.format("/%s", result.getId());
+                }
+                return result;
+            } else { 
+                return null;
             }
-            return result;
         } catch (HttpResponseException ex) {
             APIExceptionMessage exceptionMessage = fromXML(ex.getContent(), APIExceptionMessage.class);
             throw new APIException(ex.getStatusCode(), exceptionMessage.getMessage(), ex);

@@ -1,8 +1,10 @@
 package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
+import com.testdroid.api.APIException;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
@@ -60,5 +62,19 @@ public class APINotificationEmail extends APIEntity {
     public void setType(Type type) {
         this.type = type;
     }
+
+    @JsonIgnore
+    public void delete() throws APIException {
+        deleteResource(selfURI);
+    }
     
+    @Override
+    @JsonIgnore
+    protected <T extends APIEntity> void clone(T from) {
+        APINotificationEmail apiNotificationEmail = (APINotificationEmail) from;
+        cloneBase(from);
+        this.email = apiNotificationEmail.email;
+        this.project = apiNotificationEmail.project;
+        this.type = apiNotificationEmail.type;
+    }
 }
