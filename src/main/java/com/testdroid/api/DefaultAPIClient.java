@@ -8,17 +8,6 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.testdroid.api.http.MultipartFormDataContent;
 import com.testdroid.api.model.APIDevice;
 import com.testdroid.api.model.APIUser;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringReader;
-import java.security.GeneralSecurityException;
-import java.util.Arrays;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
 import net.sf.json.JSONObject;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
@@ -37,6 +26,18 @@ import org.apache.http.impl.client.BasicAuthCache;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.HttpContext;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringReader;
+import java.security.GeneralSecurityException;
+import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author kajdus, Sławomir Pawluk, krzysiek
@@ -46,7 +47,15 @@ public class DefaultAPIClient implements APIClient {
     protected static Credential getCredential() {
         return new Credential.Builder(BearerToken.queryParameterAccessMethod()).build();
     }
-    
+    static final JAXBContext context = initContext();
+    private final static String TESTDROID_API_PACKAGES = "com.testdroid.api:com.testdroid.api";
+    private static JAXBContext initContext() {
+        try {
+            return JAXBContext.newInstance(TESTDROID_API_PACKAGES);
+        } catch (JAXBException e) {
+        }
+        return null;
+    }
     protected static String API_URI = "/api/v2";
     public final static int HTTP_CONNECT_TIMEOUT = 60000;
     public final static int HTTP_READ_TIMEOUT = 60000;
@@ -349,6 +358,7 @@ public class DefaultAPIClient implements APIClient {
                 return result;
             } else { 
                 return null;
+
             }
         } catch (HttpResponseException ex) {
             APIExceptionMessage exceptionMessage = fromXML(ex.getContent(), APIExceptionMessage.class);
@@ -440,7 +450,6 @@ public class DefaultAPIClient implements APIClient {
 
     private static <T> T fromXML(String xml, Class<T> type) throws APIException {
         try {
-            JAXBContext context = JAXBContext.newInstance(type);
             Unmarshaller unmarshaller = context.createUnmarshaller();
             return (T) unmarshaller.unmarshal(new StringReader(xml));
         } catch (JAXBException ex) {
@@ -450,7 +459,6 @@ public class DefaultAPIClient implements APIClient {
 
     private static <T> T fromXML(InputStream inputStream, Class<T> type) throws APIException {
         try {
-            JAXBContext context = JAXBContext.newInstance(type);
             Unmarshaller unmarshaller = context.createUnmarshaller();
             return (T) unmarshaller.unmarshal(inputStream);
         } catch (JAXBException ex) {
