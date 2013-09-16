@@ -24,7 +24,7 @@ public class CreateDeviceGroupSample {
             
             // Create device group
             APIDeviceGroup deviceGroup = me.createDeviceGroup("My device group");
-            
+                        
             System.out.println(String.format("Device group name: %s\nOwner id: %s\nIs group public?: %s",
                     deviceGroup.getDisplayName(), deviceGroup.getUserId(), deviceGroup.isPublic()));
             
