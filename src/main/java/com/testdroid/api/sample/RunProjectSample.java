@@ -5,10 +5,12 @@ import com.testdroid.api.APIException;
 import com.testdroid.api.APIList;
 import com.testdroid.api.model.APIDeviceGroup;
 import com.testdroid.api.model.APIDeviceRun;
+import com.testdroid.api.model.APIFiles;
 import com.testdroid.api.model.APIProject;
 import com.testdroid.api.model.APITestRun;
 import com.testdroid.api.model.APITestRunConfig;
 import com.testdroid.api.model.APIUser;
+import com.testdroid.api.model.AndroidFiles;
 import com.testdroid.api.sample.util.Common;
 import java.io.File;
 
@@ -75,6 +77,12 @@ public class RunProjectSample {
                 System.out.println(String.format("Device: %s, created: %s", 
                         deviceRun.getDevice().getDisplayName(), deviceRun.getCreateTime()));
             }
+            
+            // After sending files to Testdroid Cloud files can be send back
+            AndroidFiles androidFiles = project.getFiles(AndroidFiles.class);
+            
+            APIFiles.AndroidAppFile androidAppFile = androidFiles.getAndroidApp();
+            APIFiles.AndroidTestFile androidTestFile = androidFiles.getAndroidTest();
             
         } catch(APIException apie) {
             System.err.println(apie.getMessage());
