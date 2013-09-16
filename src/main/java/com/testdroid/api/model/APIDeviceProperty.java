@@ -65,5 +65,15 @@ public class APIDeviceProperty extends APIEntity {
     public APIListResource<APIDevice> getDevicesResource() throws APIException {
         return getListResource(getDevicesURI(), APIDevice.class);
     }
-        
+
+    @Override
+    @JsonIgnore
+    protected <T extends APIEntity> void clone(T from) {
+        APIDeviceProperty apiDeviceProperty = (APIDeviceProperty) from;
+        cloneBase(from);
+        this.creditsPrice = apiDeviceProperty.creditsPrice;
+        this.deviceCount = apiDeviceProperty.deviceCount;
+        this.displayName = apiDeviceProperty.displayName;
+        this.name = apiDeviceProperty.name;
+    }
 }

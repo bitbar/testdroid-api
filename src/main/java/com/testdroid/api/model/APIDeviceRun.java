@@ -176,5 +176,23 @@ public class APIDeviceRun extends APIEntity {
     public void setRunStatus(RunStatus runStatus) {
         this.runStatus = runStatus;
     }
+
+    @Override
+    @JsonIgnore
+    protected <T extends APIEntity> void clone(T from) {
+        APIDeviceRun apiDeviceRun = (APIDeviceRun) from;
+        cloneBase(from);
+        this.createTime = apiDeviceRun.createTime;
+        this.currentState = apiDeviceRun.currentState;
+        this.device = apiDeviceRun.device;
+        this.interruptedByState = apiDeviceRun.interruptedByState;
+        this.runStatus = apiDeviceRun.runStatus;
+        this.runTime = apiDeviceRun.runTime;
+        this.softwareVersion = apiDeviceRun.softwareVersion;
+        this.startTime = apiDeviceRun.startTime;
+        this.testCaseAllNo = apiDeviceRun.testCaseAllNo;
+        this.testCaseCount = apiDeviceRun.testCaseCount;
+        this.testCaseSuccessNo = apiDeviceRun.testCaseSuccessNo;
+    }
     
 }

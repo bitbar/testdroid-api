@@ -4,6 +4,7 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.map.annotate.JsonView;
 
@@ -45,6 +46,38 @@ public class APIList<T extends APIEntity> extends APIEntity {
 
     public void setNext(String next) {
         this.next = next;
+    }
+    
+    /**
+     * Returns <code>true</code> if next page of items is available.
+     */
+    @JsonIgnore
+    public boolean isNextAvailable() {
+        return offset + limit < total && !data.isEmpty();
+    }
+    
+    @JsonIgnore
+    public APIList<T> getNextItems() throws APIException {
+        if(!isNextAvailable()) {
+            return null;
+        }
+        return new APIListResource(client, getURI(next), null, null, null, null, data.get(0).getClass()).getEntity();
+    }
+    
+    /**
+     * Returns <code>true</code> if previous page of items is available.
+     */
+    @JsonIgnore
+    public boolean isPreviousAvailable() {
+        return offset > 0;
+    }
+    
+    @JsonIgnore
+    public APIList<T> getPreviousItems() throws APIException {
+        if(!isPreviousAvailable()) {
+            return null;
+        }
+        return new APIListResource(client, getURI(previous), null, null, null, null, data.get(0).getClass()).getEntity();
     }
 
     /**
@@ -149,6 +182,25 @@ public class APIList<T extends APIEntity> extends APIEntity {
     @JsonView(APIView.class)
     public boolean hasId() {
         return false;
+    }
+
+    @Override
+    @JsonIgnore
+    protected <S extends APIEntity> void clone(S from) {
+        APIList<T> apiList = (APIList<T>) from;
+        cloneBase(from);
+        this.data = apiList.data;
+        this.limit = apiList.limit;
+        this.next = apiList.next;
+        this.offset = apiList.offset;
+        this.previous = apiList.previous;
+        this.search = apiList.search;
+        this.sort = apiList.sort;
+        this.total = apiList.total;
+    }
+    
+    private String getURI(String fullURL) {
+        return fullURL.substring(fullURL.indexOf(DefaultAPIClient.API_URI) + DefaultAPIClient.API_URI.length());
     }
 
 }
