@@ -20,7 +20,7 @@ import java.io.File;
  */
 public class RunProjectSample {
     
-    public static final APIClient CLIENT = Common.createApiClient();
+    public static final APIClient CLIENT = Common.createApiClient("http://devel", "admin@localhost", "admin");
     public static final String HOOK_URL = "some URL";
     
     public static void main(String[] args) {
@@ -58,14 +58,18 @@ public class RunProjectSample {
             // Update changes
             testRunConfig.update();
             
+            AndroidFiles af = project.getFiles(AndroidFiles.class);
+            af.uploadApp(new File(RunProjectSample.class.getResource("/fixtures/BitbarSampleApp.apk").getPath()));
+            af.uploadTest(new File(RunProjectSample.class.getResource("/fixtures/BitbarSampleAppTest.apk").getPath()));
+            
             // Upload application
-            project.uploadApplication(new File(RunProjectSample.class.getResource("/fixtures/BitbarSampleApp.apk").getPath()), Common.ANDROID_FILE_MIME_TYPE);
-            
-            // Upload test
-            project.uploadTest(new File(RunProjectSample.class.getResource("/fixtures/BitbarSampleAppTest.apk").getPath()), Common.ANDROID_FILE_MIME_TYPE);
-            
-            // Upload data
-            project.uploadData(new File(RunProjectSample.class.getResource("/fixtures/testData.zip").getPath()), Common.ZIP_FILE_MIME_TYPE);
+//            project.uploadApplication(new File(RunProjectSample.class.getResource("/fixtures/BitbarSampleApp.apk").getPath()), Common.ANDROID_FILE_MIME_TYPE);
+//            
+//            // Upload test
+//            project.uploadTest(new File(RunProjectSample.class.getResource("/fixtures/BitbarSampleAppTest.apk").getPath()), Common.ANDROID_FILE_MIME_TYPE);
+//            
+//            // Upload data
+//            project.uploadData(new File(RunProjectSample.class.getResource("/fixtures/testData.zip").getPath()), Common.ZIP_FILE_MIME_TYPE);
             
             // Run test run
             APITestRun testRun = project.run("My test run name");
