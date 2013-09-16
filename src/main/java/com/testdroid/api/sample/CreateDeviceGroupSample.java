@@ -23,14 +23,8 @@ public class CreateDeviceGroupSample {
             APIUser me = CLIENT.me();
             
             // Create device group
-            APIDeviceGroup deviceGroup = me.createDeviceGroup("TabletAlexander");
-            
-            APIListResource<APIDeviceGroup> aaa = me.getDeviceGroupsResource(0, 10, "Alexander", null);
-            
-            for(APIDeviceGroup adg: aaa.getEntity().getData()) {
-                System.out.println(adg.getDisplayName());
-            }
-            
+            APIDeviceGroup deviceGroup = me.createDeviceGroup("My device group");
+                        
             System.out.println(String.format("Device group name: %s\nOwner id: %s\nIs group public?: %s",
                     deviceGroup.getDisplayName(), deviceGroup.getUserId(), deviceGroup.isPublic()));
             
