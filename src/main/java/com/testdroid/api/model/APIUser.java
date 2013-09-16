@@ -154,10 +154,10 @@ public class APIUser extends APIEntity {
     }
     
     private String getProjectsURI() { return createUri(selfURI, "/projects"); }
-    private String getProjectsURI(Long id) { return createUri(selfURI, "/projects" + id); }
+    private String getProjectsURI(Long id) { return createUri(selfURI, "/projects/" + id); }
     private String getDeviceGroupsURI() { return createUri(selfURI, "/device-groups"); }
     private String getNotificationsURI() { return createUri(selfURI, "/notifications"); }
-    private String getNotificationURI(long id) { return createUri(selfURI, "/notifications" + id); }
+    private String getNotificationURI(long id) { return createUri(selfURI, "/notifications/" + id); }
     private String getAvailbleProjectTypesURI() { return createUri(selfURI, "/available-project-types"); }
         
     private String getCreateNotificationParams(String email, APINotificationEmail.Type type) {
