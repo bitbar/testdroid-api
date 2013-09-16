@@ -1,6 +1,7 @@
 package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
+import static com.testdroid.api.APIEntity.createUri;
 import com.testdroid.api.APIException;
 import com.testdroid.api.APIListResource;
 import com.testdroid.api.APISort;
@@ -46,6 +47,7 @@ public class APIProject extends APIEntity {
 
     public APIProject() {
     }
+    
     public APIProject(Long id, String name, String description, Type type, Long sharedById, boolean common) {
         super(id);
         this.name = name;
@@ -104,18 +106,18 @@ public class APIProject extends APIEntity {
     private APIFiles files;
     private byte[] icon;
 
-    private String getConfigURI() { return selfURI + "/config"; };
-    private String getJobConfigURI(APIProjectJobConfig.Type type) { return selfURI + "/job-configs/" + type.toString(); };
-    private String getFilesURI() { return selfURI + "/files"; };
-    private String getIconURI() { return selfURI + "/icon"; };
-    private String getSharingsURI() { return selfURI + "/sharings"; };
-    private String getTrendsURI() { return selfURI + "/trends"; };
-    private String getReportsURI() { return selfURI + "/reports/%s"; };
-    private String getRunsURI() { return selfURI + "/runs"; };
-    private String getPublicDeviceGroupsURI() { return selfURI + "/public-device-groups"; }
-    private String getUploadApplicationURI() { return selfURI + "/files/application"; }
-    private String getUploadTestURI() { return selfURI + "/files/test"; }
-    private String getUploadDataURI() { return selfURI + "/files/data"; }
+    private String getConfigURI() { return createUri(selfURI, "/config"); };
+    private String getJobConfigURI(APIProjectJobConfig.Type type) { return createUri(selfURI, "/job-configs/" + type.toString()); };
+    private String getFilesURI() { return createUri(selfURI, "/files"); };
+    private String getIconURI() { return createUri(selfURI, "/icon"); };
+    private String getSharingsURI() { return createUri(selfURI, "/sharings"); };
+    private String getTrendsURI() { return createUri(selfURI, "/trends"); };
+    private String getReportsURI() { return createUri(selfURI, "/reports/%s"); };
+    private String getRunsURI() { return createUri(selfURI, "/runs"); };
+    private String getPublicDeviceGroupsURI() { return createUri(selfURI, "/public-device-groups"); }
+    private String getUploadApplicationURI() { return createUri(selfURI, "/files/application"); }
+    private String getUploadTestURI() { return createUri(selfURI, "/files/test"); }
+    private String getUploadDataURI() { return createUri(selfURI, "/files/data"); }
 
     private String getCreateRunParameters(String testRunName) {
         return String.format("name=%s", encodeURL(testRunName));
@@ -194,12 +196,17 @@ public class APIProject extends APIEntity {
     }
     
     @JsonIgnore
-    public APIListResource<APIProjectSharing> getProjectsResource() throws APIException {
+    public APIProjectSharing share(String email) throws APIException {
+        return postResource(getSharingsURI(), String.format("email=%s", encodeURL(email)), APIProjectSharing.class);
+    }
+    
+    @JsonIgnore
+    public APIListResource<APIProjectSharing> getProjectSharings() throws APIException {
         return getListResource(getSharingsURI(), APIProjectSharing.class);
     }
     
     @JsonIgnore
-    public APIListResource<APIProjectSharing> getProjectsResource(long offset, long limit, String search, APISort sort) throws APIException {
+    public APIListResource<APIProjectSharing> getProjectSharings(long offset, long limit, String search, APISort sort) throws APIException {
         return getListResource(getSharingsURI(), offset, limit, search, sort, APIProjectSharing.class);
     }
     
