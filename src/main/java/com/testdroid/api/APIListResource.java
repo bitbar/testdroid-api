@@ -17,12 +17,10 @@ public class APIListResource<T extends APIEntity> extends APIResource<APIList<T>
 
     @Override
     public APIList<T> getEntity() throws APIException {
-        APIList<T> result = super.getEntity(); //To change body of generated methods, choose Tools | Templates.
+        APIList<T> result = super.getEntity();
         for(APIEntity item: result.getData()) {
-            //TODO fix selfURI
             item.client = this.client;
-
-            item.selfURI = String.format("%s/%s", this.resourceURI, item.id);
+            item.selfURI = APIEntity.createUri(this.resourceURI, "/" + item.id);
         }
         return result;
     }
