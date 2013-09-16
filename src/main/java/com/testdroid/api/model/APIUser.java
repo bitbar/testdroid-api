@@ -158,9 +158,12 @@ public class APIUser extends APIEntity {
     private String getNotificationsURI() { return selfURI + "/notifications"; }
     private String getNotificationURI(long id) { return selfURI + String.format("/notifications/%s", id); }
     private String getAvailbleProjectTypesURI() { return selfURI + "/available-project-types"; }
-    
+        
     private String getCreateNotificationParams(String email, APINotificationEmail.Type type) {
         return String.format("email=%s&type=%s", email, type);
+    }
+    private String getUpdateUserParams(String address, String city, String code, String country, String email, String name, String organization, String phone, String state, String timeZone, String vatId) {
+        return String.format("address=%s&city=%s&code=%s&country=%s&email=%s&name=%s&organization=%s&phone=%s&state=%s&timeZone=%s&vatId=%s", encodeURL(address), encodeURL(city), encodeURL(code), encodeURL(country), encodeURL(email), encodeURL(name), encodeURL(organization), encodeURL(phone), encodeURL(state), encodeURL(timeZone), encodeURL(vatId));
     }
         
     public APIProject createProject(APIProject.Type type) throws APIException {
@@ -169,6 +172,11 @@ public class APIUser extends APIEntity {
     
     public APIProject createProject(APIProject.Type type, String name) throws APIException {
         return postResource(getProjectsURI(), String.format("type=%s&name=%s", type.name(), encodeURL(name)), APIProject.class);
+    }
+    
+    public void update() throws APIException {
+        APIUser user = postResource(selfURI, getUpdateUserParams(address, city, code, country, email, name, organization, phone, state, timeZone, vatID), APIUser.class);
+        clone(user);
     }
     
     @JsonIgnore

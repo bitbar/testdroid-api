@@ -27,4 +27,8 @@ public class Common {
         return new DefaultAPIClient(SERVER_URL, USERNAME, PASSWORD);
     }
     
+    public static APIClient createApiClient(String url, String username, String password) {
+        return new DefaultAPIClient(url, username, password);
+    }
+    
 }
