@@ -19,10 +19,8 @@ public class APIListResource<T extends APIEntity> extends APIResource<APIList<T>
     public APIList<T> getEntity() throws APIException {
         APIList<T> result = super.getEntity();
         for(APIEntity item: result.getData()) {
-            //TODO fix selfURI
             item.client = this.client;
-
-            item.selfURI = String.format("%s/%s", this.resourceURI, item.id);
+            item.selfURI = APIEntity.createUri(this.resourceURI, "/" + item.id);
         }
         return result;
     }

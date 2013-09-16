@@ -211,4 +211,14 @@ public abstract class APIEntity {
         this.id = from.id;
         this.view = from.view;
     }
+    
+    @JsonIgnore
+    public static String createUri(String preUri, String postUri) {
+        if(preUri.contains("?")) {
+            String[] parts = preUri.split("\\?");
+            return String.format("%s%s?%s", parts[0], postUri, parts[1]);
+        } else {
+            return String.format("%s%s", preUri, postUri);
+        }
+    }
 }

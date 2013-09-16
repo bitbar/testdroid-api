@@ -1,6 +1,7 @@
 package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
+import static com.testdroid.api.APIEntity.createUri;
 import static com.testdroid.api.APIEntity.encodeURL;
 import com.testdroid.api.APIException;
 import com.testdroid.api.APIList;
@@ -113,10 +114,10 @@ public class APITestRun extends APIEntity {
  
     private APIFiles files;
     private APITestRunConfig config;
-    private String getFilesURI() { return selfURI + "/files"; };
-    private String getConfigURI() { return selfURI + "/config"; };
-    private String getTagsURI() { return selfURI + "/tags"; };
-    private String getDeviceRunsURI() { return selfURI + "/device-runs"; };
+    private String getFilesURI() { return createUri(selfURI, "/files"); };
+    private String getConfigURI() { return createUri(selfURI, "/config"); };
+    private String getTagsURI() { return createUri(selfURI, "/tags"); };
+    private String getDeviceRunsURI() { return createUri(selfURI, "/device-runs"); };
     
     @JsonIgnore
     /**
