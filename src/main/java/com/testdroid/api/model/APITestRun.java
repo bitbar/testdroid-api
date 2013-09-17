@@ -154,7 +154,7 @@ public class APITestRun extends APIEntity {
     }
     
     /**
-     * @since 1.3.33-api_query_builder-SNAPSHOT
+     * @since 1.3.33-SNAPSHOT
      * @param queryBuilder
      * @return
      * @throws APIException 
@@ -184,7 +184,7 @@ public class APITestRun extends APIEntity {
     }
     
     /**
-     * @since 1.3.33-api_query_builder-SNAPSHOT
+     * @since 1.3.33-SNAPSHOT
      * @param queryBuilder 
      * @return
      * @throws APIException 

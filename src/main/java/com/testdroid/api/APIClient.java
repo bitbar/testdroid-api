@@ -32,7 +32,7 @@ public interface APIClient {
 
     /**
      * Fetch and return list of devices in Cloud using provided filters.
-     * @since 1.3.33-api_query_builder-SNAPSHOT
+     * @since 1.3.33-SNAPSHOT
      * @param queryBuilder
      * @return list of all devices matching selected filters, if no filter used returns all devcies
      * @throws APIException 
