@@ -187,7 +187,7 @@ public class APIUser extends APIEntity {
     }
     
     /**
-     * @since 1.3.33-SNAPSHOT
+     * @since 1.3.34
      * @param queryBuilder
      * @return
      * @throws APIException 
@@ -221,7 +221,7 @@ public class APIUser extends APIEntity {
     }
     
     /**
-     * @since 1.3.33-SNAPSHOT
+     * @since 1.3.34
      * @param queryBuilder
      * @return
      * @throws APIException 
@@ -261,7 +261,7 @@ public class APIUser extends APIEntity {
     }
 
     /**
-     * @since 1.3.33-SNAPSHOT
+     * @since 1.3.34
      * @param queryBuilder
      * @return
      * @throws APIException 

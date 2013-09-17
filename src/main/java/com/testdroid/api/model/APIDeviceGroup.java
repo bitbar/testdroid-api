@@ -46,7 +46,7 @@ public class APIDeviceGroup extends APIDeviceProperty {
     }
     
     /**
-     * @since 1.3.33-SNAPSHOT
+     * @since 1.3.34
      * @param queryBuilder
      * @return
      * @throws APIException 
