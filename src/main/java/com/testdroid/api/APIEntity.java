@@ -90,6 +90,12 @@ public abstract class APIEntity {
     }
 
     @JsonIgnore
+    protected <T extends APIEntity> APIListResource<T> getListResource(String uri, APIQueryBuilder queryBuilder, Class<T> type) throws APIException {
+        checkClient(client);
+        return new APIListResource<T>(client, queryBuilder.build(uri), type);
+    }
+    
+    @JsonIgnore
     protected <T extends APIEntity> APIListResource<T> getListResource(String uri, long offset, long limit, String search, APISort sort, Class<T> type) throws APIException {
         checkClient(client);
         return new APIListResource<T>(client, uri, offset, limit, search, sort, type);
