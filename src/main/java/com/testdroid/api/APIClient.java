@@ -31,7 +31,17 @@ public interface APIClient {
     public APIListResource<APIDevice> getDevices(APIDevice.Filter... filters) throws APIException;
 
     /**
-     * Fetch and return list of devices in Cloud using provided filters
+     * Fetch and return list of devices in Cloud using provided filters.
+     * @since 1.3.34
+     * @param queryBuilder
+     * @return list of all devices matching selected filters, if no filter used returns all devcies
+     * @throws APIException 
+     */
+    public APIListResource<APIDevice> getDevices(APIQueryBuilder queryBuilder, APIDevice.Filter... filters) throws APIException;
+    
+    /**
+     * Fetch and return list of devices in Cloud using provided filters.
+     * @deprecated 
      * @param filters non-obligatory parameter for filtering devices returned
      * @return list of all devices matching selected filters, if no filter used returns all devcies
      * @throws APIException on API error

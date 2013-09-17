@@ -4,6 +4,7 @@ import com.testdroid.api.APIClient;
 import com.testdroid.api.APIException;
 import com.testdroid.api.APIList;
 import com.testdroid.api.APIListResource;
+import com.testdroid.api.APIQueryBuilder;
 import com.testdroid.api.model.APIDevice;
 import com.testdroid.api.model.APIDeviceGroup;
 import com.testdroid.api.model.APIUser;
@@ -54,12 +55,12 @@ public class CreateDeviceGroupSample {
             System.out.println(String.format("Searching device with name %s...", deviceName));
             System.out.println("Results:");
             
-            for(APIDevice device: deviceGroup.getIncludedDevicesResource(0, 10, deviceName, null).getEntity().getData()) {
+            for(APIDevice device: deviceGroup.getIncludedDevicesResource(new APIQueryBuilder().offset(0).limit(10).search(deviceName)).getEntity().getData()) {
                 System.out.println(device.getDisplayName());
             }
             
             // Now we create device group for samsungs only
-            APIList<APIDevice> samsungDevices = CLIENT.getDevices(0, 100, "Samsung", null).getEntity();
+            APIList<APIDevice> samsungDevices = CLIENT.getDevices(new APIQueryBuilder().offset(0).limit(10).search("Samsung")).getEntity();
             APIDeviceGroup samsungsDeviceGroup = me.createDeviceGroup("Samsungs only");
             
             for(APIDevice device: samsungDevices.getData()) {

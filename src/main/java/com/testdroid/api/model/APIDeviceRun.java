@@ -5,6 +5,7 @@ import static com.testdroid.api.APIEntity.createUri;
 import com.testdroid.api.APIException;
 import com.testdroid.api.APIList;
 import com.testdroid.api.APIListResource;
+import com.testdroid.api.APIQueryBuilder;
 import com.testdroid.api.APISort;
 import java.io.InputStream;
 import java.util.Date;
@@ -155,6 +156,26 @@ public class APIDeviceRun extends APIEntity {
         return getListResource(getStatesURI(), APIDeviceRunState.class);
     }
     
+    /**
+     * @since 1.3.34
+     * @param queryBuilder
+     * @return
+     * @throws APIException 
+     */
+    @JsonIgnore
+    public APIListResource<APIDeviceRunState> getDeviceRunStatesResource(APIQueryBuilder queryBuilder) throws APIException {
+        return getListResource(getStatesURI(), queryBuilder, APIDeviceRunState.class);
+    }
+    
+    /**
+     * @deprecated 
+     * @param offset
+     * @param limit
+     * @param search
+     * @param sort
+     * @return
+     * @throws APIException 
+     */
     @JsonIgnore
     public APIListResource<APIDeviceRunState> getDeviceRunStatesResource(long offset, long limit, String search, APISort sort) throws APIException {
         return getListResource(getStatesURI(), offset, limit, search, sort, APIDeviceRunState.class);
@@ -165,6 +186,26 @@ public class APIDeviceRun extends APIEntity {
         return getListResource(getScreenshotsURI(), APIScreenshot.class);
     }
     
+    /**
+     * @since 1.3.34
+     * @param queryBuilder
+     * @return
+     * @throws APIException 
+     */
+    @JsonIgnore
+    public APIListResource<APIScreenshot> getScreenshotsResource(APIQueryBuilder queryBuilder) throws APIException {
+        return getListResource(getScreenshotsURI(), queryBuilder, APIScreenshot.class);
+    }
+    
+    /**
+     * @deprecated 
+     * @param offset
+     * @param limit
+     * @param search
+     * @param sort
+     * @return
+     * @throws APIException 
+     */
     @JsonIgnore
     public APIListResource<APIScreenshot> getScreenshotsResource(long offset, long limit, String search, APISort sort) throws APIException {
         return getListResource(getScreenshotsURI(), offset, limit, search, sort, APIScreenshot.class);
