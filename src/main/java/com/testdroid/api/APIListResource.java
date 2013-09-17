@@ -5,14 +5,22 @@ package com.testdroid.api;
  * @author kajdus
  */
 public class APIListResource<T extends APIEntity> extends APIResource<APIList<T>> {
+    
     public APIListResource(APIClient client, String resourceURI, Class<T> type) {
         this(client, resourceURI, null, null, null, null, type);
     }
     
+    public APIListResource(APIClient client, String resourceURI, APIQueryBuilder queryBuilder, Class<T> type) {
+        super(client, queryBuilder.build(resourceURI), (Class<APIList<T>>) (Class) APIList.class);
+    }
+    
     public APIListResource(APIClient client, String resourceURI, Long offset, Long limit, String search, APISort sort, Class<T> type) {
-        super(client, (offset == null && limit == null && search == null && (sort == null || sort.isEmpty())) ? resourceURI : String.format("%s%soffset=%s&limit=%s&search=%s&sort=%s", resourceURI,
-                resourceURI.contains("?") ? "&" : "?",
-                getNotNullValue(offset), getNotNullValue(limit), getNotNullValue(APIEntity.encodeURL(search)), sort != null ? sort.serialize() : null), (Class<APIList<T>>) (Class) APIList.class);
+        super(client, 
+                (offset == null && limit == null && search == null && (sort == null || sort.isEmpty())) ? resourceURI : 
+                    String.format("%s%soffset=%s&limit=%s&search=%s&sort=%s", resourceURI, resourceURI.contains("?") ? "&" : "?",
+                    getNotNullValue(offset), getNotNullValue(limit), getNotNullValue(APIEntity.encodeURL(search)), 
+                sort != null ? sort.serialize() : null), 
+                (Class<APIList<T>>) (Class) APIList.class);
     }
 
     @Override
