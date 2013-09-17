@@ -6,6 +6,7 @@ import static com.testdroid.api.APIEntity.encodeURL;
 import com.testdroid.api.APIException;
 import com.testdroid.api.APIList;
 import com.testdroid.api.APIListResource;
+import com.testdroid.api.APIQueryBuilder;
 import com.testdroid.api.APISort;
 import java.util.Date;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -152,6 +153,26 @@ public class APITestRun extends APIEntity {
         return getListResource(getTagsURI(), APITag.class);
     }
     
+    /**
+     * @since 1.3.33-api_query_builder-SNAPSHOT
+     * @param queryBuilder
+     * @return
+     * @throws APIException 
+     */
+    @JsonIgnore
+    public APIListResource<APITag> getTagsResource(APIQueryBuilder queryBuilder) throws APIException {
+        return getListResource(getTagsURI(), queryBuilder, APITag.class);
+    }
+    
+    /**
+     * @deprecated 
+     * @param offset
+     * @param limit
+     * @param search
+     * @param sort
+     * @return
+     * @throws APIException 
+     */
     @JsonIgnore
     public APIListResource<APITag> getTagsResource(long offset, long limit, String search, APISort sort) throws APIException {
         return getListResource(getTagsURI(), offset, limit, search, sort, APITag.class);
@@ -162,6 +183,26 @@ public class APITestRun extends APIEntity {
         return getListResource(getDeviceRunsURI(), APIDeviceRun.class);
     }
     
+    /**
+     * @since 1.3.33-api_query_builder-SNAPSHOT
+     * @param queryBuilder 
+     * @return
+     * @throws APIException 
+     */
+    @JsonIgnore
+    public APIListResource<APIDeviceRun> getDeviceRunsResource(APIQueryBuilder queryBuilder) throws APIException {
+        return getListResource(getDeviceRunsURI(), queryBuilder, APIDeviceRun.class);
+    }
+    
+    /**
+     * @deprecated 
+     * @param offset
+     * @param limit
+     * @param search
+     * @param sort
+     * @return
+     * @throws APIException 
+     */
     @JsonIgnore
     public APIListResource<APIDeviceRun> getDeviceRunsResource(long offset, long limit, String search, APISort sort) throws APIException {
         return getListResource(getDeviceRunsURI(), offset, limit, search, sort, APIDeviceRun.class);

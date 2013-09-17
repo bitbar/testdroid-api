@@ -3,6 +3,7 @@ package com.testdroid.api.sample;
 import com.testdroid.api.APIClient;
 import com.testdroid.api.APIException;
 import com.testdroid.api.APIListResource;
+import com.testdroid.api.APIQueryBuilder;
 import com.testdroid.api.model.APIProject;
 import com.testdroid.api.model.APIProjectSharing;
 import com.testdroid.api.model.APIUser;
@@ -31,7 +32,7 @@ public class ProjectsSharingSample {
             // Now we can login as user with mail that created project was shared to, and check if project was shared correctly
             // fe. searching that project with id
             
-            APIListResource<APIProject> projects = me.getProjectsResource(0, 10, project.getId().toString(), null);
+            APIListResource<APIProject> projects = me.getProjectsResource(new APIQueryBuilder().offset(0).limit(10).search(project.getId().toString()));
             
             for(APIProject p: projects.getEntity().getData()) {
                 System.out.println(p.getName());

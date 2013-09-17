@@ -5,6 +5,7 @@ import com.testdroid.api.APIEntity;
 import static com.testdroid.api.APIEntity.createUri;
 import com.testdroid.api.APIException;
 import com.testdroid.api.APIListResource;
+import com.testdroid.api.APIQueryBuilder;
 import com.testdroid.api.APISort;
 import javax.xml.bind.annotation.XmlRootElement;
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -185,6 +186,26 @@ public class APIUser extends APIEntity {
         return getListResource(getProjectsURI(), APIProject.class);
     }
     
+    /**
+     * @since 1.3.33-api_query_builder-SNAPSHOT
+     * @param queryBuilder
+     * @return
+     * @throws APIException 
+     */
+    @JsonIgnore
+    public APIListResource<APIProject> getProjectsResource(APIQueryBuilder queryBuilder) throws APIException {
+        return getListResource(getProjectsURI(), queryBuilder, APIProject.class);
+    }
+    
+    /**
+     * @deprecated 
+     * @param offset
+     * @param limit
+     * @param search
+     * @param sort
+     * @return
+     * @throws APIException 
+     */
     @JsonIgnore
     public APIListResource<APIProject> getProjectsResource(long offset, long limit, String search, APISort sort) throws APIException {
         return getListResource(getProjectsURI(), offset, limit, search, sort, APIProject.class);
@@ -199,6 +220,26 @@ public class APIUser extends APIEntity {
         return getListResource(getDeviceGroupsURI(), APIDeviceGroup.class);
     }
     
+    /**
+     * @since 1.3.33-api_query_builder-SNAPSHOT
+     * @param queryBuilder
+     * @return
+     * @throws APIException 
+     */
+    @JsonIgnore
+    public APIListResource<APIDeviceGroup> getDeviceGroupsResource(APIQueryBuilder queryBuilder) throws APIException {
+        return getListResource(getDeviceGroupsURI(), queryBuilder, APIDeviceGroup.class);
+    }
+    
+    /**
+     * @deprecated
+     * @param offset
+     * @param limit
+     * @param search
+     * @param sort
+     * @return
+     * @throws APIException 
+     */
     @JsonIgnore
     public APIListResource<APIDeviceGroup> getDeviceGroupsResource(long offset, long limit, String search, APISort sort) throws APIException {
         return getListResource(getDeviceGroupsURI(), offset, limit, search, sort, APIDeviceGroup.class);
@@ -219,6 +260,26 @@ public class APIUser extends APIEntity {
         return getListResource(getNotificationsURI(), APINotificationEmail.class);
     }
 
+    /**
+     * @since 1.3.33-api_query_builder-SNAPSHOT
+     * @param queryBuilder
+     * @return
+     * @throws APIException 
+     */
+    @JsonIgnore
+    public APIListResource<APINotificationEmail> getNotificationEmails(APIQueryBuilder queryBuilder) throws APIException {
+        return getListResource(getNotificationsURI(), queryBuilder, APINotificationEmail.class);
+    }
+    
+    /**
+     * @deprecated 
+     * @param offset
+     * @param limit
+     * @param search
+     * @param sort
+     * @return
+     * @throws APIException 
+     */
     @JsonIgnore
     public APIListResource<APINotificationEmail> getNotificationEmails(long offset, long limit, String search, APISort sort) throws APIException {
         return getListResource(getNotificationsURI(), offset, limit, search, sort, APINotificationEmail.class);

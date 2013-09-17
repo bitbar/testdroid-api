@@ -4,6 +4,7 @@ import com.testdroid.api.APIEntity;
 import static com.testdroid.api.APIEntity.createUri;
 import com.testdroid.api.APIException;
 import com.testdroid.api.APIListResource;
+import com.testdroid.api.APIQueryBuilder;
 import com.testdroid.api.APISort;
 import javax.xml.bind.annotation.XmlRootElement;
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -44,6 +45,26 @@ public class APIDeviceGroup extends APIDeviceProperty {
         return getListResource(getIncludedDevicesURI(), APIDevice.class);
     }
     
+    /**
+     * @since 1.3.33-api_query_builder-SNAPSHOT
+     * @param queryBuilder
+     * @return
+     * @throws APIException 
+     */
+    @JsonIgnore
+    public APIListResource<APIDevice> getIncludedDevicesResource(APIQueryBuilder queryBuilder) throws APIException {
+        return getListResource(getIncludedDevicesURI(), queryBuilder, APIDevice.class);
+    }
+    
+    /**
+     * @deprecated 
+     * @param offset
+     * @param limit
+     * @param search
+     * @param sort
+     * @return
+     * @throws APIException 
+     */
     @JsonIgnore
     public APIListResource<APIDevice> getIncludedDevicesResource(long offset, long limit, String search, APISort sort) throws APIException {
         return getListResource(getIncludedDevicesURI(), offset, limit, search, sort, APIDevice.class);
