@@ -258,8 +258,12 @@ public class DefaultAPIClient implements APIClient {
             result.selfURI = uri;
             return result;
         } catch (HttpResponseException ex) {
-            APIExceptionMessage exceptionMessage = fromXML(ex.getContent(), APIExceptionMessage.class);
-            throw new APIException(ex.getStatusCode(), exceptionMessage.getMessage(), ex);
+            try {
+                APIExceptionMessage exceptionMessage = fromXML(ex.getContent(), APIExceptionMessage.class);
+                throw new APIException(ex.getStatusCode(), exceptionMessage.getMessage(), ex);
+            } catch (APIException e) {
+                throw new APIException(ex.getStatusCode(), ex.getMessage());
+            }
         } catch (IOException ex) {
             throw new APIException(String.format("Failed to execute API call: %s. Reason: %s", uri, ex.getMessage()), ex);
         }
@@ -279,8 +283,12 @@ public class DefaultAPIClient implements APIClient {
 
             return response.getContent();
         } catch (HttpResponseException ex) {
-            APIExceptionMessage exceptionMessage = fromXML(ex.getContent(), APIExceptionMessage.class);
-            throw new APIException(ex.getStatusCode(), exceptionMessage.getMessage(), ex);
+            try {
+                APIExceptionMessage exceptionMessage = fromXML(ex.getContent(), APIExceptionMessage.class);
+                throw new APIException(ex.getStatusCode(), exceptionMessage.getMessage(), ex);
+            } catch (APIException e) {
+                throw new APIException(ex.getStatusCode(), ex.getMessage());
+            }
         } catch (IOException ex) {
             throw new APIException(String.format("Failed to execute API call: %s. Reason: %s", uri, ex.getMessage()), ex);
         }
@@ -361,8 +369,12 @@ public class DefaultAPIClient implements APIClient {
 
             }
         } catch (HttpResponseException ex) {
-            APIExceptionMessage exceptionMessage = fromXML(ex.getContent(), APIExceptionMessage.class);
-            throw new APIException(ex.getStatusCode(), exceptionMessage.getMessage(), ex);
+            try {
+                APIExceptionMessage exceptionMessage = fromXML(ex.getContent(), APIExceptionMessage.class);
+                throw new APIException(ex.getStatusCode(), exceptionMessage.getMessage(), ex);
+            } catch (APIException e) {
+                throw new APIException(ex.getStatusCode(), ex.getMessage());
+            }
         } catch (IOException ex) {
             throw new APIException(String.format("Failed to execute API call: %s. Reason: %s", uri, ex.getMessage()), ex);
         }
@@ -415,8 +427,12 @@ public class DefaultAPIClient implements APIClient {
                 throw new APIException(response.getStatusCode(), "Failed to delete resource: " + response.getStatusMessage());
             }
         } catch (HttpResponseException ex) {
-            APIExceptionMessage exceptionMessage = fromXML(ex.getContent(), APIExceptionMessage.class);
-            throw new APIException(ex.getStatusCode(), exceptionMessage.getMessage(), ex);
+            try {
+                APIExceptionMessage exceptionMessage = fromXML(ex.getContent(), APIExceptionMessage.class);
+                throw new APIException(ex.getStatusCode(), exceptionMessage.getMessage(), ex);
+            } catch (APIException e) {
+                throw new APIException(ex.getStatusCode(), ex.getMessage());
+            }
         } catch (IOException ex) {
             throw new APIException(String.format("Failed to execute API call: %s. Reason: %s", uri, ex.getMessage()), ex);
         }
