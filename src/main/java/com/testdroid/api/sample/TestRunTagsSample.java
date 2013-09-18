@@ -18,7 +18,7 @@ import java.io.File;
  */
 public class TestRunTagsSample {
 
-    private static final APIClient CLIENT = Common.createApiClient();
+    private static final APIClient CLIENT = Common.createApiClient("http://devel", "admin@localhost", "admin");
     
     public static void main(String[] args) {
         try {
@@ -45,13 +45,22 @@ public class TestRunTagsSample {
             
             System.out.println(String.format("Created tag with name: %s", tag.getName()));
             
-            // Now we can search project using tag name
+            testRun.refresh();
+            
+            // List test run tags
+            System.out.println("Test run have now tags:");
+            for(APITag t: testRun.getTagsResource().getEntity().getData()) {
+                System.out.println(String.format("\t%s", t.getName()));
+            }
+            
+            // Project can be found using tag name
             APIListResource<APITestRun> projects = project.getTestRunsResource(new APIQueryBuilder().search(tagName));
             
             System.out.println(String.format("Projects found using tag name: %s", tagName));
             for(APITestRun tr: projects.getEntity().getData()) {
                 System.out.println(String.format("\t%s", tr.getDisplayName()));
             }
+            
         } catch(APIException apie) {
             System.err.println(apie.getMessage());
         }
