@@ -467,6 +467,9 @@ public class DefaultAPIClient implements APIClient {
 
     @Override
     public APIListResource<APIDevice> getDevices(long offset, long limit, String search, APISort sort, APIDevice.Filter... filters) throws APIException {
+        if(limit <= 0) {
+            limit = 10;
+        }
         return new APIListResource<APIDevice>(this, getDevicesURI(filters), offset, limit, search, sort, APIDevice.class);
     }
 
