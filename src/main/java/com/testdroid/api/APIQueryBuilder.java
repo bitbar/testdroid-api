@@ -37,7 +37,9 @@ public class APIQueryBuilder {
     }
     
     public APIQueryBuilder limit(int limit) {
-        this.limit = limit;
+        if (limit > 0) {
+            this.limit = limit;
+        }
         return this;
     }
     
