@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.testdroid</groupId>
     <artifactId>testdroid-api</artifactId>
-    <version>1.3.36-deafault_api_client_manage_errors-SNAPSHOT</version>
+    <version>1.3.36-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>testdroid-api</name>
     <url>https://github.com/bitbar/testdroid-api</url>
