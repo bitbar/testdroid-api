@@ -275,7 +275,27 @@ public abstract class APIFiles extends APIEntity {
     @XmlRootElement
     public static class RecorderOnlineScreenplayFile extends APIFile {
         public static enum Format {
-            JAVA,JSON;
+            JAVA("java"),
+            JSON("json");
+            
+            private String urlForm;
+            
+            private Format(String urlForm) {
+                this.urlForm = urlForm;
+            }
+
+            public String getUrlForm() {
+                return urlForm;
+            }
+            
+            public static Format fromUrlForm(String url) {
+                for(Format f: Format.values()) {
+                    if(f.getUrlForm().equalsIgnoreCase(url)) {
+                        return f;
+                    }
+                }
+                return null;
+            }
         }
         
         public RecorderOnlineScreenplayFile() {
