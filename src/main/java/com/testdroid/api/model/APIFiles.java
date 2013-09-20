@@ -66,7 +66,7 @@ public abstract class APIFiles extends APIEntity {
     
     @XmlRootElement 
     @XmlSeeAlso({ APIFiles.APIFile.class, APIFiles.AndroidAppFile.class, APIFiles.AndroidTestFile.class, APIFiles.DataFile.class, 
-        APIFiles.IOSAppFile.class, APIFiles.IOSTestFile.class, APIFiles.UIAutomatorTestFile.class })
+        APIFiles.IOSAppFile.class, APIFiles.IOSTestFile.class, APIFiles.UIAutomatorTestFile.class, APIFiles.RecorderOnlineScreenpleyFile.class })
     public static abstract class APIFile extends APIEntity {
         private String originalName;
         private String readableSize;
@@ -268,6 +268,20 @@ public abstract class APIFiles extends APIEntity {
         public DataFile() {}
         
         public DataFile(Long id, String originalName, Date uploadTime, String readableSize) {
+            super(id, originalName, uploadTime, readableSize);
+        }
+    }
+    
+    @XmlRootElement
+    public static class RecorderOnlineScreenpleyFile extends APIFile {
+        public static enum Format {
+            JAVA,JSON;
+        }
+        
+        public RecorderOnlineScreenpleyFile() {
+        }
+
+        public RecorderOnlineScreenpleyFile(Long id, String originalName, Date uploadTime, String readableSize) {
             super(id, originalName, uploadTime, readableSize);
         }
     }
