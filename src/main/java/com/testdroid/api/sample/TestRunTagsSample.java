@@ -18,7 +18,7 @@ import java.io.File;
  */
 public class TestRunTagsSample {
 
-    private static final APIClient CLIENT = Common.createApiClient("http://devel", "admin@localhost", "admin");
+    private static final APIClient CLIENT = Common.createApiClient();
     
     public static void main(String[] args) {
         try {
