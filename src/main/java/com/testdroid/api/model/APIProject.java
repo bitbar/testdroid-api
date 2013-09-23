@@ -119,9 +119,13 @@ public class APIProject extends APIEntity {
     private String getUploadApplicationURI() { return createUri(selfURI, "/files/application"); }
     private String getUploadTestURI() { return createUri(selfURI, "/files/test"); }
     private String getUploadDataURI() { return createUri(selfURI, "/files/data"); }
+    private String getNotificationEmailsURI() { return selfURI + "/notifications"; }
 
     private String getCreateRunParameters(String testRunName) {
         return String.format("name=%s", encodeURL(testRunName));
+    }
+    private String getCreateNotificationParameters(String email, APINotificationEmail.Type type) {
+        return String.format("email=%s&type=%s", encodeURL(email), encodeURL(type.toString()));
     }
     
     @JsonIgnore
@@ -254,6 +258,28 @@ public class APIProject extends APIEntity {
     @JsonIgnore
     public APIListResource<APIDeviceGroup> getPublicDeviceGroups() throws APIException {
         return getListResource(getPublicDeviceGroupsURI(), APIDeviceGroup.class);
+    }
+    
+    @JsonIgnore
+    public APINotificationEmail createNotificationEmail(String email, APINotificationEmail.Type type) throws APIException {
+        return postResource(getNotificationEmailsURI(), getCreateNotificationParameters(email, type), APINotificationEmail.class);
+    }
+    
+    @JsonIgnore
+    public APIListResource<APINotificationEmail> getNotificationEmails() throws APIException {
+        return getListResource(getNotificationEmailsURI(), APINotificationEmail.class);
+    }
+    
+    /**
+     * Returns list of notification emails for project.
+     * @since 1.3.34
+     * @param queryBuilder
+     * @return
+     * @throws APIException 
+     */
+    @JsonIgnore
+    public APIListResource<APINotificationEmail> getNotificationEmails(APIQueryBuilder queryBuilder) throws APIException {
+        return getListResource(getNotificationEmailsURI(), queryBuilder, APINotificationEmail.class);
     }
     
     @JsonIgnore
