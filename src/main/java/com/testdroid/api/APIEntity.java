@@ -68,15 +68,6 @@ public abstract class APIEntity {
         this.id = id;
     }
 
-    /**
-     * Returns
-     * <code>true</code> if ID exists for this entity.
-     */
-    @JsonView(APIView.class)
-    public boolean hasId() {
-        return true;
-    }
-
     @JsonIgnore
     protected <T extends APIEntity> APIResource<T> getResource(String uri, Class<T> type) throws APIException {
         checkClient(client);

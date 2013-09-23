@@ -66,7 +66,7 @@ public abstract class APIFiles extends APIEntity {
     
     @XmlRootElement 
     @XmlSeeAlso({ APIFiles.APIFile.class, APIFiles.AndroidAppFile.class, APIFiles.AndroidTestFile.class, APIFiles.DataFile.class, 
-        APIFiles.IOSAppFile.class, APIFiles.IOSTestFile.class, APIFiles.UIAutomatorTestFile.class, APIFiles.RecorderOnlineScreenpleyFile.class })
+        APIFiles.IOSAppFile.class, APIFiles.IOSTestFile.class, APIFiles.UIAutomatorTestFile.class, APIFiles.RecorderOnlineScreenplayFile.class })
     public static abstract class APIFile extends APIEntity {
         private String originalName;
         private String readableSize;
@@ -273,15 +273,35 @@ public abstract class APIFiles extends APIEntity {
     }
     
     @XmlRootElement
-    public static class RecorderOnlineScreenpleyFile extends APIFile {
+    public static class RecorderOnlineScreenplayFile extends APIFile {
         public static enum Format {
-            JAVA,JSON;
+            JAVA("java"),
+            JSON("json");
+            
+            private String urlForm;
+            
+            private Format(String urlForm) {
+                this.urlForm = urlForm;
+            }
+
+            public String getUrlForm() {
+                return urlForm;
+            }
+            
+            public static Format fromUrlForm(String url) {
+                for(Format f: Format.values()) {
+                    if(f.getUrlForm().equalsIgnoreCase(url)) {
+                        return f;
+                    }
+                }
+                return null;
+            }
         }
         
-        public RecorderOnlineScreenpleyFile() {
+        public RecorderOnlineScreenplayFile() {
         }
 
-        public RecorderOnlineScreenpleyFile(Long id, String originalName, Date uploadTime, String readableSize) {
+        public RecorderOnlineScreenplayFile(Long id, String originalName, Date uploadTime, String readableSize) {
             super(id, originalName, uploadTime, readableSize);
         }
     }
