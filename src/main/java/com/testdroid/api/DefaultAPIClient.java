@@ -80,9 +80,9 @@ public class DefaultAPIClient implements APIClient {
         this(cloudURL, username, password, false);
     }
 
-    public DefaultAPIClient(String cloudURL, String username, String password, boolean noCheckCertificate) {
+    public DefaultAPIClient(String cloudURL, String username, String password, boolean skipCheckCertificate) {
         NetHttpTransport.Builder netHttpBuilder;
-        if (noCheckCertificate) {
+        if (skipCheckCertificate) {
             try {
                 netHttpBuilder = new NetHttpTransport.Builder().doNotValidateCertificate();
             } catch (GeneralSecurityException ex) {
@@ -97,9 +97,9 @@ public class DefaultAPIClient implements APIClient {
         initializeDefaultAPIClient(cloudURL, username, password);
     }
     
-    public DefaultAPIClient(String cloudURL, String username, String password, HttpHost proxy, boolean noCheckCertificate)  {        
+    public DefaultAPIClient(String cloudURL, String username, String password, HttpHost proxy, boolean skipCheckCertificate)  {
         ApacheHttpTransport.Builder apacheBuilder;
-        if (noCheckCertificate) {
+        if (skipCheckCertificate) {
             try {
                 apacheBuilder = new ApacheHttpTransport.Builder().setProxy(proxy).doNotValidateCertificate();                        
             } catch (GeneralSecurityException ex) {
@@ -114,8 +114,8 @@ public class DefaultAPIClient implements APIClient {
         initializeDefaultAPIClient(cloudURL, username, password);
     }
     
-    public DefaultAPIClient(String cloudURL, String username, String password, HttpHost proxy, final String proxyUser, final String proxyPassword, boolean noCheckCertificate) {
-        this(cloudURL, username, password, proxy, noCheckCertificate);
+    public DefaultAPIClient(String cloudURL, String username, String password, HttpHost proxy, final String proxyUser, final String proxyPassword, boolean skipCheckCertificate) {
+        this(cloudURL, username, password, proxy, skipCheckCertificate);
         
         DefaultHttpClient apacheClient = (DefaultHttpClient)((ApacheHttpTransport)httpTransport).getHttpClient();
         apacheClient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
