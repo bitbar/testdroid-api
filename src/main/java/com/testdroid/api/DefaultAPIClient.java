@@ -47,8 +47,8 @@ public class DefaultAPIClient implements APIClient {
     protected static Credential getCredential() {
         return new Credential.Builder(BearerToken.queryParameterAccessMethod()).build();
     }
-    static final JAXBContext context = initContext();
-    private final static String TESTDROID_API_PACKAGES = "com.testdroid.api:com.testdroid.api.model:com.testdroid.um.api.model";
+    private  static final JAXBContext context = initContext();
+    private final static String TESTDROID_API_PACKAGES = "com.testdroid.api:com.testdroid.api.model";
     private static JAXBContext initContext() {
         try {
             ClassLoader cl = APIEntity.class.getClassLoader();
@@ -56,6 +56,9 @@ public class DefaultAPIClient implements APIClient {
         } catch (JAXBException e) {
         }
         return null;
+    }
+    protected JAXBContext getContext() {
+        return context;
     }
     protected static String API_URI = "/api/v2";
     public final static int HTTP_CONNECT_TIMEOUT = 60000;
@@ -473,18 +476,18 @@ public class DefaultAPIClient implements APIClient {
         return new APIListResource<APIDevice>(this, getDevicesURI(filters), offset, limit, search, sort, APIDevice.class);
     }
 
-    private static <T> T fromXML(String xml, Class<T> type) throws APIException {
+    private <T> T fromXML(String xml, Class<T> type) throws APIException {
         try {
-            Unmarshaller unmarshaller = context.createUnmarshaller();
+            Unmarshaller unmarshaller = getContext().createUnmarshaller();
             return (T) unmarshaller.unmarshal(new StringReader(xml));
         } catch (JAXBException ex) {
             throw new APIException(String.format("Failed to parse response as %s", type.getName()));
         }
     }
 
-    private static <T> T fromXML(InputStream inputStream, Class<T> type) throws APIException {
+    private <T> T fromXML(InputStream inputStream, Class<T> type) throws APIException {
         try {
-            Unmarshaller unmarshaller = context.createUnmarshaller();
+            Unmarshaller unmarshaller = getContext().createUnmarshaller();
             return (T) unmarshaller.unmarshal(inputStream);
         } catch (JAXBException ex) {
             throw new APIException(String.format("Failed to parse response as %s", type.getName()));
