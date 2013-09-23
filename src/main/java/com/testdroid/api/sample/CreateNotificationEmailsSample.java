@@ -4,6 +4,7 @@ import com.testdroid.api.APIClient;
 import com.testdroid.api.APIException;
 import com.testdroid.api.APIList;
 import com.testdroid.api.model.APINotificationEmail;
+import com.testdroid.api.model.APIProject;
 import com.testdroid.api.model.APIUser;
 import com.testdroid.api.sample.util.Common;
 
@@ -13,7 +14,7 @@ import com.testdroid.api.sample.util.Common;
  */
 public class CreateNotificationEmailsSample {
 
-    public static final APIClient CLIENT = Common.createApiClient();
+    public static final APIClient CLIENT = Common.createApiClient("http://localhost:8080/testdroid-cloud", "admin@localhost", "admin");
     
     public static void main(String[] args) {
         try {
@@ -38,6 +39,16 @@ public class CreateNotificationEmailsSample {
             
             System.out.println("Notification emails are:");
             for(APINotificationEmail notificationEmail: notificationEmailsList.getData()) {
+                System.out.println(String.format("%s, type: %s", notificationEmail.getEmail(), notificationEmail.getType()));
+            }
+            
+            // You can create notification email for project only
+            APIProject project = me.createProject(APIProject.Type.ANDROID);
+            
+            project.createNotificationEmail("user@localhost", APINotificationEmail.Type.ON_FAILURE);
+            
+            // And get it
+            for(APINotificationEmail notificationEmail: project.getNotificationEmails().getEntity().getData()) {
                 System.out.println(String.format("%s, type: %s", notificationEmail.getEmail(), notificationEmail.getType()));
             }
             
