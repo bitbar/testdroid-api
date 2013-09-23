@@ -47,15 +47,21 @@ public class DefaultAPIClient implements APIClient {
     protected static Credential getCredential() {
         return new Credential.Builder(BearerToken.queryParameterAccessMethod()).build();
     }
-    static final JAXBContext context = initContext();
-    private final static String TESTDROID_API_PACKAGES = "com.testdroid.api:com.testdroid.api.model:com.testdroid.um.api.model";
+
+    private  static final JAXBContext context = initContext();
+
+    private final static String TESTDROID_API_PACKAGES = "com.testdroid.api:com.testdroid.api.model";
     private static JAXBContext initContext() {
         try {
             ClassLoader cl = APIEntity.class.getClassLoader();
             return JAXBContext.newInstance(TESTDROID_API_PACKAGES, cl);
         } catch (JAXBException e) {
+            e.printStackTrace();
         }
         return null;
+    }
+    protected JAXBContext getContext() {
+        return context;
     }
     protected static String API_URI = "/api/v2";
     public final static int HTTP_CONNECT_TIMEOUT = 60000;
@@ -377,7 +383,7 @@ public class DefaultAPIClient implements APIClient {
                 result.selfURI = uri;
 
                 // In case of entity creation, we need to update its url
-                if (response.getStatusCode() == HttpStatus.SC_CREATED && result.hasId()) {
+                if (response.getStatusCode() == HttpStatus.SC_CREATED && result.getId() != null) {
                     result.selfURI += String.format("/%s", result.getId());
                 }
                 return result;
@@ -489,18 +495,18 @@ public class DefaultAPIClient implements APIClient {
         return new APIListResource<APIDevice>(this, getDevicesURI(filters), offset, limit, search, sort, APIDevice.class);
     }
 
-    private static <T> T fromXML(String xml, Class<T> type) throws APIException {
+    private <T> T fromXML(String xml, Class<T> type) throws APIException {
         try {
-            Unmarshaller unmarshaller = context.createUnmarshaller();
+            Unmarshaller unmarshaller = getContext().createUnmarshaller();
             return (T) unmarshaller.unmarshal(new StringReader(xml));
         } catch (JAXBException ex) {
             throw new APIException(String.format("Failed to parse response as %s", type.getName()));
         }
     }
 
-    private static <T> T fromXML(InputStream inputStream, Class<T> type) throws APIException {
+    private <T> T fromXML(InputStream inputStream, Class<T> type) throws APIException {
         try {
-            Unmarshaller unmarshaller = context.createUnmarshaller();
+            Unmarshaller unmarshaller = getContext().createUnmarshaller();
             return (T) unmarshaller.unmarshal(inputStream);
         } catch (JAXBException ex) {
             throw new APIException(String.format("Failed to parse response as %s", type.getName()));

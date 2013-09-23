@@ -4,7 +4,6 @@ APIDevice
 APIProject
 APIProjectSharing
 APIProjectJobConfig
-APICluster
 APITestRun
 APITestRunConfig
 APITestRunParameter

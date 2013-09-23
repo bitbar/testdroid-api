@@ -2,9 +2,11 @@ package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIException;
+import com.testdroid.api.APIView;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.map.annotate.JsonView;
 
 /**
  *
@@ -39,6 +41,7 @@ public class APINotificationEmail extends APIEntity {
         this.type = type;
     }
 
+    @JsonView(value = { APIView.ProjectNotificationView.class, APIView.UserNotificationView.class })
     public String getEmail() {
         return email;
     }
@@ -47,6 +50,7 @@ public class APINotificationEmail extends APIEntity {
         this.email = email;
     }
 
+    @JsonView(APIView.UserNotificationView.class)
     public APIProject getProject() {
         return project;
     }
@@ -55,6 +59,7 @@ public class APINotificationEmail extends APIEntity {
         this.project = project;
     }
 
+    @JsonView(value = { APIView.ProjectNotificationView.class, APIView.UserNotificationView.class })
     public Type getType() {
         return type;
     }
