@@ -71,12 +71,28 @@ public class DefaultAPIClient implements APIClient {
     protected final HttpTransport httpTransport;
     
     public DefaultAPIClient(String cloudURL, String username, String password) {                
-        httpTransport = new NetHttpTransport();
+        this(cloudURL, username, password, false);
+    }
+
+    public DefaultAPIClient(String cloudURL, String username, String password, boolean noCheckCertificate) {
+        NetHttpTransport.Builder netHttpBuilder;
+        if (noCheckCertificate) {
+            try {
+                netHttpBuilder = new NetHttpTransport.Builder().doNotValidateCertificate();
+            } catch (GeneralSecurityException ex) {
+                Logger.getLogger(DefaultAPIClient.class.getName()).log(Level.WARNING, "Cannot set not-validating certificate. Certificate will be validating.", ex);
+                netHttpBuilder = new NetHttpTransport.Builder();
+            }
+        } else {
+            netHttpBuilder = new NetHttpTransport.Builder();
+        }
+
+        httpTransport = netHttpBuilder.build();
         initializeDefaultAPIClient(cloudURL, username, password);
     }
     
     public DefaultAPIClient(String cloudURL, String username, String password, HttpHost proxy, boolean noCheckCertificate)  {        
-        ApacheHttpTransport.Builder apacheBuilder = null;
+        ApacheHttpTransport.Builder apacheBuilder;
         if (noCheckCertificate) {
             try {
                 apacheBuilder = new ApacheHttpTransport.Builder().setProxy(proxy).doNotValidateCertificate();                        
