@@ -48,12 +48,13 @@ public class DefaultAPIClient implements APIClient {
         return new Credential.Builder(BearerToken.queryParameterAccessMethod()).build();
     }
     static final JAXBContext context = initContext();
-    private final static String TESTDROID_API_PACKAGES = "com.testdroid.api:com.testdroid.api.model:com.testdroid.um.api.model";
+    private final static String TESTDROID_API_PACKAGES = "com.testdroid.api:com.testdroid.api.model";
     private static JAXBContext initContext() {
         try {
             ClassLoader cl = APIEntity.class.getClassLoader();
             return JAXBContext.newInstance(TESTDROID_API_PACKAGES, cl);
         } catch (JAXBException e) {
+            e.printStackTrace();
         }
         return null;
     }
@@ -361,7 +362,7 @@ public class DefaultAPIClient implements APIClient {
                 result.selfURI = uri;
 
                 // In case of entity creation, we need to update its url
-                if (response.getStatusCode() == HttpStatus.SC_CREATED && result.hasId()) {
+                if (response.getStatusCode() == HttpStatus.SC_CREATED && result.getId() != null) {
                     result.selfURI += String.format("/%s", result.getId());
                 }
                 return result;
