@@ -179,12 +179,6 @@ public class APIList<T extends APIEntity> extends APIEntity {
     }
 
     @Override
-    @JsonView(APIView.class)
-    public boolean hasId() {
-        return false;
-    }
-
-    @Override
     @JsonIgnore
     protected <S extends APIEntity> void clone(S from) {
         APIList<T> apiList = (APIList<T>) from;
