@@ -54,6 +54,7 @@ public class DefaultAPIClient implements APIClient {
             ClassLoader cl = APIEntity.class.getClassLoader();
             return JAXBContext.newInstance(TESTDROID_API_PACKAGES, cl);
         } catch (JAXBException e) {
+            System.out.println("Failed initializing JAXBContext for DefaultAPIClient - API client will not work!");
             e.printStackTrace();
         }
         return null;
@@ -140,14 +141,12 @@ public class DefaultAPIClient implements APIClient {
             try {
                 accessToken = acquireAccessToken();
             } catch (APIException ex) {
-                ex.printStackTrace();
                 throw ex;
             }
         } else if (System.currentTimeMillis() > (accessTokenExpireTime - 10 * 1000)) {
             try {
                 accessToken = refreshAccessToken();
             } catch (APIException ex) {
-                ex.printStackTrace();
                 accessToken = null; // if refreshing failed, then we are not authorized   
                 throw ex;
             }
