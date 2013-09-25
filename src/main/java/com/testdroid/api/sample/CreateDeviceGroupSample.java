@@ -24,7 +24,7 @@ public class CreateDeviceGroupSample {
             APIUser me = CLIENT.me();
             
             // Create device group
-            APIDeviceGroup deviceGroup = me.createDeviceGroup("My device group");
+            APIDeviceGroup deviceGroup = me.createDeviceGroup("My device group", APIDevice.OsType.ANDROID);
                         
             System.out.println(String.format("Device group name: %s\nOwner id: %s\nIs group public?: %s",
                     deviceGroup.getDisplayName(), deviceGroup.getUserId(), deviceGroup.isPublic()));
@@ -61,7 +61,7 @@ public class CreateDeviceGroupSample {
             
             // Now we create device group for samsungs only
             APIList<APIDevice> samsungDevices = CLIENT.getDevices(new APIQueryBuilder().offset(0).limit(10).search("Samsung")).getEntity();
-            APIDeviceGroup samsungsDeviceGroup = me.createDeviceGroup("Samsungs only");
+            APIDeviceGroup samsungsDeviceGroup = me.createDeviceGroup("Samsungs only", APIDevice.OsType.ANDROID);
             
             for(APIDevice device: samsungDevices.getData()) {
                 samsungsDeviceGroup.addDevice(device);

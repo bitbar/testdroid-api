@@ -47,7 +47,7 @@ public class DefaultAPIClient implements APIClient {
     protected static Credential getCredential() {
         return new Credential.Builder(BearerToken.queryParameterAccessMethod()).build();
     }
-    private static final JAXBContext context = initContext();
+    static final JAXBContext context = initContext();
 
     private final static String TESTDROID_API_PACKAGES = "com.testdroid.api:com.testdroid.api.model";
     private static JAXBContext initContext() {
@@ -55,6 +55,7 @@ public class DefaultAPIClient implements APIClient {
             ClassLoader cl = APIEntity.class.getClassLoader();
             return JAXBContext.newInstance(TESTDROID_API_PACKAGES, cl);
         } catch (JAXBException e) {
+            System.out.println("Failed initializing JAXBContext for DefaultAPIClient - API client will not work!");
             e.printStackTrace();
         }
         return null;
@@ -76,13 +77,29 @@ public class DefaultAPIClient implements APIClient {
     protected final HttpTransport httpTransport;
     
     public DefaultAPIClient(String cloudURL, String username, String password) {                
-        httpTransport = new NetHttpTransport();
+        this(cloudURL, username, password, false);
+    }
+
+    public DefaultAPIClient(String cloudURL, String username, String password, boolean skipCheckCertificate) {
+        NetHttpTransport.Builder netHttpBuilder;
+        if (skipCheckCertificate) {
+            try {
+                netHttpBuilder = new NetHttpTransport.Builder().doNotValidateCertificate();
+            } catch (GeneralSecurityException ex) {
+                Logger.getLogger(DefaultAPIClient.class.getName()).log(Level.WARNING, "Cannot set not-validating certificate. Certificate will be validating.", ex);
+                netHttpBuilder = new NetHttpTransport.Builder();
+            }
+        } else {
+            netHttpBuilder = new NetHttpTransport.Builder();
+        }
+
+        httpTransport = netHttpBuilder.build();
         initializeDefaultAPIClient(cloudURL, username, password);
     }
     
-    public DefaultAPIClient(String cloudURL, String username, String password, HttpHost proxy, boolean noCheckCertificate)  {        
-        ApacheHttpTransport.Builder apacheBuilder = null;
-        if (noCheckCertificate) {
+    public DefaultAPIClient(String cloudURL, String username, String password, HttpHost proxy, boolean skipCheckCertificate)  {
+        ApacheHttpTransport.Builder apacheBuilder;
+        if (skipCheckCertificate) {
             try {
                 apacheBuilder = new ApacheHttpTransport.Builder().setProxy(proxy).doNotValidateCertificate();                        
             } catch (GeneralSecurityException ex) {
@@ -97,8 +114,8 @@ public class DefaultAPIClient implements APIClient {
         initializeDefaultAPIClient(cloudURL, username, password);
     }
     
-    public DefaultAPIClient(String cloudURL, String username, String password, HttpHost proxy, final String proxyUser, final String proxyPassword, boolean noCheckCertificate) {
-        this(cloudURL, username, password, proxy, noCheckCertificate);
+    public DefaultAPIClient(String cloudURL, String username, String password, HttpHost proxy, final String proxyUser, final String proxyPassword, boolean skipCheckCertificate) {
+        this(cloudURL, username, password, proxy, skipCheckCertificate);
         
         DefaultHttpClient apacheClient = (DefaultHttpClient)((ApacheHttpTransport)httpTransport).getHttpClient();
         apacheClient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
@@ -144,14 +161,12 @@ public class DefaultAPIClient implements APIClient {
             try {
                 accessToken = acquireAccessToken();
             } catch (APIException ex) {
-                ex.printStackTrace();
                 throw ex;
             }
         } else if (System.currentTimeMillis() > (accessTokenExpireTime - 10 * 1000)) {
             try {
                 accessToken = refreshAccessToken();
             } catch (APIException ex) {
-                ex.printStackTrace();
                 accessToken = null; // if refreshing failed, then we are not authorized   
                 throw ex;
             }
