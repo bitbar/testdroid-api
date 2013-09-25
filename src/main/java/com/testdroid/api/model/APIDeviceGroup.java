@@ -16,12 +16,14 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @XmlRootElement
 public class APIDeviceGroup extends APIDeviceProperty {
     private Long userId;
+    private APIDevice.OsType osType;
 
     public APIDeviceGroup() {}
 
-    public APIDeviceGroup(Long id, String name, String displayName, Integer deviceCount, Integer creditsPrice, Long userId) {
+    public APIDeviceGroup(Long id, String name, String displayName, APIDevice.OsType osType, Integer deviceCount, Integer creditsPrice, Long userId) {
         super(id, name, displayName, deviceCount, creditsPrice);
         this.userId = userId;
+        this.osType = osType;
     }
 
     public Long getUserId() {
@@ -30,6 +32,14 @@ public class APIDeviceGroup extends APIDeviceProperty {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public APIDevice.OsType getOsType() {
+        return osType;
+    }
+
+    public void setOsType(APIDevice.OsType osType) {
+        this.osType = osType;
     }
     
     @JsonIgnore
