@@ -1,10 +1,10 @@
 APIUser
 APIFiles
 APIDevice
+APIDeviceGroup
 APIProject
 APIProjectSharing
 APIProjectJobConfig
-APICluster
 APITestRun
 APITestRunConfig
 APITestRunParameter
