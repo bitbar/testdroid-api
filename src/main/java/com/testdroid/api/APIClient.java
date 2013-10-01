@@ -24,11 +24,19 @@ public interface APIClient {
     
     /**
      * return resource for accessing list of devices in Cloud using provided filters
+     * @return list resource for accessing all devices matching selected filters, if no filter used returns all devcies
+     * @throws APIException on API error
+     */
+    public APIListResource<APIDevice> getDevices() throws APIException;
+    
+    /**
+     * return resource for accessing list of devices in Cloud using provided filters
+     * @deprecated
      * @param filters non-obligatory parameter for filtering devices returned
      * @return list resource for accessing all devices matching selected filters, if no filter used returns all devcies
      * @throws APIException on API error
      */
-    public APIListResource<APIDevice> getDevices(APIDevice.Filter... filters) throws APIException;
+    public APIListResource<APIDevice> getDevices(APIDevice.DeviceFilter... filters) throws APIException;
 
     /**
      * Fetch and return list of devices in Cloud using provided filters.
@@ -37,7 +45,7 @@ public interface APIClient {
      * @return list of all devices matching selected filters, if no filter used returns all devcies
      * @throws APIException 
      */
-    public APIListResource<APIDevice> getDevices(APIQueryBuilder queryBuilder, APIDevice.Filter... filters) throws APIException;
+    public APIListResource<APIDevice> getDevices(APIDeviceQueryBuilder queryBuilder) throws APIException;
     
     /**
      * Fetch and return list of devices in Cloud using provided filters.
@@ -46,7 +54,7 @@ public interface APIClient {
      * @return list of all devices matching selected filters, if no filter used returns all devcies
      * @throws APIException on API error
      */
-    public APIListResource<APIDevice> getDevices(long offset, long limit, String search, APISort sort, APIDevice.Filter... filters) throws APIException;
+    public APIListResource<APIDevice> getDevices(long offset, long limit, String search, APISort sort, APIDevice.DeviceFilter... filters) throws APIException;
     
     /**
      * Calls GET request to API

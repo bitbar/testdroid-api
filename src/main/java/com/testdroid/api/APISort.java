@@ -35,7 +35,7 @@ public class APISort {
     public static enum Column {
         DEVICE_GROUP_ID(APIDeviceGroup.class, "id"),
         DEVICE_GROUP_NAME(APIDeviceGroup.class, "displayName"),
-        DEVICE_NAME(APIDevice.class, "userName"),
+        DEVICE_NAME(APIDevice.class, "name"),
         DEVICE_PROPERTY_NAME(APIDeviceProperty.class, "displayName"),
         DEVICE_RUN_CREATED(APIDeviceRunState.class, "createTime"),
         DEVICE_RUN_DEVICE(APIDeviceRun.class, "device.userName"),
