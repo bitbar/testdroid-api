@@ -477,6 +477,12 @@ public class DefaultAPIClient implements APIClient {
     public APIListResource<APIDevice> getDevices() throws APIException {
         return new APIListResource<APIDevice>(this, DEVICES_URI, APIDevice.class);
     }
+    
+
+    @Override
+    public APIListResource<APIDevice> getDevices(APIDevice.DeviceFilter... filters) throws APIException {
+        return new APIListResource<APIDevice>(this, DEVICES_URI, new APIDeviceQueryBuilder().filterWithDeviceFilters(filters), APIDevice.class);
+    }
 
     @Override
     public APIListResource<APIDevice> getDevices(APIDeviceQueryBuilder queryBuilder) throws APIException {

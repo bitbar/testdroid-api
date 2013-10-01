@@ -24,11 +24,19 @@ public interface APIClient {
     
     /**
      * return resource for accessing list of devices in Cloud using provided filters
-     * @param filters non-obligatory parameter for filtering devices returned
      * @return list resource for accessing all devices matching selected filters, if no filter used returns all devcies
      * @throws APIException on API error
      */
     public APIListResource<APIDevice> getDevices() throws APIException;
+    
+    /**
+     * return resource for accessing list of devices in Cloud using provided filters
+     * @deprecated
+     * @param filters non-obligatory parameter for filtering devices returned
+     * @return list resource for accessing all devices matching selected filters, if no filter used returns all devcies
+     * @throws APIException on API error
+     */
+    public APIListResource<APIDevice> getDevices(APIDevice.DeviceFilter... filters) throws APIException;
 
     /**
      * Fetch and return list of devices in Cloud using provided filters.
