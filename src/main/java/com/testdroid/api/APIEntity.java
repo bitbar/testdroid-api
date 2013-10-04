@@ -219,7 +219,7 @@ public abstract class APIEntity {
     public static JAXBContext getJAXBContext(Class type) throws JAXBException {
         JAXBContext context = contextMap.get(type);
         if(context == null) {
-            JAXBContext context = JAXBContext.newInstance(type);
+            context = JAXBContext.newInstance(type);
             contextMap.put(type, context);
             return context;
         } else {
