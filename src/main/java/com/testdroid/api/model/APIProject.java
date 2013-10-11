@@ -181,7 +181,7 @@ public class APIProject extends APIEntity {
     }
     
     public void update() throws APIException {
-        String body = String.format("name=%s&description=%s", encodeURL(name), encodeURL(description));
+        String body = String.format("name=%s&description=%s&common=%s", encodeURL(name), encodeURL(description), encodeURL(common));
         APIProject project = postResource(selfURI, body, APIProject.class);
         clone(project);
     }
