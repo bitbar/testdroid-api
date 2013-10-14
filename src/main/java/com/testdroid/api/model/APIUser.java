@@ -246,8 +246,8 @@ public class APIUser extends APIEntity {
     }
     
     @JsonIgnore
-    public APIDeviceGroup createDeviceGroup(String name) throws APIException {
-        return postResource(getDeviceGroupsURI(), String.format("name=%s", encodeURL(name)), APIDeviceGroup.class);
+    public APIDeviceGroup createDeviceGroup(String name, APIDevice.OsType osType) throws APIException {
+        return postResource(getDeviceGroupsURI(), String.format("name=%s&osType=%s", encodeURL(name), osType), APIDeviceGroup.class);
     }
     
     @JsonIgnore
