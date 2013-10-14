@@ -41,6 +41,7 @@ public class APISort {
         DEVICE_RUN_DEVICE(APIDeviceRun.class, "device.userName"),
         DEVICE_RUN_END_TIME(APIDeviceRun.class, "endTime"),
         DEVICE_RUN_ID(APIDeviceRun.class, "id"),
+        DEVICE_RUN_STATE_FINISHED(APIDeviceRunState.class, "finishTimeMS"),
         DEVICE_RUN_STATE_STARTED(APIDeviceRunState.class, "startTimeMS"),
         NOTIFICATION_EMAIL_EMAIL(APINotificationEmail.class, "email"),
         NOTIFICATION_EMAIL_ID(APINotificationEmail.class, "id"),
