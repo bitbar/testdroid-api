@@ -15,7 +15,7 @@ import org.codehaus.jackson.map.annotate.JsonView;
 public class APIDevice extends APIEntity {
 
     @XmlType
-    public static enum Filter { FREE, RECOMMENDED, NEW }
+    public static enum DeviceFilter { FREE, RECOMMENDED, NEW }
     
     @XmlType
     public static enum OsType {

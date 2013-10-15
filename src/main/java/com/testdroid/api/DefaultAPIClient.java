@@ -49,6 +49,7 @@ public class DefaultAPIClient implements APIClient {
     }
 
     static final JAXBContext context = initContext();
+
     private final static String TESTDROID_API_PACKAGES = "com.testdroid.api:com.testdroid.api.model";
     private static JAXBContext initContext() {
         try {
@@ -77,13 +78,29 @@ public class DefaultAPIClient implements APIClient {
     protected final HttpTransport httpTransport;
     
     public DefaultAPIClient(String cloudURL, String username, String password) {                
-        httpTransport = new NetHttpTransport();
+        this(cloudURL, username, password, false);
+    }
+
+    public DefaultAPIClient(String cloudURL, String username, String password, boolean skipCheckCertificate) {
+        NetHttpTransport.Builder netHttpBuilder;
+        if (skipCheckCertificate) {
+            try {
+                netHttpBuilder = new NetHttpTransport.Builder().doNotValidateCertificate();
+            } catch (GeneralSecurityException ex) {
+                Logger.getLogger(DefaultAPIClient.class.getName()).log(Level.WARNING, "Cannot set not-validating certificate. Certificate will be validating.", ex);
+                netHttpBuilder = new NetHttpTransport.Builder();
+            }
+        } else {
+            netHttpBuilder = new NetHttpTransport.Builder();
+        }
+
+        httpTransport = netHttpBuilder.build();
         initializeDefaultAPIClient(cloudURL, username, password);
     }
     
-    public DefaultAPIClient(String cloudURL, String username, String password, HttpHost proxy, boolean noCheckCertificate)  {        
-        ApacheHttpTransport.Builder apacheBuilder = null;
-        if (noCheckCertificate) {
+    public DefaultAPIClient(String cloudURL, String username, String password, HttpHost proxy, boolean skipCheckCertificate)  {
+        ApacheHttpTransport.Builder apacheBuilder;
+        if (skipCheckCertificate) {
             try {
                 apacheBuilder = new ApacheHttpTransport.Builder().setProxy(proxy).doNotValidateCertificate();                        
             } catch (GeneralSecurityException ex) {
@@ -98,8 +115,8 @@ public class DefaultAPIClient implements APIClient {
         initializeDefaultAPIClient(cloudURL, username, password);
     }
     
-    public DefaultAPIClient(String cloudURL, String username, String password, HttpHost proxy, final String proxyUser, final String proxyPassword, boolean noCheckCertificate) {
-        this(cloudURL, username, password, proxy, noCheckCertificate);
+    public DefaultAPIClient(String cloudURL, String username, String password, HttpHost proxy, final String proxyUser, final String proxyPassword, boolean skipCheckCertificate) {
+        this(cloudURL, username, password, proxy, skipCheckCertificate);
         
         DefaultHttpClient apacheClient = (DefaultHttpClient)((ApacheHttpTransport)httpTransport).getHttpClient();
         apacheClient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
@@ -365,7 +382,7 @@ public class DefaultAPIClient implements APIClient {
                 result.selfURI = uri;
 
                 // In case of entity creation, we need to update its url
-                if (response.getStatusCode() == HttpStatus.SC_CREATED && result.hasId()) {
+                if (response.getStatusCode() == HttpStatus.SC_CREATED && result.getId() != null) {
                     result.selfURI += String.format("/%s", result.getId());
                 }
                 return result;
@@ -455,26 +472,34 @@ public class DefaultAPIClient implements APIClient {
         return result;
     }
 
-    private static String getDevicesURI(APIDevice.Filter... filters) {
-        return filters.length > 0 ? String.format("/devices?filter=%s", StringUtils.join(filters, "&filter=")) : "/devices";
+    private static String DEVICES_URI = "/devices";
+
+    @Override
+    public APIListResource<APIDevice> getDevices() throws APIException {
+        return new APIListResource<APIDevice>(this, DEVICES_URI, APIDevice.class);
+    }
+    
+
+    @Override
+    public APIListResource<APIDevice> getDevices(APIDevice.DeviceFilter... filters) throws APIException {
+        return new APIListResource<APIDevice>(this, DEVICES_URI, new APIDeviceQueryBuilder().filterWithDeviceFilters(filters), APIDevice.class);
     }
 
     @Override
-    public APIListResource<APIDevice> getDevices(APIDevice.Filter... filters) throws APIException {
-        return new APIListResource<APIDevice>(this, getDevicesURI(filters), APIDevice.class);
+    public APIListResource<APIDevice> getDevices(APIDeviceQueryBuilder queryBuilder) throws APIException {
+        return new APIListResource<APIDevice>(this, DEVICES_URI, queryBuilder, APIDevice.class);
     }
 
     @Override
-    public APIListResource<APIDevice> getDevices(APIQueryBuilder queryBuilder, APIDevice.Filter... filters) throws APIException {
-        return new APIListResource<APIDevice>(this, getDevicesURI(filters), queryBuilder, APIDevice.class);
-    }
-
-    @Override
-    public APIListResource<APIDevice> getDevices(long offset, long limit, String search, APISort sort, APIDevice.Filter... filters) throws APIException {
+    public APIListResource<APIDevice> getDevices(long offset, long limit, String search, APISort sort, APIDevice.DeviceFilter... filters) throws APIException {
         if(limit <= 0) {
             limit = 10;
         }
-        return new APIListResource<APIDevice>(this, getDevicesURI(filters), offset, limit, search, sort, APIDevice.class);
+        APIDeviceQueryBuilder builder = new APIDeviceQueryBuilder().offset((int)offset).limit((int)limit).search(search).filterWithDeviceFilters(filters);
+        if(sort != null) {
+            builder.sort(APIDevice.class, sort.getItems());
+        }
+        return new APIListResource<APIDevice>(this, DEVICES_URI, builder, APIDevice.class);
     }
 
     private <T> T fromXML(String xml, Class<T> type) throws APIException {
