@@ -47,6 +47,7 @@ public class DefaultAPIClient implements APIClient {
     protected static Credential getCredential() {
         return new Credential.Builder(BearerToken.queryParameterAccessMethod()).build();
     }
+
     static final JAXBContext context = initContext();
 
     private final static String TESTDROID_API_PACKAGES = "com.testdroid.api:com.testdroid.api.model";
