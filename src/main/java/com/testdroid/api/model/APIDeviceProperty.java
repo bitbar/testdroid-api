@@ -15,17 +15,17 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 public class APIDeviceProperty extends APIEntity {
     private String name;
     private String displayName;
-    private Integer deviceCount;
-    private Integer creditsPrice;
+    private Long propertyGroupId;
+    private String propertyGroupName;
 
     public APIDeviceProperty() {}
 
-    public APIDeviceProperty(Long id, String name, String displayName, Integer deviceCount, Integer creditsPrice) {
+    public APIDeviceProperty(Long id, String name, String displayName, Long propertyGroupId, String propertyGroupName) {
         super(id);
         this.name = name;
         this.displayName = displayName;
-        this.deviceCount = deviceCount;
-        this.creditsPrice = creditsPrice;
+        this.propertyGroupId = propertyGroupId;
+        this.propertyGroupName = propertyGroupName;
     }
 
     public String getName() {
@@ -44,20 +44,20 @@ public class APIDeviceProperty extends APIEntity {
         this.displayName = displayName;
     }
 
-    public Integer getDeviceCount() {
-        return deviceCount;
+    public Long getPropertyGroupId() {
+        return propertyGroupId;
     }
 
-    public void setDeviceCount(Integer deviceCount) {
-        this.deviceCount = deviceCount;
+    public void setPropertyGroupId(Long propertyGroupId) {
+        this.propertyGroupId = propertyGroupId;
     }
 
-    public Integer getCreditsPrice() {
-        return creditsPrice;
+    public String getPropertyGroupName() {
+        return propertyGroupName;
     }
 
-    public void setCreditsPrice(Integer creditsPrice) {
-        this.creditsPrice = creditsPrice;
+    public void setPropertyGroupName(String propertyGroupName) {
+        this.propertyGroupName = propertyGroupName;
     }
     
     private String getDevicesURI() { return createUri(selfURI, "/devices"); };
@@ -72,9 +72,9 @@ public class APIDeviceProperty extends APIEntity {
     protected <T extends APIEntity> void clone(T from) {
         APIDeviceProperty apiDeviceProperty = (APIDeviceProperty) from;
         cloneBase(from);
-        this.creditsPrice = apiDeviceProperty.creditsPrice;
-        this.deviceCount = apiDeviceProperty.deviceCount;
         this.displayName = apiDeviceProperty.displayName;
         this.name = apiDeviceProperty.name;
+        this.propertyGroupId = apiDeviceProperty.propertyGroupId;
+        this.propertyGroupName = apiDeviceProperty.propertyGroupName;
     }
 }
