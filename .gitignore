@@ -2,8 +2,9 @@
 /src/main/resources/rebel.xml
 /src/main/java/com/testdroid/api/Test.java
 /nbactions.xml
-.idea
-.project
-.settings
 .classpath
+.project
+.idea
+.settings
+*.swp
 testdroid-api.iml
