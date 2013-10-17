@@ -36,8 +36,6 @@ public class APISort {
         DEVICE_CREDITS_PRICE(APIDevice.class, "creditsPrice"),
         DEVICE_NAME(APIDevice.class, "name"),
         DEVICE_OS_TYPE(APIDevice.class, "osType"),
-        DEVICE_GROUP_CREDITS_PRICE(APIDeviceGroup.class, "creditsPrice"),
-        DEVICE_GROUP_DEVICE_COUNT(APIDeviceGroup.class, "deviceCount"),
         DEVICE_GROUP_ID(APIDeviceGroup.class, "id"),
         DEVICE_GROUP_NAME(APIDeviceGroup.class, "displayName"),
         DEVICE_GROUP_OS_TYPE(APIDeviceGroup.class, "osType"),
