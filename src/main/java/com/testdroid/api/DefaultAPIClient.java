@@ -356,11 +356,12 @@ public class DefaultAPIClient implements APIClient {
                 content = new InputStreamContent(contentType, (InputStream) body);
             } else if (body instanceof APIEntity) {
                 content = new InputStreamContent(contentType, IOUtils.toInputStream(((APIEntity) body).toXML()));
+            } else if(body instanceof HttpContent) {
+                content = (HttpContent) body;
             } else if (body == null) {
                 content = null;
             } else {
-                resourceUrl = String.format("%s?%s", resourceUrl, body);
-                content = null;
+                content = new ByteArrayContent("text/plain", body.toString().getBytes());
             }
             request = factory.buildPostRequest(new GenericUrl(resourceUrl), content);
             request.setHeaders(headers);
