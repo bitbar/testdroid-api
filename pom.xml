@@ -11,7 +11,6 @@
         <groupId>org.sonatype.oss</groupId>
         <artifactId>oss-parent</artifactId>
         <version>7</version>
-
     </parent>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -47,14 +46,16 @@
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
+                <includes>
+                    <include>fixtures/*.zip</include>
+                    <include>fixtures/*.apk</include>
+                </includes>
             </resource>
             <resource>
                 <filtering>false</filtering>
                 <directory>src/main/java</directory>
                 <includes>
                     <include>**/jaxb.index</include>
-                    <include>fixtures/*.zip</include>
-                    <include>fixtures/*.apk</include>
                 </includes>
                 <excludes>
                     <exclude>**/*.java</exclude>
