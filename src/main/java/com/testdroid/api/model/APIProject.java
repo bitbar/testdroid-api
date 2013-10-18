@@ -45,11 +45,12 @@ public class APIProject extends APIEntity {
     private Type type;
     private boolean common;
     private Long sharedById;
+    private String sharedByEmail;
 
     public APIProject() {
     }
     
-    public APIProject(Long id, String name, String description, Type type, Long sharedById, boolean common) {
+    public APIProject(Long id, String name, String description, Type type, Long sharedById, String sharedByEmail, boolean common) {
         super(id);
         this.name = name;
         this.description = description;
@@ -100,6 +101,14 @@ public class APIProject extends APIEntity {
 
     public void setSharedById(Long sharedById) {
         this.sharedById = sharedById;
+    }
+
+    public String getSharedByEmail() {
+        return sharedByEmail;
+    }
+
+    public void setSharedByEmail(String sharedByEmail) {
+        this.sharedByEmail = sharedByEmail;
     }
 
     private APITestRunConfig testRunConfig;
