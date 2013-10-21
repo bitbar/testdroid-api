@@ -121,7 +121,7 @@ public class APIDeviceGroup extends APIEntity {
     }
     
     public void addDevice(APIDevice device) throws APIException {
-        postResource(getIncludedDevicesURI(), String.format("id=%s", device.getId()), null);
+        postResource(getIncludedDevicesURI(), String.format("deviceId=%s", device.getId()), null);
     }
     
     public void deleteDevice(APIDevice device) throws APIException {
