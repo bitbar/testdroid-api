@@ -52,7 +52,7 @@ public class APISort {
         DEVICE_RUN_STATE_STATUS(APIDeviceRunState.class, "status"),
         NOTIFICATION_EMAIL_EMAIL(APINotificationEmail.class, "email"),
         NOTIFICATION_EMAIL_ID(APINotificationEmail.class, "id"),
-        NOTIFICATION_EMAIL_PROJECT_NAME(APINotificationEmail.class, "p.name"),
+        NOTIFICATION_EMAIL_PROJECT_NAME(APINotificationEmail.class, "p.name", NameType.ABSOLUTE),
         PROJECT_DESCRIPTION(APIProject.class, "description"),
         PROJECT_ID(APIProject.class, "id"),
         PROJECT_NAME(APIProject.class, "name"),
