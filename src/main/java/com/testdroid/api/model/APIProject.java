@@ -56,6 +56,7 @@ public class APIProject extends APIEntity {
         this.description = description;
         this.type = type;
         this.sharedById = sharedById;
+        this.sharedByEmail = sharedByEmail;
         this.common = common;
         jobConfig = new HashMap<APIProjectJobConfig.Type, APIProjectJobConfig>();
     }
