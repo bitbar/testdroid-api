@@ -137,6 +137,9 @@ public class DefaultAPIClient implements APIClient {
     }
     
     private void initializeDefaultAPIClient(String cloudURL, String username, String password) {
+        if(cloudURL.endsWith("/")) {
+            cloudURL = cloudURL.substring(0, cloudURL.length() - 1);
+        }
         this.cloudURL = cloudURL;
         this.apiURL = cloudURL + API_URI;
         this.username = username;
