@@ -40,7 +40,7 @@ public class APISort {
         DEVICE_GROUP_OS_TYPE(APIDeviceGroup.class, "osType"),
         DEVICE_PROPERTY_NAME(APIDeviceProperty.class, "displayName"),
         DEVICE_RUN_CREATED(APIDeviceRun.class, "createTime"),
-        DEVICE_RUN_DEVICE(APIDeviceRun.class, "device.name"),
+        DEVICE_RUN_DEVICE(APIDeviceRun.class, "deviceModel.name"),
         DEVICE_RUN_END_TIME(APIDeviceRun.class, "endTime"),
         DEVICE_RUN_ID(APIDeviceRun.class, "id"),
         DEVICE_RUN_RUN_STATUS(APIDeviceRun.class, "runStatus"),
