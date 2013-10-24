@@ -15,6 +15,7 @@ import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.bind.JAXBContext;
@@ -23,6 +24,7 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
+import javax.xml.bind.annotation.XmlTransient;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.map.annotate.JsonView;
 
@@ -41,7 +43,9 @@ public abstract class APIEntity {
 
     private static final DateFormat API_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd_HH:mm");
     private static final String ENCODING = "UTF-8";
-    
+
+    private static final HashMap<Class,JAXBContext> contextMap = new HashMap<Class,JAXBContext>();
+
     protected APIClient client;
     protected String selfURI;
     protected Long id;
@@ -168,6 +172,7 @@ public abstract class APIEntity {
     }
     
     @JsonIgnore
+    @XmlTransient
     public Class<? extends APIView> getView() {
         return view;
     }
@@ -180,7 +185,7 @@ public abstract class APIEntity {
     @JsonIgnore
     public String toXML() {
         try {
-            JAXBContext context = JAXBContext.newInstance(this.getClass());
+            JAXBContext context = getJAXBContext(this.getClass());
             Marshaller marshaller = context.createMarshaller();
             StringWriter writer = new StringWriter();
             marshaller.marshal(this, writer);
@@ -194,13 +199,25 @@ public abstract class APIEntity {
     @JsonIgnore
     public static <T extends APIEntity> T fromXML(String xml, Class<T> type) {
         try {
-            JAXBContext context = JAXBContext.newInstance(type);
+            JAXBContext context = getJAXBContext(type);
             Unmarshaller unmarshaller = context.createUnmarshaller();
             return (T) unmarshaller.unmarshal(new StringReader(xml));
         } catch (JAXBException ex) {
             Logger.getLogger(APIEntity.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+
+    @JsonIgnore
+    public static JAXBContext getJAXBContext(Class type) throws JAXBException {
+        JAXBContext context = contextMap.get(type);
+        if(context == null) {
+            context = JAXBContext.newInstance(type);
+            contextMap.put(type, context);
+            return context;
+        } else {
+            return context;
+        }
     }
 
     @JsonIgnore

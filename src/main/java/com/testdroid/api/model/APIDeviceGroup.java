@@ -14,14 +14,56 @@ import org.codehaus.jackson.annotate.JsonIgnore;
  * @author kajdus
  */
 @XmlRootElement
-public class APIDeviceGroup extends APIDeviceProperty {
+public class APIDeviceGroup extends APIEntity {
+    private String name;
+    private String displayName;
+    private Integer deviceCount;
+    private Integer creditsPrice;
     private Long userId;
+    private APIDevice.OsType osType;
 
     public APIDeviceGroup() {}
 
-    public APIDeviceGroup(Long id, String name, String displayName, Integer deviceCount, Integer creditsPrice, Long userId) {
-        super(id, name, displayName, deviceCount, creditsPrice);
+    public APIDeviceGroup(Long id, String name, String displayName, APIDevice.OsType osType, Integer deviceCount, Integer creditsPrice, Long userId) {
+        this.id = id;
+        this.name = name;
+        this.displayName = displayName;
+        this.creditsPrice = creditsPrice;
+        this.deviceCount = deviceCount;
         this.userId = userId;
+        this.osType = osType;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+
+    public Integer getDeviceCount() {
+        return deviceCount;
+    }
+
+    public void setDeviceCount(Integer deviceCount) {
+        this.deviceCount = deviceCount;
+    }
+
+    public Integer getCreditsPrice() {
+        return creditsPrice;
+    }
+
+    public void setCreditsPrice(Integer creditsPrice) {
+        this.creditsPrice = creditsPrice;
     }
 
     public Long getUserId() {
@@ -30,6 +72,14 @@ public class APIDeviceGroup extends APIDeviceProperty {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public APIDevice.OsType getOsType() {
+        return osType;
+    }
+
+    public void setOsType(APIDevice.OsType osType) {
+        this.osType = osType;
     }
     
     @JsonIgnore
@@ -81,8 +131,13 @@ public class APIDeviceGroup extends APIDeviceProperty {
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
-        super.clone(from);
         APIDeviceGroup apiDeviceGroup = (APIDeviceGroup) from;
+        cloneBase(from);
+        this.creditsPrice = apiDeviceGroup.creditsPrice;
+        this.deviceCount = apiDeviceGroup.deviceCount;
+        this.name = apiDeviceGroup.name;
+        this.displayName = apiDeviceGroup.displayName;
         this.userId = apiDeviceGroup.userId;
+        this.osType = apiDeviceGroup.osType;
     }
 }
