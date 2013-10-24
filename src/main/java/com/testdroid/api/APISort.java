@@ -58,7 +58,6 @@ public class APISort {
         PROJECT_DESCRIPTION(APIProject.class, "description"),
         PROJECT_ID(APIProject.class, "id"),
         PROJECT_NAME(APIProject.class, "name"),
-        PROJECT_TYPE(APIProject.class, "type"),
         PROJECT_JOB_CONFIG_ID(APIProjectJobConfig.class, "id"),
         PROJECT_JOB_CONFIG_TYPE(APIProjectJobConfig.class, "type"),
         PROJECT_JOB_CONFIG_VERSION(APIProjectJobConfig.class, "version"),
