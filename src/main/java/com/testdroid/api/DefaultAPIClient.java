@@ -361,6 +361,9 @@ public class DefaultAPIClient implements APIClient {
                 content = new InputStreamContent(contentType, IOUtils.toInputStream(((APIEntity) body).toXML()));
             } else if(body instanceof HttpContent) {
                 content = (HttpContent) body;
+            } else if(body instanceof String) {
+                resourceUrl = String.format("%s?%s", resourceUrl, body);
+                content = null;
             } else if (body == null) {
                 content = null;
             } else {
