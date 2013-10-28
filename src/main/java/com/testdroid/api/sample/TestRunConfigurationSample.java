@@ -52,7 +52,6 @@ public class TestRunConfigurationSample {
             try {
                 testRunConfig.setMode(APITestRunConfig.Mode.UIAUTOMATOR);
                 testRunConfig.update();
-                System.out.println("TestRunUpdated");
             } catch(APIException e) {
                 System.out.println(e.getMessage());
             }
