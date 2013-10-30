@@ -33,16 +33,14 @@ public class APISort {
     }
     
     public static enum Column {
-        DEVICE_CREDITS_PRICE(APIDevice.class, "creditsPrice"),
         DEVICE_NAME(APIDevice.class, "name"),
         DEVICE_OS_TYPE(APIDevice.class, "osType"),
         DEVICE_GROUP_ID(APIDeviceGroup.class, "id"),
         DEVICE_GROUP_NAME(APIDeviceGroup.class, "displayName"),
         DEVICE_GROUP_OS_TYPE(APIDeviceGroup.class, "osType"),
         DEVICE_PROPERTY_NAME(APIDeviceProperty.class, "displayName"),
-        DEVICE_PROPERTY_GROUP_NAME(APIDeviceProperty.class, "propertyGroupName"),
-        DEVICE_RUN_CREATED(APIDeviceRunState.class, "createTime"),
-        DEVICE_RUN_DEVICE(APIDeviceRun.class, "device.userName"),
+        DEVICE_RUN_CREATED(APIDeviceRun.class, "createTime"),
+        DEVICE_RUN_DEVICE(APIDeviceRun.class, "deviceModel.name"),
         DEVICE_RUN_END_TIME(APIDeviceRun.class, "endTime"),
         DEVICE_RUN_ID(APIDeviceRun.class, "id"),
         DEVICE_RUN_RUN_STATUS(APIDeviceRun.class, "runStatus"),
@@ -56,7 +54,6 @@ public class APISort {
         PROJECT_DESCRIPTION(APIProject.class, "description"),
         PROJECT_ID(APIProject.class, "id"),
         PROJECT_NAME(APIProject.class, "name"),
-        PROJECT_TYPE(APIProject.class, "type"),
         PROJECT_JOB_CONFIG_ID(APIProjectJobConfig.class, "id"),
         PROJECT_JOB_CONFIG_TYPE(APIProjectJobConfig.class, "type"),
         PROJECT_JOB_CONFIG_VERSION(APIProjectJobConfig.class, "version"),
