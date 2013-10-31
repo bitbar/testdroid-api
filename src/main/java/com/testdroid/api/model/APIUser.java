@@ -1,6 +1,5 @@
 package com.testdroid.api.model;
 
-import com.testdroid.api.APIArray;
 import com.testdroid.api.APIEntity;
 import static com.testdroid.api.APIEntity.createUri;
 import com.testdroid.api.APIException;
@@ -12,7 +11,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
- * @author kajdus
+ * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
  */
 @XmlRootElement
 public class APIUser extends APIEntity {

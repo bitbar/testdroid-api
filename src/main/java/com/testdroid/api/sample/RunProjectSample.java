@@ -16,7 +16,7 @@ import java.io.File;
 
 /**
  *
- * @author Sławomir
+ * @author Sławomir Pawluk <slawomir.pawluk@bitbar.com>
  */
 public class RunProjectSample {
     

@@ -8,7 +8,7 @@ import com.testdroid.api.sample.util.Common;
 
 /**
  *
- * @author Sławomir
+ * @author Sławomir Pawluk <slawomir.pawluk@bitbar.com>
  */
 public class UserOperationsSample {
 

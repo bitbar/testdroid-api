@@ -2,7 +2,7 @@ package com.testdroid.api;
 
 /**
  *
- * @author kajdus
+ * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
  */
 public class APIException extends Exception {
 

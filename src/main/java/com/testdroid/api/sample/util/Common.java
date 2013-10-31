@@ -13,7 +13,7 @@ import javax.xml.bind.Unmarshaller;
 
 /**
  *
- * @author Sławomir
+ * @author Sławomir Pawluk <slawomir.pawluk@bitbar.com>
  */
 public class Common {
 
