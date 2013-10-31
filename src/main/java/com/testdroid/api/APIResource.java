@@ -4,7 +4,7 @@ import java.io.InputStream;
 
 /**
  *
- * @author kajdus
+ * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
  */
 public class APIResource<T extends APIEntity> {
     

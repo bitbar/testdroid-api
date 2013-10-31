@@ -42,7 +42,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author kajdus, Sławomir Pawluk, krzysiek
+ * @author Łukasz Kajda <lukasz.kajda@bitbar.com>, Sławomir Pawluk <slawomir.pawluk@bitbar.com>, Krzysztof Fonał <krzysztof.fonal@bitbar.com>
  */
 public class DefaultAPIClient implements APIClient {
 

@@ -7,7 +7,7 @@ import java.io.InputStream;
 
 /**
  *
- * @author kajdus
+ * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
  */
 public interface APIClient {
     /**

@@ -5,7 +5,7 @@ import org.apache.commons.lang.StringUtils;
 
 /**
  *
- * @author kajdus
+ * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
  */
 public class APIDeviceQueryBuilder extends APIQueryBuilder {
     private Long[] labelIds;

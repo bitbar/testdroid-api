@@ -4,7 +4,7 @@ import org.apache.commons.lang.StringUtils;
 
 /**
  *
- * @author Sławomir
+ * @author Sławomir Pawluk <slawomir.pawluk@bitbar.com>
  */
 public class APIQueryBuilder {
     /**
