@@ -4,7 +4,7 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  *
- * @author kajdus
+ * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
  */
 @XmlType
 public enum DeviceRunStateType {
