@@ -4,7 +4,6 @@ import com.testdroid.api.APIEntity;
 import static com.testdroid.api.APIEntity.createUri;
 import static com.testdroid.api.APIEntity.encodeURL;
 import com.testdroid.api.APIException;
-import com.testdroid.api.APIList;
 import com.testdroid.api.APIListResource;
 import com.testdroid.api.APIQueryBuilder;
 import com.testdroid.api.APISort;
@@ -119,11 +118,6 @@ public class APITestRun extends APIEntity {
     private String getConfigURI() { return createUri(selfURI, "/config"); };
     private String getTagsURI() { return createUri(selfURI, "/tags"); };
     private String getDeviceRunsURI() { return createUri(selfURI, "/device-runs"); };
-    private String getParametersURI() { return selfURI + "/config/parameters"; }
-    
-    private String getCreateParameterParameters(String key, String value) {
-        return String.format("key=%s&value=%s", key, value);
-    }
     
     /**
      * Returns APIFiles entity about files uploaded to this project.
@@ -213,26 +207,6 @@ public class APITestRun extends APIEntity {
         return getListResource(getDeviceRunsURI(), offset, limit, search, sort, APIDeviceRun.class);
     }
 
-    @JsonIgnore
-    public APITestRunParameter createParameter(String key, String value) throws APIException {
-        return postResource(getParametersURI(), getCreateParameterParameters(key, value), APITestRunParameter.class);
-    }
-    
-    @JsonIgnore
-    public APIListResource<APITestRunParameter> getParameters() throws APIException {
-        return getListResource(getParametersURI(), APITestRunParameter.class);
-    }
-    
-    @JsonIgnore
-    public APIListResource<APITestRunParameter> getParameters(APIQueryBuilder queryBuilder) throws APIException {
-        return getListResource(getParametersURI(), queryBuilder, APITestRunParameter.class);
-    }
-    
-    @JsonIgnore
-    public void deleteParameter(long parameterId) throws APIException {
-        deleteResource(String.format("%s/%s", getParametersURI(), parameterId));
-    }
-    
     public void update() throws APIException {
         String body = String.format("displayName=%s", encodeURL(displayName));
         APITestRun testRun = postResource(selfURI, body, APITestRun.class);
