@@ -130,12 +130,16 @@ public class APIProject extends APIEntity {
     private String getUploadTestURI() { return createUri(selfURI, "/files/test"); }
     private String getUploadDataURI() { return createUri(selfURI, "/files/data"); }
     private String getNotificationEmailsURI() { return selfURI + "/notifications"; }
+    private String getParametersURI() { return selfURI + "/config/parameters"; }
 
     private String getCreateRunParameters(String testRunName) {
         return String.format("name=%s", encodeURL(testRunName));
     }
     private String getCreateNotificationParameters(String email, APINotificationEmail.Type type) {
         return String.format("email=%s&type=%s", encodeURL(email), encodeURL(type.toString()));
+    }
+    private String getCreateParameterParameters(String key, String value) {
+        return String.format("key=%s&value=%s", key, value);
     }
     
     @JsonIgnore
@@ -305,6 +309,26 @@ public class APIProject extends APIEntity {
     @JsonIgnore
     public APIFiles.APIFile uploadData(File file, String contentType) throws APIException {
         return postFile(getUploadDataURI(), file, contentType, APIFile.class);
+    }
+    
+    @JsonIgnore
+    public APITestRunParameter createParameter(String key, String value) throws APIException {
+        return postResource(getParametersURI(), getCreateParameterParameters(key, value), APITestRunParameter.class);
+    }
+    
+    @JsonIgnore
+    public APIListResource<APITestRunParameter> getParameters() throws APIException {
+        return getListResource(getParametersURI(), APITestRunParameter.class);
+    }
+    
+    @JsonIgnore
+    public APIListResource<APITestRunParameter> getParameters(APIQueryBuilder queryBuilder) throws APIException {
+        return getListResource(getParametersURI(), queryBuilder, APITestRunParameter.class);
+    }
+    
+    @JsonIgnore
+    public void deleteParameter(long parameterId) throws APIException {
+        deleteResource(String.format("%s/%s", getParametersURI(), parameterId));
     }
     
     @Override
