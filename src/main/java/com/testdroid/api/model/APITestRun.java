@@ -119,12 +119,17 @@ public class APITestRun extends APIEntity {
     private String getConfigURI() { return createUri(selfURI, "/config"); };
     private String getTagsURI() { return createUri(selfURI, "/tags"); };
     private String getDeviceRunsURI() { return createUri(selfURI, "/device-runs"); };
+    private String getParametersURI() { return selfURI + "/config/parameters"; }
     
-    @JsonIgnore
+    private String getCreateParameterParameters(String key, String value) {
+        return String.format("key=%s&value=%s", key, value);
+    }
+    
     /**
      * Returns APIFiles entity about files uploaded to this project.
      * Depending on <code>type</code> it may be any subclass of <code>APIFiles</code> returned.
      */
+    @JsonIgnore
     public <T extends APIFiles> T getFiles(Class<T> clazz) throws APIException {
         if(files == null) {
             files = getResource(getFilesURI(), clazz).getEntity();
@@ -208,6 +213,26 @@ public class APITestRun extends APIEntity {
         return getListResource(getDeviceRunsURI(), offset, limit, search, sort, APIDeviceRun.class);
     }
 
+    @JsonIgnore
+    public APITestRunParameter createParameter(String key, String value) throws APIException {
+        return postResource(getParametersURI(), getCreateParameterParameters(key, value), APITestRunParameter.class);
+    }
+    
+    @JsonIgnore
+    public APIListResource<APITestRunParameter> getParameters() throws APIException {
+        return getListResource(getParametersURI(), APITestRunParameter.class);
+    }
+    
+    @JsonIgnore
+    public APIListResource<APITestRunParameter> getParameters(APIQueryBuilder queryBuilder) throws APIException {
+        return getListResource(getParametersURI(), queryBuilder, APITestRunParameter.class);
+    }
+    
+    @JsonIgnore
+    public void deleteParameter(long parameterId) throws APIException {
+        deleteResource(String.format("%s/%s", getParametersURI(), parameterId));
+    }
+    
     public void update() throws APIException {
         String body = String.format("displayName=%s", encodeURL(displayName));
         APITestRun testRun = postResource(selfURI, body, APITestRun.class);
