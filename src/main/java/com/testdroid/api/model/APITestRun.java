@@ -4,7 +4,6 @@ import com.testdroid.api.APIEntity;
 import static com.testdroid.api.APIEntity.createUri;
 import static com.testdroid.api.APIEntity.encodeURL;
 import com.testdroid.api.APIException;
-import com.testdroid.api.APIList;
 import com.testdroid.api.APIListResource;
 import com.testdroid.api.APIQueryBuilder;
 import com.testdroid.api.APISort;
@@ -120,11 +119,11 @@ public class APITestRun extends APIEntity {
     private String getTagsURI() { return createUri(selfURI, "/tags"); };
     private String getDeviceRunsURI() { return createUri(selfURI, "/device-runs"); };
     
-    @JsonIgnore
     /**
      * Returns APIFiles entity about files uploaded to this project.
      * Depending on <code>type</code> it may be any subclass of <code>APIFiles</code> returned.
      */
+    @JsonIgnore
     public <T extends APIFiles> T getFiles(Class<T> clazz) throws APIException {
         if(files == null) {
             files = getResource(getFilesURI(), clazz).getEntity();
