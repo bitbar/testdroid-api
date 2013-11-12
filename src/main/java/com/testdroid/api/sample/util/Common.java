@@ -5,6 +5,7 @@ import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIException;
 import com.testdroid.api.APIExceptionMessage;
 import com.testdroid.api.DefaultAPIClient;
+import com.testdroid.api.model.APIProject;
 import java.io.File;
 import java.io.StringReader;
 import javax.xml.bind.JAXBContext;
@@ -37,4 +38,11 @@ public class Common {
         return new DefaultAPIClient(url, username, password);
     }
     
+    public static void uploadApk(APIProject project) throws APIException {
+        project.uploadApplication(new File(Common.class.getResource(ANDROID_APPLICATION_RESOURCE_PATH).getPath()), com.testdroid.api.sample.util.Common.ANDROID_FILE_MIME_TYPE);
+    }
+    
+    public static void uploadTest(APIProject project) throws APIException {
+        project.uploadApplication(new File(Common.class.getResource(ANDROID_TEST_RESOURCE_PATH).getPath()), com.testdroid.api.sample.util.Common.ANDROID_FILE_MIME_TYPE);
+    }
 }

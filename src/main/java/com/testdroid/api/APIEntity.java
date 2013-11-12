@@ -116,6 +116,12 @@ public abstract class APIEntity {
         checkClient(client);
         client.delete(uri);
     }
+    
+    @JsonIgnore
+    protected InputStream getFile(String uri) throws APIException {
+        checkClient(client);
+        return client.get(uri);
+    }
 
     @JsonIgnore
     public void refresh() throws APIException {

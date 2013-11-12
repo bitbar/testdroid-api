@@ -15,7 +15,7 @@ import com.testdroid.api.sample.util.Common;
  */
 public class ParametersSample {
 
-    private static APIClient client = Common.createApiClient("http://localhost:8080/testdroid-cloud", "admin@localhost", "admin");
+    private static final APIClient client = Common.createApiClient();
     
     public static void main(String[] args) {
         try {

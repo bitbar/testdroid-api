@@ -1,6 +1,7 @@
 package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
+import static com.testdroid.api.APIEntity.createUri;
 import static com.testdroid.api.APIEntity.encodeURL;
 import com.testdroid.api.APIException;
 import com.testdroid.api.APIListResource;
@@ -256,7 +257,7 @@ public class APITestRunConfig extends APIEntity {
         this.checkApp = checkApp;
     }
     
-    private String getParametersURI() { return selfURI + "/parameters"; }
+    private String getParametersURI() { return createUri(selfURI, "/parameters"); }
     
     private String getCreateParameterParameters(String key, String value) {
         return String.format("key=%s&value=%s", key, value);

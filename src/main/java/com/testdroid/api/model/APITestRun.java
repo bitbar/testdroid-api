@@ -7,6 +7,7 @@ import com.testdroid.api.APIException;
 import com.testdroid.api.APIListResource;
 import com.testdroid.api.APIQueryBuilder;
 import com.testdroid.api.APISort;
+import java.io.InputStream;
 import java.util.Date;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
@@ -114,10 +115,11 @@ public class APITestRun extends APIEntity {
  
     private APIFiles files;
     private APITestRunConfig config;
-    private String getFilesURI() { return createUri(selfURI, "/files"); };
-    private String getConfigURI() { return createUri(selfURI, "/config"); };
-    private String getTagsURI() { return createUri(selfURI, "/tags"); };
-    private String getDeviceRunsURI() { return createUri(selfURI, "/device-runs"); };
+    private String getFilesURI() { return createUri(selfURI, "/files"); }
+    private String getConfigURI() { return createUri(selfURI, "/config"); }
+    private String getTagsURI() { return createUri(selfURI, "/tags"); }
+    private String getDeviceRunsURI() { return createUri(selfURI, "/device-runs"); }
+    private String getScreenshorsZipURI() { return createUri(selfURI, "/screenshots.zip"); }
     
     /**
      * Returns APIFiles entity about files uploaded to this project.
@@ -207,6 +209,16 @@ public class APITestRun extends APIEntity {
         return getListResource(getDeviceRunsURI(), offset, limit, search, sort, APIDeviceRun.class);
     }
 
+    @JsonIgnore
+    public void requestScreenshotsZip() throws APIException {
+        postResource(getScreenshorsZipURI(), null, null);
+    }
+    
+    @JsonIgnore
+    public InputStream getScreenshotsZip() throws APIException {
+        return getFile(getScreenshorsZipURI());
+    }
+    
     public void update() throws APIException {
         String body = String.format("displayName=%s", encodeURL(displayName));
         APITestRun testRun = postResource(selfURI, body, APITestRun.class);
