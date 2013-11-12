@@ -23,6 +23,11 @@ public class ScreenshotsSample {
             
             APITestRun testRun = getFinishedTestRun(me);
             
+            if(testRun == null) {
+                System.out.println("You have no finished test runs. Cannot generate screenshots.");
+                return;
+            }
+            
             testRun.requestScreenshotsZip();
             
             while(testRun.getScreenshotZipState() != APITestRun.ScreenshotZipState.READY) {
