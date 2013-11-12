@@ -1,8 +1,11 @@
 package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
+import static com.testdroid.api.APIEntity.createUri;
 import static com.testdroid.api.APIEntity.encodeURL;
 import com.testdroid.api.APIException;
+import com.testdroid.api.APIListResource;
+import com.testdroid.api.APIQueryBuilder;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -252,6 +255,32 @@ public class APITestRunConfig extends APIEntity {
 
     public void setCheckApp(boolean checkApp) {
         this.checkApp = checkApp;
+    }
+    
+    private String getParametersURI() { return createUri(selfURI, "/parameters"); }
+    
+    private String getCreateParameterParameters(String key, String value) {
+        return String.format("key=%s&value=%s", key, value);
+    }
+    
+    @JsonIgnore
+    public APITestRunParameter createParameter(String key, String value) throws APIException {
+        return postResource(getParametersURI(), getCreateParameterParameters(key, value), APITestRunParameter.class);
+    }
+    
+    @JsonIgnore
+    public APIListResource<APITestRunParameter> getParameters() throws APIException {
+        return getListResource(getParametersURI(), APITestRunParameter.class);
+    }
+    
+    @JsonIgnore
+    public APIListResource<APITestRunParameter> getParameters(APIQueryBuilder queryBuilder) throws APIException {
+        return getListResource(getParametersURI(), queryBuilder, APITestRunParameter.class);
+    }
+    
+    @JsonIgnore
+    public void deleteParameter(long parameterId) throws APIException {
+        deleteResource(String.format("%s/%s", getParametersURI(), parameterId));
     }
     
     public void update() throws APIException {

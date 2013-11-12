@@ -129,8 +129,8 @@ public class APIProject extends APIEntity {
     private String getUploadApplicationURI() { return createUri(selfURI, "/files/application"); }
     private String getUploadTestURI() { return createUri(selfURI, "/files/test"); }
     private String getUploadDataURI() { return createUri(selfURI, "/files/data"); }
-    private String getNotificationEmailsURI() { return selfURI + "/notifications"; }
-    private String getParametersURI() { return selfURI + "/config/parameters"; }
+    private String getNotificationEmailsURI() { return createUri(selfURI, "/notifications"); }
+    private String getParametersURI() { return createUri(selfURI, "/config/parameters"); }
 
     private String getCreateRunParameters(String testRunName) {
         return String.format("name=%s", encodeURL(testRunName));

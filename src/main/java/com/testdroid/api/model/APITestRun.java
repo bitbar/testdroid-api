@@ -4,10 +4,10 @@ import com.testdroid.api.APIEntity;
 import static com.testdroid.api.APIEntity.createUri;
 import static com.testdroid.api.APIEntity.encodeURL;
 import com.testdroid.api.APIException;
-import com.testdroid.api.APIList;
 import com.testdroid.api.APIListResource;
 import com.testdroid.api.APIQueryBuilder;
 import com.testdroid.api.APISort;
+import java.io.InputStream;
 import java.util.Date;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
@@ -115,15 +115,11 @@ public class APITestRun extends APIEntity {
  
     private APIFiles files;
     private APITestRunConfig config;
-    private String getFilesURI() { return createUri(selfURI, "/files"); };
-    private String getConfigURI() { return createUri(selfURI, "/config"); };
-    private String getTagsURI() { return createUri(selfURI, "/tags"); };
-    private String getDeviceRunsURI() { return createUri(selfURI, "/device-runs"); };
-    private String getParametersURI() { return selfURI + "/config/parameters"; }
-    
-    private String getCreateParameterParameters(String key, String value) {
-        return String.format("key=%s&value=%s", key, value);
-    }
+    private String getFilesURI() { return createUri(selfURI, "/files"); }
+    private String getConfigURI() { return createUri(selfURI, "/config"); }
+    private String getTagsURI() { return createUri(selfURI, "/tags"); }
+    private String getDeviceRunsURI() { return createUri(selfURI, "/device-runs"); }
+    private String getScreenshorsZipURI() { return createUri(selfURI, "/screenshots.zip"); }
     
     /**
      * Returns APIFiles entity about files uploaded to this project.
@@ -214,23 +210,13 @@ public class APITestRun extends APIEntity {
     }
 
     @JsonIgnore
-    public APITestRunParameter createParameter(String key, String value) throws APIException {
-        return postResource(getParametersURI(), getCreateParameterParameters(key, value), APITestRunParameter.class);
+    public void requestScreenshotsZip() throws APIException {
+        postResource(getScreenshorsZipURI(), null, null);
     }
     
     @JsonIgnore
-    public APIListResource<APITestRunParameter> getParameters() throws APIException {
-        return getListResource(getParametersURI(), APITestRunParameter.class);
-    }
-    
-    @JsonIgnore
-    public APIListResource<APITestRunParameter> getParameters(APIQueryBuilder queryBuilder) throws APIException {
-        return getListResource(getParametersURI(), queryBuilder, APITestRunParameter.class);
-    }
-    
-    @JsonIgnore
-    public void deleteParameter(long parameterId) throws APIException {
-        deleteResource(String.format("%s/%s", getParametersURI(), parameterId));
+    public InputStream getScreenshotsZip() throws APIException {
+        return getFile(getScreenshorsZipURI());
     }
     
     public void update() throws APIException {
