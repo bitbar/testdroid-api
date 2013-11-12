@@ -38,7 +38,7 @@ import org.codehaus.jackson.map.annotate.JsonView;
     APIFiles.APIFile.class, APIFiles.AndroidAppFile.class, APIFiles.AndroidTestFile.class, APIFiles.DataFile.class, APIFiles.IOSAppFile.class, APIFiles.IOSTestFile.class,
     APIFiles.UIAutomatorTestFile.class, APITag.class, APIDeviceRun.class, APIDeviceRunState.class, APISoftwareVersion.class, APIScreenshot.class, APIDevice.class,
     APIDeviceProperty.class, APINotificationEmail.class, APITestCaseRun.class, APITestCaseRunStep.class, APIRecorderOnlineSession.class, APIFiles.CalabashTestFile.class,
-    CalabashFiles.class})
+    CalabashFiles.class, APITestRunParameter.class})
 public abstract class APIEntity {
 
     private static final DateFormat API_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd_HH:mm");
@@ -115,6 +115,12 @@ public abstract class APIEntity {
     protected void deleteResource(String uri) throws APIException {
         checkClient(client);
         client.delete(uri);
+    }
+    
+    @JsonIgnore
+    protected InputStream getFile(String uri) throws APIException {
+        checkClient(client);
+        return client.get(uri);
     }
 
     @JsonIgnore
