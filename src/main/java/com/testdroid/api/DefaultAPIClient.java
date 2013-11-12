@@ -35,12 +35,14 @@ import java.io.InputStream;
 import java.io.StringReader;
 import java.security.GeneralSecurityException;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
  *
- * @author kajdus, Sławomir Pawluk, krzysiek
+ * @author Łukasz Kajda <lukasz.kajda@bitbar.com>, Sławomir Pawluk <slawomir.pawluk@bitbar.com>, Krzysztof Fonał <krzysztof.fonal@bitbar.com>
  */
 public class DefaultAPIClient implements APIClient {
 
@@ -137,10 +139,13 @@ public class DefaultAPIClient implements APIClient {
     }
     
     private void initializeDefaultAPIClient(String cloudURL, String username, String password) {
+        if(cloudURL.endsWith("/")) {
+            cloudURL = cloudURL.substring(0, cloudURL.length() - 1);
+        }
         this.cloudURL = cloudURL;
         this.apiURL = cloudURL + API_URI;
         this.username = username;
-        this.password = password;
+        this.password = APIEntity.encodeURL(password);
     }
 
     protected HttpRequestFactory getRequestFactory(String accessToken) {
@@ -356,11 +361,16 @@ public class DefaultAPIClient implements APIClient {
                 content = new InputStreamContent(contentType, (InputStream) body);
             } else if (body instanceof APIEntity) {
                 content = new InputStreamContent(contentType, IOUtils.toInputStream(((APIEntity) body).toXML()));
+            } else if(body instanceof HttpContent) {
+                content = (HttpContent) body;
+            } else if(body instanceof String) {
+                // Only temporal change
+                // TODO change body type to Map<String, Object> and use it there.
+                content = new UrlEncodedContent(urlEncodedDataToMap((String) body));
             } else if (body == null) {
                 content = null;
             } else {
-                resourceUrl = String.format("%s?%s", resourceUrl, body);
-                content = null;
+                content = new ByteArrayContent("text/plain", body.toString().getBytes());
             }
             request = factory.buildPostRequest(new GenericUrl(resourceUrl), content);
             request.setHeaders(headers);
@@ -518,5 +528,19 @@ public class DefaultAPIClient implements APIClient {
         } catch (JAXBException ex) {
             throw new APIException(String.format("Failed to parse response as %s", type.getName()));
         }
+    }
+    
+    private Map<String, Object> urlEncodedDataToMap(String data) {
+        Map<String, Object> result = new HashMap<String, Object>();
+        String[] variablesAndValues = data.split("&");
+        for(String pair: variablesAndValues) {
+            String[] variableData = pair.split("=");
+            if(variableData.length == 2) {
+                result.put(variableData[0], variableData[1]);
+            } else if(variableData.length == 1) {
+                result.put(variableData[0], "");
+            }
+        }
+        return result;
     }
 }

@@ -7,7 +7,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
- * @author kajdus
+ * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
  */
 @XmlRootElement
 public class APIScreenshot extends APIEntity {

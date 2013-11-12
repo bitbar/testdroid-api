@@ -10,7 +10,7 @@ import org.codehaus.jackson.map.annotate.JsonView;
 
 /**
  *
- * @author kajdus
+ * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
  */
 @XmlRootElement
 @JsonIgnoreProperties(value = {"id"})

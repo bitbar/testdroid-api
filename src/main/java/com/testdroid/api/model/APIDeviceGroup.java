@@ -11,7 +11,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
- * @author kajdus
+ * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
  */
 @XmlRootElement
 public class APIDeviceGroup extends APIEntity {
@@ -121,7 +121,7 @@ public class APIDeviceGroup extends APIEntity {
     }
     
     public void addDevice(APIDevice device) throws APIException {
-        postResource(getIncludedDevicesURI(), String.format("id=%s", device.getId()), null);
+        postResource(getIncludedDevicesURI(), String.format("deviceId=%s", device.getId()), null);
     }
     
     public void deleteDevice(APIDevice device) throws APIException {

@@ -10,7 +10,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
- * @author Sławomir Pawluk
+ * @author Sławomir Pawluk <slawomir.pawluk@bitbar.com>
  */
 @XmlRootElement
 public class APITestCaseRun extends APIEntity {

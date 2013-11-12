@@ -2,7 +2,7 @@ package com.testdroid.api;
 
 /**
  *
- * @author Sławomir
+ * @author Sławomir Pawluk <slawomir.pawluk@bitbar.com>
  */
 public class APIView {
     public static class AdminView extends APIView {}
