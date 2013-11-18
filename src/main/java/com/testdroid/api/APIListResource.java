@@ -18,7 +18,7 @@ public class APIListResource<T extends APIEntity> extends APIResource<APIList<T>
         super(client, 
                 (offset == null && limit == null && search == null && (sort == null || sort.isEmpty())) ? resourceURI : 
                     String.format("%s%soffset=%s&limit=%s&search=%s&sort=%s", resourceURI, resourceURI.contains("?") ? "&" : "?",
-                    getNotNullValue(offset), getNotNullValue(limit), getNotNullValue(APIEntity.encodeURL(search)), 
+                    getNotNullValue(offset), getNotNullValue(limit), getNotNullValue(search), 
                 sort != null ? sort.serialize() : null), 
                 (Class<APIList<T>>) (Class) APIList.class);
     }
