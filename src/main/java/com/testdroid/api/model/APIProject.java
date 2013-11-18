@@ -133,10 +133,10 @@ public class APIProject extends APIEntity {
     private String getParametersURI() { return createUri(selfURI, "/config/parameters"); }
 
     private String getCreateRunParameters(String testRunName) {
-        return String.format("name=%s", encodeURL(testRunName));
+        return String.format("name=%s", testRunName);
     }
     private String getCreateNotificationParameters(String email, APINotificationEmail.Type type) {
-        return String.format("email=%s&type=%s", encodeURL(email), encodeURL(type.toString()));
+        return String.format("email=%s&type=%s", email, type);
     }
     private String getCreateParameterParameters(String key, String value) {
         return String.format("key=%s&value=%s", key, value);
@@ -195,7 +195,7 @@ public class APIProject extends APIEntity {
     }
     
     public void update() throws APIException {
-        String body = String.format("name=%s&description=%s&common=%s", encodeURL(name), encodeURL(description), encodeURL(common));
+        String body = String.format("name=%s&description=%s&common=%s", name, description, common);
         APIProject project = postResource(selfURI, body, APIProject.class);
         clone(project);
     }
@@ -236,7 +236,7 @@ public class APIProject extends APIEntity {
     
     @JsonIgnore
     public APIProjectSharing share(String email) throws APIException {
-        return postResource(getSharingsURI(), String.format("email=%s", encodeURL(email)), APIProjectSharing.class);
+        return postResource(getSharingsURI(), String.format("email=%s", email), APIProjectSharing.class);
     }
     
     @JsonIgnore

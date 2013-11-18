@@ -482,7 +482,7 @@ public class DefaultAPIClient implements APIClient {
 
     @Override
     public APIUser register(String email) throws APIException {
-        APIUser result = post("/users", String.format("email=%s", APIEntity.encodeURL(email)), APIUser.class);
+        APIUser result = post("/users", String.format("email=%s", email), APIUser.class);
         result.selfURI = "/me";
         return result;
     }

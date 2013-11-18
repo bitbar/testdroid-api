@@ -2,7 +2,6 @@ package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
 import static com.testdroid.api.APIEntity.createUri;
-import static com.testdroid.api.APIEntity.encodeURL;
 import com.testdroid.api.APIException;
 import com.testdroid.api.APIListResource;
 import com.testdroid.api.APIQueryBuilder;
@@ -156,7 +155,7 @@ public class APITestRun extends APIEntity {
     }
     
     public APITag addTag(String name) throws APIException {
-        return postResource(getTagsURI(), String.format("name=%s", encodeURL(name)), APITag.class);
+        return postResource(getTagsURI(), String.format("name=%s", name), APITag.class);
     }
     
     @JsonIgnore
@@ -230,7 +229,7 @@ public class APITestRun extends APIEntity {
     }
     
     public void update() throws APIException {
-        String body = String.format("displayName=%s", encodeURL(displayName));
+        String body = String.format("displayName=%s", displayName);
         APITestRun testRun = postResource(selfURI, body, APITestRun.class);
         clone(testRun);
     }

@@ -16,7 +16,7 @@ import com.testdroid.api.sample.util.Common;
  */
 public class GetDevicesSample {
 
-    public static final APIClient CLIENT = Common.createApiClient();
+    public static final APIClient CLIENT = Common.createApiClient("http://localhost:8080/testdroid-cloud", "admin@localhost", "admin");
 
     public static void main(String[] args) {
         try {
@@ -42,7 +42,7 @@ public class GetDevicesSample {
             
             // Search device
             String deviceName = devicesResource.getEntity().get(0).getDisplayName();
-            devicesResource = CLIENT.getDevices(new APIDeviceQueryBuilder().offset(0).limit(10).search(deviceName));
+            devicesResource = CLIENT.getDevices(new APIDeviceQueryBuilder().offset(0).limit(10).search("łłłł"));
             System.out.println(String.format("Found %s devices", devicesResource.getTotal()));
             printDeviceNames(devicesResource);
 
