@@ -23,7 +23,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @XmlRootElement
 public class APIProject extends APIEntity {
 
-    @XmlType(name = "projectType")
+    @XmlType(namespace = "APIProject")
     public static enum Type { 
         ANDROID, CTS, IOS, UIAUTOMATOR, REMOTECONTROL, RECORDERONLINE, CALABASH;
         public Class<? extends APIFiles> getFilesClass() {

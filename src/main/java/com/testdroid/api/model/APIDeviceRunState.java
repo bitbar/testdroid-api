@@ -12,7 +12,9 @@ import org.codehaus.jackson.annotate.JsonIgnore;
  */
 @XmlRootElement
 public class APIDeviceRunState extends APIEntity {
-    @XmlType public static enum Status { STARTED, EXCLUDED, FAILED, SUCCEEDED, NOT_AVAILABLE }
+    
+    @XmlType(namespace = "APIDeviceRunState")
+    public static enum Status { STARTED, EXCLUDED, FAILED, SUCCEEDED, NOT_AVAILABLE }
     
     private Long deviceRunId;
     private DeviceRunStateType type;

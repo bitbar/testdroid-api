@@ -16,15 +16,18 @@ import org.codehaus.jackson.annotate.JsonIgnore;
  */
 @XmlRootElement
 public class APITestRunConfig extends APIEntity {
-    @XmlType
+    
+    @XmlType(namespace = "APITestRunConfig")
     public static enum Scheduler {
         PARALLEL, SERIAL;
     }
-    @XmlType
+    
+    @XmlType(namespace = "APITestRunConfig")
     public static enum LimitationType {
         PACKAGE, CLASS;
     }
-    @XmlType
+    
+    @XmlType(namespace = "APITestRunConfig")
     public static enum Mode {
 
         FULL_RUN("Full run"), 
