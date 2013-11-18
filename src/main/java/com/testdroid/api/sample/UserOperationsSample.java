@@ -1,7 +1,10 @@
 package com.testdroid.api.sample;
 
 import com.testdroid.api.APIClient;
+import com.testdroid.api.APIDeviceQueryBuilder;
 import com.testdroid.api.APIException;
+import com.testdroid.api.APIListResource;
+import com.testdroid.api.model.APIDevice;
 import com.testdroid.api.model.APINotificationEmail;
 import com.testdroid.api.model.APIUser;
 import com.testdroid.api.sample.util.Common;
@@ -12,7 +15,7 @@ import com.testdroid.api.sample.util.Common;
  */
 public class UserOperationsSample {
 
-    public static final APIClient CLIENT = Common.createApiClient();
+    public static final APIClient CLIENT = Common.createApiClient("http://devel", "admin@localhost", "admin");
     
     public static void main(String[] args) {
         try {
@@ -48,7 +51,7 @@ public class UserOperationsSample {
         System.out.println(String.format("City: %s", user.getCity()));
         System.out.println(String.format("Code: %s", user.getCode()));
         System.out.println(String.format("Country: %s", user.getCountry()));
-        System.out.println(String.format("Emial: %s", user.getEmail()));
+        System.out.println(String.format("Email: %s", user.getEmail()));
         System.out.println(String.format("Name: %s", user.getName()));
         System.out.println(String.format("Organization: %s", user.getOrganization()));
         System.out.println(String.format("Phone: %s", user.getPhone()));

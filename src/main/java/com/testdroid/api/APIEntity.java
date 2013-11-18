@@ -137,23 +137,6 @@ public abstract class APIEntity {
     }
 
     @JsonIgnore
-    public static String encodeURL(String name) {
-        try {
-            if (name == null) {
-                return "";
-            }
-            return URLEncoder.encode(name, ENCODING);
-        } catch (UnsupportedEncodingException ex) {
-        }
-        return name;
-    }
-
-    @JsonIgnore
-    public static String encodeURL(boolean value) {
-        return value ? "on" : "";
-    }
-
-    @JsonIgnore
     public static String decodeURL(String name) {
         try {
             return URLDecoder.decode(name, ENCODING);
@@ -169,7 +152,7 @@ public abstract class APIEntity {
 
     @JsonIgnore
     public static String formatAndEncodeURL(Date date) {
-        return encodeURL(format(date));
+        return format(date);
     }
 
     @JsonIgnore
