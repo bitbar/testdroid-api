@@ -2,7 +2,6 @@ package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
 import static com.testdroid.api.APIEntity.createUri;
-import static com.testdroid.api.APIEntity.encodeURL;
 import com.testdroid.api.APIException;
 import com.testdroid.api.APIListResource;
 import com.testdroid.api.APIQueryBuilder;
@@ -286,11 +285,15 @@ public class APITestRunConfig extends APIEntity {
     public void update() throws APIException {
         String body = String.format("scheduler=%s&mode=%s&autoScreenshots=%s&screenshotDir=%s&limitationType=%s&limitationValue=%s&" +
                 "withAnnotation=%s&withoutAnnotation=%s&applicationUsername=%s&applicationPassword=%s&usedDeviceGroupId=%s&deviceLanguageCode=%s&"+
-                "hookURL=%s&uiAutomatorTestClasses=%s&launchApp=%s&instrumentationRunner=%s&checkApp=%s", scheduler != null ? encodeURL(scheduler.name()) : "", 
-                mode != null ? encodeURL(mode.name()) : "", encodeURL(autoScreenshots), encodeURL(screenshotDir), limitationType != null ? encodeURL(limitationType.name()) : "", 
-                encodeURL(limitationValue), encodeURL(withAnnotation), encodeURL(withoutAnnotation), encodeURL(applicationUsername), encodeURL(applicationPassword), 
-                usedDeviceGroupId != null ? usedDeviceGroupId : "", encodeURL(deviceLanguageCode), encodeURL(hookURL), encodeURL(uiAutomatorTestClasses), encodeURL(launchApp), encodeURL(instrumentationRunner),
-                encodeURL(checkApp));
+                "hookURL=%s&uiAutomatorTestClasses=%s&launchApp=%s&instrumentationRunner=%s&checkApp=%s", 
+                scheduler != null ? scheduler.name() : "", 
+                mode != null ? mode.name() : "", 
+                autoScreenshots, 
+                screenshotDir, 
+                limitationType != null ? limitationType.name() : "", 
+                limitationValue, withAnnotation, withoutAnnotation, applicationUsername, applicationPassword, 
+                usedDeviceGroupId != null ? usedDeviceGroupId : "", deviceLanguageCode, hookURL, uiAutomatorTestClasses, launchApp, instrumentationRunner,
+                checkApp);
         APITestRunConfig config = postResource(selfURI, body, APITestRunConfig.class);
         clone(config);
     }
