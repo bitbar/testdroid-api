@@ -15,7 +15,9 @@ import org.codehaus.jackson.annotate.JsonIgnore;
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
  */
 @XmlRootElement
-@XmlSeeAlso({AndroidFiles.class, IOSFiles.class, UIAutomatorFiles.class, RemoteControlFiles.class, CalabashFiles.class})
+@XmlSeeAlso({AndroidFiles.class, IOSFiles.class, UIAutomatorFiles.class, RemoteControlFiles.class,
+    CalabashFiles.class, CalabashIOSFiles.class
+})
 public abstract class APIFiles extends APIEntity {
     private DataFile data;
 

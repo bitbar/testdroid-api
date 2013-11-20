@@ -10,6 +10,7 @@ APITestRunConfig
 APITestRunParameter
 AndroidFiles
 CalabashFiles
+CalabashIOSFiles
 IOSFiles
 RemoteControlFiles
 UIAutomatorFiles

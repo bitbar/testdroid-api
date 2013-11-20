@@ -36,7 +36,8 @@ public class APITestRunConfig extends APIEntity {
         UIAUTOMATOR("UIAutomator"), 
         REMOTECONTROL("Remote control"),
         RECORDERONLINE("Recorder online"),
-        CALABASH("Calabash");
+        CALABASH("Calabash Android"),
+        CALABASH_IOS("Calabash iOS");
         
         private String friendlyName;
         
