@@ -407,8 +407,15 @@ public class DefaultAPIClient implements APIClient {
             }
         } catch (HttpResponseException ex) {
             try {
-                APIExceptionMessage exceptionMessage = fromXML(ex.getContent(), APIExceptionMessage.class);
-                throw new APIException(ex.getStatusCode(), exceptionMessage.getMessage(), ex);
+                try {
+                    APIExceptionMessage exceptionMessage = fromXML(ex.getContent(), APIExceptionMessage.class);
+                    throw new APIException(ex.getStatusCode(), exceptionMessage.getMessage(), ex);
+                }
+                catch(Exception e) { 
+                    // Catch exceptions related to xml unserialization. Those are usually internal server exceptions and are not properly serialized.
+                    // In such case we just put pure response content as a message
+                    throw new APIException(ex.getStatusCode(), ex.getContent(), ex);
+                }
             } catch (APIException e) {
                 throw new APIException(ex.getStatusCode(), ex.getMessage());
             }
