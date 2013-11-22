@@ -17,7 +17,7 @@ public class APIDevice extends APIEntity {
     @XmlType
     public static enum DeviceFilter { FREE, RECOMMENDED, NEW }
     
-    @XmlType
+    @XmlType(namespace = "APIDevice")
     public static enum OsType {
         IOS("iOS"),
         ANDROID("Android");

@@ -19,7 +19,9 @@ import org.codehaus.jackson.annotate.JsonIgnore;
  */
 @XmlRootElement
 public class APIDeviceRun extends APIEntity {
-    @XmlType public static enum RunStatus { WAITING, RUNNING, EXCLUDED, WARNING, FAILED, SUCCEEDED }
+    
+    @XmlType(namespace = "APIDeviceRun")
+    public static enum RunStatus { WAITING, RUNNING, EXCLUDED, WARNING, FAILED, SUCCEEDED }
     
     private Date runTime;
     private APIDevice device;
