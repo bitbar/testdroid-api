@@ -3,6 +3,7 @@ package com.testdroid.api.model;
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIException;
 import com.testdroid.api.APIListResource;
+import com.testdroid.api.APIQueryBuilder;
 import javax.xml.bind.annotation.XmlRootElement;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
@@ -12,11 +13,13 @@ import org.codehaus.jackson.annotate.JsonIgnore;
  */
 @XmlRootElement
 public class APILabelGroup extends APIEntity {
+
     private String name;
     private String displayName;
     private boolean hiddenByDefault;
 
-    public APILabelGroup() {}
+    public APILabelGroup() {
+    }
 
     public APILabelGroup(Long id, String name, String displayName, boolean hiddenByDefault) {
         super(id);
@@ -49,13 +52,18 @@ public class APILabelGroup extends APIEntity {
         this.hiddenByDefault = hiddenByDefault;
     }
 
-    private String getDevicesURI() { return selfURI + "/devices"; };
-
+    private String getDevicePropertiesURI() { return createUri(selfURI, "/labels"); }
+    
     @JsonIgnore
-    public APIListResource<APIDevice> getDevicesResource() throws APIException {
-        return getListResource(getDevicesURI(), APIDevice.class);
+    public APIListResource<APIDeviceProperty> getDevicePropertiesResource() {
+        return new APIListResource(client, getDevicePropertiesURI(), APIDeviceProperty.class);
     }
-
+    
+    @JsonIgnore
+    public APIListResource<APIDeviceProperty> getDevicePropertiesResource(APIQueryBuilder queryBuilder) {
+        return new APIListResource(client, getDevicePropertiesURI(), queryBuilder, APIDeviceProperty.class);
+    }
+    
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
