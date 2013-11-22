@@ -324,7 +324,4 @@ public class APIUser extends APIEntity {
         this.timeZone = apiUser.timeZone;
         this.vatID = apiUser.vatID;
     }
-    
-    
-    
 }
