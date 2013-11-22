@@ -33,10 +33,11 @@ public class APITestRun extends APIEntity {
     private String startedByDisplayName;
     private State state;
     private ScreenshotZipState screenshotZipState;
+    private Long projectId;
 
     public APITestRun() {}
     public APITestRun(Long id, Integer number, Date createTime, String displayName, Float executionRatio, Float successRatio, String startedByDisplayName, 
-            State state, ScreenshotZipState screenshotZipState) {
+            State state, ScreenshotZipState screenshotZipState, Long projectId) {
         super(id);
         this.number = number;
         this.createTime = createTime;
@@ -46,6 +47,7 @@ public class APITestRun extends APIEntity {
         this.startedByDisplayName = startedByDisplayName;
         this.state = state;
         this.screenshotZipState = screenshotZipState;
+        this.projectId = projectId;
     }    
 
     public Integer getNumber() {
@@ -111,7 +113,15 @@ public class APITestRun extends APIEntity {
     public void setScreenshotZipState(ScreenshotZipState screenshotZipState) {
         this.screenshotZipState = screenshotZipState;
     }
- 
+
+    public Long getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(Long projectId) {
+        this.projectId = projectId;
+    }
+    
     private APIFiles files;
     private APITestRunConfig config;
     private String getFilesURI() { return createUri(selfURI, "/files"); }
@@ -239,5 +249,6 @@ public class APITestRun extends APIEntity {
         this.startedByDisplayName = apiTestRun.startedByDisplayName;
         this.state = apiTestRun.state;
         this.successRatio = apiTestRun.successRatio;
+        this.projectId = apiTestRun.projectId;
     }
 }

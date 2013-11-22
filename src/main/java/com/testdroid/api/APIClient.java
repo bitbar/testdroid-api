@@ -1,6 +1,7 @@
 package com.testdroid.api;
 
 import com.testdroid.api.model.APIDevice;
+import com.testdroid.api.model.APILabelGroup;
 import com.testdroid.api.model.APIUser;
 import java.io.File;
 import java.io.InputStream;
@@ -21,40 +22,6 @@ public interface APIClient {
      * @throws APIException on invalid email or when user already exists.
      */
     public APIUser register(String email) throws APIException;
-    
-    /**
-     * return resource for accessing list of devices in Cloud using provided filters
-     * @return list resource for accessing all devices matching selected filters, if no filter used returns all devcies
-     * @throws APIException on API error
-     */
-    public APIListResource<APIDevice> getDevices() throws APIException;
-    
-    /**
-     * return resource for accessing list of devices in Cloud using provided filters
-     * @deprecated
-     * @param filters non-obligatory parameter for filtering devices returned
-     * @return list resource for accessing all devices matching selected filters, if no filter used returns all devcies
-     * @throws APIException on API error
-     */
-    public APIListResource<APIDevice> getDevices(APIDevice.DeviceFilter... filters) throws APIException;
-
-    /**
-     * Fetch and return list of devices in Cloud using provided filters.
-     * @since 1.3.34
-     * @param queryBuilder
-     * @return list of all devices matching selected filters, if no filter used returns all devcies
-     * @throws APIException 
-     */
-    public APIListResource<APIDevice> getDevices(APIDeviceQueryBuilder queryBuilder) throws APIException;
-    
-    /**
-     * Fetch and return list of devices in Cloud using provided filters.
-     * @deprecated 
-     * @param filters non-obligatory parameter for filtering devices returned
-     * @return list of all devices matching selected filters, if no filter used returns all devcies
-     * @throws APIException on API error
-     */
-    public APIListResource<APIDevice> getDevices(long offset, long limit, String search, APISort sort, APIDevice.DeviceFilter... filters) throws APIException;
     
     /**
      * Calls GET request to API
@@ -103,4 +70,43 @@ public interface APIClient {
      * @throws APIException on any problem related to API communication
      */
     public void delete(String uri) throws APIException;
+    
+    /**
+     * return resource for accessing list of devices in Cloud using provided filters
+     * @return list resource for accessing all devices matching selected filters, if no filter used returns all devcies
+     * @throws APIException on API error
+     */
+    public APIListResource<APIDevice> getDevices() throws APIException;
+    
+    /**
+     * return resource for accessing list of devices in Cloud using provided filters
+     * @deprecated
+     * @param filters non-obligatory parameter for filtering devices returned
+     * @return list resource for accessing all devices matching selected filters, if no filter used returns all devcies
+     * @throws APIException on API error
+     */
+    public APIListResource<APIDevice> getDevices(APIDevice.DeviceFilter... filters) throws APIException;
+
+    /**
+     * Fetch and return list of devices in Cloud using provided filters.
+     * @since 1.3.34
+     * @param queryBuilder
+     * @return list of all devices matching selected filters, if no filter used returns all devcies
+     * @throws APIException 
+     */
+    public APIListResource<APIDevice> getDevices(APIDeviceQueryBuilder queryBuilder) throws APIException;
+    
+    /**
+     * Fetch and return list of devices in Cloud using provided filters.
+     * @deprecated 
+     * @param filters non-obligatory parameter for filtering devices returned
+     * @return list of all devices matching selected filters, if no filter used returns all devcies
+     * @throws APIException on API error
+     */
+    public APIListResource<APIDevice> getDevices(long offset, long limit, String search, APISort sort, APIDevice.DeviceFilter... filters) throws APIException;
+    
+    public APIListResource<APILabelGroup> getLabelGroups() throws APIException;
+    
+    public APIListResource<APILabelGroup> getLabelGroups(APIQueryBuilder queryBuilder) throws APIException;
+    
 }
