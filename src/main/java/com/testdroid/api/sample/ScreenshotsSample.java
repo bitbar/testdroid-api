@@ -11,7 +11,7 @@ import java.io.InputStream;
 
 /**
  *
- * @author Sławomir
+ * @author Sławomir Pawluk <slawomir.pawluk@bitbar.com>
  */
 public class ScreenshotsSample {
 
