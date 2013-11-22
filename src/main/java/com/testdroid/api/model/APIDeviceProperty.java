@@ -1,9 +1,7 @@
 package com.testdroid.api.model;
 
+import com.testdroid.api.APIClient;
 import com.testdroid.api.APIEntity;
-import static com.testdroid.api.APIEntity.createUri;
-import com.testdroid.api.APIException;
-import com.testdroid.api.APIListResource;
 import javax.xml.bind.annotation.XmlRootElement;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
@@ -60,13 +58,6 @@ public class APIDeviceProperty extends APIEntity {
         this.propertyGroupName = propertyGroupName;
     }
     
-    private String getDevicesURI() { return createUri(selfURI, "/devices"); };
-    
-    @JsonIgnore
-    public APIListResource<APIDevice> getDevicesResource() throws APIException {
-        return getListResource(getDevicesURI(), APIDevice.class);
-    }
-
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
