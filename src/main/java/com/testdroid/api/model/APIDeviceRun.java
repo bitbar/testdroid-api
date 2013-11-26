@@ -136,6 +136,7 @@ public class APIDeviceRun extends APIEntity {
     private String getScreenshotsURI() { return createUri(selfURI, "/screenshots"); };
     private String getJunitURI() { return createUri(selfURI, "/junit.xml"); };
     private String getPerformanceURI() { return createUri(selfURI, "/performance"); };
+    private String getResultDataZipURI() { return createUri(selfURI, "/result-data.zip"); };
     private String getStatesURI() { return createUri(selfURI, "/states"); };
     
     @JsonIgnore
@@ -151,6 +152,11 @@ public class APIDeviceRun extends APIEntity {
     @JsonIgnore
     public InputStream getPerformanceData() throws APIException {
         return client.get(getPerformanceURI());
+    }
+
+    @JsonIgnore
+    public InputStream getResultDataZip() throws APIException {
+        return client.get(getResultDataZipURI());
     }
     
     @JsonIgnore
