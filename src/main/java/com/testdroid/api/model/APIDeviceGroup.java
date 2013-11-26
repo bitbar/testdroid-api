@@ -6,6 +6,7 @@ import com.testdroid.api.APIException;
 import com.testdroid.api.APIListResource;
 import com.testdroid.api.APIQueryBuilder;
 import com.testdroid.api.APISort;
+import java.util.Collections;
 import javax.xml.bind.annotation.XmlRootElement;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
@@ -121,7 +122,7 @@ public class APIDeviceGroup extends APIEntity {
     }
     
     public void addDevice(APIDevice device) throws APIException {
-        postResource(getIncludedDevicesURI(), String.format("deviceId=%s", device.getId()), null);
+        postResource(getIncludedDevicesURI(), Collections.singletonMap("deviceId", device.getId()), null);
     }
     
     public void deleteDevice(APIDevice device) throws APIException {

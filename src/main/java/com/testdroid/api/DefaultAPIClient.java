@@ -368,6 +368,15 @@ public class DefaultAPIClient implements APIClient {
                 content = new InputStreamContent(contentType, IOUtils.toInputStream(((APIEntity) body).toXML()));
             } else if(body instanceof HttpContent) {
                 content = (HttpContent) body;
+            } else if(body instanceof Map) {
+                Map map = (Map) body;
+                // Set empty strings for nulls - otherwise it is not passed at all to server and parameters is ingored
+                for(Object key: map.keySet()) {
+                    if(map.get(key) == null) {
+                        map.put(key, "");
+                    }
+                }
+                content = new UrlEncodedContent(map);
             } else if(body instanceof String) {
                 // Only temporal change
                 // TODO change body type to Map<String, Object> and use it there.

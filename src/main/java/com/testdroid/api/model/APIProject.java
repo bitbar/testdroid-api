@@ -195,7 +195,11 @@ public class APIProject extends APIEntity {
     }
     
     public void update() throws APIException {
-        String body = String.format("name=%s&description=%s&common=%s", name, description, common);
+        Map<String, Object> body = new HashMap<String, Object>() {{
+            put("name", name);
+            put("description", description);
+            put("common", common);
+        }};
         APIProject project = postResource(selfURI, body, APIProject.class);
         clone(project);
     }
