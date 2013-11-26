@@ -2,26 +2,13 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.testdroid</groupId>
     <artifactId>testdroid-api</artifactId>
-    <version>${testdroid-api.version}</version>
+    <version>1.4.3</version>
     <packaging>jar</packaging>
     <name>Testdroid API v2</name>
     <url>https://github.com/bitbar/testdroid-api</url>
     <description>The Testdroid API library for Java</description>
-    <!--
-    <parent>
-        <groupId>org.sonatype.oss</groupId>
-        <artifactId>oss-parent</artifactId>
-        <version>7</version>
-    </parent>
-    -->
-    <parent>
-        <groupId>com.testdroid</groupId>
-        <artifactId>testdroid</artifactId>
-        <version>1.0-SNAPSHOT</version>
-    </parent>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <testdroid.repo>http://nexus/content/repositories</testdroid.repo>
     </properties>
     <scm>
         <connection>scm:git:git://github.com:bitbar/testdroid-api.git</connection>
