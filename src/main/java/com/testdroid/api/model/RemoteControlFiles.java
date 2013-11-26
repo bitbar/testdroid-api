@@ -15,25 +15,25 @@ import org.codehaus.jackson.annotate.JsonIgnore;
  */
 @XmlRootElement 
 public class RemoteControlFiles extends APIFiles {
-    private AndroidAppFile androidApp;
+    private AndroidAppFile app;
 
     public RemoteControlFiles() {}
     
-    public RemoteControlFiles(Long id, DataFile data, AndroidAppFile androidApp) {
+    public RemoteControlFiles(Long id, DataFile data, AndroidAppFile app) {
         super(id, data);
-        this.androidApp = androidApp;
+        this.app = app;
     }
 
-    public AndroidAppFile getAndroidApp() {
-        return androidApp;
+    public AndroidAppFile getApp() {
+        return app;
     }
 
-    public void setAndroidApp(AndroidAppFile androidApp) {
-        this.androidApp = androidApp;
+    public void setApp(AndroidAppFile app) {
+        this.app = app;
     }      
 
     public void uploadApp(File file) throws APIException {
-        this.androidApp = client.postFile(getApplicationURI(), "application/vnd.android.package-archive", file, AndroidAppFile.class);
+        this.app = client.postFile(getApplicationURI(), "application/vnd.android.package-archive", file, AndroidAppFile.class);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class RemoteControlFiles extends APIFiles {
     protected <T extends APIEntity> void clone(T from) {
         super.clone(from);
         RemoteControlFiles remoteControlFiles = (RemoteControlFiles) from;
-        this.androidApp = remoteControlFiles.androidApp;
+        this.app = remoteControlFiles.app;
     }
     
 }

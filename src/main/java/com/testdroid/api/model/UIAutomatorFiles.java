@@ -13,39 +13,39 @@ import org.codehaus.jackson.annotate.JsonIgnore;
  */
 @XmlRootElement 
 public class UIAutomatorFiles extends APIFiles {
-    private AndroidAppFile androidApp;
-    private UIAutomatorTestFile uiAutomatorTest;
+    private AndroidAppFile app;
+    private UIAutomatorTestFile test;
 
     public UIAutomatorFiles() {}
     
-    public UIAutomatorFiles(Long id, DataFile data, AndroidAppFile androidApp, UIAutomatorTestFile uiAutomatorTest) {
+    public UIAutomatorFiles(Long id, DataFile data, AndroidAppFile app, UIAutomatorTestFile test) {
         super(id, data);
-        this.androidApp = androidApp;
-        this.uiAutomatorTest = uiAutomatorTest;
+        this.app = app;
+        this.test = test;
     }
 
-    public AndroidAppFile getAndroidApp() {
-        return androidApp;
+    public AndroidAppFile getApp() {
+        return app;
     }
 
-    public void setAndroidApp(AndroidAppFile androidApp) {
-        this.androidApp = androidApp;
+    public void setApp(AndroidAppFile app) {
+        this.app = app;
     }
 
-    public UIAutomatorTestFile getUiAutomatorTest() {
-        return uiAutomatorTest;
+    public UIAutomatorTestFile getTest() {
+        return test;
     }
 
-    public void setUiAutomatorTest(UIAutomatorTestFile uiAutomatorTest) {
-        this.uiAutomatorTest = uiAutomatorTest;
+    public void setTest(UIAutomatorTestFile test) {
+        this.test = test;
     } 
 
     public void uploadApp(File file) throws APIException {
-        this.androidApp = client.postFile(getApplicationURI(), "application/vnd.android.package-archive", file, AndroidAppFile.class);
+        this.app = client.postFile(getApplicationURI(), "application/vnd.android.package-archive", file, AndroidAppFile.class);
     }
 
     public void uploadTest(File file) throws APIException {
-        this.uiAutomatorTest = client.postFile(getTestURI(), "application/vnd.android.package-archive", file, UIAutomatorTestFile.class);
+        this.test = client.postFile(getTestURI(), "application/vnd.android.package-archive", file, UIAutomatorTestFile.class);
     }
 
     @Override
@@ -53,8 +53,8 @@ public class UIAutomatorFiles extends APIFiles {
     protected <T extends APIEntity> void clone(T from) {
         super.clone(from);
         UIAutomatorFiles uiAutomatorFiles = (UIAutomatorFiles) from;
-        this.androidApp = uiAutomatorFiles.androidApp;
-        this.uiAutomatorTest = uiAutomatorFiles.uiAutomatorTest;
+        this.app = uiAutomatorFiles.app;
+        this.test = uiAutomatorFiles.test;
     }
     
 }
