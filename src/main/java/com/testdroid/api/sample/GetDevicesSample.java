@@ -42,7 +42,7 @@ public class GetDevicesSample {
             
             // Search device
             String deviceName = devicesResource.getEntity().get(0).getDisplayName();
-            devicesResource = CLIENT.getDevices(new APIDeviceQueryBuilder().offset(0).limit(10).search("łłłł"));
+            devicesResource = CLIENT.getDevices(new APIDeviceQueryBuilder().offset(0).limit(10).search(deviceName));
             System.out.println(String.format("Found %s devices", devicesResource.getTotal()));
             printDeviceNames(devicesResource);
 
