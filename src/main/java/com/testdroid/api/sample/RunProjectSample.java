@@ -81,8 +81,8 @@ public class RunProjectSample {
             // After sending files to Testdroid Cloud files can be send back
             AndroidFiles androidFiles = project.getFiles(AndroidFiles.class);
             
-            APIFiles.AndroidAppFile androidAppFile = androidFiles.getAndroidApp();
-            APIFiles.AndroidTestFile androidTestFile = androidFiles.getAndroidTest();
+            APIFiles.AndroidAppFile androidAppFile = androidFiles.getApp();
+            APIFiles.AndroidTestFile androidTestFile = androidFiles.getTest();
             
         } catch(APIException apie) {
             System.err.println(apie.getMessage());

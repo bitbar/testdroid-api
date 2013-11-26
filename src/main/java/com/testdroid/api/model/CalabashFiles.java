@@ -12,39 +12,39 @@ import org.codehaus.jackson.annotate.JsonIgnore;
  */
 @XmlRootElement 
 public class CalabashFiles extends APIFiles {
-    private AndroidAppFile calabashApp;
-    private CalabashTestFile calabashTest;
+    private AndroidAppFile app;
+    private CalabashTestFile test;
 
     public CalabashFiles() {}
     
-    public CalabashFiles(Long id, DataFile data, AndroidAppFile calabashApp, CalabashTestFile calabashTest) {
+    public CalabashFiles(Long id, DataFile data, AndroidAppFile app, CalabashTestFile test) {
         super(id, data);
-        this.calabashApp = calabashApp;
-        this.calabashTest = calabashTest;
+        this.app = app;
+        this.test = test;
     }
 
-    public AndroidAppFile getCalabashApp() {
-        return calabashApp;
+    public AndroidAppFile getApp() {
+        return app;
     }
 
-    public void setCalabashApp(AndroidAppFile calabashApp) {
-        this.calabashApp = calabashApp;
+    public void setApp(AndroidAppFile app) {
+        this.app = app;
     }
 
-    public CalabashTestFile getCalabashTest() {
-        return calabashTest;
+    public CalabashTestFile getTest() {
+        return test;
     }
 
-    public void setCalabashTest(CalabashTestFile calabashTest) {
-        this.calabashTest = calabashTest;
+    public void setTest(CalabashTestFile test) {
+        this.test = test;
     }
 
     public void uploadApp(File file) throws APIException {
-        this.calabashApp = client.postFile(getApplicationURI(), "application/vnd.android.package-archive", file, AndroidAppFile.class);
+        this.app = client.postFile(getApplicationURI(), "application/vnd.android.package-archive", file, AndroidAppFile.class);
     }
 
     public void uploadTest(File file) throws APIException {
-        this.calabashTest = client.postFile(getTestURI(), "application/zip", file, CalabashTestFile.class);
+        this.test = client.postFile(getTestURI(), "application/zip", file, CalabashTestFile.class);
     }
 
     @Override
@@ -52,8 +52,8 @@ public class CalabashFiles extends APIFiles {
     protected <T extends APIEntity> void clone(T from) {
         super.clone(from);
         CalabashFiles calabashFiles = (CalabashFiles) from;
-        this.calabashApp = calabashFiles.calabashApp;
-        this.calabashTest = calabashFiles.calabashTest;
+        this.app = calabashFiles.app;
+        this.test = calabashFiles.test;
     }
     
 }
