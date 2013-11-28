@@ -65,6 +65,7 @@ public class APISort {
         RECORDER_ONLINE_SESSION_UPDATE_TIME(APIRecorderOnlineSession.class, "updateTime"),
         SCREENSHOT_ID(APIScreenshot.class, "id"),
         SCREENSHOT_ORIGINAL_NAME(APIScreenshot.class, "originalName"),
+        SCREENSHOT_TAKE_TIMESTAMP(APIScreenshot.class, "takeTimestamp"),
         SCREENSHOT_TYPE(APIScreenshot.class, "type"),
         SOFTWARE_API_LEVEL(APISoftwareVersion.class, "apiLevel"),
         SOFTWARE_ID(APISoftwareVersion.class, "id"),
