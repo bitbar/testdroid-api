@@ -7,6 +7,7 @@ import com.google.api.client.http.apache.ApacheHttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.testdroid.api.http.MultipartFormDataContent;
 import com.testdroid.api.model.APIDevice;
+import com.testdroid.api.model.APILabelGroup;
 import com.testdroid.api.model.APIUser;
 import net.sf.json.JSONObject;
 import org.apache.commons.io.IOUtils;
@@ -46,13 +47,17 @@ import java.util.logging.Logger;
  */
 public class DefaultAPIClient implements APIClient {
 
+    private static final String TESTDROID_API_PACKAGES = "com.testdroid.api:com.testdroid.api.model";
+    protected static final String API_URI = "/api/v2";
+    private static final String DEVICES_URI = "/devices";
+    private static final String LABEL_GROUPS_URI = "/label-groups";
+    
     protected static Credential getCredential() {
         return new Credential.Builder(BearerToken.queryParameterAccessMethod()).build();
     }
 
     static final JAXBContext context = initContext();
 
-    private final static String TESTDROID_API_PACKAGES = "com.testdroid.api:com.testdroid.api.model";
     private static JAXBContext initContext() {
         try {
             ClassLoader cl = APIEntity.class.getClassLoader();
@@ -66,7 +71,7 @@ public class DefaultAPIClient implements APIClient {
     protected JAXBContext getContext() {
         return context;
     }
-    protected static String API_URI = "/api/v2";
+    
     public final static int HTTP_CONNECT_TIMEOUT = 60000;
     public final static int HTTP_READ_TIMEOUT = 60000;
     protected String cloudURL;
@@ -363,6 +368,15 @@ public class DefaultAPIClient implements APIClient {
                 content = new InputStreamContent(contentType, IOUtils.toInputStream(((APIEntity) body).toXML()));
             } else if(body instanceof HttpContent) {
                 content = (HttpContent) body;
+            } else if(body instanceof Map) {
+                Map map = (Map) body;
+                // Set empty strings for nulls - otherwise it is not passed at all to server and parameters is ingored
+                for(Object key: map.keySet()) {
+                    if(map.get(key) == null) {
+                        map.put(key, "");
+                    }
+                }
+                content = new UrlEncodedContent(map);
             } else if(body instanceof String) {
                 // Only temporal change
                 // TODO change body type to Map<String, Object> and use it there.
@@ -402,8 +416,15 @@ public class DefaultAPIClient implements APIClient {
             }
         } catch (HttpResponseException ex) {
             try {
-                APIExceptionMessage exceptionMessage = fromXML(ex.getContent(), APIExceptionMessage.class);
-                throw new APIException(ex.getStatusCode(), exceptionMessage.getMessage(), ex);
+                try {
+                    APIExceptionMessage exceptionMessage = fromXML(ex.getContent(), APIExceptionMessage.class);
+                    throw new APIException(ex.getStatusCode(), exceptionMessage.getMessage(), ex);
+                }
+                catch(Exception e) { 
+                    // Catch exceptions related to xml unserialization. Those are usually internal server exceptions and are not properly serialized.
+                    // In such case we just put pure response content as a message
+                    throw new APIException(ex.getStatusCode(), ex.getContent(), ex);
+                }
             } catch (APIException e) {
                 throw new APIException(ex.getStatusCode(), ex.getMessage());
             }
@@ -477,19 +498,16 @@ public class DefaultAPIClient implements APIClient {
 
     @Override
     public APIUser register(String email) throws APIException {
-        APIUser result = post("/users", String.format("email=%s", APIEntity.encodeURL(email)), APIUser.class);
+        APIUser result = post("/users", String.format("email=%s", email), APIUser.class);
         result.selfURI = "/me";
         return result;
     }
-
-    private static String DEVICES_URI = "/devices";
 
     @Override
     public APIListResource<APIDevice> getDevices() throws APIException {
         return new APIListResource<APIDevice>(this, DEVICES_URI, APIDevice.class);
     }
     
-
     @Override
     public APIListResource<APIDevice> getDevices(APIDevice.DeviceFilter... filters) throws APIException {
         return new APIListResource<APIDevice>(this, DEVICES_URI, new APIDeviceQueryBuilder().filterWithDeviceFilters(filters), APIDevice.class);
@@ -499,7 +517,7 @@ public class DefaultAPIClient implements APIClient {
     public APIListResource<APIDevice> getDevices(APIDeviceQueryBuilder queryBuilder) throws APIException {
         return new APIListResource<APIDevice>(this, DEVICES_URI, queryBuilder, APIDevice.class);
     }
-
+    
     @Override
     public APIListResource<APIDevice> getDevices(long offset, long limit, String search, APISort sort, APIDevice.DeviceFilter... filters) throws APIException {
         if(limit <= 0) {
@@ -512,6 +530,16 @@ public class DefaultAPIClient implements APIClient {
         return new APIListResource<APIDevice>(this, DEVICES_URI, builder, APIDevice.class);
     }
 
+    @Override
+    public APIListResource<APILabelGroup> getLabelGroups() throws APIException {
+        return new APIListResource<APILabelGroup>(this, LABEL_GROUPS_URI, APILabelGroup.class);
+    }
+
+    @Override
+    public APIListResource<APILabelGroup> getLabelGroups(APIQueryBuilder queryBuilder) throws APIException {
+        return new APIListResource<APILabelGroup>(this, LABEL_GROUPS_URI, queryBuilder, APILabelGroup.class);
+    }
+    
     private <T> T fromXML(String xml, Class<T> type) throws APIException {
         try {
             Unmarshaller unmarshaller = getContext().createUnmarshaller();

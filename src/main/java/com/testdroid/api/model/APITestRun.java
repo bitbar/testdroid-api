@@ -2,12 +2,12 @@ package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
 import static com.testdroid.api.APIEntity.createUri;
-import static com.testdroid.api.APIEntity.encodeURL;
 import com.testdroid.api.APIException;
 import com.testdroid.api.APIListResource;
 import com.testdroid.api.APIQueryBuilder;
 import com.testdroid.api.APISort;
 import java.io.InputStream;
+import java.util.Collections;
 import java.util.Date;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
@@ -34,10 +34,11 @@ public class APITestRun extends APIEntity {
     private String startedByDisplayName;
     private State state;
     private ScreenshotZipState screenshotZipState;
+    private Long projectId;
 
     public APITestRun() {}
     public APITestRun(Long id, Integer number, Date createTime, String displayName, Float executionRatio, Float successRatio, String startedByDisplayName, 
-            State state, ScreenshotZipState screenshotZipState) {
+            State state, ScreenshotZipState screenshotZipState, Long projectId) {
         super(id);
         this.number = number;
         this.createTime = createTime;
@@ -47,6 +48,7 @@ public class APITestRun extends APIEntity {
         this.startedByDisplayName = startedByDisplayName;
         this.state = state;
         this.screenshotZipState = screenshotZipState;
+        this.projectId = projectId;
     }    
 
     public Integer getNumber() {
@@ -112,7 +114,15 @@ public class APITestRun extends APIEntity {
     public void setScreenshotZipState(ScreenshotZipState screenshotZipState) {
         this.screenshotZipState = screenshotZipState;
     }
- 
+
+    public Long getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(Long projectId) {
+        this.projectId = projectId;
+    }
+    
     private APIFiles files;
     private APITestRunConfig config;
     private String getFilesURI() { return createUri(selfURI, "/files"); }
@@ -146,7 +156,7 @@ public class APITestRun extends APIEntity {
     }
     
     public APITag addTag(String name) throws APIException {
-        return postResource(getTagsURI(), String.format("name=%s", encodeURL(name)), APITag.class);
+        return postResource(getTagsURI(), Collections.singletonMap("name", name), APITag.class);
     }
     
     @JsonIgnore
@@ -220,8 +230,7 @@ public class APITestRun extends APIEntity {
     }
     
     public void update() throws APIException {
-        String body = String.format("displayName=%s", encodeURL(displayName));
-        APITestRun testRun = postResource(selfURI, body, APITestRun.class);
+        APITestRun testRun = postResource(selfURI, Collections.singletonMap("displayName", displayName), APITestRun.class);
         clone(testRun);
     }
 
@@ -240,5 +249,6 @@ public class APITestRun extends APIEntity {
         this.startedByDisplayName = apiTestRun.startedByDisplayName;
         this.state = apiTestRun.state;
         this.successRatio = apiTestRun.successRatio;
+        this.projectId = apiTestRun.projectId;
     }
 }

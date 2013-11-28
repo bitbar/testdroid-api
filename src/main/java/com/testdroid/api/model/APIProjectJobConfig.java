@@ -11,7 +11,8 @@ import org.codehaus.jackson.annotate.JsonIgnore;
  */
 @XmlRootElement
 public class APIProjectJobConfig extends APIEntity {
-    @XmlType(name = "jobConfigType")
+    
+    @XmlType(namespace = "APIProjectJobConfig")
     public static enum Type { DEFAULT, RESIGNING, INSTATEST, CTS, IOS, UIAUTOMATOR, REMOTECONTROL, CALABASH, RECORDERONLINE }
 
     private Type type;

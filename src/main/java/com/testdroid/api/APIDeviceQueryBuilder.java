@@ -44,7 +44,7 @@ public class APIDeviceQueryBuilder extends APIQueryBuilder {
     
     @Override
     public APIDeviceQueryBuilder sort(Class<? extends APIEntity> type, APISort.SortItem... sortItems) {
-        return (APIDeviceQueryBuilder) sort(type, sortItems);
+        return (APIDeviceQueryBuilder) super.sort(type, sortItems);
     }
 
     @Override

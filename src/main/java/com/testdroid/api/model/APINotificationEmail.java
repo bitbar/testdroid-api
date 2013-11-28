@@ -15,7 +15,7 @@ import org.codehaus.jackson.map.annotate.JsonView;
 @XmlRootElement
 public class APINotificationEmail extends APIEntity {
     
-    @XmlType(name = "notificationEmailType")
+    @XmlType(namespace = "APINotificationEmail")
     public static enum Type {
         ALWAYS, ON_FAILURE;
         

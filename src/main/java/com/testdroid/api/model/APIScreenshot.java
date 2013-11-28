@@ -12,7 +12,8 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @XmlRootElement
 public class APIScreenshot extends APIEntity {
     
-    @XmlType public static enum Type { LANDSCAPE, PORTRAIT }
+    @XmlType(namespace = "APIScreenshot")
+    public static enum Type { LANDSCAPE, PORTRAIT }
     
     private String originalName;
     private boolean fail;
