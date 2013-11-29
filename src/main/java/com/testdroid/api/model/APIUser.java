@@ -6,6 +6,8 @@ import com.testdroid.api.APIException;
 import com.testdroid.api.APIListResource;
 import com.testdroid.api.APIQueryBuilder;
 import com.testdroid.api.APISort;
+import java.util.HashMap;
+import java.util.Map;
 import javax.xml.bind.annotation.XmlRootElement;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
@@ -163,19 +165,21 @@ public class APIUser extends APIEntity {
     private String getCreateNotificationParams(String email, APINotificationEmail.Type type) {
         return String.format("email=%s&type=%s", email, type);
     }
-    private String getUpdateUserParams(String address, String city, String code, String country, String email, String name, String organization, String phone, String state, String timeZone, String vatId) {
-        return String.format("address=%s&city=%s&code=%s&country=%s&email=%s&name=%s&organization=%s&phone=%s&state=%s&timeZone=%s&vatId=%s", 
-                address, 
-                city, 
-                code, 
-                country, 
-                email, 
-                name, 
-                organization, 
-                phone, 
-                state, 
-                timeZone, 
-                vatId);
+    private Map<String, Object> getUpdateUserParams(final String address, final String city, final String code, final String country, final String email, 
+            final String name, final String organization, final String phone, final String state, final String timeZone, final String vatId) {
+        return new HashMap<String, Object>()
+        {{
+            put("address", address);
+            put("city", city);
+            put("country", country);
+            put("email", email);
+            put("name", name);
+            put("organization", organization);
+            put("phone", phone);
+            put("state", state);
+            put("timeZone", timeZone);
+            put("vatId", vatId);
+        }};
     }
         
     public APIProject createProject(APIProject.Type type) throws APIException {
