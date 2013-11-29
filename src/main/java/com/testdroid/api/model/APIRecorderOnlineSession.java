@@ -20,7 +20,7 @@ public class APIRecorderOnlineSession extends APIEntity {
     private Date endTime;
     private String sessionKey;
     
-    @XmlType
+    @XmlType(namespace = "APIRecorderOnlineSession")
     public static enum Action { UPDATE, CLOSE }
 
     public APIRecorderOnlineSession() {}

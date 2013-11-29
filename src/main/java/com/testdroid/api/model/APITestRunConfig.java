@@ -2,10 +2,11 @@ package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
 import static com.testdroid.api.APIEntity.createUri;
-import static com.testdroid.api.APIEntity.encodeURL;
 import com.testdroid.api.APIException;
 import com.testdroid.api.APIListResource;
 import com.testdroid.api.APIQueryBuilder;
+import java.util.HashMap;
+import java.util.Map;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -16,15 +17,18 @@ import org.codehaus.jackson.annotate.JsonIgnore;
  */
 @XmlRootElement
 public class APITestRunConfig extends APIEntity {
-    @XmlType
+    
+    @XmlType(namespace = "APITestRunConfig")
     public static enum Scheduler {
         PARALLEL, SERIAL;
     }
-    @XmlType
+    
+    @XmlType(namespace = "APITestRunConfig")
     public static enum LimitationType {
         PACKAGE, CLASS;
     }
-    @XmlType
+    
+    @XmlType(namespace = "APITestRunConfig")
     public static enum Mode {
 
         FULL_RUN("Full run"), 
@@ -259,13 +263,13 @@ public class APITestRunConfig extends APIEntity {
     
     private String getParametersURI() { return createUri(selfURI, "/parameters"); }
     
-    private String getCreateParameterParameters(String key, String value) {
-        return String.format("key=%s&value=%s", key, value);
-    }
-    
     @JsonIgnore
-    public APITestRunParameter createParameter(String key, String value) throws APIException {
-        return postResource(getParametersURI(), getCreateParameterParameters(key, value), APITestRunParameter.class);
+    public APITestRunParameter createParameter(final String key, final String value) throws APIException {
+        Map<String, Object> body = new HashMap<String, Object>() {{
+            put("key", key);
+            put("value", value);
+        }};
+        return postResource(getParametersURI(), body, APITestRunParameter.class);
     }
     
     @JsonIgnore
@@ -284,13 +288,25 @@ public class APITestRunConfig extends APIEntity {
     }
     
     public void update() throws APIException {
-        String body = String.format("scheduler=%s&mode=%s&autoScreenshots=%s&screenshotDir=%s&limitationType=%s&limitationValue=%s&" +
-                "withAnnotation=%s&withoutAnnotation=%s&applicationUsername=%s&applicationPassword=%s&usedDeviceGroupId=%s&deviceLanguageCode=%s&"+
-                "hookURL=%s&uiAutomatorTestClasses=%s&launchApp=%s&instrumentationRunner=%s&checkApp=%s", scheduler != null ? encodeURL(scheduler.name()) : "", 
-                mode != null ? encodeURL(mode.name()) : "", encodeURL(autoScreenshots), encodeURL(screenshotDir), limitationType != null ? encodeURL(limitationType.name()) : "", 
-                encodeURL(limitationValue), encodeURL(withAnnotation), encodeURL(withoutAnnotation), encodeURL(applicationUsername), encodeURL(applicationPassword), 
-                usedDeviceGroupId != null ? usedDeviceGroupId : "", encodeURL(deviceLanguageCode), encodeURL(hookURL), encodeURL(uiAutomatorTestClasses), encodeURL(launchApp), encodeURL(instrumentationRunner),
-                encodeURL(checkApp));
+        Map<String, Object> body = new HashMap<String, Object>() {{
+            put("scheduler", scheduler != null ? scheduler.name() : null);
+            put("mode", mode != null ? mode.name() : null);
+            put("autoScreenshots", autoScreenshots);
+            put("screenshotDir", screenshotDir);
+            put("limitationType", limitationType != null ? limitationType.name() : null);
+            put("limitationValue", limitationValue);
+            put("withAnnotation", withAnnotation);
+            put("withoutAnnotation", withoutAnnotation);
+            put("applicationUsername", applicationUsername);
+            put("applicationPassword", applicationPassword);
+            put("usedDeviceGroupId", usedDeviceGroupId);
+            put("deviceLanguageCode", deviceLanguageCode);
+            put("hookURL", hookURL);
+            put("uiAutomatorTestClasses", uiAutomatorTestClasses);
+            put("launchApp", launchApp);
+            put("instrumentationRunner", instrumentationRunner);
+            put("checkApp", checkApp);
+        }};
         APITestRunConfig config = postResource(selfURI, body, APITestRunConfig.class);
         clone(config);
     }
