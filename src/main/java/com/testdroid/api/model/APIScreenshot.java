@@ -18,14 +18,16 @@ public class APIScreenshot extends APIEntity {
     private String originalName;
     private boolean fail;
     private Type type;
+    private long takeTimestamp;
 
     public APIScreenshot() {}
 
-    public APIScreenshot(Long id, String originalName, boolean fail, Type type) {
+    public APIScreenshot(Long id, String originalName, boolean fail, Type type, long takeTimestamp) {
         super(id);
         this.originalName = originalName;
         this.fail = fail;
         this.type = type;
+        this.takeTimestamp = takeTimestamp;
     }
 
     public String getOriginalName() {
@@ -52,6 +54,14 @@ public class APIScreenshot extends APIEntity {
         this.type = type;
     }
 
+    public long getTakeTimestamp() {
+        return takeTimestamp;
+    }
+
+    public void setTakeTimestamp(long takeTimestamp) {
+        this.takeTimestamp = takeTimestamp;
+    }
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
@@ -60,6 +70,7 @@ public class APIScreenshot extends APIEntity {
         this.fail = apiScreenshot.fail;
         this.originalName = apiScreenshot.originalName;
         this.type = apiScreenshot.type;
+        this.takeTimestamp = apiScreenshot.takeTimestamp;
     }
     
 }

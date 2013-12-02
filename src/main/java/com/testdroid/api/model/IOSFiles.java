@@ -13,39 +13,39 @@ import org.codehaus.jackson.annotate.JsonIgnore;
  */
 @XmlRootElement 
 public class IOSFiles extends APIFiles {
-    private IOSAppFile iosApp;
-    private IOSTestFile iosTest;
+    private IOSAppFile app;
+    private IOSTestFile test;
 
     public IOSFiles() {}
     
-    public IOSFiles(Long id, DataFile data, IOSAppFile iosApp, IOSTestFile iosTest) {
+    public IOSFiles(Long id, DataFile data, IOSAppFile app, IOSTestFile test) {
         super(id, data);
-        this.iosApp = iosApp;
-        this.iosTest = iosTest;
+        this.app = app;
+        this.test = test;
     }
 
-    public IOSAppFile getIosApp() {
-        return iosApp;
+    public IOSAppFile getApp() {
+        return app;
     }
 
-    public void setIosApp(IOSAppFile iosApp) {
-        this.iosApp = iosApp;
+    public void setApp(IOSAppFile app) {
+        this.app = app;
     }
 
-    public IOSTestFile getIosTest() {
-        return iosTest;
+    public IOSTestFile getTest() {
+        return test;
     }
 
-    public void setIosTest(IOSTestFile iosTest) {
-        this.iosTest = iosTest;
+    public void setTest(IOSTestFile test) {
+        this.test = test;
     } 
 
     public void uploadApp(File file) throws APIException {
-        this.iosApp = client.postFile(getApplicationURI(), "application/vnd.apple.pkpass", file, IOSAppFile.class);
+        this.app = client.postFile(getApplicationURI(), "application/vnd.apple.pkpass", file, IOSAppFile.class);
     }
 
     public void uploadTest(File file) throws APIException {
-        this.iosTest = client.postFile(getTestURI(), "application/zip", file, IOSTestFile.class);
+        this.test = client.postFile(getTestURI(), "application/zip", file, IOSTestFile.class);
     }
 
     @Override
@@ -53,8 +53,8 @@ public class IOSFiles extends APIFiles {
     protected <T extends APIEntity> void clone(T from) {
         super.clone(from);
         IOSFiles iosFiles = (IOSFiles) from;
-        this.iosApp = iosFiles.iosApp;
-        this.iosTest = iosFiles.iosTest;
+        this.app = iosFiles.app;
+        this.test = iosFiles.test;
     }
 
 }

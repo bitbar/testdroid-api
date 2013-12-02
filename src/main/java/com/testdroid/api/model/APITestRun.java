@@ -7,6 +7,7 @@ import com.testdroid.api.APIListResource;
 import com.testdroid.api.APIQueryBuilder;
 import com.testdroid.api.APISort;
 import java.io.InputStream;
+import java.util.Collections;
 import java.util.Date;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
@@ -155,7 +156,7 @@ public class APITestRun extends APIEntity {
     }
     
     public APITag addTag(String name) throws APIException {
-        return postResource(getTagsURI(), String.format("name=%s", name), APITag.class);
+        return postResource(getTagsURI(), Collections.singletonMap("name", name), APITag.class);
     }
     
     @JsonIgnore
@@ -229,8 +230,7 @@ public class APITestRun extends APIEntity {
     }
     
     public void update() throws APIException {
-        String body = String.format("displayName=%s", displayName);
-        APITestRun testRun = postResource(selfURI, body, APITestRun.class);
+        APITestRun testRun = postResource(selfURI, Collections.singletonMap("displayName", displayName), APITestRun.class);
         clone(testRun);
     }
 

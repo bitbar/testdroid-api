@@ -9,15 +9,22 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlTransient;
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 /**
  *
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
  */
 @XmlRootElement
-@XmlSeeAlso({AndroidFiles.class, IOSFiles.class, UIAutomatorFiles.class, RemoteControlFiles.class,
-    CalabashFiles.class, CalabashIOSFiles.class
+@XmlSeeAlso({
+    AndroidFiles.class,
+    IOSFiles.class,
+    UIAutomatorFiles.class,
+    RemoteControlFiles.class,
+    CalabashFiles.class,
+    CalabashIOSFiles.class
 })
+@JsonIgnoreProperties(value = {"id"})
 public abstract class APIFiles extends APIEntity {
     private DataFile data;
 

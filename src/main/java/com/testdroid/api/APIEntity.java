@@ -33,18 +33,53 @@ import org.codehaus.jackson.map.annotate.JsonView;
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
  */
 @XmlRootElement
-@XmlSeeAlso({APIUser.class, APIDeviceGroup.class, APIProject.class, APITestRun.class, APITestRunConfig.class, APIProjectSharing.class,
-    APIProjectJobConfig.class, APIFiles.class, AndroidFiles.class, IOSFiles.class, UIAutomatorFiles.class, RemoteControlFiles.class, RecorderOnlineFiles.class,
-    APIFiles.APIFile.class, APIFiles.AndroidAppFile.class, APIFiles.AndroidTestFile.class, APIFiles.DataFile.class, APIFiles.IOSAppFile.class, APIFiles.IOSTestFile.class,
-    APIFiles.UIAutomatorTestFile.class, APITag.class, APIDeviceRun.class, APIDeviceRunState.class, APISoftwareVersion.class, APIScreenshot.class, APIDevice.class,
-    APIDeviceProperty.class, APINotificationEmail.class, APITestCaseRun.class, APITestCaseRunStep.class, APIRecorderOnlineSession.class, APIFiles.CalabashTestFile.class,
-    CalabashFiles.class, APITestRunParameter.class, CalabashIOSFiles.class})
+@XmlSeeAlso({
+    APIArray.class,
+    APIDevice.class,
+    APIDeviceGroup.class,
+    APIDeviceProperty.class,
+    APIDeviceRun.class,
+    APIDeviceRunState.class,
+    APIFiles.class,
+    APIFiles.AndroidAppFile.class,
+    APIFiles.AndroidTestFile.class,
+    APIFiles.APIFile.class,
+    APIFiles.CalabashTestFile.class,
+    APIFiles.DataFile.class,
+    APIFiles.IOSAppFile.class,
+    APIFiles.IOSTestFile.class,
+    APIFiles.UIAutomatorTestFile.class,
+    APILabelGroup.class,
+    APIList.class,
+    APINotificationEmail.class,
+    APIProject.class,
+    APIProjectJobConfig.class,
+    APIProjectSharing.class,
+    APIRecorderOnlineSession.class,
+    APIRole.class,
+    APIScreenshot.class,
+    APISoftwareVersion.class,
+    APITag.class,
+    APITestCaseRun.class,
+    APITestCaseRunStep.class,
+    APITestRun.class,
+    APITestRunConfig.class,
+    APITestRunParameter.class,
+    APIUser.class,
+    AndroidFiles.class, 
+    CalabashFiles.class,
+    CalabashIOSFiles.class,
+    IOSFiles.class, 
+    RecorderOnlineFiles.class,
+    RemoteControlFiles.class, 
+    UIAutomatorFiles.class
+    })
 public abstract class APIEntity {
 
     private static final DateFormat API_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd_HH:mm");
     private static final String ENCODING = "UTF-8";
 
-    private static final HashMap<Class,JAXBContext> contextMap = new HashMap<Class,JAXBContext>();
+    private static final HashMap<Class, JAXBContext> contextMap = new HashMap<Class, JAXBContext>();
 
     protected APIClient client;
     protected String selfURI;
@@ -234,7 +269,7 @@ public abstract class APIEntity {
     public static String createUri(String preUri, String postUri) {
         if(preUri.contains("?")) {
             String[] parts = preUri.split("\\?");
-            return String.format("%s%s?%s", parts[0], postUri, parts[1]);
+            return String.format("%s%s", parts[0], postUri);
         } else {
             return String.format("%s%s", preUri, postUri);
         }
