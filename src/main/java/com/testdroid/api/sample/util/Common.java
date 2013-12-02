@@ -43,6 +43,6 @@ public class Common {
     }
     
     public static void uploadTest(APIProject project) throws APIException {
-        project.uploadApplication(new File(Common.class.getResource(ANDROID_TEST_RESOURCE_PATH).getPath()), com.testdroid.api.sample.util.Common.ANDROID_FILE_MIME_TYPE);
+        project.uploadTest(new File(Common.class.getResource(ANDROID_TEST_RESOURCE_PATH).getPath()), com.testdroid.api.sample.util.Common.ANDROID_FILE_MIME_TYPE);
     }
 }
