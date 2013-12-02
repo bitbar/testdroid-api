@@ -40,6 +40,7 @@ import org.codehaus.jackson.map.annotate.JsonView;
     APIDeviceProperty.class,
     APIDeviceRun.class,
     APIDeviceRunState.class,
+    APIExceptionMessage.class,
     APIFiles.class,
     APIFiles.AndroidAppFile.class,
     APIFiles.AndroidTestFile.class,
