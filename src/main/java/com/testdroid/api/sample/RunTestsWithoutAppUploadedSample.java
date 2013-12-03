@@ -13,7 +13,7 @@ import com.testdroid.api.sample.util.Common;
  *
  * @author Sławomir Pawluk <slawomir.pawluk@bitbar.com>
  */
-public class RunTestsWithoutApkUploadedSample {
+public class RunTestsWithoutAppUploadedSample {
 
     private static final APIClient CLIENT = Common.createApiClient();
     
