@@ -16,13 +16,13 @@ public class APIScreenshot extends APIEntity {
     public static enum Type { LANDSCAPE, PORTRAIT }
     
     private String originalName;
-    private boolean fail;
+    private Boolean fail;
     private Type type;
-    private long takeTimestamp;
+    private Long takeTimestamp;
 
     public APIScreenshot() {}
 
-    public APIScreenshot(Long id, String originalName, boolean fail, Type type, long takeTimestamp) {
+    public APIScreenshot(Long id, String originalName, Boolean fail, Type type, Long takeTimestamp) {
         super(id);
         this.originalName = originalName;
         this.fail = fail;
@@ -38,11 +38,11 @@ public class APIScreenshot extends APIEntity {
         this.originalName = originalName;
     }
 
-    public boolean isFail() {
+    public Boolean isFail() {
         return fail;
     }
 
-    public void setFail(boolean fail) {
+    public void setFail(Boolean fail) {
         this.fail = fail;
     }
 
@@ -54,11 +54,11 @@ public class APIScreenshot extends APIEntity {
         this.type = type;
     }
 
-    public long getTakeTimestamp() {
+    public Long getTakeTimestamp() {
         return takeTimestamp;
     }
 
-    public void setTakeTimestamp(long takeTimestamp) {
+    public void setTakeTimestamp(Long takeTimestamp) {
         this.takeTimestamp = takeTimestamp;
     }
 
