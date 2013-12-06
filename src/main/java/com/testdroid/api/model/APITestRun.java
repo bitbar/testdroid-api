@@ -23,8 +23,8 @@ public class APITestRun extends APIEntity {
     @XmlType(namespace = "APITestRun", name = "APITestRunState")
     public static enum State { WAITING, RUNNING, FINISHED }
     
-    @XmlType(namespace = "APITestRun", name = "APITestRunScreenshotZipState")
-    public static enum ScreenshotZipState { BLANK, PROGRESS, READY }
+    @XmlType(namespace = "APITestRun", name = "APITestRunZipState")
+    public static enum ZipState { BLANK, PROGRESS, READY }
     
     private Integer number;
     private Date createTime;
@@ -33,12 +33,13 @@ public class APITestRun extends APIEntity {
     private Float successRatio;
     private String startedByDisplayName;
     private State state;
-    private ScreenshotZipState screenshotZipState;
+    private ZipState screenshotZipState;
+    private ZipState logZipState;
     private Long projectId;
 
     public APITestRun() {}
     public APITestRun(Long id, Integer number, Date createTime, String displayName, Float executionRatio, Float successRatio, String startedByDisplayName, 
-            State state, ScreenshotZipState screenshotZipState, Long projectId) {
+            State state, ZipState screenshotZipState, ZipState logZipState, Long projectId) {
         super(id);
         this.number = number;
         this.createTime = createTime;
@@ -48,6 +49,7 @@ public class APITestRun extends APIEntity {
         this.startedByDisplayName = startedByDisplayName;
         this.state = state;
         this.screenshotZipState = screenshotZipState;
+        this.logZipState = logZipState;
         this.projectId = projectId;
     }    
 
@@ -107,12 +109,20 @@ public class APITestRun extends APIEntity {
         this.state = state;
     }
 
-    public ScreenshotZipState getScreenshotZipState() {
+    public ZipState getScreenshotZipState() {
         return screenshotZipState;
     }
 
-    public void setScreenshotZipState(ScreenshotZipState screenshotZipState) {
+    public void setScreenshotZipState(ZipState screenshotZipState) {
         this.screenshotZipState = screenshotZipState;
+    }
+
+    public ZipState getLogZipState() {
+        return logZipState;
+    }
+
+    public void setLogZipState(ZipState logZipState) {
+        this.logZipState = logZipState;
     }
 
     public Long getProjectId() {
@@ -129,7 +139,8 @@ public class APITestRun extends APIEntity {
     private String getConfigURI() { return createUri(selfURI, "/config"); }
     private String getTagsURI() { return createUri(selfURI, "/tags"); }
     private String getDeviceRunsURI() { return createUri(selfURI, "/device-runs"); }
-    private String getScreenshorsZipURI() { return createUri(selfURI, "/screenshots.zip"); }
+    private String getScreenshotsZipURI() { return createUri(selfURI, "/screenshots.zip"); }
+    private String getLogsZipURI() { return createUri(selfURI, "/logs.zip"); }
     
     /**
      * Returns APIFiles entity about files uploaded to this project.
@@ -221,12 +232,22 @@ public class APITestRun extends APIEntity {
 
     @JsonIgnore
     public void requestScreenshotsZip() throws APIException {
-        postResource(getScreenshorsZipURI(), null, null);
+        postResource(getScreenshotsZipURI(), null, null);
     }
     
     @JsonIgnore
     public InputStream getScreenshotsZip() throws APIException {
-        return getFile(getScreenshorsZipURI());
+        return getFile(getScreenshotsZipURI());
+    }
+
+    @JsonIgnore
+    public void requestLogsZip() throws APIException {
+        postResource(getLogsZipURI(), null, null);
+    }
+    
+    @JsonIgnore
+    public InputStream getLogsZip() throws APIException {
+        return getFile(getLogsZipURI());
     }
     
     public void update() throws APIException {
