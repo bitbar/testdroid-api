@@ -30,7 +30,7 @@ public class ScreenshotsSample {
             
             testRun.requestScreenshotsZip();
             
-            while(testRun.getScreenshotZipState() != APITestRun.ScreenshotZipState.READY) {
+            while(testRun.getScreenshotZipState() != APITestRun.ZipState.READY) {
                 try {
                     System.out.println("Waiting for screenshots...");
                     Thread.sleep(5000);
