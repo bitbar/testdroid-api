@@ -74,6 +74,7 @@ public class DefaultAPIClient implements APIClient {
     
     public final static int HTTP_CONNECT_TIMEOUT = 60000;
     public final static int HTTP_READ_TIMEOUT = 60000;
+    private final static int DEFAULT_CLIENT_REQUEST_TIMEOUT = 60000;
     protected String cloudURL;
     protected String apiURL;
     protected String username;
@@ -81,6 +82,7 @@ public class DefaultAPIClient implements APIClient {
     protected String accessToken;
     protected String refreshToken;
     protected long accessTokenExpireTime = 0;
+    private int clinetRequestTimeout = DEFAULT_CLIENT_REQUEST_TIMEOUT;
     
     protected final HttpTransport httpTransport;
     
@@ -238,6 +240,11 @@ public class DefaultAPIClient implements APIClient {
     }
 
     @Override
+    public void setRequestTimeout(int timeout) {
+        clinetRequestTimeout = timeout;
+    }
+
+    @Override
     public <T extends APIEntity> T get(String uri, Class<T> type) throws APIException {
         try {
             return getOnce(uri, type);
@@ -279,6 +286,8 @@ public class DefaultAPIClient implements APIClient {
             // Call request and parse result            
             request = factory.buildGetRequest(new GenericUrl(apiURL + uri));
             request.setHeaders(new HttpHeaders().setAccept("application/xml"));
+            request.setConnectTimeout(clinetRequestTimeout);
+            request.setReadTimeout(clinetRequestTimeout);
 
             response = request.execute();
             if (!Arrays.asList(HttpStatus.SC_OK, HttpStatus.SC_ACCEPTED, HttpStatus.SC_CREATED, HttpStatus.SC_NO_CONTENT).contains(response.getStatusCode())) {
@@ -307,6 +316,8 @@ public class DefaultAPIClient implements APIClient {
         HttpResponse response;
         try {
             request = factory.buildGetRequest(new GenericUrl(apiURL + uri));
+            request.setConnectTimeout(clinetRequestTimeout);
+            request.setReadTimeout(clinetRequestTimeout);
 
             response = request.execute();
             if (!Arrays.asList(HttpStatus.SC_OK, HttpStatus.SC_ACCEPTED, HttpStatus.SC_CREATED).contains(response.getStatusCode())) {
@@ -388,6 +399,8 @@ public class DefaultAPIClient implements APIClient {
             }
             request = factory.buildPostRequest(new GenericUrl(resourceUrl), content);
             request.setHeaders(headers);
+            request.setConnectTimeout(clinetRequestTimeout);
+            request.setReadTimeout(clinetRequestTimeout);
 
             // Call request and parse result
             response = request.execute();
@@ -470,6 +483,8 @@ public class DefaultAPIClient implements APIClient {
         try {
             request = factory.buildDeleteRequest(new GenericUrl(apiURL + uri));
             request.setHeaders(new HttpHeaders().setAccept("application/xml"));
+            request.setConnectTimeout(clinetRequestTimeout);
+            request.setReadTimeout(clinetRequestTimeout);
 
             response = request.execute();
             if (response == null) {
