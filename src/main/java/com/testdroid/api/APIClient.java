@@ -13,6 +13,12 @@ import java.io.InputStream;
 public interface APIClient {
     
     /**
+     * Sets connect timeout for APIClient requests
+     * @param timeout timeout is ms
+     */
+    public void setConnectTimeout(int timeout);
+    
+    /**
      * Sets timeout for request.
      * @param timeout timeout in ms.
      */
