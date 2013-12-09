@@ -11,6 +11,19 @@ import java.io.InputStream;
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
  */
 public interface APIClient {
+    
+    /**
+     * Sets establish connection timeout for APIClient requests. 
+     * @param timeout timeout is ms. Value <i>0</i> means infinite timeout.
+     */
+    public void setConnectTimeout(int timeout);
+    
+    /**
+     * Sets timeout for read data from established connection for APIClient requests.
+     * @param timeout timeout is ms. Value <i>0</i> means infinite timeout.
+     */
+    public void setRequestTimeout(int timeout);
+    
     /**
      * Fetch and return me - the authenticated user.
      * @throws APIException on invalid username, password or API error.
