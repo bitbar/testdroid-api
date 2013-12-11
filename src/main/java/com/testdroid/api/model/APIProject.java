@@ -125,6 +125,7 @@ public class APIProject extends APIEntity {
     private String getTrendsURI() { return createUri(selfURI, "/trends"); };
     private String getReportsURI() { return createUri(selfURI, "/reports/%s"); };
     private String getRunsURI() { return createUri(selfURI, "/runs"); };
+    private String getRunURI(Long id) { return createUri(selfURI, "/runs/" + id); }
     private String getPublicDeviceGroupsURI() { return createUri(selfURI, "/public-device-groups"); }
     private String getUploadApplicationURI() { return createUri(selfURI, "/files/application"); }
     private String getUploadTestURI() { return createUri(selfURI, "/files/test"); }
@@ -222,6 +223,10 @@ public class APIProject extends APIEntity {
     @JsonIgnore
     public APIListResource<APITestRun> getTestRunsResource(APIQueryBuilder queryBuilder) throws APIException {
         return getListResource(getRunsURI(), queryBuilder, APITestRun.class);
+    }
+    
+    public APITestRun getTestRun(Long id) throws APIException {
+        return getResource(getRunURI(id), APITestRun.class).getEntity();
     }
     
     /**
