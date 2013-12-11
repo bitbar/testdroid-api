@@ -156,7 +156,7 @@ public class APIUser extends APIEntity {
     }
     
     private String getProjectsURI() { return createUri(selfURI, "/projects"); }
-    private String getProjectsURI(Long id) { return createUri(selfURI, "/projects/" + id); }
+    private String getProjectURI(Long id) { return createUri(selfURI, "/projects/" + id); }
     private String getDeviceGroupsURI() { return createUri(selfURI, "/device-groups"); }
     private String getNotificationsURI() { return createUri(selfURI, "/notifications"); }
     private String getNotificationURI(long id) { return createUri(selfURI, "/notifications/" + id); }
@@ -226,7 +226,7 @@ public class APIUser extends APIEntity {
     }
     
     public APIProject getProject(Long id) throws APIException {
-        return getResource(getProjectsURI(id), APIProject.class).getEntity();
+        return getResource(getProjectURI(id), APIProject.class).getEntity();
     }
     
     @JsonIgnore
