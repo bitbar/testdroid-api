@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.testdroid</groupId>
     <artifactId>testdroid-api</artifactId>
-    <version>1.4.4</version>
+    <version>1.4.4-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>Testdroid API v2</name>
     <url>https://github.com/bitbar/testdroid-api</url>
@@ -40,6 +40,7 @@
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
+                <filtering>false</filtering>
                 <includes>
                     <include>fixtures/*.zip</include>
                     <include>fixtures/*.apk</include>

@@ -13,14 +13,14 @@ import java.io.InputStream;
 public interface APIClient {
     
     /**
-     * Sets connect timeout for APIClient requests
-     * @param timeout timeout is ms
+     * Sets establish connection timeout for APIClient requests. 
+     * @param timeout timeout is ms. Value <i>0</i> means infinite timeout.
      */
     public void setConnectTimeout(int timeout);
     
     /**
-     * Sets timeout for request.
-     * @param timeout timeout in ms.
+     * Sets timeout for read data from established connection for APIClient requests.
+     * @param timeout timeout is ms. Value <i>0</i> means infinite timeout.
      */
     public void setRequestTimeout(int timeout);
     
