@@ -25,7 +25,7 @@ public class APIProject extends APIEntity {
 
     @XmlType(namespace = "APIProject")
     public static enum Type { 
-        ANDROID, CTS, IOS, UIAUTOMATOR, REMOTECONTROL, RECORDERONLINE, CALABASH;
+        ANDROID, CTS, IOS, UIAUTOMATOR, REMOTECONTROL, RECORDERONLINE, CALABASH, CALABASH_IOS;
         public Class<? extends APIFiles> getFilesClass() {
             switch(this) {
                 case ANDROID: return AndroidFiles.class;
@@ -35,6 +35,7 @@ public class APIProject extends APIEntity {
                 case REMOTECONTROL: return RemoteControlFiles.class;
                 case RECORDERONLINE: return RecorderOnlineFiles.class;
                 case CALABASH: return CalabashFiles.class;
+                case CALABASH_IOS: return CalabashIOSFiles.class;
                 default: return null;
             }
         }
