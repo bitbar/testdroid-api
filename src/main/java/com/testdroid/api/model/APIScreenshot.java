@@ -64,6 +64,7 @@ public class APIScreenshot extends APIEntity {
         this.takeTimestamp = takeTimestamp;
     }
     
+    @JsonIgnore
     public InputStream getContent() throws APIException {
         return getFile(selfURI);
     }
