@@ -253,32 +253,58 @@ public class DefaultAPIClient implements APIClient {
 
     @Override
     public <T extends APIEntity> T get(String uri, Class<T> type) throws APIException {
-        try {
-            return getOnce(uri, type);
-        } catch (APIException ex) {
-            if (ex.getStatus() != null && HttpStatus.SC_UNAUTHORIZED == ex.getStatus()) {
-                // Access token may have expired. Clean and try again.
-                accessToken = null;
-                return getOnce(uri, type);
-            } else {
-                throw ex;
+        int trys=0;
+        int retrys=3;
+        T en=null;
+
+        do {
+            try {
+                en = getOnce(uri, type);
+            } catch (APIException ex) {
+                if (ex.getStatus() != null && HttpStatus.SC_UNAUTHORIZED == ex.getStatus()) {
+                    // Access token may have expired. Clean and try again.
+                    accessToken = null;
+                    en = getOnce(uri, type);
+                }
+//            else {
+//                throw ex;
+//            }
             }
+        } while(en==null && trys < retrys);
+
+        if(en==null) {
+            throw new APIException("failed downloading file 3 times");
         }
+
+        return en;
     }
 
     @Override
     public InputStream get(String uri) throws APIException {
-        try {
-            return getStream(uri);
-        } catch (APIException ex) {
-            if (ex.getStatus() != null && HttpStatus.SC_UNAUTHORIZED == ex.getStatus()) {
-                // Access token may have expired. Clean and try again.
-                accessToken = null;
-                return getStream(uri);
-            } else {
-                throw ex;
+        int trys=0;
+        int retrys=3;
+        InputStream en=null;
+
+        do {
+            try {
+                en = getStream(uri);
+            } catch (APIException ex) {
+                if (ex.getStatus() != null && HttpStatus.SC_UNAUTHORIZED == ex.getStatus()) {
+                    // Access token may have expired. Clean and try again.
+                    accessToken = null;
+                    en = getStream(uri);
+                }
+//            else {
+//                throw ex;
+//            }
             }
+        } while(en==null && trys < retrys);
+
+        if(en==null) {
+            throw new APIException("failed downloading file 3 times");
         }
+
+        return en;
     }
 
     /**
@@ -346,17 +372,31 @@ public class DefaultAPIClient implements APIClient {
 
     @Override
     public <T extends APIEntity> T post(String uri, Object body, Class<T> type) throws APIException {
-        try {
-            return postOnce(uri, body, null, type);
-        } catch (APIException ex) {
-            if (ex.getStatus() != null && HttpStatus.SC_UNAUTHORIZED == ex.getStatus()) {
-                // Access token may have expired. Clean and try again.
-                accessToken = null;
-                return postOnce(uri, body, null, type);
-            } else {
-                throw ex;
+        int trys=0;
+        int retrys=3;
+        T en=null;
+
+
+        do {
+            try {
+                en = postOnce(uri, body, null, type);
+            } catch (APIException ex) {
+                if (ex.getStatus() != null && HttpStatus.SC_UNAUTHORIZED == ex.getStatus()) {
+                    // Access token may have expired. Clean and try again.
+                    accessToken = null;
+                    en = postOnce(uri, body, null, type);
+                }
+//            else {
+//                throw ex;
+//            }
             }
+        } while(en==null && trys < retrys);
+
+        if(en==null) {
+            throw new APIException("failed sending file 3 times");
         }
+
+        return en;
     }
 
     protected <T extends APIEntity> T postOnce(String uri, Object body, String contentType, Class<T> type) throws APIException {
@@ -455,17 +495,31 @@ public class DefaultAPIClient implements APIClient {
 
     @Override
     public <T extends APIEntity> T postFile(String uri, String contentType, File file, Class<T> type) throws APIException {
+        int trys=0;
+        int retrys=3;
+        T en=null;
+
+
+        do {
         try {
-            return postOnce(uri, file, contentType, type);
+            en = postOnce(uri, file, contentType, type);
         } catch (APIException ex) {
             if (ex.getStatus() != null && HttpStatus.SC_UNAUTHORIZED == ex.getStatus()) {
                 // Access token may have expired. Clean and try again.
                 accessToken = null;
-                return postOnce(uri, file, contentType, type);
-            } else {
-                throw ex;
+                en = postOnce(uri, file, contentType, type);
             }
+//            else {
+//                throw ex;
+//            }
         }
+        } while(en==null && trys < retrys);
+
+        if(en==null) {
+            throw new APIException("failed sending file 3 times");
+        }
+
+        return en;
     }
 
     @Override
