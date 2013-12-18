@@ -258,6 +258,14 @@ public class DefaultAPIClient implements APIClient {
         T en=null;
 
         do {
+            trys++;
+
+            try {
+                Thread.sleep(1000);
+            } catch(InterruptedException ex) {
+                Thread.currentThread().interrupt();
+            }
+
             try {
                 en = getOnce(uri, type);
             } catch (APIException ex) {
@@ -286,6 +294,14 @@ public class DefaultAPIClient implements APIClient {
         InputStream en=null;
 
         do {
+            trys++;
+
+            try {
+                Thread.sleep(1000);
+            } catch(InterruptedException ex) {
+                Thread.currentThread().interrupt();
+            }
+
             try {
                 en = getStream(uri);
             } catch (APIException ex) {
@@ -378,6 +394,14 @@ public class DefaultAPIClient implements APIClient {
 
 
         do {
+            trys++;
+
+            try {
+                Thread.sleep(1000);
+            } catch(InterruptedException ex) {
+                Thread.currentThread().interrupt();
+            }
+
             try {
                 en = postOnce(uri, body, null, type);
             } catch (APIException ex) {
@@ -501,6 +525,14 @@ public class DefaultAPIClient implements APIClient {
 
 
         do {
+            trys++;
+
+            try {
+                Thread.sleep(1000);
+            } catch(InterruptedException ex) {
+                Thread.currentThread().interrupt();
+            }
+
         try {
             en = postOnce(uri, file, contentType, type);
         } catch (APIException ex) {
