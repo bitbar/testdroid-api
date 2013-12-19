@@ -1,6 +1,8 @@
 package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
+import com.testdroid.api.APIException;
+import java.io.InputStream;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -60,6 +62,11 @@ public class APIScreenshot extends APIEntity {
 
     public void setTakeTimestamp(Long takeTimestamp) {
         this.takeTimestamp = takeTimestamp;
+    }
+    
+    @JsonIgnore
+    public InputStream getContent() throws APIException {
+        return getFile(selfURI);
     }
 
     @Override
