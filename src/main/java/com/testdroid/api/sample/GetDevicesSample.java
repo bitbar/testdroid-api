@@ -52,7 +52,7 @@ public class GetDevicesSample {
             printDeviceNames(devicesResource);
 
             // Get devices using sorting
-            deviceName = "Samsung";
+            deviceName = "Samsung Galaxy";
             devicesResource = CLIENT.getDevices(new APIDeviceQueryBuilder().offset(0).limit(10).search(deviceName)
                     .sort(APIDevice.class, new APISort.SortItem(APISort.Column.DEVICE_NAME, APISort.Type.ASC)));
             System.out.println(String.format("Found %s devices with name %s", devicesResource.getTotal(), deviceName));
