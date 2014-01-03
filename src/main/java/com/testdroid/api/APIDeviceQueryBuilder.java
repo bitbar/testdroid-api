@@ -52,13 +52,13 @@ public class APIDeviceQueryBuilder extends APIQueryBuilder {
         String superResult = super.build(uri);
         String thisResult = superResult + (superResult.contains("?") ? "&" : "?");
         if(labelIds != null && labelIds.length > 0) {
-            thisResult += "label_id[]=" + StringUtils.join(labelIds, "&label_id=") + "&";
+            thisResult += "label_id[]=" + StringUtils.join(labelIds, "&label_id[]=") + "&";
         }
         if(deviceGroupIds != null && deviceGroupIds.length > 0) {
-            thisResult += "device_group_id[]=" + StringUtils.join(deviceGroupIds, "&device_group_id=") + "&";
+            thisResult += "device_group_id[]=" + StringUtils.join(deviceGroupIds, "&device_group_id[]=") + "&";
         }
         if(deviceFilters != null && deviceFilters.length > 0) {
-            thisResult += "device_filter[]=" + StringUtils.join(deviceFilters, "&device_filter=") + "&";
+            thisResult += "device_filter[]=" + StringUtils.join(deviceFilters, "&device_filter[]=") + "&";
         }
         return thisResult;
     }
