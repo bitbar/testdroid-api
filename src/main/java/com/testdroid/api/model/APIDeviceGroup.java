@@ -121,6 +121,10 @@ public class APIDeviceGroup extends APIEntity {
         return getListResource(getIncludedDevicesURI(), offset, limit, search, sort, APIDevice.class);
     }
     
+    public void delete() throws APIException {
+        deleteResource(selfURI);
+    }
+    
     public void addDevice(APIDevice device) throws APIException {
         postResource(getIncludedDevicesURI(), Collections.singletonMap("deviceId", device.getId()), null);
     }
