@@ -258,9 +258,12 @@ public class DefaultAPIClient implements APIClient {
         int trys = 0;
         int retrys = MAX_RETRY;
         T en = null;
+        boolean failSend;
 
         do {
             trys++;
+            failSend = false;
+
             if (trys > 1) {
                 try {
                     Thread.sleep(SLEEP_TIME_RETRY);
@@ -273,13 +276,14 @@ public class DefaultAPIClient implements APIClient {
             try {
                 en = getOnce(uri, type);
             } catch (APIException ex) {
+                failSend = true;
                 if (ex.getStatus() != null && HttpStatus.SC_UNAUTHORIZED == ex.getStatus()) {
                     // Access token may have expired. Clean and try again.
                     accessToken = null;
                 }
             }
 
-        } while (en == null && trys < retrys);
+        } while (failSend == true && trys < retrys);
 
         if (en == null) {
             throw new APIException("failed downloading file 3 times");
@@ -293,9 +297,12 @@ public class DefaultAPIClient implements APIClient {
         int trys = 0;
         int retrys = MAX_RETRY;
         InputStream en = null;
+        boolean failSend;
 
         do {
             trys++;
+            failSend = false;
+
             if (trys > 1) {
                 try {
                     Thread.sleep(SLEEP_TIME_RETRY);
@@ -308,13 +315,14 @@ public class DefaultAPIClient implements APIClient {
             try {
                 en = getStream(uri);
             } catch (APIException ex) {
+                failSend = true;
                 if (ex.getStatus() != null && HttpStatus.SC_UNAUTHORIZED == ex.getStatus()) {
                     // Access token may have expired. Clean and try again.
                     accessToken = null;
                 }
             }
 
-        } while (en == null && trys < retrys);
+        } while (failSend == true && trys < retrys);
 
         if (en == null) {
             throw new APIException("failed getting file 3 times");
@@ -391,9 +399,12 @@ public class DefaultAPIClient implements APIClient {
         int trys = 0;
         int retrys = MAX_RETRY;
         T en = null;
+        boolean failSend;
 
         do {
             trys++;
+            failSend = false;
+
             if (trys > 1) {
                 try {
                     Thread.sleep(SLEEP_TIME_RETRY);
@@ -406,12 +417,13 @@ public class DefaultAPIClient implements APIClient {
             try {
                 en = postOnce(uri, body, null, type);
             } catch (APIException ex) {
+                failSend = true;
                 if (ex.getStatus() != null && HttpStatus.SC_UNAUTHORIZED == ex.getStatus()) {
                     // Access token may have expired. Clean and try again.
                     accessToken = null;
                 }
             }
-        } while (en == null && trys < retrys);
+        } while (failSend == true && trys < retrys);
 
         if (en == null) {
             throw new APIException("failed " + trys + " times");
@@ -518,10 +530,11 @@ public class DefaultAPIClient implements APIClient {
         int trys = 0;
         int retrys = MAX_RETRY;
         T en = null;
-
+        boolean failSend;
 
         do {
             trys++;
+            failSend = false;
 
             if (trys > 1) {
                 try {
@@ -535,6 +548,7 @@ public class DefaultAPIClient implements APIClient {
             try {
                 en = postOnce(uri, file, contentType, type);
             } catch (APIException ex) {
+                failSend = true;
                 if (ex.getStatus() != null && HttpStatus.SC_UNAUTHORIZED == ex.getStatus()) {
                     // Access token may have expired. Clean and try again.
                     accessToken = null;
@@ -542,7 +556,7 @@ public class DefaultAPIClient implements APIClient {
             }
 
 
-        } while (en == null && trys < retrys);
+        } while (failSend == true && trys < retrys);
 
         if (en == null) {
             throw new APIException("FILE: failed " + trys + " times");
