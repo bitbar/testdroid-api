@@ -14,7 +14,7 @@ public class APIProjectJobConfig extends APIEntity {
     
     @XmlType(namespace = "APIProjectJobConfig")
     public static enum Type { DEFAULT, RESIGNING, INSTATEST, CTS, IOS, UIAUTOMATOR, REMOTECONTROL,
-        CALABASH, RECORDERONLINE, APPIUM_ANDROID, APPIUM_IOS}
+        CALABASH, CALABASH_IOS, RECORDERONLINE, APPIUM_ANDROID, APPIUM_IOS}
 
     private Type type;
     private String content;
