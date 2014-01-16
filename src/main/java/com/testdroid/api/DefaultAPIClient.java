@@ -85,7 +85,6 @@ public class DefaultAPIClient implements APIClient {
     protected long accessTokenExpireTime = 0;
     private int clientConnectTimeout = DEFAULT_CLIENT_CONNECT_TIMEOUT;
     private int clinetRequestTimeout = DEFAULT_CLIENT_REQUEST_TIMEOUT;
-    private boolean retry = false;
     
     protected final HttpTransport httpTransport;
     
@@ -184,14 +183,7 @@ public class DefaultAPIClient implements APIClient {
                 accessToken = refreshAccessToken();
             } catch (APIException ex) {
                 accessToken = null; // if refreshing failed, then we are not authorized
-                if(retry) {
-                    retry = false;
-                    throw ex;
-                } else {
-                    retry = true;
-                    accessToken = getAccessToken();
-                    retry = false;
-                }
+                accessToken = acquireAccessToken();
             }
         }
         return accessToken;
