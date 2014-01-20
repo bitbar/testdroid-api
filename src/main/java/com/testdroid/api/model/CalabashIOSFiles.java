@@ -12,39 +12,39 @@ import org.codehaus.jackson.annotate.JsonIgnore;
  */
 @XmlRootElement
 public class CalabashIOSFiles extends APIFiles {
-    private IOSAppFile calabashApp;
-    private CalabashTestFile calabashTest;
+    private IOSAppFile app;
+    private CalabashTestFile test;
 
     public CalabashIOSFiles() {}
 
     public CalabashIOSFiles(Long id, DataFile data, IOSAppFile calabashApp, CalabashTestFile calabashTest) {
         super(id, data);
-        this.calabashApp = calabashApp;
-        this.calabashTest = calabashTest;
+        this.app = calabashApp;
+        this.test = calabashTest;
     }
 
-    public IOSAppFile getCalabashApp() {
-        return calabashApp;
+    public IOSAppFile getApp() {
+        return app;
     }
 
-    public void setCalabashApp(IOSAppFile calabashApp) {
-        this.calabashApp = calabashApp;
+    public void setApp(IOSAppFile calabashApp) {
+        this.app = calabashApp;
     }
 
-    public CalabashTestFile getCalabashTest() {
-        return calabashTest;
+    public CalabashTestFile getTest() {
+        return test;
     }
 
-    public void setCalabashTest(CalabashTestFile calabashTest) {
-        this.calabashTest = calabashTest;
+    public void setTest(CalabashTestFile calabashTest) {
+        this.test = calabashTest;
     }
 
     public void uploadApp(File file) throws APIException {
-        this.calabashApp = client.postFile(getApplicationURI(), "application/vnd.apple.pkpass", file, IOSAppFile.class);
+        this.app = client.postFile(getApplicationURI(), "application/vnd.apple.pkpass", file, IOSAppFile.class);
     }
 
     public void uploadTest(File file) throws APIException {
-        this.calabashTest = client.postFile(getTestURI(), "application/zip", file, CalabashTestFile.class);
+        this.test = client.postFile(getTestURI(), "application/zip", file, CalabashTestFile.class);
     }
 
     @Override
@@ -52,8 +52,8 @@ public class CalabashIOSFiles extends APIFiles {
     protected <T extends APIEntity> void clone(T from) {
         super.clone(from);
         CalabashIOSFiles calabashFiles = (CalabashIOSFiles) from;
-        this.calabashApp = calabashFiles.calabashApp;
-        this.calabashTest = calabashFiles.calabashTest;
+        this.app = calabashFiles.app;
+        this.test = calabashFiles.test;
     }
 
 }
