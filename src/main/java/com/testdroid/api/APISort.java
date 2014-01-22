@@ -43,7 +43,6 @@ public class APISort {
         DEVICE_RUN_DEVICE(APIDeviceRun.class, "deviceModel.name"),
         DEVICE_RUN_END_TIME(APIDeviceRun.class, "endTime"),
         DEVICE_RUN_ID(APIDeviceRun.class, "id"),
-        DEVICE_RUN_RUN_STATUS(APIDeviceRun.class, "runStatus"),
         DEVICE_RUN_STATE_FINISHED(APIDeviceRunState.class, "finishTimeMS"),
         DEVICE_RUN_STATE_ID(APIDeviceRunState.class, "id"),
         DEVICE_RUN_STATE_STARTED(APIDeviceRunState.class, "startTimeMS"),
