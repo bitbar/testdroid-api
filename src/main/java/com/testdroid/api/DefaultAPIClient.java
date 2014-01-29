@@ -325,6 +325,7 @@ public class DefaultAPIClient implements APIClient {
         } while (failSend == true && trys < retrys);
 
         if (failSend == true) {
+            IOUtils.closeQuietly(en);
             throw new APIException("failed getting file 3 times");
         }
 
