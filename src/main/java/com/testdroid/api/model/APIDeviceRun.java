@@ -34,10 +34,12 @@ public class APIDeviceRun extends APIEntity {
     private APIDeviceRunState currentState;
     private APIDeviceRunState interruptedByState;
     private RunStatus runStatus;
+    private String deviceName;
+    private String deviceSerialId;
 
     public APIDeviceRun() {}
     public APIDeviceRun(Long id, Date runTime, APIDevice device, Integer testCaseSuccessNo, Integer testCaseAllNo, Integer testCaseCount, APISoftwareVersion softwareVersion, 
-            Date createTime, Date startTime, APIDeviceRunState currentState, APIDeviceRunState interruptedByState, RunStatus runStatus) {
+            Date createTime, Date startTime, APIDeviceRunState currentState, APIDeviceRunState interruptedByState, RunStatus runStatus, String deviceName, String deviceSerialId) {
         super(id);
         this.runTime = runTime;
         this.device = device;
@@ -50,6 +52,8 @@ public class APIDeviceRun extends APIEntity {
         this.currentState = currentState;
         this.interruptedByState = interruptedByState;
         this.runStatus = runStatus;
+        this.deviceName = deviceName;
+        this.deviceSerialId = deviceSerialId;
     }
 
     public Date getRunTime() {
@@ -130,6 +134,22 @@ public class APIDeviceRun extends APIEntity {
 
     public void setInterruptedByState(APIDeviceRunState interruptedByState) {
         this.interruptedByState = interruptedByState;
+    }
+
+    public String getDeviceName() {
+        return deviceName;
+    }
+
+    public void setDeviceName(String deviceName) {
+        this.deviceName = deviceName;
+    }
+
+    public String getDeviceSerialId() {
+        return deviceSerialId;
+    }
+
+    public void setDeviceSerialId(String deviceSerialId) {
+        this.deviceSerialId = deviceSerialId;
     }
     
     private String getLogsURI() { return createUri(selfURI, "/logs"); };
