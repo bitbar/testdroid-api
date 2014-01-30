@@ -182,8 +182,8 @@ public class DefaultAPIClient implements APIClient {
             try {
                 accessToken = refreshAccessToken();
             } catch (APIException ex) {
-                accessToken = null; // if refreshing failed, then we are not authorized   
-                throw ex;
+                accessToken = null; // if refreshing failed, then we are not authorized
+                accessToken = acquireAccessToken();
             }
         }
         return accessToken;
