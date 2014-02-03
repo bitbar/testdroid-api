@@ -2,7 +2,6 @@ package com.testdroid.api.sample;
 
 import com.testdroid.api.APIClient;
 import com.testdroid.api.APIException;
-import com.testdroid.api.APIExceptionMessage;
 import com.testdroid.api.model.APIProject;
 import com.testdroid.api.model.APIUser;
 import com.testdroid.api.sample.util.Common;
@@ -13,7 +12,7 @@ import com.testdroid.api.sample.util.Common;
  */
 public class CreateProjectSample {
 
-    public static final APIClient CLIENT = Common.createApiClient();
+    public static final APIClient CLIENT = Common.createApiClient("http://localhost:8080/testdroid-cloud", "admin@localhost", "admin");
     
     public static void main(String[] args) {
         APIUser me;
