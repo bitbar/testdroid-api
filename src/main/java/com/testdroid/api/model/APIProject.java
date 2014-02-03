@@ -51,7 +51,7 @@ public class APIProject extends APIEntity {
     private boolean common;
     private Long sharedById;
     private String sharedByEmail;
-    private APIArchivingStrategy archivingStrategy = APIArchivingStrategy.NEVER;
+    private APIArchivingStrategy archivingStrategy;
     private Integer archivingItemCount;
 
     public APIProject() {
@@ -105,6 +105,7 @@ public class APIProject extends APIEntity {
 
     /**
      * Returns user ID sharing this project or null if project is owned or common.
+     * @return user ID sharing this project
      */
     public Long getSharedById() {
         return sharedById;
