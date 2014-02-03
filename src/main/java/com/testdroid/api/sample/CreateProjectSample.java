@@ -8,11 +8,11 @@ import com.testdroid.api.sample.util.Common;
 
 /**
  *
- * @author Sławomir Pawluk <slawomir.pawluk@bitbar.com>
+ * @author Slawomir Pawluk <slawomir.pawluk@bitbar.com>
  */
 public class CreateProjectSample {
 
-    public static final APIClient CLIENT = Common.createApiClient("http://localhost:8080/testdroid-cloud", "admin@localhost", "admin");
+    public static final APIClient CLIENT = Common.createApiClient();
     
     public static void main(String[] args) {
         APIUser me;
@@ -51,6 +51,7 @@ public class CreateProjectSample {
             
             // Deleting project
             project.delete();
+            project1.delete();
             
         } catch (APIException apie) {
             System.err.println(apie.getMessage());

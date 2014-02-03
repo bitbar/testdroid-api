@@ -231,18 +231,6 @@ public class APIProject extends APIEntity {
         return postResource(getRunsURI(), getCreateRunParameters(testRunName), APITestRun.class);
     }
     
-    public void update() throws APIException {
-        Map<String, Object> body = new HashMap<String, Object>() {{
-            put("name", name);
-            put("description", description);
-            put("common", common);
-            put("archivingStrategy", archivingStrategy);
-            put("archivingItemCount", archivingItemCount);
-        }};
-        APIProject project = postResource(selfURI, body, APIProject.class);
-        clone(project);
-    }
-    
     public void delete() throws APIException {
         deleteResource(selfURI);
     }
@@ -376,6 +364,18 @@ public class APIProject extends APIEntity {
     @JsonIgnore
     public void deleteParameter(long parameterId) throws APIException {
         deleteResource(String.format("%s/%s", getParametersURI(), parameterId));
+    }
+    
+    public void update() throws APIException {
+        Map<String, Object> body = new HashMap<String, Object>() {{
+            put("name", name);
+            put("description", description);
+            put("common", common);
+            put("archivingStrategy", archivingStrategy.name());
+            put("archivingItemCount", archivingItemCount);
+        }};
+        APIProject project = postResource(selfURI, body, APIProject.class);
+        clone(project);
     }
     
     @Override
