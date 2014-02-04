@@ -4,8 +4,15 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+/**
+ *
+ * @author Jarno Tuovinen <jarno.tuovinen@bitbar.com>
+ */
 public class APIProjectTest {
 
+    /**
+     * Check that APIProject.Type returns proper class.
+     */
     @Test
     public void testAPIProjectType() {
         assertEquals(AndroidFiles.class, APIProject.Type.ANDROID.getFilesClass());
