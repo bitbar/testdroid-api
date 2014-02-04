@@ -71,6 +71,8 @@ import org.codehaus.jackson.map.annotate.JsonView;
     AndroidFiles.class, 
     CalabashFiles.class,
     CalabashIOSFiles.class,
+    AppiumAndroidFiles.class,
+    AppiumIOSFiles.class,
     IOSFiles.class, 
     RecorderOnlineFiles.class,
     RemoteControlFiles.class, 
