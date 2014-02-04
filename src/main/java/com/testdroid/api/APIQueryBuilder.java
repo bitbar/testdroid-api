@@ -44,7 +44,7 @@ public class APIQueryBuilder {
     }
     
     public APIQueryBuilder search(String search) {
-        this.search = search.replaceAll(" ", "%20");
+        this.search = search;
         return this;
     }
     
