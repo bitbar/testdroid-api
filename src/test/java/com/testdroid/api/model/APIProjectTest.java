@@ -16,6 +16,8 @@ public class APIProjectTest {
         assertEquals(RecorderOnlineFiles.class, APIProject.Type.RECORDERONLINE.getFilesClass());
         assertEquals(CalabashFiles.class, APIProject.Type.CALABASH.getFilesClass());
         assertEquals(CalabashIOSFiles.class, APIProject.Type.CALABASH_IOS.getFilesClass());
+        assertEquals(AppiumAndroidFiles.class, APIProject.Type.APPIUM_ANDROID.getFilesClass());
+        assertEquals(AppiumIOSFiles.class, APIProject.Type.APPIUM_IOS.getFilesClass());
     }
 
 }
