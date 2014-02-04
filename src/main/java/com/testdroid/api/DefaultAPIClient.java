@@ -92,9 +92,9 @@ public class DefaultAPIClient implements APIClient {
         this(cloudURL, username, password, false);
     }
 
-    public DefaultAPIClient(String cloudURL, String username, String password, boolean checkCertificate) {
+    public DefaultAPIClient(String cloudURL, String username, String password, boolean skipCheckCertificate) {
         NetHttpTransport.Builder netHttpBuilder;
-        if (checkCertificate) {
+        if (skipCheckCertificate) {
             try {
                 netHttpBuilder = new NetHttpTransport.Builder().doNotValidateCertificate();
             } catch (GeneralSecurityException ex) {
