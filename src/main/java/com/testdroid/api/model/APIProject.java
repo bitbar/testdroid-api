@@ -51,7 +51,7 @@ public class APIProject extends APIEntity {
     private boolean common;
     private Long sharedById;
     private String sharedByEmail;
-    private APIArchivingStrategy archivingStrategy = APIArchivingStrategy.NEVER;
+    private APIArchivingStrategy archivingStrategy;
     private Integer archivingItemCount;
 
     public APIProject() {
@@ -105,6 +105,7 @@ public class APIProject extends APIEntity {
 
     /**
      * Returns user ID sharing this project or null if project is owned or common.
+     * @return user ID sharing this project
      */
     public Long getSharedById() {
         return sharedById;
@@ -228,18 +229,6 @@ public class APIProject extends APIEntity {
     @JsonIgnore
     public APITestRun run(String testRunName) throws APIException {
         return postResource(getRunsURI(), getCreateRunParameters(testRunName), APITestRun.class);
-    }
-    
-    public void update() throws APIException {
-        Map<String, Object> body = new HashMap<String, Object>() {{
-            put("name", name);
-            put("description", description);
-            put("common", common);
-            put("archivingStrategy", archivingStrategy);
-            put("archivingItemCount", archivingItemCount);
-        }};
-        APIProject project = postResource(selfURI, body, APIProject.class);
-        clone(project);
     }
     
     public void delete() throws APIException {
@@ -375,6 +364,18 @@ public class APIProject extends APIEntity {
     @JsonIgnore
     public void deleteParameter(long parameterId) throws APIException {
         deleteResource(String.format("%s/%s", getParametersURI(), parameterId));
+    }
+    
+    public void update() throws APIException {
+        Map<String, Object> body = new HashMap<String, Object>() {{
+            put("name", name);
+            put("description", description);
+            put("common", common);
+            put("archivingStrategy", archivingStrategy.name());
+            put("archivingItemCount", archivingItemCount);
+        }};
+        APIProject project = postResource(selfURI, body, APIProject.class);
+        clone(project);
     }
     
     @Override
