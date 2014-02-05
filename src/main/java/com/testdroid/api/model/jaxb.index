@@ -22,7 +22,11 @@ APITestRunParameter
 APIUser
 AndroidFiles
 CalabashFiles
+CalabashIOSFiles
 DeviceRunStateType
 IOSFiles
+RecorderOnlineFiles
 RemoteControlFiles
 UIAutomatorFiles
+AppiumAndroidFiles
+AppiumIOSFiles

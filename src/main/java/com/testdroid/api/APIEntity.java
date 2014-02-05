@@ -5,6 +5,7 @@ import com.testdroid.api.model.AndroidFiles;
 import com.testdroid.api.model.IOSFiles;
 import com.testdroid.api.model.RemoteControlFiles;
 import com.testdroid.api.model.UIAutomatorFiles;
+import com.testdroid.api.um.model.APIUserService;
 import java.io.File;
 import java.io.InputStream;
 import java.io.StringReader;
@@ -40,6 +41,7 @@ import org.codehaus.jackson.map.annotate.JsonView;
     APIDeviceProperty.class,
     APIDeviceRun.class,
     APIDeviceRunState.class,
+    APIExceptionMessage.class,
     APIFiles.class,
     APIFiles.AndroidAppFile.class,
     APIFiles.AndroidTestFile.class,
@@ -67,11 +69,15 @@ import org.codehaus.jackson.map.annotate.JsonView;
     APITestRunParameter.class,
     APIUser.class,
     AndroidFiles.class, 
-    CalabashFiles.class, 
+    CalabashFiles.class,
+    CalabashIOSFiles.class,
+    AppiumAndroidFiles.class,
+    AppiumIOSFiles.class,
     IOSFiles.class, 
     RecorderOnlineFiles.class,
     RemoteControlFiles.class, 
-    UIAutomatorFiles.class
+    UIAutomatorFiles.class,
+    APIUserService.class
     })
 public abstract class APIEntity {
 

@@ -10,17 +10,15 @@ import org.codehaus.jackson.annotate.JsonIgnore;
  *
  * @author Jarno Tuovinen <jarno.tuovinen@bitbar.com>
  */
-@XmlRootElement 
-public class CalabashFiles extends APIFiles {
+@XmlRootElement
+public class AppiumAndroidFiles extends APIFiles {
     private AndroidAppFile app;
-    private CalabashTestFile test;
 
-    public CalabashFiles() {}
-    
-    public CalabashFiles(Long id, DataFile data, AndroidAppFile app, CalabashTestFile test) {
+    public AppiumAndroidFiles() {}
+
+    public AppiumAndroidFiles(Long id, DataFile data, AndroidAppFile app) {
         super(id, data);
         this.app = app;
-        this.test = test;
     }
 
     public AndroidAppFile getApp() {
@@ -31,29 +29,15 @@ public class CalabashFiles extends APIFiles {
         this.app = app;
     }
 
-    public CalabashTestFile getTest() {
-        return test;
-    }
-
-    public void setTest(CalabashTestFile test) {
-        this.test = test;
-    }
-
     public void uploadApp(File file) throws APIException {
         this.app = client.postFile(getApplicationURI(), "application/vnd.android.package-archive", file, AndroidAppFile.class);
-    }
-
-    public void uploadTest(File file) throws APIException {
-        this.test = client.postFile(getTestURI(), "application/zip", file, CalabashTestFile.class);
     }
 
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
         super.clone(from);
-        CalabashFiles calabashFiles = (CalabashFiles) from;
-        this.app = calabashFiles.app;
-        this.test = calabashFiles.test;
+        AppiumAndroidFiles appiumFiles = (AppiumAndroidFiles) from;
+        this.app = appiumFiles.app;
     }
-    
 }

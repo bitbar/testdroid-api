@@ -20,7 +20,7 @@ public class APITestRunConfig extends APIEntity {
     
     @XmlType(namespace = "APITestRunConfig")
     public static enum Scheduler {
-        PARALLEL, SERIAL;
+        PARALLEL, SERIAL, SINGLE;
     }
     
     @XmlType(namespace = "APITestRunConfig")
@@ -38,7 +38,10 @@ public class APITestRunConfig extends APIEntity {
         UIAUTOMATOR("UIAutomator"), 
         REMOTECONTROL("Remote control"),
         RECORDERONLINE("Recorder online"),
-        CALABASH("Calabash");
+        CALABASH("Calabash Android"),
+        CALABASH_IOS("Calabash iOS"),
+        APPIUM_ANDROID("Appium Android"),
+        APPIUM_IOS("Appium iOS");
         
         private String friendlyName;
         
@@ -71,13 +74,14 @@ public class APITestRunConfig extends APIEntity {
     private boolean launchApp;
     private String instrumentationRunner;
     private boolean checkApp;
+    private boolean appRequired;
 
     public APITestRunConfig() {}
 
     public APITestRunConfig(Long id, Long projectId, Scheduler scheduler, Mode mode, boolean autoScreenshots, boolean runAvailable, 
             String screenshotDir, LimitationType limitationType, String limitationValue, String withAnnotation, String withoutAnnotation, 
             String applicationUsername, String applicationPassword, Long usedClusterId, Integer creditsPrice, String deviceLanguageCode, String hookURL,
-            String uiAutomatorTestClasses, Boolean launchApp, String instrumentationRunner, Boolean checkApp) {
+            String uiAutomatorTestClasses, Boolean launchApp, String instrumentationRunner, Boolean checkApp, Boolean appRequired) {
         super(id);
         this.projectId = projectId;
         this.scheduler = scheduler;
@@ -99,6 +103,7 @@ public class APITestRunConfig extends APIEntity {
         this.launchApp = launchApp;
         this.instrumentationRunner = instrumentationRunner;
         this.checkApp = checkApp;
+        this.appRequired = appRequired;
     }
 
     public Long getProjectId() {
@@ -260,6 +265,14 @@ public class APITestRunConfig extends APIEntity {
     public void setCheckApp(boolean checkApp) {
         this.checkApp = checkApp;
     }
+
+    public boolean isAppRequired() {
+        return appRequired;
+    }
+
+    public void setAppRequired(boolean appRequired) {
+        this.appRequired = appRequired;
+    }
     
     private String getParametersURI() { return createUri(selfURI, "/parameters"); }
     
@@ -306,6 +319,7 @@ public class APITestRunConfig extends APIEntity {
             put("launchApp", launchApp);
             put("instrumentationRunner", instrumentationRunner);
             put("checkApp", checkApp);
+            put("appRequired", appRequired);
         }};
         APITestRunConfig config = postResource(selfURI, body, APITestRunConfig.class);
         clone(config);
@@ -318,6 +332,7 @@ public class APITestRunConfig extends APIEntity {
         cloneBase(from);
         this.applicationPassword = apiTestRunConfig.applicationPassword;
         this.applicationUsername = apiTestRunConfig.applicationUsername;
+        this.appRequired = apiTestRunConfig.appRequired;
         this.autoScreenshots = apiTestRunConfig.autoScreenshots;
         this.checkApp = apiTestRunConfig.checkApp;
         this.creditsPrice = apiTestRunConfig.creditsPrice;

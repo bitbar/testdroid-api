@@ -196,5 +196,4 @@ public class APIList<T extends APIEntity> extends APIEntity {
     private String getURI(String fullURL) {
         return fullURL.substring(fullURL.indexOf(DefaultAPIClient.API_URI) + DefaultAPIClient.API_URI.length());
     }
-
 }

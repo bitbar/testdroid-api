@@ -13,38 +13,38 @@ import org.codehaus.jackson.annotate.JsonIgnore;
  */
 @XmlRootElement 
 public class AndroidFiles extends APIFiles {
-    private AndroidAppFile androidApp;
-    private AndroidTestFile androidTest;
+    private AndroidAppFile app;
+    private AndroidTestFile test;
 
     public AndroidFiles() {}
-    public AndroidFiles(Long id, DataFile data, AndroidAppFile androidApp, AndroidTestFile androidTest) {
+    public AndroidFiles(Long id, DataFile data, AndroidAppFile app, AndroidTestFile test) {
         super(id, data);
-        this.androidApp = androidApp;
-        this.androidTest = androidTest;
+        this.app = app;
+        this.test = test;
     }
 
-    public AndroidAppFile getAndroidApp() {
-        return androidApp;
+    public AndroidAppFile getApp() {
+        return app;
     }
 
-    public void setAndroidApp(AndroidAppFile androidApp) {
-        this.androidApp = androidApp;
+    public void setApp(AndroidAppFile app) {
+        this.app = app;
     }
 
-    public AndroidTestFile getAndroidTest() {
-        return androidTest;
+    public AndroidTestFile getTest() {
+        return test;
     }
 
-    public void setAndroidTest(AndroidTestFile androidTest) {
-        this.androidTest = androidTest;
+    public void setTest(AndroidTestFile test) {
+        this.test = test;
     }
 
     public void uploadApp(File file) throws APIException {
-        this.androidApp = client.postFile(getApplicationURI(), "application/vnd.android.package-archive", file, AndroidAppFile.class);
+        this.app = client.postFile(getApplicationURI(), "application/vnd.android.package-archive", file, AndroidAppFile.class);
     }
 
     public void uploadTest(File file) throws APIException {
-        this.androidTest = client.postFile(getTestURI(), "application/vnd.android.package-archive", file, AndroidTestFile.class);
+        this.test = client.postFile(getTestURI(), "application/vnd.android.package-archive", file, AndroidTestFile.class);
     }
 
     @Override
@@ -52,8 +52,8 @@ public class AndroidFiles extends APIFiles {
     protected <T extends APIEntity> void clone(T from) {
         super.clone(from);
         AndroidFiles androidFiles = (AndroidFiles) from;
-        this.androidApp = androidFiles.androidApp;
-        this.androidTest = androidFiles.androidTest;
+        this.app = androidFiles.app;
+        this.test = androidFiles.test;
     }
 
 }

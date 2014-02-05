@@ -1,6 +1,8 @@
 package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
+import com.testdroid.api.APIException;
+import java.io.InputStream;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -16,16 +18,18 @@ public class APIScreenshot extends APIEntity {
     public static enum Type { LANDSCAPE, PORTRAIT }
     
     private String originalName;
-    private boolean fail;
+    private Boolean fail;
     private Type type;
+    private Long takeTimestamp;
 
     public APIScreenshot() {}
 
-    public APIScreenshot(Long id, String originalName, boolean fail, Type type) {
+    public APIScreenshot(Long id, String originalName, Boolean fail, Type type, Long takeTimestamp) {
         super(id);
         this.originalName = originalName;
         this.fail = fail;
         this.type = type;
+        this.takeTimestamp = takeTimestamp;
     }
 
     public String getOriginalName() {
@@ -36,11 +40,11 @@ public class APIScreenshot extends APIEntity {
         this.originalName = originalName;
     }
 
-    public boolean isFail() {
+    public Boolean isFail() {
         return fail;
     }
 
-    public void setFail(boolean fail) {
+    public void setFail(Boolean fail) {
         this.fail = fail;
     }
 
@@ -52,6 +56,19 @@ public class APIScreenshot extends APIEntity {
         this.type = type;
     }
 
+    public Long getTakeTimestamp() {
+        return takeTimestamp;
+    }
+
+    public void setTakeTimestamp(Long takeTimestamp) {
+        this.takeTimestamp = takeTimestamp;
+    }
+    
+    @JsonIgnore
+    public InputStream getContent() throws APIException {
+        return getFile(selfURI);
+    }
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
@@ -60,6 +77,7 @@ public class APIScreenshot extends APIEntity {
         this.fail = apiScreenshot.fail;
         this.originalName = apiScreenshot.originalName;
         this.type = apiScreenshot.type;
+        this.takeTimestamp = apiScreenshot.takeTimestamp;
     }
     
 }

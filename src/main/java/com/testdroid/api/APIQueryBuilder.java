@@ -59,7 +59,7 @@ public class APIQueryBuilder {
             formatString = formatString.replace("?", "&");
         }
         return String.format(formatString, uri, limit, offset, 
-                StringUtils.isNotBlank(search) ? search : "", 
+                StringUtils.isNotBlank(search) ? APIEntity.encodeURL(search) : "", 
                 sort !=null ? sort.serialize() : "");
     }
 }

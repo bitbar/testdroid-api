@@ -10,37 +10,37 @@ import org.codehaus.jackson.annotate.JsonIgnore;
  *
  * @author Jarno Tuovinen <jarno.tuovinen@bitbar.com>
  */
-@XmlRootElement 
-public class CalabashFiles extends APIFiles {
-    private AndroidAppFile app;
+@XmlRootElement
+public class CalabashIOSFiles extends APIFiles {
+    private IOSAppFile app;
     private CalabashTestFile test;
 
-    public CalabashFiles() {}
-    
-    public CalabashFiles(Long id, DataFile data, AndroidAppFile app, CalabashTestFile test) {
+    public CalabashIOSFiles() {}
+
+    public CalabashIOSFiles(Long id, DataFile data, IOSAppFile calabashApp, CalabashTestFile calabashTest) {
         super(id, data);
-        this.app = app;
-        this.test = test;
+        this.app = calabashApp;
+        this.test = calabashTest;
     }
 
-    public AndroidAppFile getApp() {
+    public IOSAppFile getApp() {
         return app;
     }
 
-    public void setApp(AndroidAppFile app) {
-        this.app = app;
+    public void setApp(IOSAppFile calabashApp) {
+        this.app = calabashApp;
     }
 
     public CalabashTestFile getTest() {
         return test;
     }
 
-    public void setTest(CalabashTestFile test) {
-        this.test = test;
+    public void setTest(CalabashTestFile calabashTest) {
+        this.test = calabashTest;
     }
 
     public void uploadApp(File file) throws APIException {
-        this.app = client.postFile(getApplicationURI(), "application/vnd.android.package-archive", file, AndroidAppFile.class);
+        this.app = client.postFile(getApplicationURI(), "application/vnd.apple.pkpass", file, IOSAppFile.class);
     }
 
     public void uploadTest(File file) throws APIException {
@@ -51,9 +51,9 @@ public class CalabashFiles extends APIFiles {
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
         super.clone(from);
-        CalabashFiles calabashFiles = (CalabashFiles) from;
+        CalabashIOSFiles calabashFiles = (CalabashIOSFiles) from;
         this.app = calabashFiles.app;
         this.test = calabashFiles.test;
     }
-    
+
 }
