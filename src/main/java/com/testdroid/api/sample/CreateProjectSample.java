@@ -2,14 +2,13 @@ package com.testdroid.api.sample;
 
 import com.testdroid.api.APIClient;
 import com.testdroid.api.APIException;
-import com.testdroid.api.APIExceptionMessage;
 import com.testdroid.api.model.APIProject;
 import com.testdroid.api.model.APIUser;
 import com.testdroid.api.sample.util.Common;
 
 /**
  *
- * @author Sławomir Pawluk <slawomir.pawluk@bitbar.com>
+ * @author Slawomir Pawluk <slawomir.pawluk@bitbar.com>
  */
 public class CreateProjectSample {
 
@@ -52,6 +51,7 @@ public class CreateProjectSample {
             
             // Deleting project
             project.delete();
+            project1.delete();
             
         } catch (APIException apie) {
             System.err.println(apie.getMessage());

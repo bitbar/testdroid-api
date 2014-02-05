@@ -25,7 +25,8 @@ public class APIProject extends APIEntity {
 
     @XmlType(namespace = "APIProject")
     public static enum Type { 
-        ANDROID, CTS, IOS, UIAUTOMATOR, REMOTECONTROL, RECORDERONLINE, CALABASH;
+        ANDROID, CTS, IOS, UIAUTOMATOR, REMOTECONTROL, RECORDERONLINE, CALABASH,
+        CALABASH_IOS, APPIUM_ANDROID, APPIUM_IOS;
         public Class<? extends APIFiles> getFilesClass() {
             switch(this) {
                 case ANDROID: return AndroidFiles.class;
@@ -35,9 +36,17 @@ public class APIProject extends APIEntity {
                 case REMOTECONTROL: return RemoteControlFiles.class;
                 case RECORDERONLINE: return RecorderOnlineFiles.class;
                 case CALABASH: return CalabashFiles.class;
+                case CALABASH_IOS: return CalabashIOSFiles.class;
+                case APPIUM_ANDROID: return AppiumAndroidFiles.class;
+                case APPIUM_IOS: return AppiumIOSFiles.class;
                 default: return null;
             }
         }
+    }
+    
+    @XmlType(namespace = "APIProject")
+    public static enum APIArchivingStrategy {
+        NEVER, DAYS, RUNS;
     }
 
     private String name;
@@ -46,11 +55,14 @@ public class APIProject extends APIEntity {
     private boolean common;
     private Long sharedById;
     private String sharedByEmail;
+    private APIArchivingStrategy archivingStrategy;
+    private Integer archivingItemCount;
 
     public APIProject() {
     }
     
-    public APIProject(Long id, String name, String description, Type type, Long sharedById, String sharedByEmail, boolean common) {
+    public APIProject(Long id, String name, String description, Type type, Long sharedById, String sharedByEmail, boolean common, 
+            APIArchivingStrategy archivingStrategy, Integer archivingItemCount) {
         super(id);
         this.name = name;
         this.description = description;
@@ -58,6 +70,8 @@ public class APIProject extends APIEntity {
         this.sharedById = sharedById;
         this.sharedByEmail = sharedByEmail;
         this.common = common;
+        this.archivingStrategy = archivingStrategy;
+        this.archivingItemCount = archivingItemCount;
         jobConfig = new HashMap<APIProjectJobConfig.Type, APIProjectJobConfig>();
     }
 
@@ -95,6 +109,7 @@ public class APIProject extends APIEntity {
 
     /**
      * Returns user ID sharing this project or null if project is owned or common.
+     * @return user ID sharing this project
      */
     public Long getSharedById() {
         return sharedById;
@@ -110,6 +125,31 @@ public class APIProject extends APIEntity {
 
     public void setSharedByEmail(String sharedByEmail) {
         this.sharedByEmail = sharedByEmail;
+    }
+
+    public APIArchivingStrategy getArchivingStrategy() {
+        return archivingStrategy;
+    }
+
+    public void setArchivingStrategy(APIArchivingStrategy archivingStrategy) {
+        this.archivingStrategy = archivingStrategy;
+    }
+
+    public Integer getArchivingItemCount() {
+        return archivingItemCount;
+    }
+
+    public void setArchivingItemCount(Integer archivingItemCount) {
+        this.archivingItemCount = archivingItemCount;
+    }
+    
+    public String getArchivingStrategyDisplayValue() {
+        switch(archivingStrategy) {
+            case NEVER: return "never";
+            case RUNS: return String.format("%s run%s", archivingItemCount, archivingItemCount != 1 ? "s" : "");
+            case DAYS: return String.format("%s day%s", archivingItemCount, archivingItemCount != 1 ? "s" : "");
+            default: return "";
+        }
     }
 
     private APITestRunConfig testRunConfig;
@@ -193,16 +233,6 @@ public class APIProject extends APIEntity {
     @JsonIgnore
     public APITestRun run(String testRunName) throws APIException {
         return postResource(getRunsURI(), getCreateRunParameters(testRunName), APITestRun.class);
-    }
-    
-    public void update() throws APIException {
-        Map<String, Object> body = new HashMap<String, Object>() {{
-            put("name", name);
-            put("description", description);
-            put("common", common);
-        }};
-        APIProject project = postResource(selfURI, body, APIProject.class);
-        clone(project);
     }
     
     public void delete() throws APIException {
@@ -340,6 +370,18 @@ public class APIProject extends APIEntity {
         deleteResource(String.format("%s/%s", getParametersURI(), parameterId));
     }
     
+    public void update() throws APIException {
+        Map<String, Object> body = new HashMap<String, Object>() {{
+            put("name", name);
+            put("description", description);
+            put("common", common);
+            put("archivingStrategy", archivingStrategy.name());
+            put("archivingItemCount", archivingItemCount);
+        }};
+        APIProject project = postResource(selfURI, body, APIProject.class);
+        clone(project);
+    }
+    
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
@@ -354,5 +396,7 @@ public class APIProject extends APIEntity {
         this.sharedById = apiProject.sharedById;
         this.testRunConfig = apiProject.testRunConfig;
         this.type = apiProject.type;
+        this.archivingStrategy = apiProject.archivingStrategy;
+        this.archivingItemCount = apiProject.archivingItemCount;
     }
 }
