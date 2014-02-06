@@ -3,6 +3,7 @@ APIDeviceGroup
 APIDeviceProperty
 APIDeviceRun
 APIDeviceRunState
+APIDeviceSession
 APIFiles
 APILabelGroup
 APINotificationEmail
