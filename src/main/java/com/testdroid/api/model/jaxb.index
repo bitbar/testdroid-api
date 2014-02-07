@@ -21,6 +21,8 @@ APITestRun
 APITestRunConfig
 APITestRunParameter
 APIUser
+APIUserFile
+APIUserFileProperty
 AndroidFiles
 CalabashFiles
 CalabashIOSFiles

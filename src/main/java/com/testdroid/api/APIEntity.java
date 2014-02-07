@@ -1,10 +1,6 @@
 package com.testdroid.api;
 
 import com.testdroid.api.model.*;
-import com.testdroid.api.model.AndroidFiles;
-import com.testdroid.api.model.IOSFiles;
-import com.testdroid.api.model.RemoteControlFiles;
-import com.testdroid.api.model.UIAutomatorFiles;
 import com.testdroid.api.um.model.APIUserService;
 import java.io.File;
 import java.io.InputStream;
@@ -69,6 +65,8 @@ import org.codehaus.jackson.map.annotate.JsonView;
     APITestRunConfig.class,
     APITestRunParameter.class,
     APIUser.class,
+    APIUserFile.class,
+    APIUserFileProperty.class,
     AndroidFiles.class, 
     CalabashFiles.class,
     CalabashIOSFiles.class,
