@@ -19,14 +19,16 @@ public class APIDeviceSession extends APIEntity {
     
     private Type type;
     private Date createTime;
+    private APIDevice device;
 
     public APIDeviceSession() {
     }
 
-    public APIDeviceSession(Long id, Type type, Date createTime) {
+    public APIDeviceSession(Long id, Type type, Date createTime, APIDevice device) {
         super(id);
         this.type = type;
         this.createTime = createTime;
+        this.device = device;
     }
 
     public Type getType() {
@@ -44,6 +46,14 @@ public class APIDeviceSession extends APIEntity {
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
+
+    public APIDevice getDevice() {
+        return device;
+    }
+
+    public void setDevice(APIDevice device) {
+        this.device = device;
+    }
     
     @Override
     protected <T extends APIEntity> void clone(T from) {
@@ -51,6 +61,7 @@ public class APIDeviceSession extends APIEntity {
         cloneBase(from);
         this.createTime = apiDeviceSession.createTime;
         this.type = apiDeviceSession.type;
+        this.device = apiDeviceSession.device;
     }
 
 }
