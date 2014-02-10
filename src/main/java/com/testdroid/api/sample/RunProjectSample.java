@@ -46,6 +46,7 @@ public class RunProjectSample {
             testRunConfig.setDeviceLanguageCode("EN");
             testRunConfig.setUsedDeviceGroupId(deviceGroup.getId());
             testRunConfig.setMode(APITestRunConfig.Mode.FULL_RUN);
+//            testRunConfig.createParameter();
             
             // Set hook URL to recieve signal, when test run is finished.
             // Server will send POST request to specified URL:

@@ -42,7 +42,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>, Sławomir Pawluk <slawomir.pawluk@bitbar.com>, Krzysztof Fonał <krzysztof.fonal@bitbar.com>
  */
 public class DefaultAPIClient implements APIClient {
@@ -51,7 +50,9 @@ public class DefaultAPIClient implements APIClient {
     protected static final String API_URI = "/api/v2";
     private static final String DEVICES_URI = "/devices";
     private static final String LABEL_GROUPS_URI = "/label-groups";
-    
+    private int MAX_RETRY = 6;
+    private int SLEEP_TIME_RETRY = 12500;
+
     protected static Credential getCredential() {
         return new Credential.Builder(BearerToken.queryParameterAccessMethod()).build();
     }
@@ -68,10 +69,11 @@ public class DefaultAPIClient implements APIClient {
         }
         return null;
     }
+
     protected JAXBContext getContext() {
         return context;
     }
-    
+
     public final static int HTTP_CONNECT_TIMEOUT = 60000;
     public final static int HTTP_READ_TIMEOUT = 60000;
     private final static int DEFAULT_CLIENT_CONNECT_TIMEOUT = 20000;
@@ -85,10 +87,10 @@ public class DefaultAPIClient implements APIClient {
     protected long accessTokenExpireTime = 0;
     private int clientConnectTimeout = DEFAULT_CLIENT_CONNECT_TIMEOUT;
     private int clinetRequestTimeout = DEFAULT_CLIENT_REQUEST_TIMEOUT;
-    
+
     protected final HttpTransport httpTransport;
-    
-    public DefaultAPIClient(String cloudURL, String username, String password) {                
+
+    public DefaultAPIClient(String cloudURL, String username, String password) {
         this(cloudURL, username, password, false);
     }
 
@@ -108,12 +110,12 @@ public class DefaultAPIClient implements APIClient {
         httpTransport = netHttpBuilder.build();
         initializeDefaultAPIClient(cloudURL, username, password);
     }
-    
-    public DefaultAPIClient(String cloudURL, String username, String password, HttpHost proxy, boolean skipCheckCertificate)  {
+
+    public DefaultAPIClient(String cloudURL, String username, String password, HttpHost proxy, boolean skipCheckCertificate) {
         ApacheHttpTransport.Builder apacheBuilder;
         if (skipCheckCertificate) {
             try {
-                apacheBuilder = new ApacheHttpTransport.Builder().setProxy(proxy).doNotValidateCertificate();                        
+                apacheBuilder = new ApacheHttpTransport.Builder().setProxy(proxy).doNotValidateCertificate();
             } catch (GeneralSecurityException ex) {
                 Logger.getLogger(DefaultAPIClient.class.getName()).log(Level.WARNING, "Cannot set not-validating certificate. Certificate will be validating.", ex);
                 apacheBuilder = new ApacheHttpTransport.Builder().setProxy(proxy);
@@ -121,34 +123,34 @@ public class DefaultAPIClient implements APIClient {
         } else {
             apacheBuilder = new ApacheHttpTransport.Builder().setProxy(proxy);
         }
-        
+
         httpTransport = apacheBuilder.build();
         initializeDefaultAPIClient(cloudURL, username, password);
     }
-    
+
     public DefaultAPIClient(String cloudURL, String username, String password, HttpHost proxy, final String proxyUser, final String proxyPassword, boolean skipCheckCertificate) {
         this(cloudURL, username, password, proxy, skipCheckCertificate);
-        
-        DefaultHttpClient apacheClient = (DefaultHttpClient)((ApacheHttpTransport)httpTransport).getHttpClient();
+
+        DefaultHttpClient apacheClient = (DefaultHttpClient) ((ApacheHttpTransport) httpTransport).getHttpClient();
         apacheClient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
         apacheClient.getCredentialsProvider().setCredentials(
-                new AuthScope(proxy.getHostName(), proxy.getPort()), 
-                new UsernamePasswordCredentials(proxyUser, proxyPassword));        
-                
+                new AuthScope(proxy.getHostName(), proxy.getPort()),
+                new UsernamePasswordCredentials(proxyUser, proxyPassword));
+
         final AuthCache authCache = new BasicAuthCache();
         final BasicScheme basicAuth = new BasicScheme(ChallengeState.PROXY);
         authCache.put(proxy, basicAuth);
-        
-        apacheClient.addRequestInterceptor(new HttpRequestInterceptor() {            
+
+        apacheClient.addRequestInterceptor(new HttpRequestInterceptor() {
             @Override
-            public void process(org.apache.http.HttpRequest hr, HttpContext hc) throws HttpException, IOException {    
-                hc.setAttribute(ClientContext.AUTH_CACHE, authCache);            
+            public void process(org.apache.http.HttpRequest hr, HttpContext hc) throws HttpException, IOException {
+                hc.setAttribute(ClientContext.AUTH_CACHE, authCache);
             }
         }, 0);
     }
-    
+
     private void initializeDefaultAPIClient(String cloudURL, String username, String password) {
-        if(cloudURL.endsWith("/")) {
+        if (cloudURL.endsWith("/")) {
             cloudURL = cloudURL.substring(0, cloudURL.length() - 1);
         }
         this.cloudURL = cloudURL;
@@ -159,7 +161,7 @@ public class DefaultAPIClient implements APIClient {
 
     protected HttpRequestFactory getRequestFactory(String accessToken) {
         final Credential credential = getCredential();
-        if(StringUtils.isNotBlank(accessToken)) {
+        if (StringUtils.isNotBlank(accessToken)) {
             credential.setAccessToken(accessToken);
         }
         return httpTransport.createRequestFactory(new HttpRequestInitializer() {
@@ -170,7 +172,7 @@ public class DefaultAPIClient implements APIClient {
             }
         });
     }
-    
+
     protected String getAccessToken() throws APIException {
         if (accessToken == null) {
             try {
@@ -183,7 +185,7 @@ public class DefaultAPIClient implements APIClient {
                 accessToken = refreshAccessToken();
             } catch (APIException ex) {
                 accessToken = null; // if refreshing failed, then we are not authorized
-                accessToken = acquireAccessToken();
+                throw ex;
             }
         }
         return accessToken;
@@ -191,16 +193,16 @@ public class DefaultAPIClient implements APIClient {
 
     protected String acquireAccessToken() throws APIException {
         try {
-            if(username == null && password == null) {
+            if (username == null && password == null) {
                 return "";
             }
-            
+
             HttpRequest request = httpTransport.createRequestFactory().buildGetRequest(new GenericUrl(
                     String.format("%s/oauth/token?client_id=testdroid-cloud-api&grant_type=password&username=%s&password=%s",
-                    cloudURL, username, password)));
+                            cloudURL, username, password)));
             request.setConnectTimeout(HTTP_CONNECT_TIMEOUT); // one minute
             request.setReadTimeout(HTTP_READ_TIMEOUT); // one minute            
-            request.setHeaders(new HttpHeaders().setAccept("application/json")); 
+            request.setHeaders(new HttpHeaders().setAccept("application/json"));
             HttpResponse response = request.execute();
             if (response.getStatusCode() != 200) {
                 throw new APIException(response.getStatusCode(), "Failed to acquire access token");
@@ -224,20 +226,20 @@ public class DefaultAPIClient implements APIClient {
             }
             HttpRequest request = httpTransport.createRequestFactory().buildGetRequest(new GenericUrl(
                     String.format("%s/oauth/token?client_id=testdroid-cloud-api&grant_type=refresh_token&refresh_token=%s",
-                    cloudURL, refreshToken)));
+                            cloudURL, refreshToken)));
             request.setConnectTimeout(HTTP_CONNECT_TIMEOUT); // one minute
             request.setReadTimeout(HTTP_READ_TIMEOUT); // one minute
             HttpResponse response = request.execute();
-            if (response.getStatusCode() != 200) {
-                throw new APIException(response.getStatusCode(), "Failed to acquire access token");
-            }
             String content = StringUtils.join(IOUtils.readLines(response.getContent()), "\n");
             JSONObject json = JSONObject.fromObject(content);
             accessTokenExpireTime = System.currentTimeMillis() + (Long.parseLong(json.optString("expires_in")) * 1000);
             refreshToken = json.optString("refresh_token");
             return json.optString("access_token");
+        } catch (HttpResponseException ex) {
+            //System.out.println(String.format("Failed to refresh access token, trying to acquire. Reason: %s", ex.getContent()));
+            return acquireAccessToken();
         } catch (IOException ex) {
-            throw new APIException(String.format("Failed to acquire access token. Reason: %s", ex.getMessage()), ex);
+            throw new APIException(String.format("Failed to refresh access token. Reason: %s", ex.getMessage()), ex);
         }
     }
 
@@ -253,32 +255,81 @@ public class DefaultAPIClient implements APIClient {
 
     @Override
     public <T extends APIEntity> T get(String uri, Class<T> type) throws APIException {
-        try {
-            return getOnce(uri, type);
-        } catch (APIException ex) {
-            if (ex.getStatus() != null && HttpStatus.SC_UNAUTHORIZED == ex.getStatus()) {
-                // Access token may have expired. Clean and try again.
-                accessToken = null;
-                return getOnce(uri, type);
-            } else {
-                throw ex;
+        int trys = 0;
+        int retrys = MAX_RETRY;
+        T en = null;
+        boolean failSend;
+
+        do {
+            trys++;
+            failSend = false;
+
+            if (trys > 1) {
+                try {
+                    Thread.sleep(SLEEP_TIME_RETRY);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
+
+
+            try {
+                en = getOnce(uri, type);
+            } catch (APIException ex) {
+                failSend = true;
+                if (ex.getStatus() != null && HttpStatus.SC_UNAUTHORIZED == ex.getStatus()) {
+                    // Access token may have expired. Clean and try again.
+                    accessToken = null;
+                }
+            }
+
+        } while (failSend == true && trys < retrys);
+
+        if (failSend == true) {
+            throw new APIException("failed downloading file 3 times");
         }
+
+        return en;
     }
 
     @Override
     public InputStream get(String uri) throws APIException {
-        try {
-            return getStream(uri);
-        } catch (APIException ex) {
-            if (ex.getStatus() != null && HttpStatus.SC_UNAUTHORIZED == ex.getStatus()) {
-                // Access token may have expired. Clean and try again.
-                accessToken = null;
-                return getStream(uri);
-            } else {
-                throw ex;
+        int trys = 0;
+        int retrys = MAX_RETRY;
+        InputStream en = null;
+        boolean failSend;
+
+        do {
+            trys++;
+            failSend = false;
+
+            if (trys > 1) {
+                try {
+                    Thread.sleep(SLEEP_TIME_RETRY);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
+
+
+            try {
+                en = getStream(uri);
+            } catch (APIException ex) {
+                failSend = true;
+                if (ex.getStatus() != null && HttpStatus.SC_UNAUTHORIZED == ex.getStatus()) {
+                    // Access token may have expired. Clean and try again.
+                    accessToken = null;
+                }
+            }
+
+        } while (failSend == true && trys < retrys);
+
+        if (failSend == true) {
+            IOUtils.closeQuietly(en);
+            throw new APIException("failed getting file 3 times");
         }
+
+        return en;
     }
 
     /**
@@ -346,17 +397,40 @@ public class DefaultAPIClient implements APIClient {
 
     @Override
     public <T extends APIEntity> T post(String uri, Object body, Class<T> type) throws APIException {
-        try {
-            return postOnce(uri, body, null, type);
-        } catch (APIException ex) {
-            if (ex.getStatus() != null && HttpStatus.SC_UNAUTHORIZED == ex.getStatus()) {
-                // Access token may have expired. Clean and try again.
-                accessToken = null;
-                return postOnce(uri, body, null, type);
-            } else {
-                throw ex;
+        int trys = 0;
+        int retrys = MAX_RETRY;
+        T en = null;
+        boolean failSend;
+
+        do {
+            trys++;
+            failSend = false;
+
+            if (trys > 1) {
+                try {
+                    Thread.sleep(SLEEP_TIME_RETRY);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
+
+
+            try {
+                en = postOnce(uri, body, null, type);
+            } catch (APIException ex) {
+                failSend = true;
+                if (ex.getStatus() != null && HttpStatus.SC_UNAUTHORIZED == ex.getStatus()) {
+                    // Access token may have expired. Clean and try again.
+                    accessToken = null;
+                }
+            }
+        } while (failSend == true && trys < retrys);
+
+        if (failSend == true) {
+            throw new APIException("failed " + trys + " times");
         }
+
+        return en;
     }
 
     protected <T extends APIEntity> T postOnce(String uri, Object body, String contentType, Class<T> type) throws APIException {
@@ -374,7 +448,7 @@ public class DefaultAPIClient implements APIClient {
             if (body instanceof File) {
                 MultipartFormDataContent multipartContent = new MultipartFormDataContent();
                 FileContent fileContent = new FileContent(contentType, (File) body);
-                
+
                 MultipartFormDataContent.Part filePart = new MultipartFormDataContent.Part("file", fileContent);
                 multipartContent.addPart(filePart);
 
@@ -384,18 +458,18 @@ public class DefaultAPIClient implements APIClient {
                 content = new InputStreamContent(contentType, (InputStream) body);
             } else if (body instanceof APIEntity) {
                 content = new InputStreamContent(contentType, IOUtils.toInputStream(((APIEntity) body).toXML()));
-            } else if(body instanceof HttpContent) {
+            } else if (body instanceof HttpContent) {
                 content = (HttpContent) body;
-            } else if(body instanceof Map) {
+            } else if (body instanceof Map) {
                 Map map = (Map) body;
                 // Set empty strings for nulls - otherwise it is not passed at all to server and parameters is ingored
-                for(Object key: map.keySet()) {
-                    if(map.get(key) == null) {
+                for (Object key : map.keySet()) {
+                    if (map.get(key) == null) {
                         map.put(key, "");
                     }
                 }
                 content = new UrlEncodedContent(map);
-            } else if(body instanceof String) {
+            } else if (body instanceof String) {
                 // Only temporal change
                 // TODO change body type to Map<String, Object> and use it there.
                 content = new UrlEncodedContent(urlEncodedDataToMap((String) body));
@@ -420,7 +494,7 @@ public class DefaultAPIClient implements APIClient {
                 throw new APIException(response.getStatusCode(), "Failed to post resource: " + response.getStatusMessage());
             }
 
-            if(type != null) {
+            if (type != null) {
                 T result = (T) fromXML(response.getContent(), type);
                 result.client = this;
                 result.selfURI = uri;
@@ -430,7 +504,7 @@ public class DefaultAPIClient implements APIClient {
                     result.selfURI += String.format("/%s", result.getId());
                 }
                 return result;
-            } else { 
+            } else {
                 return null;
 
             }
@@ -439,8 +513,7 @@ public class DefaultAPIClient implements APIClient {
                 try {
                     APIExceptionMessage exceptionMessage = fromXML(ex.getContent(), APIExceptionMessage.class);
                     throw new APIException(ex.getStatusCode(), exceptionMessage.getMessage(), ex);
-                }
-                catch(Exception e) { 
+                } catch (Exception e) {
                     // Catch exceptions related to xml unserialization. Those are usually internal server exceptions and are not properly serialized.
                     // In such case we just put pure response content as a message
                     throw new APIException(ex.getStatusCode(), ex.getContent(), ex);
@@ -455,17 +528,42 @@ public class DefaultAPIClient implements APIClient {
 
     @Override
     public <T extends APIEntity> T postFile(String uri, String contentType, File file, Class<T> type) throws APIException {
-        try {
-            return postOnce(uri, file, contentType, type);
-        } catch (APIException ex) {
-            if (ex.getStatus() != null && HttpStatus.SC_UNAUTHORIZED == ex.getStatus()) {
-                // Access token may have expired. Clean and try again.
-                accessToken = null;
-                return postOnce(uri, file, contentType, type);
-            } else {
-                throw ex;
+        int trys = 0;
+        int retrys = MAX_RETRY;
+        T en = null;
+        boolean failSend;
+
+        do {
+            trys++;
+            failSend = false;
+
+            if (trys > 1) {
+                try {
+                    Thread.sleep(SLEEP_TIME_RETRY);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
+
+
+            try {
+                en = postOnce(uri, file, contentType, type);
+            } catch (APIException ex) {
+                failSend = true;
+                if (ex.getStatus() != null && HttpStatus.SC_UNAUTHORIZED == ex.getStatus()) {
+                    // Access token may have expired. Clean and try again.
+                    accessToken = null;
+                }
+            }
+
+
+        } while (failSend == true && trys < retrys);
+
+        if (failSend == true) {
+            throw new APIException("FILE: failed " + trys + " times");
         }
+
+        return en;
     }
 
     @Override
@@ -529,7 +627,7 @@ public class DefaultAPIClient implements APIClient {
     public APIListResource<APIDevice> getDevices() throws APIException {
         return new APIListResource<APIDevice>(this, DEVICES_URI, APIDevice.class);
     }
-    
+
     @Override
     public APIListResource<APIDevice> getDevices(APIDevice.DeviceFilter... filters) throws APIException {
         return new APIListResource<APIDevice>(this, DEVICES_URI, new APIDeviceQueryBuilder().filterWithDeviceFilters(filters), APIDevice.class);
@@ -539,14 +637,14 @@ public class DefaultAPIClient implements APIClient {
     public APIListResource<APIDevice> getDevices(APIDeviceQueryBuilder queryBuilder) throws APIException {
         return new APIListResource<APIDevice>(this, DEVICES_URI, queryBuilder, APIDevice.class);
     }
-    
+
     @Override
     public APIListResource<APIDevice> getDevices(long offset, long limit, String search, APISort sort, APIDevice.DeviceFilter... filters) throws APIException {
-        if(limit <= 0) {
+        if (limit <= 0) {
             limit = 10;
         }
-        APIDeviceQueryBuilder builder = new APIDeviceQueryBuilder().offset((int)offset).limit((int)limit).search(search).filterWithDeviceFilters(filters);
-        if(sort != null) {
+        APIDeviceQueryBuilder builder = new APIDeviceQueryBuilder().offset((int) offset).limit((int) limit).search(search).filterWithDeviceFilters(filters);
+        if (sort != null) {
             builder.sort(APIDevice.class, sort.getItems());
         }
         return new APIListResource<APIDevice>(this, DEVICES_URI, builder, APIDevice.class);
@@ -561,7 +659,7 @@ public class DefaultAPIClient implements APIClient {
     public APIListResource<APILabelGroup> getLabelGroups(APIQueryBuilder queryBuilder) throws APIException {
         return new APIListResource<APILabelGroup>(this, LABEL_GROUPS_URI, queryBuilder, APILabelGroup.class);
     }
-    
+
     private <T> T fromXML(String xml, Class<T> type) throws APIException {
         try {
             Unmarshaller unmarshaller = getContext().createUnmarshaller();
@@ -579,15 +677,15 @@ public class DefaultAPIClient implements APIClient {
             throw new APIException(String.format("Failed to parse response as %s", type.getName()));
         }
     }
-    
+
     private Map<String, Object> urlEncodedDataToMap(String data) {
         Map<String, Object> result = new HashMap<String, Object>();
         String[] variablesAndValues = data.split("&");
-        for(String pair: variablesAndValues) {
+        for (String pair : variablesAndValues) {
             String[] variableData = pair.split("=");
-            if(variableData.length == 2) {
+            if (variableData.length == 2) {
                 result.put(variableData[0], variableData[1]);
-            } else if(variableData.length == 1) {
+            } else if (variableData.length == 1) {
                 result.put(variableData[0], "");
             }
         }
