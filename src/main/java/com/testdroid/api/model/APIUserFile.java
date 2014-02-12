@@ -30,7 +30,7 @@ public class APIUserFile extends APIEntity {
         UIAUTOMATOR_TEST,
         UNKNOWN
     }
-    
+
     private String name;
     private Date createTime;
     private Long size;
@@ -101,6 +101,10 @@ public class APIUserFile extends APIEntity {
     @JsonIgnore
     public InputStream getFile() throws APIException {
         return getFile(getFileURI());
+    }
+    
+    public void delete() throws APIException {
+        deleteResource(selfURI);
     }
 
     @Override

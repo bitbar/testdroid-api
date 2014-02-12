@@ -78,7 +78,7 @@ public class APIFileSet extends APIEntity {
         postResource(getIncludedFilesURI(), Collections.singletonMap("fileId", file.getId()), null);
     }
     
-    public void deleteFile(APIUserFile file) throws APIException {
+    public void removeFile(APIUserFile file) throws APIException {
         deleteResource(getIncludedFilesURI(file.getId()));
     }
     
