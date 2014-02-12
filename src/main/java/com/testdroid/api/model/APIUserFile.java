@@ -1,6 +1,9 @@
 package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
+import static com.testdroid.api.APIEntity.createUri;
+import com.testdroid.api.APIException;
+import java.io.InputStream;
 import java.util.Date;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
@@ -76,6 +79,19 @@ public class APIUserFile extends APIEntity {
 
     public void setFileProperties(APIUserFileProperty[] fileProperties) {
         this.fileProperties = fileProperties;
+    }
+
+    private String getFileURI() { return createUri(selfURI, "/file"); }
+    private String getIconURI() { return createUri(selfURI, "/icon"); }
+
+    @JsonIgnore
+    public InputStream getIcon() throws APIException {
+        return getFile(getIconURI());
+    }
+
+    @JsonIgnore
+    public InputStream getFile() throws APIException {
+        return getFile(getFileURI());
     }
 
     @Override
