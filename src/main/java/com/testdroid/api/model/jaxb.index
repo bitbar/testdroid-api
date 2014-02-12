@@ -5,6 +5,7 @@ APIDeviceRun
 APIDeviceRunState
 APIDeviceSession
 APIFiles
+APIFileSet
 APILabelGroup
 APINotificationEmail
 APIProject

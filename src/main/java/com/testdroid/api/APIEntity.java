@@ -48,6 +48,7 @@ import org.codehaus.jackson.map.annotate.JsonView;
     APIFiles.IOSAppFile.class,
     APIFiles.IOSTestFile.class,
     APIFiles.UIAutomatorTestFile.class,
+    APIFileSet.class,
     APILabelGroup.class,
     APIList.class,
     APINotificationEmail.class,

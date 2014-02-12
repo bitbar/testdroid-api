@@ -1,4 +1,4 @@
 REPOSITORY='testdroid-api'
-REVIEWBOARD_URL='http://review'
+REVIEWBOARD_URL='http://10.0.6.166'
 BRANCH='bitbar/inspector'
 TRACKING_BRANCH='origin/inspector'
