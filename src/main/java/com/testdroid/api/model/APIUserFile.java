@@ -19,9 +19,18 @@ public class APIUserFile extends APIEntity {
     @XmlType(namespace = "APIUserFile")
     public static enum APIFileType {
 
-        ANDROID_APP, ANDROID_TEST, ANDROID_FILE, IOS_APP, IOS_TEST, DATA, SCREENSHOT, CALABASH_TEST, UIAUTOMATOR_TEST, 
+        ANDROID_APP,
+        ANDROID_TEST,
+        ANDROID_FILE,
+        IOS_APP,
+        IOS_TEST,
+        DATA,
+        SCREENSHOT,
+        CALABASH_TEST,
+        UIAUTOMATOR_TEST,
         UNKNOWN
     }
+    
     private String name;
     private Date createTime;
     private Long size;
