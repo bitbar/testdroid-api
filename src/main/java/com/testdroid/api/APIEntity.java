@@ -68,6 +68,7 @@ import org.codehaus.jackson.map.annotate.JsonView;
     APIUser.class,
     APIUserFile.class,
     APIUserFileProperty.class,
+    APIUserFileTag.class,
     AndroidFiles.class, 
     CalabashFiles.class,
     CalabashIOSFiles.class,
