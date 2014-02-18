@@ -138,7 +138,7 @@ public class APIService {
     public void setQuantityAppliable(boolean quantityAppliable) {
         this.quantityAppliable = quantityAppliable;
     }
-    @JsonIgnore
+    
     public String getPriceString() {
         return CurrencyFormatter.format(centPrice);
     }
