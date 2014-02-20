@@ -83,10 +83,7 @@ public class APIFileSet extends APIEntity {
     }
     
     public void update() throws APIException {
-        Map<String, Object> body = new HashMap<String, Object>() {{
-            put("name", name);
-        }};
-        APIFileSet fileSet = postResource(selfURI, body, APIFileSet.class);
+        APIFileSet fileSet = postResource(selfURI, Collections.singletonMap("name", name), APIFileSet.class);
         clone(fileSet);
     }
     
