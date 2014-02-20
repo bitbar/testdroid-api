@@ -5,6 +5,7 @@ APIDeviceRun
 APIDeviceRunState
 APIDeviceSession
 APIFiles
+APIFileSet
 APILabelGroup
 APINotificationEmail
 APIProject
@@ -21,6 +22,9 @@ APITestRun
 APITestRunConfig
 APITestRunParameter
 APIUser
+APIUserFile
+APIUserFileProperty
+APIUserFileTag
 AndroidFiles
 CalabashFiles
 CalabashIOSFiles
