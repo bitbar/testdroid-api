@@ -7,8 +7,6 @@ import com.testdroid.api.APIListResource;
 import com.testdroid.api.APIQueryBuilder;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import javax.xml.bind.annotation.XmlRootElement;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
