@@ -16,7 +16,16 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
  */
 @XmlRootElement
-@XmlSeeAlso({AndroidFiles.class, IOSFiles.class, UIAutomatorFiles.class, RemoteControlFiles.class, CalabashFiles.class})
+@XmlSeeAlso({
+    AndroidFiles.class,
+    IOSFiles.class,
+    UIAutomatorFiles.class,
+    RemoteControlFiles.class,
+    CalabashFiles.class,
+    CalabashIOSFiles.class,
+    AppiumAndroidFiles.class,
+    AppiumIOSFiles.class
+})
 @JsonIgnoreProperties(value = {"id"})
 public abstract class APIFiles extends APIEntity {
     private DataFile data;
@@ -67,8 +76,11 @@ public abstract class APIFiles extends APIEntity {
     }
     
     @XmlRootElement 
-    @XmlSeeAlso({ APIFiles.APIFile.class, APIFiles.AndroidAppFile.class, APIFiles.AndroidTestFile.class, APIFiles.DataFile.class, 
-        APIFiles.IOSAppFile.class, APIFiles.IOSTestFile.class, APIFiles.UIAutomatorTestFile.class, APIFiles.RecorderOnlineScreenplayFile.class })
+    @XmlSeeAlso({ APIFiles.APIFile.class, APIFiles.AndroidAppFile.class, APIFiles.AndroidTestFile.class, 
+        APIFiles.DataFile.class, APIFiles.IOSAppFile.class, APIFiles.IOSTestFile.class,
+        APIFiles.UIAutomatorTestFile.class, APIFiles.RecorderOnlineScreenplayFile.class,
+        APIFiles.CalabashTestFile.class
+    })
     public static abstract class APIFile extends APIEntity {
         private String originalName;
         private String readableSize;
