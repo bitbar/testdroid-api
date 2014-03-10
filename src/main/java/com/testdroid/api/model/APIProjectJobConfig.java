@@ -39,18 +39,8 @@ public class APIProjectJobConfig extends APIEntity {
         this.projectName = projectName;
         this.lastModifiedBy = lastModifiedBy;
         this.lastModificationTime = lastModificationTime;
-        
     }
     
-    public APIProjectJobConfig(Long id, Type type, String content, Integer version, boolean global, Long projectId) {
-        super(id);
-        this.type = type;
-        this.content = content;
-        this.version = version;
-        this.global = global;
-        this.projectId = projectId;
-    }
-
     public Type getType() {
         return type;
     }
