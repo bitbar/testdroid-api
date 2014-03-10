@@ -1,6 +1,7 @@
 package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
+import java.util.Date;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -21,18 +22,25 @@ public class APIProjectJobConfig extends APIEntity {
     private Integer version;
     private boolean global;
     private Long projectId;
+    private String projectName;
+    private String lastModifiedBy;
+    private Date lastModificationTime;
 
     public APIProjectJobConfig() {}
 
-    public APIProjectJobConfig(Long id, Type type, String content, Integer version, boolean global, Long projectId) {
+    public APIProjectJobConfig(Long id, Type type, String content, Integer version, boolean global, Long projectId, 
+                String projectName, Date lastModificationTime, String lastModifiedBy) {
         super(id);
         this.type = type;
         this.content = content;
         this.version = version;
         this.global = global;
         this.projectId = projectId;
+        this.projectName = projectName;
+        this.lastModifiedBy = lastModifiedBy;
+        this.lastModificationTime = lastModificationTime;
     }
-
+    
     public Type getType() {
         return type;
     }
@@ -72,6 +80,30 @@ public class APIProjectJobConfig extends APIEntity {
     public void setProjectId(Long projectId) {
         this.projectId = projectId;
     }
+    
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
+    public String getLastModifiedBy() {
+        return lastModifiedBy;
+    }
+
+    public void setLastModifiedBy(String lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
+    }
+
+    public Date getLastModificationTime() {
+        return lastModificationTime;
+    }
+
+    public void setLastModificationTime(Date lastModificationTime) {
+        this.lastModificationTime = lastModificationTime;
+    }
 
     @Override
     @JsonIgnore
@@ -83,5 +115,8 @@ public class APIProjectJobConfig extends APIEntity {
         this.projectId = apiProjectJobConfig.projectId;
         this.type = apiProjectJobConfig.type;
         this.version = apiProjectJobConfig.version;
+        this.projectName = apiProjectJobConfig.projectName;
+        this.lastModificationTime = apiProjectJobConfig.lastModificationTime;
+        this.lastModifiedBy = apiProjectJobConfig.lastModifiedBy;
     }
 }
