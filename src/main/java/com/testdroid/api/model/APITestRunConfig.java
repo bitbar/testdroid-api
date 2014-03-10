@@ -34,14 +34,15 @@ public class APITestRunConfig extends APIEntity {
         FULL_RUN("Full run"), 
         APP_CRAWLER("App crawler"), 
         CTS("CTS"), 
-        IOS("iOS"), 
+        IOS("iOS"),
         UIAUTOMATOR("UIAutomator"), 
         REMOTECONTROL("Remote control"),
         RECORDERONLINE("Recorder online"),
         CALABASH("Calabash Android"),
         CALABASH_IOS("Calabash iOS"),
         APPIUM_ANDROID("Appium Android"),
-        APPIUM_IOS("Appium iOS");
+        APPIUM_IOS("Appium iOS"), 
+        IOS_CRAWLER("iOS App crawler");
         
         private String friendlyName;
         
