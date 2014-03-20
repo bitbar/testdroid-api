@@ -25,8 +25,17 @@ public class APIProject extends APIEntity {
 
     @XmlType(namespace = "APIProject")
     public static enum Type { 
-        ANDROID, CTS, IOS, UIAUTOMATOR, REMOTECONTROL, RECORDERONLINE, CALABASH,
-        CALABASH_IOS, APPIUM_ANDROID, APPIUM_IOS;
+        ANDROID, 
+        CTS, 
+        IOS, 
+        UIAUTOMATOR, 
+        REMOTECONTROL, 
+        RECORDERONLINE, 
+        CALABASH,
+        CALABASH_IOS, 
+        APPIUM_ANDROID, 
+        APPIUM_IOS;
+        
         public Class<? extends APIFiles> getFilesClass() {
             switch(this) {
                 case ANDROID: return AndroidFiles.class;
@@ -57,12 +66,16 @@ public class APIProject extends APIEntity {
     private String sharedByEmail;
     private APIArchivingStrategy archivingStrategy;
     private Integer archivingItemCount;
+    private APITestRunConfig testRunConfig;
+    private Map<APIProjectJobConfig.Type, APIProjectJobConfig> jobConfig;
+    private APIFiles files;
+    private byte[] icon;
 
     public APIProject() {
     }
     
-    public APIProject(Long id, String name, String description, Type type, Long sharedById, String sharedByEmail, boolean common, 
-            APIArchivingStrategy archivingStrategy, Integer archivingItemCount) {
+    public APIProject(Long id, String name, String description, Type type, Long sharedById, String sharedByEmail, 
+            boolean common, APIArchivingStrategy archivingStrategy, Integer archivingItemCount) {
         super(id);
         this.name = name;
         this.description = description;
@@ -72,7 +85,7 @@ public class APIProject extends APIEntity {
         this.common = common;
         this.archivingStrategy = archivingStrategy;
         this.archivingItemCount = archivingItemCount;
-        jobConfig = new HashMap<APIProjectJobConfig.Type, APIProjectJobConfig>();
+        this.jobConfig = new HashMap<APIProjectJobConfig.Type, APIProjectJobConfig>();
     }
 
     public String getName() {
@@ -151,11 +164,6 @@ public class APIProject extends APIEntity {
             default: return "";
         }
     }
-
-    private APITestRunConfig testRunConfig;
-    private Map<APIProjectJobConfig.Type, APIProjectJobConfig> jobConfig;
-    private APIFiles files;
-    private byte[] icon;
 
     private String getConfigURI() { return createUri(selfURI, "/config"); };
     private String getJobConfigURI(APIProjectJobConfig.Type type) { return createUri(selfURI, "/job-configs/" + type.toString()); };
