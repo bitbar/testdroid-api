@@ -154,7 +154,7 @@ public class DefaultAPIClient implements APIClient {
         this.cloudURL = cloudURL;
         this.apiURL = cloudURL + API_URI;
         this.username = username;
-        this.password = APIEntity.encodeURL(password);
+        this.password = password;
     }
 
     protected HttpRequestFactory getRequestFactory(String accessToken) {
