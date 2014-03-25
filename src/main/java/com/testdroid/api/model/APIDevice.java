@@ -16,12 +16,12 @@ public class APIDevice extends APIEntity {
 
     @XmlType
     public static enum DeviceFilter { FREE, RECOMMENDED, NEW }
-    
+
     @XmlType(namespace = "APIDevice")
     public static enum OsType {
         IOS("iOS"),
         ANDROID("Android");
-        
+
         private String displayName;
 
         private OsType(String displayName) {
@@ -32,26 +32,30 @@ public class APIDevice extends APIEntity {
             return displayName;
         }
     }
-        
-    private String displayName;
-    private APISoftwareVersion softwareVersion;
+
+    private Boolean locked;
+    private Boolean online;
     private Integer creditsPrice;
+    private String displayName;
     private String imagePrefix;
     private Integer imageTop;
     private Integer imageLeft;
     private Integer imageWidth;
     private Integer imageHeight;
     private Integer frameExtraWidth;
-    private APIDevice.OsType osType;
     private String frame80Url;
     private String frame100Url;
     private String frame160Url;
     private String frame400Url;
+    private APIDevice.OsType osType;
+    private APISoftwareVersion softwareVersion;
 
     public APIDevice() {}
 
-    public APIDevice(Long id, String displayName, APISoftwareVersion softwareVersion, Integer creditsPrice, String imagePrefix, Integer imageTop, Integer imageLeft, 
-            Integer imageWidth, Integer imageHeight, Integer frameExtraWidth, OsType osType, String frame80Url, String frame100Url, String frame160Url, String frame400Url) {
+    public APIDevice(Long id, String displayName, APISoftwareVersion softwareVersion, Integer creditsPrice,
+            String imagePrefix, Integer imageTop, Integer imageLeft, Integer imageWidth, Integer imageHeight,
+            Integer frameExtraWidth, OsType osType, String frame80Url, String frame100Url, String frame160Url,
+            String frame400Url, Boolean online, Boolean locked) {
         super(id);
         this.displayName = displayName;
         this.softwareVersion = softwareVersion;
@@ -67,6 +71,8 @@ public class APIDevice extends APIEntity {
         this.frame100Url = frame100Url;
         this.frame160Url = frame160Url;
         this.frame400Url = frame400Url;
+        this.locked = locked;
+        this.online = online;
     }
 
     @JsonView(value = {APIView.AdminView.class, APIView.MonitorView.class})
@@ -190,7 +196,23 @@ public class APIDevice extends APIEntity {
     public void setFrame400Url(String frame400Url) {
         this.frame400Url = frame400Url;
     }
-    
+
+    public Boolean isLocked() {
+        return locked;
+    }
+
+    public void setLocked(Boolean locked) {
+        this.locked = locked;
+    }
+
+    public Boolean isOnline() {
+        return online;
+    }
+
+    public void setOnline(Boolean online) {
+        this.online = online;
+    }
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
@@ -210,6 +232,8 @@ public class APIDevice extends APIEntity {
         this.imageWidth = apiDevice.imageWidth;
         this.osType = apiDevice.osType;
         this.softwareVersion = apiDevice.softwareVersion;
+        this.online = apiDevice.online;
+        this.locked = apiDevice.locked;
     }
-    
+
 }
