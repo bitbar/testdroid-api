@@ -10,6 +10,7 @@ import org.codehaus.jackson.map.annotate.JsonView;
 /**
  *
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
+ * @author Michał Szpruta <michal.szpruta@bitbar.com>
  */
 @XmlRootElement
 public class APIDevice extends APIEntity {
@@ -35,6 +36,7 @@ public class APIDevice extends APIEntity {
 
     private Boolean locked;
     private Boolean online;
+    private Boolean vncSupported;
     private Integer creditsPrice;
     private String displayName;
     private String imagePrefix;
@@ -55,7 +57,7 @@ public class APIDevice extends APIEntity {
     public APIDevice(Long id, String displayName, APISoftwareVersion softwareVersion, Integer creditsPrice,
             String imagePrefix, Integer imageTop, Integer imageLeft, Integer imageWidth, Integer imageHeight,
             Integer frameExtraWidth, OsType osType, String frame80Url, String frame100Url, String frame160Url,
-            String frame400Url, Boolean online, Boolean locked) {
+            String frame400Url, Boolean online, Boolean locked, Boolean vncSupported) {
         super(id);
         this.displayName = displayName;
         this.softwareVersion = softwareVersion;
@@ -73,6 +75,7 @@ public class APIDevice extends APIEntity {
         this.frame400Url = frame400Url;
         this.locked = locked;
         this.online = online;
+        this.vncSupported = vncSupported;
     }
 
     @JsonView(value = {APIView.AdminView.class, APIView.MonitorView.class})
@@ -213,6 +216,14 @@ public class APIDevice extends APIEntity {
         this.online = online;
     }
 
+    public Boolean isVncSupported() {
+        return vncSupported;
+    }
+
+    public void setVncSupported(Boolean vncSupported) {
+        this.vncSupported = vncSupported;
+    }
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
@@ -234,6 +245,7 @@ public class APIDevice extends APIEntity {
         this.softwareVersion = apiDevice.softwareVersion;
         this.online = apiDevice.online;
         this.locked = apiDevice.locked;
+        this.vncSupported = apiDevice.vncSupported;
     }
 
 }
