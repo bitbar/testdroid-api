@@ -141,6 +141,7 @@ public class APITestRun extends APIEntity {
     private String getDeviceRunsURI() { return createUri(selfURI, "/device-runs"); }
     private String getScreenshotsZipURI() { return createUri(selfURI, "/screenshots.zip"); }
     private String getLogsZipURI() { return createUri(selfURI, "/logs.zip"); }
+    private String getAbortURI() { return createUri(selfURI, "/abort"); }
     
     /**
      * Returns APIFiles entity about files uploaded to this project.
@@ -253,6 +254,10 @@ public class APITestRun extends APIEntity {
     public void update() throws APIException {
         APITestRun testRun = postResource(selfURI, Collections.singletonMap("displayName", displayName), APITestRun.class);
         clone(testRun);
+    }
+    
+    public void abort() throws APIException {
+        postResource(getAbortURI(), null, null);
     }
 
     @Override
