@@ -24,18 +24,18 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 public class APIProject extends APIEntity {
 
     @XmlType(namespace = "APIProject")
-    public static enum Type { 
-        ANDROID, 
-        CTS, 
-        IOS, 
-        UIAUTOMATOR, 
-        REMOTECONTROL, 
-        RECORDERONLINE, 
+    public static enum Type {
+        ANDROID,
+        CTS,
+        IOS,
+        UIAUTOMATOR,
+        REMOTECONTROL,
+        RECORDERONLINE,
         CALABASH,
-        CALABASH_IOS, 
-        APPIUM_ANDROID, 
+        CALABASH_IOS,
+        APPIUM_ANDROID,
         APPIUM_IOS;
-        
+
         public Class<? extends APIFiles> getFilesClass() {
             switch(this) {
                 case ANDROID: return AndroidFiles.class;
@@ -52,7 +52,7 @@ public class APIProject extends APIEntity {
             }
         }
     }
-    
+
     @XmlType(namespace = "APIProject")
     public static enum APIArchivingStrategy {
         NEVER, DAYS, RUNS;
@@ -73,8 +73,8 @@ public class APIProject extends APIEntity {
 
     public APIProject() {
     }
-    
-    public APIProject(Long id, String name, String description, Type type, Long sharedById, String sharedByEmail, 
+
+    public APIProject(Long id, String name, String description, Type type, Long sharedById, String sharedByEmail,
             boolean common, APIArchivingStrategy archivingStrategy, Integer archivingItemCount) {
         super(id);
         this.name = name;
@@ -155,7 +155,7 @@ public class APIProject extends APIEntity {
     public void setArchivingItemCount(Integer archivingItemCount) {
         this.archivingItemCount = archivingItemCount;
     }
-    
+
     public String getArchivingStrategyDisplayValue() {
         switch(archivingStrategy) {
             case NEVER: return "never";
@@ -170,11 +170,10 @@ public class APIProject extends APIEntity {
     private String getFilesURI() { return createUri(selfURI, "/files"); };
     private String getIconURI() { return createUri(selfURI, "/icon"); };
     private String getSharingsURI() { return createUri(selfURI, "/sharings"); };
-    private String getTrendsURI() { return createUri(selfURI, "/trends"); };
-    private String getReportsURI() { return createUri(selfURI, "/reports/%s"); };
     private String getRunsURI() { return createUri(selfURI, "/runs"); };
     private String getRunURI(Long id) { return createUri(selfURI, "/runs/" + id); }
     private String getPublicDeviceGroupsURI() { return createUri(selfURI, "/public-device-groups"); }
+    private String getDeviceGroupsURI() { return createUri(selfURI, "/device-groups"); }
     private String getUploadApplicationURI() { return createUri(selfURI, "/files/application"); }
     private String getUploadTestURI() { return createUri(selfURI, "/files/test"); }
     private String getUploadDataURI() { return createUri(selfURI, "/files/data"); }
@@ -190,7 +189,7 @@ public class APIProject extends APIEntity {
     private String getCreateParameterParameters(String key, String value) {
         return String.format("key=%s&value=%s", key, value);
     }
-    
+
     @JsonIgnore
     public APITestRunConfig getTestRunConfig() throws APIException {
         if(testRunConfig == null) {
@@ -198,7 +197,7 @@ public class APIProject extends APIEntity {
         }
         return testRunConfig;
     }
-    
+
     @JsonIgnore
     public APIProjectJobConfig getJobConfig(APIProjectJobConfig.Type type) throws APIException {
         if(jobConfig == null ) {
@@ -209,7 +208,7 @@ public class APIProject extends APIEntity {
         }
         return jobConfig.get(type);
     }
-    
+
     /**
      * Returns APIFiles entity about files uploaded to this project.
      * Depending on <code>type</code> it may be any subclass of <code>APIFiles</code> returned.
@@ -224,7 +223,7 @@ public class APIProject extends APIEntity {
         }
         return (T) files;
     }
-    
+
     @JsonIgnore
     public byte[] getIcon() throws APIException, IOException {
         if(icon == null) {
@@ -232,17 +231,17 @@ public class APIProject extends APIEntity {
         }
         return icon;
     }
-    
+
     @JsonIgnore
     public APITestRun run() throws APIException {
         return postResource(getRunsURI(), null, APITestRun.class);
     }
-    
+
     @JsonIgnore
     public APITestRun run(String testRunName) throws APIException {
         return postResource(getRunsURI(), getCreateRunParameters(testRunName), APITestRun.class);
     }
-    
+
     public void delete() throws APIException {
         deleteResource(selfURI);
     }
@@ -256,93 +255,98 @@ public class APIProject extends APIEntity {
      * @since 1.3.34
      * @param queryBuilder
      * @return
-     * @throws APIException 
+     * @throws APIException
      */
     @JsonIgnore
     public APIListResource<APITestRun> getTestRunsResource(APIQueryBuilder queryBuilder) throws APIException {
         return getListResource(getRunsURI(), queryBuilder, APITestRun.class);
     }
-    
+
     public APITestRun getTestRun(Long id) throws APIException {
         return getResource(getRunURI(id), APITestRun.class).getEntity();
     }
-    
+
     /**
-     * @deprecated 
+     * @deprecated
      * @param offset
      * @param limit
      * @param search
      * @param sort
      * @return
-     * @throws APIException 
+     * @throws APIException
      */
     @JsonIgnore
     public APIListResource<APITestRun> getTestRunsResource(long offset, long limit, String search, APISort sort) throws APIException {
         return getListResource(getRunsURI(), offset, limit, search, sort, APITestRun.class);
     }
-    
+
     @JsonIgnore
     public APIProjectSharing share(String email) throws APIException {
         return postResource(getSharingsURI(), String.format("email=%s", email), APIProjectSharing.class);
     }
-    
+
     @JsonIgnore
     public APIListResource<APIProjectSharing> getProjectSharings() throws APIException {
         return getListResource(getSharingsURI(), APIProjectSharing.class);
     }
-    
+
     /**
      * @since 1.3.34
-     * @param queryBuilder 
+     * @param queryBuilder
      * @return
-     * @throws APIException 
+     * @throws APIException
      */
     @JsonIgnore
     public APIListResource<APIProjectSharing> getProjectSharings(APIQueryBuilder queryBuilder) throws APIException {
         return getListResource(getSharingsURI(), queryBuilder, APIProjectSharing.class);
     }
-    
+
     /**
-     * @deprecated 
+     * @deprecated
      * @param offset
      * @param limit
      * @param search
      * @param sort
      * @return
-     * @throws APIException 
+     * @throws APIException
      */
     @JsonIgnore
     public APIListResource<APIProjectSharing> getProjectSharings(long offset, long limit, String search, APISort sort) throws APIException {
         return getListResource(getSharingsURI(), offset, limit, search, sort, APIProjectSharing.class);
     }
-    
+
     @JsonIgnore
     public APIListResource<APIDeviceGroup> getPublicDeviceGroups() throws APIException {
         return getListResource(getPublicDeviceGroupsURI(), APIDeviceGroup.class);
     }
-    
+
+    @JsonIgnore
+    public APIListResource<APIDeviceGroup> getDeviceGroups() throws APIException {
+        return getListResource(getDeviceGroupsURI(), APIDeviceGroup.class);
+    }
+
     @JsonIgnore
     public APINotificationEmail createNotificationEmail(String email, APINotificationEmail.Type type) throws APIException {
         return postResource(getNotificationEmailsURI(), getCreateNotificationParameters(email, type), APINotificationEmail.class);
     }
-    
+
     @JsonIgnore
     public APIListResource<APINotificationEmail> getNotificationEmails() throws APIException {
         return getListResource(getNotificationEmailsURI(), APINotificationEmail.class);
     }
-    
+
     /**
      * Returns list of notification emails for project.
      * @since 1.3.34
      * @param queryBuilder
      * @return
-     * @throws APIException 
+     * @throws APIException
      */
     @JsonIgnore
     public APIListResource<APINotificationEmail> getNotificationEmails(APIQueryBuilder queryBuilder) throws APIException {
         return getListResource(getNotificationEmailsURI(), queryBuilder, APINotificationEmail.class);
     }
-    
+
     @JsonIgnore
     public APIFiles.APIFile uploadApplication(File file, String contentType) throws APIException {
         return postFile(getUploadApplicationURI(), file, contentType, APIFile.class);
@@ -352,32 +356,32 @@ public class APIProject extends APIEntity {
     public APIFiles.APIFile uploadTest(File file, String contentType) throws APIException {
         return postFile(getUploadTestURI(), file, contentType, APIFile.class);
     }
-    
+
     @JsonIgnore
     public APIFiles.APIFile uploadData(File file, String contentType) throws APIException {
         return postFile(getUploadDataURI(), file, contentType, APIFile.class);
     }
-    
+
     @JsonIgnore
     public APITestRunParameter createParameter(String key, String value) throws APIException {
         return postResource(getParametersURI(), getCreateParameterParameters(key, value), APITestRunParameter.class);
     }
-    
+
     @JsonIgnore
     public APIListResource<APITestRunParameter> getParameters() throws APIException {
         return getListResource(getParametersURI(), APITestRunParameter.class);
     }
-    
+
     @JsonIgnore
     public APIListResource<APITestRunParameter> getParameters(APIQueryBuilder queryBuilder) throws APIException {
         return getListResource(getParametersURI(), queryBuilder, APITestRunParameter.class);
     }
-    
+
     @JsonIgnore
     public void deleteParameter(long parameterId) throws APIException {
         deleteResource(String.format("%s/%s", getParametersURI(), parameterId));
     }
-    
+
     public void update() throws APIException {
         Map<String, Object> body = new HashMap<String, Object>() {{
             put("name", name);
@@ -389,7 +393,7 @@ public class APIProject extends APIEntity {
         APIProject project = postResource(selfURI, body, APIProject.class);
         clone(project);
     }
-    
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
