@@ -194,37 +194,25 @@ public class APIProject extends APIEntity {
         return createUri(selfURI, "/config");
     }
 
-    ;
-
     private String getJobConfigURI(APIProjectJobConfig.Type type) {
         return createUri(selfURI, "/job-configs/" + type.toString());
     }
-
-    ;
 
     private String getFilesURI() {
         return createUri(selfURI, "/files");
     }
 
-    ;
-
     private String getIconURI() {
         return createUri(selfURI, "/icon");
     }
-
-    ;
 
     private String getSharingsURI() {
         return createUri(selfURI, "/sharings");
     }
 
-    ;
-
     private String getRunsURI() {
         return createUri(selfURI, "/runs");
     }
-
-    ;
 
     private String getRunURI(Long id) {
         return createUri(selfURI, "/runs/" + id);
