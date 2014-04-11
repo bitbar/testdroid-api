@@ -1,23 +1,21 @@
 package com.testdroid.api.model;
 
-import com.testdroid.api.APIEntity;
-import static com.testdroid.api.APIEntity.createUri;
-import com.testdroid.api.APIException;
-import com.testdroid.api.APIListResource;
-import com.testdroid.api.APIQueryBuilder;
-import com.testdroid.api.APISort;
+import com.testdroid.api.*;
 import com.testdroid.api.model.APIFiles.APIFile;
-import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+import java.io.File;
+import java.io.IOException;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
- *
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
  */
 @XmlRootElement
@@ -37,18 +35,29 @@ public class APIProject extends APIEntity {
         APPIUM_IOS;
 
         public Class<? extends APIFiles> getFilesClass() {
-            switch(this) {
-                case ANDROID: return AndroidFiles.class;
-                case CTS: return null;
-                case IOS: return IOSFiles.class;
-                case UIAUTOMATOR: return UIAutomatorFiles.class;
-                case REMOTECONTROL: return RemoteControlFiles.class;
-                case RECORDERONLINE: return RecorderOnlineFiles.class;
-                case CALABASH: return CalabashFiles.class;
-                case CALABASH_IOS: return CalabashIOSFiles.class;
-                case APPIUM_ANDROID: return AppiumAndroidFiles.class;
-                case APPIUM_IOS: return AppiumIOSFiles.class;
-                default: return null;
+            switch (this) {
+                case ANDROID:
+                    return AndroidFiles.class;
+                case CTS:
+                    return null;
+                case IOS:
+                    return IOSFiles.class;
+                case UIAUTOMATOR:
+                    return UIAutomatorFiles.class;
+                case REMOTECONTROL:
+                    return RemoteControlFiles.class;
+                case RECORDERONLINE:
+                    return RecorderOnlineFiles.class;
+                case CALABASH:
+                    return CalabashFiles.class;
+                case CALABASH_IOS:
+                    return CalabashIOSFiles.class;
+                case APPIUM_ANDROID:
+                    return AppiumAndroidFiles.class;
+                case APPIUM_IOS:
+                    return AppiumIOSFiles.class;
+                default:
+                    return null;
             }
         }
     }
@@ -58,18 +67,29 @@ public class APIProject extends APIEntity {
         NEVER, DAYS, RUNS;
     }
 
-    private String name;
-    private String description;
-    private Type type;
-    private boolean common;
-    private Long sharedById;
-    private String sharedByEmail;
-    private APIArchivingStrategy archivingStrategy;
     private Integer archivingItemCount;
-    private APITestRunConfig testRunConfig;
-    private Map<APIProjectJobConfig.Type, APIProjectJobConfig> jobConfig;
+
+    private APIArchivingStrategy archivingStrategy;
+
+    private boolean common;
+
+    private String description;
+
     private APIFiles files;
+
     private byte[] icon;
+
+    private Map<APIProjectJobConfig.Type, APIProjectJobConfig> jobConfig;
+
+    private String name;
+
+    private String sharedByEmail;
+
+    private Long sharedById;
+
+    private APITestRunConfig testRunConfig;
+
+    private Type type;
 
     public APIProject() {
     }
@@ -85,7 +105,7 @@ public class APIProject extends APIEntity {
         this.common = common;
         this.archivingStrategy = archivingStrategy;
         this.archivingItemCount = archivingItemCount;
-        this.jobConfig = new HashMap<APIProjectJobConfig.Type, APIProjectJobConfig>();
+        this.jobConfig = new HashMap<>();
     }
 
     public String getName() {
@@ -122,6 +142,7 @@ public class APIProject extends APIEntity {
 
     /**
      * Returns user ID sharing this project or null if project is owned or common.
+     *
      * @return user ID sharing this project
      */
     public Long getSharedById() {
@@ -157,42 +178,119 @@ public class APIProject extends APIEntity {
     }
 
     public String getArchivingStrategyDisplayValue() {
-        switch(archivingStrategy) {
-            case NEVER: return "never";
-            case RUNS: return String.format("%s run%s", archivingItemCount, archivingItemCount != 1 ? "s" : "");
-            case DAYS: return String.format("%s day%s", archivingItemCount, archivingItemCount != 1 ? "s" : "");
-            default: return "";
+        switch (archivingStrategy) {
+            case NEVER:
+                return "never";
+            case RUNS:
+                return String.format("%s run%s", archivingItemCount, archivingItemCount != 1 ? "s" : "");
+            case DAYS:
+                return String.format("%s day%s", archivingItemCount, archivingItemCount != 1 ? "s" : "");
+            default:
+                return "";
         }
     }
 
-    private String getConfigURI() { return createUri(selfURI, "/config"); };
-    private String getJobConfigURI(APIProjectJobConfig.Type type) { return createUri(selfURI, "/job-configs/" + type.toString()); };
-    private String getFilesURI() { return createUri(selfURI, "/files"); };
-    private String getIconURI() { return createUri(selfURI, "/icon"); };
-    private String getSharingsURI() { return createUri(selfURI, "/sharings"); };
-    private String getRunsURI() { return createUri(selfURI, "/runs"); };
-    private String getRunURI(Long id) { return createUri(selfURI, "/runs/" + id); }
-    private String getPublicDeviceGroupsURI() { return createUri(selfURI, "/public-device-groups"); }
-    private String getDeviceGroupsURI() { return createUri(selfURI, "/device-groups"); }
-    private String getUploadApplicationURI() { return createUri(selfURI, "/files/application"); }
-    private String getUploadTestURI() { return createUri(selfURI, "/files/test"); }
-    private String getUploadDataURI() { return createUri(selfURI, "/files/data"); }
-    private String getNotificationEmailsURI() { return createUri(selfURI, "/notifications"); }
-    private String getParametersURI() { return createUri(selfURI, "/config/parameters"); }
+    private String getConfigURI() {
+        return createUri(selfURI, "/config");
+    }
 
-    private String getCreateRunParameters(String testRunName) {
-        return String.format("name=%s", testRunName);
+    ;
+
+    private String getJobConfigURI(APIProjectJobConfig.Type type) {
+        return createUri(selfURI, "/job-configs/" + type.toString());
     }
-    private String getCreateNotificationParameters(String email, APINotificationEmail.Type type) {
-        return String.format("email=%s&type=%s", email, type);
+
+    ;
+
+    private String getFilesURI() {
+        return createUri(selfURI, "/files");
     }
-    private String getCreateParameterParameters(String key, String value) {
-        return String.format("key=%s&value=%s", key, value);
+
+    ;
+
+    private String getIconURI() {
+        return createUri(selfURI, "/icon");
+    }
+
+    ;
+
+    private String getSharingsURI() {
+        return createUri(selfURI, "/sharings");
+    }
+
+    ;
+
+    private String getRunsURI() {
+        return createUri(selfURI, "/runs");
+    }
+
+    ;
+
+    private String getRunURI(Long id) {
+        return createUri(selfURI, "/runs/" + id);
+    }
+
+    private String getPublicDeviceGroupsURI() {
+        return createUri(selfURI, "/public-device-groups");
+    }
+
+    private String getDeviceGroupsURI() {
+        return createUri(selfURI, "/device-groups");
+    }
+
+    private String getUploadApplicationURI() {
+        return createUri(selfURI, "/files/application");
+    }
+
+    private String getUploadTestURI() {
+        return createUri(selfURI, "/files/test");
+    }
+
+    private String getUploadDataURI() {
+        return createUri(selfURI, "/files/data");
+    }
+
+    private String getNotificationEmailsURI() {
+        return createUri(selfURI, "/notifications");
+    }
+
+    private String getParametersURI() {
+        return createUri(selfURI, "/config/parameters");
+    }
+
+    private Map<String, Object> getCreateRunParameters(String testRunName) {
+        return Collections.singletonMap("name", (Object) testRunName);
+    }
+
+    private Map<String, Object> getCreateRunParameters(List<Long> usedDeviceIds) {
+        return Collections.singletonMap("usedDeviceIds[]", (Object) StringUtils.join(usedDeviceIds, ","));
+    }
+
+    private Map<String, Object> getCreateRunParameters(String testRunName, List<Long> usedDeviceIds) {
+        Map<String, Object> result = new HashMap<>();
+        result.putAll(getCreateRunParameters(testRunName));
+        result.putAll(getCreateRunParameters(usedDeviceIds));
+        return result;
+    }
+
+    private Map<String, Object> getCreateNotificationParameters(final String email,
+            final APINotificationEmail.Type type) {
+        return new HashMap<String, Object>() {{
+            put("email", email);
+            put("type", type);
+        }};
+    }
+
+    private Map<String, Object> getCreateParameterParameters(final String key, final String value) {
+        return new HashMap<String, Object>() {{
+            put("key", key);
+            put("value", value);
+        }};
     }
 
     @JsonIgnore
     public APITestRunConfig getTestRunConfig() throws APIException {
-        if(testRunConfig == null) {
+        if (testRunConfig == null) {
             testRunConfig = getResource(getConfigURI(), APITestRunConfig.class).getEntity();
         }
         return testRunConfig;
@@ -200,10 +298,10 @@ public class APIProject extends APIEntity {
 
     @JsonIgnore
     public APIProjectJobConfig getJobConfig(APIProjectJobConfig.Type type) throws APIException {
-        if(jobConfig == null ) {
-            jobConfig = new HashMap<APIProjectJobConfig.Type, APIProjectJobConfig>();
+        if (jobConfig == null) {
+            jobConfig = new HashMap<>();
         }
-        if(jobConfig.get(type) == null) {
+        if (jobConfig.get(type) == null) {
             jobConfig.put(type, getResource(getJobConfigURI(type), APIProjectJobConfig.class).getEntity());
         }
         return jobConfig.get(type);
@@ -215,10 +313,10 @@ public class APIProject extends APIEntity {
      */
     @JsonIgnore
     public <T extends APIFiles> T getFiles(Class<T> clazz) throws APIException {
-        if(clazz == null || !clazz.isAssignableFrom(type.getFilesClass())) {
+        if (clazz == null || !clazz.isAssignableFrom(type.getFilesClass())) {
             throw new APIException("This project type does not have requested file types");
         }
-        if(files == null) {
+        if (files == null) {
             files = getResource(getFilesURI(), clazz).getEntity();
         }
         return (T) files;
@@ -226,7 +324,7 @@ public class APIProject extends APIEntity {
 
     @JsonIgnore
     public byte[] getIcon() throws APIException, IOException {
-        if(icon == null) {
+        if (icon == null) {
             icon = IOUtils.toByteArray(getResource(getIconURI(), null).getStream());
         }
         return icon;
@@ -242,6 +340,16 @@ public class APIProject extends APIEntity {
         return postResource(getRunsURI(), getCreateRunParameters(testRunName), APITestRun.class);
     }
 
+    @JsonIgnore
+    public APITestRun run(List<Long> usedDevicesId) throws APIException {
+        return postResource(getRunsURI(), getCreateRunParameters(usedDevicesId), APITestRun.class);
+    }
+
+    @JsonIgnore
+    public APITestRun run(String testRunName, List<Long> usedDevicesId) throws APIException {
+        return postResource(getRunsURI(), getCreateRunParameters(testRunName, usedDevicesId), APITestRun.class);
+    }
+
     public void delete() throws APIException {
         deleteResource(selfURI);
     }
@@ -252,10 +360,10 @@ public class APIProject extends APIEntity {
     }
 
     /**
-     * @since 1.3.34
      * @param queryBuilder
      * @return
      * @throws APIException
+     * @since 1.3.34
      */
     @JsonIgnore
     public APIListResource<APITestRun> getTestRunsResource(APIQueryBuilder queryBuilder) throws APIException {
@@ -267,16 +375,17 @@ public class APIProject extends APIEntity {
     }
 
     /**
-     * @deprecated
      * @param offset
      * @param limit
      * @param search
      * @param sort
      * @return
      * @throws APIException
+     * @deprecated
      */
     @JsonIgnore
-    public APIListResource<APITestRun> getTestRunsResource(long offset, long limit, String search, APISort sort) throws APIException {
+    public APIListResource<APITestRun> getTestRunsResource(long offset, long limit, String search, APISort sort)
+            throws APIException {
         return getListResource(getRunsURI(), offset, limit, search, sort, APITestRun.class);
     }
 
@@ -291,10 +400,10 @@ public class APIProject extends APIEntity {
     }
 
     /**
-     * @since 1.3.34
      * @param queryBuilder
      * @return
      * @throws APIException
+     * @since 1.3.34
      */
     @JsonIgnore
     public APIListResource<APIProjectSharing> getProjectSharings(APIQueryBuilder queryBuilder) throws APIException {
@@ -302,16 +411,17 @@ public class APIProject extends APIEntity {
     }
 
     /**
-     * @deprecated
      * @param offset
      * @param limit
      * @param search
      * @param sort
      * @return
      * @throws APIException
+     * @deprecated
      */
     @JsonIgnore
-    public APIListResource<APIProjectSharing> getProjectSharings(long offset, long limit, String search, APISort sort) throws APIException {
+    public APIListResource<APIProjectSharing> getProjectSharings(long offset, long limit, String search, APISort sort)
+            throws APIException {
         return getListResource(getSharingsURI(), offset, limit, search, sort, APIProjectSharing.class);
     }
 
@@ -326,7 +436,8 @@ public class APIProject extends APIEntity {
     }
 
     @JsonIgnore
-    public APINotificationEmail createNotificationEmail(String email, APINotificationEmail.Type type) throws APIException {
+    public APINotificationEmail createNotificationEmail(String email, APINotificationEmail.Type type)
+            throws APIException {
         return postResource(getNotificationEmailsURI(), getCreateNotificationParameters(email, type), APINotificationEmail.class);
     }
 
@@ -337,13 +448,15 @@ public class APIProject extends APIEntity {
 
     /**
      * Returns list of notification emails for project.
-     * @since 1.3.34
+     *
      * @param queryBuilder
      * @return
      * @throws APIException
+     * @since 1.3.34
      */
     @JsonIgnore
-    public APIListResource<APINotificationEmail> getNotificationEmails(APIQueryBuilder queryBuilder) throws APIException {
+    public APIListResource<APINotificationEmail> getNotificationEmails(APIQueryBuilder queryBuilder)
+            throws APIException {
         return getListResource(getNotificationEmailsURI(), queryBuilder, APINotificationEmail.class);
     }
 
