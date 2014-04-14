@@ -1,12 +1,12 @@
 package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
-import java.util.Date;
+
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import java.util.Date;
 
 /**
- *
  * @author Slawomir Pawluk <slawomir.pawluk@bitbar.com>
  */
 @XmlRootElement
@@ -16,11 +16,14 @@ public class APIDeviceSession extends APIEntity {
     public static enum Type {
         INSPECTOR
     }
-    
-    private Type type;
+
     private Date createTime;
-    private Date endTime;
+
     private APIDevice device;
+
+    private Date endTime;
+
+    private Type type;
 
     public APIDeviceSession() {
     }

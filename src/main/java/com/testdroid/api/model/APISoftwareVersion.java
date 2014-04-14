@@ -1,19 +1,23 @@
 package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
-import javax.xml.bind.annotation.XmlRootElement;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
- *
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
+ * @author Slawomir Pawluk <slawomir.pawluk@bitbar.com>
  */
 @XmlRootElement
 public class APISoftwareVersion extends APIEntity {
-    private String releaseVersion;
+
     private Integer apiLevel;
 
-    public APISoftwareVersion() {}
+    private String releaseVersion;
+
+    public APISoftwareVersion() {
+    }
 
     public APISoftwareVersion(Long id, String releaseVersion, Integer apiLevel) {
         super(id);
@@ -45,5 +49,5 @@ public class APISoftwareVersion extends APIEntity {
         this.apiLevel = apiSoftwareVersion.apiLevel;
         this.releaseVersion = apiSoftwareVersion.releaseVersion;
     }
-    
+
 }
