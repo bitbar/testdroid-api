@@ -616,7 +616,7 @@ public class DefaultAPIClient implements APIClient {
     }
 
     private Map<String, Object> urlEncodedDataToMap(String data) {
-        Map<String, Object> result = new HashMap<>();
+        Map<String, Object> result = new HashMap<String, Object>();
         String[] variablesAndValues = data.split("&");
         for (String pair : variablesAndValues) {
             String[] variableData = pair.split("=");
