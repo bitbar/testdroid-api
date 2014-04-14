@@ -82,8 +82,6 @@ public abstract class APIEntity {
 
     private static final DateFormat API_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd_HH:mm");
 
-    private static final String ENCODING = "UTF-8";
-
     private static final HashMap<Class, JAXBContext> contextMap = new HashMap<>();
 
     protected APIClient client;
