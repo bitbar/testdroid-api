@@ -12,8 +12,10 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlTransient;
-import java.io.*;
-import java.net.URLEncoder;
+import java.io.File;
+import java.io.InputStream;
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -97,19 +99,6 @@ public abstract class APIEntity {
 
     public APIEntity(Long id) {
         this.id = id;
-    }
-
-    @JsonIgnore
-    public static String encodeURL(String name) {
-        try {
-            if (name == null) {
-                return "";
-            }
-            return URLEncoder.encode(name, ENCODING);
-        } catch (UnsupportedEncodingException ex) {
-        }
-
-        return name;
     }
 
     @JsonIgnore

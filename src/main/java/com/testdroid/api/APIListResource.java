@@ -19,7 +19,7 @@ public class APIListResource<T extends APIEntity> extends APIResource<APIList<T>
         APIList<T> result = super.getEntity();
         for (APIEntity item : result.getData()) {
             item.client = this.client;
-            item.selfURI = this.resourceURI;
+            item.selfURI = APIEntity.createUri(this.resourceURI, String.format("/%s", item.id));
         }
         return result;
     }

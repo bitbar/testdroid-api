@@ -634,12 +634,14 @@ public class DefaultAPIClient implements APIClient {
     private String buildUrl(String url, APIQueryBuilder queryBuilder) throws APIException {
         try {
             URIBuilder builder = new URIBuilder(url);
-            for (Map.Entry<String, Object> entry : queryBuilder.build().entrySet()) {
-                builder.addParameter(entry.getKey(), entry.getValue() == null ? "" : entry.getValue().toString());
+            if (queryBuilder != null) {
+                for (Map.Entry<String, Object> entry : queryBuilder.build().entrySet()) {
+                    builder.addParameter(entry.getKey(), entry.getValue() == null ? "" : entry.getValue().toString());
+                }
             }
             return builder.build().toString();
         } catch (URISyntaxException e) {
-            throw new APIException(String.format("Bad URL: ", e.getMessage()));
+            throw new APIException(String.format("Bad URL: %s", e.getMessage()));
         }
     }
 
