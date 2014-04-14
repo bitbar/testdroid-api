@@ -1,45 +1,58 @@
 package com.testdroid.api.model;
 
-import com.testdroid.api.APIEntity;
-import static com.testdroid.api.APIEntity.createUri;
-import com.testdroid.api.APIException;
-import com.testdroid.api.APIList;
-import com.testdroid.api.APIListResource;
-import com.testdroid.api.APIQueryBuilder;
-import com.testdroid.api.APISort;
-import java.io.InputStream;
-import java.util.Date;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
+import com.testdroid.api.*;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+import java.io.InputStream;
+import java.util.Date;
+
 /**
- *
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
+ * @author Slawomir Pawluk <slawomir.pawluk@bitbar.com>
  */
 @XmlRootElement
 public class APIDeviceRun extends APIEntity {
-    
+
     @XmlType(namespace = "APIDeviceRun")
-    public static enum RunStatus { WAITING, RUNNING, EXCLUDED, WARNING, FAILED, SUCCEEDED }
-    
-    private Date runTime;
-    private APIDevice device;
-    private Integer testCaseSuccessNo;
-    private Integer testCaseAllNo;
-    private Integer testCaseCount;
-    private APISoftwareVersion softwareVersion;
+    public static enum RunStatus {
+        WAITING, RUNNING, EXCLUDED, WARNING, FAILED, SUCCEEDED
+    }
+
     private Date createTime;
-    private Date startTime; 
+
     private APIDeviceRunState currentState;
-    private APIDeviceRunState interruptedByState;
-    private RunStatus runStatus;
+
+    private APIDevice device;
+
     private String deviceName;
+
     private String deviceSerialId;
 
-    public APIDeviceRun() {}
-    public APIDeviceRun(Long id, Date runTime, APIDevice device, Integer testCaseSuccessNo, Integer testCaseAllNo, Integer testCaseCount, APISoftwareVersion softwareVersion, 
-            Date createTime, Date startTime, APIDeviceRunState currentState, APIDeviceRunState interruptedByState, RunStatus runStatus, String deviceName, String deviceSerialId) {
+    private APIDeviceRunState interruptedByState;
+
+    private RunStatus runStatus;
+
+    private Date runTime;
+
+    private APISoftwareVersion softwareVersion;
+
+    private Date startTime;
+
+    private Integer testCaseAllNo;
+
+    private Integer testCaseCount;
+
+    private Integer testCaseSuccessNo;
+
+    public APIDeviceRun() {
+    }
+
+    public APIDeviceRun(Long id, Date runTime, APIDevice device, Integer testCaseSuccessNo, Integer testCaseAllNo,
+            Integer testCaseCount, APISoftwareVersion softwareVersion,
+            Date createTime, Date startTime, APIDeviceRunState currentState, APIDeviceRunState interruptedByState,
+            RunStatus runStatus, String deviceName, String deviceSerialId) {
         super(id);
         this.runTime = runTime;
         this.device = device;
@@ -151,24 +164,41 @@ public class APIDeviceRun extends APIEntity {
     public void setDeviceSerialId(String deviceSerialId) {
         this.deviceSerialId = deviceSerialId;
     }
-    
-    private String getLogsURI() { return createUri(selfURI, "/logs"); };
-    private String getScreenshotsURI() { return createUri(selfURI, "/screenshots"); };
-    private String getJunitURI() { return createUri(selfURI, "/junit.xml"); };
-    private String getPerformanceURI() { return createUri(selfURI, "/performance"); };
-    private String getResultDataZipURI() { return createUri(selfURI, "/result-data.zip"); };
-    private String getStatesURI() { return createUri(selfURI, "/states"); };
-    
+
+    private String getLogsURI() {
+        return createUri(selfURI, "/logs");
+    }
+
+    private String getScreenshotsURI() {
+        return createUri(selfURI, "/screenshots");
+    }
+
+    private String getJunitURI() {
+        return createUri(selfURI, "/junit.xml");
+    }
+
+    private String getPerformanceURI() {
+        return createUri(selfURI, "/performance");
+    }
+
+    private String getResultDataZipURI() {
+        return createUri(selfURI, "/result-data.zip");
+    }
+
+    private String getStatesURI() {
+        return createUri(selfURI, "/states");
+    }
+
     @JsonIgnore
     public InputStream getLogs() throws APIException {
         return client.get(getLogsURI());
     }
-    
+
     @JsonIgnore
     public InputStream getJunitXml() throws APIException {
         return client.get(getJunitURI());
     }
-    
+
     @JsonIgnore
     public InputStream getPerformanceData() throws APIException {
         return client.get(getPerformanceURI());
@@ -178,64 +208,67 @@ public class APIDeviceRun extends APIEntity {
     public InputStream getResultDataZip() throws APIException {
         return client.get(getResultDataZipURI());
     }
-    
+
     @JsonIgnore
     public APIListResource<APIDeviceRunState> getDeviceRunStatesResource() throws APIException {
-        return getListResource(getStatesURI(), APIDeviceRunState.class);
+        return getListResource(getStatesURI());
     }
-    
+
     /**
-     * @since 1.3.34
      * @param queryBuilder
      * @return
-     * @throws APIException 
+     * @throws APIException
+     * @since 1.3.34
      */
     @JsonIgnore
-    public APIListResource<APIDeviceRunState> getDeviceRunStatesResource(APIQueryBuilder queryBuilder) throws APIException {
-        return getListResource(getStatesURI(), queryBuilder, APIDeviceRunState.class);
+    public APIListResource<APIDeviceRunState> getDeviceRunStatesResource(APIQueryBuilder queryBuilder)
+            throws APIException {
+        return getListResource(getStatesURI(), queryBuilder);
     }
-    
+
     /**
-     * @deprecated 
      * @param offset
      * @param limit
      * @param search
      * @param sort
      * @return
-     * @throws APIException 
+     * @throws APIException
+     * @deprecated
      */
     @JsonIgnore
-    public APIListResource<APIDeviceRunState> getDeviceRunStatesResource(long offset, long limit, String search, APISort sort) throws APIException {
+    public APIListResource<APIDeviceRunState> getDeviceRunStatesResource(long offset, long limit, String search,
+            APISort sort) throws APIException {
         return getListResource(getStatesURI(), offset, limit, search, sort, APIDeviceRunState.class);
     }
-    
+
     @JsonIgnore
     public APIListResource<APIScreenshot> getScreenshotsResource() throws APIException {
-        return getListResource(getScreenshotsURI(), APIScreenshot.class);
+        return getListResource(getScreenshotsURI());
     }
-    
+
     /**
-     * @since 1.3.34
      * @param queryBuilder
      * @return
-     * @throws APIException 
+     * @throws APIException
+     * @since 1.3.34
      */
     @JsonIgnore
     public APIListResource<APIScreenshot> getScreenshotsResource(APIQueryBuilder queryBuilder) throws APIException {
-        return getListResource(getScreenshotsURI(), queryBuilder, APIScreenshot.class);
+        return getListResource(getScreenshotsURI(), queryBuilder);
     }
-    
+
     /**
-     * @deprecated 
      * @param offset
      * @param limit
      * @param search
      * @param sort
      * @return
-     * @throws APIException 
+     * @throws APIException
+     * @deprecated
      */
     @JsonIgnore
-    public APIListResource<APIScreenshot> getScreenshotsResource(long offset, long limit, String search, APISort sort) throws APIException {
+    public APIListResource<APIScreenshot> getScreenshotsResource(long offset, long limit, String search, APISort sort)
+            throws APIException {
         return getListResource(getScreenshotsURI(), offset, limit, search, sort, APIScreenshot.class);
     }
 
@@ -264,5 +297,5 @@ public class APIDeviceRun extends APIEntity {
         this.testCaseCount = apiDeviceRun.testCaseCount;
         this.testCaseSuccessNo = apiDeviceRun.testCaseSuccessNo;
     }
-    
+
 }

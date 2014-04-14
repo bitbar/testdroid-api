@@ -2,21 +2,25 @@ package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIException;
-import java.io.File;
-import javax.xml.bind.annotation.XmlRootElement;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
+import javax.xml.bind.annotation.XmlRootElement;
+import java.io.File;
+
 /**
- *
  * @author Jarno Tuovinen <jarno.tuovinen@bitbar.com>
+ * @author Slawomir Pawluk <slawomir.pawluk@bitbar.com>
  */
-@XmlRootElement 
+@XmlRootElement
 public class CalabashFiles extends APIFiles {
+
     private AndroidAppFile app;
+
     private CalabashTestFile test;
 
-    public CalabashFiles() {}
-    
+    public CalabashFiles() {
+    }
+
     public CalabashFiles(Long id, DataFile data, AndroidAppFile app, CalabashTestFile test) {
         super(id, data);
         this.app = app;
@@ -55,5 +59,5 @@ public class CalabashFiles extends APIFiles {
         this.app = calabashFiles.app;
         this.test = calabashFiles.test;
     }
-    
+
 }

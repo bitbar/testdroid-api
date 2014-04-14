@@ -1,26 +1,29 @@
 package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
-import javax.xml.bind.annotation.XmlRootElement;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
- *
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
  */
 @XmlRootElement
 public class APITestRunParameter extends APIEntity {
+
     private String key;
+
     private String value;
 
-    public APITestRunParameter() {}
+    public APITestRunParameter() {
+    }
 
     public APITestRunParameter(Long id, String key, String value) {
         super(id);
         this.key = key;
         this.value = value;
     }
-    
+
     public String getKey() {
         return key;
     }
@@ -45,5 +48,5 @@ public class APITestRunParameter extends APIEntity {
         this.key = apiTestRunParameter.key;
         this.value = apiTestRunParameter.value;
     }
-    
+
 }

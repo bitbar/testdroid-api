@@ -2,27 +2,34 @@ package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIException;
-import java.io.InputStream;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+import java.io.InputStream;
+
 /**
- *
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
+ * @author Slawomir Pawluk <slawomir.pawluk@bitbar.com>
  */
 @XmlRootElement
 public class APIScreenshot extends APIEntity {
-    
+
     @XmlType(namespace = "APIScreenshot")
-    public static enum Type { LANDSCAPE, PORTRAIT }
-    
-    private String originalName;
+    public static enum Type {
+        LANDSCAPE, PORTRAIT
+    }
+
     private Boolean fail;
-    private Type type;
+
+    private String originalName;
+
     private Long takeTimestamp;
 
-    public APIScreenshot() {}
+    private Type type;
+
+    public APIScreenshot() {
+    }
 
     public APIScreenshot(Long id, String originalName, Boolean fail, Type type, Long takeTimestamp) {
         super(id);
@@ -63,7 +70,7 @@ public class APIScreenshot extends APIEntity {
     public void setTakeTimestamp(Long takeTimestamp) {
         this.takeTimestamp = takeTimestamp;
     }
-    
+
     @JsonIgnore
     public InputStream getContent() throws APIException {
         return getFile(selfURI);
@@ -79,5 +86,5 @@ public class APIScreenshot extends APIEntity {
         this.type = apiScreenshot.type;
         this.takeTimestamp = apiScreenshot.takeTimestamp;
     }
-    
+
 }

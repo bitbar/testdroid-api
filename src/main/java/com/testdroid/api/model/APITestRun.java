@@ -1,44 +1,60 @@
 package com.testdroid.api.model;
 
-import com.testdroid.api.APIEntity;
-import static com.testdroid.api.APIEntity.createUri;
-import com.testdroid.api.APIException;
-import com.testdroid.api.APIListResource;
-import com.testdroid.api.APIQueryBuilder;
-import com.testdroid.api.APISort;
+import com.testdroid.api.*;
+import org.codehaus.jackson.annotate.JsonIgnore;
+
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 import java.io.InputStream;
 import java.util.Collections;
 import java.util.Date;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
-import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
- *
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
+ * @author Slawomir Pawluk <slawomir.pawluk@bitbar.com>
  */
 @XmlRootElement
 public class APITestRun extends APIEntity {
-    
+
     @XmlType(namespace = "APITestRun", name = "APITestRunState")
-    public static enum State { WAITING, RUNNING, FINISHED }
-    
+    public static enum State {
+        WAITING, RUNNING, FINISHED
+    }
+
     @XmlType(namespace = "APITestRun", name = "APITestRunZipState")
-    public static enum ZipState { BLANK, PROGRESS, READY }
-    
-    private Integer number;
+    public static enum ZipState {
+        BLANK, PROGRESS, READY
+    }
+
+    private APITestRunConfig config;
+
     private Date createTime;
+
     private String displayName;
+
     private Float executionRatio;
-    private Float successRatio;
-    private String startedByDisplayName;
-    private State state;
-    private ZipState screenshotZipState;
+
+    private APIFiles files;
+
     private ZipState logZipState;
+
+    private Integer number;
+
     private Long projectId;
 
-    public APITestRun() {}
-    public APITestRun(Long id, Integer number, Date createTime, String displayName, Float executionRatio, Float successRatio, String startedByDisplayName, 
+    private ZipState screenshotZipState;
+
+    private String startedByDisplayName;
+
+    private State state;
+
+    private Float successRatio;
+
+    public APITestRun() {
+    }
+
+    public APITestRun(Long id, Integer number, Date createTime, String displayName, Float executionRatio,
+            Float successRatio, String startedByDisplayName,
             State state, ZipState screenshotZipState, ZipState logZipState, Long projectId) {
         super(id);
         this.number = number;
@@ -51,7 +67,7 @@ public class APITestRun extends APIEntity {
         this.screenshotZipState = screenshotZipState;
         this.logZipState = logZipState;
         this.projectId = projectId;
-    }    
+    }
 
     public Integer getNumber() {
         return number;
@@ -132,102 +148,122 @@ public class APITestRun extends APIEntity {
     public void setProjectId(Long projectId) {
         this.projectId = projectId;
     }
-    
-    private APIFiles files;
-    private APITestRunConfig config;
-    private String getFilesURI() { return createUri(selfURI, "/files"); }
-    private String getConfigURI() { return createUri(selfURI, "/config"); }
-    private String getTagsURI() { return createUri(selfURI, "/tags"); }
-    private String getDeviceRunsURI() { return createUri(selfURI, "/device-runs"); }
-    private String getScreenshotsZipURI() { return createUri(selfURI, "/screenshots.zip"); }
-    private String getLogsZipURI() { return createUri(selfURI, "/logs.zip"); }
-    private String getAbortURI() { return createUri(selfURI, "/abort"); }
-    
+
+    private String getFilesURI() {
+        return createUri(selfURI, "/files");
+    }
+
+    private String getConfigURI() {
+        return createUri(selfURI, "/config");
+    }
+
+    private String getTagsURI() {
+        return createUri(selfURI, "/tags");
+    }
+
+    private String getDeviceRunsURI() {
+        return createUri(selfURI, "/device-runs");
+    }
+
+    private String getScreenshotsZipURI() {
+        return createUri(selfURI, "/screenshots.zip");
+    }
+
+    private String getLogsZipURI() {
+        return createUri(selfURI, "/logs.zip");
+    }
+
+    private String getAbortURI() {
+        return createUri(selfURI, "/abort");
+    }
+
     /**
      * Returns APIFiles entity about files uploaded to this project.
      * Depending on <code>type</code> it may be any subclass of <code>APIFiles</code> returned.
      */
     @JsonIgnore
     public <T extends APIFiles> T getFiles(Class<T> clazz) throws APIException {
-        if(files == null) {
+        if (files == null) {
             files = getResource(getFilesURI(), clazz).getEntity();
         }
         return (T) files;
     }
-    
+
     public void delete() throws APIException {
         deleteResource(selfURI);
     }
-    
+
     @JsonIgnore
     public APITestRunConfig getConfig() throws APIException {
-        if(config == null) {
+        if (config == null) {
             config = getResource(getConfigURI(), APITestRunConfig.class).getEntity();
         }
         return config;
     }
-    
+
     public APITag addTag(String name) throws APIException {
         return postResource(getTagsURI(), Collections.singletonMap("name", name), APITag.class);
     }
-    
+
     @JsonIgnore
     public APIListResource<APITag> getTagsResource() throws APIException {
-        return getListResource(getTagsURI(), APITag.class);
+        return getListResource(getTagsURI());
     }
-    
+
     /**
-     * @since 1.3.34
      * @param queryBuilder
      * @return
-     * @throws APIException 
+     * @throws APIException
+     * @since 1.3.34
      */
     @JsonIgnore
     public APIListResource<APITag> getTagsResource(APIQueryBuilder queryBuilder) throws APIException {
-        return getListResource(getTagsURI(), queryBuilder, APITag.class);
+        return getListResource(getTagsURI(), queryBuilder);
     }
-    
+
     /**
-     * @deprecated 
      * @param offset
      * @param limit
      * @param search
      * @param sort
      * @return
-     * @throws APIException 
+     * @throws APIException
+     * @deprecated
      */
     @JsonIgnore
-    public APIListResource<APITag> getTagsResource(long offset, long limit, String search, APISort sort) throws APIException {
+    public APIListResource<APITag> getTagsResource(long offset, long limit, String search, APISort sort)
+            throws APIException {
         return getListResource(getTagsURI(), offset, limit, search, sort, APITag.class);
     }
 
     @JsonIgnore
     public APIListResource<APIDeviceRun> getDeviceRunsResource() throws APIException {
-        return getListResource(getDeviceRunsURI(), APIDeviceRun.class);
+        return getListResource(getDeviceRunsURI());
     }
-    
+
     /**
-     * @since 1.3.34
-     * @param queryBuilder 
+     * @param queryBuilder
      * @return
-     * @throws APIException 
+     * @throws APIException
+     * @since 1.3.34
      */
     @JsonIgnore
     public APIListResource<APIDeviceRun> getDeviceRunsResource(APIQueryBuilder queryBuilder) throws APIException {
-        return getListResource(getDeviceRunsURI(), queryBuilder, APIDeviceRun.class);
+        return getListResource(getDeviceRunsURI(), queryBuilder);
     }
-    
+
     /**
-     * @deprecated 
      * @param offset
      * @param limit
      * @param search
      * @param sort
      * @return
-     * @throws APIException 
+     * @throws APIException
+     * @deprecated
      */
     @JsonIgnore
-    public APIListResource<APIDeviceRun> getDeviceRunsResource(long offset, long limit, String search, APISort sort) throws APIException {
+    public APIListResource<APIDeviceRun> getDeviceRunsResource(long offset, long limit, String search, APISort sort)
+            throws APIException {
         return getListResource(getDeviceRunsURI(), offset, limit, search, sort, APIDeviceRun.class);
     }
 
@@ -235,7 +271,7 @@ public class APITestRun extends APIEntity {
     public void requestScreenshotsZip() throws APIException {
         postResource(getScreenshotsZipURI(), null, null);
     }
-    
+
     @JsonIgnore
     public InputStream getScreenshotsZip() throws APIException {
         return getFile(getScreenshotsZipURI());
@@ -245,17 +281,17 @@ public class APITestRun extends APIEntity {
     public void requestLogsZip() throws APIException {
         postResource(getLogsZipURI(), null, null);
     }
-    
+
     @JsonIgnore
     public InputStream getLogsZip() throws APIException {
         return getFile(getLogsZipURI());
     }
-    
+
     public void update() throws APIException {
         APITestRun testRun = postResource(selfURI, Collections.singletonMap("displayName", displayName), APITestRun.class);
         clone(testRun);
     }
-    
+
     public void abort() throws APIException {
         postResource(getAbortURI(), null, null);
     }

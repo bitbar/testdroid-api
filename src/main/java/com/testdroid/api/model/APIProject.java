@@ -17,6 +17,7 @@ import java.util.Map;
 
 /**
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
+ * @author Slawomir Pawluk <slawomir.pawluk@bitbar.com>
  */
 @XmlRootElement
 public class APIProject extends APIEntity {
@@ -344,7 +345,7 @@ public class APIProject extends APIEntity {
 
     @JsonIgnore
     public APIListResource<APITestRun> getTestRunsResource() throws APIException {
-        return getListResource(getRunsURI(), APITestRun.class);
+        return getListResource(getRunsURI());
     }
 
     /**
@@ -355,7 +356,7 @@ public class APIProject extends APIEntity {
      */
     @JsonIgnore
     public APIListResource<APITestRun> getTestRunsResource(APIQueryBuilder queryBuilder) throws APIException {
-        return getListResource(getRunsURI(), queryBuilder, APITestRun.class);
+        return getListResource(getRunsURI(), queryBuilder);
     }
 
     public APITestRun getTestRun(Long id) throws APIException {
@@ -384,7 +385,7 @@ public class APIProject extends APIEntity {
 
     @JsonIgnore
     public APIListResource<APIProjectSharing> getProjectSharings() throws APIException {
-        return getListResource(getSharingsURI(), APIProjectSharing.class);
+        return getListResource(getSharingsURI());
     }
 
     /**
@@ -395,7 +396,7 @@ public class APIProject extends APIEntity {
      */
     @JsonIgnore
     public APIListResource<APIProjectSharing> getProjectSharings(APIQueryBuilder queryBuilder) throws APIException {
-        return getListResource(getSharingsURI(), queryBuilder, APIProjectSharing.class);
+        return getListResource(getSharingsURI(), queryBuilder);
     }
 
     /**
@@ -415,12 +416,12 @@ public class APIProject extends APIEntity {
 
     @JsonIgnore
     public APIListResource<APIDeviceGroup> getPublicDeviceGroups() throws APIException {
-        return getListResource(getPublicDeviceGroupsURI(), APIDeviceGroup.class);
+        return getListResource(getPublicDeviceGroupsURI());
     }
 
     @JsonIgnore
     public APIListResource<APIDeviceGroup> getDeviceGroups() throws APIException {
-        return getListResource(getDeviceGroupsURI(), APIDeviceGroup.class);
+        return getListResource(getDeviceGroupsURI());
     }
 
     @JsonIgnore
@@ -431,7 +432,7 @@ public class APIProject extends APIEntity {
 
     @JsonIgnore
     public APIListResource<APINotificationEmail> getNotificationEmails() throws APIException {
-        return getListResource(getNotificationEmailsURI(), APINotificationEmail.class);
+        return getListResource(getNotificationEmailsURI());
     }
 
     /**
@@ -445,7 +446,7 @@ public class APIProject extends APIEntity {
     @JsonIgnore
     public APIListResource<APINotificationEmail> getNotificationEmails(APIQueryBuilder queryBuilder)
             throws APIException {
-        return getListResource(getNotificationEmailsURI(), queryBuilder, APINotificationEmail.class);
+        return getListResource(getNotificationEmailsURI(), queryBuilder);
     }
 
     @JsonIgnore
@@ -470,12 +471,12 @@ public class APIProject extends APIEntity {
 
     @JsonIgnore
     public APIListResource<APITestRunParameter> getParameters() throws APIException {
-        return getListResource(getParametersURI(), APITestRunParameter.class);
+        return getListResource(getParametersURI());
     }
 
     @JsonIgnore
     public APIListResource<APITestRunParameter> getParameters(APIQueryBuilder queryBuilder) throws APIException {
-        return getListResource(getParametersURI(), queryBuilder, APITestRunParameter.class);
+        return getListResource(getParametersURI(), queryBuilder);
     }
 
     @JsonIgnore

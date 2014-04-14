@@ -1,22 +1,27 @@
 package com.testdroid.api.model;
 
-import com.testdroid.api.APIClient;
 import com.testdroid.api.APIEntity;
-import javax.xml.bind.annotation.XmlRootElement;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
- *
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
+ * @author Slawomir Pawluk <slawomir.pawluk@bitbar.com>
  */
 @XmlRootElement
 public class APIDeviceProperty extends APIEntity {
-    private String name;
+
     private String displayName;
+
+    private String name;
+
     private Long propertyGroupId;
+
     private String propertyGroupName;
 
-    public APIDeviceProperty() {}
+    public APIDeviceProperty() {
+    }
 
     public APIDeviceProperty(Long id, String name, String displayName, Long propertyGroupId, String propertyGroupName) {
         super(id);
@@ -57,7 +62,7 @@ public class APIDeviceProperty extends APIEntity {
     public void setPropertyGroupName(String propertyGroupName) {
         this.propertyGroupName = propertyGroupName;
     }
-    
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {

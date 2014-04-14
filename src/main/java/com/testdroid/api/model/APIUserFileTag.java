@@ -1,12 +1,13 @@
 package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
-import javax.xml.bind.annotation.XmlRootElement;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
- *
  * @author Michał Szpruta <michal.szpruta@bitbar.com>
+ * @author Slawomir Pawluk <slawomir.pawluk@bitbar.com>
  */
 @XmlRootElement
 public class APIUserFileTag extends APIEntity {
