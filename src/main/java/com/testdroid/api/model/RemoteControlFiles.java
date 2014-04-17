@@ -2,23 +2,25 @@ package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIException;
-import com.testdroid.api.model.APIFiles;
-import java.io.File;
-import java.io.InputStream;
-import javax.xml.bind.annotation.XmlRootElement;
 import org.apache.http.HttpStatus;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
+import javax.xml.bind.annotation.XmlRootElement;
+import java.io.File;
+import java.io.InputStream;
+
 /**
- *
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
+ * @author Slawomir Pawluk <slawomir.pawluk@bitbar.com>
  */
-@XmlRootElement 
+@XmlRootElement
 public class RemoteControlFiles extends APIFiles {
+
     private AndroidAppFile app;
 
-    public RemoteControlFiles() {}
-    
+    public RemoteControlFiles() {
+    }
+
     public RemoteControlFiles(Long id, DataFile data, AndroidAppFile app) {
         super(id, data);
         this.app = app;
@@ -30,7 +32,7 @@ public class RemoteControlFiles extends APIFiles {
 
     public void setApp(AndroidAppFile app) {
         this.app = app;
-    }      
+    }
 
     public void uploadApp(File file) throws APIException {
         this.app = client.postFile(getApplicationURI(), "application/vnd.android.package-archive", file, AndroidAppFile.class);
@@ -48,5 +50,5 @@ public class RemoteControlFiles extends APIFiles {
         RemoteControlFiles remoteControlFiles = (RemoteControlFiles) from;
         this.app = remoteControlFiles.app;
     }
-    
+
 }

@@ -1,24 +1,24 @@
 package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
-import org.codehaus.jackson.annotate.JsonIgnore;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
+ * @author Michał Szpruta <michal.szpruta@bitbar.com>
+ * @author Slawomir Pawluk <slawomir.pawluk@bitbar.com>
  */
 @XmlRootElement
-public class APITestRunParameter extends APIEntity {
+public class APIUserFileProperty extends APIEntity {
 
     private String key;
 
     private String value;
 
-    public APITestRunParameter() {
+    public APIUserFileProperty() {
     }
 
-    public APITestRunParameter(Long id, String key, String value) {
+    public APIUserFileProperty(Long id, String key, String value) {
         super(id);
         this.key = key;
         this.value = value;
@@ -41,12 +41,10 @@ public class APITestRunParameter extends APIEntity {
     }
 
     @Override
-    @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
-        APITestRunParameter apiTestRunParameter = (APITestRunParameter) from;
+        APIUserFileProperty apiUserFileProperty = (APIUserFileProperty) from;
         cloneBase(from);
-        this.key = apiTestRunParameter.key;
-        this.value = apiTestRunParameter.value;
+        this.key = apiUserFileProperty.key;
+        this.value = apiUserFileProperty.value;
     }
-
 }

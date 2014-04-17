@@ -1,35 +1,55 @@
 package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+import java.util.Date;
+
 /**
- *
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
+ * @author Slawomir Pawluk <slawomir.pawluk@bitbar.com>
  */
 @XmlRootElement
 public class APIProjectJobConfig extends APIEntity {
-    
-    @XmlType(namespace = "APIProjectJobConfig")
-    public static enum Type { DEFAULT, RESIGNING, INSTATEST, CTS, IOS, UIAUTOMATOR, REMOTECONTROL, CALABASH, RECORDERONLINE }
 
-    private Type type;
+    @XmlType(namespace = "APIProjectJobConfig")
+    public static enum Type {
+        DEFAULT, RESIGNING, INSTATEST, CTS, IOS, UIAUTOMATOR, REMOTECONTROL,
+        CALABASH, CALABASH_IOS, RECORDERONLINE, APPIUM_ANDROID, APPIUM_IOS
+    }
+
     private String content;
-    private Integer version;
+
     private boolean global;
+
+    private Date lastModificationTime;
+
+    private String lastModifiedBy;
+
     private Long projectId;
 
-    public APIProjectJobConfig() {}
+    private String projectName;
 
-    public APIProjectJobConfig(Long id, Type type, String content, Integer version, boolean global, Long projectId) {
+    private Type type;
+
+    private Integer version;
+
+    public APIProjectJobConfig() {
+    }
+
+    public APIProjectJobConfig(Long id, Type type, String content, Integer version, boolean global, Long projectId,
+            String projectName, Date lastModificationTime, String lastModifiedBy) {
         super(id);
         this.type = type;
         this.content = content;
         this.version = version;
         this.global = global;
         this.projectId = projectId;
+        this.projectName = projectName;
+        this.lastModifiedBy = lastModifiedBy;
+        this.lastModificationTime = lastModificationTime;
     }
 
     public Type getType() {
@@ -72,6 +92,30 @@ public class APIProjectJobConfig extends APIEntity {
         this.projectId = projectId;
     }
 
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
+    public String getLastModifiedBy() {
+        return lastModifiedBy;
+    }
+
+    public void setLastModifiedBy(String lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
+    }
+
+    public Date getLastModificationTime() {
+        return lastModificationTime;
+    }
+
+    public void setLastModificationTime(Date lastModificationTime) {
+        this.lastModificationTime = lastModificationTime;
+    }
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
@@ -82,5 +126,8 @@ public class APIProjectJobConfig extends APIEntity {
         this.projectId = apiProjectJobConfig.projectId;
         this.type = apiProjectJobConfig.type;
         this.version = apiProjectJobConfig.version;
+        this.projectName = apiProjectJobConfig.projectName;
+        this.lastModificationTime = apiProjectJobConfig.lastModificationTime;
+        this.lastModifiedBy = apiProjectJobConfig.lastModifiedBy;
     }
 }

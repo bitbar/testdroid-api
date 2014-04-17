@@ -1,42 +1,53 @@
 package com.testdroid.api.um.model;
 
 import com.testdroid.api.formatter.CurrencyFormatter;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+
 /**
- *
  * @author kajdus
  */
 @XmlRootElement(name = "umApiService", namespace = "cloud.testdroid.api.um.model")
-@XmlType(name="umApiService", namespace = "cloud.testdroid.api.um.model")
+@XmlType(name = "umApiService", namespace = "cloud.testdroid.api.um.model")
 public class APIService {
-    
-    @XmlType(name="umApiServiceUnit", namespace = "cloud.testdroid.um.api.model")
+
+    @XmlType(name = "umApiServiceUnit", namespace = "cloud.testdroid.um.api.model")
     public static enum Unit {
         SECOND, MINUTE, HOUR, DAY, MONTH, YEAR, RUN, PROJECT;
     }
-    
-    @XmlType(name="umApiServiceType", namespace = "cloud.testdroid.um.api.model")
+
+    @XmlType(name = "umApiServiceType", namespace = "cloud.testdroid.um.api.model")
     public static enum Type {
         RECORDER, CLOUD;
     }
-    
-    private Long id;
-    private String name;
-    private String description;
+
     private boolean autoRenew;
-    private Type type;
-    private Integer centPrice;
-    private Integer unitCount;
-    private Unit unit;
-    private boolean quantityAppliable;
+
     private String braintreeId;
 
-    public APIService() {}
-    
-    public APIService(Long id, String name, String description, boolean autoRenew, Type type, Integer centPrice, Integer unitCount, Unit unit, 
+    private Integer centPrice;
+
+    private String description;
+
+    private Long id;
+
+    private String name;
+
+    private boolean quantityAppliable;
+
+    private Type type;
+
+    private Unit unit;
+
+    private Integer unitCount;
+
+    public APIService() {
+    }
+
+    public APIService(Long id, String name, String description, boolean autoRenew, Type type, Integer centPrice,
+            Integer unitCount, Unit unit,
             boolean quantityAppliable, String braintreeId) {
         this.id = id;
         this.name = name;
@@ -54,36 +65,69 @@ public class APIService {
         return autoRenew;
     }
 
+    public void setAutoRenew(boolean autoRenew) {
+        this.autoRenew = autoRenew;
+    }
+
     public Integer getCentPrice() {
         return centPrice;
+    }
+
+    public void setCentPrice(Integer centPrice) {
+        this.centPrice = centPrice;
     }
 
     public Long getId() {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {
         return description;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public Type getType() {
         return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
     }
 
     public Unit getUnit() {
         return unit;
     }
+
+    public void setUnit(Unit unit) {
+        this.unit = unit;
+    }
+
     @JsonIgnore
     public String getPaypalUnit() {
-        switch(unit) {
-            case YEAR: return "Y";
-            case DAY: return "D";
-            case MONTH: return "M";
-            default: return "";
+        switch (unit) {
+            case YEAR:
+                return "Y";
+            case DAY:
+                return "D";
+            case MONTH:
+                return "M";
+            default:
+                return "";
         }
     }
 
@@ -91,8 +135,16 @@ public class APIService {
         return unitCount;
     }
 
+    public void setUnitCount(Integer unitCount) {
+        this.unitCount = unitCount;
+    }
+
     public boolean isQuantityAppliable() {
         return quantityAppliable;
+    }
+
+    public void setQuantityAppliable(boolean quantityAppliable) {
+        this.quantityAppliable = quantityAppliable;
     }
 
     public String getBraintreeId() {
@@ -103,45 +155,10 @@ public class APIService {
         this.braintreeId = braintreeId;
     }
 
-    public void setAutoRenew(boolean autoRenew) {
-        this.autoRenew = autoRenew;
-    }
-
-    public void setCentPrice(Integer centPrice) {
-        this.centPrice = centPrice;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setType(Type type) {
-        this.type = type;
-    }
-
-    public void setUnit(Unit unit) {
-        this.unit = unit;
-    }
-
-    public void setUnitCount(Integer unitCount) {
-        this.unitCount = unitCount;
-    }
-
-    public void setQuantityAppliable(boolean quantityAppliable) {
-        this.quantityAppliable = quantityAppliable;
-    }
-    @JsonIgnore
     public String getPriceString() {
         return CurrencyFormatter.format(centPrice);
     }
+
     @JsonIgnore
     @Override
     public int hashCode() {
@@ -149,10 +166,11 @@ public class APIService {
         hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
+
     @JsonIgnore
     @Override
     public boolean equals(Object object) {
-	if(this == object) return true;
+        if (this == object) return true;
         if (!(object instanceof APIService)) {
             return false;
         }
@@ -162,5 +180,5 @@ public class APIService {
         }
         return true;
     }
-    
+
 }

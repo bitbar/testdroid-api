@@ -21,6 +21,7 @@ import org.apache.http.auth.ChallengeState;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.AuthCache;
 import org.apache.http.client.protocol.ClientContext;
+import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.conn.params.ConnRoutePNames;
 import org.apache.http.impl.auth.BasicScheme;
 import org.apache.http.impl.client.BasicAuthCache;
@@ -34,61 +35,59 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
+import java.net.URISyntaxException;
 import java.security.GeneralSecurityException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>, Sławomir Pawluk <slawomir.pawluk@bitbar.com>, Krzysztof Fonał <krzysztof.fonal@bitbar.com>
  */
 public class DefaultAPIClient implements APIClient {
 
-    private static final String TESTDROID_API_PACKAGES = "com.testdroid.api:com.testdroid.api.model";
+    public final static int HTTP_CONNECT_TIMEOUT = 60000;
+
+    public final static int HTTP_READ_TIMEOUT = 60000;
+
     protected static final String API_URI = "/api/v2";
-    private static final String DEVICES_URI = "/devices";
-    private static final String LABEL_GROUPS_URI = "/label-groups";
-    
-    protected static Credential getCredential() {
-        return new Credential.Builder(BearerToken.queryParameterAccessMethod()).build();
-    }
 
     static final JAXBContext context = initContext();
 
-    private static JAXBContext initContext() {
-        try {
-            ClassLoader cl = APIEntity.class.getClassLoader();
-            return JAXBContext.newInstance(TESTDROID_API_PACKAGES, cl);
-        } catch (JAXBException e) {
-            System.out.println("Failed initializing JAXBContext for DefaultAPIClient - API client will not work!");
-            e.printStackTrace();
-        }
-        return null;
-    }
-    protected JAXBContext getContext() {
-        return context;
-    }
-    
-    public final static int HTTP_CONNECT_TIMEOUT = 60000;
-    public final static int HTTP_READ_TIMEOUT = 60000;
     private final static int DEFAULT_CLIENT_CONNECT_TIMEOUT = 20000;
-    private final static int DEFAULT_CLIENT_REQUEST_TIMEOUT = 60000;
-    protected String cloudURL;
-    protected String apiURL;
-    protected String username;
-    protected String password;
-    protected String accessToken;
-    protected String refreshToken;
-    protected long accessTokenExpireTime = 0;
+
     private int clientConnectTimeout = DEFAULT_CLIENT_CONNECT_TIMEOUT;
-    private int clinetRequestTimeout = DEFAULT_CLIENT_REQUEST_TIMEOUT;
-    
+
+    private final static int DEFAULT_CLIENT_REQUEST_TIMEOUT = 60000;
+
+    private int clientRequestTimeout = DEFAULT_CLIENT_REQUEST_TIMEOUT;
+
+    private static final String DEVICES_URI = "/devices";
+
+    private static final String LABEL_GROUPS_URI = "/label-groups";
+
+    private static final String TESTDROID_API_PACKAGES = "com.testdroid.api:com.testdroid.api.model";
+
     protected final HttpTransport httpTransport;
-    
-    public DefaultAPIClient(String cloudURL, String username, String password) {                
+
+    protected String accessToken;
+
+    protected long accessTokenExpireTime = 0;
+
+    protected String apiURL;
+
+    protected String cloudURL;
+
+    protected String password;
+
+    protected String refreshToken;
+
+    protected String username;
+
+    public DefaultAPIClient(String cloudURL, String username, String password) {
         this(cloudURL, username, password, false);
     }
 
@@ -108,12 +107,13 @@ public class DefaultAPIClient implements APIClient {
         httpTransport = netHttpBuilder.build();
         initializeDefaultAPIClient(cloudURL, username, password);
     }
-    
-    public DefaultAPIClient(String cloudURL, String username, String password, HttpHost proxy, boolean skipCheckCertificate)  {
+
+    public DefaultAPIClient(String cloudURL, String username, String password, HttpHost proxy,
+            boolean skipCheckCertificate) {
         ApacheHttpTransport.Builder apacheBuilder;
         if (skipCheckCertificate) {
             try {
-                apacheBuilder = new ApacheHttpTransport.Builder().setProxy(proxy).doNotValidateCertificate();                        
+                apacheBuilder = new ApacheHttpTransport.Builder().setProxy(proxy).doNotValidateCertificate();
             } catch (GeneralSecurityException ex) {
                 Logger.getLogger(DefaultAPIClient.class.getName()).log(Level.WARNING, "Cannot set not-validating certificate. Certificate will be validating.", ex);
                 apacheBuilder = new ApacheHttpTransport.Builder().setProxy(proxy);
@@ -121,45 +121,65 @@ public class DefaultAPIClient implements APIClient {
         } else {
             apacheBuilder = new ApacheHttpTransport.Builder().setProxy(proxy);
         }
-        
+
         httpTransport = apacheBuilder.build();
         initializeDefaultAPIClient(cloudURL, username, password);
     }
-    
-    public DefaultAPIClient(String cloudURL, String username, String password, HttpHost proxy, final String proxyUser, final String proxyPassword, boolean skipCheckCertificate) {
+
+    public DefaultAPIClient(String cloudURL, String username, String password, HttpHost proxy, final String proxyUser,
+            final String proxyPassword, boolean skipCheckCertificate) {
         this(cloudURL, username, password, proxy, skipCheckCertificate);
-        
-        DefaultHttpClient apacheClient = (DefaultHttpClient)((ApacheHttpTransport)httpTransport).getHttpClient();
+
+        DefaultHttpClient apacheClient = (DefaultHttpClient) ((ApacheHttpTransport) httpTransport).getHttpClient();
         apacheClient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
         apacheClient.getCredentialsProvider().setCredentials(
-                new AuthScope(proxy.getHostName(), proxy.getPort()), 
-                new UsernamePasswordCredentials(proxyUser, proxyPassword));        
-                
+                new AuthScope(proxy.getHostName(), proxy.getPort()),
+                new UsernamePasswordCredentials(proxyUser, proxyPassword));
+
         final AuthCache authCache = new BasicAuthCache();
         final BasicScheme basicAuth = new BasicScheme(ChallengeState.PROXY);
         authCache.put(proxy, basicAuth);
-        
-        apacheClient.addRequestInterceptor(new HttpRequestInterceptor() {            
+
+        apacheClient.addRequestInterceptor(new HttpRequestInterceptor() {
             @Override
-            public void process(org.apache.http.HttpRequest hr, HttpContext hc) throws HttpException, IOException {    
-                hc.setAttribute(ClientContext.AUTH_CACHE, authCache);            
+            public void process(org.apache.http.HttpRequest hr, HttpContext hc) throws HttpException, IOException {
+                hc.setAttribute(ClientContext.AUTH_CACHE, authCache);
             }
         }, 0);
     }
-    
+
+    protected static Credential getCredential() {
+        return new Credential.Builder(BearerToken.queryParameterAccessMethod()).build();
+    }
+
+    private static JAXBContext initContext() {
+        try {
+            ClassLoader cl = APIEntity.class.getClassLoader();
+            return JAXBContext.newInstance(TESTDROID_API_PACKAGES, cl);
+        } catch (JAXBException e) {
+            System.out.println("Failed initializing JAXBContext for DefaultAPIClient - API client will not work!");
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    protected JAXBContext getContext() {
+        return context;
+    }
+
     private void initializeDefaultAPIClient(String cloudURL, String username, String password) {
-        if(cloudURL.endsWith("/")) {
+        if (cloudURL.endsWith("/")) {
             cloudURL = cloudURL.substring(0, cloudURL.length() - 1);
         }
         this.cloudURL = cloudURL;
         this.apiURL = cloudURL + API_URI;
         this.username = username;
-        this.password = APIEntity.encodeURL(password);
+        this.password = password;
     }
 
     protected HttpRequestFactory getRequestFactory(String accessToken) {
         final Credential credential = getCredential();
-        if(StringUtils.isNotBlank(accessToken)) {
+        if (StringUtils.isNotBlank(accessToken)) {
             credential.setAccessToken(accessToken);
         }
         return httpTransport.createRequestFactory(new HttpRequestInitializer() {
@@ -170,7 +190,7 @@ public class DefaultAPIClient implements APIClient {
             }
         });
     }
-    
+
     protected String getAccessToken() throws APIException {
         if (accessToken == null) {
             try {
@@ -191,22 +211,30 @@ public class DefaultAPIClient implements APIClient {
 
     protected String acquireAccessToken() throws APIException {
         try {
-            if(username == null && password == null) {
+            if (username == null && password == null) {
                 return "";
             }
-            
-            HttpRequest request = httpTransport.createRequestFactory().buildGetRequest(new GenericUrl(
-                    String.format("%s/oauth/token?client_id=testdroid-cloud-api&grant_type=password&username=%s&password=%s",
-                    cloudURL, username, password)));
+
+            GenericUrl url = new GenericUrl(String.format("%s/oauth/token", cloudURL));
+            HttpContent content = new UrlEncodedContent(new HashMap() {{
+                put("client_id", "testdroid-cloud-api");
+                put("grant_type", "password");
+                put("username", username);
+                put("password", password);
+            }});
+
+            HttpRequest request = httpTransport.createRequestFactory().buildPostRequest(url, content);
             request.setConnectTimeout(HTTP_CONNECT_TIMEOUT); // one minute
             request.setReadTimeout(HTTP_READ_TIMEOUT); // one minute            
-            request.setHeaders(new HttpHeaders().setAccept("application/json")); 
+            request.setHeaders(new HttpHeaders().setAccept("application/json"));
+
             HttpResponse response = request.execute();
             if (response.getStatusCode() != 200) {
                 throw new APIException(response.getStatusCode(), "Failed to acquire access token");
             }
-            String content = StringUtils.join(IOUtils.readLines(response.getContent()), "\n");
-            JSONObject json = JSONObject.fromObject(content);
+
+            String responseJson = StringUtils.join(IOUtils.readLines(response.getContent()), "\n");
+            JSONObject json = JSONObject.fromObject(responseJson);
             accessTokenExpireTime = System.currentTimeMillis() + (Long.parseLong(json.optString("expires_in")) * 1000);
             refreshToken = json.optString("refresh_token");
             return json.optString("access_token");
@@ -222,22 +250,30 @@ public class DefaultAPIClient implements APIClient {
             if (refreshToken == null) {
                 return null;
             }
-            HttpRequest request = httpTransport.createRequestFactory().buildGetRequest(new GenericUrl(
-                    String.format("%s/oauth/token?client_id=testdroid-cloud-api&grant_type=refresh_token&refresh_token=%s",
-                    cloudURL, refreshToken)));
+
+            GenericUrl url = new GenericUrl(String.format("%s/oauth/token", cloudURL));
+            HttpContent content = new UrlEncodedContent(new HashMap() {{
+                put("client_id", "testdroid-cloud-api");
+                put("grant_type", "refresh_token");
+                put("refresh_token", refreshToken);
+            }});
+
+            HttpRequest request = httpTransport.createRequestFactory().buildPostRequest(url, content);
             request.setConnectTimeout(HTTP_CONNECT_TIMEOUT); // one minute
             request.setReadTimeout(HTTP_READ_TIMEOUT); // one minute
             HttpResponse response = request.execute();
+
             if (response.getStatusCode() != 200) {
-                throw new APIException(response.getStatusCode(), "Failed to acquire access token");
+                throw new APIException(response.getStatusCode(), "Failed to refresh access token");
             }
-            String content = StringUtils.join(IOUtils.readLines(response.getContent()), "\n");
-            JSONObject json = JSONObject.fromObject(content);
+
+            String jsonContent = StringUtils.join(IOUtils.readLines(response.getContent()), "\n");
+            JSONObject json = JSONObject.fromObject(jsonContent);
             accessTokenExpireTime = System.currentTimeMillis() + (Long.parseLong(json.optString("expires_in")) * 1000);
             refreshToken = json.optString("refresh_token");
             return json.optString("access_token");
         } catch (IOException ex) {
-            throw new APIException(String.format("Failed to acquire access token. Reason: %s", ex.getMessage()), ex);
+            throw new APIException(String.format("Failed to refresh access token. Reason: %s", ex.getMessage()), ex);
         }
     }
 
@@ -248,18 +284,33 @@ public class DefaultAPIClient implements APIClient {
 
     @Override
     public void setRequestTimeout(int timeout) {
-        clinetRequestTimeout = timeout;
+        clientRequestTimeout = timeout;
     }
 
     @Override
     public <T extends APIEntity> T get(String uri, Class<T> type) throws APIException {
         try {
-            return getOnce(uri, type);
+            return getOnce(uri, null, type);
         } catch (APIException ex) {
             if (ex.getStatus() != null && HttpStatus.SC_UNAUTHORIZED == ex.getStatus()) {
                 // Access token may have expired. Clean and try again.
                 accessToken = null;
-                return getOnce(uri, type);
+                return getOnce(uri, null, type);
+            } else {
+                throw ex;
+            }
+        }
+    }
+
+    @Override
+    public <T extends APIEntity> T get(String uri, APIQueryBuilder queryBuilder, Class<T> type) throws APIException {
+        try {
+            return getOnce(uri, queryBuilder, type);
+        } catch (APIException ex) {
+            if (ex.getStatus() != null && HttpStatus.SC_UNAUTHORIZED == ex.getStatus()) {
+                // Access token may have expired. Clean and try again.
+                accessToken = null;
+                return getOnce(uri, queryBuilder, type);
             } else {
                 throw ex;
             }
@@ -284,24 +335,26 @@ public class DefaultAPIClient implements APIClient {
     /**
      * Tries to call API once. Returns expected entity or throws exception.
      */
-    private <T extends APIEntity> T getOnce(String uri, Class<T> type) throws APIException {
+    private <T extends APIEntity> T getOnce(String uri, APIQueryBuilder queryBuilder,
+            Class<T> type) throws APIException {
         // Build request
         HttpRequestFactory factory = getRequestFactory(getAccessToken());
         HttpRequest request;
         HttpResponse response;
         try {
-            // Call request and parse result            
-            request = factory.buildGetRequest(new GenericUrl(apiURL + uri));
+            // Call request and parse result
+            request = factory.buildGetRequest(new GenericUrl(buildUrl(apiURL + uri, queryBuilder)));
             request.setHeaders(new HttpHeaders().setAccept("application/xml"));
             request.setConnectTimeout(clientConnectTimeout);
-            request.setReadTimeout(clinetRequestTimeout);
+            request.setReadTimeout(clientRequestTimeout);
 
             response = request.execute();
-            if (!Arrays.asList(HttpStatus.SC_OK, HttpStatus.SC_ACCEPTED, HttpStatus.SC_CREATED, HttpStatus.SC_NO_CONTENT).contains(response.getStatusCode())) {
+            if (!Arrays.asList(HttpStatus.SC_OK, HttpStatus.SC_ACCEPTED, HttpStatus.SC_CREATED, HttpStatus.SC_NO_CONTENT)
+                    .contains(response.getStatusCode())) {
                 throw new APIException(response.getStatusCode(), String.format("Failed to execute api call: %s", uri));
             }
 
-            T result = (T) fromXML(response.getContent(), type);
+            T result = fromXML(response.getContent(), type);
             result.client = this;
             result.selfURI = uri;
             return result;
@@ -324,7 +377,7 @@ public class DefaultAPIClient implements APIClient {
         try {
             request = factory.buildGetRequest(new GenericUrl(apiURL + uri));
             request.setConnectTimeout(clientConnectTimeout);
-            request.setReadTimeout(clinetRequestTimeout);
+            request.setReadTimeout(clientRequestTimeout);
 
             response = request.execute();
             if (!Arrays.asList(HttpStatus.SC_OK, HttpStatus.SC_ACCEPTED, HttpStatus.SC_CREATED).contains(response.getStatusCode())) {
@@ -359,7 +412,8 @@ public class DefaultAPIClient implements APIClient {
         }
     }
 
-    protected <T extends APIEntity> T postOnce(String uri, Object body, String contentType, Class<T> type) throws APIException {
+    protected <T extends APIEntity> T postOnce(String uri, Object body, String contentType, Class<T> type)
+            throws APIException {
         if (contentType == null) {
             contentType = "application/xml";
         }
@@ -374,7 +428,7 @@ public class DefaultAPIClient implements APIClient {
             if (body instanceof File) {
                 MultipartFormDataContent multipartContent = new MultipartFormDataContent();
                 FileContent fileContent = new FileContent(contentType, (File) body);
-                
+
                 MultipartFormDataContent.Part filePart = new MultipartFormDataContent.Part("file", fileContent);
                 multipartContent.addPart(filePart);
 
@@ -384,21 +438,17 @@ public class DefaultAPIClient implements APIClient {
                 content = new InputStreamContent(contentType, (InputStream) body);
             } else if (body instanceof APIEntity) {
                 content = new InputStreamContent(contentType, IOUtils.toInputStream(((APIEntity) body).toXML()));
-            } else if(body instanceof HttpContent) {
+            } else if (body instanceof HttpContent) {
                 content = (HttpContent) body;
-            } else if(body instanceof Map) {
+            } else if (body instanceof Map) {
                 Map map = (Map) body;
-                // Set empty strings for nulls - otherwise it is not passed at all to server and parameters is ingored
-                for(Object key: map.keySet()) {
-                    if(map.get(key) == null) {
+                // Set empty strings for nulls - otherwise it is not passed at all to server and parameters is ignored
+                for (Object key : map.keySet()) {
+                    if (map.get(key) == null) {
                         map.put(key, "");
                     }
                 }
                 content = new UrlEncodedContent(map);
-            } else if(body instanceof String) {
-                // Only temporal change
-                // TODO change body type to Map<String, Object> and use it there.
-                content = new UrlEncodedContent(urlEncodedDataToMap((String) body));
             } else if (body == null) {
                 content = null;
             } else {
@@ -407,7 +457,7 @@ public class DefaultAPIClient implements APIClient {
             request = factory.buildPostRequest(new GenericUrl(resourceUrl), content);
             request.setHeaders(headers);
             request.setConnectTimeout(clientConnectTimeout);
-            request.setReadTimeout(clinetRequestTimeout);
+            request.setReadTimeout(clientRequestTimeout);
 
             // Call request and parse result
             response = request.execute();
@@ -420,8 +470,8 @@ public class DefaultAPIClient implements APIClient {
                 throw new APIException(response.getStatusCode(), "Failed to post resource: " + response.getStatusMessage());
             }
 
-            if(type != null) {
-                T result = (T) fromXML(response.getContent(), type);
+            if (type != null) {
+                T result = fromXML(response.getContent(), type);
                 result.client = this;
                 result.selfURI = uri;
 
@@ -430,7 +480,7 @@ public class DefaultAPIClient implements APIClient {
                     result.selfURI += String.format("/%s", result.getId());
                 }
                 return result;
-            } else { 
+            } else {
                 return null;
 
             }
@@ -439,8 +489,7 @@ public class DefaultAPIClient implements APIClient {
                 try {
                     APIExceptionMessage exceptionMessage = fromXML(ex.getContent(), APIExceptionMessage.class);
                     throw new APIException(ex.getStatusCode(), exceptionMessage.getMessage(), ex);
-                }
-                catch(Exception e) { 
+                } catch (Exception e) {
                     // Catch exceptions related to xml unserialization. Those are usually internal server exceptions and are not properly serialized.
                     // In such case we just put pure response content as a message
                     throw new APIException(ex.getStatusCode(), ex.getContent(), ex);
@@ -454,7 +503,8 @@ public class DefaultAPIClient implements APIClient {
     }
 
     @Override
-    public <T extends APIEntity> T postFile(String uri, String contentType, File file, Class<T> type) throws APIException {
+    public <T extends APIEntity> T postFile(String uri, String contentType, File file, Class<T> type)
+            throws APIException {
         try {
             return postOnce(uri, file, contentType, type);
         } catch (APIException ex) {
@@ -491,7 +541,7 @@ public class DefaultAPIClient implements APIClient {
             request = factory.buildDeleteRequest(new GenericUrl(apiURL + uri));
             request.setHeaders(new HttpHeaders().setAccept("application/xml"));
             request.setConnectTimeout(clientConnectTimeout);
-            request.setReadTimeout(clinetRequestTimeout);
+            request.setReadTimeout(clientRequestTimeout);
 
             response = request.execute();
             if (response == null) {
@@ -520,48 +570,49 @@ public class DefaultAPIClient implements APIClient {
 
     @Override
     public APIUser register(String email) throws APIException {
-        APIUser result = post("/users", String.format("email=%s", email), APIUser.class);
+        APIUser result = post("/users", Collections.singletonMap("email", email), APIUser.class);
         result.selfURI = "/me";
         return result;
     }
 
     @Override
     public APIListResource<APIDevice> getDevices() throws APIException {
-        return new APIListResource<APIDevice>(this, DEVICES_URI, APIDevice.class);
+        return new APIListResource<>(this, DEVICES_URI);
     }
-    
+
     @Override
     public APIListResource<APIDevice> getDevices(APIDevice.DeviceFilter... filters) throws APIException {
-        return new APIListResource<APIDevice>(this, DEVICES_URI, new APIDeviceQueryBuilder().filterWithDeviceFilters(filters), APIDevice.class);
+        return new APIListResource<>(this, DEVICES_URI, new APIDeviceQueryBuilder().filterWithDeviceFilters(filters));
     }
 
     @Override
     public APIListResource<APIDevice> getDevices(APIDeviceQueryBuilder queryBuilder) throws APIException {
-        return new APIListResource<APIDevice>(this, DEVICES_URI, queryBuilder, APIDevice.class);
+        return new APIListResource<>(this, DEVICES_URI, queryBuilder);
     }
-    
+
     @Override
-    public APIListResource<APIDevice> getDevices(long offset, long limit, String search, APISort sort, APIDevice.DeviceFilter... filters) throws APIException {
-        if(limit <= 0) {
+    public APIListResource<APIDevice> getDevices(long offset, long limit, String search, APISort sort,
+            APIDevice.DeviceFilter... filters) throws APIException {
+        if (limit <= 0) {
             limit = 10;
         }
-        APIDeviceQueryBuilder builder = new APIDeviceQueryBuilder().offset((int)offset).limit((int)limit).search(search).filterWithDeviceFilters(filters);
-        if(sort != null) {
+        APIDeviceQueryBuilder builder = new APIDeviceQueryBuilder().offset((int) offset).limit((int) limit).search(search).filterWithDeviceFilters(filters);
+        if (sort != null) {
             builder.sort(APIDevice.class, sort.getItems());
         }
-        return new APIListResource<APIDevice>(this, DEVICES_URI, builder, APIDevice.class);
+        return new APIListResource<>(this, DEVICES_URI, builder);
     }
 
     @Override
     public APIListResource<APILabelGroup> getLabelGroups() throws APIException {
-        return new APIListResource<APILabelGroup>(this, LABEL_GROUPS_URI, APILabelGroup.class);
+        return new APIListResource<>(this, LABEL_GROUPS_URI);
     }
 
     @Override
     public APIListResource<APILabelGroup> getLabelGroups(APIQueryBuilder queryBuilder) throws APIException {
-        return new APIListResource<APILabelGroup>(this, LABEL_GROUPS_URI, queryBuilder, APILabelGroup.class);
+        return new APIListResource<>(this, LABEL_GROUPS_URI, queryBuilder);
     }
-    
+
     private <T> T fromXML(String xml, Class<T> type) throws APIException {
         try {
             Unmarshaller unmarshaller = getContext().createUnmarshaller();
@@ -579,18 +630,19 @@ public class DefaultAPIClient implements APIClient {
             throw new APIException(String.format("Failed to parse response as %s", type.getName()));
         }
     }
-    
-    private Map<String, Object> urlEncodedDataToMap(String data) {
-        Map<String, Object> result = new HashMap<String, Object>();
-        String[] variablesAndValues = data.split("&");
-        for(String pair: variablesAndValues) {
-            String[] variableData = pair.split("=");
-            if(variableData.length == 2) {
-                result.put(variableData[0], variableData[1]);
-            } else if(variableData.length == 1) {
-                result.put(variableData[0], "");
+
+    private String buildUrl(String url, APIQueryBuilder queryBuilder) throws APIException {
+        try {
+            URIBuilder builder = new URIBuilder(url);
+            if (queryBuilder != null) {
+                for (Map.Entry<String, Object> entry : queryBuilder.build().entrySet()) {
+                    builder.addParameter(entry.getKey(), entry.getValue() == null ? "" : entry.getValue().toString());
+                }
             }
+            return builder.build().toString();
+        } catch (URISyntaxException e) {
+            throw new APIException(String.format("Bad URL: %s", e.getMessage()));
         }
-        return result;
     }
+
 }

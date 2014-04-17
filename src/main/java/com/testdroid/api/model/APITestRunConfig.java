@@ -1,48 +1,51 @@
 package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
-import static com.testdroid.api.APIEntity.createUri;
 import com.testdroid.api.APIException;
 import com.testdroid.api.APIListResource;
 import com.testdroid.api.APIQueryBuilder;
-import java.util.HashMap;
-import java.util.Map;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
- *
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
  */
 @XmlRootElement
 public class APITestRunConfig extends APIEntity {
-    
+
     @XmlType(namespace = "APITestRunConfig")
     public static enum Scheduler {
         PARALLEL, SERIAL, SINGLE;
     }
-    
+
     @XmlType(namespace = "APITestRunConfig")
     public static enum LimitationType {
         PACKAGE, CLASS;
     }
-    
+
     @XmlType(namespace = "APITestRunConfig")
     public static enum Mode {
 
-        FULL_RUN("Full run"), 
-        APP_CRAWLER("App crawler"), 
-        CTS("CTS"), 
-        IOS("iOS"), 
-        UIAUTOMATOR("UIAutomator"), 
+        FULL_RUN("Full run"),
+        APP_CRAWLER("App crawler"),
+        CTS("CTS"),
+        IOS("iOS"),
+        UIAUTOMATOR("UIAutomator"),
         REMOTECONTROL("Remote control"),
         RECORDERONLINE("Recorder online"),
-        CALABASH("Calabash");
-        
+        CALABASH("Calabash Android"),
+        CALABASH_IOS("Calabash iOS"),
+        APPIUM_ANDROID("Appium Android"),
+        APPIUM_IOS("Appium iOS"),
+        IOS_CRAWLER("iOS App crawler");
+
         private String friendlyName;
-        
-        private Mode(String friendlyName){
+
+        private Mode(String friendlyName) {
             this.friendlyName = friendlyName;
         }
 
@@ -50,35 +53,60 @@ public class APITestRunConfig extends APIEntity {
             return friendlyName;
         }
     }
-    
-    private Long projectId;
-    private Scheduler scheduler;
-    private Mode mode;
-    private boolean autoScreenshots;
-    private boolean runAvailable;
-    private String screenshotDir;
-    private LimitationType limitationType;
-    private String limitationValue;
-    private String withAnnotation;
-    private String withoutAnnotation;
-    private String applicationUsername;
-    private String applicationPassword;
-    private Long usedDeviceGroupId;
-    private Integer creditsPrice;
-    private String deviceLanguageCode;
-    private String hookURL;
-    private String uiAutomatorTestClasses;
-    private boolean launchApp;
-    private String instrumentationRunner;
-    private boolean checkApp;
+
     private boolean appRequired;
 
-    public APITestRunConfig() {}
+    private String applicationPassword;
 
-    public APITestRunConfig(Long id, Long projectId, Scheduler scheduler, Mode mode, boolean autoScreenshots, boolean runAvailable, 
-            String screenshotDir, LimitationType limitationType, String limitationValue, String withAnnotation, String withoutAnnotation, 
-            String applicationUsername, String applicationPassword, Long usedClusterId, Integer creditsPrice, String deviceLanguageCode, String hookURL,
-            String uiAutomatorTestClasses, Boolean launchApp, String instrumentationRunner, Boolean checkApp, Boolean appRequired) {
+    private String applicationUsername;
+
+    private boolean autoScreenshots;
+
+    private boolean checkApp;
+
+    private Integer creditsPrice;
+
+    private String deviceLanguageCode;
+
+    private String hookURL;
+
+    private String instrumentationRunner;
+
+    private boolean launchApp;
+
+    private LimitationType limitationType;
+
+    private String limitationValue;
+
+    private Mode mode;
+
+    private Long projectId;
+
+    private boolean runAvailable;
+
+    private Scheduler scheduler;
+
+    private String screenshotDir;
+
+    private String uiAutomatorTestClasses;
+
+    private Long usedDeviceGroupId;
+
+    private String withAnnotation;
+
+    private String withoutAnnotation;
+
+    public APITestRunConfig() {
+    }
+
+    public APITestRunConfig(Long id, Long projectId, Scheduler scheduler, Mode mode, boolean autoScreenshots,
+            boolean runAvailable,
+            String screenshotDir, LimitationType limitationType, String limitationValue, String withAnnotation,
+            String withoutAnnotation,
+            String applicationUsername, String applicationPassword, Long usedClusterId, Integer creditsPrice,
+            String deviceLanguageCode, String hookURL,
+            String uiAutomatorTestClasses, Boolean launchApp, String instrumentationRunner, Boolean checkApp,
+            Boolean appRequired) {
         super(id);
         this.projectId = projectId;
         this.scheduler = scheduler;
@@ -270,9 +298,11 @@ public class APITestRunConfig extends APIEntity {
     public void setAppRequired(boolean appRequired) {
         this.appRequired = appRequired;
     }
-    
-    private String getParametersURI() { return createUri(selfURI, "/parameters"); }
-    
+
+    private String getParametersURI() {
+        return createUri(selfURI, "/parameters");
+    }
+
     @JsonIgnore
     public APITestRunParameter createParameter(final String key, final String value) throws APIException {
         Map<String, Object> body = new HashMap<String, Object>() {{
@@ -281,22 +311,22 @@ public class APITestRunConfig extends APIEntity {
         }};
         return postResource(getParametersURI(), body, APITestRunParameter.class);
     }
-    
+
     @JsonIgnore
     public APIListResource<APITestRunParameter> getParameters() throws APIException {
-        return getListResource(getParametersURI(), APITestRunParameter.class);
+        return getListResource(getParametersURI());
     }
-    
+
     @JsonIgnore
     public APIListResource<APITestRunParameter> getParameters(APIQueryBuilder queryBuilder) throws APIException {
-        return getListResource(getParametersURI(), queryBuilder, APITestRunParameter.class);
+        return getListResource(getParametersURI(), queryBuilder);
     }
-    
+
     @JsonIgnore
     public void deleteParameter(long parameterId) throws APIException {
         deleteResource(String.format("%s/%s", getParametersURI(), parameterId));
     }
-    
+
     public void update() throws APIException {
         Map<String, Object> body = new HashMap<String, Object>() {{
             put("scheduler", scheduler != null ? scheduler.name() : null);
@@ -349,5 +379,5 @@ public class APITestRunConfig extends APIEntity {
         this.withAnnotation = apiTestRunConfig.withAnnotation;
         this.withoutAnnotation = apiTestRunConfig.withoutAnnotation;
     }
-    
+
 }
