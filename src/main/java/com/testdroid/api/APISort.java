@@ -38,8 +38,8 @@ public class APISort {
     }
     
     public static enum Column {
+        DEVICE_NAME(APIDevice.class, "name"),
         DEVICE_OS_TYPE(APIDevice.class, "osType"),
-
         DEVICE_VNC_SUPPORTED(APIDevice.class, "vncSupported"),
         DEVICE_GROUP_ID(APIDeviceGroup.class, "id"),
         DEVICE_GROUP_NAME(APIDeviceGroup.class, "displayName"),
@@ -90,8 +90,7 @@ public class APISort {
         USER_COUNTRY(APIUser.class, "localeCountry"),
         USER_EMAIL(APIUser.class, "email"),
         USER_ID(APIUser.class, "id"),
-        USER_NAME(APIUser.class, "name"),
-        DEVICE_NAME(APIDevice.class, "name");
+        USER_NAME(APIUser.class, "name");
 
         public static enum NameType {
             RELATIVE,
