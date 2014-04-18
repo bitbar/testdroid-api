@@ -443,11 +443,7 @@ public class DefaultAPIClient implements APIClient {
             } else if (body instanceof Map) {
                 Map map = (Map) body;
                 // Set empty strings for nulls - otherwise it is not passed at all to server and parameters is ignored
-                for (Object key : map.keySet()) {
-                    if (map.get(key) == null) {
-                        map.put(key, "");
-                    }
-                }
+                fixMapParameters(map);
                 content = new UrlEncodedContent(map);
             } else if (body == null) {
                 content = null;
@@ -643,6 +639,18 @@ public class DefaultAPIClient implements APIClient {
         } catch (URISyntaxException e) {
             throw new APIException(String.format("Bad URL: %s", e.getMessage()));
         }
+    }
+
+    private Map fixMapParameters(Map map) {
+        for (Object key : map.keySet()) {
+            if (map.get(key) == null) {
+                map.put(key, "");
+            }
+            if(map.get(key) instanceof Enum<?>) {
+                map.put(key, map.get(key).toString());
+            }
+        }
+        return map;
     }
 
 }

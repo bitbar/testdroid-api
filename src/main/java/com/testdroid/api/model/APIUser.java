@@ -231,8 +231,8 @@ public class APIUser extends APIEntity {
         }};
     }
 
-    public APIProject createProject(APIProject.Type type) throws APIException {
-        return postResource(getProjectsURI(), Collections.singletonMap("type", type), APIProject.class);
+    public APIProject createProject(final APIProject.Type projectType) throws APIException {
+        return postResource(getProjectsURI(), new HashMap<String, Object>(){{put("type", projectType);}}, APIProject.class);
     }
 
     public APIProject createProject(APIProject.Type type, String name) throws APIException {
@@ -357,8 +357,10 @@ public class APIUser extends APIEntity {
     }
 
     @JsonIgnore
-    public APINotificationEmail updateNotificationEmail(long id, APINotificationEmail.Type type) throws APIException {
-        return postResource(getNotificationURI(id), Collections.singletonMap("type", type), APINotificationEmail.class);
+    public APINotificationEmail updateNotificationEmail(long id, final APINotificationEmail.Type emailType)
+            throws APIException {
+        return postResource(getNotificationURI(id), new HashMap<String, Object>() {{ put("type", emailType); }},
+                APINotificationEmail.class);
     }
 
     @JsonIgnore
