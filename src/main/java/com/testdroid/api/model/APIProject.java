@@ -277,6 +277,12 @@ public class APIProject extends APIEntity {
         }};
     }
 
+    private Map<String, Object> getShareParameters(final String email) {
+        return new HashMap<String, Object>() {{
+            put("email", email);
+        }};
+    }
+
     @JsonIgnore
     public APITestRunConfig getTestRunConfig() throws APIException {
         if (testRunConfig == null) {
@@ -380,7 +386,7 @@ public class APIProject extends APIEntity {
 
     @JsonIgnore
     public APIProjectSharing share(String email) throws APIException {
-        return postResource(getSharingsURI(), String.format("email=%s", email), APIProjectSharing.class);
+        return postResource(getSharingsURI(), getShareParameters(email), APIProjectSharing.class);
     }
 
     @JsonIgnore
