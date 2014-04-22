@@ -4,7 +4,6 @@ import com.testdroid.api.*;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -191,11 +190,16 @@ public class APIUser extends APIEntity {
         return createUri(selfURI, "/available-project-types");
     }
 
-    private Map<String, Object> getCreateNotificationParams(final String email, final APINotificationEmail.Type type) {
+    private Map<String, Object> getNotificationEmailParams(final APINotificationEmail.Type type) {
         return new HashMap<String, Object>() {{
-            put("email", email);
             put("type", type);
         }};
+    }
+
+    private Map<String, Object> getNotificationEmailParams(String email, APINotificationEmail.Type type) {
+        Map<String, Object> result = getNotificationEmailParams(type);
+        result.put("email", email);
+        return result;
     }
 
     private Map<String, Object> getUpdateUserParams(final String address, final String city, final String code,
@@ -224,15 +228,20 @@ public class APIUser extends APIEntity {
         }};
     }
 
-    private Map<String, Object> getCreateProjectParams(final APIProject.Type type, final String name) {
+    private Map<String, Object> getCreateProjectParams(final APIProject.Type type) {
         return new HashMap<String, Object>() {{
-            put("name", name);
             put("type", type);
         }};
     }
 
-    public APIProject createProject(APIProject.Type type) throws APIException {
-        return postResource(getProjectsURI(), Collections.singletonMap("type", type), APIProject.class);
+    private Map<String, Object> getCreateProjectParams(APIProject.Type type, String name) {
+        Map<String, Object> result = getCreateProjectParams(type);
+        result.put("name", name);
+        return result;
+    }
+
+    public APIProject createProject(APIProject.Type projectType) throws APIException {
+        return postResource(getProjectsURI(), getCreateProjectParams(projectType), APIProject.class);
     }
 
     public APIProject createProject(APIProject.Type type, String name) throws APIException {
@@ -321,7 +330,7 @@ public class APIUser extends APIEntity {
     @JsonIgnore
     public APINotificationEmail createNotificationEmail(String email, APINotificationEmail.Type type)
             throws APIException {
-        return postResource(getNotificationsURI(), getCreateNotificationParams(email, type), APINotificationEmail.class);
+        return postResource(getNotificationsURI(), getNotificationEmailParams(email, type), APINotificationEmail.class);
     }
 
     @JsonIgnore
@@ -357,8 +366,10 @@ public class APIUser extends APIEntity {
     }
 
     @JsonIgnore
-    public APINotificationEmail updateNotificationEmail(long id, APINotificationEmail.Type type) throws APIException {
-        return postResource(getNotificationURI(id), Collections.singletonMap("type", type), APINotificationEmail.class);
+    public APINotificationEmail updateNotificationEmail(long id, APINotificationEmail.Type emailType)
+            throws APIException {
+        return postResource(getNotificationURI(id), getNotificationEmailParams(emailType),
+                APINotificationEmail.class);
     }
 
     @JsonIgnore

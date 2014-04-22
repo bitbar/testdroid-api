@@ -7,6 +7,7 @@ import org.codehaus.jackson.map.annotate.JsonView;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,6 +35,7 @@ public class APIList<T extends APIEntity> extends APIEntity {
     private Integer total;
 
     public APIList() {
+        data = new ArrayList<>();
     }
 
     public APIList(String next, String previous, List<T> data, Integer total, String search, String sort) {
