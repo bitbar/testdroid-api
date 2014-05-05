@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 /**
- * Damian Sniezek <damian.sniezek@bitbar.com>
+ * @author Damian Sniezek <damian.sniezek@bitbar.com>
  */
 @XmlRootElement(name = "APIBasicJiraAccount", namespace = "cloud.testdroid.api.jira.model")
 @XmlType(name = "APIBasicJiraAccount", namespace = "cloud.testdroid.api.jira.model")
