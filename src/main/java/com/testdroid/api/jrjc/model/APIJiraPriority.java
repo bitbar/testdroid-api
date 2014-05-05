@@ -37,3 +37,4 @@ public class APIJiraPriority extends APIEntity {
         this.name = jiraPriority.name;
     }
 }
+
