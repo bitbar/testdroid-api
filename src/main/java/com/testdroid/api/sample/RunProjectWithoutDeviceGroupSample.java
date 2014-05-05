@@ -41,13 +41,16 @@ public class RunProjectWithoutDeviceGroupSample {
             testRunConfig.update();
 
             // Upload application
-            project.uploadApplication(new File(RunProjectWithoutDeviceGroupSample.class.getResource(Common.ANDROID_APPLICATION_RESOURCE_PATH).getPath()), Common.ANDROID_FILE_MIME_TYPE);
+            project.uploadApplication(new File(RunProjectWithoutDeviceGroupSample.class
+                    .getResource(Common.ANDROID_APPLICATION_RESOURCE_PATH).getPath()), Common.ANDROID_FILE_MIME_TYPE);
 
             // Upload test
-            project.uploadTest(new File(RunProjectWithoutDeviceGroupSample.class.getResource(Common.ANDROID_TEST_RESOURCE_PATH).getPath()), Common.ANDROID_FILE_MIME_TYPE);
+            project.uploadTest(new File(RunProjectWithoutDeviceGroupSample.class
+                    .getResource(Common.ANDROID_TEST_RESOURCE_PATH).getPath()), Common.ANDROID_FILE_MIME_TYPE);
 
             // Upload data
-            project.uploadData(new File(RunProjectWithoutDeviceGroupSample.class.getResource(Common.DATA_FILE_RESOURCE_PATH).getPath()), Common.ZIP_FILE_MIME_TYPE);
+            project.uploadData(new File(RunProjectWithoutDeviceGroupSample.class
+                    .getResource(Common.DATA_FILE_RESOURCE_PATH).getPath()), Common.ZIP_FILE_MIME_TYPE);
 
             // Run test run
             APITestRun testRun = project.run("My test run", getDeviceIds());

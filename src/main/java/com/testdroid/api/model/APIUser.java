@@ -43,7 +43,8 @@ public class APIUser extends APIEntity {
     public APIUser() {
     }
 
-    public APIUser(Long id, String email, String name, String state, String country, String city, String code,
+    public APIUser(
+            Long id, String email, String name, String state, String country, String city, String code,
             String address, String phone,
             String organization, String vatID, String timeZone, boolean enabled, APIRole... roles) {
         super(id);
@@ -202,7 +203,8 @@ public class APIUser extends APIEntity {
         return result;
     }
 
-    private Map<String, Object> getUpdateUserParams(final String address, final String city, final String code,
+    private Map<String, Object> getUpdateUserParams(
+            final String address, final String city, final String code,
             final String country, final String email,
             final String name, final String organization, final String phone, final String state, final String timeZone,
             final String vatId) {
@@ -360,7 +362,8 @@ public class APIUser extends APIEntity {
      * @deprecated
      */
     @JsonIgnore
-    public APIListResource<APINotificationEmail> getNotificationEmails(long offset, long limit, String search,
+    public APIListResource<APINotificationEmail> getNotificationEmails(
+            long offset, long limit, String search,
             APISort sort) throws APIException {
         return getListResource(getNotificationsURI(), offset, limit, search, sort, APINotificationEmail.class);
     }

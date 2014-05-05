@@ -16,7 +16,11 @@ public class APIDeviceRunState extends APIEntity {
 
     @XmlType(namespace = "APIDeviceRunState")
     public static enum Status {
-        STARTED, EXCLUDED, FAILED, SUCCEEDED, NOT_AVAILABLE
+        STARTED,
+        EXCLUDED,
+        FAILED,
+        SUCCEEDED,
+        NOT_AVAILABLE
     }
 
     private Long deviceRunId;
@@ -36,7 +40,8 @@ public class APIDeviceRunState extends APIEntity {
     public APIDeviceRunState() {
     }
 
-    public APIDeviceRunState(Long id, Long deviceRunId, Long startTimeMS, Long finishTimeMS, Date retryTime,
+    public APIDeviceRunState(
+            Long id, Long deviceRunId, Long startTimeMS, Long finishTimeMS, Date retryTime,
             String failReason, Status status, DeviceRunStateType type) {
         super(id);
         this.deviceRunId = deviceRunId;

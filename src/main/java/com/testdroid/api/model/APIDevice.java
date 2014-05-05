@@ -18,7 +18,9 @@ public class APIDevice extends APIEntity {
 
     @XmlType
     public static enum DeviceFilter {
-        FREE, RECOMMENDED, NEW
+        FREE,
+        RECOMMENDED,
+        NEW
     }
 
     @XmlType(namespace = "APIDevice")
@@ -74,7 +76,8 @@ public class APIDevice extends APIEntity {
     public APIDevice() {
     }
 
-    public APIDevice(Long id, String displayName, APISoftwareVersion softwareVersion, Integer creditsPrice,
+    public APIDevice(
+            Long id, String displayName, APISoftwareVersion softwareVersion, Integer creditsPrice,
             String imagePrefix, Integer imageTop, Integer imageLeft, Integer imageWidth, Integer imageHeight,
             Integer frameExtraWidth, OsType osType, String frame80Url, String frame100Url, String frame160Url,
             String frame400Url, Boolean online, Boolean locked, Boolean vncSupported) {

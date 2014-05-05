@@ -44,11 +44,13 @@ public class AndroidFiles extends APIFiles {
     }
 
     public void uploadApp(File file) throws APIException {
-        this.app = client.postFile(getApplicationURI(), "application/vnd.android.package-archive", file, AndroidAppFile.class);
+        this.app = client
+                .postFile(getApplicationURI(), "application/vnd.android.package-archive", file, AndroidAppFile.class);
     }
 
     public void uploadTest(File file) throws APIException {
-        this.test = client.postFile(getTestURI(), "application/vnd.android.package-archive", file, AndroidTestFile.class);
+        this.test = client
+                .postFile(getTestURI(), "application/vnd.android.package-archive", file, AndroidTestFile.class);
     }
 
     @Override

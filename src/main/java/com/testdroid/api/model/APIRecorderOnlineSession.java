@@ -17,7 +17,8 @@ public class APIRecorderOnlineSession extends APIEntity {
 
     @XmlType(namespace = "APIRecorderOnlineSession")
     public static enum Action {
-        UPDATE, CLOSE
+        UPDATE,
+        CLOSE
     }
 
     private Date endTime;
@@ -33,7 +34,8 @@ public class APIRecorderOnlineSession extends APIEntity {
     public APIRecorderOnlineSession() {
     }
 
-    public APIRecorderOnlineSession(Long id, String screenplayContent, Date startTime, Date endTime, Date updateTime,
+    public APIRecorderOnlineSession(
+            Long id, String screenplayContent, Date startTime, Date endTime, Date updateTime,
             String sessionKey) {
         super(id);
         this.screenplayContent = screenplayContent;

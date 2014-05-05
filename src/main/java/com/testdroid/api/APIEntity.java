@@ -172,7 +172,8 @@ public abstract class APIEntity {
     }
 
     @JsonIgnore
-    protected <T extends APIEntity> APIListResource<T> getListResource(String uri, long offset, long limit,
+    protected <T extends APIEntity> APIListResource<T> getListResource(
+            String uri, long offset, long limit,
             String search, APISort sort, Class<T> type) throws APIException {
         checkClient(client);
         if (limit <= 0) {

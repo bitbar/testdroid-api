@@ -168,7 +168,8 @@ public abstract class APIFiles extends APIEntity {
         public AndroidTestFile() {
         }
 
-        public AndroidTestFile(Long id, String originalName, Date uploadTime, String readableSize, String packageName,
+        public AndroidTestFile(
+                Long id, String originalName, Date uploadTime, String readableSize, String packageName,
                 String mainActivity, Integer minSdk) {
             super(id, originalName, uploadTime, readableSize);
             this.packageName = packageName;
@@ -222,7 +223,8 @@ public abstract class APIFiles extends APIEntity {
         public IOSAppFile() {
         }
 
-        public IOSAppFile(Long id, String originalName, Date uploadTime, String readableSize, String bundleName,
+        public IOSAppFile(
+                Long id, String originalName, Date uploadTime, String readableSize, String bundleName,
                 String bundleIdentifier) {
             super(id, originalName, uploadTime, readableSize);
             this.bundleName = bundleName;
@@ -286,7 +288,8 @@ public abstract class APIFiles extends APIEntity {
         public UIAutomatorTestFile() {
         }
 
-        public UIAutomatorTestFile(Long id, String originalName, Date uploadTime, String readableSize,
+        public UIAutomatorTestFile(
+                Long id, String originalName, Date uploadTime, String readableSize,
                 String jarNames) {
             super(id, originalName, uploadTime, readableSize);
             this.jarNames = jarNames;

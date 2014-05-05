@@ -45,7 +45,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * @author Łukasz Kajda <lukasz.kajda@bitbar.com>, Sławomir Pawluk <slawomir.pawluk@bitbar.com>, Krzysztof Fonał <krzysztof.fonal@bitbar.com>
+ * @author Łukasz Kajda <lukasz.kajda@bitbar.com>, Sławomir Pawluk <slawomir.pawluk@bitbar.com>,
+ * Krzysztof Fonał <krzysztof.fonal@bitbar.com>
  */
 public class DefaultAPIClient implements APIClient {
 
@@ -97,7 +98,8 @@ public class DefaultAPIClient implements APIClient {
             try {
                 netHttpBuilder = new NetHttpTransport.Builder().doNotValidateCertificate();
             } catch (GeneralSecurityException ex) {
-                Logger.getLogger(DefaultAPIClient.class.getName()).log(Level.WARNING, "Cannot set not-validating certificate. Certificate will be validating.", ex);
+                Logger.getLogger(DefaultAPIClient.class.getName())
+                      .log(Level.WARNING, "Cannot set not-validating certificate. Certificate will be validating.", ex);
                 netHttpBuilder = new NetHttpTransport.Builder();
             }
         } else {
@@ -108,14 +110,16 @@ public class DefaultAPIClient implements APIClient {
         initializeDefaultAPIClient(cloudURL, username, password);
     }
 
-    public DefaultAPIClient(String cloudURL, String username, String password, HttpHost proxy,
+    public DefaultAPIClient(
+            String cloudURL, String username, String password, HttpHost proxy,
             boolean skipCheckCertificate) {
         ApacheHttpTransport.Builder apacheBuilder;
         if (skipCheckCertificate) {
             try {
                 apacheBuilder = new ApacheHttpTransport.Builder().setProxy(proxy).doNotValidateCertificate();
             } catch (GeneralSecurityException ex) {
-                Logger.getLogger(DefaultAPIClient.class.getName()).log(Level.WARNING, "Cannot set not-validating certificate. Certificate will be validating.", ex);
+                Logger.getLogger(DefaultAPIClient.class.getName())
+                      .log(Level.WARNING, "Cannot set not-validating certificate. Certificate will be validating.", ex);
                 apacheBuilder = new ApacheHttpTransport.Builder().setProxy(proxy);
             }
         } else {
@@ -126,7 +130,8 @@ public class DefaultAPIClient implements APIClient {
         initializeDefaultAPIClient(cloudURL, username, password);
     }
 
-    public DefaultAPIClient(String cloudURL, String username, String password, HttpHost proxy, final String proxyUser,
+    public DefaultAPIClient(
+            String cloudURL, String username, String password, HttpHost proxy, final String proxyUser,
             final String proxyPassword, boolean skipCheckCertificate) {
         this(cloudURL, username, password, proxy, skipCheckCertificate);
 
@@ -239,7 +244,8 @@ public class DefaultAPIClient implements APIClient {
             refreshToken = json.optString("refresh_token");
             return json.optString("access_token");
         } catch (HttpResponseException ex) {
-            throw new APIException(String.format("Failed to acquire access token. Reason: %s", ex.getStatusMessage()), ex);
+            throw new APIException(String
+                    .format("Failed to acquire access token. Reason: %s", ex.getStatusMessage()), ex);
         } catch (IOException ex) {
             throw new APIException(String.format("Failed to acquire access token. Reason: %s", ex.getMessage()), ex);
         }
@@ -335,7 +341,8 @@ public class DefaultAPIClient implements APIClient {
     /**
      * Tries to call API once. Returns expected entity or throws exception.
      */
-    private <T extends APIEntity> T getOnce(String uri, APIQueryBuilder queryBuilder,
+    private <T extends APIEntity> T getOnce(
+            String uri, APIQueryBuilder queryBuilder,
             Class<T> type) throws APIException {
         // Build request
         HttpRequestFactory factory = getRequestFactory(getAccessToken());
@@ -349,7 +356,8 @@ public class DefaultAPIClient implements APIClient {
             request.setReadTimeout(clientRequestTimeout);
 
             response = request.execute();
-            if (!Arrays.asList(HttpStatus.SC_OK, HttpStatus.SC_ACCEPTED, HttpStatus.SC_CREATED, HttpStatus.SC_NO_CONTENT)
+            if (!Arrays
+                    .asList(HttpStatus.SC_OK, HttpStatus.SC_ACCEPTED, HttpStatus.SC_CREATED, HttpStatus.SC_NO_CONTENT)
                     .contains(response.getStatusCode())) {
                 throw new APIException(response.getStatusCode(), String.format("Failed to execute api call: %s", uri));
             }
@@ -366,7 +374,8 @@ public class DefaultAPIClient implements APIClient {
                 throw new APIException(ex.getStatusCode(), ex.getMessage());
             }
         } catch (IOException ex) {
-            throw new APIException(String.format("Failed to execute API call: %s. Reason: %s", uri, ex.getMessage()), ex);
+            throw new APIException(String
+                    .format("Failed to execute API call: %s. Reason: %s", uri, ex.getMessage()), ex);
         }
     }
 
@@ -380,7 +389,8 @@ public class DefaultAPIClient implements APIClient {
             request.setReadTimeout(clientRequestTimeout);
 
             response = request.execute();
-            if (!Arrays.asList(HttpStatus.SC_OK, HttpStatus.SC_ACCEPTED, HttpStatus.SC_CREATED).contains(response.getStatusCode())) {
+            if (!Arrays.asList(HttpStatus.SC_OK, HttpStatus.SC_ACCEPTED, HttpStatus.SC_CREATED)
+                       .contains(response.getStatusCode())) {
                 throw new APIException(response.getStatusCode(), String.format("Failed to execute api call: %s", uri));
             }
 
@@ -393,7 +403,8 @@ public class DefaultAPIClient implements APIClient {
                 throw new APIException(ex.getStatusCode(), ex.getMessage());
             }
         } catch (IOException ex) {
-            throw new APIException(String.format("Failed to execute API call: %s. Reason: %s", uri, ex.getMessage()), ex);
+            throw new APIException(String
+                    .format("Failed to execute API call: %s. Reason: %s", uri, ex.getMessage()), ex);
         }
     }
 
@@ -463,7 +474,8 @@ public class DefaultAPIClient implements APIClient {
             }
 
             if (response.getStatusCode() < HttpStatus.SC_OK || response.getStatusCode() >= 300) {
-                throw new APIException(response.getStatusCode(), "Failed to post resource: " + response.getStatusMessage());
+                throw new APIException(response.getStatusCode(), "Failed to post resource: " + response
+                        .getStatusMessage());
             }
 
             if (type != null) {
@@ -486,7 +498,8 @@ public class DefaultAPIClient implements APIClient {
                     APIExceptionMessage exceptionMessage = fromXML(ex.getContent(), APIExceptionMessage.class);
                     throw new APIException(ex.getStatusCode(), exceptionMessage.getMessage(), ex);
                 } catch (Exception e) {
-                    // Catch exceptions related to xml unserialization. Those are usually internal server exceptions and are not properly serialized.
+                    // Catch exceptions related to xml unserialization. Those are usually internal server exceptions
+                    // and are not properly serialized.
                     // In such case we just put pure response content as a message
                     throw new APIException(ex.getStatusCode(), ex.getContent(), ex);
                 }
@@ -494,7 +507,8 @@ public class DefaultAPIClient implements APIClient {
                 throw new APIException(ex.getStatusCode(), ex.getMessage());
             }
         } catch (IOException ex) {
-            throw new APIException(String.format("Failed to execute API call: %s. Reason: %s", uri, ex.getMessage()), ex);
+            throw new APIException(String
+                    .format("Failed to execute API call: %s. Reason: %s", uri, ex.getMessage()), ex);
         }
     }
 
@@ -545,7 +559,8 @@ public class DefaultAPIClient implements APIClient {
             }
 
             if (response.getStatusCode() != HttpStatus.SC_NO_CONTENT) {
-                throw new APIException(response.getStatusCode(), "Failed to delete resource: " + response.getStatusMessage());
+                throw new APIException(response.getStatusCode(), "Failed to delete resource: " + response
+                        .getStatusMessage());
             }
         } catch (HttpResponseException ex) {
             try {
@@ -555,7 +570,8 @@ public class DefaultAPIClient implements APIClient {
                 throw new APIException(ex.getStatusCode(), ex.getMessage());
             }
         } catch (IOException ex) {
-            throw new APIException(String.format("Failed to execute API call: %s. Reason: %s", uri, ex.getMessage()), ex);
+            throw new APIException(String
+                    .format("Failed to execute API call: %s. Reason: %s", uri, ex.getMessage()), ex);
         }
     }
 
@@ -587,12 +603,14 @@ public class DefaultAPIClient implements APIClient {
     }
 
     @Override
-    public APIListResource<APIDevice> getDevices(long offset, long limit, String search, APISort sort,
+    public APIListResource<APIDevice> getDevices(
+            long offset, long limit, String search, APISort sort,
             APIDevice.DeviceFilter... filters) throws APIException {
         if (limit <= 0) {
             limit = 10;
         }
-        APIDeviceQueryBuilder builder = new APIDeviceQueryBuilder().offset((int) offset).limit((int) limit).search(search).filterWithDeviceFilters(filters);
+        APIDeviceQueryBuilder builder = new APIDeviceQueryBuilder().offset((int) offset).limit((int) limit)
+                                                                   .search(search).filterWithDeviceFilters(filters);
         if (sort != null) {
             builder.sort(APIDevice.class, sort.getItems());
         }
@@ -646,7 +664,7 @@ public class DefaultAPIClient implements APIClient {
             if (map.get(key) == null) {
                 map.put(key, "");
             }
-            if(map.get(key) instanceof Enum<?>) {
+            if (map.get(key) instanceof Enum<?>) {
                 map.put(key, map.get(key).toString());
             }
         }

@@ -17,7 +17,8 @@ public class APINotificationEmail extends APIEntity {
 
     @XmlType(namespace = "APINotificationEmail")
     public static enum Type {
-        ALWAYS, ON_FAILURE;
+        ALWAYS,
+        ON_FAILURE;
 
         public String getDisplayName() {
             switch (this) {

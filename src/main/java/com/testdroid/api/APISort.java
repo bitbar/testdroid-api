@@ -7,15 +7,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
  */
 public class APISort {
+
     /**
      * Sort type used for fetching collections from API.
      */
     public static enum Type {
-        ASC, DESC;
+        ASC,
+        DESC;
 
         public static Type fromURLValue(String urlValue) {
             for (Type t : Type.values()) {
@@ -36,7 +37,7 @@ public class APISort {
             }
         }
     }
-    
+
     public static enum Column {
         DEVICE_NAME(APIDevice.class, "name"),
         DEVICE_OS_TYPE(APIDevice.class, "osType"),
@@ -96,15 +97,23 @@ public class APISort {
             RELATIVE,
             ABSOLUTE
         }
-        
+
         private String name;
 
         private Class<? extends APIEntity> supportedClass;
 
         private NameType type = NameType.RELATIVE;
-        private Column(Class<? extends APIEntity> supportedClass, String name) { this.supportedClass = supportedClass; this.name = name; }
-        private Column(Class<? extends APIEntity> supportedClass, String name, NameType type) { this(supportedClass,
-                name); this.type = type; }
+
+        private Column(Class<? extends APIEntity> supportedClass, String name) {
+            this.supportedClass = supportedClass;
+            this.name = name;
+        }
+
+        private Column(Class<? extends APIEntity> supportedClass, String name, NameType type) {
+            this(supportedClass,
+                    name);
+            this.type = type;
+        }
 
         public static Column fromColumnName(Class<? extends APIEntity> type, String name) {
             if (name == null) {
@@ -135,22 +144,21 @@ public class APISort {
         public NameType getNameType() {
             return type;
         }
-        
+
     }
-    
+
     private SortItem[] items;
-    
+
     private APISort(Class<? extends APIEntity> type, SortItem... items) {
-        if(items != null && items.length > 0) {
+        if (items != null && items.length > 0) {
             List<SortItem> itemList = new ArrayList<SortItem>();
-            for(SortItem si: items) {
-                if(si.column.supportedClass.equals(type)) {
+            for (SortItem si : items) {
+                if (si.column.supportedClass.equals(type)) {
                     itemList.add(si);
                 }
             }
             this.items = itemList.toArray(new SortItem[itemList.size()]);
-        }
-        else {
+        } else {
             this.items = new SortItem[0];
         }
     }
@@ -189,10 +197,10 @@ public class APISort {
     public boolean isEmpty() {
         return items == null || items.length == 0;
     }
-    
+
     public String serialize() {
         List<String> resultItems = new ArrayList<String>();
-        for(SortItem item: items) {
+        for (SortItem item : items) {
             resultItems.add(String.format("%s_%s", item.column.getName(), item.type.getURLValue()));
         }
         return StringUtils.join(resultItems, ":");

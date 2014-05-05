@@ -12,11 +12,11 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "APIBasicJiraAccount", namespace = "cloud.testdroid.api.jira.model")
 public class APIBasicJiraAccount extends APIEntity {
 
+    private String jiraUrl;
+
     private Long userId;
 
     private String username;
-
-    private String jiraUrl;
 
     public APIBasicJiraAccount() {
     }

@@ -13,9 +13,9 @@ import java.net.URI;
 @XmlType(name = "APIBasicJiraIssue", namespace = "cloud.testdroid.api.jira.model")
 public class APIBasicJiraIssue extends APIEntity {
 
-    private URI self;
-
     private String key;
+
+    private URI self;
 
     public APIBasicJiraIssue() {
 

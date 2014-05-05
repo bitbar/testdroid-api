@@ -28,7 +28,8 @@ public class APIDeviceGroup extends APIEntity {
     public APIDeviceGroup() {
     }
 
-    public APIDeviceGroup(Long id, String name, String displayName, APIDevice.OsType osType, Integer deviceCount,
+    public APIDeviceGroup(
+            Long id, String name, String displayName, APIDevice.OsType osType, Integer deviceCount,
             Integer creditsPrice, Long userId) {
         this.id = id;
         this.name = name;

@@ -33,7 +33,8 @@ public class AppiumIOSFiles extends APIFiles {
     }
 
     public void uploadApp(File file) throws APIException {
-        this.app = client.postFile(getApplicationURI(), "application/vnd.android.package-archive", file, IOSAppFile.class);
+        this.app = client
+                .postFile(getApplicationURI(), "application/vnd.android.package-archive", file, IOSAppFile.class);
     }
 
     @Override

@@ -44,7 +44,8 @@ public class APIUserService extends APIEntity {
     public APIUserService() {
     }
 
-    public APIUserService(Long id, Long userId, String userEmail, APIService service, boolean active, boolean finished,
+    public APIUserService(
+            Long id, Long userId, String userEmail, APIService service, boolean active, boolean finished,
             boolean autoRenew,
             Integer total, Integer vat, APIPaymentMethod paymentMethod, Integer payUnitCount, String payUnitText,
             Date startTime, Date endTime) {
