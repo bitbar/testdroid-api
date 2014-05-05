@@ -1,12 +1,12 @@
 package com.testdroid.api;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
- *
  * @author Sławomir Pawluk <slawomir.pawluk@bitbar.com>
  */
 @XmlRootElement

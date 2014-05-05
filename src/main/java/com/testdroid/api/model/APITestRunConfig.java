@@ -18,13 +18,9 @@ import java.util.Map;
 public class APITestRunConfig extends APIEntity {
 
     @XmlType(namespace = "APITestRunConfig")
-    public static enum Scheduler {
-        PARALLEL, SERIAL, SINGLE;
-    }
-
-    @XmlType(namespace = "APITestRunConfig")
     public static enum LimitationType {
-        PACKAGE, CLASS;
+        PACKAGE,
+        CLASS;
     }
 
     @XmlType(namespace = "APITestRunConfig")
@@ -52,6 +48,13 @@ public class APITestRunConfig extends APIEntity {
         public String getFriendlyName() {
             return friendlyName;
         }
+    }
+
+    @XmlType(namespace = "APITestRunConfig")
+    public static enum Scheduler {
+        PARALLEL,
+        SERIAL,
+        SINGLE;
     }
 
     private boolean appRequired;
@@ -99,7 +102,8 @@ public class APITestRunConfig extends APIEntity {
     public APITestRunConfig() {
     }
 
-    public APITestRunConfig(Long id, Long projectId, Scheduler scheduler, Mode mode, boolean autoScreenshots,
+    public APITestRunConfig(
+            Long id, Long projectId, Scheduler scheduler, Mode mode, boolean autoScreenshots,
             boolean runAvailable,
             String screenshotDir, LimitationType limitationType, String limitationValue, String withAnnotation,
             String withoutAnnotation,

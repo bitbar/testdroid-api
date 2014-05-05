@@ -13,14 +13,22 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "umApiService", namespace = "cloud.testdroid.api.um.model")
 public class APIService {
 
-    @XmlType(name = "umApiServiceUnit", namespace = "cloud.testdroid.um.api.model")
-    public static enum Unit {
-        SECOND, MINUTE, HOUR, DAY, MONTH, YEAR, RUN, PROJECT;
-    }
-
     @XmlType(name = "umApiServiceType", namespace = "cloud.testdroid.um.api.model")
     public static enum Type {
-        RECORDER, CLOUD;
+        RECORDER,
+        CLOUD;
+    }
+
+    @XmlType(name = "umApiServiceUnit", namespace = "cloud.testdroid.um.api.model")
+    public static enum Unit {
+        SECOND,
+        MINUTE,
+        HOUR,
+        DAY,
+        MONTH,
+        YEAR,
+        RUN,
+        PROJECT;
     }
 
     private boolean autoRenew;
@@ -46,7 +54,8 @@ public class APIService {
     public APIService() {
     }
 
-    public APIService(Long id, String name, String description, boolean autoRenew, Type type, Integer centPrice,
+    public APIService(
+            Long id, String name, String description, boolean autoRenew, Type type, Integer centPrice,
             Integer unitCount, Unit unit,
             boolean quantityAppliable, String braintreeId) {
         this.id = id;
@@ -170,7 +179,9 @@ public class APIService {
     @JsonIgnore
     @Override
     public boolean equals(Object object) {
-        if (this == object) return true;
+        if (this == object) {
+            return true;
+        }
         if (!(object instanceof APIService)) {
             return false;
         }

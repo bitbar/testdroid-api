@@ -10,42 +10,41 @@ import com.testdroid.api.model.APIUser;
 import com.testdroid.api.sample.util.Common;
 
 /**
- *
  * @author Sławomir Pawluk <slawomir.pawluk@bitbar.com>
  */
 public class ParametersSample {
 
     private static final APIClient client = Common.createApiClient();
-    
+
     public static void main(String[] args) {
         try {
             APIUser me = client.me();
             APIProject project = me.createProject(APIProject.Type.ANDROID);
-            
+
             project.createParameter("project_parameter", "value");
-            
+
             APIListResource<APITestRunParameter> parameters = project.getParameters();
-            
-            System.out.println("Parameters of project:");            
-            for(APITestRunParameter parameter: parameters.getEntity().getData()) {
-                System.out.println(String.format("%s = %s", parameter.getKey(), parameter.getValue()));
-            }            
-            
-            APITestRunConfig testRunConfig = project.getTestRunConfig();
-            
-            testRunConfig.createParameter("test_run_parameter", "value");
-            
-            parameters = testRunConfig.getParameters();
-            
-            // Notice that project parameter is also listed there
-            System.out.println("Test run parameters");
-            for(APITestRunParameter parameter: parameters.getEntity().getData()) {
+
+            System.out.println("Parameters of project:");
+            for (APITestRunParameter parameter : parameters.getEntity().getData()) {
                 System.out.println(String.format("%s = %s", parameter.getKey(), parameter.getValue()));
             }
-            
-        } catch(APIException apie) {
+
+            APITestRunConfig testRunConfig = project.getTestRunConfig();
+
+            testRunConfig.createParameter("test_run_parameter", "value");
+
+            parameters = testRunConfig.getParameters();
+
+            // Notice that project parameter is also listed there
+            System.out.println("Test run parameters");
+            for (APITestRunParameter parameter : parameters.getEntity().getData()) {
+                System.out.println(String.format("%s = %s", parameter.getKey(), parameter.getValue()));
+            }
+
+        } catch (APIException apie) {
             System.out.println(apie.getMessage());
         }
     }
-    
+
 }

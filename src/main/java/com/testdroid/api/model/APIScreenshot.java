@@ -17,7 +17,8 @@ public class APIScreenshot extends APIEntity {
 
     @XmlType(namespace = "APIScreenshot")
     public static enum Type {
-        LANDSCAPE, PORTRAIT
+        LANDSCAPE,
+        PORTRAIT
     }
 
     private Boolean fail;

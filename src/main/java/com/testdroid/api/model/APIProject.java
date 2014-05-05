@@ -23,6 +23,13 @@ import java.util.Map;
 public class APIProject extends APIEntity {
 
     @XmlType(namespace = "APIProject")
+    public static enum APIArchivingStrategy {
+        NEVER,
+        DAYS,
+        RUNS;
+    }
+
+    @XmlType(namespace = "APIProject")
     public static enum Type {
         ANDROID,
         CTS,
@@ -63,11 +70,6 @@ public class APIProject extends APIEntity {
         }
     }
 
-    @XmlType(namespace = "APIProject")
-    public static enum APIArchivingStrategy {
-        NEVER, DAYS, RUNS;
-    }
-
     private Integer archivingItemCount;
 
     private APIArchivingStrategy archivingStrategy;
@@ -95,7 +97,8 @@ public class APIProject extends APIEntity {
     public APIProject() {
     }
 
-    public APIProject(Long id, String name, String description, Type type, Long sharedById, String sharedByEmail,
+    public APIProject(
+            Long id, String name, String description, Type type, Long sharedById, String sharedByEmail,
             boolean common, APIArchivingStrategy archivingStrategy, Integer archivingItemCount) {
         super(id);
         this.name = name;
@@ -262,7 +265,8 @@ public class APIProject extends APIEntity {
         return result;
     }
 
-    private Map<String, Object> getCreateNotificationParameters(final String email,
+    private Map<String, Object> getCreateNotificationParameters(
+            final String email,
             final APINotificationEmail.Type type) {
         return new HashMap<String, Object>() {{
             put("email", email);
@@ -433,7 +437,8 @@ public class APIProject extends APIEntity {
     @JsonIgnore
     public APINotificationEmail createNotificationEmail(String email, APINotificationEmail.Type type)
             throws APIException {
-        return postResource(getNotificationEmailsURI(), getCreateNotificationParameters(email, type), APINotificationEmail.class);
+        return postResource(getNotificationEmailsURI(), getCreateNotificationParameters(email, type),
+                APINotificationEmail.class);
     }
 
     @JsonIgnore

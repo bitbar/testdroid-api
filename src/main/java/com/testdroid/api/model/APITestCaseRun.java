@@ -42,7 +42,8 @@ public class APITestCaseRun extends APIEntity {
     public APITestCaseRun() {
     }
 
-    public APITestCaseRun(Long id, double duration, Result result, String errorMessage, String stacktrace,
+    public APITestCaseRun(
+            Long id, double duration, Result result, String errorMessage, String stacktrace,
             Date createTime, APIList<APITestCaseRunStep> steps, String className, String methodName, String suiteName) {
         super(id);
         this.duration = duration;

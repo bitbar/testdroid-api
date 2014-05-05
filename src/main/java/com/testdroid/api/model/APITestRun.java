@@ -18,12 +18,16 @@ public class APITestRun extends APIEntity {
 
     @XmlType(namespace = "APITestRun", name = "APITestRunState")
     public static enum State {
-        WAITING, RUNNING, FINISHED
+        WAITING,
+        RUNNING,
+        FINISHED
     }
 
     @XmlType(namespace = "APITestRun", name = "APITestRunZipState")
     public static enum ZipState {
-        BLANK, PROGRESS, READY
+        BLANK,
+        PROGRESS,
+        READY
     }
 
     private APITestRunConfig config;
@@ -53,7 +57,8 @@ public class APITestRun extends APIEntity {
     public APITestRun() {
     }
 
-    public APITestRun(Long id, Integer number, Date createTime, String displayName, Float executionRatio,
+    public APITestRun(
+            Long id, Integer number, Date createTime, String displayName, Float executionRatio,
             Float successRatio, String startedByDisplayName,
             State state, ZipState screenshotZipState, ZipState logZipState, Long projectId) {
         super(id);
@@ -288,7 +293,8 @@ public class APITestRun extends APIEntity {
     }
 
     public void update() throws APIException {
-        APITestRun testRun = postResource(selfURI, Collections.singletonMap("displayName", displayName), APITestRun.class);
+        APITestRun testRun = postResource(selfURI, Collections
+                .singletonMap("displayName", displayName), APITestRun.class);
         clone(testRun);
     }
 

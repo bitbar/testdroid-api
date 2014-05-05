@@ -49,14 +49,20 @@ public class GetDevicesSample {
 
             // Search device with filter
             devicesResource = CLIENT.getDevices(new APIDeviceQueryBuilder().offset(0).limit(10).search(deviceName)
-                    .filterWithDeviceFilters(APIDevice.DeviceFilter.RECOMMENDED));
+                    .filterWithDeviceFilters(APIDevice
+                            .DeviceFilter.RECOMMENDED));
             System.out.println(String.format("\nFound %s recommended devices", devicesResource.getTotal()));
             printDeviceNames(devicesResource);
 
             // Get devices using sorting
             deviceName = "Samsung Galaxy";
             devicesResource = CLIENT.getDevices(new APIDeviceQueryBuilder().offset(0).limit(10).search(deviceName)
-                    .sort(APIDevice.class, new APISort.SortItem(APISort.Column.DEVICE_NAME, APISort.Type.ASC)));
+                    .sort(APIDevice.class,
+                            new APISort.SortItem(APISort
+                                    .Column.DEVICE_NAME,
+                                    APISort.Type.ASC
+                            )
+                    ));
             System.out.println(String.format("\nFound %s devices with name %s", devicesResource.getTotal(),
                     deviceName));
             printDeviceNames(devicesResource);

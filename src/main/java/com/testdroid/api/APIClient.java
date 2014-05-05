@@ -142,7 +142,8 @@ public interface APIClient {
      * @throws APIException on API error
      * @deprecated
      */
-    public APIListResource<APIDevice> getDevices(long offset, long limit, String search, APISort sort,
+    public APIListResource<APIDevice> getDevices(
+            long offset, long limit, String search, APISort sort,
             APIDevice.DeviceFilter... filters) throws APIException;
 
     public APIListResource<APILabelGroup> getLabelGroups() throws APIException;

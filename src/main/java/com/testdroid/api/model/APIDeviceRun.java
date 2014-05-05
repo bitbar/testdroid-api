@@ -17,7 +17,12 @@ public class APIDeviceRun extends APIEntity {
 
     @XmlType(namespace = "APIDeviceRun")
     public static enum RunStatus {
-        WAITING, RUNNING, EXCLUDED, WARNING, FAILED, SUCCEEDED
+        WAITING,
+        RUNNING,
+        EXCLUDED,
+        WARNING,
+        FAILED,
+        SUCCEEDED
     }
 
     private Date createTime;
@@ -49,7 +54,8 @@ public class APIDeviceRun extends APIEntity {
     public APIDeviceRun() {
     }
 
-    public APIDeviceRun(Long id, Date runTime, APIDevice device, Integer testCaseSuccessNo, Integer testCaseAllNo,
+    public APIDeviceRun(
+            Long id, Date runTime, APIDevice device, Integer testCaseSuccessNo, Integer testCaseAllNo,
             Integer testCaseCount, APISoftwareVersion softwareVersion,
             Date createTime, Date startTime, APIDeviceRunState currentState, APIDeviceRunState interruptedByState,
             RunStatus runStatus, String deviceName, String deviceSerialId) {
@@ -236,7 +242,8 @@ public class APIDeviceRun extends APIEntity {
      * @deprecated
      */
     @JsonIgnore
-    public APIListResource<APIDeviceRunState> getDeviceRunStatesResource(long offset, long limit, String search,
+    public APIListResource<APIDeviceRunState> getDeviceRunStatesResource(
+            long offset, long limit, String search,
             APISort sort) throws APIException {
         return getListResource(getStatesURI(), offset, limit, search, sort, APIDeviceRunState.class);
     }
