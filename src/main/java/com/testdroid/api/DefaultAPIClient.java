@@ -46,7 +46,7 @@ import java.util.logging.Logger;
 
 /**
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>, Sławomir Pawluk <slawomir.pawluk@bitbar.com>,
- * Krzysztof Fonał <krzysztof.fonal@bitbar.com>
+ *         Krzysztof Fonał <krzysztof.fonal@bitbar.com>
  */
 public class DefaultAPIClient implements APIClient {
 
@@ -99,7 +99,8 @@ public class DefaultAPIClient implements APIClient {
                 netHttpBuilder = new NetHttpTransport.Builder().doNotValidateCertificate();
             } catch (GeneralSecurityException ex) {
                 Logger.getLogger(DefaultAPIClient.class.getName())
-                      .log(Level.WARNING, "Cannot set not-validating certificate. Certificate will be validating.", ex);
+                        .log(Level.WARNING, "Cannot set not-validating certificate. Certificate will be validating.",
+                                ex);
                 netHttpBuilder = new NetHttpTransport.Builder();
             }
         } else {
@@ -119,7 +120,8 @@ public class DefaultAPIClient implements APIClient {
                 apacheBuilder = new ApacheHttpTransport.Builder().setProxy(proxy).doNotValidateCertificate();
             } catch (GeneralSecurityException ex) {
                 Logger.getLogger(DefaultAPIClient.class.getName())
-                      .log(Level.WARNING, "Cannot set not-validating certificate. Certificate will be validating.", ex);
+                        .log(Level.WARNING, "Cannot set not-validating certificate. Certificate will be validating.",
+                                ex);
                 apacheBuilder = new ApacheHttpTransport.Builder().setProxy(proxy);
             }
         } else {
@@ -390,7 +392,7 @@ public class DefaultAPIClient implements APIClient {
 
             response = request.execute();
             if (!Arrays.asList(HttpStatus.SC_OK, HttpStatus.SC_ACCEPTED, HttpStatus.SC_CREATED)
-                       .contains(response.getStatusCode())) {
+                    .contains(response.getStatusCode())) {
                 throw new APIException(response.getStatusCode(), String.format("Failed to execute api call: %s", uri));
             }
 
@@ -610,7 +612,7 @@ public class DefaultAPIClient implements APIClient {
             limit = 10;
         }
         APIDeviceQueryBuilder builder = new APIDeviceQueryBuilder().offset((int) offset).limit((int) limit)
-                                                                   .search(search).filterWithDeviceFilters(filters);
+                .search(search).filterWithDeviceFilters(filters);
         if (sort != null) {
             builder.sort(APIDevice.class, sort.getItems());
         }

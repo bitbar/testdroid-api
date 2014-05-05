@@ -18,13 +18,6 @@ import java.util.Map;
 public class APITestRunConfig extends APIEntity {
 
     @XmlType(namespace = "APITestRunConfig")
-    public static enum Scheduler {
-        PARALLEL,
-        SERIAL,
-        SINGLE;
-    }
-
-    @XmlType(namespace = "APITestRunConfig")
     public static enum LimitationType {
         PACKAGE,
         CLASS;
@@ -55,6 +48,13 @@ public class APITestRunConfig extends APIEntity {
         public String getFriendlyName() {
             return friendlyName;
         }
+    }
+
+    @XmlType(namespace = "APITestRunConfig")
+    public static enum Scheduler {
+        PARALLEL,
+        SERIAL,
+        SINGLE;
     }
 
     private boolean appRequired;

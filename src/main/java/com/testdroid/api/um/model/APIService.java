@@ -13,6 +13,12 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "umApiService", namespace = "cloud.testdroid.api.um.model")
 public class APIService {
 
+    @XmlType(name = "umApiServiceType", namespace = "cloud.testdroid.um.api.model")
+    public static enum Type {
+        RECORDER,
+        CLOUD;
+    }
+
     @XmlType(name = "umApiServiceUnit", namespace = "cloud.testdroid.um.api.model")
     public static enum Unit {
         SECOND,
@@ -23,12 +29,6 @@ public class APIService {
         YEAR,
         RUN,
         PROJECT;
-    }
-
-    @XmlType(name = "umApiServiceType", namespace = "cloud.testdroid.um.api.model")
-    public static enum Type {
-        RECORDER,
-        CLOUD;
     }
 
     private boolean autoRenew;

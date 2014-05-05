@@ -44,10 +44,10 @@ public class MultipartFormDataContent extends AbstractHttpContent {
                 headers.fromHttpHeaders(part.headers);
             }
             headers.setContentEncoding(null)
-                   .setUserAgent(null)
-                   .setContentType(null)
-                   .setContentLength(null)
-                   .set("Content-Transfer-Encoding", null);
+                    .setUserAgent(null)
+                    .setContentType(null)
+                    .setContentLength(null)
+                    .set("Content-Transfer-Encoding", null);
 
             // Write disposition
             if (part.getName() != null) {

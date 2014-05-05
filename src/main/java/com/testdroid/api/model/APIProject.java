@@ -23,6 +23,13 @@ import java.util.Map;
 public class APIProject extends APIEntity {
 
     @XmlType(namespace = "APIProject")
+    public static enum APIArchivingStrategy {
+        NEVER,
+        DAYS,
+        RUNS;
+    }
+
+    @XmlType(namespace = "APIProject")
     public static enum Type {
         ANDROID,
         CTS,
@@ -61,13 +68,6 @@ public class APIProject extends APIEntity {
                     return null;
             }
         }
-    }
-
-    @XmlType(namespace = "APIProject")
-    public static enum APIArchivingStrategy {
-        NEVER,
-        DAYS,
-        RUNS;
     }
 
     private Integer archivingItemCount;

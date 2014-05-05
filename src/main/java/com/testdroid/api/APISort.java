@@ -11,33 +11,6 @@ import java.util.List;
  */
 public class APISort {
 
-    /**
-     * Sort type used for fetching collections from API.
-     */
-    public static enum Type {
-        ASC,
-        DESC;
-
-        public static Type fromURLValue(String urlValue) {
-            for (Type t : Type.values()) {
-                if (t.getURLValue().equals(urlValue)) {
-                    return t;
-                }
-            }
-            return null;
-        }
-
-        public String getURLValue() {
-            switch (this) {
-                case DESC:
-                    return "d";
-                case ASC:
-                default:
-                    return "a";
-            }
-        }
-    }
-
     public static enum Column {
         DEVICE_NAME(APIDevice.class, "name"),
         DEVICE_OS_TYPE(APIDevice.class, "osType"),
@@ -64,7 +37,6 @@ public class APISort {
         PROJECT_JOB_CONFIG_TYPE(APIProjectJobConfig.class, "type"),
         PROJECT_JOB_CONFIG_VERSION(APIProjectJobConfig.class, "version"),
         PROJECT_SHARING_ID(APIProjectSharing.class, "id"),
-
         PROJECT_SHARING_USER_EMAIL(APIProjectSharing.class, "userEmail"),
         RECORDER_ONLINE_SESSION_ID(APIRecorderOnlineSession.class, "id"),
         RECORDER_ONLINE_SESSION_END_TIME(APIRecorderOnlineSession.class, "endTime"),
@@ -110,8 +82,7 @@ public class APISort {
         }
 
         private Column(Class<? extends APIEntity> supportedClass, String name, NameType type) {
-            this(supportedClass,
-                    name);
+            this(supportedClass, name);
             this.type = type;
         }
 
@@ -147,11 +118,38 @@ public class APISort {
 
     }
 
+    /**
+     * Sort type used for fetching collections from API.
+     */
+    public static enum Type {
+        ASC,
+        DESC;
+
+        public static Type fromURLValue(String urlValue) {
+            for (Type t : Type.values()) {
+                if (t.getURLValue().equals(urlValue)) {
+                    return t;
+                }
+            }
+            return null;
+        }
+
+        public String getURLValue() {
+            switch (this) {
+                case DESC:
+                    return "d";
+                case ASC:
+                default:
+                    return "a";
+            }
+        }
+    }
+
     private SortItem[] items;
 
     private APISort(Class<? extends APIEntity> type, SortItem... items) {
         if (items != null && items.length > 0) {
-            List<SortItem> itemList = new ArrayList<SortItem>();
+            List<SortItem> itemList = new ArrayList<>();
             for (SortItem si : items) {
                 if (si.column.supportedClass.equals(type)) {
                     itemList.add(si);
@@ -171,7 +169,7 @@ public class APISort {
         if (StringUtils.isBlank(value)) {
             return new APISort(type);
         }
-        List<SortItem> items = new ArrayList<SortItem>();
+        List<SortItem> items = new ArrayList<>();
         String[] resultItems = value.split(":");
         for (String stringItem : resultItems) {
             String[] sortItemValues = stringItem.split("_");
@@ -199,7 +197,7 @@ public class APISort {
     }
 
     public String serialize() {
-        List<String> resultItems = new ArrayList<String>();
+        List<String> resultItems = new ArrayList<>();
         for (SortItem item : items) {
             resultItems.add(String.format("%s_%s", item.column.getName(), item.type.getURLValue()));
         }

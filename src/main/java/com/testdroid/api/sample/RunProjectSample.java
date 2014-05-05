@@ -58,11 +58,11 @@ public class RunProjectSample {
 
             // Upload test
             project.uploadTest(new File(RunProjectSample.class.getResource(Common.ANDROID_TEST_RESOURCE_PATH)
-                                                              .getPath()), Common.ANDROID_FILE_MIME_TYPE);
+                    .getPath()), Common.ANDROID_FILE_MIME_TYPE);
 
             // Upload data
             project.uploadData(new File(RunProjectSample.class.getResource(Common.DATA_FILE_RESOURCE_PATH)
-                                                              .getPath()), Common.ZIP_FILE_MIME_TYPE);
+                    .getPath()), Common.ZIP_FILE_MIME_TYPE);
 
             // Run test run
             APITestRun testRun = project.run("My test run name");
