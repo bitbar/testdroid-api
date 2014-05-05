@@ -6,14 +6,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 /**
- *
- * @author damian.sniezek<damian.sniezek@bitbar.com>
+ * @author Damian Sniezek <damian.sniezek@bitbar.com>
  */
 @XmlRootElement(name = "APIJiraPriority", namespace = "cloud.testdroid.api.jira.model")
-@XmlType(name= "APIJiraPriority", namespace = "cloud.testdroid.api.jira.model")
+@XmlType(name = "APIJiraPriority", namespace = "cloud.testdroid.api.jira.model")
 public class APIJiraPriority extends APIEntity {
-
-    private Long id;
 
     private String name;
 
@@ -23,14 +20,6 @@ public class APIJiraPriority extends APIEntity {
     public APIJiraPriority(Long id, String name) {
         this.id = id;
         this.name = name;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -43,6 +32,8 @@ public class APIJiraPriority extends APIEntity {
 
     @Override
     protected <T extends APIEntity> void clone(T from) {
-
+        cloneBase(from);
+        APIJiraPriority jiraPriority = (APIJiraPriority) from;
+        this.name = jiraPriority.name;
     }
 }

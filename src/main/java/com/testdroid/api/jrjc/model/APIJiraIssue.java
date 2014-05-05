@@ -5,12 +5,11 @@ import javax.xml.bind.annotation.XmlType;
 import java.net.URI;
 
 /**
- *
- * @author damian.sniezek<damian.sniezek@bitbar.com>
+ * @author Damian Sniezek <damian.sniezek@bitbar.com>
  */
 @XmlRootElement(name = "APIJiraIssue", namespace = "cloud.testdroid.api.jira.model")
-@XmlType(name="APIJiraIssue", namespace = "cloud.testdroid.api.jira.model")
-public class APIJiraIssue extends APIBasicJiraIssue{
+@XmlType(name = "APIJiraIssue", namespace = "cloud.testdroid.api.jira.model")
+public class APIJiraIssue extends APIBasicJiraIssue {
 
     public APIJiraIssue() {
     }

@@ -7,18 +7,17 @@ import javax.xml.bind.annotation.XmlType;
 import java.net.URI;
 
 /**
- *
- * @author kajdus
+ * @author Damian Sniezek <damian.sniezek@bitbar.com>
  */
 @XmlRootElement(name = "APIBasicJiraIssue", namespace = "cloud.testdroid.api.jira.model")
-@XmlType(name="APIBasicJiraIssue", namespace = "cloud.testdroid.api.jira.model")
+@XmlType(name = "APIBasicJiraIssue", namespace = "cloud.testdroid.api.jira.model")
 public class APIBasicJiraIssue extends APIEntity {
 
     private URI self;
-    private String key;
-    private Long id;
 
-    public APIBasicJiraIssue(){
+    private String key;
+
+    public APIBasicJiraIssue() {
 
     }
 
@@ -42,15 +41,12 @@ public class APIBasicJiraIssue extends APIEntity {
         return key;
     }
 
-    /**
-     * @return issue id
-     */
-    public Long getId() {
-        return id;
-    }
-
-    @Override protected <T extends APIEntity> void clone(T from) {
-
+    @Override
+    protected <T extends APIEntity> void clone(T from) {
+        cloneBase(from);
+        APIBasicJiraIssue jiraIssueType = (APIBasicJiraIssue) from;
+        this.self = jiraIssueType.self;
+        this.key = jiraIssueType.key;
     }
 
 }
