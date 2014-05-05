@@ -45,8 +45,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * @author Łukasz Kajda <lukasz.kajda@bitbar.com>, Sławomir Pawluk <slawomir.pawluk@bitbar.com>,
- *         Krzysztof Fonał <krzysztof.fonal@bitbar.com>
+ * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
+ * @author Sławomir Pawluk <slawomir.pawluk@bitbar.com>
+ * @author Krzysztof Fonał <krzysztof.fonal@bitbar.com>
  */
 public class DefaultAPIClient implements APIClient {
 
