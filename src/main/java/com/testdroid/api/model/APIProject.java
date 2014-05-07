@@ -17,9 +17,17 @@ import java.util.Map;
 
 /**
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
+ * @author Slawomir Pawluk <slawomir.pawluk@bitbar.com>
  */
 @XmlRootElement
 public class APIProject extends APIEntity {
+
+    @XmlType(namespace = "APIProject")
+    public static enum APIArchivingStrategy {
+        NEVER,
+        DAYS,
+        RUNS;
+    }
 
     @XmlType(namespace = "APIProject")
     public static enum Type {
@@ -62,16 +70,14 @@ public class APIProject extends APIEntity {
         }
     }
 
-    @XmlType(namespace = "APIProject")
-    public static enum APIArchivingStrategy {
-        NEVER, DAYS, RUNS;
-    }
-
     private Integer archivingItemCount;
 
     private APIArchivingStrategy archivingStrategy;
 
     private boolean common;
+
+    private String description;
+
 
     private String description;
 
@@ -94,7 +100,8 @@ public class APIProject extends APIEntity {
     public APIProject() {
     }
 
-    public APIProject(Long id, String name, String description, Type type, Long sharedById, String sharedByEmail,
+    public APIProject(
+            Long id, String name, String description, Type type, Long sharedById, String sharedByEmail,
             boolean common, APIArchivingStrategy archivingStrategy, Integer archivingItemCount) {
         super(id);
         this.name = name;
@@ -105,7 +112,7 @@ public class APIProject extends APIEntity {
         this.common = common;
         this.archivingStrategy = archivingStrategy;
         this.archivingItemCount = archivingItemCount;
-        this.jobConfig = new HashMap<APIProjectJobConfig.Type, APIProjectJobConfig>();
+        this.jobConfig = new HashMap<>();
     }
 
     public String getName() {
@@ -255,13 +262,14 @@ public class APIProject extends APIEntity {
     }
 
     private Map<String, Object> getCreateRunParameters(String testRunName, List<Long> usedDeviceIds) {
-        Map<String, Object> result = new HashMap<String, Object>();
+        Map<String, Object> result = new HashMap<>();
         result.putAll(getCreateRunParameters(testRunName));
         result.putAll(getCreateRunParameters(usedDeviceIds));
         return result;
     }
 
-    private Map<String, Object> getCreateNotificationParameters(final String email,
+    private Map<String, Object> getCreateNotificationParameters(
+            final String email,
             final APINotificationEmail.Type type) {
         return new HashMap<String, Object>() {{
             put("email", email);
@@ -276,6 +284,12 @@ public class APIProject extends APIEntity {
         }};
     }
 
+    private Map<String, Object> getShareParameters(final String email) {
+        return new HashMap<String, Object>() {{
+            put("email", email);
+        }};
+    }
+
     @JsonIgnore
     public APITestRunConfig getTestRunConfig() throws APIException {
         if (testRunConfig == null) {
@@ -287,7 +301,7 @@ public class APIProject extends APIEntity {
     @JsonIgnore
     public APIProjectJobConfig getJobConfig(APIProjectJobConfig.Type type) throws APIException {
         if (jobConfig == null) {
-            jobConfig = new HashMap<APIProjectJobConfig.Type, APIProjectJobConfig>();
+            jobConfig = new HashMap<>();
         }
         if (jobConfig.get(type) == null) {
             jobConfig.put(type, getResource(getJobConfigURI(type), APIProjectJobConfig.class).getEntity());
@@ -344,7 +358,7 @@ public class APIProject extends APIEntity {
 
     @JsonIgnore
     public APIListResource<APITestRun> getTestRunsResource() throws APIException {
-        return getListResource(getRunsURI(), APITestRun.class);
+        return getListResource(getRunsURI());
     }
 
     /**
@@ -355,7 +369,7 @@ public class APIProject extends APIEntity {
      */
     @JsonIgnore
     public APIListResource<APITestRun> getTestRunsResource(APIQueryBuilder queryBuilder) throws APIException {
-        return getListResource(getRunsURI(), queryBuilder, APITestRun.class);
+        return getListResource(getRunsURI(), queryBuilder);
     }
 
     public APITestRun getTestRun(Long id) throws APIException {
@@ -379,12 +393,12 @@ public class APIProject extends APIEntity {
 
     @JsonIgnore
     public APIProjectSharing share(String email) throws APIException {
-        return postResource(getSharingsURI(), String.format("email=%s", email), APIProjectSharing.class);
+        return postResource(getSharingsURI(), getShareParameters(email), APIProjectSharing.class);
     }
 
     @JsonIgnore
     public APIListResource<APIProjectSharing> getProjectSharings() throws APIException {
-        return getListResource(getSharingsURI(), APIProjectSharing.class);
+        return getListResource(getSharingsURI());
     }
 
     /**
@@ -395,7 +409,7 @@ public class APIProject extends APIEntity {
      */
     @JsonIgnore
     public APIListResource<APIProjectSharing> getProjectSharings(APIQueryBuilder queryBuilder) throws APIException {
-        return getListResource(getSharingsURI(), queryBuilder, APIProjectSharing.class);
+        return getListResource(getSharingsURI(), queryBuilder);
     }
 
     /**
@@ -415,23 +429,24 @@ public class APIProject extends APIEntity {
 
     @JsonIgnore
     public APIListResource<APIDeviceGroup> getPublicDeviceGroups() throws APIException {
-        return getListResource(getPublicDeviceGroupsURI(), APIDeviceGroup.class);
+        return getListResource(getPublicDeviceGroupsURI());
     }
 
     @JsonIgnore
     public APIListResource<APIDeviceGroup> getDeviceGroups() throws APIException {
-        return getListResource(getDeviceGroupsURI(), APIDeviceGroup.class);
+        return getListResource(getDeviceGroupsURI());
     }
 
     @JsonIgnore
     public APINotificationEmail createNotificationEmail(String email, APINotificationEmail.Type type)
             throws APIException {
-        return postResource(getNotificationEmailsURI(), getCreateNotificationParameters(email, type), APINotificationEmail.class);
+        return postResource(getNotificationEmailsURI(), getCreateNotificationParameters(email, type),
+                APINotificationEmail.class);
     }
 
     @JsonIgnore
     public APIListResource<APINotificationEmail> getNotificationEmails() throws APIException {
-        return getListResource(getNotificationEmailsURI(), APINotificationEmail.class);
+        return getListResource(getNotificationEmailsURI());
     }
 
     /**
@@ -445,7 +460,7 @@ public class APIProject extends APIEntity {
     @JsonIgnore
     public APIListResource<APINotificationEmail> getNotificationEmails(APIQueryBuilder queryBuilder)
             throws APIException {
-        return getListResource(getNotificationEmailsURI(), queryBuilder, APINotificationEmail.class);
+        return getListResource(getNotificationEmailsURI(), queryBuilder);
     }
 
     @JsonIgnore
@@ -470,12 +485,12 @@ public class APIProject extends APIEntity {
 
     @JsonIgnore
     public APIListResource<APITestRunParameter> getParameters() throws APIException {
-        return getListResource(getParametersURI(), APITestRunParameter.class);
+        return getListResource(getParametersURI());
     }
 
     @JsonIgnore
     public APIListResource<APITestRunParameter> getParameters(APIQueryBuilder queryBuilder) throws APIException {
-        return getListResource(getParametersURI(), queryBuilder, APITestRunParameter.class);
+        return getListResource(getParametersURI(), queryBuilder);
     }
 
     @JsonIgnore

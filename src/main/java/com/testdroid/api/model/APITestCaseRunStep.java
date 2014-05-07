@@ -2,18 +2,17 @@ package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIList;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSeeAlso;
-import javax.xml.bind.annotation.XmlType;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+
 /**
- *
  * @author Sławomir Pawluk <slawomir.pawluk@bitbar.com>
  */
 @XmlRootElement
 public class APITestCaseRunStep extends APIEntity {
-    
+
     @XmlType(namespace = "APITestCaseRunStep")
     public static enum Type {
         CLICK,
@@ -24,18 +23,25 @@ public class APITestCaseRunStep extends APIEntity {
         NAVIGATION,
         OTHER;
     }
-    
+
     private String description;
-    private String fromActivity;
-    private String errorMessage;
+
     private Long duration;
-    private Type type;
+
+    private String errorMessage;
+
+    private String fromActivity;
+
     private APIList<APIScreenshot> screenshots;
+
+    private Type type;
 
     public APITestCaseRunStep() {
     }
 
-    public APITestCaseRunStep(Long id, String description, String fromActivity, String errorMessage, Long duration, Type type, APIList<APIScreenshot> screenshots) {
+    public APITestCaseRunStep(
+            Long id, String description, String fromActivity, String errorMessage, Long duration,
+            Type type, APIList<APIScreenshot> screenshots) {
         super(id);
         this.description = description;
         this.fromActivity = fromActivity;
@@ -105,5 +111,5 @@ public class APITestCaseRunStep extends APIEntity {
         this.screenshots = apiTestCaseRunStep.screenshots;
         this.type = apiTestCaseRunStep.type;
     }
-    
+
 }

@@ -2,40 +2,49 @@ package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIList;
-import java.util.Date;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSeeAlso;
-import javax.xml.bind.annotation.XmlType;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+import java.util.Date;
+
 /**
- *
  * @author Sławomir Pawluk <slawomir.pawluk@bitbar.com>
  */
 @XmlRootElement
 public class APITestCaseRun extends APIEntity {
-    
+
     @XmlType(namespace = "APITestCaseRun")
     public static enum Result {
         PASSED,
         FAILED,
         NOT_AVAILBLE;
     }
-    
-    private double duration;
-    private Result result;
-    private String errorMessage;
-    private String stacktrace;
-    private Date createTime;
-    private APIList<APITestCaseRunStep> steps;
+
     private String className;
+
+    private Date createTime;
+
+    private double duration;
+
+    private String errorMessage;
+
     private String methodName;
+
+    private Result result;
+
+    private String stacktrace;
+
+    private APIList<APITestCaseRunStep> steps;
+
     private String suiteName;
 
     public APITestCaseRun() {
     }
 
-    public APITestCaseRun(Long id, double duration, Result result, String errorMessage, String stacktrace, Date createTime, APIList<APITestCaseRunStep> steps, String className, String methodName, String suiteName) {
+    public APITestCaseRun(
+            Long id, double duration, Result result, String errorMessage, String stacktrace,
+            Date createTime, APIList<APITestCaseRunStep> steps, String className, String methodName, String suiteName) {
         super(id);
         this.duration = duration;
         this.result = result;
@@ -79,7 +88,7 @@ public class APITestCaseRun extends APIEntity {
     public void setStacktrace(String stacktrace) {
         this.stacktrace = stacktrace;
     }
-    
+
     public Date getCreateTime() {
         return createTime;
     }
@@ -135,5 +144,5 @@ public class APITestCaseRun extends APIEntity {
         this.steps = apiTestCaseRun.steps;
         this.suiteName = apiTestCaseRun.suiteName;
     }
-    
+
 }

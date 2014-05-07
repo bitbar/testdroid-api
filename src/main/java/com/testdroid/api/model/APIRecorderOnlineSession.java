@@ -1,31 +1,42 @@
 package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
-import java.util.Date;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+import java.util.Date;
+
 /**
- *
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
  */
 @XmlRootElement
 @JsonIgnoreProperties(value = {"id"})
 public class APIRecorderOnlineSession extends APIEntity {
-    private String screenplayContent;
-    private Date startTime;
-    private Date updateTime;
-    private Date endTime;
-    private String sessionKey;
-    
+
     @XmlType(namespace = "APIRecorderOnlineSession")
-    public static enum Action { UPDATE, CLOSE }
+    public static enum Action {
+        UPDATE,
+        CLOSE
+    }
 
-    public APIRecorderOnlineSession() {}
+    private Date endTime;
 
-    public APIRecorderOnlineSession(Long id, String screenplayContent, Date startTime, Date endTime, Date updateTime, String sessionKey) {
+    private String screenplayContent;
+
+    private String sessionKey;
+
+    private Date startTime;
+
+    private Date updateTime;
+
+    public APIRecorderOnlineSession() {
+    }
+
+    public APIRecorderOnlineSession(
+            Long id, String screenplayContent, Date startTime, Date endTime, Date updateTime,
+            String sessionKey) {
         super(id);
         this.screenplayContent = screenplayContent;
         this.startTime = startTime;
@@ -85,5 +96,5 @@ public class APIRecorderOnlineSession extends APIEntity {
         this.startTime = apiRecorderOnlineSession.startTime;
         this.updateTime = apiRecorderOnlineSession.updateTime;
     }
-    
+
 }

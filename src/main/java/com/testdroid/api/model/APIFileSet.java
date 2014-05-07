@@ -1,29 +1,31 @@
 package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
-import static com.testdroid.api.APIEntity.createUri;
 import com.testdroid.api.APIException;
 import com.testdroid.api.APIListResource;
 import com.testdroid.api.APIQueryBuilder;
-import java.util.Collections;
-import java.util.Date;
-import javax.xml.bind.annotation.XmlRootElement;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
+import javax.xml.bind.annotation.XmlRootElement;
+import java.util.Collections;
+import java.util.Date;
+
 /**
- *
  * @author Michał Szpruta <michal.szpruta@bitbar.com>
+ * @author Slawomir Pawluk <slawomir.pawluk@bitbar.com>
  */
 @XmlRootElement
 public class APIFileSet extends APIEntity {
 
-    private String name;
     private Date createTime;
+
     private Integer fileCount;
+
+    private String name;
 
     public APIFileSet() {
     }
-    
+
     public APIFileSet(Long id, String name, Date createTime, Integer fileCount) {
         super(id);
         this.name = name;
@@ -54,37 +56,42 @@ public class APIFileSet extends APIEntity {
     public void setFileCount(Integer fileCount) {
         this.fileCount = fileCount;
     }
-    
-    private String getIncludedFilesURI() { return createUri(selfURI, "/files"); };
-    private String getIncludedFilesURI(Long fileId) { return createUri(selfURI, "/files/" + fileId); };
+
+    private String getIncludedFilesURI() {
+        return createUri(selfURI, "/files");
+    }
+
+    private String getIncludedFilesURI(Long fileId) {
+        return createUri(selfURI, "/files/" + fileId);
+    }
 
     @JsonIgnore
     public APIListResource<APIUserFile> getIncludedFilesResource() throws APIException {
-        return getListResource(getIncludedFilesURI(), APIUserFile.class);
+        return getListResource(getIncludedFilesURI());
     }
-    
+
     @JsonIgnore
     public APIListResource<APIUserFile> getIncludedFilesResource(APIQueryBuilder queryBuilder) throws APIException {
-        return getListResource(getIncludedFilesURI(), queryBuilder, APIUserFile.class);
+        return getListResource(getIncludedFilesURI(), queryBuilder);
     }
-    
+
     public void delete() throws APIException {
         deleteResource(selfURI);
     }
-    
+
     public void addFile(APIUserFile file) throws APIException {
         postResource(getIncludedFilesURI(), Collections.singletonMap("fileId", file.getId()), null);
     }
-    
+
     public void removeFile(APIUserFile file) throws APIException {
         deleteResource(getIncludedFilesURI(file.getId()));
     }
-    
+
     public void update() throws APIException {
         APIFileSet fileSet = postResource(selfURI, Collections.singletonMap("name", name), APIFileSet.class);
         clone(fileSet);
     }
-    
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {

@@ -1,31 +1,36 @@
 package com.testdroid.api.model;
 
-import com.testdroid.api.APIEntity;
-import static com.testdroid.api.APIEntity.createUri;
-import com.testdroid.api.APIException;
-import com.testdroid.api.APIListResource;
-import com.testdroid.api.APIQueryBuilder;
-import com.testdroid.api.APISort;
-import java.util.Collections;
-import javax.xml.bind.annotation.XmlRootElement;
+import com.testdroid.api.*;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
+import javax.xml.bind.annotation.XmlRootElement;
+import java.util.Collections;
+
 /**
- *
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
+ * @author Slawomir Pawluk <slawomir.pawluk@bitbar.com>
  */
 @XmlRootElement
 public class APIDeviceGroup extends APIEntity {
-    private String name;
-    private String displayName;
-    private Integer deviceCount;
+
     private Integer creditsPrice;
-    private Long userId;
+
+    private Integer deviceCount;
+
+    private String displayName;
+
+    private String name;
+
     private APIDevice.OsType osType;
 
-    public APIDeviceGroup() {}
+    private Long userId;
 
-    public APIDeviceGroup(Long id, String name, String displayName, APIDevice.OsType osType, Integer deviceCount, Integer creditsPrice, Long userId) {
+    public APIDeviceGroup() {
+    }
+
+    public APIDeviceGroup(
+            Long id, String name, String displayName, APIDevice.OsType osType, Integer deviceCount,
+            Integer creditsPrice, Long userId) {
         this.id = id;
         this.name = name;
         this.displayName = displayName;
@@ -82,53 +87,59 @@ public class APIDeviceGroup extends APIEntity {
     public void setOsType(APIDevice.OsType osType) {
         this.osType = osType;
     }
-    
+
     @JsonIgnore
     public boolean isPublic() {
         return userId == null;
     }
-    
-    private String getIncludedDevicesURI() { return createUri(selfURI, "/devices"); };
-    private String getIncludedDevicesURI(Long deviceId) { return createUri(selfURI, "/devices/" + deviceId); };
-    
+
+    private String getIncludedDevicesURI() {
+        return createUri(selfURI, "/devices");
+    }
+
+    private String getIncludedDevicesURI(Long deviceId) {
+        return createUri(selfURI, "/devices/" + deviceId);
+    }
+
     @JsonIgnore
     public APIListResource<APIDevice> getIncludedDevicesResource() throws APIException {
-        return getListResource(getIncludedDevicesURI(), APIDevice.class);
+        return getListResource(getIncludedDevicesURI());
     }
-    
+
     /**
-     * @since 1.3.34
      * @param queryBuilder
      * @return
-     * @throws APIException 
+     * @throws APIException
+     * @since 1.3.34
      */
     @JsonIgnore
     public APIListResource<APIDevice> getIncludedDevicesResource(APIQueryBuilder queryBuilder) throws APIException {
-        return getListResource(getIncludedDevicesURI(), queryBuilder, APIDevice.class);
+        return getListResource(getIncludedDevicesURI(), queryBuilder);
     }
-    
+
     /**
-     * @deprecated 
      * @param offset
      * @param limit
      * @param search
      * @param sort
      * @return
-     * @throws APIException 
+     * @throws APIException
+     * @deprecated
      */
     @JsonIgnore
-    public APIListResource<APIDevice> getIncludedDevicesResource(long offset, long limit, String search, APISort sort) throws APIException {
+    public APIListResource<APIDevice> getIncludedDevicesResource(long offset, long limit, String search, APISort sort)
+            throws APIException {
         return getListResource(getIncludedDevicesURI(), offset, limit, search, sort, APIDevice.class);
     }
-    
+
     public void delete() throws APIException {
         deleteResource(selfURI);
     }
-    
+
     public void addDevice(APIDevice device) throws APIException {
         postResource(getIncludedDevicesURI(), Collections.singletonMap("deviceId", device.getId()), null);
     }
-    
+
     public void deleteDevice(APIDevice device) throws APIException {
         deleteResource(getIncludedDevicesURI(device.getId()));
     }

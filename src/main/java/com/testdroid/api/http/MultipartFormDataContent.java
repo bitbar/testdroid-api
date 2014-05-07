@@ -14,23 +14,22 @@ import java.util.Collections;
  * Created by sakari on 6/10/13.
  */
 
-public class MultipartFormDataContent extends AbstractHttpContent
-{
+public class MultipartFormDataContent extends AbstractHttpContent {
 
     static final String NEWLINE = "\r\n";
+
     private static final String TWO_DASHES = "--";
+
     /**
      * Parts of the HTTP multipart request.
      */
     private ArrayList<Part> parts = new ArrayList<Part>();
 
-    public MultipartFormDataContent()
-    {
+    public MultipartFormDataContent() {
         super(new HttpMediaType("multipart/form-data").setParameter("boundary", "__END_OF_PART__"));
     }
 
-    public void writeTo(OutputStream out) throws IOException
-    {
+    public void writeTo(OutputStream out) throws IOException {
         Writer writer = new OutputStreamWriter(out, getCharset());
         String boundary = getBoundary();
 
@@ -38,12 +37,12 @@ public class MultipartFormDataContent extends AbstractHttpContent
         String contentDisposition = null;
         HttpContent content = null;
         StreamingContent streamingContent = null;
-        for (Part part : parts)
-        {
+        for (Part part : parts) {
             // analyze the headers
             headers = new HttpHeaders().setAcceptEncoding(null);
-            if (part.headers != null)
+            if (part.headers != null) {
                 headers.fromHttpHeaders(part.headers);
+            }
             headers.setContentEncoding(null)
                     .setUserAgent(null)
                     .setContentType(null)
@@ -51,28 +50,26 @@ public class MultipartFormDataContent extends AbstractHttpContent
                     .set("Content-Transfer-Encoding", null);
 
             // Write disposition
-            if (part.getName() != null)
-            {
+            if (part.getName() != null) {
                 contentDisposition = String.format("form-data; name=\"%s\"", part.name);
                 // Do we have a filename?
                 // Then add to the content dispos
-                if (part.filename != null)
+                if (part.filename != null) {
                     contentDisposition += String.format("; filename=\"%s\"", part.filename);
+                }
                 headers.set("Content-Disposition", contentDisposition);
             }
 
             // analyze the content
             content = part.content;
             streamingContent = null;
-            if (content != null)
-            {
+            if (content != null) {
                 headers.setContentType(content.getType());
                 headers.set("Content-Transfer-Encoding", Arrays.asList("binary"));
                 final HttpEncoding encoding = part.encoding;
-                if (encoding == null)
+                if (encoding == null) {
                     streamingContent = content;
-                else
-                {
+                } else {
                     headers.setContentEncoding(encoding.getName());
                     streamingContent = new HttpEncodingStreamingContent(content, encoding);
                 }
@@ -85,8 +82,7 @@ public class MultipartFormDataContent extends AbstractHttpContent
             // Write Headers
             HttpHeaders.serializeHeadersForMultipartRequests(headers, null, null, writer);
             // write content
-            if (streamingContent != null)
-            {
+            if (streamingContent != null) {
                 writer.write(NEWLINE);
                 writer.flush();
                 streamingContent.writeTo(out);
@@ -102,12 +98,9 @@ public class MultipartFormDataContent extends AbstractHttpContent
     }
 
     @Override
-    public boolean retrySupported()
-    {
-        for (Part part : parts)
-        {
-            if (!part.content.retrySupported())
-            {
+    public boolean retrySupported() {
+        for (Part part : parts) {
+            if (!part.content.retrySupported()) {
                 return false;
             }
         }
@@ -115,8 +108,7 @@ public class MultipartFormDataContent extends AbstractHttpContent
     }
 
     @Override
-    public MultipartFormDataContent setMediaType(HttpMediaType mediaType)
-    {
+    public MultipartFormDataContent setMediaType(HttpMediaType mediaType) {
         super.setMediaType(mediaType);
         return this;
     }
@@ -124,8 +116,7 @@ public class MultipartFormDataContent extends AbstractHttpContent
     /**
      * Returns an unmodifiable view of the parts of the HTTP multipart request.
      */
-    public final Collection<Part> getParts()
-    {
+    public final Collection<Part> getParts() {
         return Collections.unmodifiableCollection(parts);
     }
 
@@ -137,8 +128,7 @@ public class MultipartFormDataContent extends AbstractHttpContent
      * the return type, but nothing else.
      * </p>
      */
-    public MultipartFormDataContent setParts(Collection<Part> parts)
-    {
+    public MultipartFormDataContent setParts(Collection<Part> parts) {
         this.parts = new ArrayList<Part>(parts);
         return this;
     }
@@ -151,8 +141,7 @@ public class MultipartFormDataContent extends AbstractHttpContent
      * the return type, but nothing else.
      * </p>
      */
-    public MultipartFormDataContent addPart(Part part)
-    {
+    public MultipartFormDataContent addPart(Part part) {
         parts.add(Preconditions.checkNotNull(part));
         return this;
     }
@@ -160,8 +149,7 @@ public class MultipartFormDataContent extends AbstractHttpContent
     /**
      * Returns the boundary string to use.
      */
-    public final String getBoundary()
-    {
+    public final String getBoundary() {
         return getMediaType().getParameter("boundary");
     }
 
@@ -177,8 +165,7 @@ public class MultipartFormDataContent extends AbstractHttpContent
      * the return type, but nothing else.
      * </p>
      */
-    public MultipartFormDataContent setBoundary(String boundary)
-    {
+    public MultipartFormDataContent setBoundary(String boundary) {
         getMediaType().setParameter("boundary", Preconditions.checkNotNull(boundary));
         return this;
     }
@@ -190,41 +177,42 @@ public class MultipartFormDataContent extends AbstractHttpContent
      * Implementation is not thread-safe.
      * </p>
      */
-    public static final class Part
-    {
+    public static final class Part {
 
-        /**
-         * Name of this FormPart
-         */
-        private String name;
-        /**
-         * FileName of the File being uploaded or {@code null} for none.
-         */
-        private String filename;
-        /**
-         * HTTP header or {@code null} for none.
-         */
-        private HttpHeaders headers;
         /**
          * HTTP content or {@code null} for none.
          */
         private HttpContent content;
+
         /**
          * HTTP encoding or {@code null} for none.
          */
         private HttpEncoding encoding;
 
-        public Part()
-        {
+        /**
+         * FileName of the File being uploaded or {@code null} for none.
+         */
+        private String filename;
+
+        /**
+         * HTTP header or {@code null} for none.
+         */
+        private HttpHeaders headers;
+
+        /**
+         * Name of this FormPart
+         */
+        private String name;
+
+        public Part() {
             this(null, null);
         }
 
         /**
-         * @param name HTTP headers or {@code null} for none
+         * @param name    HTTP headers or {@code null} for none
          * @param content HTTP content or {@code null} for none
          */
-        public Part(String name, HttpContent content)
-        {
+        public Part(String name, HttpContent content) {
             setName(name);
             setContent(content);
         }
@@ -232,41 +220,34 @@ public class MultipartFormDataContent extends AbstractHttpContent
         /**
          * Returns the HTTP content or {@code null} for none.
          */
-        public HttpContent getContent()
-        {
+        public HttpContent getContent() {
             return content;
         }
 
         /**
          * Sets the HTTP content or {@code null} for none.
          */
-        public Part setContent(HttpContent content)
-        {
+        public Part setContent(HttpContent content) {
             this.content = content;
-            if (content instanceof FileContent)
-            {
+            if (content instanceof FileContent) {
                 final File file = ((FileContent) content).getFile();
-                if (file != null && file.exists())
-                {
+                if (file != null && file.exists()) {
                     setFilename(file.getName());
                 }
             }
             return this;
         }
 
-        public String getName()
-        {
+        public String getName() {
             return name;
         }
 
-        public Part setName(final String name)
-        {
+        public Part setName(final String name) {
             this.name = name;
             return this;
         }
 
-        public String getFilename()
-        {
+        public String getFilename() {
             return filename;
         }
 
@@ -275,8 +256,7 @@ public class MultipartFormDataContent extends AbstractHttpContent
          *
          * @param filename
          */
-        public Part setFilename(final String filename)
-        {
+        public Part setFilename(final String filename) {
             this.filename = filename;
             return this;
         }
@@ -284,16 +264,14 @@ public class MultipartFormDataContent extends AbstractHttpContent
         /**
          * Returns the HTTP headers or {@code null} for none.
          */
-        public HttpHeaders getHeaders()
-        {
+        public HttpHeaders getHeaders() {
             return headers;
         }
 
         /**
          * Sets the HTTP headers or {@code null} for none.
          */
-        public Part setHeaders(final HttpHeaders headers)
-        {
+        public Part setHeaders(final HttpHeaders headers) {
             this.headers = headers;
             return this;
         }
@@ -301,16 +279,14 @@ public class MultipartFormDataContent extends AbstractHttpContent
         /**
          * Returns the HTTP encoding or {@code null} for none.
          */
-        public HttpEncoding getEncoding()
-        {
+        public HttpEncoding getEncoding() {
             return encoding;
         }
 
         /**
          * Sets the HTTP encoding or {@code null} for none.
          */
-        public Part setEncoding(HttpEncoding encoding)
-        {
+        public Part setEncoding(HttpEncoding encoding) {
             this.encoding = encoding;
             return this;
         }

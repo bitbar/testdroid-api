@@ -2,18 +2,21 @@ package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIException;
-import javax.xml.bind.annotation.XmlRootElement;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
- *
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
+ * @author Slawomir Pawluk <slawomir.pawluk@bitbar.com>
  */
 @XmlRootElement
 public class APITag extends APIEntity {
+
     private String name;
 
-    public APITag() {}
+    public APITag() {
+    }
 
     public APITag(Long id, String name) {
         super(id);
@@ -27,7 +30,7 @@ public class APITag extends APIEntity {
     public void setName(String name) {
         this.name = name;
     }
-    
+
     public void delete() throws APIException {
         deleteResource(selfURI);
     }
@@ -39,5 +42,5 @@ public class APITag extends APIEntity {
         cloneBase(from);
         this.name = apiTag.name;
     }
-    
+
 }

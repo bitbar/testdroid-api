@@ -2,21 +2,25 @@ package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIException;
-import com.testdroid.api.model.APIFiles;
-import java.io.File;
-import javax.xml.bind.annotation.XmlRootElement;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
+import javax.xml.bind.annotation.XmlRootElement;
+import java.io.File;
+
 /**
- *
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
+ * @author Slawomir Pawluk <slawomir.pawluk@bitbar.com>
  */
-@XmlRootElement 
+@XmlRootElement
 public class AndroidFiles extends APIFiles {
+
     private AndroidAppFile app;
+
     private AndroidTestFile test;
 
-    public AndroidFiles() {}
+    public AndroidFiles() {
+    }
+
     public AndroidFiles(Long id, DataFile data, AndroidAppFile app, AndroidTestFile test) {
         super(id, data);
         this.app = app;
@@ -40,11 +44,13 @@ public class AndroidFiles extends APIFiles {
     }
 
     public void uploadApp(File file) throws APIException {
-        this.app = client.postFile(getApplicationURI(), "application/vnd.android.package-archive", file, AndroidAppFile.class);
+        this.app = client
+                .postFile(getApplicationURI(), "application/vnd.android.package-archive", file, AndroidAppFile.class);
     }
 
     public void uploadTest(File file) throws APIException {
-        this.test = client.postFile(getTestURI(), "application/vnd.android.package-archive", file, AndroidTestFile.class);
+        this.test = client
+                .postFile(getTestURI(), "application/vnd.android.package-archive", file, AndroidTestFile.class);
     }
 
     @Override

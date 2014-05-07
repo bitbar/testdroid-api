@@ -2,20 +2,26 @@ package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIView;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.map.annotate.JsonView;
 
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+
 /**
- *
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
+ * @author Michał Szpruta <michal.szpruta@bitbar.com>
+ * @author Slawomir Pawluk <slawomir.pawluk@bitbar.com>
  */
 @XmlRootElement
 public class APIDevice extends APIEntity {
 
     @XmlType
-    public static enum DeviceFilter { FREE, RECOMMENDED, NEW }
+    public static enum DeviceFilter {
+        FREE,
+        RECOMMENDED,
+        NEW
+    }
 
     @XmlType(namespace = "APIDevice")
     public static enum OsType {
@@ -33,29 +39,48 @@ public class APIDevice extends APIEntity {
         }
     }
 
-    private Boolean locked;
-    private Boolean online;
     private Integer creditsPrice;
+
     private String displayName;
-    private String imagePrefix;
-    private Integer imageTop;
-    private Integer imageLeft;
-    private Integer imageWidth;
-    private Integer imageHeight;
-    private Integer frameExtraWidth;
-    private String frame80Url;
+
     private String frame100Url;
+
     private String frame160Url;
+
     private String frame400Url;
+
+    private String frame80Url;
+
+    private Integer frameExtraWidth;
+
+    private Integer imageHeight;
+
+    private Integer imageLeft;
+
+    private String imagePrefix;
+
+    private Integer imageTop;
+
+    private Integer imageWidth;
+
+    private Boolean locked;
+
+    private Boolean online;
+
     private APIDevice.OsType osType;
+
     private APISoftwareVersion softwareVersion;
 
-    public APIDevice() {}
+    private Boolean vncSupported;
 
-    public APIDevice(Long id, String displayName, APISoftwareVersion softwareVersion, Integer creditsPrice,
+    public APIDevice() {
+    }
+
+    public APIDevice(
+            Long id, String displayName, APISoftwareVersion softwareVersion, Integer creditsPrice,
             String imagePrefix, Integer imageTop, Integer imageLeft, Integer imageWidth, Integer imageHeight,
             Integer frameExtraWidth, OsType osType, String frame80Url, String frame100Url, String frame160Url,
-            String frame400Url, Boolean online, Boolean locked) {
+            String frame400Url, Boolean online, Boolean locked, Boolean vncSupported) {
         super(id);
         this.displayName = displayName;
         this.softwareVersion = softwareVersion;
@@ -73,6 +98,7 @@ public class APIDevice extends APIEntity {
         this.frame400Url = frame400Url;
         this.locked = locked;
         this.online = online;
+        this.vncSupported = vncSupported;
     }
 
     @JsonView(value = {APIView.AdminView.class, APIView.MonitorView.class})
@@ -213,6 +239,14 @@ public class APIDevice extends APIEntity {
         this.online = online;
     }
 
+    public Boolean isVncSupported() {
+        return vncSupported;
+    }
+
+    public void setVncSupported(Boolean vncSupported) {
+        this.vncSupported = vncSupported;
+    }
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
@@ -234,6 +268,7 @@ public class APIDevice extends APIEntity {
         this.softwareVersion = apiDevice.softwareVersion;
         this.online = apiDevice.online;
         this.locked = apiDevice.locked;
+        this.vncSupported = apiDevice.vncSupported;
     }
 
 }

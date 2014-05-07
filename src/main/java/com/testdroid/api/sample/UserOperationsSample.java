@@ -1,30 +1,25 @@
 package com.testdroid.api.sample;
 
 import com.testdroid.api.APIClient;
-import com.testdroid.api.APIDeviceQueryBuilder;
 import com.testdroid.api.APIException;
-import com.testdroid.api.APIListResource;
-import com.testdroid.api.model.APIDevice;
-import com.testdroid.api.model.APINotificationEmail;
 import com.testdroid.api.model.APIUser;
 import com.testdroid.api.sample.util.Common;
 
 /**
- *
  * @author Sławomir Pawluk <slawomir.pawluk@bitbar.com>
  */
 public class UserOperationsSample {
 
     public static final APIClient CLIENT = Common.createApiClient();
-    
+
     public static void main(String[] args) {
         try {
             // Get authenticated user
             APIUser me = CLIENT.me();
-            
+
             // List available data
             printUser(me);
-            
+
             // Updating user data
             me.setAddress("Address");
             me.setCity("City");
@@ -36,16 +31,16 @@ public class UserOperationsSample {
             me.setPhone("0987654321");
             me.setState("Some state");
             me.setVatID("FR1234890");
-            
+
             me.update();
-            
+
             // List data again
             printUser(me);
-        } catch(APIException apie) {
+        } catch (APIException apie) {
             System.err.println(apie.getMessage());
         }
     }
-    
+
     private static void printUser(APIUser user) {
         System.out.println(String.format("Address: %s", user.getAddress()));
         System.out.println(String.format("City: %s", user.getCity()));

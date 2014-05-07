@@ -1,42 +1,44 @@
 package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
-import static com.testdroid.api.APIEntity.createUri;
 import com.testdroid.api.APIException;
-import java.io.InputStream;
-import java.util.Date;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSeeAlso;
-import javax.xml.bind.annotation.XmlTransient;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSeeAlso;
+import javax.xml.bind.annotation.XmlTransient;
+import java.io.InputStream;
+import java.util.Date;
+
 /**
- *
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
+ * @author Slawomir Pawluk <slawomir.pawluk@bitbar.com>
  */
 @XmlRootElement
 @XmlSeeAlso({
-    AndroidFiles.class,
-    IOSFiles.class,
-    UIAutomatorFiles.class,
-    RemoteControlFiles.class,
-    CalabashFiles.class,
-    CalabashIOSFiles.class,
-    AppiumAndroidFiles.class,
-    AppiumIOSFiles.class
+        AndroidFiles.class,
+        IOSFiles.class,
+        UIAutomatorFiles.class,
+        RemoteControlFiles.class,
+        CalabashFiles.class,
+        CalabashIOSFiles.class,
+        AppiumAndroidFiles.class,
+        AppiumIOSFiles.class
 })
 @JsonIgnoreProperties(value = {"id"})
 public abstract class APIFiles extends APIEntity {
+
     private DataFile data;
 
-    public APIFiles() {}
+    public APIFiles() {
+    }
 
     public APIFiles(Long id, DataFile data) {
         super(id);
         this.data = data;
     }
-    
+
     public DataFile getData() {
         return data;
     }
@@ -44,11 +46,19 @@ public abstract class APIFiles extends APIEntity {
     public void setData(DataFile data) {
         this.data = data;
     }
-    
-    protected String getDataURI() { return createUri(selfURI, "/data"); };
-    protected String getApplicationURI() { return createUri(selfURI, "/application"); };
-    protected String getTestURI() { return createUri(selfURI, "/test"); };
-    
+
+    protected String getDataURI() {
+        return createUri(selfURI, "/data");
+    }
+
+    protected String getApplicationURI() {
+        return createUri(selfURI, "/application");
+    }
+
+    protected String getTestURI() {
+        return createUri(selfURI, "/test");
+    }
+
     @JsonIgnore
     @XmlTransient
     public InputStream getApplicationStream() throws APIException {
@@ -60,7 +70,7 @@ public abstract class APIFiles extends APIEntity {
     public InputStream getTestStream() throws APIException {
         return getResource(getTestURI(), null).getStream();
     }
-    
+
     @JsonIgnore
     @XmlTransient
     public InputStream getDataStream() throws APIException {
@@ -74,19 +84,23 @@ public abstract class APIFiles extends APIEntity {
         cloneBase(from);
         this.data = apiFiles.data;
     }
-    
-    @XmlRootElement 
-    @XmlSeeAlso({ APIFiles.APIFile.class, APIFiles.AndroidAppFile.class, APIFiles.AndroidTestFile.class, 
-        APIFiles.DataFile.class, APIFiles.IOSAppFile.class, APIFiles.IOSTestFile.class,
-        APIFiles.UIAutomatorTestFile.class, APIFiles.RecorderOnlineScreenplayFile.class,
-        APIFiles.CalabashTestFile.class
+
+    @XmlRootElement
+    @XmlSeeAlso({APIFiles.APIFile.class, APIFiles.AndroidAppFile.class, APIFiles.AndroidTestFile.class,
+            APIFiles.DataFile.class, APIFiles.IOSAppFile.class, APIFiles.IOSTestFile.class,
+            APIFiles.UIAutomatorTestFile.class, APIFiles.RecorderOnlineScreenplayFile.class,
+            APIFiles.CalabashTestFile.class
     })
     public static abstract class APIFile extends APIEntity {
+
         private String originalName;
+
         private String readableSize;
+
         private Date uploadTime;
-        
-        public APIFile() {}
+
+        public APIFile() {
+        }
 
         public APIFile(Long id, String originalName, Date uploadTime, String readableSize) {
             super(id);
@@ -94,7 +108,7 @@ public abstract class APIFiles extends APIEntity {
             this.uploadTime = uploadTime;
             this.readableSize = readableSize;
         }
-        
+
         public String getOriginalName() {
             return originalName;
         }
@@ -131,24 +145,32 @@ public abstract class APIFiles extends APIEntity {
 
     }
 
-    @XmlRootElement 
-    public static class AndroidAppFile extends APIFile { 
-        public AndroidAppFile() {}
-        
+    @XmlRootElement
+    public static class AndroidAppFile extends APIFile {
+
+        public AndroidAppFile() {
+        }
+
         public AndroidAppFile(Long id, String originalName, Date uploadTime, String readableSize) {
             super(id, originalName, uploadTime, readableSize);
         }
     }
 
-    @XmlRootElement 
-    public static class AndroidTestFile extends APIFile { 
+    @XmlRootElement
+    public static class AndroidTestFile extends APIFile {
+
         private String mainActivity;
+
         private Integer minSdk;
+
         private String packageName;
-        
-        public AndroidTestFile() {}
-        
-        public AndroidTestFile(Long id, String originalName, Date uploadTime, String readableSize, String packageName, String mainActivity, Integer minSdk) {
+
+        public AndroidTestFile() {
+        }
+
+        public AndroidTestFile(
+                Long id, String originalName, Date uploadTime, String readableSize, String packageName,
+                String mainActivity, Integer minSdk) {
             super(id, originalName, uploadTime, readableSize);
             this.packageName = packageName;
             this.mainActivity = mainActivity;
@@ -188,17 +210,22 @@ public abstract class APIFiles extends APIEntity {
             this.minSdk = androidTestFile.minSdk;
             this.packageName = androidTestFile.packageName;
         }
-        
+
     }
 
-    @XmlRootElement 
+    @XmlRootElement
     public static class IOSAppFile extends APIFile {
+
         private String bundleIdentifier;
+
         private String bundleName;
-        
-        public IOSAppFile() {}
-        
-        public IOSAppFile(Long id, String originalName, Date uploadTime, String readableSize, String bundleName, String bundleIdentifier) {
+
+        public IOSAppFile() {
+        }
+
+        public IOSAppFile(
+                Long id, String originalName, Date uploadTime, String readableSize, String bundleName,
+                String bundleIdentifier) {
             super(id, originalName, uploadTime, readableSize);
             this.bundleName = bundleName;
             this.bundleIdentifier = bundleIdentifier;
@@ -231,30 +258,39 @@ public abstract class APIFiles extends APIEntity {
 
     }
 
-    @XmlRootElement 
+    @XmlRootElement
     public static class IOSTestFile extends APIFile {
-        public IOSTestFile() {}
-        
+
+        public IOSTestFile() {
+        }
+
         public IOSTestFile(Long id, String originalName, Date uploadTime, String readableSize) {
             super(id, originalName, uploadTime, readableSize);
         }
     }
 
-    @XmlRootElement 
+    @XmlRootElement
     public static class CalabashTestFile extends APIFile {
-        public CalabashTestFile() {}
+
+        public CalabashTestFile() {
+        }
+
         public CalabashTestFile(Long id, String originalName, Date uploadTime, String readableSize) {
             super(id, originalName, uploadTime, readableSize);
         }
     }
 
-    @XmlRootElement 
+    @XmlRootElement
     public static class UIAutomatorTestFile extends APIFile {
+
         private String jarNames;
 
-        public UIAutomatorTestFile() {}
+        public UIAutomatorTestFile() {
+        }
 
-        public UIAutomatorTestFile(Long id, String originalName, Date uploadTime, String readableSize, String jarNames) {
+        public UIAutomatorTestFile(
+                Long id, String originalName, Date uploadTime, String readableSize,
+                String jarNames) {
             super(id, originalName, uploadTime, readableSize);
             this.jarNames = jarNames;
         }
@@ -277,41 +313,44 @@ public abstract class APIFiles extends APIEntity {
 
     }
 
-    @XmlRootElement 
+    @XmlRootElement
     public static class DataFile extends APIFile {
-        public DataFile() {}
-        
+
+        public DataFile() {
+        }
+
         public DataFile(Long id, String originalName, Date uploadTime, String readableSize) {
             super(id, originalName, uploadTime, readableSize);
         }
     }
-    
+
     @XmlRootElement
     public static class RecorderOnlineScreenplayFile extends APIFile {
+
         public static enum Format {
             JAVA("java"),
             JSON("json");
-            
+
             private String urlForm;
-            
+
             private Format(String urlForm) {
                 this.urlForm = urlForm;
             }
 
-            public String getUrlForm() {
-                return urlForm;
-            }
-            
             public static Format fromUrlForm(String url) {
-                for(Format f: Format.values()) {
-                    if(f.getUrlForm().equalsIgnoreCase(url)) {
+                for (Format f : Format.values()) {
+                    if (f.getUrlForm().equalsIgnoreCase(url)) {
                         return f;
                     }
                 }
                 return null;
             }
+
+            public String getUrlForm() {
+                return urlForm;
+            }
         }
-        
+
         public RecorderOnlineScreenplayFile() {
         }
 
@@ -319,5 +358,5 @@ public abstract class APIFiles extends APIEntity {
             super(id, originalName, uploadTime, readableSize);
         }
     }
-    
+
 }

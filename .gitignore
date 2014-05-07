@@ -7,4 +7,4 @@
 .idea
 .settings
 *.swp
-testdroid-api.iml
+*.iml

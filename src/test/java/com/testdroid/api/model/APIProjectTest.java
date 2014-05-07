@@ -1,11 +1,10 @@
 package com.testdroid.api.model;
 
-import static org.junit.Assert.*;
-
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
+
 /**
- *
  * @author Jarno Tuovinen <jarno.tuovinen@bitbar.com>
  */
 public class APIProjectTest {
