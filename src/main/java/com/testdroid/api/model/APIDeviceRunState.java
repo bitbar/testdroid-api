@@ -1,31 +1,48 @@
 package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
-import java.util.Date;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+import java.util.Date;
+
 /**
- *
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
+ * @author Slawomir Pawluk <slawomir.pawluk@bitbar.com>
  */
 @XmlRootElement
 public class APIDeviceRunState extends APIEntity {
-    
+
     @XmlType(namespace = "APIDeviceRunState")
-    public static enum Status { STARTED, EXCLUDED, FAILED, SUCCEEDED, NOT_AVAILABLE }
-    
+    public static enum Status {
+        STARTED,
+        EXCLUDED,
+        FAILED,
+        SUCCEEDED,
+        NOT_AVAILABLE
+    }
+
     private Long deviceRunId;
-    private DeviceRunStateType type;
-    private Long startTimeMS;
-    private Long finishTimeMS;
-    private Date retryTime;
+
     private String failReason;
+
+    private Long finishTimeMS;
+
+    private Date retryTime;
+
+    private Long startTimeMS;
+
     private Status status;
 
-    public APIDeviceRunState() {}
-    public APIDeviceRunState(Long id, Long deviceRunId, Long startTimeMS, Long finishTimeMS, Date retryTime, String failReason, Status status, DeviceRunStateType type) {
+    private DeviceRunStateType type;
+
+    public APIDeviceRunState() {
+    }
+
+    public APIDeviceRunState(
+            Long id, Long deviceRunId, Long startTimeMS, Long finishTimeMS, Date retryTime,
+            String failReason, Status status, DeviceRunStateType type) {
         super(id);
         this.deviceRunId = deviceRunId;
         this.startTimeMS = startTimeMS;
@@ -35,15 +52,15 @@ public class APIDeviceRunState extends APIEntity {
         this.status = status;
         this.type = type;
     }
-    
+
     public Long getDeviceRunId() {
-         return deviceRunId;
+        return deviceRunId;
     }
- 
+
     public void setDeviceRunId(Long deviceRunId) {
         this.deviceRunId = deviceRunId;
     }
-    
+
     public Long getStartTimeMS() {
         return startTimeMS;
     }
@@ -105,5 +122,5 @@ public class APIDeviceRunState extends APIEntity {
         this.status = apiDeviceRunState.status;
         this.type = apiDeviceRunState.type;
     }
-    
+
 }

@@ -1,31 +1,43 @@
 package com.testdroid.api;
 
-import java.util.List;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.map.annotate.JsonView;
 
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- *
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
  */
 @XmlRootElement
 @JsonIgnoreProperties(value = {"id"})
 public class APIList<T extends APIEntity> extends APIEntity {
-    private String next;
-    private String previous;
+
     @XmlElementWrapper
     private List<T> data;
-    private Integer offset;
+
     private Integer limit;
-    private Integer total;
+
+    private String next;
+
+    private Integer offset;
+
+    private String previous;
+
     private String search;
+
     private String sort;
 
-    public APIList() {}
+    private Integer total;
+
+    public APIList() {
+        data = new ArrayList<>();
+    }
+
     public APIList(String next, String previous, List<T> data, Integer total, String search, String sort) {
         this.next = next;
         this.previous = previous;
@@ -34,7 +46,7 @@ public class APIList<T extends APIEntity> extends APIEntity {
         this.search = search;
         this.sort = sort;
     }
-    
+
     /**
      * Get full URL of the next page of the collection.
      * Simple call it to fetch next items.
@@ -47,7 +59,7 @@ public class APIList<T extends APIEntity> extends APIEntity {
     public void setNext(String next) {
         this.next = next;
     }
-    
+
     /**
      * Returns <code>true</code> if next page of items is available.
      */
@@ -55,15 +67,16 @@ public class APIList<T extends APIEntity> extends APIEntity {
     public boolean isNextAvailable() {
         return offset + limit < total && !data.isEmpty();
     }
-    
+
     @JsonIgnore
     public APIList<T> getNextItems() throws APIException {
-        if(!isNextAvailable()) {
+        if (!isNextAvailable()) {
             return null;
         }
-        return new APIListResource(client, getURI(next), null, null, null, null, data.get(0).getClass()).getEntity();
+        APIQueryBuilder queryBuilder = new APIQueryBuilder().limit(limit).offset(offset + limit).search(search);
+        return new APIListResource(client, selfURI, queryBuilder).getEntity();
     }
-    
+
     /**
      * Returns <code>true</code> if previous page of items is available.
      */
@@ -71,13 +84,14 @@ public class APIList<T extends APIEntity> extends APIEntity {
     public boolean isPreviousAvailable() {
         return offset > 0;
     }
-    
+
     @JsonIgnore
     public APIList<T> getPreviousItems() throws APIException {
-        if(!isPreviousAvailable()) {
+        if (!isPreviousAvailable()) {
             return null;
         }
-        return new APIListResource(client, getURI(previous), null, null, null, null, data.get(0).getClass()).getEntity();
+        APIQueryBuilder queryBuilder = new APIQueryBuilder().limit(limit).offset(offset - limit).search(search);
+        return new APIListResource(client, selfURI, queryBuilder).getEntity();
     }
 
     /**
@@ -95,7 +109,7 @@ public class APIList<T extends APIEntity> extends APIEntity {
 
     /**
      * Get found data of the list.
-     * List contains only set of items contrained with <code>offset</code>, 
+     * List contains only set of items contrained with <code>offset</code>,
      * <code>limit</code> and <code>search</code>.
      */
     @XmlTransient
@@ -112,12 +126,12 @@ public class APIList<T extends APIEntity> extends APIEntity {
     public T get(int index) {
         return this.data.get(index);
     }
-    
+
     @JsonView(APIView.class)
     public boolean isEmpty() {
         return this.data.isEmpty();
     }
-    
+
     /**
      * Get offset of data page returned in <code>getData()</code> method.
      */
@@ -192,8 +206,5 @@ public class APIList<T extends APIEntity> extends APIEntity {
         this.sort = apiList.sort;
         this.total = apiList.total;
     }
-    
-    private String getURI(String fullURL) {
-        return fullURL.substring(fullURL.indexOf(DefaultAPIClient.API_URI) + DefaultAPIClient.API_URI.length());
-    }
+
 }

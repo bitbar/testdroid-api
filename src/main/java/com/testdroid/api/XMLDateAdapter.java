@@ -1,10 +1,9 @@
 package com.testdroid.api;
 
-import java.util.Date;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
+import java.util.Date;
 
 /**
- *
  * @author kajdus
  */
 public class XMLDateAdapter extends XmlAdapter<Long, Date> {
@@ -18,5 +17,5 @@ public class XMLDateAdapter extends XmlAdapter<Long, Date> {
     public Long marshal(Date value) throws Exception {
         return value.getTime();
     }
-    
+
 }

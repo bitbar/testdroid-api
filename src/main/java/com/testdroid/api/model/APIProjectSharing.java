@@ -1,19 +1,24 @@
 package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
-import javax.xml.bind.annotation.XmlRootElement;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
- *
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
+ * @author Slawomir Pawluk <slawomir.pawluk@bitbar.com>
  */
 @XmlRootElement
 public class APIProjectSharing extends APIEntity {
-    private Long userId;
+
     private String userEmail;
 
-    public APIProjectSharing() {}
+    private Long userId;
+
+    public APIProjectSharing() {
+    }
+
     public APIProjectSharing(Long id, Long userId, String userEmail) {
         super(id);
         this.userId = userId;
@@ -44,5 +49,5 @@ public class APIProjectSharing extends APIEntity {
         this.userId = apiProjectSharing.userId;
         this.userEmail = apiProjectSharing.userEmail;
     }
-    
+
 }
