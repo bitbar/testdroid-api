@@ -78,9 +78,6 @@ public class APIProject extends APIEntity {
 
     private String description;
 
-
-    private String description;
-
     private APIFiles files;
 
     private byte[] icon;
