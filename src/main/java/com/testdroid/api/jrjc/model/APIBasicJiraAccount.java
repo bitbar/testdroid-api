@@ -4,13 +4,16 @@ import com.testdroid.api.APIEntity;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import java.io.Serializable;
 
 /**
  * @author Damian Sniezek <damian.sniezek@bitbar.com>
  */
 @XmlRootElement(name = "APIBasicJiraAccount", namespace = "cloud.testdroid.api.jira.model")
 @XmlType(name = "APIBasicJiraAccount", namespace = "cloud.testdroid.api.jira.model")
-public class APIBasicJiraAccount extends APIEntity {
+public class APIBasicJiraAccount extends APIEntity implements Serializable {
+
+    private static final long serialVersionUID = -7535287736543318975L;
 
     private String jiraUrl;
 
