@@ -149,7 +149,7 @@ public class APISort {
 
     private APISort(Class<? extends APIEntity> type, SortItem... items) {
         if (items != null && items.length > 0) {
-            List<SortItem> itemList = new ArrayList<>();
+            List<SortItem> itemList = new ArrayList<SortItem>();
             for (SortItem si : items) {
                 if (si.column.supportedClass.equals(type)) {
                     itemList.add(si);
@@ -169,7 +169,7 @@ public class APISort {
         if (StringUtils.isBlank(value)) {
             return new APISort(type);
         }
-        List<SortItem> items = new ArrayList<>();
+        List<SortItem> items = new ArrayList<SortItem>();
         String[] resultItems = value.split(":");
         for (String stringItem : resultItems) {
             String[] sortItemValues = stringItem.split("_");
@@ -197,7 +197,7 @@ public class APISort {
     }
 
     public String serialize() {
-        List<String> resultItems = new ArrayList<>();
+        List<String> resultItems = new ArrayList<String>();
         for (SortItem item : items) {
             resultItems.add(String.format("%s_%s", item.column.getName(), item.type.getURLValue()));
         }
