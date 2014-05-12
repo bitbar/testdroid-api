@@ -109,7 +109,7 @@ public class APIProject extends APIEntity {
         this.common = common;
         this.archivingStrategy = archivingStrategy;
         this.archivingItemCount = archivingItemCount;
-        this.jobConfig = new HashMap<>();
+        this.jobConfig = new HashMap<APIProjectJobConfig.Type, APIProjectJobConfig>();
     }
 
     public String getName() {
@@ -259,7 +259,7 @@ public class APIProject extends APIEntity {
     }
 
     private Map<String, Object> getCreateRunParameters(String testRunName, List<Long> usedDeviceIds) {
-        Map<String, Object> result = new HashMap<>();
+        Map<String, Object> result = new HashMap<String, Object>();
         result.putAll(getCreateRunParameters(testRunName));
         result.putAll(getCreateRunParameters(usedDeviceIds));
         return result;
@@ -298,7 +298,7 @@ public class APIProject extends APIEntity {
     @JsonIgnore
     public APIProjectJobConfig getJobConfig(APIProjectJobConfig.Type type) throws APIException {
         if (jobConfig == null) {
-            jobConfig = new HashMap<>();
+            jobConfig = new HashMap<APIProjectJobConfig.Type, APIProjectJobConfig>();
         }
         if (jobConfig.get(type) == null) {
             jobConfig.put(type, getResource(getJobConfigURI(type), APIProjectJobConfig.class).getEntity());
