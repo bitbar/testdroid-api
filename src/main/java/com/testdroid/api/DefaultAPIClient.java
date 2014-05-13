@@ -592,17 +592,17 @@ public class DefaultAPIClient implements APIClient {
 
     @Override
     public APIListResource<APIDevice> getDevices() throws APIException {
-        return new APIListResource<>(this, DEVICES_URI);
+        return new APIListResource<APIDevice>(this, DEVICES_URI);
     }
 
     @Override
     public APIListResource<APIDevice> getDevices(APIDevice.DeviceFilter... filters) throws APIException {
-        return new APIListResource<>(this, DEVICES_URI, new APIDeviceQueryBuilder().filterWithDeviceFilters(filters));
+        return new APIListResource<APIDevice>(this, DEVICES_URI, new APIDeviceQueryBuilder().filterWithDeviceFilters(filters));
     }
 
     @Override
     public APIListResource<APIDevice> getDevices(APIDeviceQueryBuilder queryBuilder) throws APIException {
-        return new APIListResource<>(this, DEVICES_URI, queryBuilder);
+        return new APIListResource<APIDevice>(this, DEVICES_URI, queryBuilder);
     }
 
     @Override
@@ -617,17 +617,17 @@ public class DefaultAPIClient implements APIClient {
         if (sort != null) {
             builder.sort(APIDevice.class, sort.getItems());
         }
-        return new APIListResource<>(this, DEVICES_URI, builder);
+        return new APIListResource<APIDevice>(this, DEVICES_URI, builder);
     }
 
     @Override
     public APIListResource<APILabelGroup> getLabelGroups() throws APIException {
-        return new APIListResource<>(this, LABEL_GROUPS_URI);
+        return new APIListResource<APILabelGroup>(this, LABEL_GROUPS_URI);
     }
 
     @Override
     public APIListResource<APILabelGroup> getLabelGroups(APIQueryBuilder queryBuilder) throws APIException {
-        return new APIListResource<>(this, LABEL_GROUPS_URI, queryBuilder);
+        return new APIListResource<APILabelGroup>(this, LABEL_GROUPS_URI, queryBuilder);
     }
 
     private <T> T fromXML(String xml, Class<T> type) throws APIException {
