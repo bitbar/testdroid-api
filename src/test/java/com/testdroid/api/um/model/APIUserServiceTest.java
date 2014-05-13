@@ -45,6 +45,7 @@ public class APIUserServiceTest {
         //THEN
         assertThat(service.isActiveAt(new DateTime(2014, 02, 11, 10, 34).toDate())).isFalse();
         assertThat(service.isActiveAt(new DateTime(2014, 05, 11, 10, 34).toDate())).isTrue();
+        assertThat(service.isActiveAt(startTime.toDate())).isTrue();
         assertThat(service.isActiveAt(new DateTime(2016, 02, 11, 10, 34).toDate())).isTrue();
 
         // AND WHEN
