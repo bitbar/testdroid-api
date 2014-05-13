@@ -10,7 +10,7 @@ import static org.fest.assertions.Assertions.assertThat;
  */
 public class APIUserService_Test {
     @Test
-    public void testUserServiceIsActiveAt(){
+    public void testUserServiceIsActiveAt() {
         //GIVEN
         DateTime startTime = new DateTime(2014, 03, 11, 10, 34);
         DateTime endTime = new DateTime(2015, 03, 11, 10, 34);
@@ -35,7 +35,7 @@ public class APIUserService_Test {
     }
 
     @Test
-    public void testUserServiceIsActiveAt_withNullEndDate(){
+    public void testUserServiceIsActiveAt_withNullEndDate() {
         //GIVEN
         DateTime startTime = new DateTime(2014, 03, 11, 10, 34);
         APIUserService service = new APIUserService();
