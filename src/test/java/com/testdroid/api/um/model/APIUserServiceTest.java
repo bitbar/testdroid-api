@@ -8,7 +8,7 @@ import java.util.Date;
 import static org.fest.assertions.Assertions.assertThat;
 
 /**
- * @@author Stefano Gregori <stefano.gregori@bitbar.com>
+ * @author Stefano Gregori <stefano.gregori@bitbar.com>
  */
 public class APIUserServiceTest {
 
