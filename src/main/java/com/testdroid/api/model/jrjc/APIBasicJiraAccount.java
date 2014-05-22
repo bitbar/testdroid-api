@@ -1,19 +1,16 @@
-package com.testdroid.api.jrjc.model;
+package com.testdroid.api.model.jrjc;
 
 import com.testdroid.api.APIEntity;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
-import java.io.Serializable;
 
 /**
  * @author Damian Sniezek <damian.sniezek@bitbar.com>
  */
-@XmlRootElement(name = "APIBasicJiraAccount", namespace = "cloud.testdroid.api.jira.model")
-@XmlType(name = "APIBasicJiraAccount", namespace = "cloud.testdroid.api.jira.model")
-public class APIBasicJiraAccount extends APIEntity implements Serializable {
-
-    private static final long serialVersionUID = -7535287736543318975L;
+@XmlRootElement(name = "APIBasicJiraAccount", namespace = "cloud.testdroid.api.model.jrjc")
+@XmlType(name = "APIBasicJiraAccount", namespace = "cloud.testdroid.api.model.jrjc")
+public class APIBasicJiraAccount extends APIEntity {
 
     private String jiraUrl;
 
@@ -25,7 +22,7 @@ public class APIBasicJiraAccount extends APIEntity implements Serializable {
     }
 
     public APIBasicJiraAccount(Long id, String username, String jiraUrl, Long userId) {
-        this.id = id;
+        super(id);
         this.userId = userId;
         this.username = username;
         this.jiraUrl = jiraUrl;
@@ -57,9 +54,9 @@ public class APIBasicJiraAccount extends APIEntity implements Serializable {
 
     @Override protected <T extends APIEntity> void clone(T from) {
         cloneBase(from);
-        APIBasicJiraAccount jiraIssueType = (APIBasicJiraAccount) from;
-        this.userId = jiraIssueType.userId;
-        this.username = jiraIssueType.username;
-        this.jiraUrl = jiraIssueType.jiraUrl;
+        APIBasicJiraAccount account = (APIBasicJiraAccount) from;
+        this.userId = account.userId;
+        this.username = account.username;
+        this.jiraUrl = account.jiraUrl;
     }
 }
