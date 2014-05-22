@@ -13,6 +13,8 @@ public class APIConnection extends APIEntity {
 
     protected Date createTime;
 
+    protected Long deviceSessionId;
+
     protected String password;
 
     protected String type;
@@ -22,10 +24,13 @@ public class APIConnection extends APIEntity {
     public APIConnection() {
     }
 
-    public APIConnection(Long id, Date createTime, String password, String type, String url) {
+    public APIConnection(Long id, Date createTime, Long deviceSessionId, String password, String type, String url) {
         super(id);
-        this.url = url;
         this.createTime = createTime;
+        this.deviceSessionId = deviceSessionId;
+        this.password = password;
+        this.type = type;
+        this.url = url;
     }
 
     public Date getCreateTime() {
@@ -34,6 +39,14 @@ public class APIConnection extends APIEntity {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public Long getDeviceSessionId() {
+        return deviceSessionId;
+    }
+
+    public void setDeviceSessionId(Long deviceSessionId) {
+        this.deviceSessionId = deviceSessionId;
     }
 
     public String getPassword() {
