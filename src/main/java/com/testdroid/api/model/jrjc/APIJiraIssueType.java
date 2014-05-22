@@ -1,4 +1,4 @@
-package com.testdroid.api.jrjc.model;
+package com.testdroid.api.model.jrjc;
 
 import com.testdroid.api.APIEntity;
 
@@ -8,8 +8,8 @@ import javax.xml.bind.annotation.XmlType;
 /**
  * @author Damian Sniezek <damian.sniezek@bitbar.com>
  */
-@XmlRootElement(name = "APIJiraIssueType", namespace = "cloud.testdroid.api.jira.model")
-@XmlType(name = "APIJiraIssueType", namespace = "cloud.testdroid.api.jira.model")
+@XmlRootElement(name = "APIJiraIssueType", namespace = "cloud.testdroid.api.model.jrjc")
+@XmlType(name = "APIJiraIssueType", namespace = "cloud.testdroid.api.model.jrjc")
 public class APIJiraIssueType extends APIEntity {
 
     private String name;
