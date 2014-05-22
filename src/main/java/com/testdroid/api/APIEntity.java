@@ -30,6 +30,7 @@ import java.util.logging.Logger;
 @XmlRootElement(namespace = "com.testdroid.api")
 @XmlSeeAlso({
         APIArray.class,
+        APIConnection.class,
         APIDevice.class,
         APIDeviceGroup.class,
         APIDeviceProperty.class,
