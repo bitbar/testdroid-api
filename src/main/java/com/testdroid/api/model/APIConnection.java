@@ -3,6 +3,7 @@ package com.testdroid.api.model;
 import com.testdroid.api.APIEntity;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 import java.util.Date;
 
 /**
@@ -11,20 +12,25 @@ import java.util.Date;
 @XmlRootElement
 public class APIConnection extends APIEntity {
 
+    @XmlType
+    public static enum Type {
+        VNC
+    }
+
     protected Date createTime;
 
     protected Long deviceSessionId;
 
     protected String password;
 
-    protected String type;
+    protected APIConnection.Type type;
 
     protected String url;
 
     public APIConnection() {
     }
 
-    public APIConnection(Long id, Date createTime, Long deviceSessionId, String password, String type, String url) {
+    public APIConnection(Long id, Date createTime, Long deviceSessionId, String password, Type type, String url) {
         super(id);
         this.createTime = createTime;
         this.deviceSessionId = deviceSessionId;
@@ -57,11 +63,11 @@ public class APIConnection extends APIEntity {
         this.password = password;
     }
 
-    public String getType() {
+    public Type getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(Type type) {
         this.type = type;
     }
 
