@@ -17,22 +17,26 @@ public class APIConnection extends APIEntity {
         VNC
     }
 
-    protected Date createTime;
+    private Date createTime;
 
-    protected Long deviceSessionId;
+    private Date endTime;
 
-    protected String password;
+    private Long deviceSessionId;
 
-    protected APIConnection.Type type;
+    private String password;
 
-    protected String url;
+    private APIConnection.Type type;
+
+    private String url;
 
     public APIConnection() {
     }
 
-    public APIConnection(Long id, Date createTime, Long deviceSessionId, String password, Type type, String url) {
+    public APIConnection(Long id, Date createTime, Date endTime, Long deviceSessionId, String password, Type type,
+            String url) {
         super(id);
         this.createTime = createTime;
+        this.endTime = endTime;
         this.deviceSessionId = deviceSessionId;
         this.password = password;
         this.type = type;
@@ -45,6 +49,14 @@ public class APIConnection extends APIEntity {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
     }
 
     public Long getDeviceSessionId() {
@@ -84,6 +96,7 @@ public class APIConnection extends APIEntity {
         APIConnection apiConnection = (APIConnection) from;
         cloneBase(from);
         this.createTime = apiConnection.createTime;
+        this.endTime = apiConnection.endTime;
         this.password = apiConnection.password;
         this.type = apiConnection.type;
         this.url = apiConnection.url;
