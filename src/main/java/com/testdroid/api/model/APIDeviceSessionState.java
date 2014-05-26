@@ -7,7 +7,7 @@ import java.util.Date;
 /**
  * @author Michał Szpruta <michal.szpruta@bitbar.com>
  */
-public class APIDeviceSessionStep extends APIEntity {
+public class APIDeviceSessionState extends APIEntity {
 
     private Long deviceSessionId;
 
@@ -21,10 +21,10 @@ public class APIDeviceSessionStep extends APIEntity {
 
     private Long startTimeMS;
 
-    public APIDeviceSessionStep() {
+    public APIDeviceSessionState() {
     }
 
-    public APIDeviceSessionStep(
+    public APIDeviceSessionState(
             Long id, Long deviceSessionId, String failReason, Long finishTimeMS, Date retryTime, Long startTimeMS,
             DeviceSessionStateName name) {
         super(id);
@@ -85,7 +85,7 @@ public class APIDeviceSessionStep extends APIEntity {
     }
 
     @Override protected <T extends APIEntity> void clone(T from) {
-        APIDeviceSessionStep apiDeviceSessionStep = (APIDeviceSessionStep) from;
+        APIDeviceSessionState apiDeviceSessionStep = (APIDeviceSessionState) from;
         cloneBase(from);
         this.deviceSessionId = apiDeviceSessionStep.deviceSessionId;
         this.failReason = apiDeviceSessionStep.failReason;

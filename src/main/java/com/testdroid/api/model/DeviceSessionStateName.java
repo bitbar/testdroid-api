@@ -10,7 +10,9 @@ import javax.xml.bind.annotation.XmlType;
 public enum DeviceSessionStateName {
     PREPARING,
     WAITING,
-    WAITING_FOR_DEVICE;
+    WAITING_FOR_DEVICE,
+    FINISHED,
+    EXCLUDED;
 
     public String getDisplayName() {
         switch (this) {
