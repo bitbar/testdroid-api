@@ -15,9 +15,7 @@ public class APIDeviceSessionState extends APIEntity {
 
     private Long finishTimeMS;
 
-    private DeviceSessionStateType name;
-
-    private Date retryTime;
+    private DeviceSessionStateType type;
 
     private Long startTimeMS;
 
@@ -25,15 +23,14 @@ public class APIDeviceSessionState extends APIEntity {
     }
 
     public APIDeviceSessionState(
-            Long id, Long deviceSessionId, String failReason, Long finishTimeMS, Date retryTime, Long startTimeMS,
-            DeviceSessionStateType name) {
+            Long id, Long deviceSessionId, String failReason, Long finishTimeMS, Long startTimeMS,
+            DeviceSessionStateType type) {
         super(id);
         this.deviceSessionId = deviceSessionId;
         this.failReason = failReason;
         this.finishTimeMS = finishTimeMS;
-        this.retryTime = retryTime;
         this.startTimeMS = startTimeMS;
-        this.name = name;
+        this.type = type;
     }
 
     public Long getDeviceSessionId() {
@@ -60,20 +57,12 @@ public class APIDeviceSessionState extends APIEntity {
         this.finishTimeMS = finishTimeMS;
     }
 
-    public DeviceSessionStateType getName() {
-        return name;
+    public DeviceSessionStateType getType() {
+        return type;
     }
 
-    public void setName(DeviceSessionStateType name) {
-        this.name = name;
-    }
-
-    public Date getRetryTime() {
-        return retryTime;
-    }
-
-    public void setRetryTime(Date retryTime) {
-        this.retryTime = retryTime;
+    public void setType(DeviceSessionStateType type) {
+        this.type = type;
     }
 
     public Long getStartTimeMS() {
@@ -91,7 +80,6 @@ public class APIDeviceSessionState extends APIEntity {
         this.failReason = apiDeviceSessionStep.failReason;
         this.startTimeMS = apiDeviceSessionStep.startTimeMS;
         this.finishTimeMS = apiDeviceSessionStep.finishTimeMS;
-        this.retryTime = apiDeviceSessionStep.retryTime;
-        this.name = apiDeviceSessionStep.name;
+        this.type = apiDeviceSessionStep.type;
     }
 }
