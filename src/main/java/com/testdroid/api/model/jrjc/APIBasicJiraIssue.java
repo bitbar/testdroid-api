@@ -1,4 +1,4 @@
-package com.testdroid.api.jrjc.model;
+package com.testdroid.api.model.jrjc;
 
 import com.testdroid.api.APIEntity;
 
@@ -9,8 +9,8 @@ import java.net.URI;
 /**
  * @author Damian Sniezek <damian.sniezek@bitbar.com>
  */
-@XmlRootElement(name = "APIBasicJiraIssue", namespace = "cloud.testdroid.api.jira.model")
-@XmlType(name = "APIBasicJiraIssue", namespace = "cloud.testdroid.api.jira.model")
+@XmlRootElement(name = "APIBasicJiraIssue", namespace = "cloud.testdroid.api.model.jrjc")
+@XmlType(name = "APIBasicJiraIssue", namespace = "cloud.testdroid.api.model.jrjc")
 public class APIBasicJiraIssue extends APIEntity {
 
     private String key;
