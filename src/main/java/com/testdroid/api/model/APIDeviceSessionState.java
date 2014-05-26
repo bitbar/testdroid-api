@@ -15,7 +15,7 @@ public class APIDeviceSessionState extends APIEntity {
 
     private Long finishTimeMS;
 
-    private DeviceSessionStateName name;
+    private DeviceSessionStateType name;
 
     private Date retryTime;
 
@@ -26,7 +26,7 @@ public class APIDeviceSessionState extends APIEntity {
 
     public APIDeviceSessionState(
             Long id, Long deviceSessionId, String failReason, Long finishTimeMS, Date retryTime, Long startTimeMS,
-            DeviceSessionStateName name) {
+            DeviceSessionStateType name) {
         super(id);
         this.deviceSessionId = deviceSessionId;
         this.failReason = failReason;
@@ -60,11 +60,11 @@ public class APIDeviceSessionState extends APIEntity {
         this.finishTimeMS = finishTimeMS;
     }
 
-    public DeviceSessionStateName getName() {
+    public DeviceSessionStateType getName() {
         return name;
     }
 
-    public void setName(DeviceSessionStateName name) {
+    public void setName(DeviceSessionStateType name) {
         this.name = name;
     }
 
