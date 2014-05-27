@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 
 @XmlType
-public enum DeviceSessionStateType {
+public enum DeviceSessionStepType {
     WAITING,
     PREPARING,
     UNINSTALL,

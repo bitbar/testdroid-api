@@ -5,6 +5,7 @@ APIDeviceProperty
 APIDeviceRun
 APIDeviceRunState
 APIDeviceSession
+APIDeviceSessionStep
 APIFiles
 APIFileSet
 APILabelGroup

@@ -2,9 +2,12 @@ package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * @author Michał Szpruta <michal.szpruta@bitbar.com>
  */
+@XmlRootElement
 public class APIDeviceSessionStep extends APIEntity {
 
     private Long deviceSessionId;
@@ -13,7 +16,7 @@ public class APIDeviceSessionStep extends APIEntity {
 
     private Long finishTimeMS;
 
-    private DeviceSessionStateType type;
+    private DeviceSessionStepType type;
 
     private Long startTimeMS;
 
@@ -22,7 +25,7 @@ public class APIDeviceSessionStep extends APIEntity {
 
     public APIDeviceSessionStep(
             Long id, Long deviceSessionId, String failReason, Long finishTimeMS, Long startTimeMS,
-            DeviceSessionStateType type) {
+            DeviceSessionStepType type) {
         super(id);
         this.deviceSessionId = deviceSessionId;
         this.failReason = failReason;
@@ -55,11 +58,11 @@ public class APIDeviceSessionStep extends APIEntity {
         this.finishTimeMS = finishTimeMS;
     }
 
-    public DeviceSessionStateType getType() {
+    public DeviceSessionStepType getType() {
         return type;
     }
 
-    public void setType(DeviceSessionStateType type) {
+    public void setType(DeviceSessionStepType type) {
         this.type = type;
     }
 
