@@ -37,6 +37,7 @@ import java.util.logging.Logger;
         APIDeviceRun.class,
         APIDeviceRunState.class,
         APIDeviceSession.class,
+        APIDeviceSessionStep.class,
         APIExceptionMessage.class,
         APIFiles.class,
         APIFiles.AndroidAppFile.class,
