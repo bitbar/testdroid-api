@@ -2,12 +2,10 @@ package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
 
-import java.util.Date;
-
 /**
  * @author Michał Szpruta <michal.szpruta@bitbar.com>
  */
-public class APIDeviceSessionState extends APIEntity {
+public class APIDeviceSessionStep extends APIEntity {
 
     private Long deviceSessionId;
 
@@ -19,10 +17,10 @@ public class APIDeviceSessionState extends APIEntity {
 
     private Long startTimeMS;
 
-    public APIDeviceSessionState() {
+    public APIDeviceSessionStep() {
     }
 
-    public APIDeviceSessionState(
+    public APIDeviceSessionStep(
             Long id, Long deviceSessionId, String failReason, Long finishTimeMS, Long startTimeMS,
             DeviceSessionStateType type) {
         super(id);
@@ -74,7 +72,7 @@ public class APIDeviceSessionState extends APIEntity {
     }
 
     @Override protected <T extends APIEntity> void clone(T from) {
-        APIDeviceSessionState apiDeviceSessionStep = (APIDeviceSessionState) from;
+        APIDeviceSessionStep apiDeviceSessionStep = (APIDeviceSessionStep) from;
         cloneBase(from);
         this.deviceSessionId = apiDeviceSessionStep.deviceSessionId;
         this.failReason = apiDeviceSessionStep.failReason;
