@@ -14,7 +14,8 @@ public class APIDeviceSession extends APIEntity {
 
     @XmlType(namespace = "APIDeviceSession")
     public static enum Type {
-        INSPECTOR
+        INSPECTOR,
+        AUTOMATIC
     }
 
     private Date createTime;
