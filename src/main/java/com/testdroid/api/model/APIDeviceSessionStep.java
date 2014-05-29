@@ -11,7 +11,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement
 public class APIDeviceSessionStep extends APIEntity {
 
-    @XmlType
+    @XmlType(namespace = "APIDeviceSessionStep")
     public enum Type {
         WAITING,
         PREPARING,
@@ -26,7 +26,7 @@ public class APIDeviceSessionStep extends APIEntity {
                 case PREPARING:
                     return "Preparing device";
                 case WAITING:
-                    return "waiting for device";
+                    return "Waiting for device";
                 case UNINSTALL:
                     return "Uninstall apps";
                 case INSTALL:
