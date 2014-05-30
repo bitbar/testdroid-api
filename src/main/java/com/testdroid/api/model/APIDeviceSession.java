@@ -24,6 +24,8 @@ public class APIDeviceSession extends APIEntity {
 
     private Date endTime;
 
+    private Long launchAppTime;
+
     private Date startTime;
 
     private Long timeLimit;
@@ -34,8 +36,8 @@ public class APIDeviceSession extends APIEntity {
     }
 
     public APIDeviceSession(
-            Long id, Type type, Date createTime, Date startTime, Date endTime, APIDevice device,
-            Long timeLimit) {
+            Long id, Type type, Date createTime, Date startTime, Date endTime, APIDevice device, Long timeLimit,
+            Long launchAppTime) {
         super(id);
         this.type = type;
         this.createTime = createTime;
@@ -43,6 +45,7 @@ public class APIDeviceSession extends APIEntity {
         this.endTime = endTime;
         this.device = device;
         this.timeLimit = timeLimit;
+        this.launchAppTime = launchAppTime;
     }
 
     public Type getType() {
@@ -93,6 +96,14 @@ public class APIDeviceSession extends APIEntity {
         this.startTime = startTime;
     }
 
+    public Long getLaunchAppTime() {
+        return launchAppTime;
+    }
+
+    public void setLaunchAppTime(Long launchAppTime) {
+        this.launchAppTime = launchAppTime;
+    }
+
     @Override
     protected <T extends APIEntity> void clone(T from) {
         APIDeviceSession apiDeviceSession = (APIDeviceSession) from;
@@ -103,6 +114,7 @@ public class APIDeviceSession extends APIEntity {
         this.type = apiDeviceSession.type;
         this.device = apiDeviceSession.device;
         this.timeLimit = apiDeviceSession.timeLimit;
+        this.launchAppTime = apiDeviceSession.launchAppTime;
     }
 
 }
