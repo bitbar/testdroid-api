@@ -205,4 +205,16 @@ public class APIUserService extends APIEntity {
         this.endTime = apiUserService.endTime;
     }
 
+    public boolean isActiveAt(Date date) {
+        if (date == null) {
+            return false;
+        }
+        if (startTime != null && (startTime.equals(date) || startTime.before(date))) {
+            if (endTime == null || (endTime != null && (endTime.after(date) || endTime.equals(date)))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
