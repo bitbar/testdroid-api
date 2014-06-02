@@ -8,9 +8,9 @@ import javax.xml.bind.annotation.XmlType;
 /**
  * @author Damian Sniezek <damian.sniezek@bitbar.com>
  */
-@XmlRootElement(name = "APIBasicJiraAccount", namespace = "cloud.testdroid.api.model.jrjc")
-@XmlType(name = "APIBasicJiraAccount", namespace = "cloud.testdroid.api.model.jrjc")
-public class APIBasicJiraAccount extends APIEntity {
+@XmlRootElement(name = "APIJiraAccount", namespace = "cloud.testdroid.api.model.jrjc")
+@XmlType(name = "APIJiraAccount", namespace = "cloud.testdroid.api.model.jrjc")
+public class APIJiraAccount extends APIEntity {
 
     private String jiraUrl;
 
@@ -18,10 +18,10 @@ public class APIBasicJiraAccount extends APIEntity {
 
     private String username;
 
-    public APIBasicJiraAccount() {
+    public APIJiraAccount() {
     }
 
-    public APIBasicJiraAccount(Long id, String username, String jiraUrl, Long userId) {
+    public APIJiraAccount(Long id, String username, String jiraUrl, Long userId) {
         super(id);
         this.userId = userId;
         this.username = username;
@@ -54,7 +54,7 @@ public class APIBasicJiraAccount extends APIEntity {
 
     @Override protected <T extends APIEntity> void clone(T from) {
         cloneBase(from);
-        APIBasicJiraAccount account = (APIBasicJiraAccount) from;
+        APIJiraAccount account = (APIJiraAccount) from;
         this.userId = account.userId;
         this.username = account.username;
         this.jiraUrl = account.jiraUrl;
