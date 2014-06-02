@@ -1,4 +1,4 @@
-package com.testdroid.api.jrjc.model;
+package com.testdroid.api.model.jrjc;
 
 import com.testdroid.api.APIEntity;
 
@@ -8,9 +8,9 @@ import javax.xml.bind.annotation.XmlType;
 /**
  * @author Damian Sniezek <damian.sniezek@bitbar.com>
  */
-@XmlRootElement(name = "APIBasicJiraAccount", namespace = "cloud.testdroid.api.jira.model")
-@XmlType(name = "APIBasicJiraAccount", namespace = "cloud.testdroid.api.jira.model")
-public class APIBasicJiraAccount extends APIEntity {
+@XmlRootElement(name = "APIJiraAccount", namespace = "cloud.testdroid.api.model.jrjc")
+@XmlType(name = "APIJiraAccount", namespace = "cloud.testdroid.api.model.jrjc")
+public class APIJiraAccount extends APIEntity {
 
     private String jiraUrl;
 
@@ -18,11 +18,11 @@ public class APIBasicJiraAccount extends APIEntity {
 
     private String username;
 
-    public APIBasicJiraAccount() {
+    public APIJiraAccount() {
     }
 
-    public APIBasicJiraAccount(Long id, String username, String jiraUrl, Long userId) {
-        this.id = id;
+    public APIJiraAccount(Long id, String username, String jiraUrl, Long userId) {
+        super(id);
         this.userId = userId;
         this.username = username;
         this.jiraUrl = jiraUrl;
@@ -54,9 +54,9 @@ public class APIBasicJiraAccount extends APIEntity {
 
     @Override protected <T extends APIEntity> void clone(T from) {
         cloneBase(from);
-        APIBasicJiraAccount jiraIssueType = (APIBasicJiraAccount) from;
-        this.userId = jiraIssueType.userId;
-        this.username = jiraIssueType.username;
-        this.jiraUrl = jiraIssueType.jiraUrl;
+        APIJiraAccount account = (APIJiraAccount) from;
+        this.userId = account.userId;
+        this.username = account.username;
+        this.jiraUrl = account.jiraUrl;
     }
 }
