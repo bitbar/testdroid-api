@@ -1,6 +1,7 @@
 package com.testdroid.api;
 
 import com.testdroid.api.model.*;
+import com.testdroid.api.model.jrjc.*;
 import com.testdroid.api.um.model.APIUserService;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.map.annotate.JsonView;
@@ -78,7 +79,14 @@ import java.util.logging.Logger;
         RecorderOnlineFiles.class,
         RemoteControlFiles.class,
         UIAutomatorFiles.class,
-        APIUserService.class
+        APIUserService.class,
+        APIBasicJiraProject.class,
+        APIBasicJiraIssue.class,
+        APIJiraAccount.class,
+        APIJiraIssue.class,
+        APIJiraIssueType.class,
+        APIJiraPriority.class,
+        APIJiraProject.class
 })
 public abstract class APIEntity {
 
