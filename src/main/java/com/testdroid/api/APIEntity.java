@@ -86,7 +86,8 @@ import java.util.logging.Logger;
         APIJiraIssue.class,
         APIJiraIssueType.class,
         APIJiraPriority.class,
-        APIJiraProject.class
+        APIJiraProject.class,
+        APIJiraServerInfo.class
 })
 public abstract class APIEntity {
 

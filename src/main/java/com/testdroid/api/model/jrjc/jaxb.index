@@ -5,3 +5,4 @@ APIJiraIssue
 APIJiraIssueType
 APIJiraPriority
 APIJiraProject
+APIJiraServerInfo
