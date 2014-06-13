@@ -39,8 +39,6 @@ public class APIDeviceRun extends APIEntity {
 
     private RunStatus runStatus;
 
-    private Date runTime;
-
     private APISoftwareVersion softwareVersion;
 
     private Date startTime;
@@ -55,12 +53,11 @@ public class APIDeviceRun extends APIEntity {
     }
 
     public APIDeviceRun(
-            Long id, Date runTime, APIDevice device, Integer testCaseSuccessNo, Integer testCaseAllNo,
+            Long id, APIDevice device, Integer testCaseSuccessNo, Integer testCaseAllNo,
             Integer testCaseCount, APISoftwareVersion softwareVersion,
             Date createTime, Date startTime, APIDeviceRunState currentState, APIDeviceRunState interruptedByState,
             RunStatus runStatus, String deviceName, String deviceSerialId) {
         super(id);
-        this.runTime = runTime;
         this.device = device;
         this.testCaseSuccessNo = testCaseSuccessNo;
         this.testCaseAllNo = testCaseAllNo;
@@ -73,14 +70,6 @@ public class APIDeviceRun extends APIEntity {
         this.runStatus = runStatus;
         this.deviceName = deviceName;
         this.deviceSerialId = deviceSerialId;
-    }
-
-    public Date getRunTime() {
-        return runTime;
-    }
-
-    public void setRunTime(Date runTime) {
-        this.runTime = runTime;
     }
 
     public APIDevice getDevice() {
@@ -297,7 +286,6 @@ public class APIDeviceRun extends APIEntity {
         this.device = apiDeviceRun.device;
         this.interruptedByState = apiDeviceRun.interruptedByState;
         this.runStatus = apiDeviceRun.runStatus;
-        this.runTime = apiDeviceRun.runTime;
         this.softwareVersion = apiDeviceRun.softwareVersion;
         this.startTime = apiDeviceRun.startTime;
         this.testCaseAllNo = apiDeviceRun.testCaseAllNo;
