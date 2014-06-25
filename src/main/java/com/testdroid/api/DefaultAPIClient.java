@@ -270,6 +270,7 @@ public class DefaultAPIClient implements APIClient {
             HttpRequest request = httpTransport.createRequestFactory().buildPostRequest(url, content);
             request.setConnectTimeout(HTTP_CONNECT_TIMEOUT); // one minute
             request.setReadTimeout(HTTP_READ_TIMEOUT); // one minute
+            request.setHeaders(new HttpHeaders().setAccept("application/json"));
             HttpResponse response = request.execute();
 
             if (response.getStatusCode() != 200) {
