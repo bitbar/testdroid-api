@@ -17,6 +17,7 @@ public class APIJiraProject extends APIBasicJiraProject {
 
     private String leadName;
 
+
     public APIJiraProject() {
     }
 
