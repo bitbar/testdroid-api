@@ -270,6 +270,7 @@ public class DefaultAPIClient implements APIClient {
             HttpRequest request = httpTransport.createRequestFactory().buildPostRequest(url, content);
             request.setConnectTimeout(HTTP_CONNECT_TIMEOUT); // one minute
             request.setReadTimeout(HTTP_READ_TIMEOUT); // one minute
+            request.setHeaders(new HttpHeaders().setAccept("application/json"));
             HttpResponse response = request.execute();
 
             if (response.getStatusCode() != 200) {
@@ -597,7 +598,8 @@ public class DefaultAPIClient implements APIClient {
 
     @Override
     public APIListResource<APIDevice> getDevices(APIDevice.DeviceFilter... filters) throws APIException {
-        return new APIListResource<APIDevice>(this, DEVICES_URI, new APIDeviceQueryBuilder().filterWithDeviceFilters(filters));
+        return new APIListResource<APIDevice>(this, DEVICES_URI, new APIDeviceQueryBuilder()
+                .filterWithDeviceFilters(filters));
     }
 
     @Override

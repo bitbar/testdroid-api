@@ -1,9 +1,12 @@
+APIConnection
 APIDevice
 APIDeviceGroup
 APIDeviceProperty
 APIDeviceRun
+APIDeviceRunDataAvailability
 APIDeviceRunState
 APIDeviceSession
+APIDeviceSessionStep
 APIFiles
 APIFileSet
 APILabelGroup
@@ -19,7 +22,9 @@ APITag
 APITestCaseRun
 APITestCaseRunStep
 APITestRun
+APITestRunDataAvailability
 APITestRunConfig
+APITestRunExtended
 APITestRunParameter
 APIUser
 APIUserFile

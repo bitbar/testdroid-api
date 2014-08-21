@@ -4,6 +4,7 @@ import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIException;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.annotate.JsonTypeInfo;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
@@ -27,6 +28,7 @@ import java.util.Date;
         AppiumIOSFiles.class
 })
 @JsonIgnoreProperties(value = {"id"})
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 public abstract class APIFiles extends APIEntity {
 
     private DataFile data;
@@ -102,6 +104,10 @@ public abstract class APIFiles extends APIEntity {
         public APIFile() {
         }
 
+        public APIFile(String originalName) {
+            this.originalName = originalName;
+        }
+
         public APIFile(Long id, String originalName, Date uploadTime, String readableSize) {
             super(id);
             this.originalName = originalName;
@@ -151,6 +157,10 @@ public abstract class APIFiles extends APIEntity {
         public AndroidAppFile() {
         }
 
+        public AndroidAppFile(String originalName) {
+            super(originalName);
+        }
+
         public AndroidAppFile(Long id, String originalName, Date uploadTime, String readableSize) {
             super(id, originalName, uploadTime, readableSize);
         }
@@ -166,6 +176,10 @@ public abstract class APIFiles extends APIEntity {
         private String packageName;
 
         public AndroidTestFile() {
+        }
+
+        public AndroidTestFile(String originalName) {
+            super(originalName);
         }
 
         public AndroidTestFile(
@@ -223,6 +237,10 @@ public abstract class APIFiles extends APIEntity {
         public IOSAppFile() {
         }
 
+        public IOSAppFile(String originalName) {
+            super(originalName);
+        }
+
         public IOSAppFile(
                 Long id, String originalName, Date uploadTime, String readableSize, String bundleName,
                 String bundleIdentifier) {
@@ -264,6 +282,10 @@ public abstract class APIFiles extends APIEntity {
         public IOSTestFile() {
         }
 
+        public IOSTestFile(String originalName) {
+            super(originalName);
+        }
+
         public IOSTestFile(Long id, String originalName, Date uploadTime, String readableSize) {
             super(id, originalName, uploadTime, readableSize);
         }
@@ -273,6 +295,10 @@ public abstract class APIFiles extends APIEntity {
     public static class CalabashTestFile extends APIFile {
 
         public CalabashTestFile() {
+        }
+
+        public CalabashTestFile(String originalName) {
+            super(originalName);
         }
 
         public CalabashTestFile(Long id, String originalName, Date uploadTime, String readableSize) {
@@ -286,6 +312,10 @@ public abstract class APIFiles extends APIEntity {
         private String jarNames;
 
         public UIAutomatorTestFile() {
+        }
+
+        public UIAutomatorTestFile(String originalName) {
+            super(originalName);
         }
 
         public UIAutomatorTestFile(
@@ -317,6 +347,10 @@ public abstract class APIFiles extends APIEntity {
     public static class DataFile extends APIFile {
 
         public DataFile() {
+        }
+
+        public DataFile(String originalName) {
+            super(originalName);
         }
 
         public DataFile(Long id, String originalName, Date uploadTime, String readableSize) {
@@ -352,6 +386,10 @@ public abstract class APIFiles extends APIEntity {
         }
 
         public RecorderOnlineScreenplayFile() {
+        }
+
+        public RecorderOnlineScreenplayFile(String originalName) {
+            super(originalName);
         }
 
         public RecorderOnlineScreenplayFile(Long id, String originalName, Date uploadTime, String readableSize) {

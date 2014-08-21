@@ -1,6 +1,7 @@
 package com.testdroid.api;
 
 import com.testdroid.api.model.*;
+import com.testdroid.api.model.jrjc.*;
 import com.testdroid.api.um.model.APIUserService;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.map.annotate.JsonView;
@@ -30,12 +31,14 @@ import java.util.logging.Logger;
 @XmlRootElement(namespace = "com.testdroid.api")
 @XmlSeeAlso({
         APIArray.class,
+        APIConnection.class,
         APIDevice.class,
         APIDeviceGroup.class,
         APIDeviceProperty.class,
         APIDeviceRun.class,
         APIDeviceRunState.class,
         APIDeviceSession.class,
+        APIDeviceSessionStep.class,
         APIExceptionMessage.class,
         APIFiles.class,
         APIFiles.AndroidAppFile.class,
@@ -62,6 +65,7 @@ import java.util.logging.Logger;
         APITestCaseRunStep.class,
         APITestRun.class,
         APITestRunConfig.class,
+        APITestRunExtended.class,
         APITestRunParameter.class,
         APIUser.class,
         APIUserFile.class,
@@ -76,7 +80,17 @@ import java.util.logging.Logger;
         RecorderOnlineFiles.class,
         RemoteControlFiles.class,
         UIAutomatorFiles.class,
-        APIUserService.class
+        APIUserService.class,
+        APIBasicJiraProject.class,
+        APIBasicJiraIssue.class,
+        APIJiraAccount.class,
+        APIJiraIssue.class,
+        APIJiraIssueType.class,
+        APIJiraPriority.class,
+        APIJiraProject.class,
+        APIJiraServerInfo.class,
+        APIDeviceRunDataAvailability.class,
+        APITestRunDataAvailability.class
 })
 public abstract class APIEntity {
 

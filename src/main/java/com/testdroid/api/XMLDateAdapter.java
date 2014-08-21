@@ -4,7 +4,7 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 import java.util.Date;
 
 /**
- * @author kajdus
+ * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
  */
 public class XMLDateAdapter extends XmlAdapter<Long, Date> {
 

@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlType;
 import java.util.Date;
 
 /**
- * @author kajdus
+ * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
  */
 @XmlRootElement(name = "umApiUserService", namespace = "cloud.testdroid.api.um.model")
 @XmlType(name = "umApiUserService", namespace = "cloud.testdroid.api.um.model")
@@ -203,6 +203,18 @@ public class APIUserService extends APIEntity {
         this.payUnitText = apiUserService.payUnitText;
         this.startTime = apiUserService.startTime;
         this.endTime = apiUserService.endTime;
+    }
+
+    public boolean isActiveAt(Date date) {
+        if (date == null) {
+            return false;
+        }
+        if (startTime != null && (startTime.equals(date) || startTime.before(date))) {
+            if (endTime == null || (endTime != null && (endTime.after(date) || endTime.equals(date)))) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

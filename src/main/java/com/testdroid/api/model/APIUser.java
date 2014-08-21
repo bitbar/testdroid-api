@@ -4,6 +4,7 @@ import com.testdroid.api.*;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,13 +41,22 @@ public class APIUser extends APIEntity {
 
     private String vatID;
 
+    private EmailNotification emailNotification;
+
+    @XmlType(namespace = "APIUser", name = "APIUserEmailNotification")
+    public static enum EmailNotification {
+        ALWAYS,
+        NEVER,
+        ON_FAILURE
+    }
+
     public APIUser() {
     }
 
     public APIUser(
             Long id, String email, String name, String state, String country, String city, String code,
-            String address, String phone,
-            String organization, String vatID, String timeZone, boolean enabled, APIRole... roles) {
+            String address, String phone, String organization, String vatID, String timeZone, boolean enabled,
+            EmailNotification emailNotification, APIRole... roles) {
         super(id);
         this.email = email;
         this.name = name;
@@ -60,6 +70,7 @@ public class APIUser extends APIEntity {
         this.vatID = vatID;
         this.timeZone = timeZone;
         this.enabled = enabled;
+        this.emailNotification = emailNotification;
         this.roles = roles;
     }
 
@@ -165,6 +176,14 @@ public class APIUser extends APIEntity {
 
     public void setRoles(APIRole[] roles) {
         this.roles = roles;
+    }
+
+    public EmailNotification getEmailNotification() {
+        return emailNotification;
+    }
+
+    public void setEmailNotification(EmailNotification emailNotification) {
+        this.emailNotification = emailNotification;
     }
 
     private String getProjectsURI() {
@@ -398,5 +417,6 @@ public class APIUser extends APIEntity {
         this.state = apiUser.state;
         this.timeZone = apiUser.timeZone;
         this.vatID = apiUser.vatID;
+        this.emailNotification = apiUser.emailNotification;
     }
 }

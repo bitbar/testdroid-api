@@ -1,10 +1,10 @@
 package com.testdroid.api.um.model;
 
 /**
- * @author kajdus
+ * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
  */
 public enum APIPaymentMethod {
     PAYPAL,
     BRAINTREE,
-    INVOICE;
+    INVOICE
 }

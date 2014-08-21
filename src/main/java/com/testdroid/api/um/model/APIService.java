@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 /**
- * @author kajdus
+ * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
  */
 @XmlRootElement(name = "umApiService", namespace = "cloud.testdroid.api.um.model")
 @XmlType(name = "umApiService", namespace = "cloud.testdroid.api.um.model")
@@ -16,7 +16,7 @@ public class APIService {
     @XmlType(name = "umApiServiceType", namespace = "cloud.testdroid.um.api.model")
     public static enum Type {
         RECORDER,
-        CLOUD;
+        CLOUD
     }
 
     @XmlType(name = "umApiServiceUnit", namespace = "cloud.testdroid.um.api.model")
@@ -28,7 +28,7 @@ public class APIService {
         MONTH,
         YEAR,
         RUN,
-        PROJECT;
+        PROJECT
     }
 
     private boolean autoRenew;

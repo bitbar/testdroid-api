@@ -21,7 +21,7 @@ public class APITestCaseRunStep extends APIEntity {
         DRAG,
         SCROLL,
         NAVIGATION,
-        OTHER;
+        OTHER
     }
 
     private String description;

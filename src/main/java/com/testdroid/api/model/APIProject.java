@@ -26,7 +26,7 @@ public class APIProject extends APIEntity {
     public static enum APIArchivingStrategy {
         NEVER,
         DAYS,
-        RUNS;
+        RUNS
     }
 
     @XmlType(namespace = "APIProject")

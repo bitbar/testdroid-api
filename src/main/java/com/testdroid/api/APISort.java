@@ -147,6 +147,10 @@ public class APISort {
 
     private SortItem[] items;
 
+    protected APISort() {
+
+    }
+
     private APISort(Class<? extends APIEntity> type, SortItem... items) {
         if (items != null && items.length > 0) {
             List<SortItem> itemList = new ArrayList<SortItem>();

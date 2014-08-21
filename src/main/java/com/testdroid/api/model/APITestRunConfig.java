@@ -20,7 +20,7 @@ public class APITestRunConfig extends APIEntity {
     @XmlType(namespace = "APITestRunConfig")
     public static enum LimitationType {
         PACKAGE,
-        CLASS;
+        CLASS
     }
 
     @XmlType(namespace = "APITestRunConfig")
@@ -54,7 +54,7 @@ public class APITestRunConfig extends APIEntity {
     public static enum Scheduler {
         PARALLEL,
         SERIAL,
-        SINGLE;
+        SINGLE
     }
 
     private boolean appRequired;
