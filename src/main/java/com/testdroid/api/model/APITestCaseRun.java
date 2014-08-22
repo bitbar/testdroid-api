@@ -18,7 +18,7 @@ public class APITestCaseRun extends APIEntity {
     public static enum Result {
         PASSED,
         FAILED,
-        NOT_AVAILBLE;
+        NOT_AVAILBLE
     }
 
     private String className;

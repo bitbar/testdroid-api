@@ -65,6 +65,7 @@ import java.util.logging.Logger;
         APITestCaseRunStep.class,
         APITestRun.class,
         APITestRunConfig.class,
+        APITestRunExtended.class,
         APITestRunParameter.class,
         APIUser.class,
         APIUserFile.class,
@@ -87,7 +88,9 @@ import java.util.logging.Logger;
         APIJiraIssueType.class,
         APIJiraPriority.class,
         APIJiraProject.class,
-        APIJiraServerInfo.class
+        APIJiraServerInfo.class,
+        APIDeviceRunDataAvailability.class,
+        APITestRunDataAvailability.class
 })
 public abstract class APIEntity {
 

@@ -14,7 +14,8 @@ public class APIConnection extends APIEntity {
 
     @XmlType
     public static enum Type {
-        VNC
+        VNC,
+        LOGS
     }
 
     private Date createTime;
@@ -32,7 +33,8 @@ public class APIConnection extends APIEntity {
     public APIConnection() {
     }
 
-    public APIConnection(Long id, Date createTime, Date endTime, Long deviceSessionId, String password, Type type,
+    public APIConnection(
+            Long id, Date createTime, Date endTime, Long deviceSessionId, String password, Type type,
             String url) {
         super(id);
         this.createTime = createTime;

@@ -35,11 +35,13 @@ public class APIDeviceRun extends APIEntity {
 
     private String deviceSerialId;
 
+    private Long deviceSessionId;
+
     private APIDeviceRunState interruptedByState;
 
-    private RunStatus runStatus;
+    private Long launchAppDuration;
 
-    private Date runTime;
+    private RunStatus runStatus;
 
     private APISoftwareVersion softwareVersion;
 
@@ -55,12 +57,13 @@ public class APIDeviceRun extends APIEntity {
     }
 
     public APIDeviceRun(
-            Long id, Date runTime, APIDevice device, Integer testCaseSuccessNo, Integer testCaseAllNo,
-            Integer testCaseCount, APISoftwareVersion softwareVersion,
-            Date createTime, Date startTime, APIDeviceRunState currentState, APIDeviceRunState interruptedByState,
-            RunStatus runStatus, String deviceName, String deviceSerialId) {
+            Long id, Long deviceSessionId, Long launchAppDuration, APIDevice device, Integer testCaseSuccessNo,
+            Integer testCaseAllNo, Integer testCaseCount, APISoftwareVersion softwareVersion, Date createTime,
+            Date startTime, APIDeviceRunState currentState, APIDeviceRunState interruptedByState, RunStatus runStatus,
+            String deviceName, String deviceSerialId) {
         super(id);
-        this.runTime = runTime;
+        this.deviceSessionId = deviceSessionId;
+        this.launchAppDuration = launchAppDuration;
         this.device = device;
         this.testCaseSuccessNo = testCaseSuccessNo;
         this.testCaseAllNo = testCaseAllNo;
@@ -75,12 +78,20 @@ public class APIDeviceRun extends APIEntity {
         this.deviceSerialId = deviceSerialId;
     }
 
-    public Date getRunTime() {
-        return runTime;
+    public Long getDeviceSessionId() {
+        return deviceSessionId;
     }
 
-    public void setRunTime(Date runTime) {
-        this.runTime = runTime;
+    public void setDeviceSessionId(Long deviceSessionId) {
+        this.deviceSessionId = deviceSessionId;
+    }
+
+    public Long getLaunchAppDuration() {
+        return launchAppDuration;
+    }
+
+    public void setLaunchAppDuration(Long launchAppDuration) {
+        this.launchAppDuration = launchAppDuration;
     }
 
     public APIDevice getDevice() {
@@ -292,12 +303,13 @@ public class APIDeviceRun extends APIEntity {
     protected <T extends APIEntity> void clone(T from) {
         APIDeviceRun apiDeviceRun = (APIDeviceRun) from;
         cloneBase(from);
+        this.deviceSessionId = apiDeviceRun.deviceSessionId;
+        this.launchAppDuration = apiDeviceRun.launchAppDuration;
         this.createTime = apiDeviceRun.createTime;
         this.currentState = apiDeviceRun.currentState;
         this.device = apiDeviceRun.device;
         this.interruptedByState = apiDeviceRun.interruptedByState;
         this.runStatus = apiDeviceRun.runStatus;
-        this.runTime = apiDeviceRun.runTime;
         this.softwareVersion = apiDeviceRun.softwareVersion;
         this.startTime = apiDeviceRun.startTime;
         this.testCaseAllNo = apiDeviceRun.testCaseAllNo;

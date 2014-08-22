@@ -6,6 +6,7 @@ import com.testdroid.api.APIList;
 import com.testdroid.api.model.APIProject;
 import com.testdroid.api.model.APITestRun;
 import com.testdroid.api.model.APIUser;
+import com.testdroid.api.model.APIUserFile;
 import com.testdroid.api.sample.util.Common;
 
 import java.io.InputStream;
@@ -29,17 +30,18 @@ public class ScreenshotsSample {
             }
 
             testRun.requestScreenshotsZip();
+            APIUserFile file = testRun.getScreenshotsZip();
 
-            while (testRun.getScreenshotZipState() != APITestRun.ZipState.READY) {
+            while (file.getState() != APIUserFile.State.READY) {
                 try {
                     System.out.println("Waiting for screenshots...");
                     Thread.sleep(5000);
-                    testRun.refresh();
+                    file.refresh();
                 } catch (InterruptedException ignore) {
                 }
             }
 
-            InputStream is = testRun.getScreenshotsZip();
+            InputStream is = file.getFile();
 
         } catch (APIException apie) {
             System.out.println(apie.getMessage());

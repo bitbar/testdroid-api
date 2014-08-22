@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlType;
 import java.util.Date;
 
 /**
- * @author kajdus
+ * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
  */
 @XmlRootElement(name = "umApiUserService", namespace = "cloud.testdroid.api.um.model")
 @XmlType(name = "umApiUserService", namespace = "cloud.testdroid.api.um.model")

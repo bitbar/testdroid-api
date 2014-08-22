@@ -6,6 +6,7 @@ import com.testdroid.api.APIListResource;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 import java.io.InputStream;
 import java.util.Date;
 
@@ -20,19 +21,30 @@ public class APIUserFile extends APIEntity {
 
     private APIUserFileProperty[] fileProperties;
 
+    private State state;
+
     private String name;
 
     private Long size;
 
+    @XmlType(namespace = "APIUserFile", name = "APIUserFileState")
+    public static enum State {
+        PREPARING,
+        READY
+    }
+
     public APIUserFile() {
     }
 
-    public APIUserFile(Long id, String name, Date createTime, Long size, APIUserFileProperty... fileProperties) {
+    public APIUserFile(
+            Long id, String name, Date createTime, Long size, State state, APIUserFileProperty...
+            fileProperties) {
         super(id);
         this.name = name;
         this.createTime = createTime;
         this.size = size;
         this.fileProperties = fileProperties;
+        this.state = state;
     }
 
     public String getName() {
@@ -79,6 +91,14 @@ public class APIUserFile extends APIEntity {
         return createUri(selfURI, "/tags");
     }
 
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
+    }
+
     @JsonIgnore
     public InputStream getIcon() throws APIException {
         return getFile(getIconURI());
@@ -107,5 +127,6 @@ public class APIUserFile extends APIEntity {
         this.createTime = apiUserFile.createTime;
         this.size = apiUserFile.size;
         this.fileProperties = apiUserFile.fileProperties;
+        this.state = apiUserFile.state;
     }
 }

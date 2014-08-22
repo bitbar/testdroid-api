@@ -107,7 +107,8 @@ public class APIDeviceSessionStep extends APIEntity {
         this.startTimeMS = startTimeMS;
     }
 
-    @Override protected <T extends APIEntity> void clone(T from) {
+    @Override
+    protected <T extends APIEntity> void clone(T from) {
         APIDeviceSessionStep apiDeviceSessionStep = (APIDeviceSessionStep) from;
         cloneBase(from);
         this.deviceSessionId = apiDeviceSessionStep.deviceSessionId;

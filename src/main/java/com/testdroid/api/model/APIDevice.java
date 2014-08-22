@@ -37,6 +37,7 @@ public class APIDevice extends APIEntity {
         public String getDisplayName() {
             return displayName;
         }
+
     }
 
     private Integer creditsPrice;

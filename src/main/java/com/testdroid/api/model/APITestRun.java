@@ -5,7 +5,6 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
-import java.io.InputStream;
 import java.util.Collections;
 import java.util.Date;
 
@@ -23,44 +22,37 @@ public class APITestRun extends APIEntity {
         FINISHED
     }
 
-    @XmlType(namespace = "APITestRun", name = "APITestRunZipState")
-    public static enum ZipState {
-        BLANK,
-        PROGRESS,
-        READY
-    }
+    protected APITestRunConfig config;
 
-    private APITestRunConfig config;
+    protected Date createTime;
 
-    private Date createTime;
+    protected String displayName;
 
-    private String displayName;
+    protected Float executionRatio;
 
-    private Float executionRatio;
+    protected APIFiles files;
 
-    private APIFiles files;
+    protected Integer number;
 
-    private ZipState logZipState;
+    protected Long projectId;
 
-    private Integer number;
+    protected String startedByDisplayName;
 
-    private Long projectId;
+    protected State state;
 
-    private ZipState screenshotZipState;
+    protected Float successRatio;
 
-    private String startedByDisplayName;
+    protected Long screenshotsFileId;
 
-    private State state;
-
-    private Float successRatio;
+    protected Long logsFileId;
 
     public APITestRun() {
     }
 
     public APITestRun(
             Long id, Integer number, Date createTime, String displayName, Float executionRatio,
-            Float successRatio, String startedByDisplayName,
-            State state, ZipState screenshotZipState, ZipState logZipState, Long projectId) {
+            Float successRatio, String startedByDisplayName, State state, Long projectId, Long screenshotsFileId,
+            Long logsFileId) {
         super(id);
         this.number = number;
         this.createTime = createTime;
@@ -69,9 +61,9 @@ public class APITestRun extends APIEntity {
         this.successRatio = successRatio;
         this.startedByDisplayName = startedByDisplayName;
         this.state = state;
-        this.screenshotZipState = screenshotZipState;
-        this.logZipState = logZipState;
         this.projectId = projectId;
+        this.screenshotsFileId = screenshotsFileId;
+        this.logsFileId = logsFileId;
     }
 
     public Integer getNumber() {
@@ -122,28 +114,28 @@ public class APITestRun extends APIEntity {
         this.startedByDisplayName = startedByDisplayName;
     }
 
+    public Long getScreenshotsFileId() {
+        return screenshotsFileId;
+    }
+
+    public void setScreenshotsFileId(Long screenshotsFileId) {
+        this.screenshotsFileId = screenshotsFileId;
+    }
+
+    public Long getLogsFileId() {
+        return logsFileId;
+    }
+
+    public void setLogsFileId(Long logsFileId) {
+        this.logsFileId = logsFileId;
+    }
+
     public State getState() {
         return state;
     }
 
     public void setState(State state) {
         this.state = state;
-    }
-
-    public ZipState getScreenshotZipState() {
-        return screenshotZipState;
-    }
-
-    public void setScreenshotZipState(ZipState screenshotZipState) {
-        this.screenshotZipState = screenshotZipState;
-    }
-
-    public ZipState getLogZipState() {
-        return logZipState;
-    }
-
-    public void setLogZipState(ZipState logZipState) {
-        this.logZipState = logZipState;
     }
 
     public Long getProjectId() {
@@ -170,17 +162,21 @@ public class APITestRun extends APIEntity {
         return createUri(selfURI, "/device-runs");
     }
 
-    private String getScreenshotsZipURI() {
+    private String getRequestScreenshotsZipURI() {
         return createUri(selfURI, "/screenshots.zip");
     }
 
-    private String getLogsZipURI() {
+    private String getRequestLogsZipURI() {
         return createUri(selfURI, "/logs.zip");
     }
 
     private String getAbortURI() {
         return createUri(selfURI, "/abort");
     }
+
+    private String getLogsZipURI() { return String.format("/files/%s", logsFileId); }
+
+    private String getScreenshotsZipURI() { return String.format("/files/%s", screenshotsFileId); }
 
     /**
      * Returns APIFiles entity about files uploaded to this project.
@@ -274,22 +270,24 @@ public class APITestRun extends APIEntity {
 
     @JsonIgnore
     public void requestScreenshotsZip() throws APIException {
-        postResource(getScreenshotsZipURI(), null, null);
-    }
-
-    @JsonIgnore
-    public InputStream getScreenshotsZip() throws APIException {
-        return getFile(getScreenshotsZipURI());
+        APIUserFile result = postResource(getRequestScreenshotsZipURI(), null, APIUserFile.class);
+        this.screenshotsFileId = result.getId();
     }
 
     @JsonIgnore
     public void requestLogsZip() throws APIException {
-        postResource(getLogsZipURI(), null, null);
+        APIUserFile result = postResource(getRequestLogsZipURI(), null, APIUserFile.class);
+        this.logsFileId = result.getId();
     }
 
     @JsonIgnore
-    public InputStream getLogsZip() throws APIException {
-        return getFile(getLogsZipURI());
+    public APIUserFile getScreenshotsZip() throws APIException {
+        return super.getResource(getScreenshotsZipURI(), APIUserFile.class).getEntity();
+    }
+
+    @JsonIgnore
+    public APIUserFile getLogsZip() throws APIException {
+        return super.getResource(getLogsZipURI(), APIUserFile.class).getEntity();
     }
 
     public void update() throws APIException {
@@ -313,10 +311,11 @@ public class APITestRun extends APIEntity {
         this.executionRatio = apiTestRun.executionRatio;
         this.files = apiTestRun.files;
         this.number = apiTestRun.number;
-        this.screenshotZipState = apiTestRun.screenshotZipState;
         this.startedByDisplayName = apiTestRun.startedByDisplayName;
         this.state = apiTestRun.state;
         this.successRatio = apiTestRun.successRatio;
         this.projectId = apiTestRun.projectId;
+        this.screenshotsFileId = apiTestRun.screenshotsFileId;
+        this.logsFileId = apiTestRun.logsFileId;
     }
 }
