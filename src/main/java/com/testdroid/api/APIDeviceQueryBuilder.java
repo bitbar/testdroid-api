@@ -55,9 +55,15 @@ public class APIDeviceQueryBuilder extends APIQueryBuilder {
     @Override
     protected Map<String, Object> build() {
         Map<String, Object> result = super.build();
-        result.put("label_id[]", StringUtils.join(labelIds, ","));
-        result.put("device_group_id[]", StringUtils.join(deviceGroupIds, ","));
-        result.put("device_filter[]", StringUtils.join(deviceFilters, ","));
+        if(labelIds != null && labelIds.length > 0) {
+            result.put("label_id[]", StringUtils.join(labelIds, ","));
+        }
+        if(deviceGroupIds != null && deviceGroupIds.length > 0) {
+            result.put("device_group_id[]", StringUtils.join(deviceGroupIds, ","));
+        }
+        if(deviceFilters != null && deviceFilters.length > 0) {
+            result.put("device_filter[]", StringUtils.join(deviceFilters, ","));
+        }
         return result;
     }
 }
