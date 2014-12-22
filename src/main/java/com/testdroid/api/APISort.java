@@ -27,6 +27,7 @@ public class APISort {
         DEVICE_RUN_STATE_ID(APIDeviceRunState.class, "id"),
         DEVICE_RUN_STATE_STARTED(APIDeviceRunState.class, "startTimeMS"),
         DEVICE_RUN_STATE_STATUS(APIDeviceRunState.class, "status"),
+        LABEL_GROUP_NAME(APILabelGroup.class, "displayName"),
         NOTIFICATION_EMAIL_EMAIL(APINotificationEmail.class, "email"),
         NOTIFICATION_EMAIL_ID(APINotificationEmail.class, "id"),
         NOTIFICATION_EMAIL_PROJECT_NAME(APINotificationEmail.class, "p.name", NameType.ABSOLUTE),
@@ -177,7 +178,7 @@ public class APISort {
         String[] resultItems = value.split(":");
         for (String stringItem : resultItems) {
             String[] sortItemValues = stringItem.split("_");
-            if (sortItemValues != null && sortItemValues.length > 1) {
+            if (sortItemValues.length > 1) {
                 Column sc = Column.fromColumnName(type, sortItemValues[0]);
                 Type st = Type.fromURLValue(sortItemValues[1]);
                 if (sc != null && st != null) {

@@ -18,14 +18,21 @@ public class APIDeviceRunDataAvailability extends APIEntity {
 
     private boolean screenshots;
 
+    private boolean buildLogs;
+
+    private boolean resultsDataZip;
+
     public APIDeviceRunDataAvailability() {
     }
 
-    public APIDeviceRunDataAvailability(Long deviceRunId, boolean logs, boolean performance, boolean screenshots) {
+    public APIDeviceRunDataAvailability(Long deviceRunId, boolean logs, boolean performance, boolean screenshots,
+            boolean buildLogs, boolean resultsDataZip) {
         this.deviceRunId = deviceRunId;
         this.logs = logs;
         this.performance = performance;
         this.screenshots = screenshots;
+        this.buildLogs = buildLogs;
+        this.resultsDataZip = resultsDataZip;
     }
 
     public boolean isLogs() {
@@ -60,6 +67,22 @@ public class APIDeviceRunDataAvailability extends APIEntity {
         this.deviceRunId = deviceRunId;
     }
 
+    public boolean isBuildLogs() {
+        return buildLogs;
+    }
+
+    public void setBuildLogs(boolean buildLogs) {
+        this.buildLogs = buildLogs;
+    }
+
+    public boolean isResultsDataZip() {
+        return resultsDataZip;
+    }
+
+    public void setResultsDataZip(boolean resultsDataZip) {
+        this.resultsDataZip = resultsDataZip;
+    }
+
     @Override
     protected <T extends APIEntity> void clone(T from) {
         APIDeviceRunDataAvailability apiDeviceRunDataAvailability = (APIDeviceRunDataAvailability) from;
@@ -68,5 +91,7 @@ public class APIDeviceRunDataAvailability extends APIEntity {
         this.logs = apiDeviceRunDataAvailability.logs;
         this.performance = apiDeviceRunDataAvailability.performance;
         this.screenshots = apiDeviceRunDataAvailability.screenshots;
+        this.buildLogs = apiDeviceRunDataAvailability.buildLogs;
+        this.resultsDataZip = apiDeviceRunDataAvailability.resultsDataZip;
     }
 }

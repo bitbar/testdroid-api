@@ -22,7 +22,7 @@ public class CreateProjectSample {
             // Get authenticated user
             me = CLIENT.me();
 
-            // Create project with selected type
+            // Create proejct with selected type
             project = me.createProject(APIProject.Type.ANDROID);
 
             // Create project with selected type and specified name

@@ -58,7 +58,7 @@ public class APISort2 extends APISort {
         String[] resultItems = value.split(":");
         for (String stringItem : resultItems) {
             String[] sortItemValues = stringItem.split("_");
-            if (sortItemValues != null && sortItemValues.length > 1) {
+            if (sortItemValues.length > 1) {
                 String column = sortItemValues[0];
                 Type sortType = Type.fromURLValue(sortItemValues[1]);
                 if (column != null && type != null) {

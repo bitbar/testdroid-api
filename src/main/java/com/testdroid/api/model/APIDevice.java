@@ -74,6 +74,8 @@ public class APIDevice extends APIEntity {
 
     private Boolean vncSupported;
 
+    private Boolean aroSupported;
+
     public APIDevice() {
     }
 
@@ -81,7 +83,7 @@ public class APIDevice extends APIEntity {
             Long id, String displayName, APISoftwareVersion softwareVersion, Integer creditsPrice,
             String imagePrefix, Integer imageTop, Integer imageLeft, Integer imageWidth, Integer imageHeight,
             Integer frameExtraWidth, OsType osType, String frame80Url, String frame100Url, String frame160Url,
-            String frame400Url, Boolean online, Boolean locked, Boolean vncSupported) {
+            String frame400Url, Boolean online, Boolean locked, Boolean vncSupported, Boolean aroSupported) {
         super(id);
         this.displayName = displayName;
         this.softwareVersion = softwareVersion;
@@ -100,6 +102,8 @@ public class APIDevice extends APIEntity {
         this.locked = locked;
         this.online = online;
         this.vncSupported = vncSupported;
+        this.aroSupported = aroSupported;
+
     }
 
     @JsonView(value = {APIView.AdminView.class, APIView.MonitorView.class})
@@ -240,6 +244,14 @@ public class APIDevice extends APIEntity {
         this.online = online;
     }
 
+    public Boolean isAroSupported() {
+        return aroSupported;
+    }
+
+    public void setAroSupported(Boolean aroSupported) {
+        this.aroSupported = aroSupported;
+    }
+
     public Boolean isVncSupported() {
         return vncSupported;
     }
@@ -270,6 +282,7 @@ public class APIDevice extends APIEntity {
         this.online = apiDevice.online;
         this.locked = apiDevice.locked;
         this.vncSupported = apiDevice.vncSupported;
+        this.aroSupported = apiDevice.aroSupported;
     }
 
 }
