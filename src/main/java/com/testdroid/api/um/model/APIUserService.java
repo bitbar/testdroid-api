@@ -41,14 +41,15 @@ public class APIUserService extends APIEntity {
 
     private Integer vat;
 
+    private String handledBy;
+
     public APIUserService() {
     }
 
     public APIUserService(
             Long id, Long userId, String userEmail, APIService service, boolean active, boolean finished,
-            boolean autoRenew,
-            Integer total, Integer vat, APIPaymentMethod paymentMethod, Integer payUnitCount, String payUnitText,
-            Date startTime, Date endTime) {
+            boolean autoRenew, Integer total, Integer vat, APIPaymentMethod paymentMethod, Integer payUnitCount,
+            String payUnitText, Date startTime, Date endTime, String handledBy) {
         this.id = id;
         this.userId = userId;
         this.userEmail = userEmail;
@@ -63,6 +64,7 @@ public class APIUserService extends APIEntity {
         this.payUnitText = payUnitText;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.handledBy = handledBy;
     }
 
     public boolean isActive() {
@@ -185,6 +187,14 @@ public class APIUserService extends APIEntity {
         this.endTime = endTime;
     }
 
+    public String getHandledBy() {
+        return handledBy;
+    }
+
+    public void setHandledBy(String handledBy) {
+        this.handledBy = handledBy;
+    }
+
     @JsonIgnore
     @Override
     protected <T extends APIEntity> void clone(T from) {
@@ -216,5 +226,4 @@ public class APIUserService extends APIEntity {
         }
         return false;
     }
-
 }

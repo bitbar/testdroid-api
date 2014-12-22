@@ -292,6 +292,21 @@ public abstract class APIFiles extends APIEntity {
     }
 
     @XmlRootElement
+    public static class TelerikTestFile extends APIFile {
+
+        public TelerikTestFile() {
+        }
+
+        public TelerikTestFile(String originalName) {
+            super(originalName);
+        }
+
+        public TelerikTestFile(Long id, String originalName, Date uploadTime, String readableSize) {
+            super(id, originalName, uploadTime, readableSize);
+        }
+    }
+
+    @XmlRootElement
     public static class CalabashTestFile extends APIFile {
 
         public CalabashTestFile() {

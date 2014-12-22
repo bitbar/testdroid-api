@@ -5,6 +5,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,7 +42,11 @@ public class APIUser extends APIEntity {
 
     private String vatID;
 
+    private Date createTime;
+
     private EmailNotification emailNotification;
+
+    private Boolean isMainUser;
 
     @XmlType(namespace = "APIUser", name = "APIUserEmailNotification")
     public static enum EmailNotification {
@@ -56,7 +61,7 @@ public class APIUser extends APIEntity {
     public APIUser(
             Long id, String email, String name, String state, String country, String city, String code,
             String address, String phone, String organization, String vatID, String timeZone, boolean enabled,
-            EmailNotification emailNotification, APIRole... roles) {
+            EmailNotification emailNotification, Date createTime, APIRole... roles) {
         super(id);
         this.email = email;
         this.name = name;
@@ -72,6 +77,7 @@ public class APIUser extends APIEntity {
         this.enabled = enabled;
         this.emailNotification = emailNotification;
         this.roles = roles;
+        this.createTime = createTime;
     }
 
     public String getEmail() {
@@ -170,6 +176,14 @@ public class APIUser extends APIEntity {
         this.enabled = enabled;
     }
 
+    public Boolean getIsMainUser() {
+        return isMainUser;
+    }
+
+    public void setIsMainUser(Boolean isMainUser) {
+        this.isMainUser = isMainUser;
+    }
+
     public APIRole[] getRoles() {
         return roles;
     }
@@ -184,6 +198,14 @@ public class APIUser extends APIEntity {
 
     public void setEmailNotification(EmailNotification emailNotification) {
         this.emailNotification = emailNotification;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     private String getProjectsURI() {
@@ -418,5 +440,7 @@ public class APIUser extends APIEntity {
         this.timeZone = apiUser.timeZone;
         this.vatID = apiUser.vatID;
         this.emailNotification = apiUser.emailNotification;
+        this.createTime = apiUser.createTime;
+        this.isMainUser = apiUser.isMainUser;
     }
 }
