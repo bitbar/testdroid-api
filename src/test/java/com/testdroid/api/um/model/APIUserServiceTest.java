@@ -3,8 +3,6 @@ package com.testdroid.api.um.model;
 import org.joda.time.DateTime;
 import org.junit.Test;
 
-import java.util.Date;
-
 import static org.fest.assertions.Assertions.assertThat;
 
 /**
@@ -18,7 +16,6 @@ public class APIUserServiceTest {
         DateTime startTime = new DateTime(2014, 03, 11, 10, 34);
         DateTime endTime = new DateTime(2015, 03, 11, 10, 34);
         APIUserService service = prepareUserService(startTime, endTime);
-
 
         //THEN
         assertThat(service.isActiveAt(new DateTime(2014, 02, 11, 10, 34).toDate())).isFalse();

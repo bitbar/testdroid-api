@@ -18,14 +18,17 @@ public class APIJiraAccount extends APIEntity {
 
     private String username;
 
+    private Boolean hasCert;
+
     public APIJiraAccount() {
     }
 
-    public APIJiraAccount(Long id, String username, String jiraUrl, Long userId) {
+    public APIJiraAccount(Long id, String username, String jiraUrl, Long userId, Boolean hasCert) {
         super(id);
         this.userId = userId;
         this.username = username;
         this.jiraUrl = jiraUrl;
+        this.hasCert = hasCert;
     }
 
     public Long getUserId() {
@@ -52,11 +55,21 @@ public class APIJiraAccount extends APIEntity {
         this.jiraUrl = jiraUrl;
     }
 
-    @Override protected <T extends APIEntity> void clone(T from) {
+    public Boolean getHasCertificate() {
+        return hasCert;
+    }
+
+    public void setHasCertificate(Boolean hasCertificate) {
+        this.hasCert = hasCert;
+    }
+
+    @Override
+    protected <T extends APIEntity> void clone(T from) {
         cloneBase(from);
         APIJiraAccount account = (APIJiraAccount) from;
         this.userId = account.userId;
         this.username = account.username;
         this.jiraUrl = account.jiraUrl;
+        this.hasCert = account.hasCert;
     }
 }

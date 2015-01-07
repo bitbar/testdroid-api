@@ -21,8 +21,7 @@ public class APITestRunDataAvailability extends APIEntity {
     public APITestRunDataAvailability() {
     }
 
-    public APITestRunDataAvailability(
-            Long testRunId, boolean application, boolean test) {
+    public APITestRunDataAvailability(Long testRunId, boolean application, boolean test) {
         this.testRunId = testRunId;
         this.application = application;
         this.test = test;

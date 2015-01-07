@@ -90,7 +90,9 @@ import java.util.logging.Logger;
         APIJiraProject.class,
         APIJiraServerInfo.class,
         APIDeviceRunDataAvailability.class,
-        APITestRunDataAvailability.class
+        APITestRunDataAvailability.class,
+        APIUserDeviceTime.class,
+        APIDeviceTimeEntry.class
 })
 public abstract class APIEntity {
 

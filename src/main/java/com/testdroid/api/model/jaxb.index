@@ -40,3 +40,5 @@ RemoteControlFiles
 UIAutomatorFiles
 AppiumAndroidFiles
 AppiumIOSFiles
+APIUserDeviceTime
+APIDeviceTimeEntry

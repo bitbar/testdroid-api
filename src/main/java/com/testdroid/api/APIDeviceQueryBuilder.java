@@ -1,6 +1,7 @@
 package com.testdroid.api;
 
 import com.testdroid.api.model.APIDevice;
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.Map;
@@ -55,13 +56,13 @@ public class APIDeviceQueryBuilder extends APIQueryBuilder {
     @Override
     protected Map<String, Object> build() {
         Map<String, Object> result = super.build();
-        if(labelIds != null && labelIds.length > 0) {
+        if (ArrayUtils.isNotEmpty(labelIds)) {
             result.put("label_id[]", StringUtils.join(labelIds, ","));
         }
-        if(deviceGroupIds != null && deviceGroupIds.length > 0) {
+        if (ArrayUtils.isNotEmpty(deviceGroupIds)) {
             result.put("device_group_id[]", StringUtils.join(deviceGroupIds, ","));
         }
-        if(deviceFilters != null && deviceFilters.length > 0) {
+        if (ArrayUtils.isNotEmpty(deviceFilters)) {
             result.put("device_filter[]", StringUtils.join(deviceFilters, ","));
         }
         return result;
