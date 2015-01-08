@@ -37,7 +37,9 @@ public class APITestRunConfig extends APIEntity {
         CALABASH_IOS("Calabash iOS"),
         APPIUM_ANDROID("Appium Android"),
         APPIUM_IOS("Appium iOS"),
-        IOS_CRAWLER("iOS App crawler");
+        IOS_CRAWLER("iOS App crawler"),
+        TELERIK_ANDROID("Telerik Android"),
+        TELERIK_IOS("Telerik iOS");
 
         private String friendlyName;
 
@@ -99,18 +101,17 @@ public class APITestRunConfig extends APIEntity {
 
     private String withoutAnnotation;
 
+    private Long timeout;
+
     public APITestRunConfig() {
     }
 
     public APITestRunConfig(
-            Long id, Long projectId, Scheduler scheduler, Mode mode, boolean autoScreenshots,
-            boolean runAvailable,
+            Long id, Long projectId, Scheduler scheduler, Mode mode, boolean autoScreenshots, boolean runAvailable,
             String screenshotDir, LimitationType limitationType, String limitationValue, String withAnnotation,
-            String withoutAnnotation,
-            String applicationUsername, String applicationPassword, Long usedClusterId, Integer creditsPrice,
-            String deviceLanguageCode, String hookURL,
-            String uiAutomatorTestClasses, Boolean launchApp, String instrumentationRunner, Boolean checkApp,
-            Boolean appRequired) {
+            String withoutAnnotation, String applicationUsername, String applicationPassword, Long usedClusterId,
+            Integer creditsPrice, String deviceLanguageCode, String hookURL, String uiAutomatorTestClasses,
+            Boolean launchApp, String instrumentationRunner, Boolean checkApp, Boolean appRequired, Long timeout) {
         super(id);
         this.projectId = projectId;
         this.scheduler = scheduler;
@@ -133,6 +134,7 @@ public class APITestRunConfig extends APIEntity {
         this.instrumentationRunner = instrumentationRunner;
         this.checkApp = checkApp;
         this.appRequired = appRequired;
+        this.timeout = timeout;
     }
 
     public Long getProjectId() {
@@ -307,6 +309,14 @@ public class APITestRunConfig extends APIEntity {
         return createUri(selfURI, "/parameters");
     }
 
+    public Long getTimeout() {
+        return timeout;
+    }
+
+    public void setTimeout(Long timeout) {
+        this.timeout = timeout;
+    }
+
     @JsonIgnore
     public APITestRunParameter createParameter(final String key, final String value) throws APIException {
         Map<String, Object> body = new HashMap<String, Object>() {{
@@ -351,6 +361,7 @@ public class APITestRunConfig extends APIEntity {
             put("instrumentationRunner", instrumentationRunner);
             put("checkApp", checkApp);
             put("appRequired", appRequired);
+            put("timeout", timeout);
         }};
         APITestRunConfig config = postResource(selfURI, body, APITestRunConfig.class);
         clone(config);
@@ -382,6 +393,6 @@ public class APITestRunConfig extends APIEntity {
         this.usedDeviceGroupId = apiTestRunConfig.usedDeviceGroupId;
         this.withAnnotation = apiTestRunConfig.withAnnotation;
         this.withoutAnnotation = apiTestRunConfig.withoutAnnotation;
+        this.timeout = apiTestRunConfig.timeout;
     }
-
 }

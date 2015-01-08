@@ -49,25 +49,31 @@ public class APIDeviceRun extends APIEntity {
 
     private Integer testCaseAllNo;
 
-    private Integer testCaseCount;
-
     private Integer testCaseSuccessNo;
+
+    private Integer testCasePassedNo;
+
+    private Integer testCaseFailedNo;
+
+    private Integer testCaseSkippedNo;
 
     public APIDeviceRun() {
     }
 
     public APIDeviceRun(
             Long id, Long deviceSessionId, Long launchAppDuration, APIDevice device, Integer testCaseSuccessNo,
-            Integer testCaseAllNo, Integer testCaseCount, APISoftwareVersion softwareVersion, Date createTime,
-            Date startTime, APIDeviceRunState currentState, APIDeviceRunState interruptedByState, RunStatus runStatus,
-            String deviceName, String deviceSerialId) {
+            Integer testCaseAllNo, Integer testCasePassedNo, Integer testCaseFailedNo, Integer testCaseSkippedNo,
+            APISoftwareVersion softwareVersion, Date createTime, Date startTime, APIDeviceRunState currentState,
+            APIDeviceRunState interruptedByState, RunStatus runStatus, String deviceName, String deviceSerialId) {
         super(id);
         this.deviceSessionId = deviceSessionId;
         this.launchAppDuration = launchAppDuration;
         this.device = device;
         this.testCaseSuccessNo = testCaseSuccessNo;
         this.testCaseAllNo = testCaseAllNo;
-        this.testCaseCount = testCaseCount;
+        this.testCasePassedNo = testCasePassedNo;
+        this.testCaseFailedNo = testCaseFailedNo;
+        this.testCaseSkippedNo = testCaseSkippedNo;
         this.softwareVersion = softwareVersion;
         this.createTime = createTime;
         this.startTime = startTime;
@@ -118,12 +124,28 @@ public class APIDeviceRun extends APIEntity {
         this.testCaseAllNo = testCaseAllNo;
     }
 
-    public Integer getTestCaseCount() {
-        return testCaseCount;
+    public Integer getTestCasePassedNo() {
+        return testCasePassedNo;
     }
 
-    public void setTestCaseCount(Integer testCaseCount) {
-        this.testCaseCount = testCaseCount;
+    public void setTestCasePassedNo(Integer testCasePassedNo) {
+        this.testCasePassedNo = testCasePassedNo;
+    }
+
+    public Integer getTestCaseFailedNo() {
+        return testCaseFailedNo;
+    }
+
+    public void setTestCaseFailedNo(Integer testCaseFailedNo) {
+        this.testCaseFailedNo = testCaseFailedNo;
+    }
+
+    public Integer getTestCaseSkippedNo() {
+        return testCaseSkippedNo;
+    }
+
+    public void setTestCaseSkippedNo(Integer testCaseSkippedNo) {
+        this.testCaseSkippedNo = testCaseSkippedNo;
     }
 
     public APISoftwareVersion getSoftwareVersion() {
@@ -313,8 +335,10 @@ public class APIDeviceRun extends APIEntity {
         this.softwareVersion = apiDeviceRun.softwareVersion;
         this.startTime = apiDeviceRun.startTime;
         this.testCaseAllNo = apiDeviceRun.testCaseAllNo;
-        this.testCaseCount = apiDeviceRun.testCaseCount;
         this.testCaseSuccessNo = apiDeviceRun.testCaseSuccessNo;
+        this.testCasePassedNo = apiDeviceRun.testCasePassedNo;
+        this.testCaseFailedNo = apiDeviceRun.testCaseFailedNo;
+        this.testCaseSkippedNo = apiDeviceRun.testCaseSkippedNo;
     }
 
 }

@@ -12,7 +12,7 @@ import java.util.Date;
 @XmlRootElement
 public class APIDeviceTimeEntry extends APIEntity {
 
-    private Date startTime;
+    private Date createTime;
 
     private Date endTime;
 
@@ -29,9 +29,9 @@ public class APIDeviceTimeEntry extends APIEntity {
     }
 
     public APIDeviceTimeEntry(
-            Date startTime, Date endTime, String userName, Long userId, Long deviceTime,
+            Date createTime, Date endTime, String userName, Long userId, Long deviceTime,
             APIDeviceSession.Type type) {
-        this.startTime = startTime;
+        this.createTime = createTime;
         this.endTime = endTime;
         this.userName = userName;
         this.userId = userId;
@@ -44,7 +44,7 @@ public class APIDeviceTimeEntry extends APIEntity {
     protected <T extends APIEntity> void clone(T from) {
         APIDeviceTimeEntry apiDeviceTimeEntry = (APIDeviceTimeEntry) from;
         cloneBase(from);
-        this.startTime = apiDeviceTimeEntry.startTime;
+        this.createTime = apiDeviceTimeEntry.createTime;
         this.endTime = apiDeviceTimeEntry.endTime;
         this.userName = apiDeviceTimeEntry.userName;
         this.userId = apiDeviceTimeEntry.userId;
@@ -52,12 +52,12 @@ public class APIDeviceTimeEntry extends APIEntity {
         this.type = apiDeviceTimeEntry.type;
     }
 
-    public Date getStartTime() {
-        return startTime;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     public Date getEndTime() {

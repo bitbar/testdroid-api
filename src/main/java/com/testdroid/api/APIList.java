@@ -36,6 +36,7 @@ public class APIList<T extends APIEntity> extends APIEntity {
 
     public APIList() {
         data = new ArrayList<T>();
+        total = 0;
     }
 
     public APIList(String next, String previous, List<T> data, Integer total, String search, String sort) {

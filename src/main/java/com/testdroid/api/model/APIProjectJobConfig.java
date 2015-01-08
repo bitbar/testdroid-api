@@ -27,7 +27,9 @@ public class APIProjectJobConfig extends APIEntity {
         CALABASH_IOS,
         RECORDERONLINE,
         APPIUM_ANDROID,
-        APPIUM_IOS
+        APPIUM_IOS,
+        TELERIK_ANDROID,
+        TELERIK_IOS;
     }
 
     private String content;

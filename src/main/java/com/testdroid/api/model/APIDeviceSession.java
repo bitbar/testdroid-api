@@ -14,8 +14,18 @@ public class APIDeviceSession extends APIEntity {
 
     @XmlType(namespace = "APIDeviceSession")
     public static enum Type {
-        INSPECTOR,
+        INTERACTIVE,
         AUTOMATIC
+    }
+
+    @XmlType(namespace = "APIDeviceSession")
+    public static enum State {
+        WAITING,
+        RUNNING,
+        EXCLUDED,
+        WARNING,
+        FAILED,
+        SUCCEEDED
     }
 
     private Date createTime;
@@ -32,12 +42,13 @@ public class APIDeviceSession extends APIEntity {
 
     private Type type;
 
+    private State state;
+
     public APIDeviceSession() {
     }
 
-    public APIDeviceSession(
-            Long id, Type type, Date createTime, Date startTime, Date endTime, APIDevice device, Long timeLimit,
-            Long launchAppDuration) {
+    public APIDeviceSession(Long id, Type type, Date createTime, Date startTime, Date endTime, APIDevice device,
+            Long timeLimit, Long launchAppDuration, State state) {
         super(id);
         this.type = type;
         this.createTime = createTime;
@@ -46,6 +57,7 @@ public class APIDeviceSession extends APIEntity {
         this.device = device;
         this.timeLimit = timeLimit;
         this.launchAppDuration = launchAppDuration;
+        this.state = state;
     }
 
     public Type getType() {
@@ -104,6 +116,14 @@ public class APIDeviceSession extends APIEntity {
         this.launchAppDuration = launchAppDuration;
     }
 
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
+    }
+
     @Override
     protected <T extends APIEntity> void clone(T from) {
         APIDeviceSession apiDeviceSession = (APIDeviceSession) from;
@@ -115,6 +135,6 @@ public class APIDeviceSession extends APIEntity {
         this.device = apiDeviceSession.device;
         this.timeLimit = apiDeviceSession.timeLimit;
         this.launchAppDuration = apiDeviceSession.launchAppDuration;
+        this.state = apiDeviceSession.state;
     }
-
 }

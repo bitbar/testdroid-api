@@ -18,6 +18,7 @@ public class APITestCaseRun extends APIEntity {
     public static enum Result {
         PASSED,
         FAILED,
+        SKIPPED,
         NOT_AVAILBLE
     }
 

@@ -10,10 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import java.io.File;
 import java.io.IOException;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
@@ -40,7 +37,9 @@ public class APIProject extends APIEntity {
         CALABASH,
         CALABASH_IOS,
         APPIUM_ANDROID,
-        APPIUM_IOS;
+        APPIUM_IOS,
+        TELERIK_ANDROID,
+        TELERIK_IOS;
 
         public Class<? extends APIFiles> getFilesClass() {
             switch (this) {
@@ -64,6 +63,10 @@ public class APIProject extends APIEntity {
                     return AppiumAndroidFiles.class;
                 case APPIUM_IOS:
                     return AppiumIOSFiles.class;
+                case TELERIK_ANDROID:
+                    return TelerikAndroidFiles.class;
+                case TELERIK_IOS:
+                    return TelerikIOSFiles.class;
                 default:
                     return null;
             }
@@ -94,13 +97,16 @@ public class APIProject extends APIEntity {
 
     private Type type;
 
+    private Date createTime;
+
     public APIProject() {
     }
 
     public APIProject(
-            Long id, String name, String description, Type type, Long sharedById, String sharedByEmail,
+            Long id, Date createTime, String name, String description, Type type, Long sharedById, String sharedByEmail,
             boolean common, APIArchivingStrategy archivingStrategy, Integer archivingItemCount) {
         super(id);
+        this.createTime = createTime;
         this.name = name;
         this.description = description;
         this.type = type;
@@ -142,6 +148,14 @@ public class APIProject extends APIEntity {
 
     public void setCommon(boolean common) {
         this.common = common;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     /**
@@ -513,6 +527,7 @@ public class APIProject extends APIEntity {
         APIProject apiProject = (APIProject) from;
         cloneBase(from);
         this.common = apiProject.common;
+        this.createTime = apiProject.createTime;
         this.description = apiProject.description;
         this.files = apiProject.files;
         this.icon = apiProject.icon;
