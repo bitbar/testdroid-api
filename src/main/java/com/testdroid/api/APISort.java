@@ -62,7 +62,7 @@ public class APISort {
         TEST_RUN_TAG(APITestRun.class, "t.name", NameType.ABSOLUTE),
         TEST_RUN_PARAMETER_ID(APITestRunParameter.class, "id"),
         TEST_RUN_PARAMETER_KEY(APITestRunParameter.class, "key"),
-        USER_COUNTRY(APIUser.class, "localeCountry"),
+        USER_COUNTRY(APIUser.class, "country"),
         USER_EMAIL(APIUser.class, "email"),
         USER_ID(APIUser.class, "id"),
         USER_NAME(APIUser.class, "name");

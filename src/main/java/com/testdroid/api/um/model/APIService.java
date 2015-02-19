@@ -1,5 +1,6 @@
 package com.testdroid.api.um.model;
 
+import com.testdroid.api.APIEntity;
 import com.testdroid.api.formatter.CurrencyFormatter;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
@@ -11,7 +12,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlRootElement(name = "umApiService", namespace = "cloud.testdroid.api.um.model")
 @XmlType(name = "umApiService", namespace = "cloud.testdroid.api.um.model")
-public class APIService {
+public class APIService extends APIEntity{
 
     @XmlType(name = "umApiServiceType", namespace = "cloud.testdroid.um.api.model")
     public static enum Type {
@@ -92,6 +93,20 @@ public class APIService {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    @Override protected <T extends APIEntity> void clone(T from) {
+        APIService apiService = (APIService) from;
+        cloneBase(from);
+        this.name = apiService.name;
+        this.description = apiService.description;
+        this.autoRenew = apiService.autoRenew;
+        this.type = apiService.type;
+        this.centPrice = apiService.centPrice;
+        this.unitCount = apiService.unitCount;
+        this.unit = apiService.unit;
+        this.quantityAppliable = apiService.quantityAppliable;
+        this.braintreeId = apiService.braintreeId;
     }
 
     public String getName() {

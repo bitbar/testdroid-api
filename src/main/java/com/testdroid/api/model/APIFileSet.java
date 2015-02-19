@@ -19,14 +19,14 @@ public class APIFileSet extends APIEntity {
 
     private Date createTime;
 
-    private Integer fileCount;
+    private Long fileCount;
 
     private String name;
 
     public APIFileSet() {
     }
 
-    public APIFileSet(Long id, String name, Date createTime, Integer fileCount) {
+    public APIFileSet(Long id, String name, Date createTime, Long fileCount) {
         super(id);
         this.name = name;
         this.createTime = createTime;
@@ -49,11 +49,11 @@ public class APIFileSet extends APIEntity {
         this.createTime = createTime;
     }
 
-    public Integer getFileCount() {
+    public Long getFileCount() {
         return fileCount;
     }
 
-    public void setFileCount(Integer fileCount) {
+    public void setFileCount(Long fileCount) {
         this.fileCount = fileCount;
     }
 

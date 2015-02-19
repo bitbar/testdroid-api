@@ -28,12 +28,10 @@ public class CreateNotificationEmailsSample {
 
             System.out.println("Now add some notification emails");
             // Create notification email, for specified email, notified always
-            APINotificationEmail alwaysNotificationEmail = me
-                    .createNotificationEmail("email@localhost", APINotificationEmail.Type.ALWAYS);
+            me.createNotificationEmail("email@localhost", APINotificationEmail.Type.ALWAYS);
 
             // Create notification email, for specified email, notified on test run failures
-            APINotificationEmail onFailureNotificationEmail = me
-                    .createNotificationEmail("different.email@localhost", APINotificationEmail.Type.ON_FAILURE);
+            me.createNotificationEmail("different.email@localhost", APINotificationEmail.Type.ON_FAILURE);
 
             // Then you can get list of created notification emails
             APIList<APINotificationEmail> notificationEmailsList = me.getNotificationEmails().getEntity();

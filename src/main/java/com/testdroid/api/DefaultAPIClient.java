@@ -201,11 +201,7 @@ public class DefaultAPIClient implements APIClient {
 
     protected String getAccessToken() throws APIException {
         if (accessToken == null) {
-            try {
-                accessToken = acquireAccessToken();
-            } catch (APIException ex) {
-                throw ex;
-            }
+            accessToken = acquireAccessToken();
         } else if (System.currentTimeMillis() > (accessTokenExpireTime - 10 * 1000)) {
             try {
                 accessToken = refreshAccessToken();

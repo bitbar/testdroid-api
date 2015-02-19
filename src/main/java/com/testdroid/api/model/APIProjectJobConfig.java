@@ -29,7 +29,7 @@ public class APIProjectJobConfig extends APIEntity {
         APPIUM_ANDROID,
         APPIUM_IOS,
         TELERIK_ANDROID,
-        TELERIK_IOS;
+        TELERIK_IOS
     }
 
     private String content;
