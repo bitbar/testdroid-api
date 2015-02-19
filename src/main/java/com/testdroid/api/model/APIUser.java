@@ -16,6 +16,22 @@ import java.util.Map;
 @XmlRootElement
 public class APIUser extends APIEntity {
 
+    public static enum Status {
+        INACTIVE("Inactive"),
+        DISABLED("Disabled"),
+        ENABLED("Enabled");
+
+        private String displayName;
+
+        private Status(String displayName) {
+            this.displayName = displayName;
+        }
+
+        public String getDisplayName() {
+            return displayName;
+        }
+    }
+
     private String address;
 
     private String city;
@@ -47,6 +63,8 @@ public class APIUser extends APIEntity {
     private EmailNotification emailNotification;
 
     private Boolean isMainUser;
+
+    private Status status;
 
     @XmlType(namespace = "APIUser", name = "APIUserEmailNotification")
     public static enum EmailNotification {
@@ -206,6 +224,14 @@ public class APIUser extends APIEntity {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     private String getProjectsURI() {
@@ -442,5 +468,6 @@ public class APIUser extends APIEntity {
         this.emailNotification = apiUser.emailNotification;
         this.createTime = apiUser.createTime;
         this.isMainUser = apiUser.isMainUser;
+        this.status = apiUser.status;
     }
 }
