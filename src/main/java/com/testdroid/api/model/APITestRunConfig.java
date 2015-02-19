@@ -73,6 +73,8 @@ public class APITestRunConfig extends APIEntity {
 
     private String deviceLanguageCode;
 
+    private boolean gamebenchEnabled;
+
     private String hookURL;
 
     private String instrumentationRunner;
@@ -111,7 +113,8 @@ public class APITestRunConfig extends APIEntity {
             String screenshotDir, LimitationType limitationType, String limitationValue, String withAnnotation,
             String withoutAnnotation, String applicationUsername, String applicationPassword, Long usedClusterId,
             Integer creditsPrice, String deviceLanguageCode, String hookURL, String uiAutomatorTestClasses,
-            Boolean launchApp, String instrumentationRunner, Boolean checkApp, Boolean appRequired, Long timeout) {
+            Boolean launchApp, String instrumentationRunner, Boolean checkApp, Boolean appRequired,
+            Boolean gamebenchEnabled, Long timeout) {
         super(id);
         this.projectId = projectId;
         this.scheduler = scheduler;
@@ -134,6 +137,7 @@ public class APITestRunConfig extends APIEntity {
         this.instrumentationRunner = instrumentationRunner;
         this.checkApp = checkApp;
         this.appRequired = appRequired;
+        this.gamebenchEnabled = gamebenchEnabled;
         this.timeout = timeout;
     }
 
@@ -317,6 +321,14 @@ public class APITestRunConfig extends APIEntity {
         this.timeout = timeout;
     }
 
+    public boolean isGamebenchEnabled() {
+        return gamebenchEnabled;
+    }
+
+    public void setGamebenchEnabled(boolean gamebenchEnabled) {
+        this.gamebenchEnabled = gamebenchEnabled;
+    }
+
     @JsonIgnore
     public APITestRunParameter createParameter(final String key, final String value) throws APIException {
         Map<String, Object> body = new HashMap<String, Object>() {{
@@ -361,6 +373,7 @@ public class APITestRunConfig extends APIEntity {
             put("instrumentationRunner", instrumentationRunner);
             put("checkApp", checkApp);
             put("appRequired", appRequired);
+            put("gamebenchEnabled", gamebenchEnabled);
             put("timeout", timeout);
         }};
         APITestRunConfig config = postResource(selfURI, body, APITestRunConfig.class);
@@ -379,6 +392,7 @@ public class APITestRunConfig extends APIEntity {
         this.checkApp = apiTestRunConfig.checkApp;
         this.creditsPrice = apiTestRunConfig.creditsPrice;
         this.deviceLanguageCode = apiTestRunConfig.deviceLanguageCode;
+        this.gamebenchEnabled = apiTestRunConfig.gamebenchEnabled;
         this.hookURL = apiTestRunConfig.hookURL;
         this.instrumentationRunner = apiTestRunConfig.instrumentationRunner;
         this.launchApp = apiTestRunConfig.launchApp;

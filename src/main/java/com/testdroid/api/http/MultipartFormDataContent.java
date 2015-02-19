@@ -34,9 +34,9 @@ public class MultipartFormDataContent extends AbstractHttpContent {
         String boundary = getBoundary();
 
         HttpHeaders headers;
-        String contentDisposition = null;
-        HttpContent content = null;
-        StreamingContent streamingContent = null;
+        String contentDisposition;
+        HttpContent content;
+        StreamingContent streamingContent;
         for (Part part : parts) {
             // analyze the headers
             headers = new HttpHeaders().setAcceptEncoding(null);

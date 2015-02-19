@@ -17,7 +17,6 @@ public class CreateProjectSample {
         APIUser me;
         APIProject project;
         APIProject project1;
-        APIProject project2;
         try {
             // Get authenticated user
             me = CLIENT.me();
@@ -35,7 +34,7 @@ public class CreateProjectSample {
 
             // Cannot create project with the same name
             try {
-                project2 = me.createProject(APIProject.Type.ANDROID, project.getName());
+                me.createProject(APIProject.Type.ANDROID, project.getName());
             } catch (APIException apiex) {
                 System.err.println(apiex.getMessage());
             }
