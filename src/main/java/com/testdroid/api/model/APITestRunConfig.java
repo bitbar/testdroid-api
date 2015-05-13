@@ -32,7 +32,6 @@ public class APITestRunConfig extends APIEntity {
         IOS("iOS"),
         UIAUTOMATOR("UIAutomator"),
         REMOTECONTROL("Remote control"),
-        RECORDERONLINE("Recorder online"),
         CALABASH("Calabash Android"),
         CALABASH_IOS("Calabash iOS"),
         APPIUM_ANDROID("Appium Android"),

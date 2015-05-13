@@ -2,7 +2,7 @@ package com.testdroid.api;
 
 import com.testdroid.api.model.*;
 import com.testdroid.api.model.jrjc.*;
-import com.testdroid.api.um.model.APIUserService;
+import com.testdroid.api.um.model.APIService;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.map.annotate.JsonView;
 
@@ -31,6 +31,7 @@ import java.util.logging.Logger;
 @XmlRootElement(namespace = "com.testdroid.api")
 @XmlSeeAlso({
         APIArray.class,
+        APIBillingPeriod.class,
         APIConnection.class,
         APIDevice.class,
         APIDeviceGroup.class,
@@ -56,8 +57,8 @@ import java.util.logging.Logger;
         APIProject.class,
         APIProjectJobConfig.class,
         APIProjectSharing.class,
-        APIRecorderOnlineSession.class,
         APIRole.class,
+        APIService.class,
         APIScreenshot.class,
         APISoftwareVersion.class,
         APITag.class,
@@ -77,10 +78,9 @@ import java.util.logging.Logger;
         AppiumAndroidFiles.class,
         AppiumIOSFiles.class,
         IOSFiles.class,
-        RecorderOnlineFiles.class,
         RemoteControlFiles.class,
         UIAutomatorFiles.class,
-        APIUserService.class,
+        APIAccountService.class,
         APIBasicJiraProject.class,
         APIBasicJiraIssue.class,
         APIJiraAccount.class,

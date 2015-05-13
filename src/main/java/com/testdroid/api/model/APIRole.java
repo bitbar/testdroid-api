@@ -13,20 +13,28 @@ import java.util.Date;
 @XmlRootElement
 public class APIRole extends APIEntity {
 
+    private String addedByEmail;
+
     private Date expireTime;
 
     private String name;
 
-    private Integer useLimit;
-
     public APIRole() {
     }
 
-    public APIRole(Long id, String name, Integer useLimit, Date expireTime) {
+    public APIRole(Long id, String name) {
         super(id);
         this.name = name;
-        this.useLimit = useLimit;
+    }
+
+    public APIRole(Long id, String name, Date expireTime) {
+        this(id, name);
         this.expireTime = expireTime;
+    }
+
+    public APIRole(Long id, String name, Date expireTime, String addedByEmail) {
+        this(id, name, expireTime);
+        this.addedByEmail = addedByEmail;
     }
 
     public String getName() {
@@ -37,14 +45,6 @@ public class APIRole extends APIEntity {
         this.name = name;
     }
 
-    public Integer getUseLimit() {
-        return useLimit;
-    }
-
-    public void setUseLimit(Integer useLimit) {
-        this.useLimit = useLimit;
-    }
-
     public Date getExpireTime() {
         return expireTime;
     }
@@ -53,12 +53,12 @@ public class APIRole extends APIEntity {
         this.expireTime = expireTime;
     }
 
-    public boolean isLimited() {
-        return getUseLimit() != null;
+    public String getAddedByEmail() {
+        return addedByEmail;
     }
 
-    public boolean isLimitUsed() {
-        return getUseLimit() != null && getUseLimit() <= 0;
+    public void setAddedByEmail(String addedByEmail) {
+        this.addedByEmail = addedByEmail;
     }
 
     @Override
@@ -68,7 +68,6 @@ public class APIRole extends APIEntity {
         cloneBase(from);
         this.expireTime = apiRole.expireTime;
         this.name = apiRole.name;
-        this.useLimit = apiRole.useLimit;
+        this.addedByEmail = apiRole.addedByEmail;
     }
-
 }

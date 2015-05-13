@@ -25,7 +25,17 @@ public class APIDeviceSession extends APIEntity {
         EXCLUDED,
         WARNING,
         FAILED,
-        SUCCEEDED
+        SUCCEEDED;
+
+        public boolean isFinished() {
+            switch (this) {
+                case WAITING:
+                case RUNNING:
+                    return false;
+                default:
+                    return true;
+            }
+        }
     }
 
     private Date createTime;

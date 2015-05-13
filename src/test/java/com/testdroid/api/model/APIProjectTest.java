@@ -19,7 +19,6 @@ public class APIProjectTest {
         assertEquals(IOSFiles.class, APIProject.Type.IOS.getFilesClass());
         assertEquals(UIAutomatorFiles.class, APIProject.Type.UIAUTOMATOR.getFilesClass());
         assertEquals(RemoteControlFiles.class, APIProject.Type.REMOTECONTROL.getFilesClass());
-        assertEquals(RecorderOnlineFiles.class, APIProject.Type.RECORDERONLINE.getFilesClass());
         assertEquals(CalabashFiles.class, APIProject.Type.CALABASH.getFilesClass());
         assertEquals(CalabashIOSFiles.class, APIProject.Type.CALABASH_IOS.getFilesClass());
         assertEquals(AppiumAndroidFiles.class, APIProject.Type.APPIUM_ANDROID.getFilesClass());

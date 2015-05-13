@@ -2,35 +2,19 @@ package com.testdroid.api.um.model;
 
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.formatter.CurrencyFormatter;
+import com.testdroid.api.model.enums.Unit;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import java.util.Date;
 
 /**
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
  */
 @XmlRootElement(name = "umApiService", namespace = "cloud.testdroid.api.um.model")
 @XmlType(name = "umApiService", namespace = "cloud.testdroid.api.um.model")
-public class APIService extends APIEntity{
-
-    @XmlType(name = "umApiServiceType", namespace = "cloud.testdroid.um.api.model")
-    public static enum Type {
-        RECORDER,
-        CLOUD
-    }
-
-    @XmlType(name = "umApiServiceUnit", namespace = "cloud.testdroid.um.api.model")
-    public static enum Unit {
-        SECOND,
-        MINUTE,
-        HOUR,
-        DAY,
-        MONTH,
-        YEAR,
-        RUN,
-        PROJECT
-    }
+public class APIService extends APIEntity {
 
     private boolean autoRenew;
 
@@ -38,37 +22,43 @@ public class APIService extends APIEntity{
 
     private Integer centPrice;
 
+    private Integer includedHours;
+
+    private Integer pricePerHour;
+
     private String description;
 
-    private Long id;
-
     private String name;
-
-    private boolean quantityAppliable;
-
-    private Type type;
 
     private Unit unit;
 
     private Integer unitCount;
 
+    private Date archiveTime;
+
+    private Date activateTime;
+
+    private boolean customPlan;
+
     public APIService() {
     }
 
-    public APIService(
-            Long id, String name, String description, boolean autoRenew, Type type, Integer centPrice,
-            Integer unitCount, Unit unit,
-            boolean quantityAppliable, String braintreeId) {
-        this.id = id;
+    public APIService(Long id, String name, String description, boolean autoRenew, Integer centPrice,
+            Integer includedHours, Integer pricePerHour, String braintreeId, Date archiveTime, Date activateTime,
+            Unit unit, Integer unitCount, boolean customPlan) {
+        super(id);
         this.name = name;
         this.description = description;
         this.autoRenew = autoRenew;
-        this.type = type;
         this.centPrice = centPrice;
-        this.unitCount = unitCount;
-        this.unit = unit;
-        this.quantityAppliable = quantityAppliable;
+        this.includedHours = includedHours;
+        this.pricePerHour = pricePerHour;
         this.braintreeId = braintreeId;
+        this.archiveTime = archiveTime;
+        this.activateTime = activateTime;
+        this.unit = unit;
+        this.unitCount = unitCount;
+        this.customPlan = customPlan;
     }
 
     public boolean isAutoRenew() {
@@ -87,26 +77,22 @@ public class APIService extends APIEntity{
         this.centPrice = centPrice;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    @Override protected <T extends APIEntity> void clone(T from) {
+    @Override
+    protected <T extends APIEntity> void clone(T from) {
         APIService apiService = (APIService) from;
         cloneBase(from);
         this.name = apiService.name;
         this.description = apiService.description;
         this.autoRenew = apiService.autoRenew;
-        this.type = apiService.type;
         this.centPrice = apiService.centPrice;
         this.unitCount = apiService.unitCount;
         this.unit = apiService.unit;
-        this.quantityAppliable = apiService.quantityAppliable;
         this.braintreeId = apiService.braintreeId;
+        this.includedHours = apiService.includedHours;
+        this.pricePerHour = apiService.pricePerHour;
+        this.archiveTime = apiService.archiveTime;
+        this.activateTime = apiService.activateTime;
+        this.customPlan = apiService.customPlan;
     }
 
     public String getName() {
@@ -125,14 +111,6 @@ public class APIService extends APIEntity{
         this.description = description;
     }
 
-    public Type getType() {
-        return type;
-    }
-
-    public void setType(Type type) {
-        this.type = type;
-    }
-
     public Unit getUnit() {
         return unit;
     }
@@ -141,34 +119,12 @@ public class APIService extends APIEntity{
         this.unit = unit;
     }
 
-    @JsonIgnore
-    public String getPaypalUnit() {
-        switch (unit) {
-            case YEAR:
-                return "Y";
-            case DAY:
-                return "D";
-            case MONTH:
-                return "M";
-            default:
-                return "";
-        }
-    }
-
     public Integer getUnitCount() {
         return unitCount;
     }
 
     public void setUnitCount(Integer unitCount) {
         this.unitCount = unitCount;
-    }
-
-    public boolean isQuantityAppliable() {
-        return quantityAppliable;
-    }
-
-    public void setQuantityAppliable(boolean quantityAppliable) {
-        this.quantityAppliable = quantityAppliable;
     }
 
     public String getBraintreeId() {
@@ -181,6 +137,46 @@ public class APIService extends APIEntity{
 
     public String getPriceString() {
         return CurrencyFormatter.format(centPrice);
+    }
+
+    public Integer getIncludedHours() {
+        return includedHours;
+    }
+
+    public void setIncludedHours(Integer includedHours) {
+        this.includedHours = includedHours;
+    }
+
+    public Integer getPricePerHour() {
+        return pricePerHour;
+    }
+
+    public void setPricePerHour(Integer pricePerHour) {
+        this.pricePerHour = pricePerHour;
+    }
+
+    public Date getArchiveTime() {
+        return archiveTime;
+    }
+
+    public void setArchiveTime(Date archiveTime) {
+        this.archiveTime = archiveTime;
+    }
+
+    public Date getActivateTime() {
+        return activateTime;
+    }
+
+    public void setActivateTime(Date activateTime) {
+        this.activateTime = activateTime;
+    }
+
+    public boolean isCustomPlan() {
+        return customPlan;
+    }
+
+    public void setCustomPlan(boolean customPlan) {
+        this.customPlan = customPlan;
     }
 
     @JsonIgnore
@@ -206,5 +202,4 @@ public class APIService extends APIEntity{
         }
         return true;
     }
-
 }

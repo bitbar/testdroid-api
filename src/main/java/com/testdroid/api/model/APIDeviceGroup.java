@@ -13,9 +13,9 @@ import java.util.Collections;
 @XmlRootElement
 public class APIDeviceGroup extends APIEntity {
 
-    private Integer creditsPrice;
+    private Long creditsPrice;
 
-    private Integer deviceCount;
+    private Long deviceCount;
 
     private String displayName;
 
@@ -29,8 +29,8 @@ public class APIDeviceGroup extends APIEntity {
     }
 
     public APIDeviceGroup(
-            Long id, String name, String displayName, APIDevice.OsType osType, Integer deviceCount,
-            Integer creditsPrice, Long userId) {
+            Long id, String name, String displayName, APIDevice.OsType osType, Long deviceCount,
+            Long creditsPrice, Long userId) {
         this.id = id;
         this.name = name;
         this.displayName = displayName;
@@ -56,19 +56,19 @@ public class APIDeviceGroup extends APIEntity {
         this.displayName = displayName;
     }
 
-    public Integer getDeviceCount() {
+    public Long getDeviceCount() {
         return deviceCount;
     }
 
-    public void setDeviceCount(Integer deviceCount) {
+    public void setDeviceCount(Long deviceCount) {
         this.deviceCount = deviceCount;
     }
 
-    public Integer getCreditsPrice() {
+    public Long getCreditsPrice() {
         return creditsPrice;
     }
 
-    public void setCreditsPrice(Integer creditsPrice) {
+    public void setCreditsPrice(Long creditsPrice) {
         this.creditsPrice = creditsPrice;
     }
 

@@ -90,8 +90,7 @@ public abstract class APIFiles extends APIEntity {
     @XmlRootElement
     @XmlSeeAlso({APIFiles.APIFile.class, APIFiles.AndroidAppFile.class, APIFiles.AndroidTestFile.class,
             APIFiles.DataFile.class, APIFiles.IOSAppFile.class, APIFiles.IOSTestFile.class,
-            APIFiles.UIAutomatorTestFile.class, APIFiles.RecorderOnlineScreenplayFile.class,
-            APIFiles.CalabashTestFile.class
+            APIFiles.UIAutomatorTestFile.class, APIFiles.CalabashTestFile.class
     })
     public static abstract class APIFile extends APIEntity {
 
@@ -372,44 +371,4 @@ public abstract class APIFiles extends APIEntity {
             super(id, originalName, uploadTime, readableSize);
         }
     }
-
-    @XmlRootElement
-    public static class RecorderOnlineScreenplayFile extends APIFile {
-
-        public static enum Format {
-            JAVA("java"),
-            JSON("json");
-
-            private String urlForm;
-
-            private Format(String urlForm) {
-                this.urlForm = urlForm;
-            }
-
-            public static Format fromUrlForm(String url) {
-                for (Format f : Format.values()) {
-                    if (f.getUrlForm().equalsIgnoreCase(url)) {
-                        return f;
-                    }
-                }
-                return null;
-            }
-
-            public String getUrlForm() {
-                return urlForm;
-            }
-        }
-
-        public RecorderOnlineScreenplayFile() {
-        }
-
-        public RecorderOnlineScreenplayFile(String originalName) {
-            super(originalName);
-        }
-
-        public RecorderOnlineScreenplayFile(Long id, String originalName, Date uploadTime, String readableSize) {
-            super(id, originalName, uploadTime, readableSize);
-        }
-    }
-
 }

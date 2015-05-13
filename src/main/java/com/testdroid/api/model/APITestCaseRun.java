@@ -19,7 +19,7 @@ public class APITestCaseRun extends APIEntity {
         PASSED,
         FAILED,
         SKIPPED,
-        NOT_AVAILBLE
+        NOT_AVAILABLE
     }
 
     private String className;

@@ -15,13 +15,16 @@ public class APITestCaseRunStep extends APIEntity {
 
     @XmlType(namespace = "APITestCaseRunStep")
     public static enum Type {
+        ASSERTION,
         CLICK,
         CONFIG,
-        INPUT,
         DRAG,
-        SCROLL,
+        INPUT,
         NAVIGATION,
-        OTHER
+        OTHER,
+        SCROLL,
+        UTIL,
+        WAIT
     }
 
     private String description;

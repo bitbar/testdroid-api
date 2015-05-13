@@ -1,0 +1,349 @@
+package com.testdroid.api.model;
+
+import com.testdroid.api.APIEntity;
+import com.testdroid.api.model.enums.Unit;
+import com.testdroid.api.um.model.APIPaymentMethod;
+import org.codehaus.jackson.annotate.JsonIgnore;
+
+import javax.xml.bind.annotation.XmlRootElement;
+import java.util.Date;
+import java.util.Locale;
+
+/**
+ * @author Michał Szpruta <michal.szpruta@bitbar.com>
+ */
+@XmlRootElement
+public class APIAccountService extends APIEntity {
+
+    private Long accountId;
+
+    private Long activatedById;
+
+    private String activatedByName;
+
+    private boolean active;
+
+    private boolean autoRenew;
+
+    private String braintreeId;
+
+    private Date createTime;
+
+    private Long deactivatedById;
+
+    private String deactivatedByName;
+
+    private Date endTime;
+
+    private boolean finished;
+
+    private Date lastPaymentTime;
+
+    private APIPaymentMethod paymentMethod;
+
+    private Integer price;
+
+    private Integer serviceCount;
+
+    private Long serviceId;
+
+    private String serviceName;
+
+    private Date startTime;
+
+    private Unit unit;
+
+    private Integer unitCount;
+
+    private String userEmail;
+
+    private Long userId;
+
+    private Integer vatRate;
+
+    public APIAccountService() {
+    }
+
+    public APIAccountService(
+            Long accountId, Long activatedById, String activatedByName, boolean active, boolean autoRenew,
+            String braintreeId, Date createTime, Long deactivatedById, String deactivatedByName, Date endTime,
+            boolean finished, Long id, Date lastPaymentTime, APIPaymentMethod paymentMethod, Integer price,
+            Long serviceId, Date startTime, String userEmail, Long userId, Integer vatRate, Unit unit,
+            Integer unitCount, Integer serviceCount, String serviceName) {
+        super(id);
+        this.accountId = accountId;
+        this.activatedById = activatedById;
+        this.activatedByName = activatedByName;
+        this.active = active;
+        this.autoRenew = autoRenew;
+        this.braintreeId = braintreeId;
+        this.createTime = createTime;
+        this.deactivatedById = deactivatedById;
+        this.deactivatedByName = deactivatedByName;
+        this.endTime = endTime;
+        this.finished = finished;
+        this.lastPaymentTime = lastPaymentTime;
+        this.paymentMethod = paymentMethod;
+        this.price = price;
+        this.serviceId = serviceId;
+        this.startTime = startTime;
+        this.userEmail = userEmail;
+        this.userId = userId;
+        this.vatRate = vatRate;
+        this.unit = unit;
+        this.unitCount = unitCount;
+        this.serviceCount = serviceCount;
+        this.serviceName = serviceName;
+    }
+
+    public Long getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(Long accountId) {
+        this.accountId = accountId;
+    }
+
+    public Long getActivatedById() {
+        return activatedById;
+    }
+
+    public void setActivatedById(Long activatedById) {
+        this.activatedById = activatedById;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Long getDeactivatedById() {
+        return deactivatedById;
+    }
+
+    public void setDeactivatedById(Long deactivatedById) {
+        this.deactivatedById = deactivatedById;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+
+    public Date getLastPaymentTime() {
+        return lastPaymentTime;
+    }
+
+    public void setLastPaymentTime(Date lastPaymentTime) {
+        this.lastPaymentTime = lastPaymentTime;
+    }
+
+    public APIPaymentMethod getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(APIPaymentMethod paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
+    public boolean isFinished() {
+        return finished;
+    }
+
+    public void setFinished(boolean finished) {
+        this.finished = finished;
+    }
+
+    public Long getServiceId() {
+        return serviceId;
+    }
+
+    public void setServiceId(Long serviceId) {
+        this.serviceId = serviceId;
+    }
+
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public Integer getVatRate() {
+        return vatRate;
+    }
+
+    public void setVatRate(Integer vatRate) {
+        this.vatRate = vatRate;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public Integer getTotal() {
+        return (price * (100 + vatRate)) / 100;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
+    }
+
+    public boolean isAutoRenew() {
+        return autoRenew;
+    }
+
+    public void setAutoRenew(boolean autoRenew) {
+        this.autoRenew = autoRenew;
+    }
+
+    public String getBraintreeId() {
+        return braintreeId;
+    }
+
+    public void setBraintreeId(String braintreeId) {
+        this.braintreeId = braintreeId;
+    }
+
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public Unit getUnit() {
+        return unit;
+    }
+
+    public void setUnit(Unit unit) {
+        this.unit = unit;
+    }
+
+    public Integer getUnitCount() {
+        return unitCount;
+    }
+
+    public void setUnitCount(Integer unitCount) {
+        this.unitCount = unitCount;
+    }
+
+    public Integer getServiceCount() {
+        return serviceCount;
+    }
+
+    public void setServiceCount(Integer serviceCount) {
+        this.serviceCount = serviceCount;
+    }
+
+    public String getServiceName() {
+        return serviceName;
+    }
+
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName;
+    }
+
+    public String getActivatedByName() {
+        return activatedByName;
+    }
+
+    public void setActivatedByName(String activatedByName) {
+        this.activatedByName = activatedByName;
+    }
+
+    public String getDeactivatedByName() {
+        return deactivatedByName;
+    }
+
+    public void setDeactivatedByName(String deactivatedByName) {
+        this.deactivatedByName = deactivatedByName;
+    }
+
+    @JsonIgnore
+    public Integer getPayUnitCount() {
+        return autoRenew ? unitCount : unitCount * serviceCount;
+    }
+
+    @JsonIgnore
+    public String getVatPriceString() {
+        float vatPrice = (getPrice() * getVatRate()) / 100;
+        return String.format(Locale.ENGLISH, "%.2f", vatPrice / 100);
+    }
+
+    @JsonIgnore
+    public String getNetPriceString() {
+        return String.format(Locale.ENGLISH, "%.2f", ((float) getPrice()) / 100);
+    }
+
+    @JsonIgnore
+    public String getTotalPriceString() {
+        float totalPrice = (getPrice() * (100 + getVatRate())) / 100;
+        return String.format(Locale.ENGLISH, "%.2f", totalPrice / 100);
+    }
+
+    @JsonIgnore
+    @Override
+    public <T extends APIEntity> void clone(T from) {
+        APIAccountService accountService = (APIAccountService) from;
+        cloneBase(from);
+        this.accountId = accountService.accountId;
+        this.active = accountService.active;
+        this.finished = accountService.finished;
+        this.autoRenew = accountService.autoRenew;
+        this.price = accountService.price;
+        this.activatedById = accountService.activatedById;
+        this.activatedByName = accountService.activatedByName;
+        this.createTime = accountService.createTime;
+        this.deactivatedById = accountService.deactivatedById;
+        this.deactivatedByName = accountService.deactivatedByName;
+        this.endTime = accountService.endTime;
+        this.lastPaymentTime = accountService.lastPaymentTime;
+        this.paymentMethod = accountService.paymentMethod;
+        this.serviceId = accountService.serviceId;
+        this.startTime = accountService.startTime;
+        this.vatRate = accountService.vatRate;
+        this.unit = accountService.unit;
+        this.unitCount = accountService.unitCount;
+        this.serviceCount = accountService.serviceCount;
+        this.serviceName = accountService.serviceName;
+        this.userId = accountService.userId;
+        this.braintreeId = accountService.braintreeId;
+    }
+
+    public boolean isActiveAt(Date date) {
+        if (date == null) {
+            return false;
+        }
+        if (startTime != null && (startTime.equals(date) || startTime.before(date))) {
+            if (endTime == null || (endTime.after(date) || endTime.equals(date))) {
+                return true;
+            }
+        }
+        return false;
+    }
+}

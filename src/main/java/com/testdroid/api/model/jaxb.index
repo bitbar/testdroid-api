@@ -1,3 +1,4 @@
+APIBillingPeriod
 APIConnection
 APIDevice
 APIDeviceGroup
@@ -14,7 +15,6 @@ APINotificationEmail
 APIProject
 APIProjectJobConfig
 APIProjectSharing
-APIRecorderOnlineSession
 APIRole
 APIScreenshot
 APISoftwareVersion
@@ -35,10 +35,10 @@ CalabashFiles
 CalabashIOSFiles
 DeviceRunStateType
 IOSFiles
-RecorderOnlineFiles
 RemoteControlFiles
 UIAutomatorFiles
 AppiumAndroidFiles
 AppiumIOSFiles
 APIUserDeviceTime
 APIDeviceTimeEntry
+APIAccountService
