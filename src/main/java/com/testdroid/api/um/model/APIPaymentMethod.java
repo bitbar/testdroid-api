@@ -6,5 +6,7 @@ package com.testdroid.api.um.model;
 public enum APIPaymentMethod {
     PAYPAL,
     BRAINTREE,
-    INVOICE
+    INVOICE,
+    PROMOTION,
+    ADMIN
 }

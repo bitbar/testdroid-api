@@ -63,8 +63,8 @@ public class APIDeviceRun extends APIEntity {
     public APIDeviceRun(
             Long id, Long deviceSessionId, Long launchAppDuration, APIDevice device, Integer testCaseSuccessNo,
             Integer testCaseAllNo, Integer testCasePassedNo, Integer testCaseFailedNo, Integer testCaseSkippedNo,
-            APISoftwareVersion softwareVersion, Date createTime, Date startTime, APIDeviceRunState currentState,
-            APIDeviceRunState interruptedByState, RunStatus runStatus, String deviceName, String deviceSerialId) {
+            APISoftwareVersion softwareVersion, Date createTime, Date startTime, RunStatus runStatus, String deviceName,
+            String deviceSerialId) {
         super(id);
         this.deviceSessionId = deviceSessionId;
         this.launchAppDuration = launchAppDuration;
@@ -77,11 +77,21 @@ public class APIDeviceRun extends APIEntity {
         this.softwareVersion = softwareVersion;
         this.createTime = createTime;
         this.startTime = startTime;
-        this.currentState = currentState;
-        this.interruptedByState = interruptedByState;
         this.runStatus = runStatus;
         this.deviceName = deviceName;
         this.deviceSerialId = deviceSerialId;
+    }
+
+    public APIDeviceRun(
+            Long id, Long deviceSessionId, Long launchAppDuration, APIDevice device, Integer testCaseSuccessNo,
+            Integer testCaseAllNo, Integer testCasePassedNo, Integer testCaseFailedNo, Integer testCaseSkippedNo,
+            APISoftwareVersion softwareVersion, Date createTime, Date startTime, APIDeviceRunState currentState,
+            APIDeviceRunState interruptedByState, RunStatus runStatus, String deviceName, String deviceSerialId) {
+        this(id, deviceSessionId, launchAppDuration, device, testCaseSuccessNo, testCaseAllNo, testCasePassedNo,
+                testCaseFailedNo, testCaseSkippedNo, softwareVersion, createTime, startTime, runStatus, deviceName,
+                deviceSerialId);
+        this.currentState = currentState;
+        this.interruptedByState = interruptedByState;
     }
 
     public Long getDeviceSessionId() {

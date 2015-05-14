@@ -28,18 +28,23 @@ public class APIProject extends APIEntity {
 
     @XmlType(namespace = "APIProject")
     public static enum Type {
-        ANDROID,
-        CTS,
-        IOS,
-        UIAUTOMATOR,
-        REMOTECONTROL,
-        RECORDERONLINE,
-        CALABASH,
-        CALABASH_IOS,
-        APPIUM_ANDROID,
-        APPIUM_IOS,
-        TELERIK_ANDROID,
-        TELERIK_IOS;
+        ANDROID(APIDevice.OsType.ANDROID),
+        CTS(APIDevice.OsType.ANDROID),
+        IOS(APIDevice.OsType.IOS),
+        UIAUTOMATOR(APIDevice.OsType.ANDROID),
+        REMOTECONTROL(APIDevice.OsType.ANDROID),
+        CALABASH(APIDevice.OsType.ANDROID),
+        CALABASH_IOS(APIDevice.OsType.IOS),
+        APPIUM_ANDROID(APIDevice.OsType.ANDROID),
+        APPIUM_IOS(APIDevice.OsType.IOS),
+        TELERIK_ANDROID(APIDevice.OsType.ANDROID),
+        TELERIK_IOS(APIDevice.OsType.IOS);
+
+        private APIDevice.OsType osType;
+
+        private Type(APIDevice.OsType osType) {
+            this.osType = osType;
+        }
 
         public Class<? extends APIFiles> getFilesClass() {
             switch (this) {
@@ -53,8 +58,6 @@ public class APIProject extends APIEntity {
                     return UIAutomatorFiles.class;
                 case REMOTECONTROL:
                     return RemoteControlFiles.class;
-                case RECORDERONLINE:
-                    return RecorderOnlineFiles.class;
                 case CALABASH:
                     return CalabashFiles.class;
                 case CALABASH_IOS:
@@ -70,6 +73,10 @@ public class APIProject extends APIEntity {
                 default:
                     return null;
             }
+        }
+
+        public APIDevice.OsType getOsType() {
+            return osType;
         }
     }
 

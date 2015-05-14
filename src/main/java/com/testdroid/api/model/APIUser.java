@@ -32,6 +32,8 @@ public class APIUser extends APIEntity {
         }
     }
 
+    private Long activeServiceId;
+
     private String address;
 
     private String city;
@@ -40,9 +42,21 @@ public class APIUser extends APIEntity {
 
     private String country;
 
+    private Date createTime;
+
     private String email;
 
+    private EmailNotification emailNotification;
+
     private boolean enabled;
+
+    private Boolean isMainUser;
+
+    private Date lastLoginTime;
+
+    private String mainUserEmail;
+
+    private Long mainUserId;
 
     private String name;
 
@@ -54,23 +68,27 @@ public class APIUser extends APIEntity {
 
     private String state;
 
+    private Status status;
+
     private String timeZone;
 
     private String vatID;
 
-    private Date createTime;
-
-    private EmailNotification emailNotification;
-
-    private Boolean isMainUser;
-
-    private Status status;
-
     @XmlType(namespace = "APIUser", name = "APIUserEmailNotification")
     public static enum EmailNotification {
-        ALWAYS,
-        NEVER,
-        ON_FAILURE
+        ALWAYS("always"),
+        NEVER("never"),
+        ON_FAILURE("on failure");
+
+        private String displayName;
+
+        private EmailNotification(String displayName) {
+            this.displayName = displayName;
+        }
+
+        public String getDisplayName() {
+            return displayName;
+        }
     }
 
     public APIUser() {
@@ -78,8 +96,8 @@ public class APIUser extends APIEntity {
 
     public APIUser(
             Long id, String email, String name, String state, String country, String city, String code,
-            String address, String phone, String organization, String vatID, String timeZone, boolean enabled,
-            EmailNotification emailNotification, Date createTime, APIRole... roles) {
+            String address, String phone, String organization, String vatID, String timeZone,
+            EmailNotification emailNotification, Date createTime) {
         super(id);
         this.email = email;
         this.name = name;
@@ -92,10 +110,31 @@ public class APIUser extends APIEntity {
         this.organization = organization;
         this.vatID = vatID;
         this.timeZone = timeZone;
-        this.enabled = enabled;
         this.emailNotification = emailNotification;
-        this.roles = roles;
         this.createTime = createTime;
+    }
+
+    public APIUser(
+            Long id, String email, String name, String state, String country, String city, String code,
+            String address, String phone, String organization, String vatID, String timeZone,
+            EmailNotification emailNotification, Date createTime, Date lastLoginTime, Boolean isMainUser,
+            Long mainUserId, String mainUserEmail, Long activeServiceId) {
+        this(id, email, name, state, country, city, code, address, phone, organization, vatID, timeZone,
+                emailNotification, createTime);
+        this.lastLoginTime = lastLoginTime;
+        this.isMainUser = isMainUser;
+        this.mainUserId = mainUserId;
+        this.mainUserEmail = mainUserEmail;
+        this.activeServiceId = activeServiceId;
+    }
+
+    public APIUser(
+            Long id, String email, String name, String state, String country, String city, String code,
+            String address, String phone, String organization, String vatID, String timeZone,
+            EmailNotification emailNotification, Date createTime, APIRole... roles) {
+        this(id, email, name, state, country, city, code, address, phone, organization, vatID, timeZone,
+                emailNotification, createTime);
+        this.roles = roles;
     }
 
     public String getEmail() {
@@ -232,6 +271,39 @@ public class APIUser extends APIEntity {
 
     public void setStatus(Status status) {
         this.status = status;
+        this.enabled = status == Status.ENABLED;
+    }
+
+    public Date getLastLoginTime() {
+        return lastLoginTime;
+    }
+
+    public void setLastLoginTime(Date lastLoginTime) {
+        this.lastLoginTime = lastLoginTime;
+    }
+
+    public Long getMainUserId() {
+        return mainUserId;
+    }
+
+    public void setMainUserId(Long mainUserId) {
+        this.mainUserId = mainUserId;
+    }
+
+    public String getMainUserEmail() {
+        return mainUserEmail;
+    }
+
+    public void setMainUserEmail(String mainUserEmail) {
+        this.mainUserEmail = mainUserEmail;
+    }
+
+    public Long getActiveServiceId() {
+        return activeServiceId;
+    }
+
+    public void setActiveServiceId(Long activeServiceId) {
+        this.activeServiceId = activeServiceId;
     }
 
     private String getProjectsURI() {
@@ -457,7 +529,6 @@ public class APIUser extends APIEntity {
         this.code = apiUser.code;
         this.country = apiUser.country;
         this.email = apiUser.email;
-        this.enabled = apiUser.enabled;
         this.name = apiUser.name;
         this.organization = apiUser.organization;
         this.phone = apiUser.phone;
@@ -469,5 +540,10 @@ public class APIUser extends APIEntity {
         this.createTime = apiUser.createTime;
         this.isMainUser = apiUser.isMainUser;
         this.status = apiUser.status;
+        this.lastLoginTime = apiUser.lastLoginTime;
+        this.mainUserId = apiUser.mainUserId;
+        this.activeServiceId = apiUser.activeServiceId;
+        this.mainUserEmail = apiUser.mainUserEmail;
+        this.enabled = apiUser.enabled;
     }
 }

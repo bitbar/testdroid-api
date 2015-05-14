@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.testdroid</groupId>
     <artifactId>testdroid-api</artifactId>
-    <version>2.4</version>
+    <version>2.5</version>
     <packaging>jar</packaging>
     <name>Testdroid API v2</name>
     <url>https://github.com/bitbar/testdroid-api</url>
@@ -176,17 +176,4 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-    <distributionManagement>
-        <repository>
-            <id>testdroid</id>
-            <name>Testdroid Releases</name>
-            <url>${testdroid.repo}/releases</url>
-        </repository>
-        <snapshotRepository>
-            <uniqueVersion>false</uniqueVersion>
-            <id>testdroid</id>
-            <name>Testdroid Snapshots</name>
-            <url>${testdroid.repo}/snapshots</url>
-        </snapshotRepository>
-    </distributionManagement>
 </project>

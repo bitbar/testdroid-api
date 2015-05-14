@@ -36,15 +36,18 @@ public class APIUserFile extends APIEntity {
     public APIUserFile() {
     }
 
-    public APIUserFile(
-            Long id, String name, Date createTime, Long size, State state, APIUserFileProperty...
-            fileProperties) {
+    public APIUserFile(Long id, String name, Date createTime, Long size, State state) {
         super(id);
         this.name = name;
         this.createTime = createTime;
         this.size = size;
-        this.fileProperties = fileProperties;
         this.state = state;
+    }
+
+    public APIUserFile(
+            Long id, String name, Date createTime, Long size, State state, APIUserFileProperty... fileProperties) {
+        this(id, name, createTime, size, state);
+        this.fileProperties = fileProperties;
     }
 
     public String getName() {

@@ -38,6 +38,13 @@ public class APIDevice extends APIEntity {
             return displayName;
         }
 
+        public boolean isAndroid() {
+            return this == ANDROID;
+        }
+
+        public boolean isIos() {
+            return this == IOS;
+        }
     }
 
     private Integer creditsPrice;
