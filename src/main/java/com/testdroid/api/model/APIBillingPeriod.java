@@ -1,6 +1,7 @@
 package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
+import com.testdroid.api.um.model.APIPaymentMethod;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
@@ -20,6 +21,13 @@ public class APIBillingPeriod extends APIEntity {
     private String plan;
     private Long additionalHours;
     private Long totalPrice;
+    private Long servicePrice;
+    private Long additionalHoursPrice;
+    private Boolean paid;
+    private Date lastPaymentDate;
+    private Date createTime;
+    private APIPaymentMethod paymentMethod;
+    private APIBillingPeriodType apiBillingPeriodType;
 
     public APIBillingPeriod() {
     }
@@ -27,7 +35,9 @@ public class APIBillingPeriod extends APIEntity {
     public APIBillingPeriod(
             Long invoiceId, Long userId, String mail, String plan, Date startBillingPeriod,
             Date endBillingPeriod, Date subscriptionStart, Date subscriptionEnd,
-            Long additionalHours, Long totalPrice) {
+            Long additionalHours, Long totalPrice, Long servicePrice, Long additionalHoursPrice, Boolean paid,
+            Date lastPaymentDate, Date createTime, APIPaymentMethod paymentMethod,
+            APIBillingPeriodType apiBillingPeriodType) {
         super(invoiceId);
         this.userId = userId;
         this.mail = mail;
@@ -38,6 +48,13 @@ public class APIBillingPeriod extends APIEntity {
         this.endBillingPeriod = endBillingPeriod;
         this.subscriptionStart = subscriptionStart;
         this.subscriptionEnd = subscriptionEnd;
+        this.servicePrice = servicePrice;
+        this.additionalHoursPrice = additionalHoursPrice;
+        this.paid = paid;
+        this.lastPaymentDate = lastPaymentDate;
+        this.paymentMethod = paymentMethod;
+        this.createTime = createTime;
+        this.apiBillingPeriodType = apiBillingPeriodType;
     }
 
     public String getMail() {
@@ -112,6 +129,62 @@ public class APIBillingPeriod extends APIEntity {
         this.subscriptionEnd = subscriptionEnd;
     }
 
+    public Long getServicePrice() {
+        return servicePrice;
+    }
+
+    public void setServicePrice(Long servicePrice) {
+        this.servicePrice = servicePrice;
+    }
+
+    public Long getAdditionalHoursPrice() {
+        return additionalHoursPrice;
+    }
+
+    public void setAdditionalHoursPrice(Long additionalHoursPrice) {
+        this.additionalHoursPrice = additionalHoursPrice;
+    }
+
+    public Boolean getPaid() {
+        return paid;
+    }
+
+    public void setPaid(Boolean paid) {
+        this.paid = paid;
+    }
+
+    public Date getLastPaymentDate() {
+        return lastPaymentDate;
+    }
+
+    public void setLastPaymentDate(Date lastPaymentDate) {
+        this.lastPaymentDate = lastPaymentDate;
+    }
+
+    public APIPaymentMethod getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(APIPaymentMethod paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public APIBillingPeriodType getApiBillingPeriodType() {
+        return apiBillingPeriodType;
+    }
+
+    public void setApiBillingPeriodType(APIBillingPeriodType apiBillingPeriodType) {
+        this.apiBillingPeriodType = apiBillingPeriodType;
+    }
+
     @Override
     protected <T extends APIEntity> void clone(T from) {
         APIBillingPeriod period = (APIBillingPeriod) from;
@@ -123,5 +196,12 @@ public class APIBillingPeriod extends APIEntity {
         this.plan = period.plan;
         this.additionalHours = period.additionalHours;
         this.totalPrice = period.totalPrice;
+        this.servicePrice = period.servicePrice;
+        this.additionalHoursPrice = period.additionalHoursPrice;
+        this.paid = period.paid;
+        this.lastPaymentDate = period.lastPaymentDate;
+        this.paymentMethod = period.paymentMethod;
+        this.createTime = period.createTime;
+        this.apiBillingPeriodType = period.apiBillingPeriodType;
     }
 }

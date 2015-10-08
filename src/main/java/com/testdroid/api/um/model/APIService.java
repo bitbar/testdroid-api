@@ -1,9 +1,9 @@
 package com.testdroid.api.um.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.formatter.CurrencyFormatter;
 import com.testdroid.api.model.enums.Unit;
-import org.codehaus.jackson.annotate.JsonIgnore;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;

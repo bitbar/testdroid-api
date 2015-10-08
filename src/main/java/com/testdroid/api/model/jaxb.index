@@ -42,3 +42,4 @@ AppiumIOSFiles
 APIUserDeviceTime
 APIDeviceTimeEntry
 APIAccountService
+APIEmailNotification

@@ -1,11 +1,12 @@
 package com.testdroid.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.model.enums.Unit;
 import com.testdroid.api.um.model.APIPaymentMethod;
-import org.codehaus.jackson.annotate.JsonIgnore;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 import java.util.Date;
 import java.util.Locale;
 
@@ -14,6 +15,14 @@ import java.util.Locale;
  */
 @XmlRootElement
 public class APIAccountService extends APIEntity {
+
+    @XmlType(namespace = "APIAccountService")
+    public static enum DeactivateReason {
+        INITIAL_FAILURE,
+        CHARGE_FAILURE,
+        CANCEL
+    }
+
 
     private Long accountId;
 
@@ -61,6 +70,8 @@ public class APIAccountService extends APIEntity {
 
     private Integer vatRate;
 
+    private DeactivateReason deactivateReason;
+
     public APIAccountService() {
     }
 
@@ -69,7 +80,7 @@ public class APIAccountService extends APIEntity {
             String braintreeId, Date createTime, Long deactivatedById, String deactivatedByName, Date endTime,
             boolean finished, Long id, Date lastPaymentTime, APIPaymentMethod paymentMethod, Integer price,
             Long serviceId, Date startTime, String userEmail, Long userId, Integer vatRate, Unit unit,
-            Integer unitCount, Integer serviceCount, String serviceName) {
+            Integer unitCount, Integer serviceCount, String serviceName, DeactivateReason deactivateReason) {
         super(id);
         this.accountId = accountId;
         this.activatedById = activatedById;
@@ -94,6 +105,7 @@ public class APIAccountService extends APIEntity {
         this.unitCount = unitCount;
         this.serviceCount = serviceCount;
         this.serviceName = serviceName;
+        this.deactivateReason = deactivateReason;
     }
 
     public Long getAccountId() {
@@ -284,6 +296,14 @@ public class APIAccountService extends APIEntity {
         this.deactivatedByName = deactivatedByName;
     }
 
+    public DeactivateReason getDeactivateReason() {
+        return deactivateReason;
+    }
+
+    public void setDeactivateReason(DeactivateReason deactivateReason) {
+        this.deactivateReason = deactivateReason;
+    }
+
     @JsonIgnore
     public Integer getPayUnitCount() {
         return autoRenew ? unitCount : unitCount * serviceCount;
@@ -333,6 +353,7 @@ public class APIAccountService extends APIEntity {
         this.serviceName = accountService.serviceName;
         this.userId = accountService.userId;
         this.braintreeId = accountService.braintreeId;
+        this.deactivateReason = accountService.deactivateReason;
     }
 
     public boolean isActiveAt(Date date) {

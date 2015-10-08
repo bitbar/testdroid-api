@@ -1,7 +1,7 @@
 package com.testdroid.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
-import org.codehaus.jackson.annotate.JsonIgnore;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
@@ -20,6 +20,10 @@ public class APIDeviceTimeEntry extends APIEntity {
 
     private Long userId;
 
+    private Long freeTime;
+
+    private Long billableTime;
+
     private Long deviceTime;
 
     private APIDeviceSession.Type type;
@@ -29,13 +33,15 @@ public class APIDeviceTimeEntry extends APIEntity {
     }
 
     public APIDeviceTimeEntry(
-            Date createTime, Date endTime, String userName, Long userId, Long deviceTime,
+            Date createTime, Date endTime, String userName, Long userId, Long freeTime, Long billableTime,
             APIDeviceSession.Type type) {
         this.createTime = createTime;
         this.endTime = endTime;
         this.userName = userName;
         this.userId = userId;
-        this.deviceTime = deviceTime;
+        this.freeTime = freeTime;
+        this.billableTime = billableTime;
+        this.deviceTime = freeTime + billableTime;
         this.type = type;
     }
 
@@ -50,6 +56,7 @@ public class APIDeviceTimeEntry extends APIEntity {
         this.userId = apiDeviceTimeEntry.userId;
         this.deviceTime = apiDeviceTimeEntry.deviceTime;
         this.type = apiDeviceTimeEntry.type;
+        this.freeTime = apiDeviceTimeEntry.freeTime;
     }
 
     public Date getCreateTime() {
@@ -98,5 +105,21 @@ public class APIDeviceTimeEntry extends APIEntity {
 
     public void setType(APIDeviceSession.Type type) {
         this.type = type;
+    }
+
+    public Long getFreeTime() {
+        return freeTime;
+    }
+
+    public void setFreeTime(Long freeTime) {
+        this.freeTime = freeTime;
+    }
+
+    public Long getBillableTime() {
+        return billableTime;
+    }
+
+    public void setBillableTime(Long billableTime) {
+        this.billableTime = billableTime;
     }
 }

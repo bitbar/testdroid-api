@@ -7,6 +7,5 @@ public enum APIPaymentMethod {
     PAYPAL,
     BRAINTREE,
     INVOICE,
-    PROMOTION,
-    ADMIN
+    PROMOTION
 }

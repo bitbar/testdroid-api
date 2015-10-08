@@ -1,7 +1,7 @@
 package com.testdroid.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.*;
-import org.codehaus.jackson.annotate.JsonIgnore;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Collections;

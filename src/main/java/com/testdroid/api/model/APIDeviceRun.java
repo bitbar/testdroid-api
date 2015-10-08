@@ -1,7 +1,7 @@
 package com.testdroid.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.*;
-import org.codehaus.jackson.annotate.JsonIgnore;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
@@ -238,9 +238,18 @@ public class APIDeviceRun extends APIEntity {
         return createUri(selfURI, "/states");
     }
 
+    private String getBuildLogsURI() {
+        return createUri(selfURI, "/cluster-logs");
+    }
+
     @JsonIgnore
     public InputStream getLogs() throws APIException {
         return client.get(getLogsURI());
+    }
+
+    @JsonIgnore
+    public InputStream getClusterLogs() throws APIException {
+        return client.get(getBuildLogsURI());
     }
 
     @JsonIgnore

@@ -1,6 +1,6 @@
 package com.testdroid.api.model.enums;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.xml.bind.annotation.XmlType;
 import java.util.HashSet;
