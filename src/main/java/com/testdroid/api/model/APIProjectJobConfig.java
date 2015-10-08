@@ -1,7 +1,7 @@
 package com.testdroid.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
-import org.codehaus.jackson.annotate.JsonIgnore;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
@@ -17,20 +17,19 @@ public class APIProjectJobConfig extends APIEntity {
     @XmlType(namespace = "APIProjectJobConfig")
     public static enum Type {
         DEFAULT,
-        RESIGNING,
         INSTATEST,
         INTERACTIVE,
         CTS,
         IOS,
         UIAUTOMATOR,
         REMOTECONTROL,
-        RECORDERONLINE,
         CALABASH,
         CALABASH_IOS,
         APPIUM_ANDROID,
         APPIUM_IOS,
         TELERIK_ANDROID,
-        TELERIK_IOS
+        TELERIK_IOS,
+        GENERIC
     }
 
     private String content;

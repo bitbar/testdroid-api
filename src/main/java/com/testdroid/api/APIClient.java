@@ -109,7 +109,7 @@ public interface APIClient {
     /**
      * return resource for accessing list of devices in Cloud using provided filters
      *
-     * @return list resource for accessing all devices matching selected filters, if no filter used returns all devcies
+     * @return list resource for accessing all devices matching selected filters, if no filter used returns all devices
      * @throws APIException on API error
      */
     public APIListResource<APIDevice> getDevices() throws APIException;
@@ -118,7 +118,7 @@ public interface APIClient {
      * return resource for accessing list of devices in Cloud using provided filters
      *
      * @param filters non-obligatory parameter for filtering devices returned
-     * @return list resource for accessing all devices matching selected filters, if no filter used returns all devcies
+     * @return list resource for accessing all devices matching selected filters, if no filter used returns all devices
      * @throws APIException on API error
      * @deprecated
      */
@@ -128,7 +128,7 @@ public interface APIClient {
      * Fetch and return list of devices in Cloud using provided filters.
      *
      * @param queryBuilder
-     * @return list of all devices matching selected filters, if no filter used returns all devcies
+     * @return list of all devices matching selected filters, if no filter used returns all devices
      * @throws APIException
      * @since 1.3.34
      */
@@ -138,7 +138,7 @@ public interface APIClient {
      * Fetch and return list of devices in Cloud using provided filters.
      *
      * @param filters non-obligatory parameter for filtering devices returned
-     * @return list of all devices matching selected filters, if no filter used returns all devcies
+     * @return list of all devices matching selected filters, if no filter used returns all devices
      * @throws APIException on API error
      * @deprecated
      */

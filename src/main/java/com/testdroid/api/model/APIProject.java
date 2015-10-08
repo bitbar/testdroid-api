@@ -1,10 +1,10 @@
 package com.testdroid.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.*;
 import com.testdroid.api.model.APIFiles.APIFile;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
-import org.codehaus.jackson.annotate.JsonIgnore;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
@@ -38,7 +38,8 @@ public class APIProject extends APIEntity {
         APPIUM_ANDROID(APIDevice.OsType.ANDROID),
         APPIUM_IOS(APIDevice.OsType.IOS),
         TELERIK_ANDROID(APIDevice.OsType.ANDROID),
-        TELERIK_IOS(APIDevice.OsType.IOS);
+        TELERIK_IOS(APIDevice.OsType.IOS),
+        GENERIC(null);
 
         private APIDevice.OsType osType;
 
@@ -106,14 +107,18 @@ public class APIProject extends APIEntity {
 
     private Date createTime;
 
+    private Date archiveTime;
+
     public APIProject() {
     }
 
     public APIProject(
-            Long id, Date createTime, String name, String description, Type type, Long sharedById, String sharedByEmail,
+            Long id, Date createTime, Date archiveTime, String name, String description, Type type, Long sharedById,
+            String sharedByEmail,
             boolean common, APIArchivingStrategy archivingStrategy, Integer archivingItemCount) {
         super(id);
         this.createTime = createTime;
+        this.archiveTime = archiveTime;
         this.name = name;
         this.description = description;
         this.type = type;
@@ -163,6 +168,14 @@ public class APIProject extends APIEntity {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public Date getArchiveTime() {
+        return archiveTime;
+    }
+
+    public void setArchiveTime(Date archiveTime) {
+        this.archiveTime = archiveTime;
     }
 
     /**
@@ -275,6 +288,10 @@ public class APIProject extends APIEntity {
         return Collections.singletonMap("name", (Object) testRunName);
     }
 
+    private Map<String, Object> getCreateRunParameters(Long testRunId) {
+        return Collections.singletonMap("testRunId", (Object) testRunId);
+    }
+
     private Map<String, Object> getCreateRunParameters(List<Long> usedDeviceIds) {
         return Collections.singletonMap("usedDeviceIds[]", (Object) StringUtils.join(usedDeviceIds, ","));
     }
@@ -283,6 +300,14 @@ public class APIProject extends APIEntity {
         Map<String, Object> result = new HashMap<String, Object>();
         result.putAll(getCreateRunParameters(testRunName));
         result.putAll(getCreateRunParameters(usedDeviceIds));
+        return result;
+    }
+
+    private Map<String, Object> getCreateRunParameters(String testRunName, List<Long> usedDeviceIds, Long testRunId) {
+        Map<String, Object> result = new HashMap<String, Object>();
+        result.putAll(getCreateRunParameters(testRunName));
+        result.putAll(getCreateRunParameters(usedDeviceIds));
+        result.putAll(getCreateRunParameters(testRunId));
         return result;
     }
 
@@ -368,6 +393,43 @@ public class APIProject extends APIEntity {
     @JsonIgnore
     public APITestRun run(String testRunName, List<Long> usedDevicesId) throws APIException {
         return postResource(getRunsURI(), getCreateRunParameters(testRunName, usedDevicesId), APITestRun.class);
+    }
+
+    @JsonIgnore
+    public APITestRun run(String testRunName, List<Long> usedDevicesId, Long testRunId) throws APIException {
+        return postResource(getRunsURI(), getCreateRunParameters(testRunName, usedDevicesId, testRunId), APITestRun.class);
+    }
+
+    @JsonIgnore
+    public APITestRun runWithConfig(
+            String testRunName, List<Long> deviceIds, APITestRunConfig config, Long appFileId, Long testFileId,
+            Long dataFileId) throws APIException {
+        Map<String, Object> body = new HashMap<String, Object>();
+        body.put("scheduler", config.getScheduler() != null ? config.getScheduler().name() : null);
+        body.put("mode", config.getMode() != null ? config.getMode().name() : null);
+        body.put("autoScreenshots", config.isAutoScreenshots());
+        body.put("screenshotDir", config.getScreenshotDir());
+        body.put("limitationType", config.getLimitationType() != null ? config.getLimitationType().name() : null);
+        body.put("limitationValue", config.getLimitationValue());
+        body.put("withAnnotation", config.getWithAnnotation());
+        body.put("withoutAnnotation", config.getWithoutAnnotation());
+        body.put("applicationUsername", config.getApplicationUsername());
+        body.put("applicationPassword", config.getApplicationPassword());
+        body.put("usedDeviceGroupId", config.getUsedDeviceGroupId());
+        body.put("deviceLanguageCode", config.getDeviceLanguageCode());
+        body.put("hookURL", config.getHookURL());
+        body.put("uiAutomatorTestClasses", config.getUiAutomatorTestClasses());
+        body.put("launchApp", config.isLaunchApp());
+        body.put("instrumentationRunner", config.getInstrumentationRunner());
+        body.put("appRequired", config.isAppRequired());
+        body.put("gamebenchEnabled", config.isGamebenchEnabled());
+        body.put("timeout", config.getTimeout());
+        body.put("name", testRunName);
+        body.put("usedDeviceIds[]", StringUtils.join(deviceIds, ","));
+        body.put("appFileId", appFileId);
+        body.put("testFileId", testFileId);
+        body.put("dataFileId", dataFileId);
+        return postResource(getRunsURI(), body, APITestRun.class);
     }
 
     public void delete() throws APIException {
@@ -535,6 +597,7 @@ public class APIProject extends APIEntity {
         cloneBase(from);
         this.common = apiProject.common;
         this.createTime = apiProject.createTime;
+        this.archiveTime = apiProject.archiveTime;
         this.description = apiProject.description;
         this.files = apiProject.files;
         this.icon = apiProject.icon;

@@ -1,10 +1,10 @@
 package com.testdroid.api;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.testdroid.api.model.*;
 import com.testdroid.api.model.jrjc.*;
 import com.testdroid.api.um.model.APIService;
-import org.codehaus.jackson.annotate.JsonIgnore;
-import org.codehaus.jackson.map.annotate.JsonView;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -92,7 +92,8 @@ import java.util.logging.Logger;
         APIDeviceRunDataAvailability.class,
         APITestRunDataAvailability.class,
         APIUserDeviceTime.class,
-        APIDeviceTimeEntry.class
+        APIDeviceTimeEntry.class,
+        APIEmailNotification.class
 })
 public abstract class APIEntity {
 

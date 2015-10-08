@@ -68,11 +68,16 @@ public class APIDeviceSession extends APIEntity {
 
     private Integer testCaseSkippedCount;
 
+    private Boolean billable;
+
+    private String excludeReason;
+
     public APIDeviceSession() {
     }
 
     public APIDeviceSession(Long id, Type type, Date createTime, Date startTime, Date installTime, Date endTime,
-            APIDevice device, Long timeLimit, Long launchAppDuration, State state, Long deviceRunId) {
+            APIDevice device, Long timeLimit, Long launchAppDuration, State state, Long deviceRunId,
+            Boolean billable) {
         super(id);
         this.type = type;
         this.createTime = createTime;
@@ -84,14 +89,23 @@ public class APIDeviceSession extends APIEntity {
         this.launchAppDuration = launchAppDuration;
         this.state = state;
         this.deviceRunId = deviceRunId;
+        this.billable = billable;
+    }
+
+    public APIDeviceSession(Long id, Type type, Date createTime, Date startTime, Date installTime, Date endTime,
+            APIDevice device, Long timeLimit, Long launchAppDuration, State state, Long deviceRunId,
+            Boolean billable, String excludeReason) {
+        this(id, type, createTime, startTime, installTime, endTime, device, timeLimit, launchAppDuration, state,
+                deviceRunId, billable);
+        this.excludeReason = excludeReason;
     }
 
     public APIDeviceSession(Long id, Type type, Date createTime, Date startTime, Date installTime, Date endTime,
             APIDevice device, Long timeLimit, Long launchAppDuration, State state, Long deviceRunId,
             Integer testCaseAllCount, Integer testCaseSuccessCount, Integer testCasePassedCount,
-            Integer testCaseFailedCount, Integer testCaseSkippedCount) {
+            Integer testCaseFailedCount, Integer testCaseSkippedCount, Boolean billable, String excludeReason) {
         this(id, type, createTime, startTime, installTime, endTime, device, timeLimit, launchAppDuration, state,
-                deviceRunId);
+                deviceRunId, billable, excludeReason);
         this.testCaseAllCount = testCaseAllCount;
         this.testCaseSuccessCount = testCaseSuccessCount;
         this.testCasePassedCount = testCasePassedCount;
@@ -219,6 +233,22 @@ public class APIDeviceSession extends APIEntity {
         this.testCaseSkippedCount = testCaseSkippedCount;
     }
 
+    public Boolean getBillable() {
+        return billable;
+    }
+
+    public void setBillable(Boolean billable) {
+        this.billable = billable;
+    }
+
+    public String getExcludeReason() {
+        return excludeReason;
+    }
+
+    public void setExcludeReason(String excludeReason) {
+        this.excludeReason = excludeReason;
+    }
+
     @Override
     protected <T extends APIEntity> void clone(T from) {
         APIDeviceSession apiDeviceSession = (APIDeviceSession) from;
@@ -238,5 +268,7 @@ public class APIDeviceSession extends APIEntity {
         this.testCasePassedCount = apiDeviceSession.testCasePassedCount;
         this.testCaseFailedCount = apiDeviceSession.testCaseFailedCount;
         this.testCaseSkippedCount = apiDeviceSession.testCaseSkippedCount;
+        this.billable = apiDeviceSession.billable;
+        this.excludeReason = apiDeviceSession.excludeReason;
     }
 }

@@ -1,7 +1,7 @@
 package com.testdroid.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.*;
-import org.codehaus.jackson.annotate.JsonIgnore;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
@@ -33,6 +33,8 @@ public class APIUser extends APIEntity {
     }
 
     private Long activeServiceId;
+
+    private Long accountId;
 
     private String address;
 
@@ -73,6 +75,8 @@ public class APIUser extends APIEntity {
     private String timeZone;
 
     private String vatID;
+
+    private String apiKey;
 
     @XmlType(namespace = "APIUser", name = "APIUserEmailNotification")
     public static enum EmailNotification {
@@ -129,12 +133,14 @@ public class APIUser extends APIEntity {
     }
 
     public APIUser(
-            Long id, String email, String name, String state, String country, String city, String code,
+            Long id, Long accountId, String email, String name, String state, String country, String city, String code,
             String address, String phone, String organization, String vatID, String timeZone,
-            EmailNotification emailNotification, Date createTime, APIRole... roles) {
+            EmailNotification emailNotification, Date createTime, String apiKey, APIRole... roles) {
         this(id, email, name, state, country, city, code, address, phone, organization, vatID, timeZone,
                 emailNotification, createTime);
         this.roles = roles;
+        this.accountId = accountId;
+        this.apiKey = apiKey;
     }
 
     public String getEmail() {
@@ -328,6 +334,22 @@ public class APIUser extends APIEntity {
 
     private String getAvailbleProjectTypesURI() {
         return createUri(selfURI, "/available-project-types");
+    }
+
+    public Long getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(Long accountId) {
+        this.accountId = accountId;
+    }
+
+    public String getApiKey() {
+        return apiKey;
+    }
+
+    public void setApiKey(String apiKey) {
+        this.apiKey = apiKey;
     }
 
     private Map<String, Object> getNotificationEmailParams(final APINotificationEmail.Type type) {
@@ -545,5 +567,7 @@ public class APIUser extends APIEntity {
         this.activeServiceId = apiUser.activeServiceId;
         this.mainUserEmail = apiUser.mainUserEmail;
         this.enabled = apiUser.enabled;
+        this.accountId = apiUser.accountId;
+        this.apiKey = apiUser.apiKey;
     }
 }

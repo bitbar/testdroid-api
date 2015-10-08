@@ -3,7 +3,6 @@ package com.testdroid.api.model;
 import com.testdroid.api.APIEntity;
 
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
 import java.util.Date;
 
 /**
@@ -11,12 +10,6 @@ import java.util.Date;
  */
 @XmlRootElement
 public class APIConnection extends APIEntity {
-
-    @XmlType
-    public static enum Type {
-        VNC,
-        LOGS
-    }
 
     private Date createTime;
 
@@ -26,23 +19,36 @@ public class APIConnection extends APIEntity {
 
     private String password;
 
-    private APIConnection.Type type;
+    private String type;
 
+    @Deprecated
     private String url;
+
+    private Integer port;
+
+    private String path;
+
+    private String urlSchema;
+
+    private String host;
 
     public APIConnection() {
     }
 
     public APIConnection(
-            Long id, Date createTime, Date endTime, Long deviceSessionId, String password, Type type,
-            String url) {
+            Long id, Date createTime, Date endTime, Long deviceSessionId, String password, String type,
+            String urlSchema, String host, Integer port, String path) {
         super(id);
         this.createTime = createTime;
         this.endTime = endTime;
         this.deviceSessionId = deviceSessionId;
         this.password = password;
         this.type = type;
-        this.url = url;
+        this.port = port;
+        this.path = path;
+        this.urlSchema = urlSchema;
+        this.host = host;
+        this.url = String.format("%s:%d", host, port);
     }
 
     public Date getCreateTime() {
@@ -77,11 +83,11 @@ public class APIConnection extends APIEntity {
         this.password = password;
     }
 
-    public Type getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(Type type) {
+    public void setType(String type) {
         this.type = type;
     }
 
@@ -93,6 +99,30 @@ public class APIConnection extends APIEntity {
         this.url = url;
     }
 
+    public String getUrlSchema() {
+        return urlSchema;
+    }
+
+    public void setUrlSchema(String urlSchema) {
+        this.urlSchema = urlSchema;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public Integer getPort() {
+        return port;
+    }
+
+    public String getHost() {
+        return host;
+    }
+
+    public void setHost(String host) {
+        this.host = host;
+    }
+
     @Override
     protected <T extends APIEntity> void clone(T from) {
         APIConnection apiConnection = (APIConnection) from;
@@ -102,6 +132,10 @@ public class APIConnection extends APIEntity {
         this.password = apiConnection.password;
         this.type = apiConnection.type;
         this.url = apiConnection.url;
+        this.port = apiConnection.port;
+        this.path = apiConnection.path;
+        this.urlSchema = apiConnection.urlSchema;
+        this.host = apiConnection.host;
     }
 
 }

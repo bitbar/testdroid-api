@@ -1,10 +1,10 @@
 package com.testdroid.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIException;
 import com.testdroid.api.APIListResource;
 import com.testdroid.api.APIQueryBuilder;
-import org.codehaus.jackson.annotate.JsonIgnore;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
@@ -38,7 +38,8 @@ public class APITestRunConfig extends APIEntity {
         APPIUM_IOS("Appium iOS"),
         IOS_CRAWLER("iOS App crawler"),
         TELERIK_ANDROID("Telerik Android"),
-        TELERIK_IOS("Telerik iOS");
+        TELERIK_IOS("Telerik iOS"),
+        GENERIC("Generic");
 
         private String friendlyName;
 

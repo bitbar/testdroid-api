@@ -1,10 +1,10 @@
 package com.testdroid.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIException;
-import org.codehaus.jackson.annotate.JsonIgnore;
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
-import org.codehaus.jackson.annotate.JsonTypeInfo;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
@@ -153,6 +153,8 @@ public abstract class APIFiles extends APIEntity {
     @XmlRootElement
     public static class AndroidAppFile extends APIFile {
 
+        private String packageName;
+
         public AndroidAppFile() {
         }
 
@@ -160,8 +162,25 @@ public abstract class APIFiles extends APIEntity {
             super(originalName);
         }
 
-        public AndroidAppFile(Long id, String originalName, Date uploadTime, String readableSize) {
+        public AndroidAppFile(Long id, String originalName, Date uploadTime, String readableSize, String packageName) {
             super(id, originalName, uploadTime, readableSize);
+            this.packageName = packageName;
+        }
+
+        public String getPackageName() {
+            return packageName;
+        }
+
+        public void setPackageName(String packageName) {
+            this.packageName = packageName;
+        }
+
+        @Override
+        @JsonIgnore
+        protected <T extends APIEntity> void cloneBase(T from) {
+            super.clone(from);
+            AndroidAppFile androidAppFile = (AndroidAppFile) from;
+            this.packageName = androidAppFile.packageName;
         }
     }
 

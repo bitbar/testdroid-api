@@ -1,9 +1,9 @@
 package com.testdroid.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIView;
-import org.codehaus.jackson.annotate.JsonIgnore;
-import org.codehaus.jackson.map.annotate.JsonView;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
@@ -26,7 +26,8 @@ public class APIDevice extends APIEntity {
     @XmlType(namespace = "APIDevice")
     public static enum OsType {
         IOS("iOS"),
-        ANDROID("Android");
+        ANDROID("Android"),
+        UNDEFINED("Undefined");
 
         private String displayName;
 
@@ -83,6 +84,8 @@ public class APIDevice extends APIEntity {
 
     private Boolean aroSupported;
 
+    private Boolean enabled;
+
     public APIDevice() {
     }
 
@@ -90,7 +93,8 @@ public class APIDevice extends APIEntity {
             Long id, String displayName, APISoftwareVersion softwareVersion, Integer creditsPrice,
             String imagePrefix, Integer imageTop, Integer imageLeft, Integer imageWidth, Integer imageHeight,
             Integer frameExtraWidth, OsType osType, String frame80Url, String frame100Url, String frame160Url,
-            String frame400Url, Boolean online, Boolean locked, Boolean vncSupported, Boolean aroSupported) {
+            String frame400Url, Boolean online, Boolean locked, Boolean vncSupported, Boolean aroSupported,
+            Boolean enabled) {
         super(id);
         this.displayName = displayName;
         this.softwareVersion = softwareVersion;
@@ -110,7 +114,7 @@ public class APIDevice extends APIEntity {
         this.online = online;
         this.vncSupported = vncSupported;
         this.aroSupported = aroSupported;
-
+        this.enabled = enabled;
     }
 
     @JsonView(value = {APIView.AdminView.class, APIView.MonitorView.class})
@@ -267,6 +271,14 @@ public class APIDevice extends APIEntity {
         this.vncSupported = vncSupported;
     }
 
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
@@ -290,6 +302,7 @@ public class APIDevice extends APIEntity {
         this.locked = apiDevice.locked;
         this.vncSupported = apiDevice.vncSupported;
         this.aroSupported = apiDevice.aroSupported;
+        this.enabled = apiDevice.enabled;
     }
 
 }

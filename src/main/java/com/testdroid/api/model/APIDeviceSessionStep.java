@@ -53,6 +53,8 @@ public class APIDeviceSessionStep extends APIEntity {
 
     private Long startTimeMS;
 
+    private String excludeReason;
+
     public APIDeviceSessionStep() {
     }
 
@@ -65,6 +67,13 @@ public class APIDeviceSessionStep extends APIEntity {
         this.finishTimeMS = finishTimeMS;
         this.startTimeMS = startTimeMS;
         this.type = type;
+    }
+
+    public APIDeviceSessionStep(
+            Long id, Long deviceSessionId, String failReason, Long finishTimeMS, Long startTimeMS,
+            Type type, String excludeReason) {
+        this(id, deviceSessionId, failReason, finishTimeMS, startTimeMS, type);
+        this.excludeReason = excludeReason;
     }
 
     public Long getDeviceSessionId() {
@@ -107,6 +116,14 @@ public class APIDeviceSessionStep extends APIEntity {
         this.startTimeMS = startTimeMS;
     }
 
+    public String getExcludeReason() {
+        return excludeReason;
+    }
+
+    public void setExcludeReason(String excludeReason) {
+        this.excludeReason = excludeReason;
+    }
+
     @Override
     protected <T extends APIEntity> void clone(T from) {
         APIDeviceSessionStep apiDeviceSessionStep = (APIDeviceSessionStep) from;
@@ -116,5 +133,6 @@ public class APIDeviceSessionStep extends APIEntity {
         this.startTimeMS = apiDeviceSessionStep.startTimeMS;
         this.finishTimeMS = apiDeviceSessionStep.finishTimeMS;
         this.type = apiDeviceSessionStep.type;
+        this.excludeReason = apiDeviceSessionStep.excludeReason;
     }
 }

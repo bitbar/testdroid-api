@@ -2,6 +2,7 @@ package com.testdroid.api.sample.util;
 
 import com.testdroid.api.APIClient;
 import com.testdroid.api.APIException;
+import com.testdroid.api.APIKeyClient;
 import com.testdroid.api.DefaultAPIClient;
 import com.testdroid.api.model.APIProject;
 
@@ -28,6 +29,8 @@ public class Common {
 
     public static final String USERNAME = "Fill with username";
 
+    public static final String API_KEY = "Fill with apiKey";
+
     public static final String ZIP_FILE_MIME_TYPE = "application/zip";
 
     public static APIClient createApiClient() {
@@ -36,6 +39,10 @@ public class Common {
 
     public static APIClient createApiClient(String url, String username, String password) {
         return new DefaultAPIClient(url, username, password);
+    }
+
+    public static APIClient createApiClientWithApiKey() {
+        return new APIKeyClient(SERVER_URL, API_KEY);
     }
 
     public static void uploadApk(APIProject project) throws APIException {
