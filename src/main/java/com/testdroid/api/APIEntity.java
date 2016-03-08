@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.testdroid.api.model.*;
 import com.testdroid.api.model.jrjc.*;
-import com.testdroid.api.um.model.APIService;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -57,9 +56,11 @@ import java.util.logging.Logger;
         APIProject.class,
         APIProjectJobConfig.class,
         APIProjectSharing.class,
+        APIProjectTypeExtended.class,
         APIRole.class,
         APIService.class,
         APIScreenshot.class,
+        APIScreenshotExtended.class,
         APISoftwareVersion.class,
         APITag.class,
         APITestCaseRun.class,
@@ -89,7 +90,7 @@ import java.util.logging.Logger;
         APIJiraPriority.class,
         APIJiraProject.class,
         APIJiraServerInfo.class,
-        APIDeviceRunDataAvailability.class,
+        APIDeviceSessionDataAvailability.class,
         APITestRunDataAvailability.class,
         APIUserDeviceTime.class,
         APIDeviceTimeEntry.class,
@@ -197,7 +198,7 @@ public abstract class APIEntity {
             limit = 10;
         }
         return new APIListResource<T>(client, uri, new APIQueryBuilder().offset(offset).limit(limit).search
-                (search).sort(type, sort.getItems()));
+                (search).sort(type, sort.getSorts()));
     }
 
     @JsonIgnore

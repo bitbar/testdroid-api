@@ -4,6 +4,8 @@ import com.testdroid.api.*;
 import com.testdroid.api.model.APIDevice;
 import com.testdroid.api.sample.util.Common;
 
+import java.util.Arrays;
+
 /**
  * @author Sławomir Pawluk <slawomir.pawluk@bitbar.com>
  */
@@ -57,16 +59,28 @@ public class GetDevicesSample {
             // Get devices using sorting
             deviceName = "Samsung Galaxy";
             devicesResource = CLIENT.getDevices(new APIDeviceQueryBuilder().offset(0).limit(10).search(deviceName)
-                    .sort(APIDevice.class,
-                            new APISort.SortItem(APISort
-                                    .Column.DEVICE_NAME,
-                                    APISort.Type.ASC
-                            )
+                    .sort(APIDevice.class, Arrays.asList(new APISort.SortItem("displayName", APISort.Type.ASC))
                     ));
             System.out.println(String.format("\nFound %s devices with name %s", devicesResource.getTotal(),
                     deviceName));
             printDeviceNames(devicesResource);
 
+            devicesResource = CLIENT.getDevices(
+                    new APIDeviceQueryBuilder()
+                            .offset(0)
+                            .limit(10)
+                            .sort(APIDevice.class,
+                                    Arrays.asList(
+                                            new APISort.SortItem("displayName", APISort.Type.ASC)))
+                            .filter(Arrays.asList(
+                                            new APIFilter.APIFilterItem(APIFilter.APIFilterItem.Type.B,
+                                                    "vncSupported", APIFilter.APIFilterItem.Operand.EQ, Boolean.TRUE),
+                                            new APIFilter.APIFilterItem(APIFilter.APIFilterItem.Type.B,
+                                                    "online", APIFilter.APIFilterItem.Operand.EQ, Boolean.FALSE)
+                                    )
+                            )
+            );
+            printDeviceNames(devicesResource);
         } catch (APIException apie) {
             System.err.println(apie.getMessage());
         }

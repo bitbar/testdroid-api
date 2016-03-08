@@ -1,6 +1,7 @@
 package com.testdroid.api;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,11 +29,14 @@ public class APIQueryBuilder {
      */
     private APISort sort;
 
+    private APIFilter filter;
+
     public APIQueryBuilder() {
         this.offset = 0;
         this.limit = 10;
         this.search = null;
         this.sort = null;
+        this.filter = null;
     }
 
     public APIQueryBuilder offset(long offset) {
@@ -56,8 +60,13 @@ public class APIQueryBuilder {
         return this;
     }
 
-    public APIQueryBuilder sort(Class<? extends APIEntity> type, APISort.SortItem... sortItems) {
-        this.sort = APISort.create(type, sortItems);
+    public APIQueryBuilder sort(Class<? extends APIEntity> type, List<APISort.SortItem> sortItems) {
+        this.sort = APISort.create(sortItems);
+        return this;
+    }
+
+    public APIQueryBuilder filter(List<APIFilter.APIFilterItem> filterItems) {
+        this.filter = APIFilter.create(filterItems);
         return this;
     }
 
@@ -67,6 +76,7 @@ public class APIQueryBuilder {
             put("offset", offset);
             put("search", search);
             put("sort", sort != null ? sort.serialize() : null);
+            put("filter", filter != null ? filter.serialize() : null);
         }};
     }
 }

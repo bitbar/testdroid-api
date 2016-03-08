@@ -99,10 +99,12 @@ public class APIUser extends APIEntity {
     }
 
     public APIUser(
-            Long id, String email, String name, String state, String country, String city, String code,
+            Long id, Long accountId, String email, String name, String state, String country, String city, String code,
             String address, String phone, String organization, String vatID, String timeZone,
-            EmailNotification emailNotification, Date createTime) {
+            EmailNotification emailNotification, Date createTime, Date lastLoginTime, Boolean isMainUser,
+            Long mainUserId, String mainUserEmail, Long activeServiceId, String apiKey) {
         super(id);
+        this.accountId = accountId;
         this.email = email;
         this.name = name;
         this.state = state;
@@ -116,31 +118,13 @@ public class APIUser extends APIEntity {
         this.timeZone = timeZone;
         this.emailNotification = emailNotification;
         this.createTime = createTime;
-    }
-
-    public APIUser(
-            Long id, String email, String name, String state, String country, String city, String code,
-            String address, String phone, String organization, String vatID, String timeZone,
-            EmailNotification emailNotification, Date createTime, Date lastLoginTime, Boolean isMainUser,
-            Long mainUserId, String mainUserEmail, Long activeServiceId) {
-        this(id, email, name, state, country, city, code, address, phone, organization, vatID, timeZone,
-                emailNotification, createTime);
         this.lastLoginTime = lastLoginTime;
         this.isMainUser = isMainUser;
         this.mainUserId = mainUserId;
         this.mainUserEmail = mainUserEmail;
-        this.activeServiceId = activeServiceId;
-    }
-
-    public APIUser(
-            Long id, Long accountId, String email, String name, String state, String country, String city, String code,
-            String address, String phone, String organization, String vatID, String timeZone,
-            EmailNotification emailNotification, Date createTime, String apiKey, APIRole... roles) {
-        this(id, email, name, state, country, city, code, address, phone, organization, vatID, timeZone,
-                emailNotification, createTime);
-        this.roles = roles;
         this.accountId = accountId;
         this.apiKey = apiKey;
+        this.activeServiceId = activeServiceId;
     }
 
     public String getEmail() {
@@ -328,6 +312,10 @@ public class APIUser extends APIEntity {
         return createUri(selfURI, "/notifications");
     }
 
+    private String getDeviceSessionVNCConnectionsURI(long id) {
+        return createUri(selfURI, String.format("/device-sessions/%s/connections?filter=s_type_eq_VNC", id));
+    }
+
     private String getNotificationURI(long id) {
         return createUri(selfURI, "/notifications/" + id);
     }
@@ -480,7 +468,8 @@ public class APIUser extends APIEntity {
      * @deprecated
      */
     @JsonIgnore
-    public APIListResource<APIDeviceGroup> getDeviceGroupsResource(long offset, long limit, String search, APISort sort)
+    public APIListResource<APIDeviceGroup> getDeviceGroupsResource(long offset, long limit, String search,
+            APISort sort)
             throws APIException {
         return getListResource(getDeviceGroupsURI(), offset, limit, search, sort, APIDeviceGroup.class);
     }
@@ -527,6 +516,11 @@ public class APIUser extends APIEntity {
             long offset, long limit, String search,
             APISort sort) throws APIException {
         return getListResource(getNotificationsURI(), offset, limit, search, sort, APINotificationEmail.class);
+    }
+
+    @JsonIgnore
+    public APIListResource<APIConnection> getDeviceSessionConnections(Long deviceSessionId) throws APIException {
+        return getListResource(getDeviceSessionVNCConnectionsURI(deviceSessionId));
     }
 
     @JsonIgnore

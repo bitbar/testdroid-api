@@ -28,42 +28,78 @@ public class APITestRun extends APIEntity {
 
     protected String displayName;
 
+    protected Integer errorsDeviceCount;
+
+    protected Integer excludedDeviceCount;
+
     protected Float executionRatio;
 
     protected APIFiles files;
+
+    protected Integer finishedDeviceCount;
+
+    protected Long logsFileId;
 
     protected Integer number;
 
     protected Long projectId;
 
+    protected Long screenshotsFileId;
+
     protected String startedByDisplayName;
+
+    protected Long startedById;
 
     protected State state;
 
     protected Float successRatio;
 
-    protected Long screenshotsFileId;
+    protected Integer successfulTestCaseCount;
 
-    protected Long logsFileId;
+    protected Integer testCaseCount;
+
+    protected Integer totalDeviceCount;
+
+    protected Integer warningDeviceCount;
+
+    protected Integer runningDeviceCount;
+
+    protected Integer succeededDeviceCount;
+
+    protected Integer waitingDeviceCount;
 
     public APITestRun() {
     }
 
     public APITestRun(
             Long id, Integer number, Date createTime, String displayName, Float executionRatio,
-            Float successRatio, String startedByDisplayName, State state, Long projectId, Long screenshotsFileId,
-            Long logsFileId) {
+            Float successRatio, Long startedById, String startedByDisplayName, State state, Long projectId,
+            Long screenshotsFileId, Long logsFileId, Integer testCaseCount, Integer successfulTestCaseCount,
+            Integer totalDeviceCount, Integer finishedDeviceCount, Integer excludedDeviceCount,
+            Integer errorsDeviceCount, Integer succeededDeviceCount, Integer runningDeviceCount,
+            Integer warningDeviceCount, Integer waitingDeviceCount) {
         super(id);
         this.number = number;
         this.createTime = createTime;
         this.displayName = displayName;
         this.executionRatio = executionRatio;
         this.successRatio = successRatio;
+        this.startedById = startedById;
         this.startedByDisplayName = startedByDisplayName;
         this.state = state;
         this.projectId = projectId;
         this.screenshotsFileId = screenshotsFileId;
         this.logsFileId = logsFileId;
+        this.testCaseCount = testCaseCount;
+        this.successfulTestCaseCount = successfulTestCaseCount;
+        this.totalDeviceCount = totalDeviceCount;
+        this.finishedDeviceCount = finishedDeviceCount;
+        this.excludedDeviceCount = excludedDeviceCount;
+        this.errorsDeviceCount = errorsDeviceCount;
+        this.succeededDeviceCount = succeededDeviceCount;
+        this.runningDeviceCount = runningDeviceCount;
+        this.warningDeviceCount = warningDeviceCount;
+        this.waitingDeviceCount = waitingDeviceCount;
     }
 
     public Integer getNumber() {
@@ -104,6 +140,14 @@ public class APITestRun extends APIEntity {
 
     public void setSuccessRatio(Float successRatio) {
         this.successRatio = successRatio;
+    }
+
+    public Long getStartedById() {
+        return startedById;
+    }
+
+    public void setStartedById(Long startedById) {
+        this.startedById = startedById;
     }
 
     public String getStartedByDisplayName() {
@@ -162,6 +206,10 @@ public class APITestRun extends APIEntity {
         return createUri(selfURI, "/device-runs");
     }
 
+    private String getDeviceSessionsURI() {
+        return createUri(selfURI, "/device-sessions");
+    }
+
     private String getRequestScreenshotsZipURI() {
         return createUri(selfURI, "/screenshots.zip");
     }
@@ -174,9 +222,21 @@ public class APITestRun extends APIEntity {
         return createUri(selfURI, "/abort");
     }
 
-    private String getLogsZipURI() { return String.format("/files/%s", logsFileId); }
+    private String getLogsZipURI() {
+        return String.format("/files/%s", logsFileId);
+    }
 
-    private String getScreenshotsZipURI() { return String.format("/files/%s", screenshotsFileId); }
+    private String getScreenshotsZipURI() {
+        return String.format("/files/%s", screenshotsFileId);
+    }
+
+    public Integer getWaitingDeviceCount() {
+        return waitingDeviceCount;
+    }
+
+    public void setWaitingDeviceCount(Integer waitingDeviceCount) {
+        this.waitingDeviceCount = waitingDeviceCount;
+    }
 
     /**
      * Returns APIFiles entity about files uploaded to this project.
@@ -188,6 +248,78 @@ public class APITestRun extends APIEntity {
             files = getResource(getFilesURI(), clazz).getEntity();
         }
         return (T) files;
+    }
+
+    public Integer getWarningDeviceCount() {
+        return warningDeviceCount;
+    }
+
+    public void setWarningDeviceCount(Integer warningDeviceCount) {
+        this.warningDeviceCount = warningDeviceCount;
+    }
+
+    public Integer getRunningDeviceCount() {
+        return runningDeviceCount;
+    }
+
+    public void setRunningDeviceCount(Integer runningDeviceCount) {
+        this.runningDeviceCount = runningDeviceCount;
+    }
+
+    public Integer getSucceededDeviceCount() {
+        return succeededDeviceCount;
+    }
+
+    public void setSucceededDeviceCount(Integer succeededDeviceCount) {
+        this.succeededDeviceCount = succeededDeviceCount;
+    }
+
+    public Integer getTestCaseCount() {
+        return testCaseCount;
+    }
+
+    public void setTestCaseCount(Integer testCaseCount) {
+        this.testCaseCount = testCaseCount;
+    }
+
+    public Integer getSuccessfulTestCaseCount() {
+        return successfulTestCaseCount;
+    }
+
+    public void setSuccessfulTestCaseCount(Integer successfulTestCaseCount) {
+        this.successfulTestCaseCount = successfulTestCaseCount;
+    }
+
+    public Integer getTotalDeviceCount() {
+        return totalDeviceCount;
+    }
+
+    public void setTotalDeviceCount(Integer totalDeviceCount) {
+        this.totalDeviceCount = totalDeviceCount;
+    }
+
+    public Integer getFinishedDeviceCount() {
+        return finishedDeviceCount;
+    }
+
+    public void setFinishedDeviceCount(Integer finishedDeviceCount) {
+        this.finishedDeviceCount = finishedDeviceCount;
+    }
+
+    public Integer getExcludedDeviceCount() {
+        return excludedDeviceCount;
+    }
+
+    public void setExcludedDeviceCount(Integer excludedDeviceCount) {
+        this.excludedDeviceCount = excludedDeviceCount;
+    }
+
+    public Integer getErrorsDeviceCount() {
+        return errorsDeviceCount;
+    }
+
+    public void setErrorsDeviceCount(Integer errorsDeviceCount) {
+        this.errorsDeviceCount = errorsDeviceCount;
     }
 
     public void delete() throws APIException {
@@ -240,6 +372,11 @@ public class APITestRun extends APIEntity {
     @JsonIgnore
     public APIListResource<APIDeviceRun> getDeviceRunsResource() throws APIException {
         return getListResource(getDeviceRunsURI());
+    }
+
+    @JsonIgnore
+    public APIListResource<APIDeviceSession> getDeviceSessionsResource() throws APIException {
+        return getListResource(getDeviceSessionsURI());
     }
 
     /**
@@ -311,11 +448,22 @@ public class APITestRun extends APIEntity {
         this.executionRatio = apiTestRun.executionRatio;
         this.files = apiTestRun.files;
         this.number = apiTestRun.number;
+        this.startedById = apiTestRun.startedById;
         this.startedByDisplayName = apiTestRun.startedByDisplayName;
         this.state = apiTestRun.state;
         this.successRatio = apiTestRun.successRatio;
         this.projectId = apiTestRun.projectId;
         this.screenshotsFileId = apiTestRun.screenshotsFileId;
         this.logsFileId = apiTestRun.logsFileId;
+        this.testCaseCount = apiTestRun.testCaseCount;
+        this.successfulTestCaseCount = apiTestRun.successfulTestCaseCount;
+        this.totalDeviceCount = apiTestRun.totalDeviceCount;
+        this.finishedDeviceCount = apiTestRun.finishedDeviceCount;
+        this.excludedDeviceCount = apiTestRun.excludedDeviceCount;
+        this.errorsDeviceCount = apiTestRun.errorsDeviceCount;
+        this.warningDeviceCount = apiTestRun.warningDeviceCount;
+        this.runningDeviceCount = apiTestRun.runningDeviceCount;
+        this.succeededDeviceCount = apiTestRun.succeededDeviceCount;
+        this.waitingDeviceCount = apiTestRun.waitingDeviceCount;
     }
 }

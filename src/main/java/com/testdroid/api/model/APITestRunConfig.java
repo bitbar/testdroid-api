@@ -25,7 +25,6 @@ public class APITestRunConfig extends APIEntity {
 
     @XmlType(namespace = "APITestRunConfig")
     public static enum Mode {
-
         FULL_RUN("Full run"),
         APP_CRAWLER("App crawler"),
         CTS("CTS"),
@@ -59,6 +58,10 @@ public class APITestRunConfig extends APIEntity {
         SINGLE
     }
 
+    private boolean createVNCConnection;
+
+    private String appiumBrokerAddress;
+
     private boolean appRequired;
 
     private String applicationPassword;
@@ -69,11 +72,15 @@ public class APITestRunConfig extends APIEntity {
 
     private boolean checkApp;
 
-    private Integer creditsPrice;
+    private Long creditsPrice;
 
     private String deviceLanguageCode;
 
     private boolean gamebenchEnabled;
+
+    private boolean useAdditionalFiles;
+
+    private boolean videoRecordingEnabled;
 
     private String hookURL;
 
@@ -99,6 +106,8 @@ public class APITestRunConfig extends APIEntity {
 
     private Long usedDeviceGroupId;
 
+    private String usedDeviceGroupName;
+
     private String withAnnotation;
 
     private String withoutAnnotation;
@@ -109,18 +118,17 @@ public class APITestRunConfig extends APIEntity {
     }
 
     public APITestRunConfig(
-            Long id, Long projectId, Scheduler scheduler, Mode mode, boolean autoScreenshots, boolean runAvailable,
+            Long id, Scheduler scheduler, Mode mode, Boolean autoScreenshots,
             String screenshotDir, LimitationType limitationType, String limitationValue, String withAnnotation,
-            String withoutAnnotation, String applicationUsername, String applicationPassword, Long usedClusterId,
-            Integer creditsPrice, String deviceLanguageCode, String hookURL, String uiAutomatorTestClasses,
-            Boolean launchApp, String instrumentationRunner, Boolean checkApp, Boolean appRequired,
-            Boolean gamebenchEnabled, Long timeout) {
+            String withoutAnnotation, String applicationUsername, String applicationPassword, Long usedDeviceGroupId,
+            String usedDeviceGroupName, Long creditsPrice, String deviceLanguageCode, String hookURL,
+            String uiAutomatorTestClasses, Boolean launchApp, String instrumentationRunner, Boolean checkApp,
+            Boolean appRequired, Boolean gamebenchEnabled, Boolean useAdditionalFiles, Boolean videoRecordingEnabled,
+            Long timeout, String appiumBrokerAddress, Boolean createVNCConnection) {
         super(id);
-        this.projectId = projectId;
         this.scheduler = scheduler;
         this.mode = mode;
         this.autoScreenshots = autoScreenshots;
-        this.runAvailable = runAvailable;
         this.screenshotDir = screenshotDir;
         this.limitationType = limitationType;
         this.limitationValue = limitationValue;
@@ -128,7 +136,8 @@ public class APITestRunConfig extends APIEntity {
         this.withoutAnnotation = withoutAnnotation;
         this.applicationUsername = applicationUsername;
         this.applicationPassword = applicationPassword;
-        this.usedDeviceGroupId = usedClusterId;
+        this.usedDeviceGroupId = usedDeviceGroupId;
+        this.usedDeviceGroupName = usedDeviceGroupName;
         this.creditsPrice = creditsPrice;
         this.deviceLanguageCode = deviceLanguageCode;
         this.hookURL = hookURL;
@@ -138,7 +147,11 @@ public class APITestRunConfig extends APIEntity {
         this.checkApp = checkApp;
         this.appRequired = appRequired;
         this.gamebenchEnabled = gamebenchEnabled;
+        this.videoRecordingEnabled = videoRecordingEnabled;
         this.timeout = timeout;
+        this.useAdditionalFiles = useAdditionalFiles;
+        this.appiumBrokerAddress = appiumBrokerAddress;
+        this.createVNCConnection = createVNCConnection;
     }
 
     public Long getProjectId() {
@@ -245,11 +258,19 @@ public class APITestRunConfig extends APIEntity {
         this.usedDeviceGroupId = usedDeviceGroupId;
     }
 
-    public Integer getCreditsPrice() {
+    public String getUsedDeviceGroupName() {
+        return usedDeviceGroupName;
+    }
+
+    public void setUsedDeviceGroupName(String usedDeviceGroupName) {
+        this.usedDeviceGroupName = usedDeviceGroupName;
+    }
+
+    public Long getCreditsPrice() {
         return creditsPrice;
     }
 
-    public void setCreditsPrice(Integer creditsPrice) {
+    public void setCreditsPrice(Long creditsPrice) {
         this.creditsPrice = creditsPrice;
     }
 
@@ -325,8 +346,40 @@ public class APITestRunConfig extends APIEntity {
         return gamebenchEnabled;
     }
 
+    public boolean getUseAdditionalFiles() {
+        return useAdditionalFiles;
+    }
+
+    public void setUseAdditionalFiles(boolean useAdditionalFiles) {
+        this.useAdditionalFiles = useAdditionalFiles;
+    }
+
     public void setGamebenchEnabled(boolean gamebenchEnabled) {
         this.gamebenchEnabled = gamebenchEnabled;
+    }
+
+    public boolean isVideoRecordingEnabled() {
+        return videoRecordingEnabled;
+    }
+
+    public void setVideoRecordingEnabled(boolean videoRecordingEnabled) {
+        this.videoRecordingEnabled = videoRecordingEnabled;
+    }
+
+    public String getAppiumBrokerAddress() {
+        return appiumBrokerAddress;
+    }
+
+    public void setAppiumBrokerAddress(String appiumBrokerAddress) {
+        this.appiumBrokerAddress = appiumBrokerAddress;
+    }
+
+    public boolean isCreateVNCConnection() {
+        return createVNCConnection;
+    }
+
+    public void setCreateVNCConnection(boolean createVNCConnection) {
+        this.createVNCConnection = createVNCConnection;
     }
 
     @JsonIgnore
@@ -375,6 +428,8 @@ public class APITestRunConfig extends APIEntity {
             put("appRequired", appRequired);
             put("gamebenchEnabled", gamebenchEnabled);
             put("timeout", timeout);
+            put("appiumBrokerAddress", appiumBrokerAddress);
+            put("createVNCConnection", createVNCConnection);
         }};
         APITestRunConfig config = postResource(selfURI, body, APITestRunConfig.class);
         clone(config);
@@ -393,6 +448,7 @@ public class APITestRunConfig extends APIEntity {
         this.creditsPrice = apiTestRunConfig.creditsPrice;
         this.deviceLanguageCode = apiTestRunConfig.deviceLanguageCode;
         this.gamebenchEnabled = apiTestRunConfig.gamebenchEnabled;
+        this.videoRecordingEnabled = apiTestRunConfig.videoRecordingEnabled;
         this.hookURL = apiTestRunConfig.hookURL;
         this.instrumentationRunner = apiTestRunConfig.instrumentationRunner;
         this.launchApp = apiTestRunConfig.launchApp;
@@ -405,8 +461,12 @@ public class APITestRunConfig extends APIEntity {
         this.screenshotDir = apiTestRunConfig.screenshotDir;
         this.uiAutomatorTestClasses = apiTestRunConfig.uiAutomatorTestClasses;
         this.usedDeviceGroupId = apiTestRunConfig.usedDeviceGroupId;
+        this.usedDeviceGroupName = apiTestRunConfig.usedDeviceGroupName;
         this.withAnnotation = apiTestRunConfig.withAnnotation;
         this.withoutAnnotation = apiTestRunConfig.withoutAnnotation;
         this.timeout = apiTestRunConfig.timeout;
+        this.useAdditionalFiles = apiTestRunConfig.useAdditionalFiles;
+        this.appiumBrokerAddress = apiTestRunConfig.appiumBrokerAddress;
+        this.createVNCConnection = apiTestRunConfig.createVNCConnection;
     }
 }

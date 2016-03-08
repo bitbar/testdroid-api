@@ -18,16 +18,23 @@ public class APITestRunExtended extends APITestRun {
 
     private APIFiles files;
 
+    private boolean billable;
+
     public APITestRunExtended() {
     }
 
     public APITestRunExtended(
             Long id, Integer number, Date createTime, String displayName, Float executionRatio, Float successRatio,
-            String startedByDisplayName, State state, Long projectId, Integer deviceCount, APIFiles files,
-            Long screenshotsFileId, Long logsFileId, APITag... tags) {
-        super(id, number, createTime, displayName, executionRatio, successRatio, startedByDisplayName, state,
-                projectId, screenshotsFileId, logsFileId);
-        this.deviceCount = deviceCount;
+            Long startedById, String startedByDisplayName, State state, Long projectId, APIFiles files,
+            Long screenshotsFileId, Long logsFileId, Integer testCaseCount, Integer successfulTestCaseCount,
+            Integer totalDeviceCount, Integer finishedDeviceCount, Integer excludedDeviceCount,
+            Integer errorsDeviceCount, Integer succeededDeviceCount, Integer runningDeviceCount,
+            Integer warningDeviceCount, Integer waitingDeviceCount, APITag... tags) {
+        super(id, number, createTime, displayName, executionRatio, successRatio, startedById, startedByDisplayName,
+                state, projectId, screenshotsFileId, logsFileId, testCaseCount, successfulTestCaseCount,
+                totalDeviceCount, finishedDeviceCount, excludedDeviceCount, errorsDeviceCount, succeededDeviceCount,
+                runningDeviceCount, warningDeviceCount, waitingDeviceCount);
+        this.deviceCount = totalDeviceCount;
         this.tags = tags;
         this.files = files;
     }
@@ -56,6 +63,14 @@ public class APITestRunExtended extends APITestRun {
         this.files = files;
     }
 
+    public boolean isBillable() {
+        return billable;
+    }
+
+    public void setBillable(boolean billable) {
+        this.billable = billable;
+    }
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
@@ -64,5 +79,6 @@ public class APITestRunExtended extends APITestRun {
         this.files = apiTestRunExtended.files;
         this.deviceCount = apiTestRunExtended.deviceCount;
         this.tags = apiTestRunExtended.tags;
+        this.billable =apiTestRunExtended.billable;
     }
 }

@@ -1,127 +1,25 @@
 package com.testdroid.api;
 
-import com.testdroid.api.model.*;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
- * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
+ * @author Damian Sniezek <damian.sniezek@bitbar.com>
  */
 public class APISort {
 
-    public static enum Column {
-        DEVICE_NAME(APIDevice.class, "name"),
-        DEVICE_OS_TYPE(APIDevice.class, "osType"),
-        DEVICE_VNC_SUPPORTED(APIDevice.class, "vncSupported"),
-        DEVICE_GROUP_ID(APIDeviceGroup.class, "id"),
-        DEVICE_GROUP_NAME(APIDeviceGroup.class, "displayName"),
-        DEVICE_GROUP_OS_TYPE(APIDeviceGroup.class, "osType"),
-        DEVICE_PROPERTY_NAME(APIDeviceProperty.class, "displayName"),
-        DEVICE_RUN_CREATED(APIDeviceRun.class, "createTime"),
-        DEVICE_RUN_DEVICE(APIDeviceRun.class, "deviceModel.name"),
-        DEVICE_RUN_END_TIME(APIDeviceRun.class, "endTime"),
-        DEVICE_RUN_ID(APIDeviceRun.class, "id"),
-        DEVICE_RUN_STATE_FINISHED(APIDeviceRunState.class, "finishTimeMS"),
-        DEVICE_RUN_STATE_ID(APIDeviceRunState.class, "id"),
-        DEVICE_RUN_STATE_STARTED(APIDeviceRunState.class, "startTimeMS"),
-        DEVICE_RUN_STATE_STATUS(APIDeviceRunState.class, "status"),
-        LABEL_GROUP_NAME(APILabelGroup.class, "displayName"),
-        NOTIFICATION_EMAIL_EMAIL(APINotificationEmail.class, "email"),
-        NOTIFICATION_EMAIL_ID(APINotificationEmail.class, "id"),
-        NOTIFICATION_EMAIL_PROJECT_NAME(APINotificationEmail.class, "p.name", NameType.ABSOLUTE),
-        PROJECT_DESCRIPTION(APIProject.class, "description"),
-        PROJECT_ID(APIProject.class, "id"),
-        PROJECT_NAME(APIProject.class, "name"),
-        PROJECT_CREATE_TIME(APIProject.class, "createTime"),
-        PROJECT_JOB_CONFIG_ID(APIProjectJobConfig.class, "id"),
-        PROJECT_JOB_CONFIG_TYPE(APIProjectJobConfig.class, "type"),
-        PROJECT_JOB_CONFIG_VERSION(APIProjectJobConfig.class, "version"),
-        PROJECT_SHARING_ID(APIProjectSharing.class, "id"),
-        PROJECT_SHARING_USER_EMAIL(APIProjectSharing.class, "userEmail"),
-        SCREENSHOT_ID(APIScreenshot.class, "id"),
-        SCREENSHOT_ORIGINAL_NAME(APIScreenshot.class, "originalName"),
-        SCREENSHOT_TAKE_TIMESTAMP(APIScreenshot.class, "takeTimestamp"),
-        SCREENSHOT_TYPE(APIScreenshot.class, "type"),
-        SOFTWARE_API_LEVEL(APISoftwareVersion.class, "apiLevel"),
-        SOFTWARE_ID(APISoftwareVersion.class, "id"),
-        SOFTWARE_RELEASE_VERSION(APISoftwareVersion.class, "releaseVersion"),
-        TAG_ID(APITag.class, "id"),
-        TAG_NAME(APITag.class, "name"),
-        TEST_CASE_RUN_CREATE_TIME(APITestCaseRun.class, "createTime"),
-        TEST_CASE_RUN_ID(APITestCaseRun.class, "id"),
-        TEST_CASE_RUN_RESULT(APITestCaseRun.class, "result"),
-        TEST_RUN_CREATED(APITestRun.class, "createTime"),
-        TEST_RUN_ID(APITestRun.class, "id"),
-        TEST_RUN_NAME(APITestRun.class, "userName"),
-        TEST_RUN_TAG(APITestRun.class, "t.name", NameType.ABSOLUTE),
-        TEST_RUN_PARAMETER_ID(APITestRunParameter.class, "id"),
-        TEST_RUN_PARAMETER_KEY(APITestRunParameter.class, "key"),
-        USER_COUNTRY(APIUser.class, "country"),
-        USER_EMAIL(APIUser.class, "email"),
-        USER_ID(APIUser.class, "id"),
-        USER_NAME(APIUser.class, "name");
-
-        public static enum NameType {
-            RELATIVE,
-            ABSOLUTE
-        }
-
-        private String name;
-
-        private Class<? extends APIEntity> supportedClass;
-
-        private NameType type = NameType.RELATIVE;
-
-        private Column(Class<? extends APIEntity> supportedClass, String name) {
-            this.supportedClass = supportedClass;
-            this.name = name;
-        }
-
-        private Column(Class<? extends APIEntity> supportedClass, String name, NameType type) {
-            this(supportedClass, name);
-            this.type = type;
-        }
-
-        public static Column fromColumnName(Class<? extends APIEntity> type, String name) {
-            if (name == null) {
-                return null;
-            }
-            for (Column sc : get(type)) {
-                if (name.equals(sc.getName())) {
-                    return sc;
-                }
-            }
-            return null;
-        }
-
-        public static List<Column> get(Class<? extends APIEntity> type) {
-            List<Column> result = new ArrayList<Column>();
-            for (Column sc : values()) {
-                if (sc.supportedClass.isAssignableFrom(type)) {
-                    result.add(sc);
-                }
-            }
-            return result;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public NameType getNameType() {
-            return type;
-        }
-
-    }
-
-    /**
-     * Sort type used for fetching collections from API.
-     */
     public static enum Type {
-        ASC,
-        DESC;
+        ASC("a"),
+        DESC("d");
+
+        private String urlValue;
+
+        private Type(String urlValue) {
+            this.urlValue = urlValue;
+        }
 
         public static Type fromURLValue(String urlValue) {
             for (Type t : Type.values()) {
@@ -133,91 +31,75 @@ public class APISort {
         }
 
         public String getURLValue() {
-            switch (this) {
-                case DESC:
-                    return "d";
-                case ASC:
-                default:
-                    return "a";
-            }
+            return urlValue;
         }
     }
 
-    private SortItem[] items;
+    private List<SortItem> sorts;
 
-    protected APISort() {
-
+    private APISort() {
+        this(Collections.<SortItem>emptyList());
     }
 
-    private APISort(Class<? extends APIEntity> type, SortItem... items) {
-        if (items != null && items.length > 0) {
-            List<SortItem> itemList = new ArrayList<SortItem>();
-            for (SortItem si : items) {
-                if (si.column.supportedClass.equals(type)) {
-                    itemList.add(si);
-                }
-            }
-            this.items = itemList.toArray(new SortItem[itemList.size()]);
-        } else {
-            this.items = new SortItem[0];
-        }
+    public APISort(List<SortItem> items) {
+        this.sorts = items;
     }
 
-    public static APISort create(Class<? extends APIEntity> type, SortItem... items) {
-        return new APISort(type, items);
+    public static APISort create(List<SortItem> items) {
+        return new APISort(items);
     }
 
-    public static APISort deserialize(Class<? extends APIEntity> type, String value) {
+    public static APISort deserialize(String value) {
         if (StringUtils.isBlank(value)) {
-            return new APISort(type);
+            return new APISort();
         }
         List<SortItem> items = new ArrayList<SortItem>();
         String[] resultItems = value.split(":");
         for (String stringItem : resultItems) {
             String[] sortItemValues = stringItem.split("_");
             if (sortItemValues.length > 1) {
-                Column sc = Column.fromColumnName(type, sortItemValues[0]);
-                Type st = Type.fromURLValue(sortItemValues[1]);
-                if (sc != null && st != null) {
-                    items.add(new SortItem(sc, st));
+                String column = sortItemValues[0];
+                Type sortType = Type.fromURLValue(sortItemValues[1]);
+                if (column != null) {
+                    items.add(new SortItem(column, sortType));
                 }
             }
         }
-        return new APISort(type, items.toArray(new SortItem[items.size()]));
+        return new APISort(items);
     }
 
-    public SortItem[] getItems() {
-        return items;
+    public List<SortItem> getSorts() {
+        return sorts;
     }
 
-    public void setItems(SortItem... items) {
-        this.items = items;
+    public void setSorts(List<SortItem> items) {
+        this.sorts = items;
     }
 
     public boolean isEmpty() {
-        return items == null || items.length == 0;
+        return sorts == null || sorts.isEmpty();
     }
 
     public String serialize() {
         List<String> resultItems = new ArrayList<String>();
-        for (SortItem item : items) {
-            resultItems.add(String.format("%s_%s", item.column.getName(), item.type.getURLValue()));
+        for (SortItem item : sorts) {
+            resultItems.add(String.format("%s_%s", item.column, item.type.getURLValue()));
         }
         return StringUtils.join(resultItems, ":");
     }
 
     public static class SortItem {
 
-        private Column column;
+        private String column;
 
         private Type type;
 
-        public SortItem(Column column, Type sortType) {
+        public SortItem(String column, Type sortType) {
             this.column = column;
             this.type = sortType;
         }
 
-        public Column getColumn() {
+        public String getColumn() {
             return column;
         }
 

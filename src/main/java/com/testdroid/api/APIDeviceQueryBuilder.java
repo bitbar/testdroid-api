@@ -1,9 +1,10 @@
 package com.testdroid.api;
 
 import com.testdroid.api.model.APIDevice;
-import org.apache.commons.lang.ArrayUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -49,8 +50,13 @@ public class APIDeviceQueryBuilder extends APIQueryBuilder {
     }
 
     @Override
-    public APIDeviceQueryBuilder sort(Class<? extends APIEntity> type, APISort.SortItem... sortItems) {
+    public APIDeviceQueryBuilder sort(Class<? extends APIEntity> type, List<APISort.SortItem> sortItems) {
         return (APIDeviceQueryBuilder) super.sort(type, sortItems);
+    }
+
+    @Override
+    public APIDeviceQueryBuilder filter(List<APIFilter.APIFilterItem> filterItems) {
+        return (APIDeviceQueryBuilder) super.filter(filterItems);
     }
 
     @Override

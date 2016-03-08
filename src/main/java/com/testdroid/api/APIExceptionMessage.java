@@ -8,9 +8,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
  */
 @XmlRootElement
-public class APIExceptionMessage {
-
-    private String message;
+public class APIExceptionMessage extends APIMessage {
 
     private Integer statusCode;
 
@@ -18,8 +16,8 @@ public class APIExceptionMessage {
     }
 
     public APIExceptionMessage(Integer statusCode, String message) {
+        super(message);
         this.statusCode = statusCode;
-        this.message = message;
     }
 
     public Integer getStatusCode() {
@@ -28,14 +26,6 @@ public class APIExceptionMessage {
 
     public void setStatusCode(Integer statusCode) {
         this.statusCode = statusCode;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 
 }
