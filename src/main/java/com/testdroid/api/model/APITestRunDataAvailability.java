@@ -12,7 +12,7 @@ public class APITestRunDataAvailability extends APIEntity {
 
     private boolean application;
 
-    private APIDeviceRunDataAvailability[] deviceRunDataAvailabilities;
+    private APIDeviceSessionDataAvailability[] deviceRunDataAvailabilities;
 
     private boolean test;
 
@@ -51,11 +51,11 @@ public class APITestRunDataAvailability extends APIEntity {
         this.test = test;
     }
 
-    public APIDeviceRunDataAvailability[] getDeviceRunDataAvailabilities() {
+    public APIDeviceSessionDataAvailability[] getDeviceRunDataAvailabilities() {
         return deviceRunDataAvailabilities;
     }
 
-    public void setDeviceRunDataAvailabilities(APIDeviceRunDataAvailability[] deviceRunDataAvailabilities) {
+    public void setDeviceRunDataAvailabilities(APIDeviceSessionDataAvailability[] deviceRunDataAvailabilities) {
         this.deviceRunDataAvailabilities = deviceRunDataAvailabilities;
     }
 

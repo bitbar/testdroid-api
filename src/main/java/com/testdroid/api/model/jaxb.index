@@ -4,7 +4,7 @@ APIDevice
 APIDeviceGroup
 APIDeviceProperty
 APIDeviceRun
-APIDeviceRunDataAvailability
+APIDeviceSessionDataAvailability
 APIDeviceRunState
 APIDeviceSession
 APIDeviceSessionStep
@@ -15,8 +15,12 @@ APINotificationEmail
 APIProject
 APIProjectJobConfig
 APIProjectSharing
+APIProjectTypeExtended
 APIRole
+APIService
+APIServicePaymentStatus
 APIScreenshot
+APIScreenshotExtended
 APISoftwareVersion
 APITag
 APITestCaseRun

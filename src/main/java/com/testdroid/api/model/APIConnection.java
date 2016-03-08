@@ -123,6 +123,14 @@ public class APIConnection extends APIEntity {
         this.host = host;
     }
 
+    public void setPort(Integer port) {
+        this.port = port;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
     @Override
     protected <T extends APIEntity> void clone(T from) {
         APIConnection apiConnection = (APIConnection) from;

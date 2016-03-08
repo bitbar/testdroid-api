@@ -19,6 +19,13 @@ public class APIDeviceSession extends APIEntity {
     }
 
     @XmlType(namespace = "APIDeviceSession")
+    public static enum RetryState {
+        NONE,
+        MANUAL,
+        AUTO
+    }
+
+    @XmlType(namespace = "APIDeviceSession")
     public static enum State {
         WAITING,
         RUNNING,
@@ -72,6 +79,12 @@ public class APIDeviceSession extends APIEntity {
 
     private String excludeReason;
 
+    private Long deviceInstanceId;
+
+    private RetryState retryState;
+
+    private Integer autoRetriesLeftCount;
+
     public APIDeviceSession() {
     }
 
@@ -103,7 +116,8 @@ public class APIDeviceSession extends APIEntity {
     public APIDeviceSession(Long id, Type type, Date createTime, Date startTime, Date installTime, Date endTime,
             APIDevice device, Long timeLimit, Long launchAppDuration, State state, Long deviceRunId,
             Integer testCaseAllCount, Integer testCaseSuccessCount, Integer testCasePassedCount,
-            Integer testCaseFailedCount, Integer testCaseSkippedCount, Boolean billable, String excludeReason) {
+            Integer testCaseFailedCount, Integer testCaseSkippedCount, Boolean billable, String excludeReason,
+            Long deviceInstanceId, RetryState retryState, Integer autoRetriesLeftCount) {
         this(id, type, createTime, startTime, installTime, endTime, device, timeLimit, launchAppDuration, state,
                 deviceRunId, billable, excludeReason);
         this.testCaseAllCount = testCaseAllCount;
@@ -111,6 +125,9 @@ public class APIDeviceSession extends APIEntity {
         this.testCasePassedCount = testCasePassedCount;
         this.testCaseFailedCount = testCaseFailedCount;
         this.testCaseSkippedCount = testCaseSkippedCount;
+        this.deviceInstanceId = deviceInstanceId;
+        this.retryState = retryState;
+        this.autoRetriesLeftCount = autoRetriesLeftCount;
     }
 
     public Type getType() {
@@ -249,6 +266,30 @@ public class APIDeviceSession extends APIEntity {
         this.excludeReason = excludeReason;
     }
 
+    public Long getDeviceInstanceId() {
+        return deviceInstanceId;
+    }
+
+    public void setDeviceInstanceId(Long deviceInstanceId) {
+        this.deviceInstanceId = deviceInstanceId;
+    }
+
+    public RetryState getRetryState() {
+        return retryState;
+    }
+
+    public void setRetryState(RetryState retryState) {
+        this.retryState = retryState;
+    }
+
+    public Integer getAutoRetriesLeftCount() {
+        return autoRetriesLeftCount;
+    }
+
+    public void setAutoRetriesLeftCount(Integer autoRetriesLeftCount) {
+        this.autoRetriesLeftCount = autoRetriesLeftCount;
+    }
+
     @Override
     protected <T extends APIEntity> void clone(T from) {
         APIDeviceSession apiDeviceSession = (APIDeviceSession) from;
@@ -270,5 +311,8 @@ public class APIDeviceSession extends APIEntity {
         this.testCaseSkippedCount = apiDeviceSession.testCaseSkippedCount;
         this.billable = apiDeviceSession.billable;
         this.excludeReason = apiDeviceSession.excludeReason;
+        this.deviceInstanceId = apiDeviceSession.deviceInstanceId;
+        this.retryState = apiDeviceSession.retryState;
+        this.autoRetriesLeftCount = apiDeviceSession.autoRetriesLeftCount;
     }
 }

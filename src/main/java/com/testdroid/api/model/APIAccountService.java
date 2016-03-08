@@ -3,7 +3,7 @@ package com.testdroid.api.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.model.enums.Unit;
-import com.testdroid.api.um.model.APIPaymentMethod;
+import com.testdroid.api.model.enums.APIPaymentMethod;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
@@ -20,7 +20,8 @@ public class APIAccountService extends APIEntity {
     public static enum DeactivateReason {
         INITIAL_FAILURE,
         CHARGE_FAILURE,
-        CANCEL
+        CANCEL,
+        SUSPENDED
     }
 
 

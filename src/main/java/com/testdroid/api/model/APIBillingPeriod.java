@@ -1,7 +1,7 @@
 package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
-import com.testdroid.api.um.model.APIPaymentMethod;
+import com.testdroid.api.model.enums.APIPaymentMethod;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
