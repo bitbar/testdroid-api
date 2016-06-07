@@ -25,7 +25,9 @@ import java.util.Date;
         CalabashFiles.class,
         CalabashIOSFiles.class,
         AppiumAndroidFiles.class,
-        AppiumIOSFiles.class
+        AppiumIOSFiles.class,
+        TelerikIOSFiles.class,
+        TelerikAndroidFiles.class
 })
 @JsonIgnoreProperties(value = {"id"})
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")

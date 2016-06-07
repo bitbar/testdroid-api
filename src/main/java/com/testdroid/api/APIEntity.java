@@ -31,6 +31,7 @@ import java.util.logging.Logger;
 @XmlSeeAlso({
         APIArray.class,
         APIBillingPeriod.class,
+        APICloudInfo.class,
         APIConnection.class,
         APIDevice.class,
         APIDeviceGroup.class,
