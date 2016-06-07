@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Michał Szpruta <michal.szpruta@bitbar.com>
  */
 @XmlRootElement
-public class APIDeviceRunDataAvailability extends APIEntity {
+public class APIDeviceSessionDataAvailability extends APIEntity {
 
     private Long deviceRunId;
 
@@ -22,10 +22,11 @@ public class APIDeviceRunDataAvailability extends APIEntity {
 
     private boolean resultsDataZip;
 
-    public APIDeviceRunDataAvailability() {
+    public APIDeviceSessionDataAvailability() {
     }
 
-    public APIDeviceRunDataAvailability(Long deviceRunId, boolean logs, boolean performance, boolean screenshots,
+    public APIDeviceSessionDataAvailability(
+            Long deviceRunId, boolean logs, boolean performance, boolean screenshots,
             boolean buildLogs, boolean resultsDataZip) {
         this.deviceRunId = deviceRunId;
         this.logs = logs;
@@ -85,13 +86,13 @@ public class APIDeviceRunDataAvailability extends APIEntity {
 
     @Override
     protected <T extends APIEntity> void clone(T from) {
-        APIDeviceRunDataAvailability apiDeviceRunDataAvailability = (APIDeviceRunDataAvailability) from;
+        APIDeviceSessionDataAvailability apiDeviceSessionDataAvailability = (APIDeviceSessionDataAvailability) from;
         cloneBase(from);
-        this.deviceRunId = apiDeviceRunDataAvailability.deviceRunId;
-        this.logs = apiDeviceRunDataAvailability.logs;
-        this.performance = apiDeviceRunDataAvailability.performance;
-        this.screenshots = apiDeviceRunDataAvailability.screenshots;
-        this.buildLogs = apiDeviceRunDataAvailability.buildLogs;
-        this.resultsDataZip = apiDeviceRunDataAvailability.resultsDataZip;
+        this.deviceRunId = apiDeviceSessionDataAvailability.deviceRunId;
+        this.logs = apiDeviceSessionDataAvailability.logs;
+        this.performance = apiDeviceSessionDataAvailability.performance;
+        this.screenshots = apiDeviceSessionDataAvailability.screenshots;
+        this.buildLogs = apiDeviceSessionDataAvailability.buildLogs;
+        this.resultsDataZip = apiDeviceSessionDataAvailability.resultsDataZip;
     }
 }

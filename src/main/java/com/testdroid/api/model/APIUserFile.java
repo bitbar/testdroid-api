@@ -8,6 +8,7 @@ import com.testdroid.api.APIListResource;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.Date;
 
 /**
@@ -27,6 +28,12 @@ public class APIUserFile extends APIEntity {
 
     private Long size;
 
+    private URL directUrl;
+
+    private transient String storage;
+
+    private transient String uri;
+
     @XmlType(namespace = "APIUserFile", name = "APIUserFileState")
     public static enum State {
         PREPARING,
@@ -42,6 +49,12 @@ public class APIUserFile extends APIEntity {
         this.createTime = createTime;
         this.size = size;
         this.state = state;
+    }
+
+    public APIUserFile(Long id, String name, Date createTime, Long size, State state, String storage, String uri) {
+        this(id, name, createTime, size, state);
+        this.storage = storage;
+        this.uri = uri;
     }
 
     public APIUserFile(
@@ -102,6 +115,32 @@ public class APIUserFile extends APIEntity {
         this.state = state;
     }
 
+    public URL getDirectUrl() {
+        return directUrl;
+    }
+
+    public void setDirectUrl(URL directUrl) {
+        this.directUrl = directUrl;
+    }
+
+    @JsonIgnore
+    public String getStorage() {
+        return storage;
+    }
+
+    public void setStorage(String storage) {
+        this.storage = storage;
+    }
+
+    @JsonIgnore
+    public String getUri() {
+        return uri;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
+    }
+
     @JsonIgnore
     public InputStream getIcon() throws APIException {
         return getFile(getIconURI());
@@ -131,5 +170,8 @@ public class APIUserFile extends APIEntity {
         this.size = apiUserFile.size;
         this.fileProperties = apiUserFile.fileProperties;
         this.state = apiUserFile.state;
+        this.directUrl = apiUserFile.directUrl;
+        this.storage = apiUserFile.storage;
+        this.uri = apiUserFile.uri;
     }
 }

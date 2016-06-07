@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.*;
 import com.testdroid.api.model.APIFiles.APIFile;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
@@ -28,23 +28,26 @@ public class APIProject extends APIEntity {
 
     @XmlType(namespace = "APIProject")
     public static enum Type {
-        ANDROID(APIDevice.OsType.ANDROID),
-        CTS(APIDevice.OsType.ANDROID),
-        IOS(APIDevice.OsType.IOS),
-        UIAUTOMATOR(APIDevice.OsType.ANDROID),
-        REMOTECONTROL(APIDevice.OsType.ANDROID),
-        CALABASH(APIDevice.OsType.ANDROID),
-        CALABASH_IOS(APIDevice.OsType.IOS),
-        APPIUM_ANDROID(APIDevice.OsType.ANDROID),
-        APPIUM_IOS(APIDevice.OsType.IOS),
-        TELERIK_ANDROID(APIDevice.OsType.ANDROID),
-        TELERIK_IOS(APIDevice.OsType.IOS),
-        GENERIC(null);
+        ANDROID(APIDevice.OsType.ANDROID, "Android"),
+        CTS(APIDevice.OsType.ANDROID, "Android CTS"),
+        IOS(APIDevice.OsType.IOS, "iOS UI Automation"),
+        UIAUTOMATOR(APIDevice.OsType.ANDROID, "Android UIAutomator"),
+        REMOTECONTROL(APIDevice.OsType.ANDROID, "Android Remote Control"),
+        CALABASH(APIDevice.OsType.ANDROID, "Calabash Android"),
+        CALABASH_IOS(APIDevice.OsType.IOS, "Calabash iOS"),
+        APPIUM_ANDROID(APIDevice.OsType.ANDROID, "Appium Android"),
+        APPIUM_IOS(APIDevice.OsType.IOS, "Appium iOS"),
+        TELERIK_ANDROID(APIDevice.OsType.ANDROID, "Telerik Android"),
+        TELERIK_IOS(APIDevice.OsType.IOS, "Telerik iOS"),
+        GENERIC(null, "Generic");
 
         private APIDevice.OsType osType;
 
-        private Type(APIDevice.OsType osType) {
+        private String title;
+
+        private Type(APIDevice.OsType osType, String title) {
             this.osType = osType;
+            this.title = title;
         }
 
         public Class<? extends APIFiles> getFilesClass() {
@@ -78,6 +81,10 @@ public class APIProject extends APIEntity {
 
         public APIDevice.OsType getOsType() {
             return osType;
+        }
+
+        public String getTitle() {
+            return title;
         }
     }
 

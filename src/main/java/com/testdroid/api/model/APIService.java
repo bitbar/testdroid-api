@@ -1,4 +1,4 @@
-package com.testdroid.api.um.model;
+package com.testdroid.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
@@ -12,8 +12,7 @@ import java.util.Date;
 /**
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
  */
-@XmlRootElement(name = "umApiService", namespace = "cloud.testdroid.api.um.model")
-@XmlType(name = "umApiService", namespace = "cloud.testdroid.api.um.model")
+@XmlRootElement
 public class APIService extends APIEntity {
 
     private boolean autoRenew;

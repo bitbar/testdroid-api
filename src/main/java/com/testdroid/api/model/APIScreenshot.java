@@ -32,6 +32,10 @@ public class APIScreenshot extends APIEntity {
     public APIScreenshot() {
     }
 
+    public APIScreenshot(String originalName) {
+        this.originalName = originalName;
+    }
+
     public APIScreenshot(Long id, String originalName, Boolean fail, Type type, Long takeTimestamp) {
         super(id);
         this.originalName = originalName;

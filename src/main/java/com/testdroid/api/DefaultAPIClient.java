@@ -11,7 +11,7 @@ import com.testdroid.api.model.APILabelGroup;
 import com.testdroid.api.model.APIUser;
 import net.sf.json.JSONObject;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpException;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpRequestInterceptor;
@@ -613,7 +613,7 @@ public class DefaultAPIClient implements APIClient {
         APIDeviceQueryBuilder builder = new APIDeviceQueryBuilder().offset((int) offset).limit((int) limit)
                 .search(search).filterWithDeviceFilters(filters);
         if (sort != null) {
-            builder.sort(APIDevice.class, sort.getItems());
+            builder.sort(APIDevice.class, sort.getSorts());
         }
         return new APIListResource<APIDevice>(this, DEVICES_URI, builder);
     }

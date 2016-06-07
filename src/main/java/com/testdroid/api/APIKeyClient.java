@@ -442,7 +442,7 @@ public class APIKeyClient implements APIClient {
         APIDeviceQueryBuilder builder = new APIDeviceQueryBuilder().offset((int) offset).limit((int) limit)
                 .search(search).filterWithDeviceFilters(filters);
         if (sort != null) {
-            builder.sort(APIDevice.class, sort.getItems());
+            builder.sort(APIDevice.class, sort.getSorts());
         }
         return new APIListResource<APIDevice>(this, DEVICES_URI, builder);
     }

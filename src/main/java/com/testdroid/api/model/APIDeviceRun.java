@@ -57,6 +57,14 @@ public class APIDeviceRun extends APIEntity {
 
     private Integer testCaseSkippedNo;
 
+    private Long testRunId;
+
+    private String testRunName;
+
+    private Long projectId;
+
+    private String projectName;
+
     public APIDeviceRun() {
     }
 
@@ -64,7 +72,7 @@ public class APIDeviceRun extends APIEntity {
             Long id, Long deviceSessionId, Long launchAppDuration, APIDevice device, Integer testCaseSuccessNo,
             Integer testCaseAllNo, Integer testCasePassedNo, Integer testCaseFailedNo, Integer testCaseSkippedNo,
             APISoftwareVersion softwareVersion, Date createTime, Date startTime, RunStatus runStatus, String deviceName,
-            String deviceSerialId) {
+            String deviceSerialId, Long testRunId, String testRunName, Long projectId, String projectName) {
         super(id);
         this.deviceSessionId = deviceSessionId;
         this.launchAppDuration = launchAppDuration;
@@ -80,6 +88,10 @@ public class APIDeviceRun extends APIEntity {
         this.runStatus = runStatus;
         this.deviceName = deviceName;
         this.deviceSerialId = deviceSerialId;
+        this.testRunId = testRunId;
+        this.testRunName = testRunName;
+        this.projectId = projectId;
+        this.projectName = projectName;
     }
 
     public APIDeviceRun(
@@ -89,7 +101,7 @@ public class APIDeviceRun extends APIEntity {
             APIDeviceRunState interruptedByState, RunStatus runStatus, String deviceName, String deviceSerialId) {
         this(id, deviceSessionId, launchAppDuration, device, testCaseSuccessNo, testCaseAllNo, testCasePassedNo,
                 testCaseFailedNo, testCaseSkippedNo, softwareVersion, createTime, startTime, runStatus, deviceName,
-                deviceSerialId);
+                deviceSerialId, null, null, null, null);
         this.currentState = currentState;
         this.interruptedByState = interruptedByState;
     }
@@ -212,6 +224,38 @@ public class APIDeviceRun extends APIEntity {
 
     public void setDeviceSerialId(String deviceSerialId) {
         this.deviceSerialId = deviceSerialId;
+    }
+
+    public Long getTestRunId() {
+        return testRunId;
+    }
+
+    public void setTestRunId(Long testRunId) {
+        this.testRunId = testRunId;
+    }
+
+    public String getTestRunName() {
+        return testRunName;
+    }
+
+    public void setTestRunName(String testRunName) {
+        this.testRunName = testRunName;
+    }
+
+    public Long getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(Long projectId) {
+        this.projectId = projectId;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
     }
 
     private String getLogsURI() {
@@ -358,6 +402,9 @@ public class APIDeviceRun extends APIEntity {
         this.testCasePassedNo = apiDeviceRun.testCasePassedNo;
         this.testCaseFailedNo = apiDeviceRun.testCaseFailedNo;
         this.testCaseSkippedNo = apiDeviceRun.testCaseSkippedNo;
+        this.testRunId = apiDeviceRun.testRunId;
+        this.testRunName = apiDeviceRun.testRunName;
+        this.projectId = apiDeviceRun.projectId;
+        this.projectName = apiDeviceRun.projectName;
     }
-
 }
