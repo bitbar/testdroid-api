@@ -14,7 +14,7 @@ public class APIDeviceSession extends APIEntity {
 
     @XmlType(namespace = "APIDeviceSession")
     public static enum Type {
-        INTERACTIVE,
+        MANUAL,
         AUTOMATIC
     }
 
@@ -27,12 +27,13 @@ public class APIDeviceSession extends APIEntity {
 
     @XmlType(namespace = "APIDeviceSession")
     public static enum State {
-        WAITING,
-        RUNNING,
+        ABORTED,
         EXCLUDED,
-        WARNING,
         FAILED,
-        SUCCEEDED;
+        RUNNING,
+        SUCCEEDED,
+        WAITING,
+        WARNING;
 
         public boolean isFinished() {
             switch (this) {

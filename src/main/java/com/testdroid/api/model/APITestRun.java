@@ -68,6 +68,8 @@ public class APITestRun extends APIEntity {
 
     protected Integer waitingDeviceCount;
 
+    protected Integer abortedDeviceCount;
+
     public APITestRun() {
     }
 
@@ -77,7 +79,7 @@ public class APITestRun extends APIEntity {
             Long screenshotsFileId, Long logsFileId, Integer testCaseCount, Integer successfulTestCaseCount,
             Integer totalDeviceCount, Integer finishedDeviceCount, Integer excludedDeviceCount,
             Integer errorsDeviceCount, Integer succeededDeviceCount, Integer runningDeviceCount,
-            Integer warningDeviceCount, Integer waitingDeviceCount) {
+            Integer warningDeviceCount, Integer waitingDeviceCount, Integer abortedDeviceCount) {
         super(id);
         this.number = number;
         this.createTime = createTime;
@@ -100,6 +102,7 @@ public class APITestRun extends APIEntity {
         this.runningDeviceCount = runningDeviceCount;
         this.warningDeviceCount = warningDeviceCount;
         this.waitingDeviceCount = waitingDeviceCount;
+        this.abortedDeviceCount = abortedDeviceCount;
     }
 
     public Integer getNumber() {
@@ -322,6 +325,14 @@ public class APITestRun extends APIEntity {
         this.errorsDeviceCount = errorsDeviceCount;
     }
 
+    public Integer getAbortedDeviceCount() {
+        return abortedDeviceCount;
+    }
+
+    public void setAbortedDeviceCount(Integer abortedDeviceCount) {
+        this.abortedDeviceCount = abortedDeviceCount;
+    }
+
     public void delete() throws APIException {
         deleteResource(selfURI);
     }
@@ -465,5 +476,6 @@ public class APITestRun extends APIEntity {
         this.runningDeviceCount = apiTestRun.runningDeviceCount;
         this.succeededDeviceCount = apiTestRun.succeededDeviceCount;
         this.waitingDeviceCount = apiTestRun.waitingDeviceCount;
+        this.abortedDeviceCount = apiTestRun.abortedDeviceCount;
     }
 }

@@ -29,11 +29,11 @@ public class APITestRunExtended extends APITestRun {
             Long screenshotsFileId, Long logsFileId, Integer testCaseCount, Integer successfulTestCaseCount,
             Integer totalDeviceCount, Integer finishedDeviceCount, Integer excludedDeviceCount,
             Integer errorsDeviceCount, Integer succeededDeviceCount, Integer runningDeviceCount,
-            Integer warningDeviceCount, Integer waitingDeviceCount, APITag... tags) {
+            Integer warningDeviceCount, Integer waitingDeviceCount, Integer abortedDeviceCount, APITag... tags) {
         super(id, number, createTime, displayName, executionRatio, successRatio, startedById, startedByDisplayName,
                 state, projectId, screenshotsFileId, logsFileId, testCaseCount, successfulTestCaseCount,
                 totalDeviceCount, finishedDeviceCount, excludedDeviceCount, errorsDeviceCount, succeededDeviceCount,
-                runningDeviceCount, warningDeviceCount, waitingDeviceCount);
+                runningDeviceCount, warningDeviceCount, waitingDeviceCount, abortedDeviceCount);
         this.deviceCount = totalDeviceCount;
         this.tags = tags;
         this.files = files;

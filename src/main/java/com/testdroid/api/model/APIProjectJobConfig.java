@@ -2,6 +2,7 @@ package com.testdroid.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
+import org.apache.commons.lang3.EnumUtils;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
@@ -16,23 +17,43 @@ public class APIProjectJobConfig extends APIEntity {
 
     @XmlType(namespace = "APIProjectJobConfig")
     public static enum Type {
-        DEFAULT,
-        INSTATEST,
-        INTERACTIVE,
-        CTS,
-        IOS,
-        UIAUTOMATOR,
-        REMOTECONTROL,
-        CALABASH,
-        CALABASH_IOS,
-        APPIUM_ANDROID,
-        APPIUM_IOS,
-        TELERIK_ANDROID,
-        TELERIK_IOS,
-        GENERIC
+        DEFAULT(APIDevice.OsType.ANDROID, "Android instrumentation"),
+        INSTATEST(APIDevice.OsType.ANDROID, "Android App Crawler"),
+        INTERACTIVE(APIDevice.OsType.ANDROID, "Testdroid Interactive"),
+        INTERACTIVE_IOS(APIDevice.OsType.IOS, "Testdroid iOS Interactive"),
+        CTS(APIDevice.OsType.ANDROID, "Testdroid CTS"),
+        IOS(APIDevice.OsType.IOS, "iOS UI Automation"),
+        UIAUTOMATOR(APIDevice.OsType.ANDROID, "UI Automator"),
+        REMOTECONTROL(APIDevice.OsType.ANDROID, "Android Remote Control"),
+        CALABASH(APIDevice.OsType.ANDROID, "Android Calabash"),
+        CALABASH_IOS(APIDevice.OsType.IOS, "iOS Calabash"),
+        APPIUM_ANDROID(APIDevice.OsType.ANDROID, "Android Appium"),
+        APPIUM_IOS(APIDevice.OsType.IOS, "iOS Appium"),
+        TELERIK_ANDROID(APIDevice.OsType.ANDROID, "Android Telerik Test Framework"),
+        TELERIK_IOS(APIDevice.OsType.IOS, "iOS Telerik Test Framework"),
+        GENERIC(APIDevice.OsType.UNDEFINED, "Undefined Framework");
+
+        private String name;
+
+        private APIDevice.OsType osType;
+
+        private Type(APIDevice.OsType osType, String name) {
+            this.osType = osType;
+            this.name = name;
+        }
+
+        public APIDevice.OsType getOsType() {
+            return osType;
+        }
+
+        public String getName() {
+            return name;
+        }
     }
 
     private String content;
+
+    private Long frameworkId;
 
     private boolean global;
 
@@ -52,8 +73,15 @@ public class APIProjectJobConfig extends APIEntity {
     }
 
     public APIProjectJobConfig(
-            Long id, Type type, String content, Integer version, boolean global, Long projectId,
-            String projectName, Date lastModificationTime, String lastModifiedBy) {
+            Long id, String type, String content, Integer version, boolean global, Long projectId, String projectName,
+            Date lastModificationTime, String lastModifiedBy, Long frameworkId) {
+        this(id, EnumUtils.getEnum(Type.class, type), content, version, global, projectId, projectName,
+                lastModificationTime, lastModifiedBy, frameworkId);
+    }
+
+    public APIProjectJobConfig(
+            Long id, Type type, String content, Integer version, boolean global, Long projectId, String projectName,
+            Date lastModificationTime, String lastModifiedBy, Long frameworkId) {
         super(id);
         this.type = type;
         this.content = content;
@@ -61,8 +89,9 @@ public class APIProjectJobConfig extends APIEntity {
         this.global = global;
         this.projectId = projectId;
         this.projectName = projectName;
-        this.lastModifiedBy = lastModifiedBy;
         this.lastModificationTime = lastModificationTime;
+        this.lastModifiedBy = lastModifiedBy;
+        this.frameworkId = frameworkId;
     }
 
     public Type getType() {
@@ -89,6 +118,22 @@ public class APIProjectJobConfig extends APIEntity {
         this.version = version;
     }
 
+    public String getLastModifiedBy() {
+        return lastModifiedBy;
+    }
+
+    public void setLastModifiedBy(String lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
+    }
+
+    public Date getLastModificationTime() {
+        return lastModificationTime;
+    }
+
+    public void setLastModificationTime(Date lastModificationTime) {
+        this.lastModificationTime = lastModificationTime;
+    }
+
     public boolean isGlobal() {
         return global;
     }
@@ -113,20 +158,12 @@ public class APIProjectJobConfig extends APIEntity {
         this.projectName = projectName;
     }
 
-    public String getLastModifiedBy() {
-        return lastModifiedBy;
+    public Long getFrameworkId() {
+        return frameworkId;
     }
 
-    public void setLastModifiedBy(String lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
-    }
-
-    public Date getLastModificationTime() {
-        return lastModificationTime;
-    }
-
-    public void setLastModificationTime(Date lastModificationTime) {
-        this.lastModificationTime = lastModificationTime;
+    public void setFrameworkId(Long frameworkId) {
+        this.frameworkId = frameworkId;
     }
 
     @Override
@@ -135,12 +172,13 @@ public class APIProjectJobConfig extends APIEntity {
         APIProjectJobConfig apiProjectJobConfig = (APIProjectJobConfig) from;
         cloneBase(from);
         this.content = apiProjectJobConfig.content;
-        this.global = apiProjectJobConfig.global;
-        this.projectId = apiProjectJobConfig.projectId;
         this.type = apiProjectJobConfig.type;
         this.version = apiProjectJobConfig.version;
+        this.global = apiProjectJobConfig.global;
+        this.projectId = apiProjectJobConfig.projectId;
         this.projectName = apiProjectJobConfig.projectName;
         this.lastModificationTime = apiProjectJobConfig.lastModificationTime;
         this.lastModifiedBy = apiProjectJobConfig.lastModifiedBy;
+        this.frameworkId = apiProjectJobConfig.frameworkId;
     }
 }
