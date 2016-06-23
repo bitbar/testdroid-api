@@ -2,8 +2,8 @@ package com.testdroid.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
-import com.testdroid.api.model.enums.Unit;
 import com.testdroid.api.model.enums.APIPaymentMethod;
+import com.testdroid.api.model.enums.Unit;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
