@@ -40,10 +40,14 @@ public class APIDeviceRunState extends APIEntity {
     public APIDeviceRunState() {
     }
 
+    public APIDeviceRunState(Long id) {
+        super(id);
+    }
+
     public APIDeviceRunState(
             Long id, Long deviceRunId, Long startTimeMS, Long finishTimeMS, Date retryTime,
             String failReason, Status status, DeviceRunStateType type) {
-        super(id);
+        this(id);
         this.deviceRunId = deviceRunId;
         this.startTimeMS = startTimeMS;
         this.finishTimeMS = finishTimeMS;

@@ -588,25 +588,25 @@ public class DefaultAPIClient implements APIClient {
     }
 
     @Override
-    public APIListResource<APIDevice> getDevices() throws APIException {
+    public APIListResource<APIDevice> getDevices() {
         return new APIListResource<APIDevice>(this, DEVICES_URI);
     }
 
     @Override
-    public APIListResource<APIDevice> getDevices(APIDevice.DeviceFilter... filters) throws APIException {
+    public APIListResource<APIDevice> getDevices(APIDevice.DeviceFilter... filters) {
         return new APIListResource<APIDevice>(this, DEVICES_URI, new APIDeviceQueryBuilder()
                 .filterWithDeviceFilters(filters));
     }
 
     @Override
-    public APIListResource<APIDevice> getDevices(APIDeviceQueryBuilder queryBuilder) throws APIException {
+    public APIListResource<APIDevice> getDevices(APIDeviceQueryBuilder queryBuilder) {
         return new APIListResource<APIDevice>(this, DEVICES_URI, queryBuilder);
     }
 
     @Override
     public APIListResource<APIDevice> getDevices(
             long offset, long limit, String search, APISort sort,
-            APIDevice.DeviceFilter... filters) throws APIException {
+            APIDevice.DeviceFilter... filters) {
         if (limit <= 0) {
             limit = 10;
         }
@@ -619,12 +619,12 @@ public class DefaultAPIClient implements APIClient {
     }
 
     @Override
-    public APIListResource<APILabelGroup> getLabelGroups() throws APIException {
+    public APIListResource<APILabelGroup> getLabelGroups() {
         return new APIListResource<APILabelGroup>(this, LABEL_GROUPS_URI);
     }
 
     @Override
-    public APIListResource<APILabelGroup> getLabelGroups(APIQueryBuilder queryBuilder) throws APIException {
+    public APIListResource<APILabelGroup> getLabelGroups(APIQueryBuilder queryBuilder) {
         return new APIListResource<APILabelGroup>(this, LABEL_GROUPS_URI, queryBuilder);
     }
 

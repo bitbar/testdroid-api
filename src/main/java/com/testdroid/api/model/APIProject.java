@@ -12,6 +12,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
+import static com.testdroid.api.model.APIDevice.OsType;
+import static com.testdroid.api.model.APITestRunConfig.Mode;
+
 /**
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
  * @author Slawomir Pawluk <slawomir.pawluk@bitbar.com>
@@ -28,55 +31,49 @@ public class APIProject extends APIEntity {
 
     @XmlType(namespace = "APIProject")
     public static enum Type {
-        ANDROID(APIDevice.OsType.ANDROID, "Android"),
-        CTS(APIDevice.OsType.ANDROID, "Android CTS"),
-        IOS(APIDevice.OsType.IOS, "iOS UI Automation"),
-        UIAUTOMATOR(APIDevice.OsType.ANDROID, "Android UIAutomator"),
-        REMOTECONTROL(APIDevice.OsType.ANDROID, "Android Remote Control"),
-        CALABASH(APIDevice.OsType.ANDROID, "Calabash Android"),
-        CALABASH_IOS(APIDevice.OsType.IOS, "Calabash iOS"),
-        APPIUM_ANDROID(APIDevice.OsType.ANDROID, "Appium Android"),
-        APPIUM_IOS(APIDevice.OsType.IOS, "Appium iOS"),
-        TELERIK_ANDROID(APIDevice.OsType.ANDROID, "Telerik Android"),
-        TELERIK_IOS(APIDevice.OsType.IOS, "Telerik iOS"),
-        GENERIC(null, "Generic");
+        ANDROID(OsType.ANDROID, Mode.APP_CRAWLER, APIProjectJobConfig.Type.DEFAULT, AndroidFiles.class, "Android"),
+        CTS(OsType.ANDROID, Mode.CTS, APIProjectJobConfig.Type.CTS, null, "Android CTS"),
+        IOS(OsType.IOS, Mode.IOS, APIProjectJobConfig.Type.IOS, IOSFiles.class, "iOS UI Automation"),
+        UIAUTOMATOR(OsType.ANDROID, Mode.UIAUTOMATOR, APIProjectJobConfig.Type.UIAUTOMATOR, UIAutomatorFiles.class,
+                "Android UIAutomator"),
+        REMOTECONTROL(OsType.ANDROID, Mode.REMOTECONTROL, APIProjectJobConfig.Type.REMOTECONTROL,
+                RemoteControlFiles.class, "Android Remote Control"),
+        CALABASH(OsType.ANDROID, Mode.CALABASH, APIProjectJobConfig.Type.CALABASH, CalabashFiles.class,
+                "Calabash Android"),
+        CALABASH_IOS(OsType.IOS, Mode.CALABASH_IOS, APIProjectJobConfig.Type.CALABASH_IOS, CalabashIOSFiles.class,
+                "Calabash iOS"),
+        APPIUM_ANDROID(OsType.ANDROID, Mode.APPIUM_ANDROID, APIProjectJobConfig.Type.APPIUM_ANDROID,
+                AppiumAndroidFiles.class, "Appium Android"),
+        APPIUM_IOS(OsType.IOS, Mode.APPIUM_IOS, APIProjectJobConfig.Type.APPIUM_IOS, AppiumIOSFiles.class,
+                "Appium iOS"),
+        TELERIK_ANDROID(OsType.ANDROID, Mode.TELERIK_ANDROID, APIProjectJobConfig.Type.TELERIK_ANDROID,
+                TelerikAndroidFiles.class, "Telerik Android"),
+        TELERIK_IOS(OsType.IOS, Mode.TELERIK_IOS, APIProjectJobConfig.Type.TELERIK_IOS, TelerikIOSFiles.class,
+                "Telerik iOS"),
+        GENERIC(OsType.UNDEFINED, Mode.GENERIC, APIProjectJobConfig.Type.GENERIC, null, "Generic");
+
+        private APITestRunConfig.Mode defaultMode;
+
+        private Class<? extends APIFiles> filesClass;
+
+        private APIProjectJobConfig.Type jobConfigType;
 
         private APIDevice.OsType osType;
 
         private String title;
 
-        private Type(APIDevice.OsType osType, String title) {
+        private Type(
+                OsType osType, Mode defaultMode, APIProjectJobConfig.Type jobConfigType,
+                Class<? extends APIFiles> filesClass, String title) {
             this.osType = osType;
+            this.defaultMode = defaultMode;
+            this.jobConfigType = jobConfigType;
+            this.filesClass = filesClass;
             this.title = title;
         }
 
         public Class<? extends APIFiles> getFilesClass() {
-            switch (this) {
-                case ANDROID:
-                    return AndroidFiles.class;
-                case CTS:
-                    return null;
-                case IOS:
-                    return IOSFiles.class;
-                case UIAUTOMATOR:
-                    return UIAutomatorFiles.class;
-                case REMOTECONTROL:
-                    return RemoteControlFiles.class;
-                case CALABASH:
-                    return CalabashFiles.class;
-                case CALABASH_IOS:
-                    return CalabashIOSFiles.class;
-                case APPIUM_ANDROID:
-                    return AppiumAndroidFiles.class;
-                case APPIUM_IOS:
-                    return AppiumIOSFiles.class;
-                case TELERIK_ANDROID:
-                    return TelerikAndroidFiles.class;
-                case TELERIK_IOS:
-                    return TelerikIOSFiles.class;
-                default:
-                    return null;
-            }
+            return filesClass;
         }
 
         public APIDevice.OsType getOsType() {
@@ -85,6 +82,14 @@ public class APIProject extends APIEntity {
 
         public String getTitle() {
             return title;
+        }
+
+        public APITestRunConfig.Mode getDefaultMode() {
+            return defaultMode;
+        }
+
+        public APIProjectJobConfig.Type getJobConfigType() {
+            return jobConfigType;
         }
     }
 
@@ -116,13 +121,15 @@ public class APIProject extends APIEntity {
 
     private Date archiveTime;
 
+    private Long frameworkId;
+
     public APIProject() {
     }
 
     public APIProject(
             Long id, Date createTime, Date archiveTime, String name, String description, Type type, Long sharedById,
-            String sharedByEmail,
-            boolean common, APIArchivingStrategy archivingStrategy, Integer archivingItemCount) {
+            String sharedByEmail, boolean common, APIArchivingStrategy archivingStrategy, Integer archivingItemCount,
+            Long frameworkId) {
         super(id);
         this.createTime = createTime;
         this.archiveTime = archiveTime;
@@ -134,6 +141,7 @@ public class APIProject extends APIEntity {
         this.common = common;
         this.archivingStrategy = archivingStrategy;
         this.archivingItemCount = archivingItemCount;
+        this.frameworkId = frameworkId;
         this.jobConfig = new HashMap<APIProjectJobConfig.Type, APIProjectJobConfig>();
     }
 
@@ -233,6 +241,14 @@ public class APIProject extends APIEntity {
             default:
                 return "";
         }
+    }
+
+    public Long getFrameworkId() {
+        return frameworkId;
+    }
+
+    public void setFrameworkId(Long frameworkId) {
+        this.frameworkId = frameworkId;
     }
 
     private String getConfigURI() {
@@ -615,5 +631,6 @@ public class APIProject extends APIEntity {
         this.type = apiProject.type;
         this.archivingStrategy = apiProject.archivingStrategy;
         this.archivingItemCount = apiProject.archivingItemCount;
+        this.frameworkId = apiProject.frameworkId;
     }
 }

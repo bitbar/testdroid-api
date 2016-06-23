@@ -98,10 +98,11 @@ public class APIDeviceRun extends APIEntity {
             Long id, Long deviceSessionId, Long launchAppDuration, APIDevice device, Integer testCaseSuccessNo,
             Integer testCaseAllNo, Integer testCasePassedNo, Integer testCaseFailedNo, Integer testCaseSkippedNo,
             APISoftwareVersion softwareVersion, Date createTime, Date startTime, APIDeviceRunState currentState,
-            APIDeviceRunState interruptedByState, RunStatus runStatus, String deviceName, String deviceSerialId) {
+            APIDeviceRunState interruptedByState, RunStatus runStatus, String deviceName, String deviceSerialId,
+            Long testRunId, String testRunName, Long projectId, String projectName) {
         this(id, deviceSessionId, launchAppDuration, device, testCaseSuccessNo, testCaseAllNo, testCasePassedNo,
                 testCaseFailedNo, testCaseSkippedNo, softwareVersion, createTime, startTime, runStatus, deviceName,
-                deviceSerialId, null, null, null, null);
+                deviceSerialId, testRunId, testRunName, projectId, projectName);
         this.currentState = currentState;
         this.interruptedByState = interruptedByState;
     }

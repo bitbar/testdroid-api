@@ -112,7 +112,7 @@ public interface APIClient {
      * @return list resource for accessing all devices matching selected filters, if no filter used returns all devices
      * @throws APIException on API error
      */
-    public APIListResource<APIDevice> getDevices() throws APIException;
+    public APIListResource<APIDevice> getDevices();
 
     /**
      * return resource for accessing list of devices in Cloud using provided filters
@@ -122,7 +122,7 @@ public interface APIClient {
      * @throws APIException on API error
      * @deprecated
      */
-    public APIListResource<APIDevice> getDevices(APIDevice.DeviceFilter... filters) throws APIException;
+    public APIListResource<APIDevice> getDevices(APIDevice.DeviceFilter... filters);
 
     /**
      * Fetch and return list of devices in Cloud using provided filters.
@@ -132,7 +132,7 @@ public interface APIClient {
      * @throws APIException
      * @since 1.3.34
      */
-    public APIListResource<APIDevice> getDevices(APIDeviceQueryBuilder queryBuilder) throws APIException;
+    public APIListResource<APIDevice> getDevices(APIDeviceQueryBuilder queryBuilder);
 
     /**
      * Fetch and return list of devices in Cloud using provided filters.
@@ -144,10 +144,10 @@ public interface APIClient {
      */
     public APIListResource<APIDevice> getDevices(
             long offset, long limit, String search, APISort sort,
-            APIDevice.DeviceFilter... filters) throws APIException;
+            APIDevice.DeviceFilter... filters);
 
-    public APIListResource<APILabelGroup> getLabelGroups() throws APIException;
+    public APIListResource<APILabelGroup> getLabelGroups();
 
-    public APIListResource<APILabelGroup> getLabelGroups(APIQueryBuilder queryBuilder) throws APIException;
+    public APIListResource<APILabelGroup> getLabelGroups(APIQueryBuilder queryBuilder);
 
 }
