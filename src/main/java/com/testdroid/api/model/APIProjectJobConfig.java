@@ -61,10 +61,6 @@ public class APIProjectJobConfig extends APIEntity {
 
     private String lastModifiedBy;
 
-    private Long projectId;
-
-    private String projectName;
-
     private Type type;
 
     private Integer version;
@@ -73,22 +69,20 @@ public class APIProjectJobConfig extends APIEntity {
     }
 
     public APIProjectJobConfig(
-            Long id, String type, String content, Integer version, boolean global, Long projectId, String projectName,
+            Long id, String type, String content, Integer version, boolean global,
             Date lastModificationTime, String lastModifiedBy, Long frameworkId) {
-        this(id, EnumUtils.getEnum(Type.class, type), content, version, global, projectId, projectName,
+        this(id, EnumUtils.getEnum(Type.class, type), content, version, global,
                 lastModificationTime, lastModifiedBy, frameworkId);
     }
 
     public APIProjectJobConfig(
-            Long id, Type type, String content, Integer version, boolean global, Long projectId, String projectName,
+            Long id, Type type, String content, Integer version, boolean global,
             Date lastModificationTime, String lastModifiedBy, Long frameworkId) {
         super(id);
         this.type = type;
         this.content = content;
         this.version = version;
         this.global = global;
-        this.projectId = projectId;
-        this.projectName = projectName;
         this.lastModificationTime = lastModificationTime;
         this.lastModifiedBy = lastModifiedBy;
         this.frameworkId = frameworkId;
@@ -142,22 +136,6 @@ public class APIProjectJobConfig extends APIEntity {
         this.global = global;
     }
 
-    public Long getProjectId() {
-        return projectId;
-    }
-
-    public void setProjectId(Long projectId) {
-        this.projectId = projectId;
-    }
-
-    public String getProjectName() {
-        return projectName;
-    }
-
-    public void setProjectName(String projectName) {
-        this.projectName = projectName;
-    }
-
     public Long getFrameworkId() {
         return frameworkId;
     }
@@ -175,8 +153,6 @@ public class APIProjectJobConfig extends APIEntity {
         this.type = apiProjectJobConfig.type;
         this.version = apiProjectJobConfig.version;
         this.global = apiProjectJobConfig.global;
-        this.projectId = apiProjectJobConfig.projectId;
-        this.projectName = apiProjectJobConfig.projectName;
         this.lastModificationTime = apiProjectJobConfig.lastModificationTime;
         this.lastModifiedBy = apiProjectJobConfig.lastModifiedBy;
         this.frameworkId = apiProjectJobConfig.frameworkId;

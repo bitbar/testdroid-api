@@ -12,8 +12,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
-import static com.testdroid.api.model.APIDevice.*;
-import static com.testdroid.api.model.APITestRunConfig.*;
+import static com.testdroid.api.model.APIDevice.OsType;
+import static com.testdroid.api.model.APITestRunConfig.Mode;
 
 /**
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
@@ -121,13 +121,15 @@ public class APIProject extends APIEntity {
 
     private Date archiveTime;
 
+    private Long frameworkId;
+
     public APIProject() {
     }
 
     public APIProject(
             Long id, Date createTime, Date archiveTime, String name, String description, Type type, Long sharedById,
-            String sharedByEmail,
-            boolean common, APIArchivingStrategy archivingStrategy, Integer archivingItemCount) {
+            String sharedByEmail, boolean common, APIArchivingStrategy archivingStrategy, Integer archivingItemCount,
+            Long frameworkId) {
         super(id);
         this.createTime = createTime;
         this.archiveTime = archiveTime;
@@ -139,6 +141,7 @@ public class APIProject extends APIEntity {
         this.common = common;
         this.archivingStrategy = archivingStrategy;
         this.archivingItemCount = archivingItemCount;
+        this.frameworkId = frameworkId;
         this.jobConfig = new HashMap<APIProjectJobConfig.Type, APIProjectJobConfig>();
     }
 
@@ -238,6 +241,14 @@ public class APIProject extends APIEntity {
             default:
                 return "";
         }
+    }
+
+    public Long getFrameworkId() {
+        return frameworkId;
+    }
+
+    public void setFrameworkId(Long frameworkId) {
+        this.frameworkId = frameworkId;
     }
 
     private String getConfigURI() {
@@ -620,5 +631,6 @@ public class APIProject extends APIEntity {
         this.type = apiProject.type;
         this.archivingStrategy = apiProject.archivingStrategy;
         this.archivingItemCount = apiProject.archivingItemCount;
+        this.frameworkId = apiProject.frameworkId;
     }
 }
