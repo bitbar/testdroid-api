@@ -1,6 +1,7 @@
 package com.testdroid.api.model.devicetime;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.testdroid.api.APIEntity;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -10,6 +11,7 @@ import java.util.Date;
  * @author Damian Sniezek <damian.sniezek@bitbar.com>
  */
 @XmlRootElement
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class APIDeviceTimeStepTimeReportEntry extends APIBasicDeviceTime {
 
     private Long userId;

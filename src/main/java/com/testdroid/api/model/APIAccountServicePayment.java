@@ -28,6 +28,9 @@ public class APIAccountServicePayment extends APIEntity {
 
     private Long usedTime;
 
+    public APIAccountServicePayment() {
+    }
+
     public APIAccountServicePayment(
             Long id, Long accountId, Date startBillingPeriod, Date endBillingPeriod, String name, Long totalPrice,
             Long includedTime, Long additionalTime, Long usedTime) {

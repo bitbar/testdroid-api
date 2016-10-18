@@ -95,7 +95,9 @@ import java.util.logging.Logger;
         APITestRunDataAvailability.class,
         APIUserDeviceTime.class,
         APIDeviceTimeEntry.class,
-        APIEmailNotification.class
+        APIEmailNotification.class,
+        APIFramework.class,
+        APIS3Url.class
 })
 public abstract class APIEntity {
 

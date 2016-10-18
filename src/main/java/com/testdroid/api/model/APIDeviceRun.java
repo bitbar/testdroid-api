@@ -384,6 +384,12 @@ public class APIDeviceRun extends APIEntity {
         this.runStatus = runStatus;
     }
 
+    @JsonIgnore
+    public APIDeviceSessionDataAvailability getDataAvailability() throws APIException {
+        return getResource(createUri(selfURI, "/data-availability"), APIDeviceSessionDataAvailability.class)
+                .getEntity();
+    }
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {

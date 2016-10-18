@@ -36,13 +36,15 @@ public class APIFramework extends APIEntity {
 
     private String type;
 
+    private Boolean secured;
+
     public APIFramework() {
     }
 
     public APIFramework(
             Long id, Date createTime, String name, String description, APIDevice.OsType osType,
             String type, Long accountId, String mainUserEmail, String mainUserName, String requiredAppExtensions,
-            String requiredTestExtensions, Boolean forProjects, Boolean canRunFromUI) {
+            String requiredTestExtensions, Boolean forProjects, Boolean canRunFromUI, Boolean secured) {
         super(id);
         this.createTime = createTime;
         this.name = name;
@@ -56,6 +58,7 @@ public class APIFramework extends APIEntity {
         this.requiredTestExtensions = requiredTestExtensions;
         this.forProjects = forProjects;
         this.canRunFromUI = canRunFromUI;
+        this.secured = secured;
     }
 
     public Date getCreateTime() {
@@ -154,6 +157,14 @@ public class APIFramework extends APIEntity {
         this.mainUserName = mainUserName;
     }
 
+    public Boolean getSecured() {
+        return secured;
+    }
+
+    public void setSecured(Boolean secured) {
+        this.secured = secured;
+    }
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
@@ -171,5 +182,6 @@ public class APIFramework extends APIEntity {
         this.requiredTestExtensions = apiFramework.requiredTestExtensions;
         this.forProjects = apiFramework.forProjects;
         this.canRunFromUI = apiFramework.canRunFromUI;
+        this.secured = apiFramework.secured;
     }
 }
