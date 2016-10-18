@@ -49,7 +49,7 @@ public class APIQueryBuilder {
     }
 
     public APIQueryBuilder limit(long limit) {
-        if (limit > 0) {
+        if (limit >= 0) {
             this.limit = limit;
         }
         return this;

@@ -102,7 +102,7 @@ public class APIUser extends APIEntity {
             Long id, Long accountId, String email, String name, String state, String country, String city, String code,
             String address, String phone, String organization, String vatID, String timeZone,
             EmailNotification emailNotification, Date createTime, Date lastLoginTime, Boolean isMainUser,
-            Long mainUserId, String mainUserEmail, Long activeServiceId, String apiKey) {
+            Long mainUserId, String mainUserEmail, Long activeServiceId, String apiKey, Status status) {
         super(id);
         this.accountId = accountId;
         this.email = email;
@@ -125,6 +125,8 @@ public class APIUser extends APIEntity {
         this.accountId = accountId;
         this.apiKey = apiKey;
         this.activeServiceId = activeServiceId;
+        this.status = status;
+        this.enabled = status == Status.ENABLED;
     }
 
     public String getEmail() {

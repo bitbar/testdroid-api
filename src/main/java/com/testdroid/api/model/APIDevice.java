@@ -86,7 +86,24 @@ public class APIDevice extends APIEntity {
 
     private Boolean enabled;
 
+    private Long accountId;
+
+    private String mainUserEmail;
+
     public APIDevice() {
+    }
+
+    public APIDevice(
+            Long id, String displayName, APISoftwareVersion softwareVersion, Integer creditsPrice,
+            String imagePrefix, Integer imageTop, Integer imageLeft, Integer imageWidth, Integer imageHeight,
+            Integer frameExtraWidth, OsType osType, String frame80Url, String frame100Url, String frame160Url,
+            String frame400Url, Boolean online, Boolean locked, Boolean vncSupported, Boolean aroSupported,
+            Boolean enabled, Long accountId, String mainUserEmail) {
+        this(id, displayName, softwareVersion, creditsPrice, imagePrefix, imageTop, imageLeft, imageWidth,
+                imageHeight, frameExtraWidth, osType, frame80Url, frame100Url, frame160Url, frame400Url, online,
+                locked, vncSupported, aroSupported, enabled);
+        this.accountId = accountId;
+        this.mainUserEmail = mainUserEmail;
     }
 
     public APIDevice(
@@ -279,6 +296,22 @@ public class APIDevice extends APIEntity {
         this.enabled = enabled;
     }
 
+    public Long getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(Long accountId) {
+        this.accountId = accountId;
+    }
+
+    public String getMainUserEmail() {
+        return mainUserEmail;
+    }
+
+    public void setMainUserEmail(String mainUserEmail) {
+        this.mainUserEmail = mainUserEmail;
+    }
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
@@ -303,6 +336,8 @@ public class APIDevice extends APIEntity {
         this.vncSupported = apiDevice.vncSupported;
         this.aroSupported = apiDevice.aroSupported;
         this.enabled = apiDevice.enabled;
+        this.accountId = apiDevice.accountId;
+        this.mainUserEmail = apiDevice.mainUserEmail;
     }
 
 }

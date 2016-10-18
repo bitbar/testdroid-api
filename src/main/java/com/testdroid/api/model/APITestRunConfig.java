@@ -114,6 +114,8 @@ public class APITestRunConfig extends APIEntity {
 
     private Long timeout;
 
+    private Integer maxAutoRetriesCount;
+
     public APITestRunConfig() {
     }
 
@@ -124,7 +126,7 @@ public class APITestRunConfig extends APIEntity {
             String usedDeviceGroupName, Long creditsPrice, String deviceLanguageCode, String hookURL,
             String uiAutomatorTestClasses, Boolean launchApp, String instrumentationRunner, Boolean checkApp,
             Boolean appRequired, Boolean gamebenchEnabled, Boolean useAdditionalFiles, Boolean videoRecordingEnabled,
-            Long timeout, String appiumBrokerAddress, Boolean createVNCConnection) {
+            Long timeout, String appiumBrokerAddress, Boolean createVNCConnection, Integer maxAutoRetriesCount) {
         super(id);
         this.scheduler = scheduler;
         this.mode = mode;
@@ -152,6 +154,7 @@ public class APITestRunConfig extends APIEntity {
         this.useAdditionalFiles = useAdditionalFiles;
         this.appiumBrokerAddress = appiumBrokerAddress;
         this.createVNCConnection = createVNCConnection;
+        this.maxAutoRetriesCount = maxAutoRetriesCount;
     }
 
     public Long getProjectId() {
@@ -382,6 +385,14 @@ public class APITestRunConfig extends APIEntity {
         this.createVNCConnection = createVNCConnection;
     }
 
+    public Integer getMaxAutoRetriesCount() {
+        return maxAutoRetriesCount;
+    }
+
+    public void setMaxAutoRetriesCount(Integer maxAutoRetriesCount) {
+        this.maxAutoRetriesCount = maxAutoRetriesCount;
+    }
+
     @JsonIgnore
     public APITestRunParameter createParameter(final String key, final String value) throws APIException {
         Map<String, Object> body = new HashMap<String, Object>() {{
@@ -407,30 +418,30 @@ public class APITestRunConfig extends APIEntity {
     }
 
     public void update() throws APIException {
-        Map<String, Object> body = new HashMap<String, Object>() {{
-            put("scheduler", scheduler != null ? scheduler.name() : null);
-            put("mode", mode != null ? mode.name() : null);
-            put("autoScreenshots", autoScreenshots);
-            put("screenshotDir", screenshotDir);
-            put("limitationType", limitationType != null ? limitationType.name() : null);
-            put("limitationValue", limitationValue);
-            put("withAnnotation", withAnnotation);
-            put("withoutAnnotation", withoutAnnotation);
-            put("applicationUsername", applicationUsername);
-            put("applicationPassword", applicationPassword);
-            put("usedDeviceGroupId", usedDeviceGroupId);
-            put("deviceLanguageCode", deviceLanguageCode);
-            put("hookURL", hookURL);
-            put("uiAutomatorTestClasses", uiAutomatorTestClasses);
-            put("launchApp", launchApp);
-            put("instrumentationRunner", instrumentationRunner);
-            put("checkApp", checkApp);
-            put("appRequired", appRequired);
-            put("gamebenchEnabled", gamebenchEnabled);
-            put("timeout", timeout);
-            put("appiumBrokerAddress", appiumBrokerAddress);
-            put("createVNCConnection", createVNCConnection);
-        }};
+        Map<String, Object> body = new HashMap<String, Object>();
+        body.put("scheduler", scheduler != null ? scheduler.name() : null);
+        body.put("mode", mode != null ? mode.name() : null);
+        body.put("autoScreenshots", autoScreenshots);
+        body.put("screenshotDir", screenshotDir);
+        body.put("limitationType", limitationType != null ? limitationType.name() : null);
+        body.put("limitationValue", limitationValue);
+        body.put("withAnnotation", withAnnotation);
+        body.put("withoutAnnotation", withoutAnnotation);
+        body.put("applicationUsername", applicationUsername);
+        body.put("applicationPassword", applicationPassword);
+        body.put("usedDeviceGroupId", usedDeviceGroupId);
+        body.put("deviceLanguageCode", deviceLanguageCode);
+        body.put("hookURL", hookURL);
+        body.put("uiAutomatorTestClasses", uiAutomatorTestClasses);
+        body.put("launchApp", launchApp);
+        body.put("instrumentationRunner", instrumentationRunner);
+        body.put("checkApp", checkApp);
+        body.put("appRequired", appRequired);
+        body.put("gamebenchEnabled", gamebenchEnabled);
+        body.put("timeout", timeout);
+        body.put("appiumBrokerAddress", appiumBrokerAddress);
+        body.put("createVNCConnection", createVNCConnection);
+        body.put("maxAutoRetriesCount", maxAutoRetriesCount);
         APITestRunConfig config = postResource(selfURI, body, APITestRunConfig.class);
         clone(config);
     }
@@ -468,5 +479,6 @@ public class APITestRunConfig extends APIEntity {
         this.useAdditionalFiles = apiTestRunConfig.useAdditionalFiles;
         this.appiumBrokerAddress = apiTestRunConfig.appiumBrokerAddress;
         this.createVNCConnection = apiTestRunConfig.createVNCConnection;
+        this.maxAutoRetriesCount = apiTestRunConfig.maxAutoRetriesCount;
     }
 }

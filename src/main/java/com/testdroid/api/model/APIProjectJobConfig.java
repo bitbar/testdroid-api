@@ -27,8 +27,10 @@ public class APIProjectJobConfig extends APIEntity {
         REMOTECONTROL(APIDevice.OsType.ANDROID, "Android Remote Control"),
         CALABASH(APIDevice.OsType.ANDROID, "Android Calabash"),
         CALABASH_IOS(APIDevice.OsType.IOS, "iOS Calabash"),
+        APPIUM_ANDROID_SERVER_SIDE(APIDevice.OsType.ANDROID, "Android Appium server side"),
         APPIUM_ANDROID(APIDevice.OsType.ANDROID, "Android Appium"),
         APPIUM_IOS(APIDevice.OsType.IOS, "iOS Appium"),
+        APPIUM_IOS_SERVER_SIDE(APIDevice.OsType.IOS, "iOS Appium server side"),
         TELERIK_ANDROID(APIDevice.OsType.ANDROID, "Android Telerik Test Framework"),
         TELERIK_IOS(APIDevice.OsType.IOS, "iOS Telerik Test Framework"),
         GENERIC(APIDevice.OsType.UNDEFINED, "Undefined Framework");
