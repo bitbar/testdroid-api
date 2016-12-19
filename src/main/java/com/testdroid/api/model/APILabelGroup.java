@@ -18,16 +18,20 @@ public class APILabelGroup extends APIEntity {
 
     private boolean hiddenByDefault;
 
+    private boolean labelsSortAscending;
+
     private String name;
 
     public APILabelGroup() {
     }
 
-    public APILabelGroup(Long id, String name, String displayName, boolean hiddenByDefault) {
+    public APILabelGroup(
+            Long id, String name, String displayName, boolean hiddenByDefault, boolean labelsSortAscending) {
         super(id);
         this.name = name;
         this.displayName = displayName;
         this.hiddenByDefault = hiddenByDefault;
+        this.labelsSortAscending = labelsSortAscending;
     }
 
     public String getName() {
@@ -54,6 +58,14 @@ public class APILabelGroup extends APIEntity {
         this.hiddenByDefault = hiddenByDefault;
     }
 
+    public boolean isLabelsSortAscending() {
+        return labelsSortAscending;
+    }
+
+    public void setLabelsSortAscending(boolean labelsSortAscending) {
+        this.labelsSortAscending = labelsSortAscending;
+    }
+
     private String getDevicePropertiesURI() {
         return createUri(selfURI, "/labels");
     }
@@ -75,6 +87,7 @@ public class APILabelGroup extends APIEntity {
         cloneBase(from);
         this.displayName = apiLabelGroup.displayName;
         this.hiddenByDefault = apiLabelGroup.hiddenByDefault;
+        this.labelsSortAscending = apiLabelGroup.labelsSortAscending;
         this.name = apiLabelGroup.name;
     }
 }

@@ -82,8 +82,6 @@ public class APIDevice extends APIEntity {
 
     private Boolean vncSupported;
 
-    private Boolean aroSupported;
-
     private Boolean enabled;
 
     private Long accountId;
@@ -97,11 +95,11 @@ public class APIDevice extends APIEntity {
             Long id, String displayName, APISoftwareVersion softwareVersion, Integer creditsPrice,
             String imagePrefix, Integer imageTop, Integer imageLeft, Integer imageWidth, Integer imageHeight,
             Integer frameExtraWidth, OsType osType, String frame80Url, String frame100Url, String frame160Url,
-            String frame400Url, Boolean online, Boolean locked, Boolean vncSupported, Boolean aroSupported,
-            Boolean enabled, Long accountId, String mainUserEmail) {
+            String frame400Url, Boolean online, Boolean locked, Boolean vncSupported, Boolean enabled,
+            Long accountId, String mainUserEmail) {
         this(id, displayName, softwareVersion, creditsPrice, imagePrefix, imageTop, imageLeft, imageWidth,
                 imageHeight, frameExtraWidth, osType, frame80Url, frame100Url, frame160Url, frame400Url, online,
-                locked, vncSupported, aroSupported, enabled);
+                locked, vncSupported, enabled);
         this.accountId = accountId;
         this.mainUserEmail = mainUserEmail;
     }
@@ -110,8 +108,7 @@ public class APIDevice extends APIEntity {
             Long id, String displayName, APISoftwareVersion softwareVersion, Integer creditsPrice,
             String imagePrefix, Integer imageTop, Integer imageLeft, Integer imageWidth, Integer imageHeight,
             Integer frameExtraWidth, OsType osType, String frame80Url, String frame100Url, String frame160Url,
-            String frame400Url, Boolean online, Boolean locked, Boolean vncSupported, Boolean aroSupported,
-            Boolean enabled) {
+            String frame400Url, Boolean online, Boolean locked, Boolean vncSupported, Boolean enabled) {
         super(id);
         this.displayName = displayName;
         this.softwareVersion = softwareVersion;
@@ -130,7 +127,6 @@ public class APIDevice extends APIEntity {
         this.locked = locked;
         this.online = online;
         this.vncSupported = vncSupported;
-        this.aroSupported = aroSupported;
         this.enabled = enabled;
     }
 
@@ -272,14 +268,6 @@ public class APIDevice extends APIEntity {
         this.online = online;
     }
 
-    public Boolean isAroSupported() {
-        return aroSupported;
-    }
-
-    public void setAroSupported(Boolean aroSupported) {
-        this.aroSupported = aroSupported;
-    }
-
     public Boolean isVncSupported() {
         return vncSupported;
     }
@@ -334,7 +322,6 @@ public class APIDevice extends APIEntity {
         this.online = apiDevice.online;
         this.locked = apiDevice.locked;
         this.vncSupported = apiDevice.vncSupported;
-        this.aroSupported = apiDevice.aroSupported;
         this.enabled = apiDevice.enabled;
         this.accountId = apiDevice.accountId;
         this.mainUserEmail = apiDevice.mainUserEmail;
