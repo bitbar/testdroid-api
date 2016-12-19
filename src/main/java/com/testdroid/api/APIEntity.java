@@ -97,7 +97,28 @@ import java.util.logging.Logger;
         APIDeviceTimeEntry.class,
         APIEmailNotification.class,
         APIFramework.class,
-        APIS3Url.class
+        APIS3Url.class,
+        APIDeviceCleanupConfiguration.class,
+        APIAdminDevice.class,
+        APIAdminDeviceModel.class,
+        APIAdminDeviceType.class,
+        APIAdminDeviceSession.class,
+        APICluster.class,
+        APIDeviceModelCriterion.class,
+        APIDeviceStatus.class,
+        APIAdminEmail.class,
+        APIEvent.class,
+        APIAdminError.class,
+        APIProperty.class,
+        APISession.class,
+        APIAdminTestRun.class,
+        APIActiveUser.class,
+        APIAdminOverview.class,
+        APIAdminDeviceProblem.class,
+        APIAdminDeviceProblemPair.class,
+        APIAccount.class,
+        APILicense.class,
+        APIAdminInteractiveDeviceSession.class
 })
 public abstract class APIEntity {
 

@@ -31,7 +31,8 @@ public class APIProject extends APIEntity {
 
     @XmlType(namespace = "APIProject")
     public static enum Type {
-        ANDROID(OsType.ANDROID, Mode.APP_CRAWLER, APIProjectJobConfig.Type.DEFAULT, AndroidFiles.class, "Android"),
+        ANDROID(OsType.ANDROID, Mode.APP_CRAWLER, APIProjectJobConfig.Type.DEFAULT, AndroidFiles.class,
+                "Android Instrumentation"),
         CTS(OsType.ANDROID, Mode.CTS, APIProjectJobConfig.Type.CTS, null, "Android CTS"),
         IOS(OsType.IOS, Mode.IOS, APIProjectJobConfig.Type.IOS, IOSFiles.class, "iOS UI Automation"),
         UIAUTOMATOR(OsType.ANDROID, Mode.UIAUTOMATOR, APIProjectJobConfig.Type.UIAUTOMATOR, UIAutomatorFiles.class,
@@ -42,12 +43,16 @@ public class APIProject extends APIEntity {
                 "Calabash Android"),
         CALABASH_IOS(OsType.IOS, Mode.CALABASH_IOS, APIProjectJobConfig.Type.CALABASH_IOS, CalabashIOSFiles.class,
                 "Calabash iOS"),
+        XCTEST(OsType.IOS, Mode.CALABASH_IOS, APIProjectJobConfig.Type.XCTEST, CalabashIOSFiles.class,
+                "XCTest"),
+        XCUITEST(OsType.IOS, Mode.CALABASH_IOS, APIProjectJobConfig.Type.XCUITEST, CalabashIOSFiles.class,
+                "XCUITest"),
         APPIUM_ANDROID(OsType.ANDROID, Mode.APPIUM_ANDROID, APIProjectJobConfig.Type.APPIUM_ANDROID,
-                AppiumAndroidFiles.class, "Appium Android"),
+                AppiumAndroidFiles.class, "Appium Android client side"),
         APPIUM_ANDROID_SERVER_SIDE(OsType.ANDROID, Mode.CALABASH,
                 APIProjectJobConfig.Type.APPIUM_ANDROID_SERVER_SIDE, CalabashFiles.class, "Appium Android server side"),
         APPIUM_IOS(OsType.IOS, Mode.APPIUM_IOS, APIProjectJobConfig.Type.APPIUM_IOS, AppiumIOSFiles.class,
-                "Appium iOS"),
+                "Appium iOS client side"),
         APPIUM_IOS_SERVER_SIDE(OsType.IOS, Mode.CALABASH_IOS, APIProjectJobConfig.Type.APPIUM_IOS_SERVER_SIDE,
                 CalabashIOSFiles.class, "Appium iOS server side"),
         TELERIK_ANDROID(OsType.ANDROID, Mode.TELERIK_ANDROID, APIProjectJobConfig.Type.TELERIK_ANDROID,

@@ -33,6 +33,8 @@ public class APIProjectJobConfig extends APIEntity {
         APPIUM_IOS_SERVER_SIDE(APIDevice.OsType.IOS, "iOS Appium server side"),
         TELERIK_ANDROID(APIDevice.OsType.ANDROID, "Android Telerik Test Framework"),
         TELERIK_IOS(APIDevice.OsType.IOS, "iOS Telerik Test Framework"),
+        XCTEST(APIDevice.OsType.IOS, "iOS XCTest"),
+        XCUITEST(APIDevice.OsType.IOS, "iOS XCUITest"),
         GENERIC(APIDevice.OsType.UNDEFINED, "Undefined Framework");
 
         private String name;
