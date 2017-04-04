@@ -39,7 +39,7 @@ public class RunProjectSample {
             testRunConfig.setCheckApp(true);
             testRunConfig.setDeviceLanguageCode("EN");
             testRunConfig.setUsedDeviceGroupId(deviceGroup.getId());
-            testRunConfig.setMode(APITestRunConfig.Mode.FULL_RUN);
+            testRunConfig.setAppCrawlerRun(Boolean.FALSE);
 
             // Set hook URL to receive signal, when test run is finished.
             // Server will send POST request to specified URL:
@@ -76,10 +76,13 @@ public class RunProjectSample {
             }
 
             // After sending files to Testdroid Cloud files can be send back
-            AndroidFiles androidFiles = project.getFiles(AndroidFiles.class);
+            APIList<APIUserFile> androidFiles = project.getFiles().getEntity();
 
-            APIFiles.AndroidAppFile androidAppFile = androidFiles.getApp();
-            APIFiles.AndroidTestFile androidTestFile = androidFiles.getTest();
+            APIUserFile androidAppFile = androidFiles.getData().stream().filter(f -> APIUserFile.InputType
+                    .APPLICATION.equals(f.getInputType())).findAny().orElseGet(null);
+
+            APIUserFile androidTestFile = androidFiles.getData().stream().filter(f -> APIUserFile.InputType
+                    .TEST.equals(f.getInputType())).findAny().orElseGet(null);
 
         } catch (APIException apie) {
             System.err.println(apie.getMessage());

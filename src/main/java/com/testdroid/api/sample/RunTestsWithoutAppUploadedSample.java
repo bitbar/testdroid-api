@@ -20,7 +20,7 @@ public class RunTestsWithoutAppUploadedSample {
             APIDeviceGroup deviceGroup = me.getDeviceGroupsResource().getEntity().get(0);
 
             APITestRunConfig config = project.getTestRunConfig();
-            config.setMode(APITestRunConfig.Mode.FULL_RUN);
+            config.setAppCrawlerRun(Boolean.FALSE);
             config.setAppRequired(false);
             config.setUsedDeviceGroupId(deviceGroup.getId());
             config.update();

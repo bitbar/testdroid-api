@@ -174,7 +174,7 @@ public class APIDeviceStatus extends APIEntity {
         return batteryLevel;
     }
 
-    public void setBatteryLevel(Integer bateryLevel) {
+    public void setBatteryLevel(Integer batteryLevel) {
         this.batteryLevel = batteryLevel;
     }
 

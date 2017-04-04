@@ -34,9 +34,15 @@ public class APIFramework extends APIEntity {
 
     private String requiredTestExtensions;
 
-    private String type;
+    private Boolean retryable;
 
     private Boolean secured;
+
+    private Boolean skipOlderSdk;
+
+    private Boolean skipQueue;
+
+    private String type;
 
     public APIFramework() {
     }
@@ -44,7 +50,8 @@ public class APIFramework extends APIEntity {
     public APIFramework(
             Long id, Date createTime, String name, String description, APIDevice.OsType osType,
             String type, Long accountId, String mainUserEmail, String mainUserName, String requiredAppExtensions,
-            String requiredTestExtensions, Boolean forProjects, Boolean canRunFromUI, Boolean secured) {
+            String requiredTestExtensions, Boolean forProjects, Boolean canRunFromUI, Boolean secured,
+            Boolean retryable, Boolean skipQueue, Boolean skipOlderSdk) {
         super(id);
         this.createTime = createTime;
         this.name = name;
@@ -59,6 +66,9 @@ public class APIFramework extends APIEntity {
         this.forProjects = forProjects;
         this.canRunFromUI = canRunFromUI;
         this.secured = secured;
+        this.retryable = retryable;
+        this.skipQueue = skipQueue;
+        this.skipOlderSdk = skipOlderSdk;
     }
 
     public Date getCreateTime() {
@@ -165,6 +175,30 @@ public class APIFramework extends APIEntity {
         this.secured = secured;
     }
 
+    public Boolean getRetryable() {
+        return retryable;
+    }
+
+    public void setRetryable(Boolean retryable) {
+        this.retryable = retryable;
+    }
+
+    public Boolean getSkipOlderSdk() {
+        return skipOlderSdk;
+    }
+
+    public void setSkipOlderSdk(Boolean skipOlderSdk) {
+        this.skipOlderSdk = skipOlderSdk;
+    }
+
+    public Boolean getSkipQueue() {
+        return skipQueue;
+    }
+
+    public void setSkipQueue(Boolean skipQueue) {
+        this.skipQueue = skipQueue;
+    }
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
@@ -183,5 +217,8 @@ public class APIFramework extends APIEntity {
         this.forProjects = apiFramework.forProjects;
         this.canRunFromUI = apiFramework.canRunFromUI;
         this.secured = apiFramework.secured;
+        this.retryable = apiFramework.retryable;
+        this.skipQueue = apiFramework.skipQueue;
+        this.skipOlderSdk = apiFramework.skipOlderSdk;
     }
 }

@@ -15,7 +15,7 @@ public class APIAdminTestRun extends APIEntity {
 
     private Date endTime;
 
-    private APITestRunConfig.Mode mode;
+    private Boolean appCrawlerRun;
 
     private APITestRun.State state;
 
@@ -39,13 +39,18 @@ public class APIAdminTestRun extends APIEntity {
 
     private APITestRunConfig.Scheduler scheduler;
 
+    private Long frameworkId;
+
+    private String frameworkName;
+
     public APIAdminTestRun() {
     }
 
     public APIAdminTestRun(
             Long id, Date createTime, Date startTime, Date endTime, APITestRun.State state, Long startedById,
-            String userName, String projectName, String testRunName, APITestRunConfig.Mode mode, Float successRatio,
-            Integer priority, Long projectId, Long duration, APITestRunConfig.Scheduler scheduler) {
+            String userName, String projectName, String testRunName, Boolean appCrawlerRun, Float successRatio,
+            Integer priority, Long projectId, Long duration, APITestRunConfig.Scheduler scheduler, Long frameworkId,
+            String frameworkName) {
         super(id);
         this.createTime = createTime;
         this.startTime = startTime;
@@ -55,12 +60,14 @@ public class APIAdminTestRun extends APIEntity {
         this.userName = userName;
         this.projectName = projectName;
         this.testRunName = testRunName;
-        this.mode = mode;
+        this.appCrawlerRun = appCrawlerRun;
         this.successRatio = successRatio;
         this.priority = priority;
         this.projectId = projectId;
         this.duration = duration;
         this.scheduler = scheduler;
+        this.frameworkId = frameworkId;
+        this.frameworkName = frameworkName;
     }
 
     public Date getEndTime() {
@@ -111,12 +118,12 @@ public class APIAdminTestRun extends APIEntity {
         this.createTime = createTime;
     }
 
-    public APITestRunConfig.Mode getMode() {
-        return mode;
+    public Boolean getAppCrawlerRun() {
+        return appCrawlerRun;
     }
 
-    public void setMode(APITestRunConfig.Mode mode) {
-        this.mode = mode;
+    public void setAppCrawlerRun(Boolean appCrawlerRun) {
+        this.appCrawlerRun = appCrawlerRun;
     }
 
     public String getUserName() {
@@ -175,6 +182,22 @@ public class APIAdminTestRun extends APIEntity {
         this.scheduler = scheduler;
     }
 
+    public Long getFrameworkId() {
+        return frameworkId;
+    }
+
+    public void setFrameworkId(Long frameworkId) {
+        this.frameworkId = frameworkId;
+    }
+
+    public String getFrameworkName() {
+        return frameworkName;
+    }
+
+    public void setFrameworkName(String frameworkName) {
+        this.frameworkName = frameworkName;
+    }
+
     @Override
     protected <T extends APIEntity> void clone(T from) {
         APIAdminTestRun apiAdminTestRun = (APIAdminTestRun) from;
@@ -187,11 +210,13 @@ public class APIAdminTestRun extends APIEntity {
         this.state = apiAdminTestRun.state;
         this.projectName = apiAdminTestRun.projectName;
         this.testRunName = apiAdminTestRun.testRunName;
-        this.mode = apiAdminTestRun.mode;
+        this.appCrawlerRun = apiAdminTestRun.appCrawlerRun;
         this.successRatio = apiAdminTestRun.successRatio;
         this.priority = apiAdminTestRun.priority;
         this.projectId = apiAdminTestRun.projectId;
         this.duration = apiAdminTestRun.duration;
         this.scheduler = apiAdminTestRun.scheduler;
+        this.frameworkId = apiAdminTestRun.frameworkId;
+        this.frameworkName = apiAdminTestRun.frameworkName;
     }
 }

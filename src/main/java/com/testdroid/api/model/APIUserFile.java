@@ -30,9 +30,32 @@ public class APIUserFile extends APIEntity {
 
     private URL directUrl;
 
+    private URL iconDirectUrl;
+
+    private String mimetype;
+
+    private Direction direction;
+
+    private InputType inputType;
+
     private transient String storage;
 
     private transient String uri;
+
+    private transient String iconUri;
+
+    @XmlType(namespace = "APIUserFile")
+    public static enum InputType {
+        APPLICATION,
+        TEST,
+        DATA
+    }
+
+    @XmlType(namespace = "APIUserFile")
+    public static enum Direction {
+        INPUT,
+        OUTPUT
+    }
 
     @XmlType(namespace = "APIUserFile", name = "APIUserFileState")
     public static enum State {
@@ -43,24 +66,20 @@ public class APIUserFile extends APIEntity {
     public APIUserFile() {
     }
 
-    public APIUserFile(Long id, String name, Date createTime, Long size, State state) {
+    public APIUserFile(
+            Long id, String name, Date createTime, Long size, State state, String storage, String uri, String iconUri,
+            String mimetype, Direction direction, InputType inputType) {
         super(id);
         this.name = name;
         this.createTime = createTime;
         this.size = size;
         this.state = state;
-    }
-
-    public APIUserFile(Long id, String name, Date createTime, Long size, State state, String storage, String uri) {
-        this(id, name, createTime, size, state);
         this.storage = storage;
         this.uri = uri;
-    }
-
-    public APIUserFile(
-            Long id, String name, Date createTime, Long size, State state, APIUserFileProperty... fileProperties) {
-        this(id, name, createTime, size, state);
-        this.fileProperties = fileProperties;
+        this.iconUri = iconUri;
+        this.mimetype = mimetype;
+        this.direction = direction;
+        this.inputType = inputType;
     }
 
     public String getName() {
@@ -141,6 +160,47 @@ public class APIUserFile extends APIEntity {
         this.uri = uri;
     }
 
+    public String getMimetype() {
+        return mimetype;
+    }
+
+    public void setMimetype(String mimetype) {
+        this.mimetype = mimetype;
+    }
+
+    public Direction getDirection() {
+        return direction;
+    }
+
+    public void setDirection(Direction direction) {
+        this.direction = direction;
+    }
+
+    public InputType getInputType() {
+        return inputType;
+    }
+
+    public void setInputType(InputType inputType) {
+        this.inputType = inputType;
+    }
+
+    public URL getIconDirectUrl() {
+        return iconDirectUrl;
+    }
+
+    public void setIconDirectUrl(URL iconDirectUrl) {
+        this.iconDirectUrl = iconDirectUrl;
+    }
+
+    @JsonIgnore
+    public String getIconUri() {
+        return iconUri;
+    }
+
+    public void setIconUri(String iconUri) {
+        this.iconUri = iconUri;
+    }
+
     @JsonIgnore
     public InputStream getIcon() throws APIException {
         return getFile(getIconURI());
@@ -171,7 +231,12 @@ public class APIUserFile extends APIEntity {
         this.fileProperties = apiUserFile.fileProperties;
         this.state = apiUserFile.state;
         this.directUrl = apiUserFile.directUrl;
+        this.iconDirectUrl = apiUserFile.iconDirectUrl;
         this.storage = apiUserFile.storage;
         this.uri = apiUserFile.uri;
+        this.iconUri = apiUserFile.iconUri;
+        this.direction = apiUserFile.direction;
+        this.mimetype = apiUserFile.mimetype;
+        this.inputType = apiUserFile.inputType;
     }
 }

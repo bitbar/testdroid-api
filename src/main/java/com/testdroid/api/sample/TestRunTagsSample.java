@@ -28,7 +28,7 @@ public class TestRunTagsSample {
             APITestRunConfig config = project.getTestRunConfig();
 
             // Configure testrun
-            config.setMode(APITestRunConfig.Mode.APP_CRAWLER);
+            config.setAppCrawlerRun(Boolean.TRUE);
 
             config.update();
 

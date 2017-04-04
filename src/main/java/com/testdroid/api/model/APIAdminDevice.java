@@ -59,6 +59,8 @@ public class APIAdminDevice extends APIEntity {
 
     private String mainUserEmail;
 
+    private boolean locked;
+
     public APIAdminDevice() {
     }
 
@@ -66,7 +68,7 @@ public class APIAdminDevice extends APIEntity {
             Long id, String name, boolean enabled, String serialId, String fingerprint, String unlockGesture,
             APISoftwareVersion softwareVersion, Long deviceModelId, String deviceModelName, State state,
             Date stateTime, InitStep initStep, String ipAddress, APICluster cluster, Date lastOnlineTime,
-            Long accountId, String mainUserEmail) {
+            Long accountId, String mainUserEmail, Boolean locked) {
         super(id);
         this.name = name;
         this.enabled = enabled;
@@ -84,6 +86,7 @@ public class APIAdminDevice extends APIEntity {
         this.lastOnlineTime = lastOnlineTime;
         this.accountId = accountId;
         this.mainUserEmail = mainUserEmail;
+        this.locked = locked;
     }
 
     public String getName() {
@@ -212,6 +215,14 @@ public class APIAdminDevice extends APIEntity {
 
     public void setMainUserEmail(String mainUserEmail) {
         this.mainUserEmail = mainUserEmail;
+    }
+
+    public boolean isLocked() {
+        return locked;
+    }
+
+    public void setLocked(boolean locked) {
+        this.locked = locked;
     }
 
     @Override

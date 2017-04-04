@@ -35,7 +35,7 @@ public class RunProjectWithoutDeviceGroupSample {
             testRunConfig.setAutoScreenshots(false);
             testRunConfig.setCheckApp(true);
             testRunConfig.setDeviceLanguageCode("EN");
-            testRunConfig.setMode(APITestRunConfig.Mode.FULL_RUN);
+            testRunConfig.setAppCrawlerRun(Boolean.FALSE);
 
             // Update changes
             testRunConfig.update();

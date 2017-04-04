@@ -34,8 +34,6 @@ public class APITestRun extends APIEntity {
 
     protected Float executionRatio;
 
-    protected APIFiles files;
-
     protected Integer finishedDeviceCount;
 
     protected Long logsFileId;
@@ -70,16 +68,25 @@ public class APITestRun extends APIEntity {
 
     protected Integer abortedDeviceCount;
 
+    protected Long userId;
+
+    protected String gamebenchResultsUrl;
+
+    protected Long frameworkId;
+
+    protected String frameworkName;
+
     public APITestRun() {
     }
 
     public APITestRun(
             Long id, Integer number, Date createTime, String displayName, Float executionRatio,
-            Float successRatio, Long startedById, String startedByDisplayName, State state, Long projectId,
+            Float successRatio, Long startedById, String startedByDisplayName, State state, Long userId, Long projectId,
             Long screenshotsFileId, Long logsFileId, Integer testCaseCount, Integer successfulTestCaseCount,
             Integer totalDeviceCount, Integer finishedDeviceCount, Integer excludedDeviceCount,
             Integer errorsDeviceCount, Integer succeededDeviceCount, Integer runningDeviceCount,
-            Integer warningDeviceCount, Integer waitingDeviceCount, Integer abortedDeviceCount) {
+            Integer warningDeviceCount, Integer waitingDeviceCount, Integer abortedDeviceCount,
+            String gamebenchResultsUrl, Long frameworkId, String frameworkName) {
         super(id);
         this.number = number;
         this.createTime = createTime;
@@ -89,6 +96,7 @@ public class APITestRun extends APIEntity {
         this.startedById = startedById;
         this.startedByDisplayName = startedByDisplayName;
         this.state = state;
+        this.userId = userId;
         this.projectId = projectId;
         this.screenshotsFileId = screenshotsFileId;
         this.logsFileId = logsFileId;
@@ -103,6 +111,9 @@ public class APITestRun extends APIEntity {
         this.warningDeviceCount = warningDeviceCount;
         this.waitingDeviceCount = waitingDeviceCount;
         this.abortedDeviceCount = abortedDeviceCount;
+        this.gamebenchResultsUrl = gamebenchResultsUrl;
+        this.frameworkId = frameworkId;
+        this.frameworkName = frameworkName;
     }
 
     public Integer getNumber() {
@@ -241,16 +252,9 @@ public class APITestRun extends APIEntity {
         this.waitingDeviceCount = waitingDeviceCount;
     }
 
-    /**
-     * Returns APIFiles entity about files uploaded to this project.
-     * Depending on <code>type</code> it may be any subclass of <code>APIFiles</code> returned.
-     */
     @JsonIgnore
-    public <T extends APIFiles> T getFiles(Class<T> clazz) throws APIException {
-        if (files == null) {
-            files = getResource(getFilesURI(), clazz).getEntity();
-        }
-        return (T) files;
+    public APIListResource<APIUserFile> getFilesResource() throws APIException {
+        return getListResource(getFilesURI());
     }
 
     public Integer getWarningDeviceCount() {
@@ -331,6 +335,38 @@ public class APITestRun extends APIEntity {
 
     public void setAbortedDeviceCount(Integer abortedDeviceCount) {
         this.abortedDeviceCount = abortedDeviceCount;
+    }
+
+    public String getGamebenchResultsUrl() {
+        return gamebenchResultsUrl;
+    }
+
+    public void setGamebenchResultsUrl(String gamebenchResultsUrl) {
+        this.gamebenchResultsUrl = gamebenchResultsUrl;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public Long getFrameworkId() {
+        return frameworkId;
+    }
+
+    public void setFrameworkId(Long frameworkId) {
+        this.frameworkId = frameworkId;
+    }
+
+    public String getFrameworkName() {
+        return frameworkName;
+    }
+
+    public void setFrameworkName(String frameworkName) {
+        this.frameworkName = frameworkName;
     }
 
     public void delete() throws APIException {
@@ -457,12 +493,12 @@ public class APITestRun extends APIEntity {
         this.createTime = apiTestRun.createTime;
         this.displayName = apiTestRun.displayName;
         this.executionRatio = apiTestRun.executionRatio;
-        this.files = apiTestRun.files;
         this.number = apiTestRun.number;
         this.startedById = apiTestRun.startedById;
         this.startedByDisplayName = apiTestRun.startedByDisplayName;
         this.state = apiTestRun.state;
         this.successRatio = apiTestRun.successRatio;
+        this.userId = apiTestRun.userId;
         this.projectId = apiTestRun.projectId;
         this.screenshotsFileId = apiTestRun.screenshotsFileId;
         this.logsFileId = apiTestRun.logsFileId;
@@ -477,5 +513,8 @@ public class APITestRun extends APIEntity {
         this.succeededDeviceCount = apiTestRun.succeededDeviceCount;
         this.waitingDeviceCount = apiTestRun.waitingDeviceCount;
         this.abortedDeviceCount = apiTestRun.abortedDeviceCount;
+        this.gamebenchResultsUrl = apiTestRun.gamebenchResultsUrl;
+        this.frameworkId = apiTestRun.frameworkId;
+        this.frameworkName = apiTestRun.frameworkName;
     }
 }
