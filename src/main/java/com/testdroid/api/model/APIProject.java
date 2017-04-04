@@ -2,7 +2,7 @@ package com.testdroid.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.*;
-import com.testdroid.api.model.APIFiles.APIFile;
+import com.testdroid.api.model.APIUserFile;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.util.*;
 
 import static com.testdroid.api.model.APIDevice.OsType;
-import static com.testdroid.api.model.APITestRunConfig.Mode;
 
 /**
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
@@ -31,39 +30,20 @@ public class APIProject extends APIEntity {
 
     @XmlType(namespace = "APIProject")
     public static enum Type {
-        ANDROID(OsType.ANDROID, Mode.APP_CRAWLER, APIProjectJobConfig.Type.DEFAULT, AndroidFiles.class,
-                "Android Instrumentation"),
-        CTS(OsType.ANDROID, Mode.CTS, APIProjectJobConfig.Type.CTS, null, "Android CTS"),
-        IOS(OsType.IOS, Mode.IOS, APIProjectJobConfig.Type.IOS, IOSFiles.class, "iOS UI Automation"),
-        UIAUTOMATOR(OsType.ANDROID, Mode.UIAUTOMATOR, APIProjectJobConfig.Type.UIAUTOMATOR, UIAutomatorFiles.class,
-                "Android UIAutomator"),
-        REMOTECONTROL(OsType.ANDROID, Mode.REMOTECONTROL, APIProjectJobConfig.Type.REMOTECONTROL,
-                RemoteControlFiles.class, "Android Remote Control"),
-        CALABASH(OsType.ANDROID, Mode.CALABASH, APIProjectJobConfig.Type.CALABASH, CalabashFiles.class,
-                "Calabash Android"),
-        CALABASH_IOS(OsType.IOS, Mode.CALABASH_IOS, APIProjectJobConfig.Type.CALABASH_IOS, CalabashIOSFiles.class,
-                "Calabash iOS"),
-        XCTEST(OsType.IOS, Mode.CALABASH_IOS, APIProjectJobConfig.Type.XCTEST, CalabashIOSFiles.class,
-                "XCTest"),
-        XCUITEST(OsType.IOS, Mode.CALABASH_IOS, APIProjectJobConfig.Type.XCUITEST, CalabashIOSFiles.class,
-                "XCUITest"),
-        APPIUM_ANDROID(OsType.ANDROID, Mode.APPIUM_ANDROID, APIProjectJobConfig.Type.APPIUM_ANDROID,
-                AppiumAndroidFiles.class, "Appium Android client side"),
-        APPIUM_ANDROID_SERVER_SIDE(OsType.ANDROID, Mode.CALABASH,
-                APIProjectJobConfig.Type.APPIUM_ANDROID_SERVER_SIDE, CalabashFiles.class, "Appium Android server side"),
-        APPIUM_IOS(OsType.IOS, Mode.APPIUM_IOS, APIProjectJobConfig.Type.APPIUM_IOS, AppiumIOSFiles.class,
-                "Appium iOS client side"),
-        APPIUM_IOS_SERVER_SIDE(OsType.IOS, Mode.CALABASH_IOS, APIProjectJobConfig.Type.APPIUM_IOS_SERVER_SIDE,
-                CalabashIOSFiles.class, "Appium iOS server side"),
-        TELERIK_ANDROID(OsType.ANDROID, Mode.TELERIK_ANDROID, APIProjectJobConfig.Type.TELERIK_ANDROID,
-                TelerikAndroidFiles.class, "Telerik Android"),
-        TELERIK_IOS(OsType.IOS, Mode.TELERIK_IOS, APIProjectJobConfig.Type.TELERIK_IOS, TelerikIOSFiles.class,
-                "Telerik iOS"),
-        GENERIC(OsType.UNDEFINED, Mode.GENERIC, APIProjectJobConfig.Type.GENERIC, null, "Generic");
-
-        private APITestRunConfig.Mode defaultMode;
-
-        private Class<? extends APIFiles> filesClass;
+        ANDROID(OsType.ANDROID, APIProjectJobConfig.Type.DEFAULT, "Android Instrumentation"),
+        IOS(OsType.IOS, APIProjectJobConfig.Type.APPCRAWLER_IOS, "AppCrawler iOS"),
+        UIAUTOMATOR(OsType.ANDROID, APIProjectJobConfig.Type.UIAUTOMATOR, "Android UIAutomator"),
+        CALABASH(OsType.ANDROID, APIProjectJobConfig.Type.CALABASH, "Calabash Android"),
+        CALABASH_IOS(OsType.IOS, APIProjectJobConfig.Type.CALABASH_IOS, "Calabash iOS"),
+        XCTEST(OsType.IOS, APIProjectJobConfig.Type.XCTEST, "XCTest"),
+        XCUITEST(OsType.IOS, APIProjectJobConfig.Type.XCUITEST, "XCUITest"),
+        APPIUM_ANDROID(OsType.ANDROID, APIProjectJobConfig.Type.APPIUM_ANDROID, "Appium Android client side"),
+        APPIUM_ANDROID_SERVER_SIDE(OsType.ANDROID, APIProjectJobConfig.Type.APPIUM_ANDROID_SERVER_SIDE,
+                "Appium Android server side"),
+        APPIUM_IOS(OsType.IOS, APIProjectJobConfig.Type.APPIUM_IOS, "Appium iOS client side"),
+        APPIUM_IOS_SERVER_SIDE(OsType.IOS, APIProjectJobConfig.Type.APPIUM_IOS_SERVER_SIDE,
+                "Appium iOS server side"),
+        GENERIC(OsType.UNDEFINED, APIProjectJobConfig.Type.GENERIC, "Generic");
 
         private APIProjectJobConfig.Type jobConfigType;
 
@@ -71,18 +51,10 @@ public class APIProject extends APIEntity {
 
         private String title;
 
-        private Type(
-                OsType osType, Mode defaultMode, APIProjectJobConfig.Type jobConfigType,
-                Class<? extends APIFiles> filesClass, String title) {
+        private Type(OsType osType, APIProjectJobConfig.Type jobConfigType, String title) {
             this.osType = osType;
-            this.defaultMode = defaultMode;
             this.jobConfigType = jobConfigType;
-            this.filesClass = filesClass;
             this.title = title;
-        }
-
-        public Class<? extends APIFiles> getFilesClass() {
-            return filesClass;
         }
 
         public APIDevice.OsType getOsType() {
@@ -91,10 +63,6 @@ public class APIProject extends APIEntity {
 
         public String getTitle() {
             return title;
-        }
-
-        public APITestRunConfig.Mode getDefaultMode() {
-            return defaultMode;
         }
 
         public APIProjectJobConfig.Type getJobConfigType() {
@@ -109,8 +77,6 @@ public class APIProject extends APIEntity {
     private boolean common;
 
     private String description;
-
-    private APIFiles files;
 
     private byte[] icon;
 
@@ -384,19 +350,9 @@ public class APIProject extends APIEntity {
         return jobConfig.get(type);
     }
 
-    /**
-     * Returns APIFiles entity about files uploaded to this project.
-     * Depending on <code>type</code> it may be any subclass of <code>APIFiles</code> returned.
-     */
     @JsonIgnore
-    public <T extends APIFiles> T getFiles(Class<T> clazz) throws APIException {
-        if (clazz == null || !clazz.isAssignableFrom(type.getFilesClass())) {
-            throw new APIException("This project type does not have requested file types");
-        }
-        if (files == null) {
-            files = getResource(getFilesURI(), clazz).getEntity();
-        }
-        return (T) files;
+    public APIListResource<APIUserFile> getFiles() throws APIException {
+        return getListResource(getFilesURI());
     }
 
     @JsonIgnore
@@ -438,7 +394,7 @@ public class APIProject extends APIEntity {
             Long dataFileId) throws APIException {
         Map<String, Object> body = new HashMap<String, Object>();
         body.put("scheduler", config.getScheduler() != null ? config.getScheduler().name() : null);
-        body.put("mode", config.getMode() != null ? config.getMode().name() : null);
+        body.put("appCrawlerRun", config.getAppCrawlerRun());
         body.put("autoScreenshots", config.isAutoScreenshots());
         body.put("screenshotDir", config.getScreenshotDir());
         body.put("limitationType", config.getLimitationType() != null ? config.getLimitationType().name() : null);
@@ -576,18 +532,18 @@ public class APIProject extends APIEntity {
     }
 
     @JsonIgnore
-    public APIFiles.APIFile uploadApplication(File file, String contentType) throws APIException {
-        return postFile(getUploadApplicationURI(), file, contentType, APIFile.class);
+    public APIUserFile uploadApplication(File file, String contentType) throws APIException {
+        return postFile(getUploadApplicationURI(), file, contentType, APIUserFile.class);
     }
 
     @JsonIgnore
-    public APIFiles.APIFile uploadTest(File file, String contentType) throws APIException {
-        return postFile(getUploadTestURI(), file, contentType, APIFile.class);
+    public APIUserFile uploadTest(File file, String contentType) throws APIException {
+        return postFile(getUploadTestURI(), file, contentType, APIUserFile.class);
     }
 
     @JsonIgnore
-    public APIFiles.APIFile uploadData(File file, String contentType) throws APIException {
-        return postFile(getUploadDataURI(), file, contentType, APIFile.class);
+    public APIUserFile uploadData(File file, String contentType) throws APIException {
+        return postFile(getUploadDataURI(), file, contentType, APIUserFile.class);
     }
 
     @JsonIgnore
@@ -631,7 +587,6 @@ public class APIProject extends APIEntity {
         this.createTime = apiProject.createTime;
         this.archiveTime = apiProject.archiveTime;
         this.description = apiProject.description;
-        this.files = apiProject.files;
         this.icon = apiProject.icon;
         this.jobConfig = apiProject.jobConfig;
         this.name = apiProject.name;

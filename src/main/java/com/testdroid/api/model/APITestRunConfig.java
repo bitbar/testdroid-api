@@ -24,34 +24,6 @@ public class APITestRunConfig extends APIEntity {
     }
 
     @XmlType(namespace = "APITestRunConfig")
-    public static enum Mode {
-        FULL_RUN("Full run"),
-        APP_CRAWLER("App crawler"),
-        CTS("CTS"),
-        IOS("iOS"),
-        UIAUTOMATOR("UIAutomator"),
-        REMOTECONTROL("Remote control"),
-        CALABASH("Calabash Android"),
-        CALABASH_IOS("Calabash iOS"),
-        APPIUM_ANDROID("Appium Android"),
-        APPIUM_IOS("Appium iOS"),
-        IOS_CRAWLER("iOS App crawler"),
-        TELERIK_ANDROID("Telerik Android"),
-        TELERIK_IOS("Telerik iOS"),
-        GENERIC("Generic");
-
-        private String friendlyName;
-
-        private Mode(String friendlyName) {
-            this.friendlyName = friendlyName;
-        }
-
-        public String getFriendlyName() {
-            return friendlyName;
-        }
-    }
-
-    @XmlType(namespace = "APITestRunConfig")
     public static enum Scheduler {
         PARALLEL,
         SERIAL,
@@ -92,7 +64,7 @@ public class APITestRunConfig extends APIEntity {
 
     private String limitationValue;
 
-    private Mode mode;
+    private Boolean appCrawlerRun;
 
     private Long projectId;
 
@@ -120,7 +92,7 @@ public class APITestRunConfig extends APIEntity {
     }
 
     public APITestRunConfig(
-            Long id, Scheduler scheduler, Mode mode, Boolean autoScreenshots,
+            Long id, Scheduler scheduler, Boolean appCrawlerRun, Boolean autoScreenshots,
             String screenshotDir, LimitationType limitationType, String limitationValue, String withAnnotation,
             String withoutAnnotation, String applicationUsername, String applicationPassword, Long usedDeviceGroupId,
             String usedDeviceGroupName, Long creditsPrice, String deviceLanguageCode, String hookURL,
@@ -129,7 +101,7 @@ public class APITestRunConfig extends APIEntity {
             Long timeout, String appiumBrokerAddress, Boolean createVNCConnection, Integer maxAutoRetriesCount) {
         super(id);
         this.scheduler = scheduler;
-        this.mode = mode;
+        this.appCrawlerRun = appCrawlerRun;
         this.autoScreenshots = autoScreenshots;
         this.screenshotDir = screenshotDir;
         this.limitationType = limitationType;
@@ -173,12 +145,12 @@ public class APITestRunConfig extends APIEntity {
         this.scheduler = scheduler;
     }
 
-    public Mode getMode() {
-        return mode;
+    public Boolean getAppCrawlerRun() {
+        return appCrawlerRun;
     }
 
-    public void setMode(Mode mode) {
-        this.mode = mode;
+    public void setAppCrawlerRun(Boolean appCrawlerRun) {
+        this.appCrawlerRun = appCrawlerRun;
     }
 
     public LimitationType getLimitationType() {
@@ -420,7 +392,7 @@ public class APITestRunConfig extends APIEntity {
     public void update() throws APIException {
         Map<String, Object> body = new HashMap<String, Object>();
         body.put("scheduler", scheduler != null ? scheduler.name() : null);
-        body.put("mode", mode != null ? mode.name() : null);
+        body.put("appCrawlerRun", appCrawlerRun);
         body.put("autoScreenshots", autoScreenshots);
         body.put("screenshotDir", screenshotDir);
         body.put("limitationType", limitationType != null ? limitationType.name() : null);
@@ -465,7 +437,7 @@ public class APITestRunConfig extends APIEntity {
         this.launchApp = apiTestRunConfig.launchApp;
         this.limitationType = apiTestRunConfig.limitationType;
         this.limitationValue = apiTestRunConfig.limitationValue;
-        this.mode = apiTestRunConfig.mode;
+        this.appCrawlerRun = apiTestRunConfig.appCrawlerRun;
         this.projectId = apiTestRunConfig.projectId;
         this.runAvailable = apiTestRunConfig.runAvailable;
         this.scheduler = apiTestRunConfig.scheduler;

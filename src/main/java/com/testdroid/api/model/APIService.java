@@ -134,7 +134,7 @@ public class APIService extends APIEntity {
     }
 
     public String getPriceString() {
-        return CurrencyFormatter.format(centPrice);
+        return CurrencyFormatter.format(centPrice.longValue());
     }
 
     public Integer getIncludedHours() {

@@ -1,4 +1,3 @@
-AndroidFiles
 APIAccountService
 APIAccountServicePayment
 APIBillingPeriod
@@ -15,7 +14,6 @@ APIDeviceSessionDataAvailability
 APIDeviceSessionStep
 APIDeviceTimeEntry
 APIEmailNotification
-APIFiles
 APIFileSet
 APIFramework
 APILabelGroup
@@ -44,16 +42,7 @@ APIUserDeviceTime
 APIUserFile
 APIUserFileProperty
 APIUserFileTag
-AppiumAndroidFiles
-AppiumIOSFiles
-CalabashFiles
-CalabashIOSFiles
 DeviceRunStateType
-IOSFiles
-RemoteControlFiles
-TelerikAndroidFiles
-TelerikIOSFiles
-UIAutomatorFiles
 APIDeviceCleanupConfiguration
 APIAccount
 APIActiveUser
@@ -75,3 +64,4 @@ APIEvent
 APILicense
 APIProperty
 APISession
+APIUserIntegration

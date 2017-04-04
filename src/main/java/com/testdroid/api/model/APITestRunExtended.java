@@ -2,6 +2,7 @@ package com.testdroid.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
+import com.testdroid.api.APIList;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
@@ -16,7 +17,7 @@ public class APITestRunExtended extends APITestRun {
 
     private APITag[] tags;
 
-    private APIFiles files;
+    private APIList<APIUserFile> files;
 
     private boolean billable;
 
@@ -25,18 +26,19 @@ public class APITestRunExtended extends APITestRun {
 
     public APITestRunExtended(
             Long id, Integer number, Date createTime, String displayName, Float executionRatio, Float successRatio,
-            Long startedById, String startedByDisplayName, State state, Long projectId, APIFiles files,
+            Long startedById, String startedByDisplayName, State state, Long userId, Long projectId,
             Long screenshotsFileId, Long logsFileId, Integer testCaseCount, Integer successfulTestCaseCount,
             Integer totalDeviceCount, Integer finishedDeviceCount, Integer excludedDeviceCount,
             Integer errorsDeviceCount, Integer succeededDeviceCount, Integer runningDeviceCount,
-            Integer warningDeviceCount, Integer waitingDeviceCount, Integer abortedDeviceCount, APITag... tags) {
+            Integer warningDeviceCount, Integer waitingDeviceCount, Integer abortedDeviceCount,
+            String gamebenchResultsUrl, Long frameworkId, String frameworkName, APITag... tags) {
         super(id, number, createTime, displayName, executionRatio, successRatio, startedById, startedByDisplayName,
-                state, projectId, screenshotsFileId, logsFileId, testCaseCount, successfulTestCaseCount,
+                state, userId, projectId, screenshotsFileId, logsFileId, testCaseCount, successfulTestCaseCount,
                 totalDeviceCount, finishedDeviceCount, excludedDeviceCount, errorsDeviceCount, succeededDeviceCount,
-                runningDeviceCount, warningDeviceCount, waitingDeviceCount, abortedDeviceCount);
+                runningDeviceCount, warningDeviceCount, waitingDeviceCount, abortedDeviceCount, gamebenchResultsUrl,
+                frameworkId, frameworkName);
         this.deviceCount = totalDeviceCount;
         this.tags = tags;
-        this.files = files;
     }
 
     public Integer getDeviceCount() {
@@ -55,11 +57,11 @@ public class APITestRunExtended extends APITestRun {
         this.tags = tags;
     }
 
-    public APIFiles getFiles() {
+    public APIList<APIUserFile> getFiles() {
         return files;
     }
 
-    public void setFiles(APIFiles files) {
+    public void setFiles(APIList<APIUserFile> files) {
         this.files = files;
     }
 
