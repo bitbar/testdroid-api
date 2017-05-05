@@ -36,8 +36,6 @@ import java.util.logging.Logger;
         APIDevice.class,
         APIDeviceGroup.class,
         APIDeviceProperty.class,
-        APIDeviceRun.class,
-        APIDeviceRunState.class,
         APIDeviceSession.class,
         APIDeviceSessionStep.class,
         APIExceptionMessage.class,
@@ -101,7 +99,8 @@ import java.util.logging.Logger;
         APIAccount.class,
         APILicense.class,
         APIAdminInteractiveDeviceSession.class,
-        APIUserIntegration.class
+        APIUserIntegration.class,
+        APIAdminDeviceSessionStatistics.class
 })
 public abstract class APIEntity {
 
