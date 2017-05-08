@@ -78,6 +78,10 @@ public class APIUser extends APIEntity {
 
     private String apiKey;
 
+    private Long createdById;
+
+    private String createdByEmail;
+
     @XmlType(namespace = "APIUser", name = "APIUserEmailNotification")
     public static enum EmailNotification {
         ALWAYS("always"),
@@ -296,6 +300,22 @@ public class APIUser extends APIEntity {
 
     public void setActiveServiceId(Long activeServiceId) {
         this.activeServiceId = activeServiceId;
+    }
+
+    public Long getCreatedById() {
+        return createdById;
+    }
+
+    public void setCreatedById(Long createdById) {
+        this.createdById = createdById;
+    }
+
+    public String getCreatedByEmail() {
+        return createdByEmail;
+    }
+
+    public void setCreatedByEmail(String createdByEmail) {
+        this.createdByEmail = createdByEmail;
     }
 
     private String getProjectsURI() {
@@ -565,5 +585,7 @@ public class APIUser extends APIEntity {
         this.enabled = apiUser.enabled;
         this.accountId = apiUser.accountId;
         this.apiKey = apiUser.apiKey;
+        this.createdById = apiUser.createdById;
+        this.createdByEmail = apiUser.createdByEmail;
     }
 }

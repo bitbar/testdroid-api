@@ -68,6 +68,8 @@ public class APITestRun extends APIEntity {
 
     protected Integer abortedDeviceCount;
 
+    protected Integer timeoutedDeviceCount;
+
     protected Long userId;
 
     protected String gamebenchResultsUrl;
@@ -86,7 +88,7 @@ public class APITestRun extends APIEntity {
             Integer totalDeviceCount, Integer finishedDeviceCount, Integer excludedDeviceCount,
             Integer errorsDeviceCount, Integer succeededDeviceCount, Integer runningDeviceCount,
             Integer warningDeviceCount, Integer waitingDeviceCount, Integer abortedDeviceCount,
-            String gamebenchResultsUrl, Long frameworkId, String frameworkName) {
+            Integer timeoutedDeviceCount, String gamebenchResultsUrl, Long frameworkId, String frameworkName) {
         super(id);
         this.number = number;
         this.createTime = createTime;
@@ -111,6 +113,7 @@ public class APITestRun extends APIEntity {
         this.warningDeviceCount = warningDeviceCount;
         this.waitingDeviceCount = waitingDeviceCount;
         this.abortedDeviceCount = abortedDeviceCount;
+        this.timeoutedDeviceCount = timeoutedDeviceCount;
         this.gamebenchResultsUrl = gamebenchResultsUrl;
         this.frameworkId = frameworkId;
         this.frameworkName = frameworkName;
@@ -337,6 +340,14 @@ public class APITestRun extends APIEntity {
         this.abortedDeviceCount = abortedDeviceCount;
     }
 
+    public Integer getTimeoutedDeviceCount() {
+        return timeoutedDeviceCount;
+    }
+
+    public void setTimeoutedDeviceCount(Integer timeoutedDeviceCount) {
+        this.timeoutedDeviceCount = timeoutedDeviceCount;
+    }
+
     public String getGamebenchResultsUrl() {
         return gamebenchResultsUrl;
     }
@@ -417,13 +428,26 @@ public class APITestRun extends APIEntity {
     }
 
     @JsonIgnore
-    public APIListResource<APIDeviceRun> getDeviceRunsResource() throws APIException {
+    public APIListResource<APIDeviceSession> getDeviceRunsResource() throws APIException {
         return getListResource(getDeviceRunsURI());
     }
 
     @JsonIgnore
     public APIListResource<APIDeviceSession> getDeviceSessionsResource() throws APIException {
         return getListResource(getDeviceSessionsURI());
+    }
+
+    @JsonIgnore
+    public APIListResource<APIDeviceSession> getDeviceSessionsResource(APIQueryBuilder queryBuilder)
+            throws APIException {
+        return getListResource(getDeviceSessionsURI(), queryBuilder);
+    }
+
+    @JsonIgnore
+    public APIListResource<APIDeviceSession> getDeviceSessionsResource(
+            long offset, long limit, String search, APISort sort)
+            throws APIException {
+        return getListResource(getDeviceSessionsURI(), offset, limit, search, sort, APIDeviceSession.class);
     }
 
     /**
@@ -433,7 +457,7 @@ public class APITestRun extends APIEntity {
      * @since 1.3.34
      */
     @JsonIgnore
-    public APIListResource<APIDeviceRun> getDeviceRunsResource(APIQueryBuilder queryBuilder) throws APIException {
+    public APIListResource<APIDeviceSession> getDeviceRunsResource(APIQueryBuilder queryBuilder) throws APIException {
         return getListResource(getDeviceRunsURI(), queryBuilder);
     }
 
@@ -447,9 +471,9 @@ public class APITestRun extends APIEntity {
      * @deprecated
      */
     @JsonIgnore
-    public APIListResource<APIDeviceRun> getDeviceRunsResource(long offset, long limit, String search, APISort sort)
+    public APIListResource<APIDeviceSession> getDeviceRunsResource(long offset, long limit, String search, APISort sort)
             throws APIException {
-        return getListResource(getDeviceRunsURI(), offset, limit, search, sort, APIDeviceRun.class);
+        return getListResource(getDeviceRunsURI(), offset, limit, search, sort, APIDeviceSession.class);
     }
 
     @JsonIgnore
@@ -513,6 +537,7 @@ public class APITestRun extends APIEntity {
         this.succeededDeviceCount = apiTestRun.succeededDeviceCount;
         this.waitingDeviceCount = apiTestRun.waitingDeviceCount;
         this.abortedDeviceCount = apiTestRun.abortedDeviceCount;
+        this.timeoutedDeviceCount = apiTestRun.timeoutedDeviceCount;
         this.gamebenchResultsUrl = apiTestRun.gamebenchResultsUrl;
         this.frameworkId = apiTestRun.frameworkId;
         this.frameworkName = apiTestRun.frameworkName;

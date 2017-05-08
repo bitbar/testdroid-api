@@ -7,8 +7,6 @@ APIConnection
 APIDevice
 APIDeviceGroup
 APIDeviceProperty
-APIDeviceRun
-APIDeviceRunState
 APIDeviceSession
 APIDeviceSessionDataAvailability
 APIDeviceSessionStep
@@ -65,3 +63,4 @@ APILicense
 APIProperty
 APISession
 APIUserIntegration
+APIAdminDeviceSessionStatistics

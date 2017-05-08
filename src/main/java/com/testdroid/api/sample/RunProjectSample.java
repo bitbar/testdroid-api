@@ -70,7 +70,7 @@ public class RunProjectSample {
             System.out.println(String.format("Created test run with name: %s", testRun.getDisplayName()));
             System.out.println("Device runs was also created for devices:");
 
-            for (APIDeviceRun deviceRun : testRun.getDeviceRunsResource().getEntity().getData()) {
+            for (APIDeviceSession deviceRun : testRun.getDeviceRunsResource().getEntity().getData()) {
                 System.out.println(String.format("Device: %s, created: %s",
                         deviceRun.getDevice().getDisplayName(), deviceRun.getCreateTime()));
             }

@@ -1,9 +1,11 @@
 package com.testdroid.api.model;
 
-import com.testdroid.api.APIEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.testdroid.api.*;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import java.io.InputStream;
 import java.util.Date;
 
 /**
@@ -32,6 +34,7 @@ public class APIDeviceSession extends APIEntity {
         FAILED,
         RUNNING,
         SUCCEEDED,
+        TIMEOUT,
         WAITING,
         WARNING;
 
@@ -300,6 +303,42 @@ public class APIDeviceSession extends APIEntity {
 
     public void setDeviceTime(Long deviceTime) {
         this.deviceTime = deviceTime;
+    }
+
+    @JsonIgnore
+    public APIListResource<APIDeviceSessionStep> getDeviceSessionStepsResource() throws APIException {
+        return getListResource(createUri(selfURI, "/steps"));
+    }
+
+    @JsonIgnore
+    public APIListResource<APIScreenshot> getScreenshotsResource() throws APIException {
+        return getListResource(getScreenshotsURI());
+    }
+
+    @JsonIgnore
+    public APIListResource<APIScreenshot> getScreenshotsResource(APIQueryBuilder queryBuilder) throws APIException {
+        return getListResource(getScreenshotsURI(), queryBuilder);
+    }
+
+    @JsonIgnore
+    public APIListResource<APIScreenshot> getScreenshotsResource(long offset, long limit, String search, APISort sort)
+            throws APIException {
+        return getListResource(getScreenshotsURI(), offset, limit, search, sort, APIScreenshot.class);
+    }
+
+    @JsonIgnore
+    public InputStream getOutputFiles() throws APIException {
+        return client.get(createUri(selfURI, "/output-file-set/files.zip"));
+    }
+
+    @JsonIgnore
+    public APIDeviceSessionDataAvailability getDataAvailability() throws APIException {
+        return getResource(createUri(selfURI, "/data-availability"), APIDeviceSessionDataAvailability.class)
+                .getEntity();
+    }
+
+    private String getScreenshotsURI() {
+        return createUri(selfURI, "/screenshots");
     }
 
     @Override

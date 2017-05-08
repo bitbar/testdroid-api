@@ -12,38 +12,44 @@ import java.util.Date;
 @XmlRootElement
 public class APIAdminDeviceSession extends APIEntity {
 
-    private Date startTime;
+    private Boolean billable;
+
+    private Date createTime;
+
+    private APIDeviceSessionStep.Type currentStepType;
+
+    private Long deviceTime;
 
     private Date endTime;
 
-    private String startedByDisplayName;
+    private String errorMessage;
+
+    private Integer priority;
 
     private Long projectId;
 
     private String projectName;
 
-    private Long testRunId;
+    private Date startTime;
 
-    private String testRunName;
-
-    private String errorMessage;
+    private String startedByDisplayName;
 
     private APIDeviceSession.State state;
 
-    private Integer priority;
+    private Long testRunId;
 
-    private Boolean billable;
-
-    private Long deviceTime;
+    private String testRunName;
 
     public APIAdminDeviceSession() {
 
     }
 
-    public APIAdminDeviceSession(Long id, Date startTime, Date endTime, String startedByDisplayName, Long projectId,
-            String projectName, Long testRunId, String testRunName, String errorMessage, APIDeviceSession.State state,
-            Integer priority, Boolean billable, Long deviceTime) {
+    public APIAdminDeviceSession(
+            Long id, Date createTime, Date startTime, Date endTime, String startedByDisplayName, Long projectId,
+            String projectName, Long testRunId, String testRunName, APIDeviceSession.State state, Integer priority,
+            Boolean billable, Long deviceTime, APIDeviceSessionStep.Type currentStepType) {
         super(id);
+        this.createTime = createTime;
         this.startTime = startTime;
         this.endTime = endTime;
         this.startedByDisplayName = startedByDisplayName;
@@ -51,11 +57,11 @@ public class APIAdminDeviceSession extends APIEntity {
         this.projectName = projectName;
         this.testRunId = testRunId;
         this.testRunName = testRunName;
-        this.errorMessage = errorMessage;
         this.state = state;
         this.priority = priority;
         this.billable = billable;
         this.deviceTime = deviceTime;
+        this.currentStepType = currentStepType;
     }
 
     public Date getStartTime() {
@@ -154,11 +160,28 @@ public class APIAdminDeviceSession extends APIEntity {
         this.deviceTime = deviceTime;
     }
 
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public APIDeviceSessionStep.Type getCurrentStepType() {
+        return currentStepType;
+    }
+
+    public void setCurrentStepType(APIDeviceSessionStep.Type currentStepType) {
+        this.currentStepType = currentStepType;
+    }
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
         APIAdminDeviceSession apiAdminDeviceSession = (APIAdminDeviceSession) from;
         cloneBase(from);
+        this.createTime = apiAdminDeviceSession.createTime;
         this.startTime = apiAdminDeviceSession.startTime;
         this.endTime = apiAdminDeviceSession.endTime;
         this.startedByDisplayName = apiAdminDeviceSession.startedByDisplayName;
@@ -169,5 +192,6 @@ public class APIAdminDeviceSession extends APIEntity {
         this.priority = apiAdminDeviceSession.priority;
         this.billable = apiAdminDeviceSession.billable;
         this.deviceTime = apiAdminDeviceSession.deviceTime;
+        this.currentStepType = apiAdminDeviceSession.currentStepType;
     }
 }
