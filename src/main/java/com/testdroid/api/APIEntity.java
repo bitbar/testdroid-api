@@ -42,7 +42,6 @@ import java.util.logging.Logger;
         APIFileSet.class,
         APILabelGroup.class,
         APIList.class,
-        APINotificationEmail.class,
         APIProject.class,
         APIProjectJobConfig.class,
         APIProjectSharing.class,
@@ -75,7 +74,6 @@ import java.util.logging.Logger;
         APITestRunDataAvailability.class,
         APIUserDeviceTime.class,
         APIDeviceTimeEntry.class,
-        APIEmailNotification.class,
         APIFramework.class,
         APIS3Url.class,
         APIDeviceCleanupConfiguration.class,
@@ -100,7 +98,8 @@ import java.util.logging.Logger;
         APILicense.class,
         APIAdminInteractiveDeviceSession.class,
         APIUserIntegration.class,
-        APIAdminDeviceSessionStatistics.class
+        APIAdminDeviceSessionStatistics.class,
+        APIActivity.class
 })
 public abstract class APIEntity {
 

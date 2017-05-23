@@ -6,5 +6,6 @@ package com.testdroid.api.model.notification;
 public enum APINotificationChannel {
     SLACK,
     EMAIL,
+    HIPCHAT,
     WEBHOOK
 }

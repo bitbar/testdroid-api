@@ -2,7 +2,6 @@ package com.testdroid.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.*;
-import com.testdroid.api.model.APIUserFile;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -309,15 +308,6 @@ public class APIProject extends APIEntity {
         return result;
     }
 
-    private Map<String, Object> getCreateNotificationParameters(
-            final String email,
-            final APINotificationEmail.Type type) {
-        return new HashMap<String, Object>() {{
-            put("email", email);
-            put("type", type);
-        }};
-    }
-
     private Map<String, Object> getCreateParameterParameters(final String key, final String value) {
         return new HashMap<String, Object>() {{
             put("key", key);
@@ -503,32 +493,6 @@ public class APIProject extends APIEntity {
     @JsonIgnore
     public APIListResource<APIDeviceGroup> getDeviceGroups() throws APIException {
         return getListResource(getDeviceGroupsURI());
-    }
-
-    @JsonIgnore
-    public APINotificationEmail createNotificationEmail(String email, APINotificationEmail.Type type)
-            throws APIException {
-        return postResource(getNotificationEmailsURI(), getCreateNotificationParameters(email, type),
-                APINotificationEmail.class);
-    }
-
-    @JsonIgnore
-    public APIListResource<APINotificationEmail> getNotificationEmails() throws APIException {
-        return getListResource(getNotificationEmailsURI());
-    }
-
-    /**
-     * Returns list of notification emails for project.
-     *
-     * @param queryBuilder
-     * @return
-     * @throws APIException
-     * @since 1.3.34
-     */
-    @JsonIgnore
-    public APIListResource<APINotificationEmail> getNotificationEmails(APIQueryBuilder queryBuilder)
-            throws APIException {
-        return getListResource(getNotificationEmailsURI(), queryBuilder);
     }
 
     @JsonIgnore

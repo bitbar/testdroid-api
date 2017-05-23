@@ -48,6 +48,7 @@ public class APIUser extends APIEntity {
 
     private String email;
 
+    @Deprecated
     private EmailNotification emailNotification;
 
     private boolean enabled;
@@ -82,6 +83,7 @@ public class APIUser extends APIEntity {
 
     private String createdByEmail;
 
+    @Deprecated
     @XmlType(namespace = "APIUser", name = "APIUserEmailNotification")
     public static enum EmailNotification {
         ALWAYS("always"),
@@ -105,7 +107,7 @@ public class APIUser extends APIEntity {
     public APIUser(
             Long id, Long accountId, String email, String name, String state, String country, String city, String code,
             String address, String phone, String organization, String vatID, String timeZone,
-            EmailNotification emailNotification, Date createTime, Date lastLoginTime, Boolean isMainUser,
+            Date createTime, Date lastLoginTime, Boolean isMainUser,
             Long mainUserId, String mainUserEmail, Long activeServiceId, String apiKey, Status status) {
         super(id);
         this.accountId = accountId;
@@ -362,18 +364,6 @@ public class APIUser extends APIEntity {
         this.apiKey = apiKey;
     }
 
-    private Map<String, Object> getNotificationEmailParams(final APINotificationEmail.Type type) {
-        return new HashMap<String, Object>() {{
-            put("type", type);
-        }};
-    }
-
-    private Map<String, Object> getNotificationEmailParams(String email, APINotificationEmail.Type type) {
-        Map<String, Object> result = getNotificationEmailParams(type);
-        result.put("email", email);
-        return result;
-    }
-
     private Map<String, Object> getUpdateUserParams(
             final String address, final String city, final String code,
             final String country, final String email,
@@ -502,54 +492,8 @@ public class APIUser extends APIEntity {
     }
 
     @JsonIgnore
-    public APINotificationEmail createNotificationEmail(String email, APINotificationEmail.Type type)
-            throws APIException {
-        return postResource(getNotificationsURI(), getNotificationEmailParams(email, type), APINotificationEmail.class);
-    }
-
-    @JsonIgnore
-    public APIListResource<APINotificationEmail> getNotificationEmails() throws APIException {
-        return getListResource(getNotificationsURI());
-    }
-
-    /**
-     * @param queryBuilder
-     * @return
-     * @throws APIException
-     * @since 1.3.34
-     */
-    @JsonIgnore
-    public APIListResource<APINotificationEmail> getNotificationEmails(APIQueryBuilder queryBuilder)
-            throws APIException {
-        return getListResource(getNotificationsURI(), queryBuilder);
-    }
-
-    /**
-     * @param offset
-     * @param limit
-     * @param search
-     * @param sort
-     * @return
-     * @throws APIException
-     * @deprecated
-     */
-    @JsonIgnore
-    public APIListResource<APINotificationEmail> getNotificationEmails(
-            long offset, long limit, String search,
-            APISort sort) throws APIException {
-        return getListResource(getNotificationsURI(), offset, limit, search, sort, APINotificationEmail.class);
-    }
-
-    @JsonIgnore
     public APIListResource<APIConnection> getDeviceSessionConnections(Long deviceSessionId) throws APIException {
         return getListResource(getDeviceSessionVNCConnectionsURI(deviceSessionId));
-    }
-
-    @JsonIgnore
-    public APINotificationEmail updateNotificationEmail(long id, APINotificationEmail.Type emailType)
-            throws APIException {
-        return postResource(getNotificationURI(id), getNotificationEmailParams(emailType),
-                APINotificationEmail.class);
     }
 
     @JsonIgnore

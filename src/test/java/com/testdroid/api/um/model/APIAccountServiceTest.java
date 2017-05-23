@@ -1,8 +1,10 @@
 package com.testdroid.api.um.model;
 
 import com.testdroid.api.model.APIAccountService;
+import com.testdroid.cloud.test.categories.UnitTests;
 import org.joda.time.DateTime;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -10,6 +12,7 @@ import static org.junit.Assert.assertThat;
 /**
  * @author Stefano Gregori <stefano.gregori@bitbar.com>
  */
+@Category(UnitTests.class)
 public class APIAccountServiceTest {
 
     @Test

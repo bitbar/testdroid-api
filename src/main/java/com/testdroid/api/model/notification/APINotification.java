@@ -22,25 +22,25 @@ public class APINotification extends APIEntity {
 
     private String projectName;
 
-    private APINotificationChannel notificationChannel;
+    private APINotificationChannel channel;
 
-    private APINotificationScope notificationScope;
+    private APINotificationScope scope;
 
     public APINotification() {
     }
 
     public APINotification(
             Long id, String destination, Long userId, String userEmail, Long projectId, String projectName,
-            APINotificationChannel notificationChannel,
-            APINotificationScope notificationScope) {
+            APINotificationChannel channel,
+            APINotificationScope scope) {
         super(id);
         this.destination = destination;
         this.userId = userId;
         this.userEmail = userEmail;
         this.projectId = projectId;
         this.projectName = projectName;
-        this.notificationChannel = notificationChannel;
-        this.notificationScope = notificationScope;
+        this.channel = channel;
+        this.scope = scope;
     }
 
     public String getDestination() {
@@ -51,20 +51,20 @@ public class APINotification extends APIEntity {
         this.destination = destination;
     }
 
-    public APINotificationChannel getNotificationChannel() {
-        return notificationChannel;
+    public APINotificationChannel getChannel() {
+        return channel;
     }
 
-    public void setNotificationChannel(APINotificationChannel notificationChannel) {
-        this.notificationChannel = notificationChannel;
+    public void setChannel(APINotificationChannel channel) {
+        this.channel = channel;
     }
 
-    public APINotificationScope getNotificationScope() {
-        return notificationScope;
+    public APINotificationScope getScope() {
+        return scope;
     }
 
-    public void setNotificationScope(APINotificationScope notificationScope) {
-        this.notificationScope = notificationScope;
+    public void setScope(APINotificationScope scope) {
+        this.scope = scope;
     }
 
     public Long getProjectId() {
@@ -104,8 +104,8 @@ public class APINotification extends APIEntity {
         APINotification apiNotification = (APINotification) from;
         cloneBase(from);
         this.destination = apiNotification.destination;
-        this.notificationChannel = apiNotification.notificationChannel;
-        this.notificationScope = apiNotification.notificationScope;
+        this.channel = apiNotification.channel;
+        this.scope = apiNotification.scope;
         this.projectId = apiNotification.projectId;
         this.userId = apiNotification.userId;
         this.userEmail = apiNotification.userEmail;
