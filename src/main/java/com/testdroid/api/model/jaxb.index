@@ -11,11 +11,9 @@ APIDeviceSession
 APIDeviceSessionDataAvailability
 APIDeviceSessionStep
 APIDeviceTimeEntry
-APIEmailNotification
 APIFileSet
 APIFramework
 APILabelGroup
-APINotificationEmail
 APIProject
 APIProjectJobConfig
 APIProjectSharing
@@ -64,3 +62,4 @@ APIProperty
 APISession
 APIUserIntegration
 APIAdminDeviceSessionStatistics
+APIActivity
