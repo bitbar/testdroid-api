@@ -23,7 +23,7 @@ public class MultipartFormDataContent extends AbstractHttpContent {
     /**
      * Parts of the HTTP multipart request.
      */
-    private ArrayList<Part> parts = new ArrayList<Part>();
+    private ArrayList<Part> parts = new ArrayList<>();
 
     public MultipartFormDataContent() {
         super(new HttpMediaType("multipart/form-data").setParameter("boundary", "__END_OF_PART__"));
@@ -129,7 +129,7 @@ public class MultipartFormDataContent extends AbstractHttpContent {
      * </p>
      */
     public MultipartFormDataContent setParts(Collection<Part> parts) {
-        this.parts = new ArrayList<Part>(parts);
+        this.parts = new ArrayList<>(parts);
         return this;
     }
 

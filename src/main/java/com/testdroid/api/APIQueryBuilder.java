@@ -71,12 +71,12 @@ public class APIQueryBuilder {
     }
 
     protected Map<String, Object> build() {
-        return new HashMap<String, Object>() {{
-            put("limit", limit);
-            put("offset", offset);
-            put("search", search);
-            put("sort", sort != null ? sort.serialize() : null);
-            put("filter", filter != null ? filter.serialize() : null);
-        }};
+        Map<String, Object> map = new HashMap<>();
+        map.put("limit", limit);
+        map.put("offset", offset);
+        map.put("search", search);
+        map.put("sort", sort != null ? sort.serialize() : null);
+        map.put("filter", filter != null ? filter.serialize() : null);
+        return map;
     }
 }

@@ -36,7 +36,7 @@ public class APIList<T extends APIEntity> extends APIEntity {
     private Integer total;
 
     public APIList() {
-        data = new ArrayList<T>();
+        data = new ArrayList<>();
         total = 0;
     }
 

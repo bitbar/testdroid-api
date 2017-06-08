@@ -116,7 +116,7 @@ public class APIProject extends APIEntity {
         this.archivingStrategy = archivingStrategy;
         this.archivingItemCount = archivingItemCount;
         this.frameworkId = frameworkId;
-        this.jobConfig = new HashMap<APIProjectJobConfig.Type, APIProjectJobConfig>();
+        this.jobConfig = new HashMap<>();
     }
 
     public String getName() {
@@ -294,14 +294,14 @@ public class APIProject extends APIEntity {
     }
 
     private Map<String, Object> getCreateRunParameters(String testRunName, List<Long> usedDeviceIds) {
-        Map<String, Object> result = new HashMap<String, Object>();
+        Map<String, Object> result = new HashMap<>();
         result.putAll(getCreateRunParameters(testRunName));
         result.putAll(getCreateRunParameters(usedDeviceIds));
         return result;
     }
 
     private Map<String, Object> getCreateRunParameters(String testRunName, List<Long> usedDeviceIds, Long testRunId) {
-        Map<String, Object> result = new HashMap<String, Object>();
+        Map<String, Object> result = new HashMap<>();
         result.putAll(getCreateRunParameters(testRunName));
         result.putAll(getCreateRunParameters(usedDeviceIds));
         result.putAll(getCreateRunParameters(testRunId));
@@ -309,16 +309,16 @@ public class APIProject extends APIEntity {
     }
 
     private Map<String, Object> getCreateParameterParameters(final String key, final String value) {
-        return new HashMap<String, Object>() {{
-            put("key", key);
-            put("value", value);
-        }};
+        Map<String, Object> map = new HashMap<>();
+        map.put("key", key);
+        map.put("value", value);
+        return map;
     }
 
     private Map<String, Object> getShareParameters(final String email) {
-        return new HashMap<String, Object>() {{
-            put("email", email);
-        }};
+        Map<String, Object> map = new HashMap<>();
+        map.put("email", email);
+        return map;
     }
 
     @JsonIgnore
@@ -332,7 +332,7 @@ public class APIProject extends APIEntity {
     @JsonIgnore
     public APIProjectJobConfig getJobConfig(APIProjectJobConfig.Type type) throws APIException {
         if (jobConfig == null) {
-            jobConfig = new HashMap<APIProjectJobConfig.Type, APIProjectJobConfig>();
+            jobConfig = new HashMap<>();
         }
         if (jobConfig.get(type) == null) {
             jobConfig.put(type, getResource(getJobConfigURI(type), APIProjectJobConfig.class).getEntity());
@@ -382,7 +382,7 @@ public class APIProject extends APIEntity {
     public APITestRun runWithConfig(
             String testRunName, List<Long> deviceIds, APITestRunConfig config, Long appFileId, Long testFileId,
             Long dataFileId) throws APIException {
-        Map<String, Object> body = new HashMap<String, Object>();
+        Map<String, Object> body = new HashMap<>();
         body.put("scheduler", config.getScheduler() != null ? config.getScheduler().name() : null);
         body.put("appCrawlerRun", config.getAppCrawlerRun());
         body.put("autoScreenshots", config.isAutoScreenshots());
@@ -531,13 +531,12 @@ public class APIProject extends APIEntity {
     }
 
     public void update() throws APIException {
-        Map<String, Object> body = new HashMap<String, Object>() {{
-            put("name", name);
-            put("description", description);
-            put("common", common);
-            put("archivingStrategy", archivingStrategy.name());
-            put("archivingItemCount", archivingItemCount);
-        }};
+        Map<String, Object> body = new HashMap<>();
+        body.put("name", name);
+        body.put("description", description);
+        body.put("common", common);
+        body.put("archivingStrategy", archivingStrategy.name());
+        body.put("archivingItemCount", archivingItemCount);
         APIProject project = postResource(selfURI, body, APIProject.class);
         clone(project);
     }

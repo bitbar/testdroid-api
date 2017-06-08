@@ -105,7 +105,7 @@ public abstract class APIEntity {
 
     private static final DateFormat API_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd_HH:mm");
 
-    private static final HashMap<Class, JAXBContext> contextMap = new HashMap<Class, JAXBContext>();
+    private static final HashMap<Class, JAXBContext> contextMap = new HashMap<>();
 
     protected APIClient client;
 
@@ -178,20 +178,20 @@ public abstract class APIEntity {
     @JsonIgnore
     protected <T extends APIEntity> APIResource<T> getResource(String uri, Class<T> type) throws APIException {
         checkClient(client);
-        return new APIResource<T>(client, uri, type);
+        return new APIResource<>(client, uri, type);
     }
 
     @JsonIgnore
     protected <T extends APIEntity> APIListResource<T> getListResource(String uri) throws APIException {
         checkClient(client);
-        return new APIListResource<T>(client, uri);
+        return new APIListResource<>(client, uri);
     }
 
     @JsonIgnore
     protected <T extends APIEntity> APIListResource<T> getListResource(String uri, APIQueryBuilder queryBuilder)
             throws APIException {
         checkClient(client);
-        return new APIListResource<T>(client, uri, queryBuilder);
+        return new APIListResource<>(client, uri, queryBuilder);
     }
 
     @JsonIgnore
@@ -202,7 +202,7 @@ public abstract class APIEntity {
         if (limit <= 0) {
             limit = 10;
         }
-        return new APIListResource<T>(client, uri, new APIQueryBuilder().offset(offset).limit(limit).search
+        return new APIListResource<>(client, uri, new APIQueryBuilder().offset(offset).limit(limit).search
                 (search).sort(type, sort.getSorts()));
     }
 

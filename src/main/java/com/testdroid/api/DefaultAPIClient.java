@@ -12,21 +12,18 @@ import com.testdroid.api.model.APIUser;
 import net.sf.json.JSONObject;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.http.HttpException;
 import org.apache.http.HttpHost;
-import org.apache.http.HttpRequestInterceptor;
 import org.apache.http.HttpStatus;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.ChallengeState;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.AuthCache;
-import org.apache.http.client.protocol.ClientContext;
+import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.conn.params.ConnRoutePNames;
 import org.apache.http.impl.auth.BasicScheme;
 import org.apache.http.impl.client.BasicAuthCache;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.protocol.HttpContext;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -44,6 +41,8 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 /**
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
  * @author Sławomir Pawluk <slawomir.pawluk@bitbar.com>
@@ -51,19 +50,19 @@ import java.util.logging.Logger;
  */
 public class DefaultAPIClient implements APIClient {
 
-    public final static int HTTP_CONNECT_TIMEOUT = 60000;
+    public static final int HTTP_CONNECT_TIMEOUT = 60000;
 
-    public final static int HTTP_READ_TIMEOUT = 60000;
+    public static final int HTTP_READ_TIMEOUT = 60000;
 
     protected static final String API_URI = "/api/v2";
 
     static final JAXBContext context = initContext();
 
-    private final static int DEFAULT_CLIENT_CONNECT_TIMEOUT = 20000;
+    private static final int DEFAULT_CLIENT_CONNECT_TIMEOUT = 20000;
 
     private int clientConnectTimeout = DEFAULT_CLIENT_CONNECT_TIMEOUT;
 
-    private final static int DEFAULT_CLIENT_REQUEST_TIMEOUT = 60000;
+    private static final int DEFAULT_CLIENT_REQUEST_TIMEOUT = 60000;
 
     private int clientRequestTimeout = DEFAULT_CLIENT_REQUEST_TIMEOUT;
 
@@ -148,12 +147,7 @@ public class DefaultAPIClient implements APIClient {
         final BasicScheme basicAuth = new BasicScheme(ChallengeState.PROXY);
         authCache.put(proxy, basicAuth);
 
-        apacheClient.addRequestInterceptor(new HttpRequestInterceptor() {
-            @Override
-            public void process(org.apache.http.HttpRequest hr, HttpContext hc) throws HttpException, IOException {
-                hc.setAttribute(ClientContext.AUTH_CACHE, authCache);
-            }
-        }, 0);
+        apacheClient.addRequestInterceptor((hr, hc) -> hc.setAttribute(HttpClientContext.AUTH_CACHE, authCache), 0);
     }
 
     protected static Credential getCredential() {
@@ -190,13 +184,7 @@ public class DefaultAPIClient implements APIClient {
         if (StringUtils.isNotBlank(accessToken)) {
             credential.setAccessToken(accessToken);
         }
-        return httpTransport.createRequestFactory(new HttpRequestInitializer() {
-
-            @Override
-            public void initialize(HttpRequest request) throws IOException {
-                credential.initialize(request);
-            }
-        });
+        return httpTransport.createRequestFactory(credential::initialize);
     }
 
     protected String getAccessToken() throws APIException {
@@ -237,7 +225,7 @@ public class DefaultAPIClient implements APIClient {
                 throw new APIException(response.getStatusCode(), "Failed to acquire access token");
             }
 
-            String responseJson = StringUtils.join(IOUtils.readLines(response.getContent()), "\n");
+            String responseJson = StringUtils.join(IOUtils.readLines(response.getContent(), UTF_8), "\n");
             JSONObject json = JSONObject.fromObject(responseJson);
             accessTokenExpireTime = System.currentTimeMillis() + (Long.parseLong(json.optString("expires_in")) * 1000);
             refreshToken = json.optString("refresh_token");
@@ -273,7 +261,7 @@ public class DefaultAPIClient implements APIClient {
                 throw new APIException(response.getStatusCode(), "Failed to refresh access token");
             }
 
-            String jsonContent = StringUtils.join(IOUtils.readLines(response.getContent()), "\n");
+            String jsonContent = StringUtils.join(IOUtils.readLines(response.getContent(), UTF_8), "\n");
             JSONObject json = JSONObject.fromObject(jsonContent);
             accessTokenExpireTime = System.currentTimeMillis() + (Long.parseLong(json.optString("expires_in")) * 1000);
             refreshToken = json.optString("refresh_token");
@@ -448,7 +436,7 @@ public class DefaultAPIClient implements APIClient {
                 headers.setContentType(contentType);
                 content = new InputStreamContent(contentType, (InputStream) body);
             } else if (body instanceof APIEntity) {
-                content = new InputStreamContent(contentType, IOUtils.toInputStream(((APIEntity) body).toXML()));
+                content = new InputStreamContent(contentType, IOUtils.toInputStream(((APIEntity) body).toXML(), UTF_8));
             } else if (body instanceof HttpContent) {
                 content = (HttpContent) body;
             } else if (body instanceof Map) {
@@ -594,13 +582,13 @@ public class DefaultAPIClient implements APIClient {
 
     @Override
     public APIListResource<APIDevice> getDevices(APIDevice.DeviceFilter... filters) {
-        return new APIListResource<APIDevice>(this, DEVICES_URI, new APIDeviceQueryBuilder()
+        return new APIListResource<>(this, DEVICES_URI, new APIDeviceQueryBuilder()
                 .filterWithDeviceFilters(filters));
     }
 
     @Override
     public APIListResource<APIDevice> getDevices(APIDeviceQueryBuilder queryBuilder) {
-        return new APIListResource<APIDevice>(this, DEVICES_URI, queryBuilder);
+        return new APIListResource<>(this, DEVICES_URI, queryBuilder);
     }
 
     @Override
@@ -615,17 +603,17 @@ public class DefaultAPIClient implements APIClient {
         if (sort != null) {
             builder.sort(APIDevice.class, sort.getSorts());
         }
-        return new APIListResource<APIDevice>(this, DEVICES_URI, builder);
+        return new APIListResource<>(this, DEVICES_URI, builder);
     }
 
     @Override
     public APIListResource<APILabelGroup> getLabelGroups() {
-        return new APIListResource<APILabelGroup>(this, LABEL_GROUPS_URI);
+        return new APIListResource<>(this, LABEL_GROUPS_URI);
     }
 
     @Override
     public APIListResource<APILabelGroup> getLabelGroups(APIQueryBuilder queryBuilder) {
-        return new APIListResource<APILabelGroup>(this, LABEL_GROUPS_URI, queryBuilder);
+        return new APIListResource<>(this, LABEL_GROUPS_URI, queryBuilder);
     }
 
     private <T> T fromXML(String xml, Class<T> type) throws APIException {

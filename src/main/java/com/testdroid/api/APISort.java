@@ -53,7 +53,7 @@ public class APISort {
         if (StringUtils.isBlank(value)) {
             return new APISort();
         }
-        List<SortItem> items = new ArrayList<SortItem>();
+        List<SortItem> items = new ArrayList<>();
         String[] resultItems = value.split(":");
         for (String stringItem : resultItems) {
             String[] sortItemValues = stringItem.split("_");
@@ -81,7 +81,7 @@ public class APISort {
     }
 
     public String serialize() {
-        List<String> resultItems = new ArrayList<String>();
+        List<String> resultItems = new ArrayList<>();
         for (SortItem item : sorts) {
             resultItems.add(String.format("%s_%s", item.column, item.type.getURLValue()));
         }

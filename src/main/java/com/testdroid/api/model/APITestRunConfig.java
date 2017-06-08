@@ -367,10 +367,9 @@ public class APITestRunConfig extends APIEntity {
 
     @JsonIgnore
     public APITestRunParameter createParameter(final String key, final String value) throws APIException {
-        Map<String, Object> body = new HashMap<String, Object>() {{
-            put("key", key);
-            put("value", value);
-        }};
+        Map<String, Object> body = new HashMap<>();
+        body.put("key", key);
+        body.put("value", value);
         return postResource(getParametersURI(), body, APITestRunParameter.class);
     }
 
@@ -390,7 +389,7 @@ public class APITestRunConfig extends APIEntity {
     }
 
     public void update() throws APIException {
-        Map<String, Object> body = new HashMap<String, Object>();
+        Map<String, Object> body = new HashMap<>();
         body.put("scheduler", scheduler != null ? scheduler.name() : null);
         body.put("appCrawlerRun", appCrawlerRun);
         body.put("autoScreenshots", autoScreenshots);
