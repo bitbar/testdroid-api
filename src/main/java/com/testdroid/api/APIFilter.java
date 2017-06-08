@@ -26,7 +26,7 @@ public class APIFilter {
     }
 
     public String serialize() {
-        List<String> resultItems = new ArrayList<String>();
+        List<String> resultItems = new ArrayList<>();
         for (APIFilterItem item : filterItems) {
             resultItems.add(item.serialize());
         }

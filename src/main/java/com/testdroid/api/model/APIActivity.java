@@ -116,7 +116,7 @@ public class APIActivity extends APIEntity {
         cloneBase(from);
         this.createTime = apiActivity.createTime;
         this.httpMethod = apiActivity.httpMethod;
-        this.userAgent = userAgent;
+        this.userAgent = apiActivity.userAgent;
         this.parameters = apiActivity.parameters;
         this.uri = apiActivity.uri;
         this.userId = apiActivity.userId;

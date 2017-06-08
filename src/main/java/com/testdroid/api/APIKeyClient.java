@@ -10,21 +10,18 @@ import com.testdroid.api.model.APIDevice;
 import com.testdroid.api.model.APILabelGroup;
 import com.testdroid.api.model.APIUser;
 import org.apache.commons.io.IOUtils;
-import org.apache.http.HttpException;
 import org.apache.http.HttpHost;
-import org.apache.http.HttpRequestInterceptor;
 import org.apache.http.HttpStatus;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.ChallengeState;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.AuthCache;
-import org.apache.http.client.protocol.ClientContext;
+import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.conn.params.ConnRoutePNames;
 import org.apache.http.impl.auth.BasicScheme;
 import org.apache.http.impl.client.BasicAuthCache;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.protocol.HttpContext;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -41,6 +38,8 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 /**
  * @author Michał Szpruta <michal.szpruta@bitbar.com>
  */
@@ -50,11 +49,11 @@ public class APIKeyClient implements APIClient {
 
     static final JAXBContext context = initContext();
 
-    private final static int DEFAULT_CLIENT_CONNECT_TIMEOUT = 20000;
+    private static final int DEFAULT_CLIENT_CONNECT_TIMEOUT = 20000;
 
     private int clientConnectTimeout = DEFAULT_CLIENT_CONNECT_TIMEOUT;
 
-    private final static int DEFAULT_CLIENT_REQUEST_TIMEOUT = 60000;
+    private static final int DEFAULT_CLIENT_REQUEST_TIMEOUT = 60000;
 
     private int clientRequestTimeout = DEFAULT_CLIENT_REQUEST_TIMEOUT;
 
@@ -129,12 +128,7 @@ public class APIKeyClient implements APIClient {
         final BasicScheme basicAuth = new BasicScheme(ChallengeState.PROXY);
         authCache.put(proxy, basicAuth);
 
-        apacheClient.addRequestInterceptor(new HttpRequestInterceptor() {
-            @Override
-            public void process(org.apache.http.HttpRequest hr, HttpContext hc) throws HttpException, IOException {
-                hc.setAttribute(ClientContext.AUTH_CACHE, authCache);
-            }
-        }, 0);
+        apacheClient.addRequestInterceptor((hr, hc) -> hc.setAttribute(HttpClientContext.AUTH_CACHE, authCache), 0);
     }
 
     protected static Credential getCredential() {
@@ -295,7 +289,7 @@ public class APIKeyClient implements APIClient {
                 headers.setContentType(contentType);
                 content = new InputStreamContent(contentType, (InputStream) body);
             } else if (body instanceof APIEntity) {
-                content = new InputStreamContent(contentType, IOUtils.toInputStream(((APIEntity) body).toXML()));
+                content = new InputStreamContent(contentType, IOUtils.toInputStream(((APIEntity) body).toXML(), UTF_8));
             } else if (body instanceof HttpContent) {
                 content = (HttpContent) body;
             } else if (body instanceof Map) {
@@ -444,17 +438,17 @@ public class APIKeyClient implements APIClient {
         if (sort != null) {
             builder.sort(APIDevice.class, sort.getSorts());
         }
-        return new APIListResource<APIDevice>(this, DEVICES_URI, builder);
+        return new APIListResource<>(this, DEVICES_URI, builder);
     }
 
     @Override
     public APIListResource<APILabelGroup> getLabelGroups() {
-        return new APIListResource<APILabelGroup>(this, LABEL_GROUPS_URI);
+        return new APIListResource<>(this, LABEL_GROUPS_URI);
     }
 
     @Override
     public APIListResource<APILabelGroup> getLabelGroups(APIQueryBuilder queryBuilder) {
-        return new APIListResource<APILabelGroup>(this, LABEL_GROUPS_URI, queryBuilder);
+        return new APIListResource<>(this, LABEL_GROUPS_URI, queryBuilder);
     }
 
     private <T> T fromXML(String xml, Class<T> type) throws APIException {

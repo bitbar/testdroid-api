@@ -122,7 +122,6 @@ public class APIUser extends APIEntity {
         this.organization = organization;
         this.vatID = vatID;
         this.timeZone = timeZone;
-        this.emailNotification = emailNotification;
         this.createTime = createTime;
         this.lastLoginTime = lastLoginTime;
         this.isMainUser = isMainUser;
@@ -365,36 +364,35 @@ public class APIUser extends APIEntity {
     }
 
     private Map<String, Object> getUpdateUserParams(
-            final String address, final String city, final String code,
-            final String country, final String email,
+            final String address, final String city, final String code, final String country, final String email,
             final String name, final String organization, final String phone, final String state, final String timeZone,
             final String vatId) {
-        return new HashMap<String, Object>() {{
-            put("address", address);
-            put("city", city);
-            put("code", code);
-            put("country", country);
-            put("email", email);
-            put("name", name);
-            put("organization", organization);
-            put("phone", phone);
-            put("state", state);
-            put("timeZone", timeZone);
-            put("vatId", vatId);
-        }};
+        Map<String, Object> map = new HashMap<>();
+        map.put("address", address);
+        map.put("city", city);
+        map.put("code", code);
+        map.put("country", country);
+        map.put("email", email);
+        map.put("name", name);
+        map.put("organization", organization);
+        map.put("phone", phone);
+        map.put("state", state);
+        map.put("timeZone", timeZone);
+        map.put("vatId", vatId);
+        return map;
     }
 
     private Map<String, Object> getCreateDeviceGroupParams(final String name, final APIDevice.OsType osType) {
-        return new HashMap<String, Object>() {{
-            put("name", name);
-            put("osType", osType);
-        }};
+        Map<String, Object> map = new HashMap<>();
+        map.put("name", name);
+        map.put("osType", osType);
+        return map;
     }
 
     private Map<String, Object> getCreateProjectParams(final APIProject.Type type) {
-        return new HashMap<String, Object>() {{
-            put("type", type);
-        }};
+        Map<String, Object> map = new HashMap<>();
+        map.put("type", type);
+        return map;
     }
 
     private Map<String, Object> getCreateProjectParams(APIProject.Type type, String name) {

@@ -64,7 +64,7 @@ public class RunProjectWithoutDeviceGroupSample {
 
     private static List<Long> getDeviceIds() throws APIException {
         APIList<APIDevice> devices = CLIENT.getDevices(new APIDeviceQueryBuilder().search("samsung")).getEntity();
-        List<Long> result = new ArrayList<Long>();
+        List<Long> result = new ArrayList<>();
 
         for (APIDevice device : devices.getData()) {
             result.add(device.getId());

@@ -30,7 +30,7 @@ public enum Unit {
 
     @JsonIgnore
     public static Set<Unit> getTimeUnits() {
-        Set<Unit> result = new HashSet<Unit>();
+        Set<Unit> result = new HashSet<>();
         for (Unit u : values()) {
             if (u.isTimeUnit()) {
                 result.add(u);
