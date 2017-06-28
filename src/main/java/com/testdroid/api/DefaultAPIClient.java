@@ -208,12 +208,12 @@ public class DefaultAPIClient implements APIClient {
             }
 
             GenericUrl url = new GenericUrl(String.format("%s/oauth/token", cloudURL));
-            HttpContent content = new UrlEncodedContent(new HashMap() {{
-                put("client_id", "testdroid-cloud-api");
-                put("grant_type", "password");
-                put("username", username);
-                put("password", password);
-            }});
+            HashMap data = new HashMap();
+            data.put("client_id", "testdroid-cloud-api");
+            data.put("grant_type", "password");
+            data.put("username", username);
+            data.put("password", password);
+            HttpContent content = new UrlEncodedContent(data);
 
             HttpRequest request = httpTransport.createRequestFactory().buildPostRequest(url, content);
             request.setConnectTimeout(HTTP_CONNECT_TIMEOUT); // one minute
@@ -648,13 +648,17 @@ public class DefaultAPIClient implements APIClient {
         }
     }
 
-    private Map fixMapParameters(Map map) {
-        for (Object key : map.keySet()) {
-            if (map.get(key) == null) {
+    private Map fixMapParameters(Map<String, Object> map) {
+        String key;
+        Object value;
+        for (Map.Entry<String, Object> entry : map.entrySet()) {
+            key = entry.getKey();
+            value = entry.getValue();
+            if (value == null) {
                 map.put(key, "");
             }
-            if (map.get(key) instanceof Enum<?>) {
-                map.put(key, map.get(key).toString());
+            if (value instanceof Enum<?>) {
+                map.put(key, value.toString());
             }
         }
         return map;

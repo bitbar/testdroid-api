@@ -97,13 +97,15 @@ public class APIProject extends APIEntity {
 
     private Long frameworkId;
 
+    private boolean isShared;
+
     public APIProject() {
     }
 
     public APIProject(
             Long id, Date createTime, Date archiveTime, String name, String description, Type type, Long sharedById,
             String sharedByEmail, boolean common, APIArchivingStrategy archivingStrategy, Integer archivingItemCount,
-            Long frameworkId) {
+            Long frameworkId, Boolean isShared) {
         super(id);
         this.createTime = createTime;
         this.archiveTime = archiveTime;
@@ -116,6 +118,7 @@ public class APIProject extends APIEntity {
         this.archivingStrategy = archivingStrategy;
         this.archivingItemCount = archivingItemCount;
         this.frameworkId = frameworkId;
+        this.isShared = isShared;
         this.jobConfig = new HashMap<>();
     }
 
@@ -186,6 +189,14 @@ public class APIProject extends APIEntity {
 
     public void setSharedByEmail(String sharedByEmail) {
         this.sharedByEmail = sharedByEmail;
+    }
+
+    public boolean isShared() {
+        return isShared;
+    }
+
+    public void setShared(boolean isShared) {
+        this.isShared = isShared;
     }
 
     public APIArchivingStrategy getArchivingStrategy() {
@@ -308,6 +319,15 @@ public class APIProject extends APIEntity {
         return result;
     }
 
+    private Map<String, Object> getCreateRunParameters(String testRunName, String deviceNamePattern,
+            Long testRunId) {
+        Map<String, Object> result = new HashMap<>();
+        result.putAll(getCreateRunParameters(testRunName));
+        result.put("deviceNamePattern", deviceNamePattern);
+        result.putAll(getCreateRunParameters(testRunId));
+        return result;
+    }
+
     private Map<String, Object> getCreateParameterParameters(final String key, final String value) {
         Map<String, Object> map = new HashMap<>();
         map.put("key", key);
@@ -376,6 +396,12 @@ public class APIProject extends APIEntity {
     @JsonIgnore
     public APITestRun run(String testRunName, List<Long> usedDevicesId, Long testRunId) throws APIException {
         return postResource(getRunsURI(), getCreateRunParameters(testRunName, usedDevicesId, testRunId), APITestRun.class);
+    }
+
+    @JsonIgnore
+    public APITestRun run(String testRunName, String deviceNamePattern, Long testRunId) throws APIException {
+        return postResource(getRunsURI(), getCreateRunParameters(testRunName, deviceNamePattern, testRunId),
+                APITestRun.class);
     }
 
     @JsonIgnore

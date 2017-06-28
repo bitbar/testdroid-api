@@ -8,5 +8,6 @@ public enum APIPaymentMethod {
     BRAINTREE,
     INVOICE,
     PROMOTION,
-    BLUEMIX
+    BLUEMIX,
+    AWS
 }
