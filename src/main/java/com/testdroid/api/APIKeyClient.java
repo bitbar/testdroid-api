@@ -412,18 +412,18 @@ public class APIKeyClient implements APIClient {
 
     @Override
     public APIListResource<APIDevice> getDevices() {
-        return new APIListResource<APIDevice>(this, DEVICES_URI);
+        return new APIListResource<>(this, DEVICES_URI);
     }
 
     @Override
     public APIListResource<APIDevice> getDevices(APIDevice.DeviceFilter... filters) {
-        return new APIListResource<APIDevice>(this, DEVICES_URI, new APIDeviceQueryBuilder()
+        return new APIListResource<>(this, DEVICES_URI, new APIDeviceQueryBuilder()
                 .filterWithDeviceFilters(filters));
     }
 
     @Override
     public APIListResource<APIDevice> getDevices(APIDeviceQueryBuilder queryBuilder) {
-        return new APIListResource<APIDevice>(this, DEVICES_URI, queryBuilder);
+        return new APIListResource<>(this, DEVICES_URI, queryBuilder);
     }
 
     @Override
@@ -483,13 +483,17 @@ public class APIKeyClient implements APIClient {
         }
     }
 
-    private Map fixMapParameters(Map map) {
-        for (Object key : map.keySet()) {
-            if (map.get(key) == null) {
+    private Map fixMapParameters(Map<String, Object> map) {
+        String key;
+        Object value;
+        for (Map.Entry<String, Object> entry : map.entrySet()) {
+            key = entry.getKey();
+            value = entry.getValue();
+            if (value == null) {
                 map.put(key, "");
             }
-            if (map.get(key) instanceof Enum<?>) {
-                map.put(key, map.get(key).toString());
+            if (value instanceof Enum<?>) {
+                map.put(key, value.toString());
             }
         }
         return map;

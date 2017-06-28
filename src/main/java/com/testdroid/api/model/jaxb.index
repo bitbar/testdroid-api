@@ -63,3 +63,6 @@ APISession
 APIUserIntegration
 APIAdminDeviceSessionStatistics
 APIActivity
+APIDevicePicker
+APIDeviceFilter
+APIDeviceFilterGroup
