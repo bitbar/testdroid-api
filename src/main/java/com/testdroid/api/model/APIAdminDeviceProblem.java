@@ -17,6 +17,10 @@ public class APIAdminDeviceProblem extends APIEntity {
 
     private Long deviceId;
 
+    private Long deviceModelId;
+
+    private String deviceModelName;
+
     private String deviceName;
 
     private APIAdminDeviceProblemPair[] problems;
@@ -25,11 +29,14 @@ public class APIAdminDeviceProblem extends APIEntity {
     }
 
     public APIAdminDeviceProblem(
-            Long clusterId, String clusterName, Long deviceId, String deviceName, APIAdminDeviceProblemPair[] problems) {
+            Long clusterId, String clusterName, Long deviceId, String deviceName, Long deviceModelId,
+            String deviceModelName, APIAdminDeviceProblemPair[] problems) {
         this.clusterId = clusterId;
         this.clusterName = clusterName;
         this.deviceId = deviceId;
         this.deviceName = deviceName;
+        this.deviceModelId = deviceModelId;
+        this.deviceModelName = deviceModelName;
         this.problems = problems;
     }
 
@@ -65,6 +72,22 @@ public class APIAdminDeviceProblem extends APIEntity {
         this.deviceName = deviceName;
     }
 
+    public Long getDeviceModelId() {
+        return deviceModelId;
+    }
+
+    public void setDeviceModelId(Long deviceModelId) {
+        this.deviceModelId = deviceModelId;
+    }
+
+    public String getDeviceModelName() {
+        return deviceModelName;
+    }
+
+    public void setDeviceModelName(String deviceModelName) {
+        this.deviceModelName = deviceModelName;
+    }
+
     public APIAdminDeviceProblemPair[] getProblems() {
         return problems;
     }
@@ -82,6 +105,8 @@ public class APIAdminDeviceProblem extends APIEntity {
         this.clusterName = apiAdminDeviceProblem.clusterName;
         this.deviceId = apiAdminDeviceProblem.deviceId;
         this.deviceName = apiAdminDeviceProblem.deviceName;
+        this.deviceModelId = apiAdminDeviceProblem.deviceModelId;
+        this.deviceModelName = apiAdminDeviceProblem.deviceModelName;
         this.problems = apiAdminDeviceProblem.problems;
     }
 }

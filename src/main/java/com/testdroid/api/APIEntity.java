@@ -99,7 +99,10 @@ import java.util.logging.Logger;
         APIAdminInteractiveDeviceSession.class,
         APIUserIntegration.class,
         APIAdminDeviceSessionStatistics.class,
-        APIActivity.class
+        APIActivity.class,
+        APIDevicePicker.class,
+        APIDeviceFilter.class,
+        APIDeviceFilterGroup.class
 })
 public abstract class APIEntity {
 

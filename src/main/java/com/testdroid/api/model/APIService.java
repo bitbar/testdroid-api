@@ -16,7 +16,7 @@ public class APIService extends APIEntity {
 
     private boolean autoRenew;
 
-    private String braintreeId;
+    private String externalId;
 
     private Integer centPrice;
 
@@ -42,7 +42,7 @@ public class APIService extends APIEntity {
     }
 
     public APIService(Long id, String name, String description, boolean autoRenew, Integer centPrice,
-            Integer includedHours, Integer pricePerHour, String braintreeId, Date archiveTime, Date activateTime,
+            Integer includedHours, Integer pricePerHour, String externalId, Date archiveTime, Date activateTime,
             Unit unit, Integer unitCount, boolean customPlan) {
         super(id);
         this.name = name;
@@ -51,7 +51,7 @@ public class APIService extends APIEntity {
         this.centPrice = centPrice;
         this.includedHours = includedHours;
         this.pricePerHour = pricePerHour;
-        this.braintreeId = braintreeId;
+        this.externalId = externalId;
         this.archiveTime = archiveTime;
         this.activateTime = activateTime;
         this.unit = unit;
@@ -85,7 +85,7 @@ public class APIService extends APIEntity {
         this.centPrice = apiService.centPrice;
         this.unitCount = apiService.unitCount;
         this.unit = apiService.unit;
-        this.braintreeId = apiService.braintreeId;
+        this.externalId = apiService.externalId;
         this.includedHours = apiService.includedHours;
         this.pricePerHour = apiService.pricePerHour;
         this.archiveTime = apiService.archiveTime;
@@ -125,12 +125,12 @@ public class APIService extends APIEntity {
         this.unitCount = unitCount;
     }
 
-    public String getBraintreeId() {
-        return braintreeId;
+    public String getExternalId() {
+        return externalId;
     }
 
-    public void setBraintreeId(String braintreeId) {
-        this.braintreeId = braintreeId;
+    public void setExternalId(String externalId) {
+        this.externalId = externalId;
     }
 
     public String getPriceString() {

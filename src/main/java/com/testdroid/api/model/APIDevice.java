@@ -3,6 +3,7 @@ package com.testdroid.api.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.testdroid.api.APIEntity;
+import com.testdroid.api.APIList;
 import com.testdroid.api.APIView;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -87,6 +88,8 @@ public class APIDevice extends APIEntity {
     private Long accountId;
 
     private String mainUserEmail;
+
+    private APIList<APIDeviceProperty> properties;
 
     public APIDevice() {
     }
@@ -300,6 +303,14 @@ public class APIDevice extends APIEntity {
         this.mainUserEmail = mainUserEmail;
     }
 
+    public APIList<APIDeviceProperty> getProperties() {
+        return properties;
+    }
+
+    public void setProperties(APIList<APIDeviceProperty> properties) {
+        this.properties = properties;
+    }
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
@@ -325,6 +336,7 @@ public class APIDevice extends APIEntity {
         this.enabled = apiDevice.enabled;
         this.accountId = apiDevice.accountId;
         this.mainUserEmail = apiDevice.mainUserEmail;
+        this.properties = apiDevice.properties;
     }
 
 }
