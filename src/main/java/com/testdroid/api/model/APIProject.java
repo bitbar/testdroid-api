@@ -319,6 +319,15 @@ public class APIProject extends APIEntity {
         return result;
     }
 
+    private Map<String, Object> getCreateRunParameters(String testRunName, String deviceNamePattern,
+            Long testRunId) {
+        Map<String, Object> result = new HashMap<>();
+        result.putAll(getCreateRunParameters(testRunName));
+        result.put("deviceNamePattern", deviceNamePattern);
+        result.putAll(getCreateRunParameters(testRunId));
+        return result;
+    }
+
     private Map<String, Object> getCreateParameterParameters(final String key, final String value) {
         Map<String, Object> map = new HashMap<>();
         map.put("key", key);
@@ -387,6 +396,12 @@ public class APIProject extends APIEntity {
     @JsonIgnore
     public APITestRun run(String testRunName, List<Long> usedDevicesId, Long testRunId) throws APIException {
         return postResource(getRunsURI(), getCreateRunParameters(testRunName, usedDevicesId, testRunId), APITestRun.class);
+    }
+
+    @JsonIgnore
+    public APITestRun run(String testRunName, String deviceNamePattern, Long testRunId) throws APIException {
+        return postResource(getRunsURI(), getCreateRunParameters(testRunName, deviceNamePattern, testRunId),
+                APITestRun.class);
     }
 
     @JsonIgnore
