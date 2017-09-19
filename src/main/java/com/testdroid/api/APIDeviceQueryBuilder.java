@@ -63,13 +63,13 @@ public class APIDeviceQueryBuilder extends APIQueryBuilder {
     protected Map<String, Object> build() {
         Map<String, Object> result = super.build();
         if (ArrayUtils.isNotEmpty(labelIds)) {
-            result.put("label_id[]", StringUtils.join(labelIds, ","));
+            result.put("labelIds[]", StringUtils.join(labelIds, ","));
         }
         if (ArrayUtils.isNotEmpty(deviceGroupIds)) {
-            result.put("device_group_id[]", StringUtils.join(deviceGroupIds, ","));
+            result.put("deviceGroupIds[]", StringUtils.join(deviceGroupIds, ","));
         }
         if (ArrayUtils.isNotEmpty(deviceFilters)) {
-            result.put("device_filter[]", StringUtils.join(deviceFilters, ","));
+            result.put("deviceFilters[]", StringUtils.join(deviceFilters, ","));
         }
         return result;
     }
