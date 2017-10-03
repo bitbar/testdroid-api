@@ -102,7 +102,8 @@ import java.util.logging.Logger;
         APIActivity.class,
         APIDevicePicker.class,
         APIDeviceFilter.class,
-        APIDeviceFilterGroup.class
+        APIDeviceFilterGroup.class,
+        APICountryVatRate.class
 })
 public abstract class APIEntity {
 
