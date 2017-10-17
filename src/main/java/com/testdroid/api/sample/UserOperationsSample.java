@@ -30,7 +30,7 @@ public class UserOperationsSample {
             me.setOrganization("BitBar");
             me.setPhone("0987654321");
             me.setState("Some state");
-            me.setVatID("FR1234890");
+            me.setVatId("FR1234890");
 
             me.update();
 
@@ -52,6 +52,6 @@ public class UserOperationsSample {
         System.out.println(String.format("Phone: %s", user.getPhone()));
         System.out.println(String.format("State: %s", user.getState()));
         System.out.println(String.format("Time zone: %s", user.getTimeZone()));
-        System.out.println(String.format("Vat ID: %s", user.getVatID()));
+        System.out.println(String.format("Vat ID: %s", user.getVatId()));
     }
 }

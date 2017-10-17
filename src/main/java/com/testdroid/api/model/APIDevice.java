@@ -18,10 +18,18 @@ import javax.xml.bind.annotation.XmlType;
 public class APIDevice extends APIEntity {
 
     @XmlType
+    @Deprecated
     public static enum DeviceFilter {
         FREE,
         RECOMMENDED,
         NEW
+    }
+
+    @XmlType
+    public static enum DeviceGroupOrigin {
+        STATIC,
+        DYNAMIC,
+        HYBRID
     }
 
     @XmlType(namespace = "APIDevice")
@@ -91,6 +99,8 @@ public class APIDevice extends APIEntity {
 
     private APIList<APIDeviceProperty> properties;
 
+    private DeviceGroupOrigin deviceGroupOrigin;
+
     public APIDevice() {
     }
 
@@ -99,12 +109,13 @@ public class APIDevice extends APIEntity {
             String imagePrefix, Integer imageTop, Integer imageLeft, Integer imageWidth, Integer imageHeight,
             Integer frameExtraWidth, OsType osType, String frame80Url, String frame100Url, String frame160Url,
             String frame400Url, Boolean online, Boolean locked, Boolean vncSupported, Boolean enabled,
-            Long accountId, String mainUserEmail) {
+            Long accountId, String mainUserEmail, DeviceGroupOrigin deviceGroupOrigin) {
         this(id, displayName, softwareVersion, creditsPrice, imagePrefix, imageTop, imageLeft, imageWidth,
                 imageHeight, frameExtraWidth, osType, frame80Url, frame100Url, frame160Url, frame400Url, online,
                 locked, vncSupported, enabled);
         this.accountId = accountId;
         this.mainUserEmail = mainUserEmail;
+        this.deviceGroupOrigin = deviceGroupOrigin;
     }
 
     public APIDevice(
@@ -311,6 +322,14 @@ public class APIDevice extends APIEntity {
         this.properties = properties;
     }
 
+    public DeviceGroupOrigin getDeviceGroupOrigin() {
+        return deviceGroupOrigin;
+    }
+
+    public void setDeviceGroupOrigin(DeviceGroupOrigin deviceGroupOrigin) {
+        this.deviceGroupOrigin = deviceGroupOrigin;
+    }
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
@@ -336,6 +355,7 @@ public class APIDevice extends APIEntity {
         this.enabled = apiDevice.enabled;
         this.accountId = apiDevice.accountId;
         this.mainUserEmail = apiDevice.mainUserEmail;
+        this.deviceGroupOrigin = apiDevice.deviceGroupOrigin;
         this.properties = apiDevice.properties;
     }
 

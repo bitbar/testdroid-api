@@ -33,6 +33,6 @@ public class APIKeyAuthenticationSample {
         System.out.println(String.format("Phone: %s", user.getPhone()));
         System.out.println(String.format("State: %s", user.getState()));
         System.out.println(String.format("Time zone: %s", user.getTimeZone()));
-        System.out.println(String.format("Vat ID: %s", user.getVatID()));
+        System.out.println(String.format("Vat ID: %s", user.getVatId()));
     }
 }

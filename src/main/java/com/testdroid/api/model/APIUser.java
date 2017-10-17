@@ -75,7 +75,7 @@ public class APIUser extends APIEntity {
 
     private String timeZone;
 
-    private String vatID;
+    private String vatId;
 
     private String apiKey;
 
@@ -106,9 +106,9 @@ public class APIUser extends APIEntity {
 
     public APIUser(
             Long id, Long accountId, String email, String name, String state, String country, String city, String code,
-            String address, String phone, String organization, String vatID, String timeZone,
-            Date createTime, Date lastLoginTime, Boolean isMainUser,
-            Long mainUserId, String mainUserEmail, Long activeServiceId, String apiKey, Status status) {
+            String address, String phone, String organization, String vatId, String timeZone, Date createTime,
+            Date lastLoginTime, Boolean isMainUser, Long mainUserId, String mainUserEmail, Long activeServiceId,
+            String apiKey, Status status) {
         super(id);
         this.accountId = accountId;
         this.email = email;
@@ -120,7 +120,7 @@ public class APIUser extends APIEntity {
         this.address = address;
         this.phone = phone;
         this.organization = organization;
-        this.vatID = vatID;
+        this.vatId = vatId;
         this.timeZone = timeZone;
         this.createTime = createTime;
         this.lastLoginTime = lastLoginTime;
@@ -206,12 +206,12 @@ public class APIUser extends APIEntity {
         this.organization = organization;
     }
 
-    public String getVatID() {
-        return vatID;
+    public String getVatId() {
+        return vatId;
     }
 
-    public void setVatID(String vatID) {
-        this.vatID = vatID;
+    public void setVatId(String vatId) {
+        this.vatId = vatId;
     }
 
     public String getTimeZone() {
@@ -412,7 +412,7 @@ public class APIUser extends APIEntity {
     public void update() throws APIException {
         APIUser user = postResource(selfURI,
                 getUpdateUserParams(address, city, code, country, email, name, organization, phone, state, timeZone,
-                        vatID), APIUser.class
+                        vatId), APIUser.class
         );
         clone(user);
     }
@@ -515,7 +515,7 @@ public class APIUser extends APIEntity {
         this.roles = apiUser.roles;
         this.state = apiUser.state;
         this.timeZone = apiUser.timeZone;
-        this.vatID = apiUser.vatID;
+        this.vatId = apiUser.vatId;
         this.emailNotification = apiUser.emailNotification;
         this.createTime = apiUser.createTime;
         this.isMainUser = apiUser.isMainUser;

@@ -13,6 +13,7 @@ import java.util.Collections;
 @XmlRootElement
 public class APIDeviceGroup extends APIEntity {
 
+    @Deprecated
     private Long creditsPrice;
 
     private Long deviceCount;
@@ -29,12 +30,11 @@ public class APIDeviceGroup extends APIEntity {
     }
 
     public APIDeviceGroup(
-            Long id, String name, String displayName, APIDevice.OsType osType, Long deviceCount,
-            Long creditsPrice, Long userId) {
+            Long id, String name, String displayName, APIDevice.OsType osType, Long deviceCount, Long userId) {
         this.id = id;
         this.name = name;
         this.displayName = displayName;
-        this.creditsPrice = creditsPrice;
+        this.creditsPrice = deviceCount;
         this.deviceCount = deviceCount;
         this.userId = userId;
         this.osType = osType;
