@@ -109,13 +109,12 @@ public class APIDevice extends APIEntity {
             String imagePrefix, Integer imageTop, Integer imageLeft, Integer imageWidth, Integer imageHeight,
             Integer frameExtraWidth, OsType osType, String frame80Url, String frame100Url, String frame160Url,
             String frame400Url, Boolean online, Boolean locked, Boolean vncSupported, Boolean enabled,
-            Long accountId, String mainUserEmail, DeviceGroupOrigin deviceGroupOrigin) {
+            Long accountId, String mainUserEmail) {
         this(id, displayName, softwareVersion, creditsPrice, imagePrefix, imageTop, imageLeft, imageWidth,
                 imageHeight, frameExtraWidth, osType, frame80Url, frame100Url, frame160Url, frame400Url, online,
                 locked, vncSupported, enabled);
         this.accountId = accountId;
         this.mainUserEmail = mainUserEmail;
-        this.deviceGroupOrigin = deviceGroupOrigin;
     }
 
     public APIDevice(
