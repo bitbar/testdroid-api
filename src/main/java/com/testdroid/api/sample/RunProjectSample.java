@@ -79,10 +79,10 @@ public class RunProjectSample {
             APIList<APIUserFile> androidFiles = project.getFiles().getEntity();
 
             APIUserFile androidAppFile = androidFiles.getData().stream().filter(f -> APIUserFile.InputType
-                    .APPLICATION.equals(f.getInputType())).findAny().orElseGet(null);
+                    .APPLICATION.equals(f.getInputType())).findAny().orElse(null);
 
             APIUserFile androidTestFile = androidFiles.getData().stream().filter(f -> APIUserFile.InputType
-                    .TEST.equals(f.getInputType())).findAny().orElseGet(null);
+                    .TEST.equals(f.getInputType())).findAny().orElse(null);
 
         } catch (APIException apie) {
             System.err.println(apie.getMessage());
