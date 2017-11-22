@@ -4,7 +4,6 @@ import com.testdroid.api.APIEntity;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Date;
 
 /**
@@ -17,6 +16,8 @@ public class APIPipelineJob extends APIEntity {
 
     private Date createTime;
 
+    private Date archiveTime;
+
     private String pipeline;
 
     private Long userId;
@@ -25,11 +26,13 @@ public class APIPipelineJob extends APIEntity {
 
     }
 
-    public APIPipelineJob(Long id, String name, LocalDateTime createTime, String pipeline, Long userId) {
+    public APIPipelineJob(
+            Long id, String name, LocalDateTime createTime, LocalDateTime archiveTime, String pipeline, Long userId) {
         super(id);
         this.name = name;
         this.userId = userId;
-        this.createTime = createTime == null ? null : Date.from(createTime.atZone(ZoneId.systemDefault()).toInstant());
+        this.createTime = of(createTime);
+        this.archiveTime = of(archiveTime);
         this.pipeline = pipeline;
     }
 
@@ -65,6 +68,14 @@ public class APIPipelineJob extends APIEntity {
         this.pipeline = pipeline;
     }
 
+    public Date getArchiveTime() {
+        return archiveTime;
+    }
+
+    public void setArchiveTime(Date archiveTime) {
+        this.archiveTime = archiveTime;
+    }
+
     @Override
     protected <T extends APIEntity> void clone(T from) {
         APIPipelineJob apiBuild = (APIPipelineJob) from;
@@ -72,6 +83,7 @@ public class APIPipelineJob extends APIEntity {
         this.name = apiBuild.name;
         this.userId = apiBuild.userId;
         this.createTime = apiBuild.createTime;
+        this.archiveTime = apiBuild.archiveTime;
         this.pipeline = apiBuild.pipeline;
     }
 }

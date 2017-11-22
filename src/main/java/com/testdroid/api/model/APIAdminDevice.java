@@ -61,6 +61,8 @@ public class APIAdminDevice extends APIEntity {
 
     private boolean locked;
 
+    private APIDevice.OsType osType;
+
     public APIAdminDevice() {
     }
 
@@ -68,7 +70,7 @@ public class APIAdminDevice extends APIEntity {
             Long id, String name, boolean enabled, String serialId, String fingerprint, String unlockGesture,
             APISoftwareVersion softwareVersion, Long deviceModelId, String deviceModelName, State state,
             Date stateTime, InitStep initStep, String ipAddress, APICluster cluster, Date lastOnlineTime,
-            Long accountId, String mainUserEmail, Boolean locked) {
+            Long accountId, String mainUserEmail, Boolean locked, APIDevice.OsType osType) {
         super(id);
         this.name = name;
         this.enabled = enabled;
@@ -87,6 +89,7 @@ public class APIAdminDevice extends APIEntity {
         this.accountId = accountId;
         this.mainUserEmail = mainUserEmail;
         this.locked = locked;
+        this.osType = osType;
     }
 
     public String getName() {
@@ -225,6 +228,14 @@ public class APIAdminDevice extends APIEntity {
         this.locked = locked;
     }
 
+    public APIDevice.OsType getOsType() {
+        return osType;
+    }
+
+    public void setOsType(APIDevice.OsType osType) {
+        this.osType = osType;
+    }
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
@@ -246,5 +257,7 @@ public class APIAdminDevice extends APIEntity {
         this.lastOnlineTime = adminDevice.lastOnlineTime;
         this.accountId = adminDevice.accountId;
         this.mainUserEmail = adminDevice.mainUserEmail;
+        this.locked = adminDevice.locked;
+        this.osType = adminDevice.osType;
     }
 }

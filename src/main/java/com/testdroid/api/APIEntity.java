@@ -18,6 +18,8 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.logging.Level;
@@ -285,5 +287,10 @@ public abstract class APIEntity {
     protected <T extends APIEntity> void cloneBase(T from) {
         this.id = from.id;
         this.view = from.view;
+    }
+
+    @JsonIgnore
+    protected Date of(LocalDateTime localDateTime){
+        return localDateTime == null ? null : Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
     }
 }
