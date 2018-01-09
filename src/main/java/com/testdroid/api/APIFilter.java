@@ -2,9 +2,9 @@ package com.testdroid.api;
 
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Michał Szpruta <michal.szpruta@bitbar.com>
@@ -26,10 +26,7 @@ public class APIFilter {
     }
 
     public String serialize() {
-        List<String> resultItems = new ArrayList<>();
-        for (APIFilterItem item : filterItems) {
-            resultItems.add(item.serialize());
-        }
+        List<String> resultItems = filterItems.stream().map(APIFilterItem::serialize).collect(Collectors.toList());
         return StringUtils.join(resultItems, ";");
     }
 

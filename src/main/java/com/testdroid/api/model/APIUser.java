@@ -46,6 +46,8 @@ public class APIUser extends APIEntity {
 
     private Date createTime;
 
+    private Date deleteTime;
+
     private String email;
 
     @Deprecated
@@ -107,8 +109,8 @@ public class APIUser extends APIEntity {
     public APIUser(
             Long id, Long accountId, String email, String name, String state, String country, String city, String code,
             String address, String phone, String organization, String vatId, String timeZone, Date createTime,
-            Date lastLoginTime, Boolean isMainUser, Long mainUserId, String mainUserEmail, Long activeServiceId,
-            String apiKey, Status status) {
+            Date deleteTime, Date lastLoginTime, Boolean isMainUser, Long mainUserId, String mainUserEmail,
+            Long activeServiceId, String apiKey, Status status) {
         super(id);
         this.accountId = accountId;
         this.email = email;
@@ -123,6 +125,7 @@ public class APIUser extends APIEntity {
         this.vatId = vatId;
         this.timeZone = timeZone;
         this.createTime = createTime;
+        this.deleteTime = deleteTime;
         this.lastLoginTime = lastLoginTime;
         this.isMainUser = isMainUser;
         this.mainUserId = mainUserId;
@@ -363,6 +366,14 @@ public class APIUser extends APIEntity {
         this.apiKey = apiKey;
     }
 
+    public Date getDeleteTime() {
+        return deleteTime;
+    }
+
+    public void setDeleteTime(Date deleteTime) {
+        this.deleteTime = deleteTime;
+    }
+
     private Map<String, Object> getUpdateUserParams(
             final String address, final String city, final String code, final String country, final String email,
             final String name, final String organization, final String phone, final String state, final String timeZone,
@@ -518,6 +529,7 @@ public class APIUser extends APIEntity {
         this.vatId = apiUser.vatId;
         this.emailNotification = apiUser.emailNotification;
         this.createTime = apiUser.createTime;
+        this.deleteTime = apiUser.deleteTime;
         this.isMainUser = apiUser.isMainUser;
         this.status = apiUser.status;
         this.lastLoginTime = apiUser.lastLoginTime;
