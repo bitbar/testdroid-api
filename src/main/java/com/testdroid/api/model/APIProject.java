@@ -99,6 +99,8 @@ public class APIProject extends APIEntity {
 
     private boolean isShared;
 
+    private Double successRatio;
+
     public APIProject() {
     }
 
@@ -234,6 +236,14 @@ public class APIProject extends APIEntity {
 
     public void setFrameworkId(Long frameworkId) {
         this.frameworkId = frameworkId;
+    }
+
+    public Double getSuccessRatio() {
+        return successRatio;
+    }
+
+    public void setSuccessRatio(Double successRatio) {
+        this.successRatio = successRatio;
     }
 
     private String getConfigURI() {
@@ -585,5 +595,6 @@ public class APIProject extends APIEntity {
         this.archivingStrategy = apiProject.archivingStrategy;
         this.archivingItemCount = apiProject.archivingItemCount;
         this.frameworkId = apiProject.frameworkId;
+        this.successRatio = apiProject.successRatio;
     }
 }
