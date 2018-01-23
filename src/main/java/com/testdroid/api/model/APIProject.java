@@ -436,7 +436,6 @@ public class APIProject extends APIEntity {
         body.put("launchApp", config.isLaunchApp());
         body.put("instrumentationRunner", config.getInstrumentationRunner());
         body.put("appRequired", config.isAppRequired());
-        body.put("gamebenchEnabled", config.isGamebenchEnabled());
         body.put("timeout", config.getTimeout());
         body.put("name", testRunName);
         body.put("usedDeviceIds[]", StringUtils.join(deviceIds, ","));

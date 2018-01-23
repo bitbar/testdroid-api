@@ -5,6 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Damian Sniezek <damian.sniezek@bitbar.com>
@@ -81,11 +82,11 @@ public class APISort {
     }
 
     public String serialize() {
-        List<String> resultItems = new ArrayList<>();
-        for (SortItem item : sorts) {
-            resultItems.add(String.format("%s_%s", item.column, item.type.getURLValue()));
-        }
-        return StringUtils.join(resultItems, ":");
+        return sorts.stream().map(s -> s.toString()).collect(Collectors.joining(":"));
+    }
+
+    public String toString(){
+        return serialize();
     }
 
     public static class SortItem {
@@ -107,6 +108,10 @@ public class APISort {
             return type;
         }
 
+        @Override
+        public String toString() {
+            return String.format("%s_%s", column, type.getURLValue());
+        }
     }
 
 }

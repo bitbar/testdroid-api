@@ -18,6 +18,10 @@ public class APITestRunParameter extends APIEntity {
     public APITestRunParameter() {
     }
 
+    public APITestRunParameter(String key, String value) {
+        this(null, key, value);
+    }
+
     public APITestRunParameter(Long id, String key, String value) {
         super(id);
         this.key = key;

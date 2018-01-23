@@ -36,7 +36,6 @@ public class RunProjectSample {
             testRunConfig.setApplicationPassword("applicationPassword");
             testRunConfig.setApplicationUsername("applicationUsername");
             testRunConfig.setAutoScreenshots(false);
-            testRunConfig.setCheckApp(true);
             testRunConfig.setDeviceLanguageCode("EN");
             testRunConfig.setUsedDeviceGroupId(deviceGroup.getId());
             testRunConfig.setAppCrawlerRun(Boolean.FALSE);

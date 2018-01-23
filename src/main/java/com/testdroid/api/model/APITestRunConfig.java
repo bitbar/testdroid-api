@@ -9,6 +9,7 @@ import com.testdroid.api.APIQueryBuilder;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -42,13 +43,9 @@ public class APITestRunConfig extends APIEntity {
 
     private boolean autoScreenshots;
 
-    private boolean checkApp;
-
     private Long creditsPrice;
 
     private String deviceLanguageCode;
-
-    private boolean gamebenchEnabled;
 
     private boolean useAdditionalFiles;
 
@@ -88,17 +85,35 @@ public class APITestRunConfig extends APIEntity {
 
     private Integer maxAutoRetriesCount;
 
+    private Long frameworkId;
+
+    private List<APIDeviceGroup> availableDeviceGroups;
+
+    private List<APIDevice> availableDevices;
+
+    private List<APIFramework> availableFrameworks;
+
+    private List<APIFileConfig> files;
+
+    private APIDevice.OsType osType = APIDevice.OsType.UNDEFINED;
+
+    private List<APITestRunParameter> testRunParameters;
+
+    private List<Long> deviceIds;
+
+    private String status;
+
     public APITestRunConfig() {
     }
 
     public APITestRunConfig(
-            Long id, Scheduler scheduler, Boolean appCrawlerRun, Boolean autoScreenshots,
-            String screenshotDir, LimitationType limitationType, String limitationValue, String withAnnotation,
-            String withoutAnnotation, String applicationUsername, String applicationPassword, Long usedDeviceGroupId,
+            Long id, Scheduler scheduler, Boolean appCrawlerRun, Boolean autoScreenshots, String screenshotDir,
+            LimitationType limitationType, String limitationValue, String withAnnotation, String withoutAnnotation,
+            String applicationUsername, String applicationPassword, Long usedDeviceGroupId,
             String usedDeviceGroupName, Long creditsPrice, String deviceLanguageCode, String hookURL,
-            String uiAutomatorTestClasses, Boolean launchApp, String instrumentationRunner, Boolean checkApp,
-            Boolean appRequired, Boolean gamebenchEnabled, Boolean useAdditionalFiles, Boolean videoRecordingEnabled,
-            Long timeout, String appiumBrokerAddress, Boolean createVNCConnection, Integer maxAutoRetriesCount) {
+            String uiAutomatorTestClasses, Boolean launchApp, String instrumentationRunner, Boolean appRequired,
+            Boolean useAdditionalFiles, Boolean videoRecordingEnabled, Long timeout, String appiumBrokerAddress,
+            Boolean createVNCConnection, Integer maxAutoRetriesCount) {
         super(id);
         this.scheduler = scheduler;
         this.appCrawlerRun = appCrawlerRun;
@@ -118,9 +133,7 @@ public class APITestRunConfig extends APIEntity {
         this.uiAutomatorTestClasses = uiAutomatorTestClasses;
         this.launchApp = launchApp;
         this.instrumentationRunner = instrumentationRunner;
-        this.checkApp = checkApp;
         this.appRequired = appRequired;
-        this.gamebenchEnabled = gamebenchEnabled;
         this.videoRecordingEnabled = videoRecordingEnabled;
         this.timeout = timeout;
         this.useAdditionalFiles = useAdditionalFiles;
@@ -289,14 +302,6 @@ public class APITestRunConfig extends APIEntity {
         this.instrumentationRunner = instrumentationRunner;
     }
 
-    public boolean isCheckApp() {
-        return checkApp;
-    }
-
-    public void setCheckApp(boolean checkApp) {
-        this.checkApp = checkApp;
-    }
-
     public boolean isAppRequired() {
         return appRequired;
     }
@@ -317,20 +322,12 @@ public class APITestRunConfig extends APIEntity {
         this.timeout = timeout;
     }
 
-    public boolean isGamebenchEnabled() {
-        return gamebenchEnabled;
-    }
-
     public boolean getUseAdditionalFiles() {
         return useAdditionalFiles;
     }
 
     public void setUseAdditionalFiles(boolean useAdditionalFiles) {
         this.useAdditionalFiles = useAdditionalFiles;
-    }
-
-    public void setGamebenchEnabled(boolean gamebenchEnabled) {
-        this.gamebenchEnabled = gamebenchEnabled;
     }
 
     public boolean isVideoRecordingEnabled() {
@@ -363,6 +360,78 @@ public class APITestRunConfig extends APIEntity {
 
     public void setMaxAutoRetriesCount(Integer maxAutoRetriesCount) {
         this.maxAutoRetriesCount = maxAutoRetriesCount;
+    }
+
+    public Long getFrameworkId() {
+        return frameworkId;
+    }
+
+    public void setFrameworkId(Long frameworkId) {
+        this.frameworkId = frameworkId;
+    }
+
+    public List<APIDeviceGroup> getAvailableDeviceGroups() {
+        return availableDeviceGroups;
+    }
+
+    public void setAvailableDeviceGroups(List<APIDeviceGroup> availableDeviceGroups) {
+        this.availableDeviceGroups = availableDeviceGroups;
+    }
+
+    public List<APIDevice> getAvailableDevices() {
+        return availableDevices;
+    }
+
+    public void setAvailableDevices(List<APIDevice> availableDevices) {
+        this.availableDevices = availableDevices;
+    }
+
+    public List<APIFramework> getAvailableFrameworks() {
+        return availableFrameworks;
+    }
+
+    public void setAvailableFrameworks(List<APIFramework> availableFrameworks) {
+        this.availableFrameworks = availableFrameworks;
+    }
+
+    public List<APIFileConfig> getFiles() {
+        return files;
+    }
+
+    public void setFiles(List<APIFileConfig> files) {
+        this.files = files;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public APIDevice.OsType getOsType() {
+        return osType;
+    }
+
+    public void setOsType(APIDevice.OsType osType) {
+        this.osType = osType;
+    }
+
+    public List<APITestRunParameter> getTestRunParameters() {
+        return testRunParameters;
+    }
+
+    public void setTestRunParameters(List<APITestRunParameter> testRunParameters) {
+        this.testRunParameters = testRunParameters;
+    }
+
+    public List<Long> getDeviceIds() {
+        return deviceIds;
+    }
+
+    public void setDeviceIds(List<Long> deviceIds) {
+        this.deviceIds = deviceIds;
     }
 
     @JsonIgnore
@@ -406,9 +475,7 @@ public class APITestRunConfig extends APIEntity {
         body.put("uiAutomatorTestClasses", uiAutomatorTestClasses);
         body.put("launchApp", launchApp);
         body.put("instrumentationRunner", instrumentationRunner);
-        body.put("checkApp", checkApp);
         body.put("appRequired", appRequired);
-        body.put("gamebenchEnabled", gamebenchEnabled);
         body.put("timeout", timeout);
         body.put("appiumBrokerAddress", appiumBrokerAddress);
         body.put("createVNCConnection", createVNCConnection);
@@ -426,10 +493,8 @@ public class APITestRunConfig extends APIEntity {
         this.applicationUsername = apiTestRunConfig.applicationUsername;
         this.appRequired = apiTestRunConfig.appRequired;
         this.autoScreenshots = apiTestRunConfig.autoScreenshots;
-        this.checkApp = apiTestRunConfig.checkApp;
         this.creditsPrice = apiTestRunConfig.creditsPrice;
         this.deviceLanguageCode = apiTestRunConfig.deviceLanguageCode;
-        this.gamebenchEnabled = apiTestRunConfig.gamebenchEnabled;
         this.videoRecordingEnabled = apiTestRunConfig.videoRecordingEnabled;
         this.hookURL = apiTestRunConfig.hookURL;
         this.instrumentationRunner = apiTestRunConfig.instrumentationRunner;
@@ -451,5 +516,14 @@ public class APITestRunConfig extends APIEntity {
         this.appiumBrokerAddress = apiTestRunConfig.appiumBrokerAddress;
         this.createVNCConnection = apiTestRunConfig.createVNCConnection;
         this.maxAutoRetriesCount = apiTestRunConfig.maxAutoRetriesCount;
+        this.frameworkId = apiTestRunConfig.frameworkId;
+        this.availableDeviceGroups = apiTestRunConfig.availableDeviceGroups;
+        this.availableDevices = apiTestRunConfig.availableDevices;
+        this.availableFrameworks = apiTestRunConfig.availableFrameworks;
+        this.files = apiTestRunConfig.files;
+        this.status = apiTestRunConfig.status;
+        this.osType = apiTestRunConfig.osType;
+        this.testRunParameters = apiTestRunConfig.testRunParameters;
+        this.deviceIds = apiTestRunConfig.deviceIds;
     }
 }
