@@ -12,5 +12,6 @@ public enum APINotificationScope {
     MAINTENANCE_RELEASE,//All, User?
     CUSTOM,//User, Project, All
     NEWS,
-    SYSTEM
+    SYSTEM,
+    CHECK
 }

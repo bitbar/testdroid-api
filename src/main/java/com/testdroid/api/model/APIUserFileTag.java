@@ -17,6 +17,10 @@ public class APIUserFileTag extends APIEntity {
     public APIUserFileTag() {
     }
 
+    public APIUserFileTag(String name) {
+        this.name = name;
+    }
+
     public APIUserFileTag(Long id, String name) {
         super(id);
         this.name = name;

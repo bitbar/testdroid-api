@@ -68,3 +68,4 @@ APIDeviceFilter
 APIDeviceFilterGroup
 APICountryVatRate
 APIMarketShare
+APIFileConfig

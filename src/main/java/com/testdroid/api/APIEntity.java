@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.testdroid.api.model.*;
 import com.testdroid.api.model.jrjc.*;
+import com.testdroid.api.model.APIFileConfig;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -106,7 +107,8 @@ import java.util.logging.Logger;
         APIDeviceFilter.class,
         APIDeviceFilterGroup.class,
         APICountryVatRate.class,
-        APIMarketShare.class
+        APIMarketShare.class,
+        APIFileConfig.class
 })
 public abstract class APIEntity {
 
