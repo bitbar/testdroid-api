@@ -238,7 +238,8 @@ public class APIKeyClient implements APIClient {
             request = factory.buildGetRequest(new GenericUrl(apiURL + uri));
             request.setConnectTimeout(clientConnectTimeout);
             request.setReadTimeout(clientRequestTimeout);
-
+            HttpHeaders httpHeaders = new HttpHeaders().setAccept("application/xml").setBasicAuthentication(apiKey, "");
+            request.setHeaders(httpHeaders);
             response = request.execute();
             if (!Arrays.asList(HttpStatus.SC_OK, HttpStatus.SC_ACCEPTED, HttpStatus.SC_CREATED)
                     .contains(response.getStatusCode())) {
