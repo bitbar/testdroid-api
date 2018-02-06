@@ -56,7 +56,6 @@ APIAdminTestRun
 APICluster
 APIDeviceModelCriterion
 APIDeviceStatus
-APIEvent
 APILicense
 APIProperty
 APISession

@@ -88,7 +88,6 @@ import java.util.logging.Logger;
         APIDeviceModelCriterion.class,
         APIDeviceStatus.class,
         APIAdminEmail.class,
-        APIEvent.class,
         APIAdminError.class,
         APIProperty.class,
         APISession.class,

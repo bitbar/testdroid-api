@@ -22,69 +22,74 @@ public class APITestRun extends APIEntity {
         FINISHED
     }
 
-    protected APITestRunConfig config;
+    private APITestRunConfig config;
 
-    protected Date createTime;
+    private Date createTime;
 
-    protected String displayName;
+    private String displayName;
 
-    protected Integer errorsDeviceCount;
+    private Integer errorsDeviceCount;
 
-    protected Integer excludedDeviceCount;
+    private Integer excludedDeviceCount;
 
-    protected Float executionRatio;
+    private Float executionRatio;
 
-    protected Integer finishedDeviceCount;
+    private Integer finishedDeviceCount;
 
-    protected Long logsFileId;
+    private Long logsFileId;
 
-    protected Integer number;
+    private Integer number;
 
-    protected Long projectId;
+    private Long projectId;
 
-    protected Long screenshotsFileId;
+    private Long screenshotsFileId;
 
-    protected String startedByDisplayName;
+    private String startedByDisplayName;
 
-    protected Long startedById;
+    private Long startedById;
 
-    protected State state;
+    private State state;
 
-    protected Float successRatio;
+    private Float successRatio;
 
-    protected Integer successfulTestCaseCount;
+    private Integer successfulTestCaseCount;
 
-    protected Integer testCaseCount;
+    private Integer failedTestCaseCount;
 
-    protected Integer totalDeviceCount;
+    private Integer executedTestCaseCount;
 
-    protected Integer warningDeviceCount;
+    private Integer testCaseCount;
 
-    protected Integer runningDeviceCount;
+    private Integer totalDeviceCount;
 
-    protected Integer succeededDeviceCount;
+    private Integer warningDeviceCount;
 
-    protected Integer waitingDeviceCount;
+    private Integer runningDeviceCount;
 
-    protected Integer abortedDeviceCount;
+    private Integer succeededDeviceCount;
 
-    protected Integer timeoutedDeviceCount;
+    private Integer waitingDeviceCount;
 
-    protected Long userId;
+    private Integer abortedDeviceCount;
 
-    protected String gamebenchResultsUrl;
+    private Integer timeoutedDeviceCount;
 
-    protected Long frameworkId;
+    private Long userId;
 
-    protected String frameworkName;
+    private String gamebenchResultsUrl;
+
+    private Long frameworkId;
+
+    private String frameworkName;
 
     public APITestRun() {
     }
 
     public APITestRun(
-            Long id, Integer number, Date createTime, String displayName, Float executionRatio,
-            Float successRatio, Long startedById, String startedByDisplayName, State state, Long userId, Long projectId,
-            Long screenshotsFileId, Long logsFileId, Integer testCaseCount, Integer successfulTestCaseCount,
+            Long id, Integer number, Date createTime, String displayName, Float executionRatio, Float successRatio,
+            Long startedById, String startedByDisplayName, State state, Long userId, Long projectId,
+            Long screenshotsFileId, Long logsFileId,
+            Integer testCaseCount, Integer successfulTestCaseCount, Integer failedTestCaseCount,
             Integer totalDeviceCount, Integer finishedDeviceCount, Integer excludedDeviceCount,
             Integer errorsDeviceCount, Integer succeededDeviceCount, Integer runningDeviceCount,
             Integer warningDeviceCount, Integer waitingDeviceCount, Integer abortedDeviceCount,
@@ -104,6 +109,8 @@ public class APITestRun extends APIEntity {
         this.logsFileId = logsFileId;
         this.testCaseCount = testCaseCount;
         this.successfulTestCaseCount = successfulTestCaseCount;
+        this.failedTestCaseCount = failedTestCaseCount;
+        this.executedTestCaseCount = successfulTestCaseCount + failedTestCaseCount;
         this.totalDeviceCount = totalDeviceCount;
         this.finishedDeviceCount = finishedDeviceCount;
         this.excludedDeviceCount = excludedDeviceCount;
@@ -298,6 +305,22 @@ public class APITestRun extends APIEntity {
 
     public void setSuccessfulTestCaseCount(Integer successfulTestCaseCount) {
         this.successfulTestCaseCount = successfulTestCaseCount;
+    }
+
+    public Integer getFailedTestCaseCount() {
+        return failedTestCaseCount;
+    }
+
+    public void setFailedTestCaseCount(Integer failedTestCaseCount) {
+        this.failedTestCaseCount = failedTestCaseCount;
+    }
+
+    public Integer getExecutedTestCaseCount() {
+        return executedTestCaseCount;
+    }
+
+    public void setExecutedTestCaseCount(Integer executedTestCaseCount) {
+        this.executedTestCaseCount = executedTestCaseCount;
     }
 
     public Integer getTotalDeviceCount() {
@@ -528,6 +551,7 @@ public class APITestRun extends APIEntity {
         this.logsFileId = apiTestRun.logsFileId;
         this.testCaseCount = apiTestRun.testCaseCount;
         this.successfulTestCaseCount = apiTestRun.successfulTestCaseCount;
+        this.failedTestCaseCount = apiTestRun.failedTestCaseCount;
         this.totalDeviceCount = apiTestRun.totalDeviceCount;
         this.finishedDeviceCount = apiTestRun.finishedDeviceCount;
         this.excludedDeviceCount = apiTestRun.excludedDeviceCount;

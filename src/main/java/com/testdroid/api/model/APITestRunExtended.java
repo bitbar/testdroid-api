@@ -27,13 +27,15 @@ public class APITestRunExtended extends APITestRun {
     public APITestRunExtended(
             Long id, Integer number, Date createTime, String displayName, Float executionRatio, Float successRatio,
             Long startedById, String startedByDisplayName, State state, Long userId, Long projectId,
-            Long screenshotsFileId, Long logsFileId, Integer testCaseCount, Integer successfulTestCaseCount,
+            Long screenshotsFileId, Long logsFileId,
+            Integer testCaseCount, Integer successfulTestCaseCount, Integer failedTestCaseCount,
             Integer totalDeviceCount, Integer finishedDeviceCount, Integer excludedDeviceCount,
             Integer errorsDeviceCount, Integer succeededDeviceCount, Integer runningDeviceCount,
             Integer warningDeviceCount, Integer waitingDeviceCount, Integer abortedDeviceCount,
             Integer timeoutedDeviceCount, String gamebenchResultsUrl, Long frameworkId, String frameworkName) {
         super(id, number, createTime, displayName, executionRatio, successRatio, startedById, startedByDisplayName,
-                state, userId, projectId, screenshotsFileId, logsFileId, testCaseCount, successfulTestCaseCount,
+                state, userId, projectId, screenshotsFileId, logsFileId,
+                testCaseCount, successfulTestCaseCount, failedTestCaseCount,
                 totalDeviceCount, finishedDeviceCount, excludedDeviceCount, errorsDeviceCount, succeededDeviceCount,
                 runningDeviceCount, warningDeviceCount, waitingDeviceCount, abortedDeviceCount, timeoutedDeviceCount,
                 gamebenchResultsUrl, frameworkId, frameworkName);
