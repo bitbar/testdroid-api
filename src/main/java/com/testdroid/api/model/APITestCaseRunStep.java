@@ -14,7 +14,7 @@ import javax.xml.bind.annotation.XmlType;
 public class APITestCaseRunStep extends APIEntity {
 
     @XmlType(namespace = "APITestCaseRunStep")
-    public static enum Type {
+    public enum Type {
         ASSERTION,
         CLICK,
         CONFIG,

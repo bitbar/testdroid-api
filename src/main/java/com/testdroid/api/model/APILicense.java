@@ -15,7 +15,7 @@ public class APILicense extends APIEntity {
 
 
     @XmlType(namespace = "APILicense")
-    public static enum Status {
+    public enum Status {
         ACTIVE,
         EXPIRED,
         INACTIVE

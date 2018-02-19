@@ -16,7 +16,7 @@ import java.io.InputStream;
 public class APIScreenshot extends APIEntity {
 
     @XmlType(namespace = "APIScreenshot")
-    public static enum Type {
+    public enum Type {
         LANDSCAPE,
         PORTRAIT
     }

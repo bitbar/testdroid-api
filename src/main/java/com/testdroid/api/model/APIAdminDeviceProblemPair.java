@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.XmlType;
 public class APIAdminDeviceProblemPair extends APIEntity {
 
     @XmlType(namespace = "APIAdminDeviceProblemPair", name = "APIAdminDeviceProblemPairType")
-    public static enum Type {
+    public enum Type {
         OFFLINE,
         LOW_BATTERY,
         HIGH_FAIL_RATE,

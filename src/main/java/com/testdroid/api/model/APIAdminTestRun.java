@@ -48,9 +48,8 @@ public class APIAdminTestRun extends APIEntity {
 
     public APIAdminTestRun(
             Long id, Date createTime, Date startTime, Date endTime, APITestRun.State state, Long startedById,
-            String userName, String projectName, String testRunName, Boolean appCrawlerRun, Float successRatio,
-            Integer priority, Long projectId, Long duration, APITestRunConfig.Scheduler scheduler, Long frameworkId,
-            String frameworkName) {
+            String userName, String projectName, String testRunName, Float successRatio, Integer priority,
+            Long projectId, Long duration, Long frameworkId, String frameworkName) {
         super(id);
         this.createTime = createTime;
         this.startTime = startTime;
@@ -60,14 +59,23 @@ public class APIAdminTestRun extends APIEntity {
         this.userName = userName;
         this.projectName = projectName;
         this.testRunName = testRunName;
-        this.appCrawlerRun = appCrawlerRun;
         this.successRatio = successRatio;
         this.priority = priority;
         this.projectId = projectId;
         this.duration = duration;
-        this.scheduler = scheduler;
         this.frameworkId = frameworkId;
         this.frameworkName = frameworkName;
+    }
+
+    public APIAdminTestRun(
+            Long id, Date createTime, Date startTime, Date endTime, APITestRun.State state, Long startedById,
+            String userName, String projectName, String testRunName, Boolean appCrawlerRun, Float successRatio,
+            Integer priority, Long projectId, Long duration, APITestRunConfig.Scheduler scheduler, Long frameworkId,
+            String frameworkName) {
+        this(id, createTime, startTime, endTime, state, startedById, userName, projectName, testRunName,
+                successRatio, priority, projectId, duration, frameworkId, frameworkName);
+        this.appCrawlerRun = appCrawlerRun;
+        this.scheduler = scheduler;
     }
 
     public Date getEndTime() {

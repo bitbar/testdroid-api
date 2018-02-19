@@ -21,14 +21,14 @@ import static com.testdroid.api.model.APIDevice.OsType;
 public class APIProject extends APIEntity {
 
     @XmlType(namespace = "APIProject")
-    public static enum APIArchivingStrategy {
+    public enum APIArchivingStrategy {
         NEVER,
         DAYS,
         RUNS
     }
 
     @XmlType(namespace = "APIProject")
-    public static enum Type {
+    public enum Type {
         ANDROID(OsType.ANDROID, APIProjectJobConfig.Type.DEFAULT, "Android Instrumentation"),
         IOS(OsType.IOS, APIProjectJobConfig.Type.APPCRAWLER_IOS, "AppCrawler iOS"),
         UIAUTOMATOR(OsType.ANDROID, APIProjectJobConfig.Type.UIAUTOMATOR, "Android UIAutomator"),
@@ -50,7 +50,7 @@ public class APIProject extends APIEntity {
 
         private String title;
 
-        private Type(OsType osType, APIProjectJobConfig.Type jobConfigType, String title) {
+        Type(OsType osType, APIProjectJobConfig.Type jobConfigType, String title) {
             this.osType = osType;
             this.jobConfigType = jobConfigType;
             this.title = title;
@@ -420,7 +420,7 @@ public class APIProject extends APIEntity {
             Long dataFileId) throws APIException {
         Map<String, Object> body = new HashMap<>();
         body.put("scheduler", config.getScheduler() != null ? config.getScheduler().name() : null);
-        body.put("appCrawlerRun", config.getAppCrawlerRun());
+        body.put("appCrawlerRun", config.isAppCrawlerRun());
         body.put("autoScreenshots", config.isAutoScreenshots());
         body.put("screenshotDir", config.getScreenshotDir());
         body.put("limitationType", config.getLimitationType() != null ? config.getLimitationType().name() : null);

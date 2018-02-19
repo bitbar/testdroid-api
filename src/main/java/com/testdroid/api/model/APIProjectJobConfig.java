@@ -16,7 +16,7 @@ import java.util.Date;
 public class APIProjectJobConfig extends APIEntity {
 
     @XmlType(namespace = "APIProjectJobConfig")
-    public static enum Type {
+    public enum Type {
         DEFAULT(APIDevice.OsType.ANDROID, "Android instrumentation"),
         INSTATEST(APIDevice.OsType.ANDROID, "Android App Crawler"),
         INTERACTIVE(APIDevice.OsType.ANDROID, "Testdroid Interactive"),

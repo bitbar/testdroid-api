@@ -5,6 +5,7 @@ import com.testdroid.api.APIEntity;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
@@ -12,10 +13,12 @@ import java.util.List;
  * @author Michał Szpruta <michal.szpruta@bitbar.com>
  */
 @XmlRootElement
-public class APIFileConfig extends APIEntity {
+public class APIFileConfig extends APIEntity implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @XmlType(namespace = "APIFileConfig")
-    public static enum Action {
+    public enum Action {
         COPY_TO_DEVICE,
         INSTALL,
         RUN_TEST
@@ -25,9 +28,14 @@ public class APIFileConfig extends APIEntity {
 
     private List<Action> availableActions = Arrays.asList(Action.values());
 
-    private List<APIUserFileTag> tags;
+    private APIUserFile file;
 
     public APIFileConfig() {
+    }
+
+    public APIFileConfig(Long id, Action action) {
+        super(id);
+        this.action = action;
     }
 
     public Action getAction() {
@@ -46,12 +54,12 @@ public class APIFileConfig extends APIEntity {
         this.availableActions = availableActions;
     }
 
-    public List<APIUserFileTag> getTags() {
-        return tags;
+    public APIUserFile getFile() {
+        return file;
     }
 
-    public void setTags(List<APIUserFileTag> tags) {
-        this.tags = tags;
+    public void setFile(APIUserFile file) {
+        this.file = file;
     }
 
     @Override
@@ -60,7 +68,7 @@ public class APIFileConfig extends APIEntity {
         APIFileConfig original = (APIFileConfig) from;
         cloneBase(original);
         this.action = original.action;
-        this.tags = original.tags;
         this.availableActions = original.availableActions;
+        this.file = original.file;
     }
 }

@@ -13,7 +13,7 @@ import java.util.Date;
 public class APIActivity extends APIEntity {
 
     @XmlType(namespace = "APIActivity")
-    public static enum HttpMethod {
+    public enum HttpMethod {
         GET,
         HEAD,
         POST,

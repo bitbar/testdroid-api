@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlType;
 public class APIServicePaymentStatus {
 
     @XmlType(name = "APIServicePaymentStatus")
-    public static enum Status {
+    public enum Status {
         SUCCEEDED,
         FAILED,
         REDIRECTED

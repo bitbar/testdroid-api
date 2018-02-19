@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.testdroid.api.model.*;
 import com.testdroid.api.model.jrjc.*;
-import com.testdroid.api.model.APIFileConfig;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;

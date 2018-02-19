@@ -32,7 +32,7 @@ public class APIFilter {
 
     public static class APIFilterItem {
 
-        public static enum Operand {
+        public enum Operand {
             GT,
             AFTER,
             LT,
@@ -48,7 +48,7 @@ public class APIFilter {
             AFTERORNULL
         }
 
-        public static enum Type {
+        public enum Type {
             N,
             D,
             S,

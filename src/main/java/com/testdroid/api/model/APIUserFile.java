@@ -8,6 +8,7 @@ import com.testdroid.api.APIListResource;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.net.URL;
 import java.util.Date;
 
@@ -16,7 +17,9 @@ import java.util.Date;
  * @author Slawomir Pawluk <slawomir.pawluk@bitbar.com>
  */
 @XmlRootElement
-public class APIUserFile extends APIEntity {
+public class APIUserFile extends APIEntity implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private Date createTime;
 
@@ -45,20 +48,20 @@ public class APIUserFile extends APIEntity {
     private transient String iconUri;
 
     @XmlType(namespace = "APIUserFile")
-    public static enum InputType {
+    public enum InputType {
         APPLICATION,
         TEST,
         DATA
     }
 
     @XmlType(namespace = "APIUserFile")
-    public static enum Direction {
+    public enum Direction {
         INPUT,
         OUTPUT
     }
 
     @XmlType(namespace = "APIUserFile", name = "APIUserFileState")
-    public static enum State {
+    public enum State {
         PREPARING,
         READY
     }

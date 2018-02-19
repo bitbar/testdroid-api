@@ -4,12 +4,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 
 /**
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
  */
 @XmlRootElement
-public class APITestRunParameter extends APIEntity {
+public class APITestRunParameter extends APIEntity implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private String key;
 

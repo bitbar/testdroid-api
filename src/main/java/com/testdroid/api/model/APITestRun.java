@@ -16,7 +16,7 @@ import java.util.Date;
 public class APITestRun extends APIEntity {
 
     @XmlType(namespace = "APITestRun", name = "APITestRunState")
-    public static enum State {
+    public enum State {
         WAITING,
         RUNNING,
         FINISHED
@@ -78,6 +78,8 @@ public class APITestRun extends APIEntity {
 
     private String gamebenchResultsUrl;
 
+    private String gamebenchJobId;
+
     private Long frameworkId;
 
     private String frameworkName;
@@ -93,7 +95,7 @@ public class APITestRun extends APIEntity {
             Integer totalDeviceCount, Integer finishedDeviceCount, Integer excludedDeviceCount,
             Integer errorsDeviceCount, Integer succeededDeviceCount, Integer runningDeviceCount,
             Integer warningDeviceCount, Integer waitingDeviceCount, Integer abortedDeviceCount,
-            Integer timeoutedDeviceCount, String gamebenchResultsUrl, Long frameworkId, String frameworkName) {
+            Integer timeoutedDeviceCount, String gamebenchJobId, Long frameworkId, String frameworkName) {
         super(id);
         this.number = number;
         this.createTime = createTime;
@@ -121,7 +123,7 @@ public class APITestRun extends APIEntity {
         this.waitingDeviceCount = waitingDeviceCount;
         this.abortedDeviceCount = abortedDeviceCount;
         this.timeoutedDeviceCount = timeoutedDeviceCount;
-        this.gamebenchResultsUrl = gamebenchResultsUrl;
+        this.gamebenchJobId = gamebenchJobId;
         this.frameworkId = frameworkId;
         this.frameworkName = frameworkName;
     }
@@ -379,6 +381,14 @@ public class APITestRun extends APIEntity {
         this.gamebenchResultsUrl = gamebenchResultsUrl;
     }
 
+    public String getGamebenchJobId() {
+        return gamebenchJobId;
+    }
+
+    public void setGamebenchJobId(String gamebenchJobId) {
+        this.gamebenchJobId = gamebenchJobId;
+    }
+
     public Long getUserId() {
         return userId;
     }
@@ -562,6 +572,7 @@ public class APITestRun extends APIEntity {
         this.waitingDeviceCount = apiTestRun.waitingDeviceCount;
         this.abortedDeviceCount = apiTestRun.abortedDeviceCount;
         this.timeoutedDeviceCount = apiTestRun.timeoutedDeviceCount;
+        this.gamebenchJobId = apiTestRun.gamebenchJobId;
         this.gamebenchResultsUrl = apiTestRun.gamebenchResultsUrl;
         this.frameworkId = apiTestRun.frameworkId;
         this.frameworkName = apiTestRun.frameworkName;
