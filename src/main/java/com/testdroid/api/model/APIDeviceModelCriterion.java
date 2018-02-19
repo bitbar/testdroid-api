@@ -14,7 +14,7 @@ import java.util.Date;
 public class APIDeviceModelCriterion extends APIEntity {
 
     @XmlType(namespace = "APIDeviceModelCriterion")
-    public static enum Field {
+    public enum Field {
         NAME,
         FINGERPRINT,
         SERIAL_ID,

@@ -19,21 +19,21 @@ public class APIDevice extends APIEntity {
 
     @XmlType
     @Deprecated
-    public static enum DeviceFilter {
+    public enum DeviceFilter {
         FREE,
         RECOMMENDED,
         NEW
     }
 
     @XmlType
-    public static enum DeviceGroupOrigin {
+    public enum DeviceGroupOrigin {
         STATIC,
         DYNAMIC,
         HYBRID
     }
 
     @XmlType(namespace = "APIDevice")
-    public static enum OsType {
+    public enum OsType {
         IOS("iOS"),
         ANDROID("Android"),
         UNDEFINED("Undefined");

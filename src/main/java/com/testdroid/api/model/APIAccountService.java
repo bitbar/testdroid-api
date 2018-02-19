@@ -17,7 +17,7 @@ import java.util.Locale;
 public class APIAccountService extends APIEntity {
 
     @XmlType(namespace = "APIAccountService")
-    public static enum DeactivateReason {
+    public enum DeactivateReason {
         INITIAL_FAILURE,
         CHARGE_FAILURE,
         CANCEL,

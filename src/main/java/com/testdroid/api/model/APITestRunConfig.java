@@ -8,24 +8,25 @@ import com.testdroid.api.APIQueryBuilder;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.Serializable;
+import java.util.*;
 
 /**
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
  */
 @XmlRootElement
-public class APITestRunConfig extends APIEntity {
+public class APITestRunConfig extends APIEntity implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @XmlType(namespace = "APITestRunConfig")
-    public static enum LimitationType {
+    public enum LimitationType {
         PACKAGE,
         CLASS
     }
 
     @XmlType(namespace = "APITestRunConfig")
-    public static enum Scheduler {
+    public enum Scheduler {
         PARALLEL,
         SERIAL,
         SINGLE
@@ -35,7 +36,7 @@ public class APITestRunConfig extends APIEntity {
 
     private String appiumBrokerAddress;
 
-    private boolean appRequired;
+    private boolean appRequired = true;
 
     private String applicationPassword;
 
@@ -45,9 +46,9 @@ public class APITestRunConfig extends APIEntity {
 
     private Long creditsPrice;
 
-    private String deviceLanguageCode;
+    private String deviceLanguageCode = Locale.US.toString();
 
-    private boolean useAdditionalFiles;
+    private boolean useAdditionalFiles = true;
 
     private boolean videoRecordingEnabled;
 
@@ -55,19 +56,19 @@ public class APITestRunConfig extends APIEntity {
 
     private String instrumentationRunner;
 
-    private boolean launchApp;
+    private boolean launchApp = true;
 
     private LimitationType limitationType;
 
     private String limitationValue;
 
-    private Boolean appCrawlerRun;
+    private boolean appCrawlerRun;
 
     private Long projectId;
 
     private boolean runAvailable;
 
-    private Scheduler scheduler;
+    private Scheduler scheduler = Scheduler.PARALLEL;
 
     private String screenshotDir;
 
@@ -93,15 +94,28 @@ public class APITestRunConfig extends APIEntity {
 
     private List<APIFramework> availableFrameworks;
 
-    private List<APIFileConfig> files;
+    private List<APIFileConfig> files = new ArrayList<>();
 
     private APIDevice.OsType osType = APIDevice.OsType.UNDEFINED;
 
-    private List<APITestRunParameter> testRunParameters;
+    private List<APITestRunParameter> testRunParameters = new ArrayList<>();
 
     private List<Long> deviceIds;
 
     private String status;
+
+    private int statusCode;
+
+    private String testRunName;
+
+    private Long testRunId;
+
+    private String deviceNamePattern;
+
+    private String projectName;
+
+    @JsonIgnore
+    private List<?> computedDevices;
 
     public APITestRunConfig() {
     }
@@ -158,11 +172,11 @@ public class APITestRunConfig extends APIEntity {
         this.scheduler = scheduler;
     }
 
-    public Boolean getAppCrawlerRun() {
+    public boolean isAppCrawlerRun() {
         return appCrawlerRun;
     }
 
-    public void setAppCrawlerRun(Boolean appCrawlerRun) {
+    public void setAppCrawlerRun(boolean appCrawlerRun) {
         this.appCrawlerRun = appCrawlerRun;
     }
 
@@ -434,6 +448,46 @@ public class APITestRunConfig extends APIEntity {
         this.deviceIds = deviceIds;
     }
 
+    public String getTestRunName() {
+        return testRunName;
+    }
+
+    public void setTestRunName(String testRunName) {
+        this.testRunName = testRunName;
+    }
+
+    public Long getTestRunId() {
+        return testRunId;
+    }
+
+    public void setTestRunId(Long testRunId) {
+        this.testRunId = testRunId;
+    }
+
+    public String getDeviceNamePattern() {
+        return deviceNamePattern;
+    }
+
+    public void setDeviceNamePattern(String deviceNamePattern) {
+        this.deviceNamePattern = deviceNamePattern;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
+    public int getStatusCode() {
+        return statusCode;
+    }
+
+    public void setStatusCode(int statusCode) {
+        this.statusCode = statusCode;
+    }
+
     @JsonIgnore
     public APITestRunParameter createParameter(final String key, final String value) throws APIException {
         Map<String, Object> body = new HashMap<>();
@@ -455,6 +509,15 @@ public class APITestRunConfig extends APIEntity {
     @JsonIgnore
     public void deleteParameter(long parameterId) throws APIException {
         deleteResource(String.format("%s/%s", getParametersURI(), parameterId));
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T> List<T> getComputedDevices() {
+        return (List<T>) computedDevices;
+    }
+
+    public <T> void setComputedDevices(List<T> computedDevices) {
+        this.computedDevices = computedDevices;
     }
 
     public void update() throws APIException {
@@ -525,5 +588,9 @@ public class APITestRunConfig extends APIEntity {
         this.osType = apiTestRunConfig.osType;
         this.testRunParameters = apiTestRunConfig.testRunParameters;
         this.deviceIds = apiTestRunConfig.deviceIds;
+        this.testRunName = apiTestRunConfig.testRunName;
+        this.testRunId = apiTestRunConfig.testRunId;
+        this.projectName = apiTestRunConfig.projectName;
+        this.statusCode = apiTestRunConfig.statusCode;
     }
 }

@@ -16,14 +16,14 @@ import java.util.Map;
 @XmlRootElement
 public class APIUser extends APIEntity {
 
-    public static enum Status {
+    public enum Status {
         INACTIVE("Inactive"),
         DISABLED("Disabled"),
         ENABLED("Enabled");
 
         private String displayName;
 
-        private Status(String displayName) {
+        Status(String displayName) {
             this.displayName = displayName;
         }
 
@@ -87,14 +87,14 @@ public class APIUser extends APIEntity {
 
     @Deprecated
     @XmlType(namespace = "APIUser", name = "APIUserEmailNotification")
-    public static enum EmailNotification {
+    public enum EmailNotification {
         ALWAYS("always"),
         NEVER("never"),
         ON_FAILURE("on failure");
 
         private String displayName;
 
-        private EmailNotification(String displayName) {
+        EmailNotification(String displayName) {
             this.displayName = displayName;
         }
 

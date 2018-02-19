@@ -12,13 +12,13 @@ import java.util.stream.Collectors;
  */
 public class APISort {
 
-    public static enum Type {
+    public enum Type {
         ASC("a"),
         DESC("d");
 
         private String urlValue;
 
-        private Type(String urlValue) {
+        Type(String urlValue) {
             this.urlValue = urlValue;
         }
 

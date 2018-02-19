@@ -14,7 +14,7 @@ import java.util.Date;
 public class APIAdminDevice extends APIEntity {
 
     @XmlType(namespace = "APIAdminDevice")
-    public static enum InitStep {
+    public enum InitStep {
         SKIP,
         REBOOT,
         REBOOT_WITH_UNLOCK,
@@ -22,7 +22,7 @@ public class APIAdminDevice extends APIEntity {
     }
 
     @XmlType(namespace = "APIAdminDevice")
-    public static enum State {
+    public enum State {
         ONLINE,
         OFFLINE
     }

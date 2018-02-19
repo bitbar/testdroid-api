@@ -25,6 +25,10 @@ public class APIDeviceSessionDataAvailability extends APIEntity {
     public APIDeviceSessionDataAvailability() {
     }
 
+    public APIDeviceSessionDataAvailability(Long deviceRunId) {
+        this.deviceRunId = deviceRunId;
+    }
+
     public APIDeviceSessionDataAvailability(
             Long deviceRunId, boolean logs, boolean performance, boolean screenshots,
             boolean buildLogs, boolean resultsDataZip) {

@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlType;
 public class APIMarketShare extends APIEntity {
 
     @XmlType(namespace = "APIMarketShare")
-    public static enum Type {
+    public enum Type {
         ANDROID_VERSION,
         IOS_VERSION,
         OPEN_GL_VERSION

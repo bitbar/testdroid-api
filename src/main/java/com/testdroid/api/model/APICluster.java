@@ -17,7 +17,7 @@ import java.util.Date;
 public class APICluster extends APIEntity {
 
     @XmlType(namespace = "APICluster", name = "APIClusterState")
-    public static enum State {
+    public enum State {
         OFFLINE,
         ONLINE
     }

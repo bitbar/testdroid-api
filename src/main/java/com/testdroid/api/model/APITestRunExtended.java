@@ -32,13 +32,13 @@ public class APITestRunExtended extends APITestRun {
             Integer totalDeviceCount, Integer finishedDeviceCount, Integer excludedDeviceCount,
             Integer errorsDeviceCount, Integer succeededDeviceCount, Integer runningDeviceCount,
             Integer warningDeviceCount, Integer waitingDeviceCount, Integer abortedDeviceCount,
-            Integer timeoutedDeviceCount, String gamebenchResultsUrl, Long frameworkId, String frameworkName) {
+            Integer timeoutedDeviceCount, String gamebenchJobId, Long frameworkId, String frameworkName) {
         super(id, number, createTime, displayName, executionRatio, successRatio, startedById, startedByDisplayName,
                 state, userId, projectId, screenshotsFileId, logsFileId,
                 testCaseCount, successfulTestCaseCount, failedTestCaseCount,
                 totalDeviceCount, finishedDeviceCount, excludedDeviceCount, errorsDeviceCount, succeededDeviceCount,
                 runningDeviceCount, warningDeviceCount, waitingDeviceCount, abortedDeviceCount, timeoutedDeviceCount,
-                gamebenchResultsUrl, frameworkId, frameworkName);
+                gamebenchJobId, frameworkId, frameworkName);
         this.deviceCount = totalDeviceCount;
     }
 

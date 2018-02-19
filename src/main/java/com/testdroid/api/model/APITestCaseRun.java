@@ -15,7 +15,7 @@ import java.util.Date;
 public class APITestCaseRun extends APIEntity {
 
     @XmlType(namespace = "APITestCaseRun")
-    public static enum Result {
+    public enum Result {
         PASSED,
         FAILED,
         SKIPPED,

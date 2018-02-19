@@ -15,20 +15,20 @@ import java.util.Date;
 public class APIDeviceSession extends APIEntity {
 
     @XmlType(namespace = "APIDeviceSession")
-    public static enum Type {
+    public enum Type {
         MANUAL,
         AUTOMATIC
     }
 
     @XmlType(namespace = "APIDeviceSession")
-    public static enum RetryState {
+    public enum RetryState {
         NONE,
         MANUAL,
         AUTO
     }
 
     @XmlType(namespace = "APIDeviceSession")
-    public static enum State {
+    public enum State {
         ABORTED,
         EXCLUDED,
         FAILED,
