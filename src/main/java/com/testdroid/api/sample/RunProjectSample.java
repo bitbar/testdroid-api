@@ -37,7 +37,7 @@ public class RunProjectSample {
             testRunConfig.setApplicationUsername("applicationUsername");
             testRunConfig.setAutoScreenshots(false);
             testRunConfig.setDeviceLanguageCode("EN");
-            testRunConfig.setUsedDeviceGroupId(deviceGroup.getId());
+            testRunConfig.setDeviceGroupId(deviceGroup.getId());
             testRunConfig.setAppCrawlerRun(Boolean.FALSE);
 
             // Set hook URL to receive signal, when test run is finished.

@@ -22,7 +22,7 @@ public class RunTestsWithoutAppUploadedSample {
             APITestRunConfig config = project.getTestRunConfig();
             config.setAppCrawlerRun(Boolean.FALSE);
             config.setAppRequired(false);
-            config.setUsedDeviceGroupId(deviceGroup.getId());
+            config.setDeviceGroupId(deviceGroup.getId());
             config.update();
 
             Common.uploadTest(project);

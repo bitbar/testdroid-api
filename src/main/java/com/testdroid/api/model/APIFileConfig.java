@@ -59,6 +59,9 @@ public class APIFileConfig extends APIEntity implements Serializable {
     }
 
     public void setFile(APIUserFile file) {
+        if (file != null) {
+            this.id = file.getId();
+        }
         this.file = file;
     }
 
