@@ -74,6 +74,9 @@ public class APITestRunConfig extends APIEntity implements Serializable {
 
     private String uiAutomatorTestClasses;
 
+    private Long deviceGroupId;
+
+    @Deprecated
     private Long usedDeviceGroupId;
 
     private String usedDeviceGroupName;
@@ -123,7 +126,7 @@ public class APITestRunConfig extends APIEntity implements Serializable {
     public APITestRunConfig(
             Long id, Scheduler scheduler, Boolean appCrawlerRun, Boolean autoScreenshots, String screenshotDir,
             LimitationType limitationType, String limitationValue, String withAnnotation, String withoutAnnotation,
-            String applicationUsername, String applicationPassword, Long usedDeviceGroupId,
+            String applicationUsername, String applicationPassword, Long deviceGroupId,
             String usedDeviceGroupName, Long creditsPrice, String deviceLanguageCode, String hookURL,
             String uiAutomatorTestClasses, Boolean launchApp, String instrumentationRunner, Boolean appRequired,
             Boolean useAdditionalFiles, Boolean videoRecordingEnabled, Long timeout, String appiumBrokerAddress,
@@ -139,6 +142,7 @@ public class APITestRunConfig extends APIEntity implements Serializable {
         this.withoutAnnotation = withoutAnnotation;
         this.applicationUsername = applicationUsername;
         this.applicationPassword = applicationPassword;
+        this.deviceGroupId = deviceGroupId;
         this.usedDeviceGroupId = usedDeviceGroupId;
         this.usedDeviceGroupName = usedDeviceGroupName;
         this.creditsPrice = creditsPrice;
@@ -252,12 +256,22 @@ public class APITestRunConfig extends APIEntity implements Serializable {
         this.applicationPassword = applicationPassword;
     }
 
+    public Long getDeviceGroupId() {
+        return deviceGroupId;
+    }
+
+    public void setDeviceGroupId(Long deviceGroupId) {
+        this.usedDeviceGroupId = deviceGroupId;
+        this.deviceGroupId = deviceGroupId;
+    }
+
     public Long getUsedDeviceGroupId() {
         return usedDeviceGroupId;
     }
 
-    public void setUsedDeviceGroupId(Long usedDeviceGroupId) {
-        this.usedDeviceGroupId = usedDeviceGroupId;
+    public void setUsedDeviceGroupId(Long deviceGroupId) {
+        this.usedDeviceGroupId = deviceGroupId;
+        this.deviceGroupId = deviceGroupId;
     }
 
     public String getUsedDeviceGroupName() {
@@ -532,7 +546,7 @@ public class APITestRunConfig extends APIEntity implements Serializable {
         body.put("withoutAnnotation", withoutAnnotation);
         body.put("applicationUsername", applicationUsername);
         body.put("applicationPassword", applicationPassword);
-        body.put("usedDeviceGroupId", usedDeviceGroupId);
+        body.put("usedDeviceGroupId", deviceGroupId);
         body.put("deviceLanguageCode", deviceLanguageCode);
         body.put("hookURL", hookURL);
         body.put("uiAutomatorTestClasses", uiAutomatorTestClasses);
@@ -570,6 +584,7 @@ public class APITestRunConfig extends APIEntity implements Serializable {
         this.scheduler = apiTestRunConfig.scheduler;
         this.screenshotDir = apiTestRunConfig.screenshotDir;
         this.uiAutomatorTestClasses = apiTestRunConfig.uiAutomatorTestClasses;
+        this.deviceGroupId = apiTestRunConfig.deviceGroupId;
         this.usedDeviceGroupId = apiTestRunConfig.usedDeviceGroupId;
         this.usedDeviceGroupName = apiTestRunConfig.usedDeviceGroupName;
         this.withAnnotation = apiTestRunConfig.withAnnotation;

@@ -1,5 +1,6 @@
 package com.testdroid.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -18,7 +19,8 @@ public class APILicense extends APIEntity {
     public enum Status {
         ACTIVE,
         EXPIRED,
-        INACTIVE
+        INACTIVE,
+        CLOSED
     }
 
     public static final String DISABLED_TEXT = "";
@@ -34,6 +36,8 @@ public class APILicense extends APIEntity {
     private Date expireTime;
 
     private Date activateTime;
+
+    private Date closeTime;
 
     private InspectorLicense inspector;
 
@@ -92,7 +96,8 @@ public class APILicense extends APIEntity {
         this.remoteControl = new RemoteControlLicense(remoteControlEnabled);
         this.xcTest = new XCTestLicense(xcTestEnabled);
         this.xcuiTest = new XCUITestLicense(xcuiTestEnabled);
-        this.status = closeTime != null ? Status.EXPIRED : activateTime != null ? Status.ACTIVE : Status.INACTIVE;
+        this.closeTime = closeTime;
+        this.status = computeStatus(activateTime, expireTime, closeTime);
     }
 
     public APILicense(
@@ -153,6 +158,7 @@ public class APILicense extends APIEntity {
         this.expireTime = expireTime;
     }
 
+    @JsonIgnore
     public boolean isExpired() {
         return this.expireTime == null || new Date().after(this.expireTime);
     }
@@ -275,6 +281,20 @@ public class APILicense extends APIEntity {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public Status computeStatus(Date activateTime, Date expireTime, Date closeTime) {
+        return closeTime != null ? Status.CLOSED :
+                activateTime == null ? Status.INACTIVE :
+                        expireTime == null || expireTime.after(new Date()) ? Status.ACTIVE : Status.EXPIRED;
+    }
+
+    public Date getCloseTime() {
+        return closeTime;
+    }
+
+    public void setCloseTime(Date closeTime) {
+        this.closeTime = closeTime;
     }
 
     public String generateSignContent() {

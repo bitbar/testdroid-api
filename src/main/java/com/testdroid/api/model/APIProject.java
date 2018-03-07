@@ -429,7 +429,7 @@ public class APIProject extends APIEntity {
         body.put("withoutAnnotation", config.getWithoutAnnotation());
         body.put("applicationUsername", config.getApplicationUsername());
         body.put("applicationPassword", config.getApplicationPassword());
-        body.put("usedDeviceGroupId", config.getUsedDeviceGroupId());
+        body.put("usedDeviceGroupId", config.getDeviceGroupId());
         body.put("deviceLanguageCode", config.getDeviceLanguageCode());
         body.put("hookURL", config.getHookURL());
         body.put("uiAutomatorTestClasses", config.getUiAutomatorTestClasses());
