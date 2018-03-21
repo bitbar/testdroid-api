@@ -2,6 +2,7 @@ package com.testdroid.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
+import org.apache.commons.lang3.EnumUtils;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
@@ -73,9 +74,9 @@ public class APILicense extends APIEntity {
             Date expireTime, Integer androidDeviceLimit, Boolean androidEnabled, Boolean seleniumEnabled,
             Boolean serverAndroidEnabled, Boolean calabashEnabled, Boolean uiautomatorEnabled, Boolean recorderEnabled,
             Integer iosProjectLimit, Boolean serverIosEnabled, Integer recorderLimit, Boolean remoteControlEnabled,
-            Boolean xcTestEnabled, Boolean xcuiTestEnabled,
-            Boolean ctsEnabled, Integer androidProjectLimit, Boolean appiumEnabled, Boolean serverEnabled,
-            Boolean inspectorEnabled, Boolean iosEnabled, Integer iosDeviceLimit, Date closeTime) {
+            Boolean xcTestEnabled, Boolean xcuiTestEnabled, Boolean ctsEnabled, Integer androidProjectLimit,
+            Boolean appiumEnabled, Boolean serverEnabled, Boolean inspectorEnabled, Boolean iosEnabled,
+            Integer iosDeviceLimit, Date closeTime, String status) {
         super(id);
         this.privateInstance = enterprise;
         this.activateTime = activateTime;
@@ -97,7 +98,7 @@ public class APILicense extends APIEntity {
         this.xcTest = new XCTestLicense(xcTestEnabled);
         this.xcuiTest = new XCUITestLicense(xcuiTestEnabled);
         this.closeTime = closeTime;
-        this.status = computeStatus(activateTime, expireTime, closeTime);
+        this.status = EnumUtils.getEnum(Status.class, status);
     }
 
     public APILicense(
@@ -281,12 +282,6 @@ public class APILicense extends APIEntity {
 
     public void setStatus(Status status) {
         this.status = status;
-    }
-
-    public Status computeStatus(Date activateTime, Date expireTime, Date closeTime) {
-        return closeTime != null ? Status.CLOSED :
-                activateTime == null ? Status.INACTIVE :
-                        expireTime == null || expireTime.after(new Date()) ? Status.ACTIVE : Status.EXPIRED;
     }
 
     public Date getCloseTime() {
