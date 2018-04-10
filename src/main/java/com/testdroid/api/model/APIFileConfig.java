@@ -6,6 +6,7 @@ import com.testdroid.api.APIEntity;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class APIFileConfig extends APIEntity implements Serializable {
 
     private Action action;
 
-    private List<Action> availableActions = Arrays.asList(Action.values());
+    private List<Action> availableActions = new ArrayList<>();
 
     private APIUserFile file;
 

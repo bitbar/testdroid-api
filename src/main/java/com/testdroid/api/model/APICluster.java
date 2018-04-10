@@ -1,10 +1,8 @@
 package com.testdroid.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonView;
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIList;
-import com.testdroid.api.APIView;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
@@ -54,7 +52,6 @@ public class APICluster extends APIEntity {
         this.enabled = enabled;
     }
 
-    @JsonView(value = APIView.class)
     public String getName() {
         return name;
     }

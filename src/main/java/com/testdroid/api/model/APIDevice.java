@@ -1,10 +1,8 @@
 package com.testdroid.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonView;
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIList;
-import com.testdroid.api.APIView;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
@@ -143,7 +141,6 @@ public class APIDevice extends APIEntity {
         this.enabled = enabled;
     }
 
-    @JsonView(value = {APIView.AdminView.class, APIView.MonitorView.class})
     public String getDisplayName() {
         return displayName;
     }
@@ -152,7 +149,6 @@ public class APIDevice extends APIEntity {
         this.displayName = displayName;
     }
 
-    @JsonView(APIView.AdminView.class)
     public APISoftwareVersion getSoftwareVersion() {
         return softwareVersion;
     }
@@ -161,7 +157,6 @@ public class APIDevice extends APIEntity {
         this.softwareVersion = softwareVersion;
     }
 
-    @JsonView(APIView.AdminView.class)
     public Integer getCreditsPrice() {
         return creditsPrice;
     }
@@ -170,7 +165,6 @@ public class APIDevice extends APIEntity {
         this.creditsPrice = creditsPrice;
     }
 
-    @JsonView(APIView.AdminView.class)
     public String getImagePrefix() {
         return imagePrefix;
     }
@@ -179,7 +173,6 @@ public class APIDevice extends APIEntity {
         this.imagePrefix = imagePrefix;
     }
 
-    @JsonView(APIView.AdminView.class)
     public Integer getImageTop() {
         return imageTop;
     }
@@ -188,7 +181,6 @@ public class APIDevice extends APIEntity {
         this.imageTop = imageTop;
     }
 
-    @JsonView(APIView.AdminView.class)
     public Integer getImageLeft() {
         return imageLeft;
     }
@@ -197,7 +189,6 @@ public class APIDevice extends APIEntity {
         this.imageLeft = imageLeft;
     }
 
-    @JsonView(APIView.AdminView.class)
     public Integer getImageWidth() {
         return imageWidth;
     }
@@ -206,7 +197,6 @@ public class APIDevice extends APIEntity {
         this.imageWidth = imageWidth;
     }
 
-    @JsonView(APIView.AdminView.class)
     public Integer getImageHeight() {
         return imageHeight;
     }
@@ -215,7 +205,6 @@ public class APIDevice extends APIEntity {
         this.imageHeight = imageHeight;
     }
 
-    @JsonView(APIView.AdminView.class)
     public Integer getFrameExtraWidth() {
         return frameExtraWidth;
     }
@@ -224,7 +213,6 @@ public class APIDevice extends APIEntity {
         this.frameExtraWidth = frameExtraWidth;
     }
 
-    @JsonView(value = {APIView.AdminView.class, APIView.MonitorView.class})
     public OsType getOsType() {
         return osType;
     }

@@ -3,13 +3,15 @@ package com.testdroid.api;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonView;
+import com.testdroid.api.dto.Context;
 
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.testdroid.api.dto.Context.*;
 
 /**
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
@@ -35,25 +37,43 @@ public class APIList<T extends APIEntity> extends APIEntity {
 
     private Integer total;
 
+    @JsonIgnore
+    private transient Context<T> context;
+
     public APIList() {
         data = new ArrayList<>();
         total = 0;
     }
 
-    public APIList(String next, String previous, List<T> data, Integer total, String search, String sort) {
-        this.next = next;
-        this.previous = previous;
-        this.data = data;
+    public APIList(String requestURL, List<T> data, Integer total, Context<T> ctx) {
+        int offset = ctx.getOffset();
+        int limit = ctx.getLimit();
+        String search = ctx.getSearch();
+        String sort = ctx.getSort().serialize();
         this.total = total;
+        this.offset = offset;
+        this.limit = limit;
         this.search = search;
         this.sort = sort;
+        this.data = data;
+        this.context = ctx;
+        if (offset + limit < total) {
+            this.next = getListURL(requestURL, offset + limit, limit, search, sort);
+        }
+        if (offset - limit >= 0) {
+            this.previous = getListURL(requestURL, offset - limit, limit, search, sort);
+        }
+    }
+
+    private String getListURL(String requestURL, long offset, long limit, String search, String sort) {
+        return String.format("%s?%s=%s&%s=%s&%s=%s&%s=%s", requestURL, OFFSET_REQUEST_PARAM, offset,
+                LIMIT_REQUEST_PARAM, limit, SEARCH_REQUEST_PARAM, search, SORT_REQUEST_PARAM, sort);
     }
 
     /**
      * Get full URL of the next page of the collection.
      * Simple call it to fetch next items.
      */
-    @JsonView(APIView.class)
     public String getNext() {
         return next;
     }
@@ -100,7 +120,6 @@ public class APIList<T extends APIEntity> extends APIEntity {
      * Get full URL of the previous page of the collection.
      * Simple call it to fetch previous items.
      */
-    @JsonView(APIView.class)
     public String getPrevious() {
         return previous;
     }
@@ -115,7 +134,6 @@ public class APIList<T extends APIEntity> extends APIEntity {
      * <code>limit</code> and <code>search</code>.
      */
     @XmlTransient
-    @JsonView(APIView.class)
     public List<T> getData() {
         return data;
     }
@@ -124,12 +142,10 @@ public class APIList<T extends APIEntity> extends APIEntity {
         this.data = data;
     }
 
-    @JsonView(APIView.class)
     public T get(int index) {
         return this.data.get(index);
     }
 
-    @JsonView(APIView.class)
     public boolean isEmpty() {
         return this.data.isEmpty();
     }
@@ -137,7 +153,6 @@ public class APIList<T extends APIEntity> extends APIEntity {
     /**
      * Get offset of data page returned in <code>getData()</code> method.
      */
-    @JsonView(APIView.class)
     public Integer getOffset() {
         return offset;
     }
@@ -149,7 +164,6 @@ public class APIList<T extends APIEntity> extends APIEntity {
     /**
      * Get limit of data page returned in <code>getData()</code> method.
      */
-    @JsonView(APIView.class)
     public Integer getLimit() {
         return limit;
     }
@@ -161,7 +175,6 @@ public class APIList<T extends APIEntity> extends APIEntity {
     /**
      * Get total number of items to be returned - independent from paging.
      */
-    @JsonView(APIView.class)
     public Integer getTotal() {
         return total;
     }
@@ -173,7 +186,6 @@ public class APIList<T extends APIEntity> extends APIEntity {
     /**
      * Get search phrase used during retrieving data returned in <code>getData()</code> method.
      */
-    @JsonView(APIView.class)
     public String getSearch() {
         return search;
     }
@@ -185,13 +197,20 @@ public class APIList<T extends APIEntity> extends APIEntity {
     /**
      * Get serialized sort value used during retrieving data returned in <code>getData()</code> method.
      */
-    @JsonView(APIView.class)
     public String getSort() {
         return sort;
     }
 
     public void setSort(String sort) {
         this.sort = sort;
+    }
+
+    public void setContext(Context<T> context) {
+        this.context = context;
+    }
+
+    public Context<T> getContext() {
+        return context;
     }
 
     @Override

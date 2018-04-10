@@ -117,6 +117,8 @@ public class APITestRunConfig extends APIEntity implements Serializable {
 
     private String projectName;
 
+    private boolean resignFiles;
+
     @JsonIgnore
     private List<?> computedDevices;
 
@@ -502,6 +504,14 @@ public class APITestRunConfig extends APIEntity implements Serializable {
         this.statusCode = statusCode;
     }
 
+    public boolean isResignFiles() {
+        return resignFiles;
+    }
+
+    public void setResignFiles(boolean resignFiles) {
+        this.resignFiles = resignFiles;
+    }
+
     @JsonIgnore
     public APITestRunParameter createParameter(final String key, final String value) throws APIException {
         Map<String, Object> body = new HashMap<>();
@@ -607,5 +617,6 @@ public class APITestRunConfig extends APIEntity implements Serializable {
         this.testRunId = apiTestRunConfig.testRunId;
         this.projectName = apiTestRunConfig.projectName;
         this.statusCode = apiTestRunConfig.statusCode;
+        this.resignFiles = apiTestRunConfig.resignFiles;
     }
 }
