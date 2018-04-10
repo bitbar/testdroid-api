@@ -1,9 +1,7 @@
 package com.testdroid.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonView;
 import com.testdroid.api.APIEntity;
-import com.testdroid.api.APIView;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
@@ -106,7 +104,6 @@ public class APIDeviceStatus extends APIEntity {
         this.emailAccount = emailAccount;
     }
 
-    @JsonView(value = {APIView.AdminView.class})
     public Date getUpdateTime() {
         return updateTime;
     }
@@ -115,7 +112,6 @@ public class APIDeviceStatus extends APIEntity {
         this.updateTime = reportTime;
     }
 
-    @JsonView(value = {APIView.AdminView.class})
     public Boolean isInternetAccess() {
         return internetAccess;
     }
@@ -124,7 +120,6 @@ public class APIDeviceStatus extends APIEntity {
         this.internetAccess = internetAccess;
     }
 
-    @JsonView(value = {APIView.AdminView.class})
     public Boolean isMonitoringOn() {
         return monitoringOn;
     }
@@ -133,7 +128,6 @@ public class APIDeviceStatus extends APIEntity {
         this.monitoringOn = monitoringOn;
     }
 
-    @JsonView(value = {APIView.AdminView.class})
     public Boolean isTestExecuting() {
         return testExecuting;
     }
@@ -142,7 +136,6 @@ public class APIDeviceStatus extends APIEntity {
         this.testExecuting = executingTest;
     }
 
-    @JsonView(value = {APIView.AdminView.class})
     public Boolean isFlashOn() {
         return flashOn;
     }
@@ -151,7 +144,6 @@ public class APIDeviceStatus extends APIEntity {
         this.flashOn = flashOn;
     }
 
-    @JsonView(value = {APIView.AdminView.class})
     public Boolean isAlarmOn() {
         return alarmOn;
     }
@@ -160,7 +152,6 @@ public class APIDeviceStatus extends APIEntity {
         this.alarmOn = alarmOn;
     }
 
-    @JsonView(value = {APIView.AdminView.class})
     public Boolean isAslOn() {
         return aslOn;
     }
@@ -169,7 +160,6 @@ public class APIDeviceStatus extends APIEntity {
         this.aslOn = aslOn;
     }
 
-    @JsonView(value = {APIView.AdminView.class, APIView.MonitorView.class})
     public Integer getBatteryLevel() {
         return batteryLevel;
     }
@@ -178,7 +168,6 @@ public class APIDeviceStatus extends APIEntity {
         this.batteryLevel = batteryLevel;
     }
 
-    @JsonView(value = {APIView.AdminView.class})
     public Long getDeviceTime() {
         return deviceTime;
     }
@@ -187,7 +176,6 @@ public class APIDeviceStatus extends APIEntity {
         this.deviceTime = deviceTime;
     }
 
-    @JsonView(value = {APIView.AdminView.class})
     public String getDeviceTimeZone() {
         return deviceTimeZone;
     }
@@ -196,7 +184,6 @@ public class APIDeviceStatus extends APIEntity {
         this.deviceTimeZone = deviceTimeZone;
     }
 
-    @JsonView(value = {APIView.AdminView.class})
     public Boolean isScreenLocked() {
         return screenLocked;
     }
@@ -205,7 +192,6 @@ public class APIDeviceStatus extends APIEntity {
         this.screenLocked = screenLocked;
     }
 
-    @JsonView(value = {APIView.AdminView.class})
     public Boolean isMockLocationOn() {
         return mockLocationOn;
     }
@@ -214,7 +200,6 @@ public class APIDeviceStatus extends APIEntity {
         this.mockLocationOn = mockLocationOn;
     }
 
-    @JsonView(value = {APIView.AdminView.class})
     public Boolean isLocationServiceOn() {
         return locationServiceOn;
     }
@@ -223,7 +208,6 @@ public class APIDeviceStatus extends APIEntity {
         this.locationServiceOn = locationServiceOn;
     }
 
-    @JsonView(value = {APIView.AdminView.class})
     public Boolean isBluetoothOn() {
         return bluetoothOn;
     }
@@ -232,7 +216,6 @@ public class APIDeviceStatus extends APIEntity {
         this.bluetoothOn = bluetoothOn;
     }
 
-    @JsonView(value = {APIView.AdminView.class})
     public Boolean isSdcardPresent() {
         return sdcardPresent;
     }
@@ -241,7 +224,6 @@ public class APIDeviceStatus extends APIEntity {
         this.sdcardPresent = sdcardPresent;
     }
 
-    @JsonView(value = {APIView.AdminView.class})
     public Boolean isTetheringOn() {
         return tetheringOn;
     }
@@ -250,7 +232,6 @@ public class APIDeviceStatus extends APIEntity {
         this.tetheringOn = tetheringOn;
     }
 
-    @JsonView(value = {APIView.AdminView.class})
     public String getTdsVersion() {
         return tdsVersion;
     }
@@ -259,7 +240,6 @@ public class APIDeviceStatus extends APIEntity {
         this.tdsVersion = tdsVersion;
     }
 
-    @JsonView(value = {APIView.AdminView.class})
     public String getSsid() {
         return ssid;
     }
@@ -268,7 +248,6 @@ public class APIDeviceStatus extends APIEntity {
         this.ssid = ssid;
     }
 
-    @JsonView(value = {APIView.AdminView.class})
     public Long getExternalStorage() {
         return externalStorage;
     }
@@ -277,7 +256,6 @@ public class APIDeviceStatus extends APIEntity {
         this.externalStorage = externalStorage;
     }
 
-    @JsonView(value = {APIView.AdminView.class})
     public Long getInternalStorage() {
         return internalStorage;
     }
@@ -286,7 +264,6 @@ public class APIDeviceStatus extends APIEntity {
         this.internalStorage = internalStorage;
     }
 
-    @JsonView(value = {APIView.AdminView.class})
     public String getEmailAccount() {
         return emailAccount;
     }
@@ -295,7 +272,6 @@ public class APIDeviceStatus extends APIEntity {
         this.emailAccount = emailAccount;
     }
 
-    @JsonView(value = {APIView.AdminView.class})
     public String getClusterName() {
         return clusterName;
     }
@@ -304,7 +280,6 @@ public class APIDeviceStatus extends APIEntity {
         this.clusterName = clusterName;
     }
 
-    @JsonView(value = {APIView.AdminView.class})
     public Long getDeviceId() {
         return deviceId;
     }
@@ -313,7 +288,6 @@ public class APIDeviceStatus extends APIEntity {
         this.deviceId = deviceId;
     }
 
-    @JsonView(value = {APIView.AdminView.class})
     public String getDeviceName() {
         return deviceName;
     }
@@ -322,7 +296,6 @@ public class APIDeviceStatus extends APIEntity {
         this.deviceName = deviceName;
     }
 
-    @JsonView(value = {APIView.AdminView.class})
     public Long getClusterId() {
         return clusterId;
     }

@@ -1,7 +1,6 @@
 package com.testdroid.api;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonView;
 import com.testdroid.api.model.*;
 import com.testdroid.api.model.jrjc.*;
 
@@ -120,8 +119,6 @@ public abstract class APIEntity {
 
     protected String selfURI;
 
-    protected Class<? extends APIView> view;
-
     public APIEntity() {
     }
 
@@ -173,7 +170,6 @@ public abstract class APIEntity {
      * lists. Please use
      * <code>hasId()</code> method to check if ID exists.
      */
-    @JsonView(APIView.class)
     public Long getId() {
         return this.id;
     }
@@ -252,22 +248,6 @@ public abstract class APIEntity {
     }
 
     @JsonIgnore
-    public boolean hasView() {
-        return view != null;
-    }
-
-    @JsonIgnore
-    @XmlTransient
-    public Class<? extends APIView> getView() {
-        return view;
-    }
-
-    @JsonIgnore
-    public void setView(Class<? extends APIView> view) {
-        this.view = view;
-    }
-
-    @JsonIgnore
     public String toXML() {
         try {
             JAXBContext context = getJAXBContext(this.getClass());
@@ -287,7 +267,6 @@ public abstract class APIEntity {
     @JsonIgnore
     protected <T extends APIEntity> void cloneBase(T from) {
         this.id = from.id;
-        this.view = from.view;
     }
 
     @JsonIgnore

@@ -39,7 +39,7 @@ public class APISort {
     private List<SortItem> sorts;
 
     private APISort() {
-        this(Collections.<SortItem>emptyList());
+        this(Collections.emptyList());
     }
 
     public APISort(List<SortItem> items) {
@@ -82,7 +82,7 @@ public class APISort {
     }
 
     public String serialize() {
-        return sorts.stream().map(s -> s.toString()).collect(Collectors.joining(":"));
+        return sorts.stream().map(SortItem::toString).collect(Collectors.joining(":"));
     }
 
     public String toString(){

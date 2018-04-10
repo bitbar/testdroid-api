@@ -3,6 +3,7 @@ package com.testdroid.api.model.build;
 import com.testdroid.api.APIEntity;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -12,28 +13,38 @@ import java.util.Date;
 @XmlRootElement
 public class APIPipelineJob extends APIEntity {
 
+    @XmlType(namespace = "APIActivity")
+    public enum Type {
+        BUILD,
+        BROWSER_TESTING
+    }
+
     private String name;
 
     private Date createTime;
 
     private Date archiveTime;
 
-    private String pipeline;
+    private String content;
 
     private Long userId;
+
+    private Type type = Type.BUILD;
 
     public APIPipelineJob() {
 
     }
 
     public APIPipelineJob(
-            Long id, String name, LocalDateTime createTime, LocalDateTime archiveTime, String pipeline, Long userId) {
+            Long id, String name, LocalDateTime createTime, LocalDateTime archiveTime, String content, Type type,
+            Long userId) {
         super(id);
         this.name = name;
         this.userId = userId;
         this.createTime = of(createTime);
         this.archiveTime = of(archiveTime);
-        this.pipeline = pipeline;
+        this.type = type;
+        this.content = content;
     }
 
     public String getName() {
@@ -60,12 +71,12 @@ public class APIPipelineJob extends APIEntity {
         this.createTime = createTime;
     }
 
-    public String getPipeline() {
-        return pipeline;
+    public String getContent() {
+        return content;
     }
 
-    public void setPipeline(String pipeline) {
-        this.pipeline = pipeline;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public Date getArchiveTime() {
@@ -76,6 +87,14 @@ public class APIPipelineJob extends APIEntity {
         this.archiveTime = archiveTime;
     }
 
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
     @Override
     protected <T extends APIEntity> void clone(T from) {
         APIPipelineJob apiBuild = (APIPipelineJob) from;
@@ -84,6 +103,7 @@ public class APIPipelineJob extends APIEntity {
         this.userId = apiBuild.userId;
         this.createTime = apiBuild.createTime;
         this.archiveTime = apiBuild.archiveTime;
-        this.pipeline = apiBuild.pipeline;
+        this.content = apiBuild.content;
+        this.type = apiBuild.type;
     }
 }

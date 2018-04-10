@@ -6,7 +6,6 @@ import com.google.api.client.util.StreamingContent;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -16,7 +15,7 @@ import java.util.Collections;
 
 public class MultipartFormDataContent extends AbstractHttpContent {
 
-    static final String NEWLINE = "\r\n";
+    private static final String NEWLINE = "\r\n";
 
     private static final String TWO_DASHES = "--";
 
@@ -65,7 +64,7 @@ public class MultipartFormDataContent extends AbstractHttpContent {
             streamingContent = null;
             if (content != null) {
                 headers.setContentType(content.getType());
-                headers.set("Content-Transfer-Encoding", Arrays.asList("binary"));
+                headers.set("Content-Transfer-Encoding", Collections.singletonList("binary"));
                 final HttpEncoding encoding = part.encoding;
                 if (encoding == null) {
                     streamingContent = content;
