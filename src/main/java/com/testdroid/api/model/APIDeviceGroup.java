@@ -2,6 +2,7 @@ package com.testdroid.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.*;
+import com.testdroid.api.dto.Context;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Collections;
@@ -103,7 +104,7 @@ public class APIDeviceGroup extends APIEntity {
 
     @JsonIgnore
     public APIListResource<APIDevice> getIncludedDevicesResource() throws APIException {
-        return getListResource(getIncludedDevicesURI());
+        return getListResource(getIncludedDevicesURI(), APIDevice.class);
     }
 
     /**
@@ -113,23 +114,8 @@ public class APIDeviceGroup extends APIEntity {
      * @since 1.3.34
      */
     @JsonIgnore
-    public APIListResource<APIDevice> getIncludedDevicesResource(APIQueryBuilder queryBuilder) throws APIException {
-        return getListResource(getIncludedDevicesURI(), queryBuilder);
-    }
-
-    /**
-     * @param offset
-     * @param limit
-     * @param search
-     * @param sort
-     * @return
-     * @throws APIException
-     * @deprecated
-     */
-    @JsonIgnore
-    public APIListResource<APIDevice> getIncludedDevicesResource(long offset, long limit, String search, APISort sort)
-            throws APIException {
-        return getListResource(getIncludedDevicesURI(), offset, limit, search, sort, APIDevice.class);
+    public APIListResource<APIDevice> getIncludedDevicesResource(Context<APIDevice> context) throws APIException {
+        return getListResource(getIncludedDevicesURI(), context);
     }
 
     public void delete() throws APIException {

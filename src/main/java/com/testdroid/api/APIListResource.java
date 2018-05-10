@@ -1,27 +1,40 @@
 package com.testdroid.api;
 
+import com.testdroid.api.dto.Context;
+
 /**
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
  * @author Slawomir Pawluk <slawomir.pawluk@bitbar.com>
  */
-public class APIListResource<T extends APIEntity> extends APIResource<APIList<T>> {
+public class APIListResource<T extends APIEntity> {
 
-    public APIListResource(APIClient client, String resourceURI) {
-        this(client, resourceURI, new APIQueryBuilder());
+    private APIClient client;
+
+    private Context<T> context;
+
+    private String resourceURI;
+
+    private APIList<T> entity;
+
+    public APIListResource(APIClient client, String resourceURI, Class<T> type) {
+        this.client = client;
+        this.resourceURI = resourceURI;
+        this.context = new Context<>(type);
     }
 
-    public APIListResource(APIClient client, String resourceURI, APIQueryBuilder queryBuilder) {
-        super(client, resourceURI, queryBuilder, (Class<APIList<T>>) (Class) APIList.class);
+    public APIListResource(APIClient client, String resourceURI, Context<T> context) {
+        this.client = client;
+        this.resourceURI = resourceURI;
+        this.context = context;
     }
 
-    @Override
     public APIList<T> getEntity() throws APIException {
-        APIList<T> result = super.getEntity();
-        for (APIEntity item : result.getData()) {
+        entity = client.get(resourceURI, context);
+        for (APIEntity item : entity.getData()) {
             item.client = this.client;
             item.selfURI = APIEntity.createUri(this.resourceURI, String.format("/%s", item.id));
         }
-        return result;
+        return entity;
     }
 
     /**
@@ -57,7 +70,7 @@ public class APIListResource<T extends APIEntity> extends APIResource<APIList<T>
             return null;
         }
         APIList<T> list = getEntity();
-        return new APIListResource(client, resourceURI, queryBuilder.offset(list.getOffset() + list.getLimit()));
+        return new APIListResource(client, resourceURI, context.setOffset(list.getOffset() + list.getLimit()));
     }
 
     /**
@@ -83,7 +96,6 @@ public class APIListResource<T extends APIEntity> extends APIResource<APIList<T>
             return null;
         }
         APIList<T> list = getEntity();
-        return new APIListResource(client, resourceURI, queryBuilder.offset(list.getOffset() - list.getLimit()));
+        return new APIListResource(client, resourceURI, context.setOffset(list.getOffset() - list.getLimit()));
     }
-
 }

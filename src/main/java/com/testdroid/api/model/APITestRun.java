@@ -2,6 +2,7 @@ package com.testdroid.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.*;
+import com.testdroid.api.dto.Context;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
@@ -266,7 +267,7 @@ public class APITestRun extends APIEntity {
 
     @JsonIgnore
     public APIListResource<APIUserFile> getFilesResource() throws APIException {
-        return getListResource(getFilesURI());
+        return getListResource(getFilesURI(), APIUserFile.class);
     }
 
     public Integer getWarningDeviceCount() {
@@ -431,7 +432,7 @@ public class APITestRun extends APIEntity {
 
     @JsonIgnore
     public APIListResource<APITag> getTagsResource() throws APIException {
-        return getListResource(getTagsURI());
+        return getListResource(getTagsURI(), APITag.class);
     }
 
     /**
@@ -441,46 +442,24 @@ public class APITestRun extends APIEntity {
      * @since 1.3.34
      */
     @JsonIgnore
-    public APIListResource<APITag> getTagsResource(APIQueryBuilder queryBuilder) throws APIException {
-        return getListResource(getTagsURI(), queryBuilder);
-    }
-
-    /**
-     * @param offset
-     * @param limit
-     * @param search
-     * @param sort
-     * @return
-     * @throws APIException
-     * @deprecated
-     */
-    @JsonIgnore
-    public APIListResource<APITag> getTagsResource(long offset, long limit, String search, APISort sort)
-            throws APIException {
-        return getListResource(getTagsURI(), offset, limit, search, sort, APITag.class);
+    public APIListResource<APITag> getTagsResource(Context<APITag> context) throws APIException {
+        return getListResource(getTagsURI(), context);
     }
 
     @JsonIgnore
     public APIListResource<APIDeviceSession> getDeviceRunsResource() throws APIException {
-        return getListResource(getDeviceRunsURI());
+        return getListResource(getDeviceRunsURI(), APIDeviceSession.class);
     }
 
     @JsonIgnore
     public APIListResource<APIDeviceSession> getDeviceSessionsResource() throws APIException {
-        return getListResource(getDeviceSessionsURI());
+        return getListResource(getDeviceSessionsURI(), APIDeviceSession.class);
     }
 
     @JsonIgnore
-    public APIListResource<APIDeviceSession> getDeviceSessionsResource(APIQueryBuilder queryBuilder)
+    public APIListResource<APIDeviceSession> getDeviceSessionsResource(Context<APIDeviceSession> context)
             throws APIException {
-        return getListResource(getDeviceSessionsURI(), queryBuilder);
-    }
-
-    @JsonIgnore
-    public APIListResource<APIDeviceSession> getDeviceSessionsResource(
-            long offset, long limit, String search, APISort sort)
-            throws APIException {
-        return getListResource(getDeviceSessionsURI(), offset, limit, search, sort, APIDeviceSession.class);
+        return getListResource(getDeviceSessionsURI(), context);
     }
 
     /**
@@ -490,23 +469,9 @@ public class APITestRun extends APIEntity {
      * @since 1.3.34
      */
     @JsonIgnore
-    public APIListResource<APIDeviceSession> getDeviceRunsResource(APIQueryBuilder queryBuilder) throws APIException {
-        return getListResource(getDeviceRunsURI(), queryBuilder);
-    }
-
-    /**
-     * @param offset
-     * @param limit
-     * @param search
-     * @param sort
-     * @return
-     * @throws APIException
-     * @deprecated
-     */
-    @JsonIgnore
-    public APIListResource<APIDeviceSession> getDeviceRunsResource(long offset, long limit, String search, APISort sort)
+    public APIListResource<APIDeviceSession> getDeviceRunsResource(Context<APIDeviceSession> context)
             throws APIException {
-        return getListResource(getDeviceRunsURI(), offset, limit, search, sort, APIDeviceSession.class);
+        return getListResource(getDeviceRunsURI(), context);
     }
 
     @JsonIgnore

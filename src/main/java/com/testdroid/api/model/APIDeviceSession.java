@@ -2,6 +2,7 @@ package com.testdroid.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.*;
+import com.testdroid.api.dto.Context;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
@@ -307,23 +308,17 @@ public class APIDeviceSession extends APIEntity {
 
     @JsonIgnore
     public APIListResource<APIDeviceSessionStep> getDeviceSessionStepsResource() throws APIException {
-        return getListResource(createUri(selfURI, "/steps"));
+        return getListResource(createUri(selfURI, "/steps"), APIDeviceSessionStep.class);
     }
 
     @JsonIgnore
     public APIListResource<APIScreenshot> getScreenshotsResource() throws APIException {
-        return getListResource(getScreenshotsURI());
+        return getListResource(getScreenshotsURI(), APIScreenshot.class);
     }
 
     @JsonIgnore
-    public APIListResource<APIScreenshot> getScreenshotsResource(APIQueryBuilder queryBuilder) throws APIException {
-        return getListResource(getScreenshotsURI(), queryBuilder);
-    }
-
-    @JsonIgnore
-    public APIListResource<APIScreenshot> getScreenshotsResource(long offset, long limit, String search, APISort sort)
-            throws APIException {
-        return getListResource(getScreenshotsURI(), offset, limit, search, sort, APIScreenshot.class);
+    public APIListResource<APIScreenshot> getScreenshotsResource(Context<APIScreenshot> context) throws APIException {
+        return getListResource(getScreenshotsURI(), context);
     }
 
     @JsonIgnore

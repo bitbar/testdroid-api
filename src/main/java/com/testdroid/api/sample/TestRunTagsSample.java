@@ -3,7 +3,7 @@ package com.testdroid.api.sample;
 import com.testdroid.api.APIClient;
 import com.testdroid.api.APIException;
 import com.testdroid.api.APIListResource;
-import com.testdroid.api.APIQueryBuilder;
+import com.testdroid.api.dto.Context;
 import com.testdroid.api.model.*;
 import com.testdroid.api.sample.util.Common;
 
@@ -32,8 +32,8 @@ public class TestRunTagsSample {
 
             config.update();
 
-            project.uploadApplication(new File(TestRunTagsSample.class
-                    .getResource(Common.ANDROID_APPLICATION_RESOURCE_PATH).getPath()), Common.ANDROID_FILE_MIME_TYPE);
+            project.uploadApplication(new File(Common.ANDROID_APPLICATION_RESOURCE_PATH), Common
+                    .ANDROID_FILE_MIME_TYPE);
 
             APITestRun testRun = project.run();
 
@@ -51,7 +51,8 @@ public class TestRunTagsSample {
             }
 
             // Project can be found using tag name
-            APIListResource<APITestRun> projects = project.getTestRunsResource(new APIQueryBuilder().search(tagName));
+            APIListResource<APITestRun> projects = project.getTestRunsResource(new Context(APITestRun.class)
+                    .setSearch(tagName));
 
             System.out.println(String.format("Projects found using tag name: %s", tagName));
             for (APITestRun tr : projects.getEntity().getData()) {

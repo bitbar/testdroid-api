@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIException;
 import com.testdroid.api.APIListResource;
-import com.testdroid.api.APIQueryBuilder;
+import com.testdroid.api.dto.Context;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
@@ -522,12 +522,13 @@ public class APITestRunConfig extends APIEntity implements Serializable {
 
     @JsonIgnore
     public APIListResource<APITestRunParameter> getParameters() throws APIException {
-        return getListResource(getParametersURI());
+        return getListResource(getParametersURI(), APITestRunParameter.class);
     }
 
     @JsonIgnore
-    public APIListResource<APITestRunParameter> getParameters(APIQueryBuilder queryBuilder) throws APIException {
-        return getListResource(getParametersURI(), queryBuilder);
+    public APIListResource<APITestRunParameter> getParameters(Context<APITestRunParameter> context)
+            throws APIException {
+        return getListResource(getParametersURI(), context);
     }
 
     @JsonIgnore
