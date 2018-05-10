@@ -2,6 +2,9 @@ package com.testdroid.api.filter;
 
 import com.testdroid.api.dto.Operand;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * @author Damian Sniezek <damian.sniezek@bitbar.com>
  */
@@ -12,6 +15,9 @@ public class FilterEntry<T> {
     private Operand operand;
 
     private T value;
+
+    private FilterEntry() {
+    }
 
     public FilterEntry(String field, Operand comparison, T value) {
         this.field = field;
@@ -82,14 +88,15 @@ public class FilterEntry<T> {
 
     @Override
     public String toString() {
-        switch(operand.getArity()){
+        switch (operand.getArity()) {
             case 1:
                 return String.format("%s_%s", field, operand);
             case 2:
                 return String.format("%s_%s_%s", field, operand, value);
             case Integer.MAX_VALUE:
             default:
-                return String.format("%s_%s_%s", field, operand, value);
+                return String.format("%s_%s_%s", field, operand,
+                        List.class.cast(value).stream().map(Object::toString).collect(Collectors.joining("|")));
         }
     }
 }

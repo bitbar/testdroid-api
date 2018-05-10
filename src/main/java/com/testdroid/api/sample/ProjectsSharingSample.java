@@ -3,7 +3,7 @@ package com.testdroid.api.sample;
 import com.testdroid.api.APIClient;
 import com.testdroid.api.APIException;
 import com.testdroid.api.APIListResource;
-import com.testdroid.api.APIQueryBuilder;
+import com.testdroid.api.dto.Context;
 import com.testdroid.api.model.APIProject;
 import com.testdroid.api.model.APIProjectSharing;
 import com.testdroid.api.model.APIUser;
@@ -33,8 +33,8 @@ public class ProjectsSharingSample {
             // and check if project was shared correctly
             // fe. searching that project with id
 
-            APIListResource<APIProject> projects = me
-                    .getProjectsResource(new APIQueryBuilder().offset(0).limit(10).search(project.getId().toString()));
+            APIListResource<APIProject> projects = me.getProjectsResource(new Context<>(APIProject.class)
+                    .setLimit(10).setSearch(project.getId().toString()));
 
             for (APIProject p : projects.getEntity().getData()) {
                 System.out.println(p.getName());

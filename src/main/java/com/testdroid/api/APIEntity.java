@@ -1,26 +1,20 @@
 package com.testdroid.api;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.testdroid.api.dto.Context;
 import com.testdroid.api.model.*;
 import com.testdroid.api.model.jrjc.*;
+import com.testdroid.api.util.TypeReferenceFactory;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
-import javax.xml.bind.annotation.XmlTransient;
 import java.io.File;
 import java.io.InputStream;
-import java.io.StringReader;
-import java.io.StringWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -111,8 +105,6 @@ public abstract class APIEntity {
 
     private static final DateFormat API_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd_HH:mm");
 
-    private static final HashMap<Class, JAXBContext> contextMap = new HashMap<>();
-
     protected APIClient client;
 
     protected Long id;
@@ -129,30 +121,6 @@ public abstract class APIEntity {
     @JsonIgnore
     public static String format(Date date) {
         return API_DATE_FORMAT.format(date);
-    }
-
-    @JsonIgnore
-    public static <T extends APIEntity> T fromXML(String xml, Class<T> type) {
-        try {
-            JAXBContext context = getJAXBContext(type);
-            Unmarshaller unmarshaller = context.createUnmarshaller();
-            return (T) unmarshaller.unmarshal(new StringReader(xml));
-        } catch (JAXBException ex) {
-            Logger.getLogger(APIEntity.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }
-
-    @JsonIgnore
-    public static JAXBContext getJAXBContext(Class type) throws JAXBException {
-        JAXBContext context = contextMap.get(type);
-        if (context == null) {
-            context = JAXBContext.newInstance(type);
-            contextMap.put(type, context);
-            return context;
-        } else {
-            return context;
-        }
     }
 
     @JsonIgnore
@@ -179,34 +147,23 @@ public abstract class APIEntity {
     }
 
     @JsonIgnore
-    protected <T extends APIEntity> APIResource<T> getResource(String uri, Class<T> type) throws APIException {
+    protected <T extends APIEntity> APIResource<T> getResource(String uri, Class<T> type)
+            throws APIException {
         checkClient(client);
         return new APIResource<>(client, uri, type);
     }
 
     @JsonIgnore
-    protected <T extends APIEntity> APIListResource<T> getListResource(String uri) throws APIException {
+    protected <T extends APIEntity> APIListResource<T> getListResource(String uri, Class<T> type) throws APIException {
         checkClient(client);
-        return new APIListResource<>(client, uri);
+        return new APIListResource<>(client, uri, type);
     }
 
     @JsonIgnore
-    protected <T extends APIEntity> APIListResource<T> getListResource(String uri, APIQueryBuilder queryBuilder)
+    protected <T extends APIEntity> APIListResource<T> getListResource(String uri, Context<T> context)
             throws APIException {
         checkClient(client);
-        return new APIListResource<>(client, uri, queryBuilder);
-    }
-
-    @JsonIgnore
-    protected <T extends APIEntity> APIListResource<T> getListResource(
-            String uri, long offset, long limit,
-            String search, APISort sort, Class<T> type) throws APIException {
-        checkClient(client);
-        if (limit <= 0) {
-            limit = 10;
-        }
-        return new APIListResource<>(client, uri, new APIQueryBuilder().offset(offset).limit(limit).search
-                (search).sort(type, sort.getSorts()));
+        return new APIListResource<>(client, uri, context);
     }
 
     @JsonIgnore
@@ -248,14 +205,10 @@ public abstract class APIEntity {
     }
 
     @JsonIgnore
-    public String toXML() {
+    public String toJson() throws JsonProcessingException {
         try {
-            JAXBContext context = getJAXBContext(this.getClass());
-            Marshaller marshaller = context.createMarshaller();
-            StringWriter writer = new StringWriter();
-            marshaller.marshal(this, writer);
-            return writer.toString();
-        } catch (JAXBException ex) {
+            return new ObjectMapper().writeValueAsString(this);
+        } catch (JsonProcessingException ex) {
             Logger.getLogger(APIEntity.class.getName()).log(Level.SEVERE, null, ex);
         }
         return "";
@@ -269,8 +222,4 @@ public abstract class APIEntity {
         this.id = from.id;
     }
 
-    @JsonIgnore
-    protected Date of(LocalDateTime localDateTime){
-        return localDateTime == null ? null : Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
-    }
 }

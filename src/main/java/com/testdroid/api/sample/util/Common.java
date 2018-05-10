@@ -13,13 +13,13 @@ import java.io.File;
  */
 public class Common {
 
-    public static final String ANDROID_APPLICATION_RESOURCE_PATH = "/fixtures/BitbarSampleApp.apk";
+    public static final String ANDROID_APPLICATION_RESOURCE_PATH = "src/main/resources/fixtures/BitbarSampleApp.apk";
 
     public static final String ANDROID_FILE_MIME_TYPE = "application/vnd.android.package-archive";
 
-    public static final String ANDROID_TEST_RESOURCE_PATH = "/fixtures/BitbarSampleAppTest.apk";
+    public static final String ANDROID_TEST_RESOURCE_PATH = "/src/main/resources/fixtures/BitbarSampleAppTest.apk";
 
-    public static final String DATA_FILE_RESOURCE_PATH = "/fixtures/testData.zip";
+    public static final String DATA_FILE_RESOURCE_PATH = "src/main/resources/fixtures/testData.zip";
 
     public static final String JAR_FILE_MIME_TYPE = "application/java-archive";
 
@@ -43,16 +43,5 @@ public class Common {
 
     public static APIClient createApiClientWithApiKey() {
         return new APIKeyClient(SERVER_URL, API_KEY);
-    }
-
-    public static void uploadApk(APIProject project) throws APIException {
-        project.uploadApplication(new File(Common.class.getResource(ANDROID_APPLICATION_RESOURCE_PATH)
-                .getPath()), com.testdroid.api.sample.util.Common
-                .ANDROID_FILE_MIME_TYPE);
-    }
-
-    public static void uploadTest(APIProject project) throws APIException {
-        project.uploadTest(new File(Common.class.getResource(ANDROID_TEST_RESOURCE_PATH)
-                .getPath()), com.testdroid.api.sample.util.Common.ANDROID_FILE_MIME_TYPE);
     }
 }

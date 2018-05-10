@@ -9,25 +9,16 @@ public class APIResource<T extends APIEntity> {
 
     protected APIClient client;
 
-    protected APIQueryBuilder queryBuilder;
+    protected Class<T> type;
 
     protected String resourceURI;
 
-    protected Class<T> type;
-
     private T entity;
 
-    private boolean loaded = false;
-
     public APIResource(APIClient client, String resourceURI, Class<T> type) {
-        this(client, resourceURI, null, type);
-    }
-
-    public APIResource(APIClient client, String resourceURI, APIQueryBuilder queryBuilder, Class<T> type) {
         this.client = client;
         this.resourceURI = resourceURI;
         this.type = type;
-        this.queryBuilder = queryBuilder;
     }
 
     /**
@@ -37,7 +28,7 @@ public class APIResource<T extends APIEntity> {
      * @throws APIException on any API errors.
      */
     public T getEntity() throws APIException {
-        this.load();
+        refresh();
         return entity;
     }
 
@@ -70,7 +61,6 @@ public class APIResource<T extends APIEntity> {
     public void delete() throws APIException {
         client.delete(resourceURI);
         this.entity = null;
-        this.loaded = true;
     }
 
     /**
@@ -79,17 +69,6 @@ public class APIResource<T extends APIEntity> {
      * @throws APIException on any API errors.
      */
     public void refresh() throws APIException {
-        clean();
-        load();
-    }
-
-    private void load() throws APIException {
-        if (!loaded) {
-            entity = client.get(resourceURI, queryBuilder, type);
-        }
-    }
-
-    private void clean() {
-        loaded = false;
+        entity = client.get(resourceURI, type);
     }
 }

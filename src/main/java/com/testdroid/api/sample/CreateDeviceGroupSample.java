@@ -1,6 +1,9 @@
 package com.testdroid.api.sample;
 
 import com.testdroid.api.*;
+import com.testdroid.api.dto.Context;
+import com.testdroid.api.dto.Operand;
+import com.testdroid.api.filter.StringFilterEntry;
 import com.testdroid.api.model.APIDevice;
 import com.testdroid.api.model.APIDeviceGroup;
 import com.testdroid.api.model.APIUser;
@@ -25,7 +28,9 @@ public class CreateDeviceGroupSample {
                     deviceGroup.getDisplayName(), deviceGroup.getUserId(), deviceGroup.isPublic()));
 
             // Get devices list
-            APIList<APIDevice> devicesList = CLIENT.getDevices().getEntity();
+            APIList<APIDevice> devicesList = CLIENT.getDevices(new Context<>(APIDevice.class)
+                    .addFilter(new StringFilterEntry("osType", Operand.EQ, APIDevice.OsType.ANDROID.name())))
+                    .getEntity();
             System.out.println(String.format("Got %s devices", devicesList.getLimit()));
 
             int i = 0;
@@ -50,15 +55,14 @@ public class CreateDeviceGroupSample {
             System.out.println(String.format("Searching device with name %s...", deviceName));
             System.out.println("Results:");
 
-            for (APIDevice device : deviceGroup
-                    .getIncludedDevicesResource(new APIQueryBuilder().offset(0).limit(10).search(deviceName))
-                    .getEntity().getData()) {
+            for (APIDevice device : deviceGroup.getIncludedDevicesResource(new Context<>(APIDevice.class)
+                    .setLimit(10).setSearch(deviceName)).getEntity().getData()) {
                 System.out.println(device.getDisplayName());
             }
 
             // Now we create device group for samsungs only
-            APIList<APIDevice> samsungDevices = CLIENT
-                    .getDevices(new APIDeviceQueryBuilder().offset(0).limit(10).search("Samsung")).getEntity();
+            APIList<APIDevice> samsungDevices = CLIENT.getDevices(new Context<>(APIDevice.class).setSearch("Samsung"))
+                    .getEntity();
             APIDeviceGroup samsungsDeviceGroup = me.createDeviceGroup("Samsungs only", APIDevice.OsType.ANDROID);
 
             for (APIDevice device : samsungDevices.getData()) {

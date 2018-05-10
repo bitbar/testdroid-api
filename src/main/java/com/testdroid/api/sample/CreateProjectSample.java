@@ -32,22 +32,7 @@ public class CreateProjectSample {
             project.setDescription("Description of project");
             project.update();
 
-            // Cannot create project with the same name
-            try {
-                me.createProject(APIProject.Type.ANDROID, project.getName());
-            } catch (APIException apiex) {
-                System.err.println(apiex.getMessage());
-            }
-
-            // Cannot update project name to existing project name
-            try {
-                project.setName(project1.getName());
-                project.update();
-            } catch (APIException apiex) {
-                System.err.println(apiex.getMessage());
-            }
-
-            // Deleting project
+            // Deleting projects
             project.delete();
             project1.delete();
 
@@ -55,5 +40,4 @@ public class CreateProjectSample {
             System.err.println(apie.getMessage());
         }
     }
-
 }

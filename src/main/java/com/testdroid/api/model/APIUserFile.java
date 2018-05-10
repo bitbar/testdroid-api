@@ -216,7 +216,7 @@ public class APIUserFile extends APIEntity implements Serializable {
 
     @JsonIgnore
     public APIListResource<APIUserFileTag> getTagsResource() throws APIException {
-        return getListResource(getFileTagsURI());
+        return getListResource(getFileTagsURI(), APIUserFileTag.class);
     }
 
     public void delete() throws APIException {

@@ -1,7 +1,10 @@
 package com.testdroid.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.testdroid.api.*;
+import com.testdroid.api.APIEntity;
+import com.testdroid.api.APIException;
+import com.testdroid.api.APIListResource;
+import com.testdroid.api.dto.Context;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -101,13 +104,15 @@ public class APIProject extends APIEntity {
 
     private Double successRatio;
 
+    private APIDevice.OsType osType;
+
     public APIProject() {
     }
 
     public APIProject(
             Long id, Date createTime, Date archiveTime, String name, String description, Type type, Long sharedById,
             String sharedByEmail, boolean common, APIArchivingStrategy archivingStrategy, Integer archivingItemCount,
-            Long frameworkId, Boolean isShared) {
+            Long frameworkId, Boolean isShared, APIDevice.OsType osType) {
         super(id);
         this.createTime = createTime;
         this.archiveTime = archiveTime;
@@ -122,6 +127,7 @@ public class APIProject extends APIEntity {
         this.frameworkId = frameworkId;
         this.isShared = isShared;
         this.jobConfig = new HashMap<>();
+        this.osType = osType;
     }
 
     public String getName() {
@@ -244,6 +250,14 @@ public class APIProject extends APIEntity {
 
     public void setSuccessRatio(Double successRatio) {
         this.successRatio = successRatio;
+    }
+
+    public OsType getOsType() {
+        return osType;
+    }
+
+    public void setOsType(OsType osType) {
+        this.osType = osType;
     }
 
     private String getConfigURI() {
@@ -372,7 +386,7 @@ public class APIProject extends APIEntity {
 
     @JsonIgnore
     public APIListResource<APIUserFile> getFiles() throws APIException {
-        return getListResource(getFilesURI());
+        return getListResource(getFilesURI(), APIUserFile.class);
     }
 
     @JsonIgnore
@@ -451,7 +465,7 @@ public class APIProject extends APIEntity {
 
     @JsonIgnore
     public APIListResource<APITestRun> getTestRunsResource() throws APIException {
-        return getListResource(getRunsURI());
+        return getListResource(getRunsURI(), APITestRun.class);
     }
 
     /**
@@ -461,27 +475,12 @@ public class APIProject extends APIEntity {
      * @since 1.3.34
      */
     @JsonIgnore
-    public APIListResource<APITestRun> getTestRunsResource(APIQueryBuilder queryBuilder) throws APIException {
-        return getListResource(getRunsURI(), queryBuilder);
+    public APIListResource<APITestRun> getTestRunsResource(Context<APITestRun> context) throws APIException {
+        return getListResource(getRunsURI(), context);
     }
 
     public APITestRun getTestRun(Long id) throws APIException {
         return getResource(getRunURI(id), APITestRun.class).getEntity();
-    }
-
-    /**
-     * @param offset
-     * @param limit
-     * @param search
-     * @param sort
-     * @return
-     * @throws APIException
-     * @deprecated
-     */
-    @JsonIgnore
-    public APIListResource<APITestRun> getTestRunsResource(long offset, long limit, String search, APISort sort)
-            throws APIException {
-        return getListResource(getRunsURI(), offset, limit, search, sort, APITestRun.class);
     }
 
     @JsonIgnore
@@ -491,7 +490,7 @@ public class APIProject extends APIEntity {
 
     @JsonIgnore
     public APIListResource<APIProjectSharing> getProjectSharings() throws APIException {
-        return getListResource(getSharingsURI());
+        return getListResource(getSharingsURI(), APIProjectSharing.class);
     }
 
     /**
@@ -501,33 +500,19 @@ public class APIProject extends APIEntity {
      * @since 1.3.34
      */
     @JsonIgnore
-    public APIListResource<APIProjectSharing> getProjectSharings(APIQueryBuilder queryBuilder) throws APIException {
-        return getListResource(getSharingsURI(), queryBuilder);
-    }
-
-    /**
-     * @param offset
-     * @param limit
-     * @param search
-     * @param sort
-     * @return
-     * @throws APIException
-     * @deprecated
-     */
-    @JsonIgnore
-    public APIListResource<APIProjectSharing> getProjectSharings(long offset, long limit, String search, APISort sort)
+    public APIListResource<APIProjectSharing> getProjectSharings(Context<APIProjectSharing> context)
             throws APIException {
-        return getListResource(getSharingsURI(), offset, limit, search, sort, APIProjectSharing.class);
+        return getListResource(getSharingsURI(), context);
     }
 
     @JsonIgnore
     public APIListResource<APIDeviceGroup> getPublicDeviceGroups() throws APIException {
-        return getListResource(getPublicDeviceGroupsURI());
+        return getListResource(getPublicDeviceGroupsURI(), APIDeviceGroup.class);
     }
 
     @JsonIgnore
     public APIListResource<APIDeviceGroup> getDeviceGroups() throws APIException {
-        return getListResource(getDeviceGroupsURI());
+        return getListResource(getDeviceGroupsURI(), APIDeviceGroup.class);
     }
 
     @JsonIgnore
@@ -552,12 +537,13 @@ public class APIProject extends APIEntity {
 
     @JsonIgnore
     public APIListResource<APITestRunParameter> getParameters() throws APIException {
-        return getListResource(getParametersURI());
+        return getListResource(getParametersURI(), APITestRunParameter.class);
     }
 
     @JsonIgnore
-    public APIListResource<APITestRunParameter> getParameters(APIQueryBuilder queryBuilder) throws APIException {
-        return getListResource(getParametersURI(), queryBuilder);
+    public APIListResource<APITestRunParameter> getParameters(Context<APITestRunParameter> context)
+            throws APIException {
+        return getListResource(getParametersURI(), context);
     }
 
     @JsonIgnore
@@ -595,5 +581,6 @@ public class APIProject extends APIEntity {
         this.archivingItemCount = apiProject.archivingItemCount;
         this.frameworkId = apiProject.frameworkId;
         this.successRatio = apiProject.successRatio;
+        this.osType = apiProject.osType;
     }
 }

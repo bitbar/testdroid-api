@@ -1,6 +1,7 @@
 package com.testdroid.api.model.build;
 
 import com.testdroid.api.APIEntity;
+import com.testdroid.api.util.TimeConverter;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
@@ -41,8 +42,8 @@ public class APIPipelineJob extends APIEntity {
         super(id);
         this.name = name;
         this.userId = userId;
-        this.createTime = of(createTime);
-        this.archiveTime = of(archiveTime);
+        this.createTime = TimeConverter.toDate(createTime);
+        this.archiveTime = TimeConverter.toDate(archiveTime);
         this.type = type;
         this.content = content;
     }

@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.testdroid</groupId>
     <artifactId>testdroid-api</artifactId>
-    <version>2.57</version>
+    <version>2.58</version>
     <packaging>jar</packaging>
     <name>Testdroid API v2</name>
     <url>https://github.com/bitbar/testdroid-api</url>
@@ -42,9 +42,6 @@
             <resource>
                 <filtering>false</filtering>
                 <directory>src/main/java</directory>
-                <includes>
-                    <include>**/jaxb.index</include>
-                </includes>
                 <excludes>
                     <exclude>**/*.java</exclude>
                 </excludes>
@@ -60,19 +57,6 @@
                     <source>1.8</source>
                     <target>1.8</target>
                     <forceJavacCompilerUse>true</forceJavacCompilerUse>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>com.atlassian.maven.plugins</groupId>
-                <artifactId>maven-jgitflow-plugin</artifactId>
-                <version>1.0-alpha20</version>
-                <configuration>
-                    <flowInitContext>
-                        <developBranchName>devel</developBranchName>
-                    </flowInitContext>
-                    <allowUntracked>true</allowUntracked>
-                    <noDeploy>true</noDeploy>
-                    <keepBranch>true</keepBranch>
                 </configuration>
             </plugin>
             <plugin>
@@ -131,6 +115,11 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
+            <version>2.6.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
             <version>2.6.0</version>
         </dependency>
     </dependencies>

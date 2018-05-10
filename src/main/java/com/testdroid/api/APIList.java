@@ -95,8 +95,7 @@ public class APIList<T extends APIEntity> extends APIEntity {
         if (!isNextAvailable()) {
             return null;
         }
-        APIQueryBuilder queryBuilder = new APIQueryBuilder().limit(limit).offset(offset + limit).search(search);
-        return new APIListResource(client, selfURI, queryBuilder).getEntity();
+        return new APIListResource(client, selfURI, context.setOffset(offset + limit)).getEntity();
     }
 
     /**
@@ -112,8 +111,7 @@ public class APIList<T extends APIEntity> extends APIEntity {
         if (!isPreviousAvailable()) {
             return null;
         }
-        APIQueryBuilder queryBuilder = new APIQueryBuilder().limit(limit).offset(offset - limit).search(search);
-        return new APIListResource(client, selfURI, queryBuilder).getEntity();
+        return new APIListResource(client, selfURI, context.setOffset(offset - limit)).getEntity();
     }
 
     /**

@@ -12,5 +12,4 @@ public class ListNumberFilterEntry extends FilterEntry<List<? extends Number>> {
     public ListNumberFilterEntry(String field, Operand operand, List<? extends Number> value) {
         super(field, operand, value);
     }
-
 }

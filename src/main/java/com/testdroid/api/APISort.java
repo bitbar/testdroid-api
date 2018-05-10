@@ -95,6 +95,9 @@ public class APISort {
 
         private Type type;
 
+        private SortItem() {
+        }
+
         public SortItem(String column, Type sortType) {
             this.column = column;
             this.type = sortType;

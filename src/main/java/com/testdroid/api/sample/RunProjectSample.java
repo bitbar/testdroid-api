@@ -25,9 +25,9 @@ public class RunProjectSample {
             // Create project
             APIProject project = me.createProject(APIProject.Type.ANDROID);
 
-            // Get or create device group
             APIList<APIDeviceGroup> deviceGroupsList = project.getPublicDeviceGroups().getEntity();
-            APIDeviceGroup deviceGroup = deviceGroupsList.get(0);
+            APIDeviceGroup deviceGroup = deviceGroupsList.getData().stream().filter(d -> d.getDeviceCount() > 0)
+                    .findFirst().get();
 
             // Get test run config from project
             APITestRunConfig testRunConfig = project.getTestRunConfig();
@@ -52,16 +52,13 @@ public class RunProjectSample {
             testRunConfig.update();
 
             // Upload application
-            project.uploadApplication(new File(RunProjectSample.class
-                    .getResource(Common.ANDROID_APPLICATION_RESOURCE_PATH).getPath()), Common.ANDROID_FILE_MIME_TYPE);
+            project.uploadApplication(new File(Common.ANDROID_APPLICATION_RESOURCE_PATH), Common.ANDROID_FILE_MIME_TYPE);
 
             // Upload test
-            project.uploadTest(new File(RunProjectSample.class.getResource(Common.ANDROID_TEST_RESOURCE_PATH)
-                    .getPath()), Common.ANDROID_FILE_MIME_TYPE);
+            project.uploadTest(new File(Common.ANDROID_TEST_RESOURCE_PATH), Common.ANDROID_FILE_MIME_TYPE);
 
             // Upload data
-            project.uploadData(new File(RunProjectSample.class.getResource(Common.DATA_FILE_RESOURCE_PATH)
-                    .getPath()), Common.ZIP_FILE_MIME_TYPE);
+            project.uploadData(new File(Common.DATA_FILE_RESOURCE_PATH), Common.ZIP_FILE_MIME_TYPE);
 
             // Run test run
             APITestRun testRun = project.run("My test run name");
@@ -75,12 +72,12 @@ public class RunProjectSample {
             }
 
             // After sending files to Testdroid Cloud files can be send back
-            APIList<APIUserFile> androidFiles = project.getFiles().getEntity();
+            APIList<APIUserFile> files = project.getFiles().getEntity();
 
-            APIUserFile androidAppFile = androidFiles.getData().stream().filter(f -> APIUserFile.InputType
+            APIUserFile androidAppFile = files.getData().stream().filter(f -> APIUserFile.InputType
                     .APPLICATION.equals(f.getInputType())).findAny().orElse(null);
 
-            APIUserFile androidTestFile = androidFiles.getData().stream().filter(f -> APIUserFile.InputType
+            APIUserFile androidTestFile = files.getData().stream().filter(f -> APIUserFile.InputType
                     .TEST.equals(f.getInputType())).findAny().orElse(null);
 
         } catch (APIException apie) {

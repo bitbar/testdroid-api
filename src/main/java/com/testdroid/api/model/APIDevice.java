@@ -38,7 +38,7 @@ public class APIDevice extends APIEntity {
 
         private String displayName;
 
-        private OsType(String displayName) {
+        OsType(String displayName) {
             this.displayName = displayName;
         }
 

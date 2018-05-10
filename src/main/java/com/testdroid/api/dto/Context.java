@@ -4,7 +4,11 @@ import com.testdroid.api.APIEntity;
 import com.testdroid.api.APISort;
 import com.testdroid.api.filter.FilterEntry;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author Damian Sniezek <damian.sniezek@bitbar.com>
@@ -29,23 +33,37 @@ public class Context<T extends APIEntity> {
 
     public static final String OFFSET_REQUEST_PARAM = "offset";
 
-    private int limit;
+    private int limit = DEFAULT_LIMIT;
 
-    private int offset;
+    private int offset = DEFAULT_OFFSET;
 
     private String search;
 
     private APISort sort;
 
-    private List<String> groups;
+    private List<String> groups = new ArrayList<>();
 
-    private List<FilterEntry> filters;
+    private List<FilterEntry> filters = new ArrayList<>();
 
     private Class<T> type;
 
     private Boolean cacheable = Boolean.FALSE;
 
+    private Map<String, Object> extraParams = new HashMap<>();
+
     private Context() {
+    }
+
+    public Context(Class<T> type) {
+        this.type = type;
+    }
+
+    public Context(Class<T> type, int offset, int limit, String search, String sort) {
+        this.offset = offset;
+        this.limit = limit;
+        this.search = search;
+        this.type = type;
+        this.sort = APISort.deserialize(sort);
     }
 
     public Context(
@@ -64,32 +82,54 @@ public class Context<T extends APIEntity> {
         return offset;
     }
 
+    public Context<T> setOffset(int offset) {
+        this.offset = offset;
+        return this;
+    }
+
     public int getLimit() {
         return limit;
     }
 
-    public void setLimit(int limit) {
+    public Context<T> setLimit(int limit) {
         this.limit = limit;
+        return this;
     }
 
     public String getSearch() {
         return search;
     }
 
-    public void setSearch(String search) {
+    public Context<T> setSearch(String search) {
         this.search = search;
+        return this;
     }
 
     public APISort getSort() {
         return sort;
     }
 
-    public Class<? extends APIEntity> getType() {
+    public Context<T> setSort(APISort sort) {
+        this.sort = sort;
+        return this;
+    }
+
+    public Class<T> getType() {
         return type;
     }
 
     public List<FilterEntry> getFilters() {
         return filters;
+    }
+
+    public Context<T> setFilters(List<FilterEntry> filters) {
+        this.filters = filters;
+        return this;
+    }
+
+    public Context<T> addFilter(FilterEntry filterEntry) {
+        this.filters.add(filterEntry);
+        return this;
     }
 
     public List<String> getGroups() {
@@ -100,7 +140,28 @@ public class Context<T extends APIEntity> {
         return cacheable;
     }
 
-    public void setCacheable(Boolean cacheable) {
+    public Context<T> setCacheable(Boolean cacheable) {
         this.cacheable = cacheable;
+        return this;
+    }
+
+    public Map<String, Object> getExtraParams() {
+        return extraParams;
+    }
+
+    public void setExtraParams(Map<String, Object> extraParams) {
+        this.extraParams = extraParams;
+    }
+
+    public Map<String, Object> build() {
+        Map<String, Object> map = new HashMap<>();
+        map.put(LIMIT_REQUEST_PARAM, limit);
+        map.put(OFFSET_REQUEST_PARAM, offset);
+        map.put(SEARCH_REQUEST_PARAM, search);
+        map.put(SORT_REQUEST_PARAM, sort != null ? sort.serialize() : null);
+        map.put(FILTER_REQUEST_PARAM, filters.stream().map(FilterEntry::toString).collect(Collectors.joining(";")));
+        map.put(GROUP_REQUEST_PARAM, groups);
+        map.putAll(extraParams);
+        return map;
     }
 }

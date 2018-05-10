@@ -2,6 +2,7 @@ package com.testdroid.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.*;
+import com.testdroid.api.dto.Context;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
@@ -430,7 +431,7 @@ public class APIUser extends APIEntity {
 
     @JsonIgnore
     public APIListResource<APIProject> getProjectsResource() throws APIException {
-        return getListResource(getProjectsURI());
+        return getListResource(getProjectsURI(), APIProject.class);
     }
 
     /**
@@ -440,23 +441,8 @@ public class APIUser extends APIEntity {
      * @since 1.3.34
      */
     @JsonIgnore
-    public APIListResource<APIProject> getProjectsResource(APIQueryBuilder queryBuilder) throws APIException {
-        return getListResource(getProjectsURI(), queryBuilder);
-    }
-
-    /**
-     * @param offset
-     * @param limit
-     * @param search
-     * @param sort
-     * @return
-     * @throws APIException
-     * @deprecated
-     */
-    @JsonIgnore
-    public APIListResource<APIProject> getProjectsResource(long offset, long limit, String search, APISort sort)
-            throws APIException {
-        return getListResource(getProjectsURI(), offset, limit, search, sort, APIProject.class);
+    public APIListResource<APIProject> getProjectsResource(Context<APIProject> context) throws APIException {
+        return getListResource(getProjectsURI(), context);
     }
 
     public APIProject getProject(Long id) throws APIException {
@@ -465,7 +451,7 @@ public class APIUser extends APIEntity {
 
     @JsonIgnore
     public APIListResource<APIDeviceGroup> getDeviceGroupsResource() throws APIException {
-        return getListResource(getDeviceGroupsURI());
+        return getListResource(getDeviceGroupsURI(), APIDeviceGroup.class);
     }
 
     /**
@@ -475,24 +461,8 @@ public class APIUser extends APIEntity {
      * @since 1.3.34
      */
     @JsonIgnore
-    public APIListResource<APIDeviceGroup> getDeviceGroupsResource(APIQueryBuilder queryBuilder) throws APIException {
-        return getListResource(getDeviceGroupsURI(), queryBuilder);
-    }
-
-    /**
-     * @param offset
-     * @param limit
-     * @param search
-     * @param sort
-     * @return
-     * @throws APIException
-     * @deprecated
-     */
-    @JsonIgnore
-    public APIListResource<APIDeviceGroup> getDeviceGroupsResource(long offset, long limit, String search,
-            APISort sort)
-            throws APIException {
-        return getListResource(getDeviceGroupsURI(), offset, limit, search, sort, APIDeviceGroup.class);
+    public APIListResource<APIDeviceGroup> getDeviceGroupsResource(Context<APIDeviceGroup> context) throws APIException {
+        return getListResource(getDeviceGroupsURI(), context);
     }
 
     @JsonIgnore
@@ -502,7 +472,7 @@ public class APIUser extends APIEntity {
 
     @JsonIgnore
     public APIListResource<APIConnection> getDeviceSessionConnections(Long deviceSessionId) throws APIException {
-        return getListResource(getDeviceSessionVNCConnectionsURI(deviceSessionId));
+        return getListResource(getDeviceSessionVNCConnectionsURI(deviceSessionId), APIConnection.class);
     }
 
     @JsonIgnore

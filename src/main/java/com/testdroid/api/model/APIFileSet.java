@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIException;
 import com.testdroid.api.APIListResource;
-import com.testdroid.api.APIQueryBuilder;
+import com.testdroid.api.dto.Context;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Collections;
@@ -67,12 +67,12 @@ public class APIFileSet extends APIEntity {
 
     @JsonIgnore
     public APIListResource<APIUserFile> getIncludedFilesResource() throws APIException {
-        return getListResource(getIncludedFilesURI());
+        return getListResource(getIncludedFilesURI(), APIUserFile.class);
     }
 
     @JsonIgnore
-    public APIListResource<APIUserFile> getIncludedFilesResource(APIQueryBuilder queryBuilder) throws APIException {
-        return getListResource(getIncludedFilesURI(), queryBuilder);
+    public APIListResource<APIUserFile> getIncludedFilesResource(Context<APIUserFile> context) throws APIException {
+        return getListResource(getIncludedFilesURI(), context);
     }
 
     public void delete() throws APIException {
