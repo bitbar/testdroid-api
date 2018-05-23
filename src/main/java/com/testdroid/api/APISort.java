@@ -85,7 +85,7 @@ public class APISort {
         return sorts.stream().map(SortItem::toString).collect(Collectors.joining(":"));
     }
 
-    public String toString(){
+    public String toString() {
         return serialize();
     }
 

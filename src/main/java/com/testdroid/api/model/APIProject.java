@@ -435,7 +435,6 @@ public class APIProject extends APIEntity {
         Map<String, Object> body = new HashMap<>();
         body.put("scheduler", config.getScheduler() != null ? config.getScheduler().name() : null);
         body.put("appCrawlerRun", config.isAppCrawlerRun());
-        body.put("autoScreenshots", config.isAutoScreenshots());
         body.put("screenshotDir", config.getScreenshotDir());
         body.put("limitationType", config.getLimitationType() != null ? config.getLimitationType().name() : null);
         body.put("limitationValue", config.getLimitationValue());
@@ -449,7 +448,6 @@ public class APIProject extends APIEntity {
         body.put("uiAutomatorTestClasses", config.getUiAutomatorTestClasses());
         body.put("launchApp", config.isLaunchApp());
         body.put("instrumentationRunner", config.getInstrumentationRunner());
-        body.put("appRequired", config.isAppRequired());
         body.put("timeout", config.getTimeout());
         body.put("name", testRunName);
         body.put("usedDeviceIds[]", StringUtils.join(deviceIds, ","));

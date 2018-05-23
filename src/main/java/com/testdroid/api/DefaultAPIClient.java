@@ -1,16 +1,10 @@
 package com.testdroid.api;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.api.client.auth.oauth2.BearerToken;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.http.*;
 import com.google.api.client.http.apache.ApacheHttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
-import com.testdroid.api.dto.Context;
-import com.testdroid.api.http.MultipartFormDataContent;
-import com.testdroid.api.model.APIDevice;
-import com.testdroid.api.model.APILabelGroup;
-import com.testdroid.api.model.APIUser;
 import net.sf.json.JSONObject;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -21,27 +15,18 @@ import org.apache.http.auth.ChallengeState;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.AuthCache;
 import org.apache.http.client.protocol.HttpClientContext;
-import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.conn.params.ConnRoutePNames;
 import org.apache.http.impl.auth.BasicScheme;
 import org.apache.http.impl.client.BasicAuthCache;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringReader;
-import java.net.URISyntaxException;
 import java.security.GeneralSecurityException;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -51,6 +36,8 @@ import static java.nio.charset.StandardCharsets.UTF_8;
  * @author Krzysztof Fonał <krzysztof.fonal@bitbar.com>
  */
 public class DefaultAPIClient extends AbstractAPIClient {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(APIKeyClient.class);
 
     public static final int HTTP_CONNECT_TIMEOUT = 60000;
 
@@ -78,9 +65,7 @@ public class DefaultAPIClient extends AbstractAPIClient {
             try {
                 netHttpBuilder = new NetHttpTransport.Builder().doNotValidateCertificate();
             } catch (GeneralSecurityException ex) {
-                Logger.getLogger(DefaultAPIClient.class.getName())
-                        .log(Level.WARNING, "Cannot set not-validating certificate. Certificate will be validating.",
-                                ex);
+                LOGGER.warn("Cannot set not-validating certificate. Certificate will be validating.", ex);
                 netHttpBuilder = new NetHttpTransport.Builder();
             }
         } else {
@@ -99,9 +84,7 @@ public class DefaultAPIClient extends AbstractAPIClient {
             try {
                 apacheBuilder = new ApacheHttpTransport.Builder().setProxy(proxy).doNotValidateCertificate();
             } catch (GeneralSecurityException ex) {
-                Logger.getLogger(DefaultAPIClient.class.getName())
-                        .log(Level.WARNING, "Cannot set not-validating certificate. Certificate will be validating.",
-                                ex);
+                LOGGER.warn("Cannot set not-validating certificate. Certificate will be validating.", ex);
                 apacheBuilder = new ApacheHttpTransport.Builder().setProxy(proxy);
             }
         } else {

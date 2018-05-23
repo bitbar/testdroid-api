@@ -17,8 +17,9 @@ public class APIDeviceSession extends APIEntity {
 
     @XmlType(namespace = "APIDeviceSession")
     public enum Type {
-        MANUAL,
-        AUTOMATIC
+        ADB,
+        AUTOMATIC,
+        MANUAL
     }
 
     @XmlType(namespace = "APIDeviceSession")
@@ -92,6 +93,8 @@ public class APIDeviceSession extends APIEntity {
 
     private Long deviceTime;
 
+    private Long duration;
+
     public APIDeviceSession() {
     }
 
@@ -125,7 +128,8 @@ public class APIDeviceSession extends APIEntity {
             APIDevice device, Long timeLimit, Long launchAppDuration, State state, Long deviceRunId,
             Integer testCaseAllCount, Integer testCaseSuccessCount, Integer testCasePassedCount,
             Integer testCaseFailedCount, Integer testCaseSkippedCount, Boolean billable, String excludeReason,
-            Long deviceInstanceId, RetryState retryState, Integer autoRetriesLeftCount, Long deviceTime) {
+            Long deviceInstanceId, RetryState retryState, Integer autoRetriesLeftCount, Long deviceTime,
+            Long duration) {
         this(id, type, createTime, startTime, installTime, endTime, device, timeLimit, launchAppDuration, state,
                 deviceRunId, billable, excludeReason, deviceTime);
         this.testCaseAllCount = testCaseAllCount;
@@ -136,6 +140,7 @@ public class APIDeviceSession extends APIEntity {
         this.deviceInstanceId = deviceInstanceId;
         this.retryState = retryState;
         this.autoRetriesLeftCount = autoRetriesLeftCount;
+        this.duration = duration;
     }
 
     public Type getType() {
@@ -306,6 +311,14 @@ public class APIDeviceSession extends APIEntity {
         this.deviceTime = deviceTime;
     }
 
+    public Long getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Long duration) {
+        this.duration = duration;
+    }
+
     @JsonIgnore
     public APIListResource<APIDeviceSessionStep> getDeviceSessionStepsResource() throws APIException {
         return getListResource(createUri(selfURI, "/steps"), APIDeviceSessionStep.class);
@@ -361,5 +374,6 @@ public class APIDeviceSession extends APIEntity {
         this.retryState = apiDeviceSession.retryState;
         this.autoRetriesLeftCount = apiDeviceSession.autoRetriesLeftCount;
         this.deviceTime = apiDeviceSession.deviceTime;
+        this.duration = apiDeviceSession.duration;
     }
 }

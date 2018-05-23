@@ -32,23 +32,15 @@ public class APITestRunConfig extends APIEntity implements Serializable {
         SINGLE
     }
 
-    private boolean createVNCConnection;
-
     private String appiumBrokerAddress;
-
-    private boolean appRequired = true;
 
     private String applicationPassword;
 
     private String applicationUsername;
 
-    private boolean autoScreenshots;
-
     private Long creditsPrice;
 
     private String deviceLanguageCode = Locale.US.toString();
-
-    private boolean useAdditionalFiles = true;
 
     private boolean videoRecordingEnabled;
 
@@ -126,17 +118,15 @@ public class APITestRunConfig extends APIEntity implements Serializable {
     }
 
     public APITestRunConfig(
-            Long id, Scheduler scheduler, Boolean appCrawlerRun, Boolean autoScreenshots, String screenshotDir,
-            LimitationType limitationType, String limitationValue, String withAnnotation, String withoutAnnotation,
-            String applicationUsername, String applicationPassword, Long deviceGroupId,
-            String usedDeviceGroupName, Long creditsPrice, String deviceLanguageCode, String hookURL,
-            String uiAutomatorTestClasses, Boolean launchApp, String instrumentationRunner, Boolean appRequired,
-            Boolean useAdditionalFiles, Boolean videoRecordingEnabled, Long timeout, String appiumBrokerAddress,
-            Boolean createVNCConnection, Integer maxAutoRetriesCount) {
+            Long id, Scheduler scheduler, Boolean appCrawlerRun, String screenshotDir, LimitationType limitationType,
+            String limitationValue, String withAnnotation, String withoutAnnotation, String applicationUsername,
+            String applicationPassword, Long deviceGroupId, String usedDeviceGroupName, Long creditsPrice,
+            String deviceLanguageCode, String hookURL, String uiAutomatorTestClasses, Boolean launchApp,
+            String instrumentationRunner, Boolean videoRecordingEnabled, Long timeout, String appiumBrokerAddress,
+            Integer maxAutoRetriesCount) {
         super(id);
         this.scheduler = scheduler;
         this.appCrawlerRun = appCrawlerRun;
-        this.autoScreenshots = autoScreenshots;
         this.screenshotDir = screenshotDir;
         this.limitationType = limitationType;
         this.limitationValue = limitationValue;
@@ -153,12 +143,9 @@ public class APITestRunConfig extends APIEntity implements Serializable {
         this.uiAutomatorTestClasses = uiAutomatorTestClasses;
         this.launchApp = launchApp;
         this.instrumentationRunner = instrumentationRunner;
-        this.appRequired = appRequired;
         this.videoRecordingEnabled = videoRecordingEnabled;
         this.timeout = timeout;
-        this.useAdditionalFiles = useAdditionalFiles;
         this.appiumBrokerAddress = appiumBrokerAddress;
-        this.createVNCConnection = createVNCConnection;
         this.maxAutoRetriesCount = maxAutoRetriesCount;
     }
 
@@ -192,14 +179,6 @@ public class APITestRunConfig extends APIEntity implements Serializable {
 
     public void setLimitationType(LimitationType limitationType) {
         this.limitationType = limitationType;
-    }
-
-    public boolean isAutoScreenshots() {
-        return autoScreenshots;
-    }
-
-    public void setAutoScreenshots(boolean autoScreenshots) {
-        this.autoScreenshots = autoScreenshots;
     }
 
     public boolean isRunAvailable() {
@@ -332,14 +311,6 @@ public class APITestRunConfig extends APIEntity implements Serializable {
         this.instrumentationRunner = instrumentationRunner;
     }
 
-    public boolean isAppRequired() {
-        return appRequired;
-    }
-
-    public void setAppRequired(boolean appRequired) {
-        this.appRequired = appRequired;
-    }
-
     private String getParametersURI() {
         return createUri(selfURI, "/parameters");
     }
@@ -350,14 +321,6 @@ public class APITestRunConfig extends APIEntity implements Serializable {
 
     public void setTimeout(Long timeout) {
         this.timeout = timeout;
-    }
-
-    public boolean getUseAdditionalFiles() {
-        return useAdditionalFiles;
-    }
-
-    public void setUseAdditionalFiles(boolean useAdditionalFiles) {
-        this.useAdditionalFiles = useAdditionalFiles;
     }
 
     public boolean isVideoRecordingEnabled() {
@@ -374,14 +337,6 @@ public class APITestRunConfig extends APIEntity implements Serializable {
 
     public void setAppiumBrokerAddress(String appiumBrokerAddress) {
         this.appiumBrokerAddress = appiumBrokerAddress;
-    }
-
-    public boolean isCreateVNCConnection() {
-        return createVNCConnection;
-    }
-
-    public void setCreateVNCConnection(boolean createVNCConnection) {
-        this.createVNCConnection = createVNCConnection;
     }
 
     public Integer getMaxAutoRetriesCount() {
@@ -549,7 +504,6 @@ public class APITestRunConfig extends APIEntity implements Serializable {
         Map<String, Object> body = new HashMap<>();
         body.put("scheduler", scheduler != null ? scheduler.name() : null);
         body.put("appCrawlerRun", appCrawlerRun);
-        body.put("autoScreenshots", autoScreenshots);
         body.put("screenshotDir", screenshotDir);
         body.put("limitationType", limitationType != null ? limitationType.name() : null);
         body.put("limitationValue", limitationValue);
@@ -563,10 +517,8 @@ public class APITestRunConfig extends APIEntity implements Serializable {
         body.put("uiAutomatorTestClasses", uiAutomatorTestClasses);
         body.put("launchApp", launchApp);
         body.put("instrumentationRunner", instrumentationRunner);
-        body.put("appRequired", appRequired);
         body.put("timeout", timeout);
         body.put("appiumBrokerAddress", appiumBrokerAddress);
-        body.put("createVNCConnection", createVNCConnection);
         body.put("maxAutoRetriesCount", maxAutoRetriesCount);
         APITestRunConfig config = postResource(selfURI, body, APITestRunConfig.class);
         clone(config);
@@ -579,8 +531,6 @@ public class APITestRunConfig extends APIEntity implements Serializable {
         cloneBase(from);
         this.applicationPassword = apiTestRunConfig.applicationPassword;
         this.applicationUsername = apiTestRunConfig.applicationUsername;
-        this.appRequired = apiTestRunConfig.appRequired;
-        this.autoScreenshots = apiTestRunConfig.autoScreenshots;
         this.creditsPrice = apiTestRunConfig.creditsPrice;
         this.deviceLanguageCode = apiTestRunConfig.deviceLanguageCode;
         this.videoRecordingEnabled = apiTestRunConfig.videoRecordingEnabled;
@@ -601,9 +551,7 @@ public class APITestRunConfig extends APIEntity implements Serializable {
         this.withAnnotation = apiTestRunConfig.withAnnotation;
         this.withoutAnnotation = apiTestRunConfig.withoutAnnotation;
         this.timeout = apiTestRunConfig.timeout;
-        this.useAdditionalFiles = apiTestRunConfig.useAdditionalFiles;
         this.appiumBrokerAddress = apiTestRunConfig.appiumBrokerAddress;
-        this.createVNCConnection = apiTestRunConfig.createVNCConnection;
         this.maxAutoRetriesCount = apiTestRunConfig.maxAutoRetriesCount;
         this.frameworkId = apiTestRunConfig.frameworkId;
         this.availableDeviceGroups = apiTestRunConfig.availableDeviceGroups;

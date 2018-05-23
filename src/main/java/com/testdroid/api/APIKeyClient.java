@@ -3,8 +3,6 @@ package com.testdroid.api;
 import com.google.api.client.http.HttpHeaders;
 import com.google.api.client.http.apache.ApacheHttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
-import com.testdroid.api.dto.Context;
-import com.testdroid.api.model.APIDevice;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;
@@ -16,15 +14,17 @@ import org.apache.http.conn.params.ConnRoutePNames;
 import org.apache.http.impl.auth.BasicScheme;
 import org.apache.http.impl.client.BasicAuthCache;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.security.GeneralSecurityException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * @author Michał Szpruta <michal.szpruta@bitbar.com>
  */
 public class APIKeyClient extends AbstractAPIClient {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(APIKeyClient.class);
 
     private String apiKey;
 
@@ -38,9 +38,7 @@ public class APIKeyClient extends AbstractAPIClient {
             try {
                 netHttpBuilder = new NetHttpTransport.Builder().doNotValidateCertificate();
             } catch (GeneralSecurityException ex) {
-                Logger.getLogger(APIKeyClient.class.getName())
-                        .log(Level.WARNING, "Cannot set not-validating certificate. Certificate will be validating.",
-                                ex);
+                LOGGER.warn("Cannot set not-validating certificate. Certificate will be validating.", ex);
                 netHttpBuilder = new NetHttpTransport.Builder();
             }
         } else {
@@ -57,9 +55,7 @@ public class APIKeyClient extends AbstractAPIClient {
             try {
                 apacheBuilder = new ApacheHttpTransport.Builder().setProxy(proxy).doNotValidateCertificate();
             } catch (GeneralSecurityException ex) {
-                Logger.getLogger(APIKeyClient.class.getName())
-                        .log(Level.WARNING, "Cannot set not-validating certificate. Certificate will be validating.",
-                                ex);
+                LOGGER.warn("Cannot set not-validating certificate. Certificate will be validating.", ex);
                 apacheBuilder = new ApacheHttpTransport.Builder().setProxy(proxy);
             }
         } else {
