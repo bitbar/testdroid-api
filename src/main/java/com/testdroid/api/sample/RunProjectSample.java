@@ -35,7 +35,6 @@ public class RunProjectSample {
             // Configure test run config
             testRunConfig.setApplicationPassword("applicationPassword");
             testRunConfig.setApplicationUsername("applicationUsername");
-            testRunConfig.setAutoScreenshots(false);
             testRunConfig.setDeviceLanguageCode("EN");
             testRunConfig.setDeviceGroupId(deviceGroup.getId());
             testRunConfig.setAppCrawlerRun(Boolean.FALSE);

@@ -15,8 +15,6 @@ import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
@@ -206,12 +204,7 @@ public abstract class APIEntity {
 
     @JsonIgnore
     public String toJson() throws JsonProcessingException {
-        try {
-            return new ObjectMapper().writeValueAsString(this);
-        } catch (JsonProcessingException ex) {
-            Logger.getLogger(APIEntity.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return "";
+        return new ObjectMapper().writeValueAsString(this);
     }
 
     @JsonIgnore

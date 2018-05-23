@@ -1,6 +1,8 @@
 package com.testdroid.api.model.enums;
 
-import static java.lang.Boolean.*;
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
+
 /**
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
  */
@@ -14,11 +16,11 @@ public enum APIPaymentMethod {
 
     private Boolean allowUpdate;
 
-    private APIPaymentMethod(){
+    APIPaymentMethod() {
 
     }
 
-    private APIPaymentMethod(Boolean allowUpdate){
+    APIPaymentMethod(Boolean allowUpdate) {
         this.allowUpdate = allowUpdate;
     }
 
