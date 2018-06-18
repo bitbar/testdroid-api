@@ -345,8 +345,7 @@ public class APIProject extends APIEntity {
 
     private Map<String, Object> getCreateRunParameters(String testRunName, String deviceNamePattern,
             Long testRunId) {
-        Map<String, Object> result = new HashMap<>();
-        result.putAll(getCreateRunParameters(testRunName));
+        Map<String, Object> result = new HashMap<>(getCreateRunParameters(testRunName));
         result.put("deviceNamePattern", deviceNamePattern);
         result.putAll(getCreateRunParameters(testRunId));
         return result;
@@ -466,12 +465,6 @@ public class APIProject extends APIEntity {
         return getListResource(getRunsURI(), APITestRun.class);
     }
 
-    /**
-     * @param queryBuilder
-     * @return
-     * @throws APIException
-     * @since 1.3.34
-     */
     @JsonIgnore
     public APIListResource<APITestRun> getTestRunsResource(Context<APITestRun> context) throws APIException {
         return getListResource(getRunsURI(), context);
@@ -491,12 +484,6 @@ public class APIProject extends APIEntity {
         return getListResource(getSharingsURI(), APIProjectSharing.class);
     }
 
-    /**
-     * @param queryBuilder
-     * @return
-     * @throws APIException
-     * @since 1.3.34
-     */
     @JsonIgnore
     public APIListResource<APIProjectSharing> getProjectSharings(Context<APIProjectSharing> context)
             throws APIException {

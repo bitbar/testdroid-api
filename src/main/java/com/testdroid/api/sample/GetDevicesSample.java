@@ -46,7 +46,6 @@ public class GetDevicesSample {
             context = new Context<>(APIDevice.class)
                     .setSort(new APISort(Collections
                             .singletonList(new APISort.SortItem("displayName", APISort.Type.ASC))))
-                    .addFilter(new BooleanFilterEntry("vncSupported", Operand.EQ, Boolean.TRUE))
                     .addFilter(new StringFilterEntry("osType", Operand.EQ, APIDevice.OsType.IOS.name()))
                     .addFilter(new BooleanFilterEntry("online", Operand.EQ, Boolean.FALSE));
             devicesResource = CLIENT.getDevices(context);

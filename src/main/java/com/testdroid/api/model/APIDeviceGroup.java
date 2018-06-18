@@ -107,12 +107,6 @@ public class APIDeviceGroup extends APIEntity {
         return getListResource(getIncludedDevicesURI(), APIDevice.class);
     }
 
-    /**
-     * @param queryBuilder
-     * @return
-     * @throws APIException
-     * @since 1.3.34
-     */
     @JsonIgnore
     public APIListResource<APIDevice> getIncludedDevicesResource(Context<APIDevice> context) throws APIException {
         return getListResource(getIncludedDevicesURI(), context);
