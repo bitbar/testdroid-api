@@ -435,12 +435,6 @@ public class APITestRun extends APIEntity {
         return getListResource(getTagsURI(), APITag.class);
     }
 
-    /**
-     * @param queryBuilder
-     * @return
-     * @throws APIException
-     * @since 1.3.34
-     */
     @JsonIgnore
     public APIListResource<APITag> getTagsResource(Context<APITag> context) throws APIException {
         return getListResource(getTagsURI(), context);
@@ -462,12 +456,6 @@ public class APITestRun extends APIEntity {
         return getListResource(getDeviceSessionsURI(), context);
     }
 
-    /**
-     * @param queryBuilder
-     * @return
-     * @throws APIException
-     * @since 1.3.34
-     */
     @JsonIgnore
     public APIListResource<APIDeviceSession> getDeviceRunsResource(Context<APIDeviceSession> context)
             throws APIException {

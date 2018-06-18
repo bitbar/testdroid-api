@@ -44,6 +44,10 @@ public class APIFramework extends APIEntity {
 
     private String type;
 
+    private Long labelId;
+
+    private String labelName;
+
     public APIFramework() {
     }
 
@@ -51,7 +55,7 @@ public class APIFramework extends APIEntity {
             Long id, Date createTime, String name, String description, APIDevice.OsType osType,
             String type, Long accountId, String mainUserEmail, String mainUserName, String requiredAppExtensions,
             String requiredTestExtensions, Boolean forProjects, Boolean canRunFromUI, Boolean secured,
-            Boolean retryable, Boolean skipQueue, Boolean skipOlderSdk) {
+            Boolean retryable, Boolean skipQueue, Boolean skipOlderSdk, Long labelId, String labelName) {
         super(id);
         this.createTime = createTime;
         this.name = name;
@@ -69,6 +73,8 @@ public class APIFramework extends APIEntity {
         this.retryable = retryable;
         this.skipQueue = skipQueue;
         this.skipOlderSdk = skipOlderSdk;
+        this.labelId = labelId;
+        this.labelName = labelName;
     }
 
     public Date getCreateTime() {
@@ -199,6 +205,22 @@ public class APIFramework extends APIEntity {
         this.skipQueue = skipQueue;
     }
 
+    public Long getLabelId() {
+        return labelId;
+    }
+
+    public void setLabelId(Long labelId) {
+        this.labelId = labelId;
+    }
+
+    public String getLabelName() {
+        return labelName;
+    }
+
+    public void setLabelName(String labelName) {
+        this.labelName = labelName;
+    }
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
@@ -220,5 +242,7 @@ public class APIFramework extends APIEntity {
         this.retryable = apiFramework.retryable;
         this.skipQueue = apiFramework.skipQueue;
         this.skipOlderSdk = apiFramework.skipOlderSdk;
+        this.labelId = apiFramework.labelId;
+        this.labelName = apiFramework.labelName;
     }
 }

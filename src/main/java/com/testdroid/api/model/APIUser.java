@@ -429,17 +429,19 @@ public class APIUser extends APIEntity {
         clone(user);
     }
 
+    public APITestRun startTestRun(APITestRunConfig config) throws APIException {
+        return postResource(createUri(selfURI, "/runs"), config, APITestRun.class);
+    }
+
+    public APITestRunConfig validateTestRunConfig(APITestRunConfig config) throws APIException {
+        return postResource(createUri(selfURI, "/runs/config"), config, APITestRunConfig.class);
+    }
+
     @JsonIgnore
     public APIListResource<APIProject> getProjectsResource() throws APIException {
         return getListResource(getProjectsURI(), APIProject.class);
     }
 
-    /**
-     * @param queryBuilder
-     * @return
-     * @throws APIException
-     * @since 1.3.34
-     */
     @JsonIgnore
     public APIListResource<APIProject> getProjectsResource(Context<APIProject> context) throws APIException {
         return getListResource(getProjectsURI(), context);
@@ -454,12 +456,6 @@ public class APIUser extends APIEntity {
         return getListResource(getDeviceGroupsURI(), APIDeviceGroup.class);
     }
 
-    /**
-     * @param queryBuilder
-     * @return
-     * @throws APIException
-     * @since 1.3.34
-     */
     @JsonIgnore
     public APIListResource<APIDeviceGroup> getDeviceGroupsResource(Context<APIDeviceGroup> context) throws APIException {
         return getListResource(getDeviceGroupsURI(), context);

@@ -25,18 +25,16 @@ public class APIAdminDeviceModel extends APIEntity {
 
     private Boolean enabled;
 
-    private Boolean vncSupported;
-
     public APIAdminDeviceModel() {
 
     }
 
-    public APIAdminDeviceModel(Long id, String name, Boolean enabled, Boolean vncSupported, Integer online,
-            Integer total, Integer running, Integer queueSize, Double avgWaitingTime) {
+    public APIAdminDeviceModel(
+            Long id, String name, Boolean enabled, Integer online, Integer total, Integer running, Integer queueSize,
+            Double avgWaitingTime) {
         super(id);
         this.name = name;
         this.enabled = enabled;
-        this.vncSupported = vncSupported;
         this.online = online;
         this.total = total;
         this.running = running;
@@ -51,7 +49,6 @@ public class APIAdminDeviceModel extends APIEntity {
         cloneBase(from);
         this.name = model.name;
         this.enabled = model.enabled;
-        this.vncSupported = model.vncSupported;
         this.online = model.online;
         this.total = model.total;
         this.running = model.running;
@@ -113,13 +110,5 @@ public class APIAdminDeviceModel extends APIEntity {
 
     public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
-    }
-
-    public Boolean getVncSupported() {
-        return vncSupported;
-    }
-
-    public void setVncSupported(Boolean vncSupported) {
-        this.vncSupported = vncSupported;
     }
 }

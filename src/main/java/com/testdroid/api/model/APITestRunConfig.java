@@ -111,6 +111,8 @@ public class APITestRunConfig extends APIEntity implements Serializable {
 
     private boolean resignFiles;
 
+    private boolean loadedPrevious;
+
     @JsonIgnore
     private List<?> computedDevices;
 
@@ -465,6 +467,14 @@ public class APITestRunConfig extends APIEntity implements Serializable {
 
     public void setResignFiles(boolean resignFiles) {
         this.resignFiles = resignFiles;
+    }
+
+    public boolean isLoadedPrevious() {
+        return loadedPrevious;
+    }
+
+    public void setLoadedPrevious(boolean loadedPrevious) {
+        this.loadedPrevious = loadedPrevious;
     }
 
     @JsonIgnore
