@@ -153,6 +153,8 @@ public class TypeReferenceFactory {
         });
         TYPE_REFERENCE_LIST_MAP.put(APIMarketShare.class, new TypeReference<APIList<APIMarketShare>>() {
         });
+        TYPE_REFERENCE_LIST_MAP.put(APIBuildExecutor.class, new TypeReference<APIList<APIBuildExecutor>>() {
+        });
     }
 
     private static final Map<Class, TypeReference<?>> TYPE_REFERENCE_MAP = new HashMap<>();
@@ -277,6 +279,8 @@ public class TypeReferenceFactory {
         TYPE_REFERENCE_MAP.put(APIUserStatistics.class, new TypeReference<APIUserStatistics>() {
         });
         TYPE_REFERENCE_MAP.put(APIMarketShare.class, new TypeReference<APIMarketShare>() {
+        });
+        TYPE_REFERENCE_MAP.put(APIBuildExecutor.class, new TypeReference<APIBuildExecutor>() {
         });
     }
 

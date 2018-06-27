@@ -494,6 +494,10 @@ public class APITestRun extends APIEntity {
         postResource(getAbortURI(), null, null);
     }
 
+    void setSelfURI(String selfURI){
+        this.selfURI = selfURI;
+    }
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {

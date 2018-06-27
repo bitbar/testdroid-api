@@ -62,6 +62,8 @@ public class APILicense extends APIEntity {
 
     private XCUITestLicense xcuiTest;
 
+    private BuildLicense build;
+
     private String userEmail;
 
     private Status status;
@@ -76,7 +78,7 @@ public class APILicense extends APIEntity {
             Integer iosProjectLimit, Boolean serverIosEnabled, Integer recorderLimit, Boolean remoteControlEnabled,
             Boolean xcTestEnabled, Boolean xcuiTestEnabled, Boolean ctsEnabled, Integer androidProjectLimit,
             Boolean appiumEnabled, Boolean serverEnabled, Boolean inspectorEnabled, Boolean iosEnabled,
-            Integer iosDeviceLimit, Date closeTime, String status) {
+            Integer iosDeviceLimit, Date closeTime, String status, Boolean buildEnabled, Integer buildLimit) {
         super(id);
         this.privateInstance = enterprise;
         this.activateTime = activateTime;
@@ -88,6 +90,7 @@ public class APILicense extends APIEntity {
                 new AndroidLicense.CTSLicense(ctsEnabled), new AndroidLicense.UIAutomatorLicense(uiautomatorEnabled),
                 androidEnabled);
         this.ios = new IOSLicense(iosDeviceLimit, iosProjectLimit, iosEnabled);
+        this.build = new BuildLicense(buildLimit, buildEnabled);
         this.recorder = new RecorderLicense(recorderLimit, recorderEnabled);
         this.server = new ServerLicense(serverAndroidEnabled, serverIosEnabled, serverEnabled);
         this.calabash = new CalabashLicense(calabashEnabled);
@@ -105,7 +108,7 @@ public class APILicense extends APIEntity {
             boolean privateInstance, Date expireTime, String userEmail, AndroidLicense android, IOSLicense ios,
             RecorderLicense recorder, ServerLicense server, CalabashLicense calabash, AppiumLicense appium,
             SeleniumLicense selenium, InspectorLicense inspector, RemoteControlLicense remoteControl,
-            XCTestLicense xcTest, XCUITestLicense xcuiTest) {
+            XCTestLicense xcTest, XCUITestLicense xcuiTest, BuildLicense build) {
         this.privateInstance = privateInstance;
         this.expireTime = expireTime;
         this.userEmail = userEmail;
@@ -120,6 +123,7 @@ public class APILicense extends APIEntity {
         this.remoteControl = remoteControl;
         this.xcTest = xcTest;
         this.xcuiTest = xcuiTest;
+        this.build = build;
     }
 
     private static String getTextValue(Integer i) {
@@ -250,6 +254,14 @@ public class APILicense extends APIEntity {
 
     public void setXcuiTest(XCUITestLicense xcuiTest) {
         this.xcuiTest = xcuiTest;
+    }
+
+    public BuildLicense getBuild() {
+        return build;
+    }
+
+    public void setBuild(BuildLicense build) {
+        this.build = build;
     }
 
     public String getUserEmail() {
@@ -420,6 +432,37 @@ public class APILicense extends APIEntity {
             public String generateSignContent() {
                 return getTextValue(enabled);
             }
+        }
+
+    }
+
+    public static class BuildLicense extends FeatureLicense {
+
+        private Integer limit;
+
+        public BuildLicense() {
+        }
+
+        public BuildLicense(Integer limit, boolean enabled) {
+            super(enabled);
+            this.limit = limit;
+        }
+
+        public Integer getLimit() {
+            return limit;
+        }
+
+        public void setLimit(Integer limit) {
+            this.limit = limit;
+        }
+
+        public boolean isLimited() {
+            return limit != null;
+        }
+
+        @Override
+        public String generateSignContent() {
+            return String.format("%s%s", getTextValue(enabled), getTextValue(limit));
         }
 
     }

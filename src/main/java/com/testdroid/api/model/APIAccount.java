@@ -22,18 +22,21 @@ public class APIAccount extends APIEntity {
 
     private Integer testScreenshotLimit;
 
+    private Integer executorsLimit;
+
     public APIAccount() {
 
     }
 
     public APIAccount(Long id, Date createTime, String mainUserName, String mainUserEmail, Integer maxTimeout,
-            Integer testScreenshotLimit) {
+            Integer testScreenshotLimit, Integer executorsLimit) {
         super(id);
         this.createTime = createTime;
         this.mainUserName = mainUserName;
         this.mainUserEmail = mainUserEmail;
         this.maxTimeout = maxTimeout;
         this.testScreenshotLimit = testScreenshotLimit;
+        this.executorsLimit = executorsLimit;
     }
 
     public Date getCreateTime() {
@@ -76,6 +79,14 @@ public class APIAccount extends APIEntity {
         this.testScreenshotLimit = testScreenshotLimit;
     }
 
+    public Integer getExecutorsLimit() {
+        return executorsLimit;
+    }
+
+    public void setExecutorsLimit(Integer executorsLimit) {
+        this.executorsLimit = executorsLimit;
+    }
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
@@ -86,5 +97,6 @@ public class APIAccount extends APIEntity {
         this.mainUserEmail = account.mainUserEmail;
         this.maxTimeout = account.maxTimeout;
         this.testScreenshotLimit = account.testScreenshotLimit;
+        this.executorsLimit = account.executorsLimit;
     }
 }
