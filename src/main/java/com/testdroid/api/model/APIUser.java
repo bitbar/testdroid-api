@@ -1,11 +1,14 @@
 package com.testdroid.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.testdroid.api.*;
+import com.testdroid.api.APIEntity;
+import com.testdroid.api.APIException;
+import com.testdroid.api.APIListResource;
 import com.testdroid.api.dto.Context;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import java.io.File;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -430,11 +433,19 @@ public class APIUser extends APIEntity {
     }
 
     public APITestRun startTestRun(APITestRunConfig config) throws APIException {
-        return postResource(createUri(selfURI, "/runs"), config, APITestRun.class);
+        APITestRun apiTestRun = postResource(createUri(selfURI, "/runs"), config, APITestRun.class);
+        apiTestRun.setSelfURI(createUri(selfURI, String.format("/projects/%s/runs/%s", apiTestRun.getProjectId(),
+                apiTestRun.getId())));
+        return apiTestRun;
     }
 
     public APITestRunConfig validateTestRunConfig(APITestRunConfig config) throws APIException {
         return postResource(createUri(selfURI, "/runs/config"), config, APITestRunConfig.class);
+    }
+
+    @JsonIgnore
+    public APIUserFile uploadFile(File file) throws APIException {
+        return postFile(createUri(selfURI, "/files"), file, null, APIUserFile.class);
     }
 
     @JsonIgnore
@@ -459,6 +470,12 @@ public class APIUser extends APIEntity {
     @JsonIgnore
     public APIListResource<APIDeviceGroup> getDeviceGroupsResource(Context<APIDeviceGroup> context) throws APIException {
         return getListResource(getDeviceGroupsURI(), context);
+    }
+
+    @JsonIgnore
+    public APIListResource<APIFramework> getAvailableFrameworksResource(Context<APIFramework> context)
+            throws APIException {
+        return this.getListResource(createUri(selfURI, "/available-frameworks"), context);
     }
 
     @JsonIgnore

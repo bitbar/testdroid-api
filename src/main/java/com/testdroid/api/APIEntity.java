@@ -5,6 +5,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.testdroid.api.dto.Context;
 import com.testdroid.api.model.*;
+import com.testdroid.api.model.build.APIBuildConfig;
+import com.testdroid.api.model.build.APIBuildResultConfig;
 import com.testdroid.api.model.jrjc.*;
 import com.testdroid.api.util.TypeReferenceFactory;
 
@@ -97,7 +99,10 @@ import java.util.Date;
         APIDeviceFilterGroup.class,
         APICountryVatRate.class,
         APIMarketShare.class,
-        APIFileConfig.class
+        APIFileConfig.class,
+        APIBuildExecutor.class,
+        APIBuildConfig.class,
+        APIBuildResultConfig.class
 })
 public abstract class APIEntity {
 

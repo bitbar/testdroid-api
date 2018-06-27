@@ -11,4 +11,9 @@ public class BooleanFilterEntry extends FilterEntry<Boolean> {
         super(field, comparison, value);
     }
 
+    @Override
+    public String toString() {
+        return String.format("b_%s", super.toString());
+    }
+
 }

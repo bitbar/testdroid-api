@@ -14,7 +14,7 @@ import java.util.Date;
 @XmlRootElement
 public class APIPipelineJob extends APIEntity {
 
-    @XmlType(namespace = "APIActivity")
+    @XmlType(namespace = "APIPipelineJob")
     public enum Type {
         BUILD,
         BROWSER_TESTING
