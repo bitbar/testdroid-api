@@ -317,15 +317,15 @@ public class APIProject extends APIEntity {
     }
 
     private Map<String, Object> getCreateRunParameters(String testRunName) {
-        return Collections.singletonMap("name", (Object) testRunName);
+        return Collections.singletonMap("name", testRunName);
     }
 
     private Map<String, Object> getCreateRunParameters(Long testRunId) {
-        return Collections.singletonMap("testRunId", (Object) testRunId);
+        return Collections.singletonMap("testRunId", testRunId);
     }
 
     private Map<String, Object> getCreateRunParameters(List<Long> usedDeviceIds) {
-        return Collections.singletonMap("usedDeviceIds[]", (Object) StringUtils.join(usedDeviceIds, ","));
+        return Collections.singletonMap("usedDeviceIds[]", StringUtils.join(usedDeviceIds, ","));
     }
 
     private Map<String, Object> getCreateRunParameters(String testRunName, List<Long> usedDeviceIds) {

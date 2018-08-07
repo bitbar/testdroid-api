@@ -11,7 +11,6 @@ import com.testdroid.api.model.APILabelGroup;
 import com.testdroid.api.model.APIUser;
 import com.testdroid.api.util.TypeReferenceFactory;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.utils.URIBuilder;
 
@@ -20,10 +19,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.Arrays;
-import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.apache.http.HttpStatus.*;
 
 /**
  * @author Michał Szpruta <michal.szpruta@bitbar.com>
@@ -37,7 +37,7 @@ public abstract class AbstractAPIClient implements APIClient {
     protected static final String DEVICES_URI = "/devices";
 
     protected static final String LABEL_GROUPS_URI = "/label-groups";
-    
+
     protected int clientConnectTimeout = 20000;
 
     protected int clientRequestTimeout = 60000;
@@ -48,6 +48,8 @@ public abstract class AbstractAPIClient implements APIClient {
             .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
     protected String apiURL;
+
+    private static List<Integer> POSSIBLE_DELETE_STATUSES = Arrays.asList(SC_OK, SC_ACCEPTED, SC_NO_CONTENT);
 
     protected HttpRequestFactory getRequestFactory() throws APIException {
         return httpTransport.createRequestFactory();
@@ -98,14 +100,16 @@ public abstract class AbstractAPIClient implements APIClient {
 
             response = request.execute();
             if (!Arrays
-                    .asList(HttpStatus.SC_OK, HttpStatus.SC_ACCEPTED, HttpStatus.SC_CREATED, HttpStatus.SC_NO_CONTENT)
+                    .asList(SC_OK, HttpStatus.SC_ACCEPTED, HttpStatus.SC_CREATED, SC_NO_CONTENT)
                     .contains(response.getStatusCode())) {
                 throw new APIException(response.getStatusCode(), String.format("Failed to execute api call: %s", uri));
             }
 
             T result = fromJson(response.getContent(), type);
             result.client = this;
-            result.selfURI = uri;
+            if (result.selfURI == null) {
+                result.selfURI = uri;
+            }
             return result;
         } catch (HttpResponseException ex) {
             throw getAPIException(ex);
@@ -125,7 +129,7 @@ public abstract class AbstractAPIClient implements APIClient {
             request.setReadTimeout(clientRequestTimeout);
             request.setHeaders(getHttpHeaders());
             response = request.execute();
-            if (!Arrays.asList(HttpStatus.SC_OK, HttpStatus.SC_ACCEPTED, HttpStatus.SC_CREATED)
+            if (!Arrays.asList(SC_OK, HttpStatus.SC_ACCEPTED, HttpStatus.SC_CREATED)
                     .contains(response.getStatusCode())) {
                 throw new APIException(response.getStatusCode(), String.format("Failed to execute api call: %s", uri));
             }
@@ -154,8 +158,7 @@ public abstract class AbstractAPIClient implements APIClient {
         String resourceUrl = apiURL + uri;
         try {
             HttpContent content;
-            HttpHeaders headers = new HttpHeaders();
-            headers.setAccept(ACCEPT_HEADER);
+            HttpHeaders headers = getHttpHeaders();
             if (body instanceof File) {
                 MultipartFormDataContent multipartContent = new MultipartFormDataContent();
                 FileContent fileContent = new FileContent(contentType, (File) body);
@@ -168,7 +171,8 @@ public abstract class AbstractAPIClient implements APIClient {
                 headers.setContentType(contentType);
                 content = new InputStreamContent(contentType, (InputStream) body);
             } else if (body instanceof APIEntity) {
-                content = new InputStreamContent(contentType, IOUtils.toInputStream(((APIEntity) body).toJson(), UTF_8));
+                content = new InputStreamContent(contentType, IOUtils
+                        .toInputStream(((APIEntity) body).toJson(), UTF_8));
             } else if (body instanceof HttpContent) {
                 content = (HttpContent) body;
             } else if (body instanceof Map) {
@@ -182,7 +186,7 @@ public abstract class AbstractAPIClient implements APIClient {
                 content = new ByteArrayContent("text/plain", body.toString().getBytes());
             }
             request = factory.buildPostRequest(new GenericUrl(resourceUrl), content);
-            request.setHeaders(getHttpHeaders());
+            request.setHeaders(headers);
             request.setConnectTimeout(clientConnectTimeout);
             request.setReadTimeout(clientRequestTimeout);
 
@@ -193,7 +197,7 @@ public abstract class AbstractAPIClient implements APIClient {
                 throw new APIException("No response from API");
             }
 
-            if (response.getStatusCode() < HttpStatus.SC_OK || response.getStatusCode() >= 300) {
+            if (response.getStatusCode() < SC_OK || response.getStatusCode() >= 300) {
                 throw new APIException(response.getStatusCode(), "Failed to post resource: " + response
                         .getStatusMessage());
             }
@@ -201,11 +205,12 @@ public abstract class AbstractAPIClient implements APIClient {
             if (type != null) {
                 T result = fromJson(response.getContent(), type);
                 result.client = this;
-                result.selfURI = uri;
-
-                // In case of entity creation, we need to update its url
-                if (response.getStatusCode() == HttpStatus.SC_CREATED && result.getId() != null) {
-                    result.selfURI += String.format("/%s", result.getId());
+                if (result.selfURI == null) {
+                    result.selfURI = uri;
+                    // In case of entity creation, we need to update its url
+                    if (response.getStatusCode() == HttpStatus.SC_CREATED && result.getId() != null) {
+                        result.selfURI += String.format("/%s", result.getId());
+                    }
                 }
                 return result;
             } else {
@@ -246,7 +251,7 @@ public abstract class AbstractAPIClient implements APIClient {
                 throw new APIException("No response from API");
             }
 
-            if (response.getStatusCode() != HttpStatus.SC_NO_CONTENT) {
+            if (!POSSIBLE_DELETE_STATUSES.contains(response.getStatusCode())) {
                 throw new APIException(response.getStatusCode(), "Failed to delete resource: " + response
                         .getStatusMessage());
             }
@@ -261,13 +266,6 @@ public abstract class AbstractAPIClient implements APIClient {
     @Override
     public APIUser me() throws APIException {
         return get("/me", APIUser.class);
-    }
-
-    @Override
-    public APIUser register(String email) throws APIException {
-        APIUser result = post("/users", Collections.singletonMap("email", email), APIUser.class);
-        result.selfURI = "/me";
-        return result;
     }
 
     @Override
@@ -298,7 +296,7 @@ public abstract class AbstractAPIClient implements APIClient {
         }
     }
 
-    protected  <T> T fromJson(String content, TypeReference<T> type) throws APIException {
+    protected <T> T fromJson(String content, TypeReference<T> type) throws APIException {
         try {
             return objectMapper.readValue(content, type);
         } catch (IOException e) {
@@ -336,7 +334,7 @@ public abstract class AbstractAPIClient implements APIClient {
         return map;
     }
 
-    protected APIException getAPIException(HttpResponseException ex) throws APIException {
+    protected APIException getAPIException(HttpResponseException ex) {
         try {
             APIExceptionMessage exceptionMessage = fromJson(ex.getContent(),
                     TypeReferenceFactory.getTypeRef(APIExceptionMessage.class));

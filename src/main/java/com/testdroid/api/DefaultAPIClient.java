@@ -1,11 +1,11 @@
 package com.testdroid.api;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.api.client.auth.oauth2.BearerToken;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.http.*;
 import com.google.api.client.http.apache.ApacheHttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
-import net.sf.json.JSONObject;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpHost;
@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.security.GeneralSecurityException;
 import java.util.HashMap;
+import java.util.Map;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -130,7 +131,7 @@ public class DefaultAPIClient extends AbstractAPIClient {
         return httpTransport.createRequestFactory(credential);
     }
 
-    protected String getAccessToken() throws APIException {
+    private String getAccessToken() throws APIException {
         if (accessToken == null) {
             accessToken = acquireAccessToken();
         } else if (System.currentTimeMillis() > (accessTokenExpireTime - 10 * 1000)) {
@@ -151,7 +152,7 @@ public class DefaultAPIClient extends AbstractAPIClient {
             }
 
             GenericUrl url = new GenericUrl(String.format("%s/oauth/token", cloudURL));
-            HashMap data = new HashMap();
+            HashMap<String, Object> data = new HashMap<>();
             data.put("client_id", "testdroid-cloud-api");
             data.put("grant_type", "password");
             data.put("username", username);
@@ -169,10 +170,10 @@ public class DefaultAPIClient extends AbstractAPIClient {
             }
 
             String responseJson = StringUtils.join(IOUtils.readLines(response.getContent(), UTF_8), "\n");
-            JSONObject json = JSONObject.fromObject(responseJson);
-            accessTokenExpireTime = System.currentTimeMillis() + (Long.parseLong(json.optString("expires_in")) * 1000);
-            refreshToken = json.optString("refresh_token");
-            return json.optString("access_token");
+            Map<String, String> json = fromJson(responseJson, new TypeReference<Map<String, String>>(){});
+            accessTokenExpireTime = System.currentTimeMillis() + (Long.parseLong(json.get("expires_in")) * 1000);
+            refreshToken = json.get("refresh_token");
+            return json.get("access_token");
         } catch (HttpResponseException ex) {
             throw new APIException(String
                     .format("Failed to acquire access token. Reason: %s", ex.getStatusMessage()), ex);
@@ -188,11 +189,11 @@ public class DefaultAPIClient extends AbstractAPIClient {
             }
 
             GenericUrl url = new GenericUrl(String.format("%s/oauth/token", cloudURL));
-            HttpContent content = new UrlEncodedContent(new HashMap() {{
-                put("client_id", "testdroid-cloud-api");
-                put("grant_type", "refresh_token");
-                put("refresh_token", refreshToken);
-            }});
+            HashMap<String, Object> data = new HashMap<>();
+            data.put("client_id", "testdroid-cloud-api");
+            data.put("grant_type", "refresh_token");
+            data.put("refresh_token", refreshToken);
+            HttpContent content = new UrlEncodedContent(data);
 
             HttpRequest request = httpTransport.createRequestFactory().buildPostRequest(url, content);
             request.setConnectTimeout(HTTP_CONNECT_TIMEOUT); // one minute
@@ -205,10 +206,10 @@ public class DefaultAPIClient extends AbstractAPIClient {
             }
 
             String jsonContent = StringUtils.join(IOUtils.readLines(response.getContent(), UTF_8), "\n");
-            JSONObject json = JSONObject.fromObject(jsonContent);
-            accessTokenExpireTime = System.currentTimeMillis() + (Long.parseLong(json.optString("expires_in")) * 1000);
-            refreshToken = json.optString("refresh_token");
-            return json.optString("access_token");
+            Map<String, String> json = fromJson(jsonContent, new TypeReference<Map<String, String>>(){});
+            accessTokenExpireTime = System.currentTimeMillis() + (Long.parseLong(json.get("expires_in")) * 1000);
+            refreshToken = json.get("refresh_token");
+            return json.get("access_token");
         } catch (IOException ex) {
             throw new APIException(String.format("Failed to refresh access token. Reason: %s", ex.getMessage()), ex);
         }

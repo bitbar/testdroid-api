@@ -38,7 +38,8 @@ public class APIList<T extends APIEntity> extends APIEntity {
     private Integer total;
 
     @JsonIgnore
-    private transient Context<T> context;
+    @XmlTransient
+    private Context<T> context;
 
     public APIList() {
         data = new ArrayList<>();
@@ -207,8 +208,15 @@ public class APIList<T extends APIEntity> extends APIEntity {
         this.context = context;
     }
 
+    @XmlTransient
     public Context<T> getContext() {
         return context;
+    }
+
+    //TODO it will be nice to implement it
+    @Override
+    public void refresh() {
+        throw new UnsupportedOperationException();
     }
 
     @Override

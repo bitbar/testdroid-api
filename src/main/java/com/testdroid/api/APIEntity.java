@@ -7,8 +7,11 @@ import com.testdroid.api.dto.Context;
 import com.testdroid.api.model.*;
 import com.testdroid.api.model.build.APIBuildConfig;
 import com.testdroid.api.model.build.APIBuildResultConfig;
+import com.testdroid.api.model.devicetime.APIBasicDeviceTime;
+import com.testdroid.api.model.devicetime.APIDeviceTimeCountSessionReportEntry;
 import com.testdroid.api.model.jrjc.*;
-import com.testdroid.api.util.TypeReferenceFactory;
+import com.testdroid.api.model.notification.APINotification;
+import com.testdroid.api.model.notification.APINotificationPlan;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
@@ -24,85 +27,93 @@ import java.util.Date;
  */
 @XmlRootElement(namespace = "com.testdroid.api")
 @XmlSeeAlso({
+        APIAccount.class,
+        APIAccountService.class,
+        APIAccountServicePayment.class,
+        APIActiveUser.class,
+        APIActivity.class,
+        APIAdminDevice.class,
+        APIAdminDeviceEvent.class,
+        APIAdminDeviceModel.class,
+        APIAdminDeviceProblem.class,
+        APIAdminDeviceProblemPair.class,
+        APIAdminDeviceSession.class,
+        APIAdminDeviceSessionStatistics.class,
+        APIAdminDeviceType.class,
+        APIAdminEmail.class,
+        APIAdminError.class,
+        APIAdminInteractiveDeviceSession.class,
+        APIAdminOverview.class,
+        APIAdminTestRun.class,
         APIArray.class,
+        APIBasicDeviceTime.class,
+        APIBasicJiraProject.class,
         APIBillingPeriod.class,
+        APIBuildConfig.class,
+        APIBuildExecutor.class,
+        APIBuildResultConfig.class,
         APICloudInfo.class,
+        APICluster.class,
         APIConnection.class,
+        APICountryVatRate.class,
         APIDevice.class,
+        APIDeviceCleanupConfiguration.class,
+        APIDeviceFilter.class,
+        APIDeviceFilterGroup.class,
         APIDeviceGroup.class,
+        APIDeviceModelCriterion.class,
+        APIDevicePicker.class,
         APIDeviceProperty.class,
         APIDeviceSession.class,
+        APIDeviceSessionDataAvailability.class,
         APIDeviceSessionStep.class,
+        APIDeviceStatus.class,
+        APIDeviceTimeCountSessionReportEntry.class,
+        APIDeviceTimeEntry.class,
+        APIDeviceUsage.class,
+        APIEnum.class,
         APIExceptionMessage.class,
+        APIFileConfig.class,
         APIFileSet.class,
+        APIFramework.class,
+        APIJiraIssue.class,
+        APIJiraIssueType.class,
+        APIJiraPriority.class,
+        APIJiraProject.class,
+        APIJiraServerInfo.class,
         APILabelGroup.class,
+        APILicense.class,
         APIList.class,
+        APIMarketShare.class,
+        APINotification.class,
+        APINotificationPlan.class,
         APIProject.class,
         APIProjectJobConfig.class,
         APIProjectSharing.class,
         APIProjectTypeExtended.class,
+        APIProperty.class,
         APIRole.class,
-        APIService.class,
+        APIS3Url.class,
         APIScreenshot.class,
         APIScreenshotExtended.class,
+        APIService.class,
+        APISession.class,
         APISoftwareVersion.class,
         APITag.class,
         APITestCaseRun.class,
         APITestCaseRunStep.class,
         APITestRun.class,
         APITestRunConfig.class,
+        APITestRunDataAvailability.class,
         APITestRunExtended.class,
         APITestRunParameter.class,
         APIUser.class,
+        APIUserDeviceTime.class,
         APIUserFile.class,
         APIUserFileProperty.class,
         APIUserFileTag.class,
-        APIAccountService.class,
-        APIBasicJiraProject.class,
-        APIBasicJiraIssue.class,
-        APIJiraIssue.class,
-        APIJiraIssueType.class,
-        APIJiraPriority.class,
-        APIJiraProject.class,
-        APIJiraServerInfo.class,
-        APIDeviceSessionDataAvailability.class,
-        APITestRunDataAvailability.class,
-        APIUserDeviceTime.class,
-        APIDeviceTimeEntry.class,
-        APIFramework.class,
-        APIS3Url.class,
-        APIDeviceCleanupConfiguration.class,
-        APIAdminDevice.class,
-        APIAdminDeviceModel.class,
-        APIAdminDeviceType.class,
-        APIAdminDeviceSession.class,
-        APICluster.class,
-        APIDeviceModelCriterion.class,
-        APIDeviceStatus.class,
-        APIAdminEmail.class,
-        APIAdminError.class,
-        APIProperty.class,
-        APISession.class,
-        APIAdminTestRun.class,
-        APIActiveUser.class,
-        APIAdminOverview.class,
-        APIAdminDeviceProblem.class,
-        APIAdminDeviceProblemPair.class,
-        APIAccount.class,
-        APILicense.class,
-        APIAdminInteractiveDeviceSession.class,
         APIUserIntegration.class,
-        APIAdminDeviceSessionStatistics.class,
-        APIActivity.class,
-        APIDevicePicker.class,
-        APIDeviceFilter.class,
-        APIDeviceFilterGroup.class,
-        APICountryVatRate.class,
-        APIMarketShare.class,
-        APIFileConfig.class,
-        APIBuildExecutor.class,
-        APIBuildConfig.class,
-        APIBuildResultConfig.class
+        APIUserStatistics.class
 })
 public abstract class APIEntity {
 
@@ -147,6 +158,14 @@ public abstract class APIEntity {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getSelfURI() {
+        return selfURI;
+    }
+
+    public void setSelfURI(String selfURI) {
+        this.selfURI = selfURI;
     }
 
     @JsonIgnore

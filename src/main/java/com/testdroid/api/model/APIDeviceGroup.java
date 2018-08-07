@@ -1,11 +1,14 @@
 package com.testdroid.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.testdroid.api.*;
+import com.testdroid.api.APIEntity;
+import com.testdroid.api.APIException;
+import com.testdroid.api.APIListResource;
 import com.testdroid.api.dto.Context;
 
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.Collections;
+
+import static java.util.Collections.singletonMap;
 
 /**
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
@@ -117,7 +120,12 @@ public class APIDeviceGroup extends APIEntity {
     }
 
     public void addDevice(APIDevice device) throws APIException {
-        postResource(getIncludedDevicesURI(), Collections.singletonMap("deviceId", device.getId()), null);
+        postResource(getIncludedDevicesURI(), singletonMap("deviceId", device.getId()), null);
+    }
+
+    public APIDeviceGroup addSelector(APIDeviceProperty deviceProperty) throws APIException {
+        return postResource(createUri(selfURI, "/selectors"), singletonMap("selectorIds[]", deviceProperty
+                .getId()), APIDeviceGroup.class);
     }
 
     public void deleteDevice(APIDevice device) throws APIException {

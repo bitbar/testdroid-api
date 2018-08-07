@@ -29,7 +29,8 @@ public class APITestRunConfig extends APIEntity implements Serializable {
     public enum Scheduler {
         PARALLEL,
         SERIAL,
-        SINGLE
+        SINGLE,
+        ALL_INSTANCES
     }
 
     private String appiumBrokerAddress;
@@ -137,7 +138,7 @@ public class APITestRunConfig extends APIEntity implements Serializable {
         this.applicationUsername = applicationUsername;
         this.applicationPassword = applicationPassword;
         this.deviceGroupId = deviceGroupId;
-        this.usedDeviceGroupId = usedDeviceGroupId;
+        this.usedDeviceGroupId = deviceGroupId;
         this.usedDeviceGroupName = usedDeviceGroupName;
         this.creditsPrice = creditsPrice;
         this.deviceLanguageCode = deviceLanguageCode;

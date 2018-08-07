@@ -34,6 +34,14 @@ public class APIJiraProject extends APIBasicJiraProject {
         return leadName;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setLeadName(String leadName) {
+        this.leadName = leadName;
+    }
+
     @Override
     protected <T extends APIEntity> void clone(T from) {
         super.clone(from);

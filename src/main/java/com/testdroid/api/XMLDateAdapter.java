@@ -9,12 +9,12 @@ import java.util.Date;
 public class XMLDateAdapter extends XmlAdapter<Long, Date> {
 
     @Override
-    public Date unmarshal(Long value) throws Exception {
+    public Date unmarshal(Long value) {
         return new Date(value);
     }
 
     @Override
-    public Long marshal(Date value) throws Exception {
+    public Long marshal(Date value) {
         return value.getTime();
     }
 

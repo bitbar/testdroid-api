@@ -35,13 +35,6 @@ public interface APIClient {
     APIUser me() throws APIException;
 
     /**
-     * Registers and fetches user from given email.
-     *
-     * @throws APIException on invalid email or when user already exists.
-     */
-    APIUser register(String email) throws APIException;
-
-    /**
      * Calls GET request to API
      *
      * @param <T>  expected result class to be parsed from response
@@ -101,7 +94,6 @@ public interface APIClient {
      * return resource for accessing list of devices in Cloud using provided filters
      *
      * @return list resource for accessing all devices matching selected filters, if no filter used returns all devices
-     * @throws APIException on API error
      */
     APIListResource<APIDevice> getDevices();
 

@@ -68,6 +68,11 @@ public class APIAdminDevice extends APIEntity {
     public APIAdminDevice() {
     }
 
+    // Stub when additional data is not needed
+    public APIAdminDevice(Long id) {
+        super(id);
+    }
+
     public APIAdminDevice(
             Long id, String name, boolean enabled, String serialId, String fingerprint, String unlockGesture,
             APISoftwareVersion softwareVersion, Long deviceModelId, String deviceModelName, State state,
