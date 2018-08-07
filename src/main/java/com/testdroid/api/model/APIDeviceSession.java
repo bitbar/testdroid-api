@@ -1,7 +1,9 @@
 package com.testdroid.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.testdroid.api.*;
+import com.testdroid.api.APIEntity;
+import com.testdroid.api.APIException;
+import com.testdroid.api.APIListResource;
 import com.testdroid.api.dto.Context;
 
 import javax.xml.bind.annotation.XmlRootElement;

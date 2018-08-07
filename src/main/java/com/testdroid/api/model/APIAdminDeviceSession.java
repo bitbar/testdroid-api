@@ -40,6 +40,8 @@ public class APIAdminDeviceSession extends APIEntity {
 
     private String testRunName;
 
+    private String retriedFailReason;
+
     public APIAdminDeviceSession() {
 
     }
@@ -47,7 +49,7 @@ public class APIAdminDeviceSession extends APIEntity {
     public APIAdminDeviceSession(
             Long id, Date createTime, Date startTime, Date endTime, String startedByDisplayName, Long projectId,
             String projectName, Long testRunId, String testRunName, APIDeviceSession.State state, Integer priority,
-            Boolean billable, Long deviceTime, APIDeviceSessionStep.Type currentStepType) {
+            Boolean billable, Long deviceTime, APIDeviceSessionStep.Type currentStepType, String retriedFailReason) {
         super(id);
         this.createTime = createTime;
         this.startTime = startTime;
@@ -62,6 +64,7 @@ public class APIAdminDeviceSession extends APIEntity {
         this.billable = billable;
         this.deviceTime = deviceTime;
         this.currentStepType = currentStepType;
+        this.retriedFailReason = retriedFailReason;
     }
 
     public Date getStartTime() {
@@ -176,6 +179,14 @@ public class APIAdminDeviceSession extends APIEntity {
         this.currentStepType = currentStepType;
     }
 
+    public String getRetriedFailReason() {
+        return retriedFailReason;
+    }
+
+    public void setRetriedFailReason(String retriedFailReason) {
+        this.retriedFailReason = retriedFailReason;
+    }
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
@@ -193,5 +204,6 @@ public class APIAdminDeviceSession extends APIEntity {
         this.billable = apiAdminDeviceSession.billable;
         this.deviceTime = apiAdminDeviceSession.deviceTime;
         this.currentStepType = apiAdminDeviceSession.currentStepType;
+        this.retriedFailReason = apiAdminDeviceSession.retriedFailReason;
     }
 }

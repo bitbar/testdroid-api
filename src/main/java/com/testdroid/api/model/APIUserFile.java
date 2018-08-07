@@ -41,6 +41,8 @@ public class APIUserFile extends APIEntity implements Serializable {
 
     private InputType inputType;
 
+    private boolean duplicate;
+
     private transient String storage;
 
     private transient String uri;
@@ -185,6 +187,14 @@ public class APIUserFile extends APIEntity implements Serializable {
 
     public void setInputType(InputType inputType) {
         this.inputType = inputType;
+    }
+
+    public boolean isDuplicate() {
+        return duplicate;
+    }
+
+    public void setDuplicate(boolean duplicate) {
+        this.duplicate = duplicate;
     }
 
     public URL getIconDirectUrl() {

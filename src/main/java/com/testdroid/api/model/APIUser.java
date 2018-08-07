@@ -139,6 +139,7 @@ public class APIUser extends APIEntity {
         this.activeServiceId = activeServiceId;
         this.status = status;
         this.enabled = status == Status.ENABLED;
+        this.selfURI = String.format("/users/%s", id);
     }
 
     public String getEmail() {
@@ -397,9 +398,9 @@ public class APIUser extends APIEntity {
         return map;
     }
 
-    private Map<String, Object> getCreateDeviceGroupParams(final String name, final APIDevice.OsType osType) {
+    private Map<String, Object> getCreateDeviceGroupParams(final String displayName, final APIDevice.OsType osType) {
         Map<String, Object> map = new HashMap<>();
-        map.put("name", name);
+        map.put("displayName", displayName);
         map.put("osType", osType);
         return map;
     }
@@ -479,8 +480,8 @@ public class APIUser extends APIEntity {
     }
 
     @JsonIgnore
-    public APIDeviceGroup createDeviceGroup(String name, APIDevice.OsType osType) throws APIException {
-        return postResource(getDeviceGroupsURI(), getCreateDeviceGroupParams(name, osType), APIDeviceGroup.class);
+    public APIDeviceGroup createDeviceGroup(String displayName, APIDevice.OsType osType) throws APIException {
+        return postResource(getDeviceGroupsURI(), getCreateDeviceGroupParams(displayName, osType), APIDeviceGroup.class);
     }
 
     @JsonIgnore

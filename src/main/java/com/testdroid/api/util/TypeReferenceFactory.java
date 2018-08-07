@@ -13,7 +13,6 @@ import com.testdroid.api.model.notification.APINotification;
 import com.testdroid.api.model.notification.APINotificationPlan;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -155,6 +154,14 @@ public class TypeReferenceFactory {
         });
         TYPE_REFERENCE_LIST_MAP.put(APIBuildExecutor.class, new TypeReference<APIList<APIBuildExecutor>>() {
         });
+        TYPE_REFERENCE_LIST_MAP.put(APIAdminDeviceEvent.class, new TypeReference<APIList<APIAdminDeviceEvent>>() {
+        });
+        TYPE_REFERENCE_LIST_MAP.put(APIBasicJiraProject.class, new TypeReference<APIList<APIBasicJiraProject>>() {
+        });
+        TYPE_REFERENCE_LIST_MAP.put(APIJiraIssueType.class, new TypeReference<APIList<APIJiraIssueType>>() {
+        });
+        TYPE_REFERENCE_LIST_MAP.put(APIJiraPriority.class, new TypeReference<APIList<APIJiraPriority>>() {
+        });
     }
 
     private static final Map<Class, TypeReference<?>> TYPE_REFERENCE_MAP = new HashMap<>();
@@ -268,8 +275,6 @@ public class TypeReferenceFactory {
         });
         TYPE_REFERENCE_MAP.put(APIJiraIssue.class, new TypeReference<APIJiraIssue>() {
         });
-        TYPE_REFERENCE_MAP.put(APIBasicJiraIssue.class, new TypeReference<APIBasicJiraIssue>() {
-        });
         TYPE_REFERENCE_MAP.put(APICountryVatRate.class, new TypeReference<APICountryVatRate>() {
         });
         TYPE_REFERENCE_MAP.put(APIPipelineBuild.class, new TypeReference<APIPipelineBuild>() {
@@ -282,16 +287,7 @@ public class TypeReferenceFactory {
         });
         TYPE_REFERENCE_MAP.put(APIBuildExecutor.class, new TypeReference<APIBuildExecutor>() {
         });
-    }
-
-    private static final Map<Class, TypeReference<?>> TYPE_REFERENCE_SIMPLE_LIST_MAP = new HashMap<>();
-
-    static {
-        TYPE_REFERENCE_SIMPLE_LIST_MAP.put(APIBasicJiraProject.class, new TypeReference<List<APIBasicJiraProject>>() {
-        });
-        TYPE_REFERENCE_SIMPLE_LIST_MAP.put(APIJiraIssueType.class, new TypeReference<List<APIJiraIssueType>>() {
-        });
-        TYPE_REFERENCE_SIMPLE_LIST_MAP.put(APIJiraPriority.class, new TypeReference<List<APIJiraPriority>>() {
+        TYPE_REFERENCE_MAP.put(APIAccountServicePayment.class, new TypeReference<APIAccountServicePayment>() {
         });
     }
 
@@ -301,10 +297,6 @@ public class TypeReferenceFactory {
 
     public static <T extends APIEntity> TypeReference<APIList<T>> getListTypeRef(Class<T> clazz) {
         return (TypeReference<APIList<T>>) TYPE_REFERENCE_LIST_MAP.get(clazz);
-    }
-
-    public static <T extends APIEntity> TypeReference<List<T>> getSimpleListTypeRef(Class<T> clazz) {
-        return (TypeReference<List<T>>) TYPE_REFERENCE_SIMPLE_LIST_MAP.get(clazz);
     }
 
     public static <T> TypeReference<APIArray<T>> getArrayTypeRef(Class<T> clazz) {

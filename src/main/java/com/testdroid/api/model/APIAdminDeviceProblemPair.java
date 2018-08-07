@@ -14,6 +14,7 @@ public class APIAdminDeviceProblemPair extends APIEntity {
 
     @XmlType(namespace = "APIAdminDeviceProblemPair", name = "APIAdminDeviceProblemPairType")
     public enum Type {
+        DIRTY,
         OFFLINE,
         LOW_BATTERY,
         HIGH_FAIL_RATE,

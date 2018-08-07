@@ -1,21 +1,21 @@
 package com.testdroid.api.um.model;
 
 import com.testdroid.api.model.APIAccountService;
-import com.testdroid.cloud.test.categories.UnitTests;
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
+import static com.testdroid.cloud.test.categories.TestTags.UNIT;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.CoreMatchers.is;
 
 /**
  * @author Stefano Gregori <stefano.gregori@bitbar.com>
  */
-@Category(UnitTests.class)
+@Tag(UNIT)
 public class APIAccountServiceTest {
 
     @Test

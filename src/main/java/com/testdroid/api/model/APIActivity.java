@@ -38,18 +38,21 @@ public class APIActivity extends APIEntity {
 
     private Long userId;
 
+    private String body;
+
     public APIActivity() {
     }
 
     public APIActivity(
             Long id, Date createTime, HttpMethod httpMethod, String userAgent, String parameters, String uri,
-            Long userId, String userEmail) {
+            String body, Long userId, String userEmail) {
         super(id);
         this.createTime = createTime;
         this.httpMethod = httpMethod;
         this.userAgent = userAgent;
         this.parameters = parameters;
         this.uri = uri;
+        this.body = body;
         this.userId = userId;
         this.userEmail = userEmail;
     }
@@ -110,6 +113,14 @@ public class APIActivity extends APIEntity {
         this.userAgent = userAgent;
     }
 
+    public String getBody() {
+        return body;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
+    }
+
     @Override
     protected <T extends APIEntity> void clone(T from) {
         APIActivity apiActivity = (APIActivity) from;
@@ -121,5 +132,6 @@ public class APIActivity extends APIEntity {
         this.uri = apiActivity.uri;
         this.userId = apiActivity.userId;
         this.userEmail = apiActivity.userEmail;
+        this.body = apiActivity.body;
     }
 }

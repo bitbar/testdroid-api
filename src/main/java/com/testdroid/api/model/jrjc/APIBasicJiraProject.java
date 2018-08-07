@@ -29,25 +29,28 @@ public class APIBasicJiraProject extends APIEntity {
         this.name = name;
     }
 
-    /**
-     * @return URI of this project
-     */
     public URI getSelf() {
         return self;
     }
 
-    /**
-     * @return project key
-     */
     public String getKey() {
         return key;
     }
 
-    /**
-     * @return project name
-     */
     public String getName() {
         return name;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setSelf(URI self) {
+        this.self = self;
     }
 
     @Override

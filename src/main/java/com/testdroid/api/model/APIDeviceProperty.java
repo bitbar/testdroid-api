@@ -20,15 +20,19 @@ public class APIDeviceProperty extends APIEntity {
 
     private String propertyGroupName;
 
+    private String labelGroupName;
+
     public APIDeviceProperty() {
     }
 
-    public APIDeviceProperty(Long id, String name, String displayName, Long propertyGroupId, String propertyGroupName) {
+    public APIDeviceProperty(Long id, String name, String displayName, Long propertyGroupId,
+            String propertyGroupName, String labelGroupName) {
         super(id);
         this.name = name;
         this.displayName = displayName;
         this.propertyGroupId = propertyGroupId;
         this.propertyGroupName = propertyGroupName;
+        this.labelGroupName = labelGroupName;
     }
 
     public String getName() {
@@ -63,6 +67,14 @@ public class APIDeviceProperty extends APIEntity {
         this.propertyGroupName = propertyGroupName;
     }
 
+    public String getLabelGroupName() {
+        return labelGroupName;
+    }
+
+    public void setLabelGroupName(String labelGroupName) {
+        this.labelGroupName = labelGroupName;
+    }
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
@@ -72,5 +84,6 @@ public class APIDeviceProperty extends APIEntity {
         this.name = apiDeviceProperty.name;
         this.propertyGroupId = apiDeviceProperty.propertyGroupId;
         this.propertyGroupName = apiDeviceProperty.propertyGroupName;
+        this.labelGroupName = apiDeviceProperty.labelGroupName;
     }
 }

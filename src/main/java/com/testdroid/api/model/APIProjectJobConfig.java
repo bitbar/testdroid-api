@@ -38,7 +38,7 @@ public class APIProjectJobConfig extends APIEntity {
 
         private APIDevice.OsType osType;
 
-        private Type(APIDevice.OsType osType, String name) {
+        Type(APIDevice.OsType osType, String name) {
             this.osType = osType;
             this.name = name;
         }

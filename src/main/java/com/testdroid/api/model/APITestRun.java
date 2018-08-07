@@ -1,7 +1,9 @@
 package com.testdroid.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.testdroid.api.*;
+import com.testdroid.api.APIEntity;
+import com.testdroid.api.APIException;
+import com.testdroid.api.APIListResource;
 import com.testdroid.api.dto.Context;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -254,7 +256,7 @@ public class APITestRun extends APIEntity {
     }
 
     private String getScreenshotsZipURI() {
-        return String.format("/files/%s", screenshotsFileId);
+        return String.format("/users/%s/files/%s", userId, screenshotsFileId);
     }
 
     public Integer getWaitingDeviceCount() {
@@ -492,10 +494,6 @@ public class APITestRun extends APIEntity {
 
     public void abort() throws APIException {
         postResource(getAbortURI(), null, null);
-    }
-
-    void setSelfURI(String selfURI){
-        this.selfURI = selfURI;
     }
 
     @Override

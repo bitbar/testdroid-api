@@ -29,7 +29,7 @@ public class APIAdminTestRun extends APIEntity {
 
     private String testRunName;
 
-    protected Long startedById;
+    private Long startedById;
 
     private String userName;
 
