@@ -101,25 +101,25 @@ public class APIDevice extends APIEntity {
     }
 
     public APIDevice(
-            Long id, String displayName, APISoftwareVersion softwareVersion, Integer creditsPrice,
-            String imagePrefix, Integer imageTop, Integer imageLeft, Integer imageWidth, Integer imageHeight,
-            Integer frameExtraWidth, OsType osType, String frame80Url, String frame100Url, String frame160Url,
-            String frame400Url, Boolean online, Boolean locked, Boolean enabled, Long accountId, String mainUserEmail) {
-        this(id, displayName, softwareVersion, creditsPrice, imagePrefix, imageTop, imageLeft, imageWidth,
-                imageHeight, frameExtraWidth, osType, frame80Url, frame100Url, frame160Url, frame400Url, online,
-                locked, enabled);
+            Long id, String displayName, Long softwareVersionId, String releaseVersion, Integer apiLevel,
+            Integer creditsPrice, String imagePrefix, Integer imageTop, Integer imageLeft, Integer imageWidth,
+            Integer imageHeight, Integer frameExtraWidth, OsType osType, Boolean online, Boolean locked,
+            Boolean enabled, Long accountId, String mainUserEmail) {
+        this(id, displayName, softwareVersionId, releaseVersion, apiLevel, creditsPrice,
+                imagePrefix, imageTop, imageLeft, imageWidth, imageHeight, frameExtraWidth, osType, online, locked,
+                enabled);
         this.accountId = accountId;
         this.mainUserEmail = mainUserEmail;
     }
 
     public APIDevice(
-            Long id, String displayName, APISoftwareVersion softwareVersion, Integer creditsPrice,
-            String imagePrefix, Integer imageTop, Integer imageLeft, Integer imageWidth, Integer imageHeight,
-            Integer frameExtraWidth, OsType osType, String frame80Url, String frame100Url, String frame160Url,
-            String frame400Url, Boolean online, Boolean locked, Boolean enabled) {
+            Long id, String displayName, Long softwareVersionId, String releaseVersion, Integer apiLevel,
+            Integer creditsPrice, String imagePrefix, Integer imageTop, Integer imageLeft, Integer imageWidth,
+            Integer imageHeight, Integer frameExtraWidth, OsType osType, Boolean online, Boolean locked,
+            Boolean enabled) {
         super(id);
         this.displayName = displayName;
-        this.softwareVersion = softwareVersion;
+        this.softwareVersion = new APISoftwareVersion(softwareVersionId, releaseVersion, apiLevel);
         this.creditsPrice = creditsPrice;
         this.imagePrefix = imagePrefix;
         this.imageTop = imageTop;
@@ -128,10 +128,6 @@ public class APIDevice extends APIEntity {
         this.imageHeight = imageHeight;
         this.frameExtraWidth = frameExtraWidth;
         this.osType = osType;
-        this.frame80Url = frame80Url;
-        this.frame100Url = frame100Url;
-        this.frame160Url = frame160Url;
-        this.frame400Url = frame400Url;
         this.locked = locked;
         this.online = online;
         this.enabled = enabled;

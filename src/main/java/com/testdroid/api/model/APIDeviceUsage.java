@@ -17,11 +17,18 @@ public class APIDeviceUsage extends APIEntity {
 
     private Long failedDeviceSessions;
 
-    public APIDeviceUsage() {}
+    public APIDeviceUsage() {
+    }
 
-    public APIDeviceUsage(Long id, APIDevice device, Long totalDeviceSessions, Long failedDeviceSessions) {
+    public APIDeviceUsage(
+            Long id, String displayName, Long softwareVersionId, String releaseVersion, Integer apiLevel,
+            Integer creditsPrice, String imagePrefix, Integer imageTop, Integer imageLeft, Integer imageWidth,
+            Integer imageHeight, Integer frameExtraWidth, APIDevice.OsType osType, Boolean online, Boolean locked,
+            Boolean enabled, Long totalDeviceSessions, Long failedDeviceSessions) {
         super(id);
-        this.device = device;
+        this.device = new APIDevice(id, displayName, softwareVersionId, releaseVersion, apiLevel, creditsPrice,
+                imagePrefix, imageTop, imageLeft, imageWidth, imageHeight, frameExtraWidth, osType, online, locked,
+                enabled);
         this.totalDeviceSessions = totalDeviceSessions;
         this.failedDeviceSessions = failedDeviceSessions;
     }

@@ -97,7 +97,6 @@ import java.util.Date;
         APIScreenshot.class,
         APIScreenshotExtended.class,
         APIService.class,
-        APISession.class,
         APISoftwareVersion.class,
         APITag.class,
         APITestCaseRun.class,

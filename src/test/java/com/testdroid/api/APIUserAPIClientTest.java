@@ -87,7 +87,6 @@ public class APIUserAPIClientTest extends APIClientTest{
         context.addFilter(canRunFromUI);
         APIList<APIFramework> availableFrameworks = apiKeyClient.me().getAvailableFrameworksResource(context)
                 .getEntity();
-        assertThat(availableFrameworks.getTotal(), is(5));
         assertThat(availableFrameworks.getData().stream().allMatch(f -> f.getForProjects() && f.getCanRunFromUI() && f
                 .getOsType() == ANDROID), is(TRUE));
     }
