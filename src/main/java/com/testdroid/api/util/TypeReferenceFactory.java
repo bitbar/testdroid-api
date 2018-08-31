@@ -121,8 +121,6 @@ public class TypeReferenceFactory {
         });
         TYPE_REFERENCE_LIST_MAP.put(APIProperty.class, new TypeReference<APIList<APIProperty>>() {
         });
-        TYPE_REFERENCE_LIST_MAP.put(APISession.class, new TypeReference<APIList<APISession>>() {
-        });
         TYPE_REFERENCE_LIST_MAP.put(APIAdminInteractiveDeviceSession.class,
                 new TypeReference<APIList<APIAdminInteractiveDeviceSession>>() {
                 });
@@ -214,8 +212,6 @@ public class TypeReferenceFactory {
         TYPE_REFERENCE_MAP.put(APIService.class, new TypeReference<APIService>() {
         });
         TYPE_REFERENCE_MAP.put(APIServicePaymentStatus.class, new TypeReference<APIServicePaymentStatus>() {
-        });
-        TYPE_REFERENCE_MAP.put(APISession.class, new TypeReference<APISession>() {
         });
         TYPE_REFERENCE_MAP.put(APITag.class, new TypeReference<APITag>() {
         });

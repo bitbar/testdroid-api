@@ -362,9 +362,7 @@ public class APIAccountService extends APIEntity {
             return false;
         }
         if (startTime != null && (startTime.equals(date) || startTime.before(date))) {
-            if (endTime == null || (endTime.after(date) || endTime.equals(date))) {
-                return true;
-            }
+            return endTime == null || (endTime.after(date) || endTime.equals(date));
         }
         return false;
     }
