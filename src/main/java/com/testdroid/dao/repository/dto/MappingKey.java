@@ -501,6 +501,8 @@ public class MappingKey {
 
     public static final String SENT = "sent";
 
+    public static final String SENT_TIME = "sentTime";
+
     public static final String SERIAL_ID = "serialId";
 
     public static final String SERVER_ANDROID_ENABLED = "serverAndroidEnabled";

@@ -29,9 +29,9 @@ public class APINotificationPlan extends APIEntity {
 
     private Date sentTime;
 
-    private APINotificationChannel notificationChannel;
+    private APINotificationChannel channel;
 
-    private APINotificationScope notificationScope;
+    private APINotificationScope scope;
 
     public APINotificationPlan() {
 
@@ -40,8 +40,8 @@ public class APINotificationPlan extends APIEntity {
     public APINotificationPlan(
             Long id, String name, Long handlerId, String handlerEmail, String contentTemplate, String subjectTemplate,
             Date createTime, Date updateTime, Date sentTime,
-            APINotificationChannel notificationChannel,
-            APINotificationScope notificationScope) {
+            APINotificationChannel channel,
+            APINotificationScope scope) {
         super(id);
         this.name = name;
         this.handlerId = handlerId;
@@ -51,8 +51,8 @@ public class APINotificationPlan extends APIEntity {
         this.createTime = createTime;
         this.updateTime = updateTime;
         this.sentTime = sentTime;
-        this.notificationChannel = notificationChannel;
-        this.notificationScope = notificationScope;
+        this.channel = channel;
+        this.scope = scope;
     }
 
     public Long getHandlerId() {
@@ -119,20 +119,20 @@ public class APINotificationPlan extends APIEntity {
         this.name = name;
     }
 
-    public APINotificationChannel getNotificationChannel() {
-        return notificationChannel;
+    public APINotificationChannel getChannel() {
+        return channel;
     }
 
-    public void setNotificationChannel(APINotificationChannel notificationChannel) {
-        this.notificationChannel = notificationChannel;
+    public void setChannel(APINotificationChannel channel) {
+        this.channel = channel;
     }
 
-    public APINotificationScope getNotificationScope() {
-        return notificationScope;
+    public APINotificationScope getScope() {
+        return scope;
     }
 
-    public void setNotificationScope(APINotificationScope notificationScope) {
-        this.notificationScope = notificationScope;
+    public void setScope(APINotificationScope scope) {
+        this.scope = scope;
     }
 
     @Override
@@ -147,8 +147,8 @@ public class APINotificationPlan extends APIEntity {
         this.createTime = notificationPlan.createTime;
         this.updateTime = notificationPlan.updateTime;
         this.sentTime = notificationPlan.sentTime;
-        this.notificationChannel = notificationPlan.notificationChannel;
-        this.notificationScope = notificationPlan.notificationScope;
+        this.channel = notificationPlan.channel;
+        this.scope = notificationPlan.scope;
     }
 
 }
