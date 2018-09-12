@@ -18,6 +18,8 @@ public class APIBuildResultConfig extends APIEntity implements Serializable {
     private boolean isDirectory;
 
     private String fileUrlEnvVariable;
+    
+    private String storage;
 
     public APIBuildResultConfig() {
     }
@@ -74,5 +76,13 @@ public class APIBuildResultConfig extends APIEntity implements Serializable {
         this.destinationName = original.destinationName;
         this.isDirectory = original.isDirectory;
         this.fileUrlEnvVariable = original.fileUrlEnvVariable;
+    }
+
+    public void setStorage(String storage) {
+        this.storage = storage;
+    }
+
+    public String getStorage() {
+        return storage;
     }
 }

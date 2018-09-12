@@ -61,7 +61,7 @@ public class APISort {
             if (sortItemValues.length > 1) {
                 String column = sortItemValues[0];
                 Type sortType = Type.fromURLValue(sortItemValues[1]);
-                if (column != null) {
+                if (column != null && sortType != null) {
                     items.add(new SortItem(column, sortType));
                 }
             }
