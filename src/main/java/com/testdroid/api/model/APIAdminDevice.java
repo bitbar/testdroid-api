@@ -2,10 +2,11 @@ package com.testdroid.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
+import org.apache.commons.lang3.tuple.Pair;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
-import java.util.Date;
+import java.util.*;
 
 /**
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
@@ -27,6 +28,60 @@ public class APIAdminDevice extends APIEntity {
         OFFLINE
     }
 
+    @XmlType(namespace = "APIAdminDevice")
+    public enum SubState {
+        CLEANING,
+        DIRTY,
+        FREE,
+        TESTING
+    }
+
+    @XmlType(namespace = "APIAdminDevice")
+    public enum ComplexState {
+        OFFLINE(State.OFFLINE, SubState.DIRTY), // for backward compatibility
+        ONLINE(State.ONLINE, SubState.FREE), // for backward compatibility
+        OFFLINE_CLEANING(State.OFFLINE, SubState.CLEANING),
+        OFFLINE_DIRTY(State.OFFLINE, SubState.DIRTY),
+        OFFLINE_FREE(State.OFFLINE, SubState.FREE),
+        OFFLINE_TESTING(State.OFFLINE, SubState.TESTING),
+        ONLINE_CLEANING(State.ONLINE, SubState.CLEANING),
+        ONLINE_DIRTY(State.ONLINE, SubState.DIRTY),
+        ONLINE_FREE(State.ONLINE, SubState.FREE),
+        ONLINE_TESTING(State.ONLINE, SubState.TESTING);
+
+        private State state;
+
+        private SubState subState;
+
+        private static final Map<Pair<State, SubState>, ComplexState> MAP = new HashMap<>(values().length, 1);
+
+        static {
+            Arrays.stream(values()).forEach(c -> MAP.put(Pair.of(c.state, c.subState), c));
+        }
+
+        ComplexState(State state, SubState subState) {
+            this.state = state;
+            this.subState = subState;
+        }
+
+        public State getState() {
+            return state;
+        }
+
+        public SubState getSubState() {
+            return subState;
+        }
+
+        public ComplexState compute(State state) {
+            return MAP.get(Pair.of(state, subState));
+        }
+
+        public ComplexState compute(SubState subState) {
+            return MAP.get(Pair.of(state, subState));
+        }
+
+    }
+
     private APICluster cluster;
 
     private Long deviceModelId;
@@ -45,7 +100,7 @@ public class APIAdminDevice extends APIEntity {
 
     private APISoftwareVersion softwareVersion;
 
-    private State state;
+    private ComplexState state;
 
     private Date stateTime;
 
@@ -63,8 +118,6 @@ public class APIAdminDevice extends APIEntity {
 
     private APIDevice.OsType osType;
 
-    private boolean dirty;
-
     public APIAdminDevice() {
     }
 
@@ -75,29 +128,31 @@ public class APIAdminDevice extends APIEntity {
 
     public APIAdminDevice(
             Long id, String name, boolean enabled, String serialId, String fingerprint, String unlockGesture,
-            APISoftwareVersion softwareVersion, Long deviceModelId, String deviceModelName, State state,
-            Date stateTime, InitStep initStep, String ipAddress, APICluster cluster, Date lastOnlineTime,
-            Long accountId, String mainUserEmail, Boolean locked, APIDevice.OsType osType, Boolean dirty) {
+            Long softwareVersionId, String releaseVersion, Integer apiLevel, Long deviceModelId, String deviceModelName,
+            ComplexState state, Date stateTime, InitStep initStep, String ipAddress, Long clusterId, String clusterName,
+            String clusterUrl, APICluster.State clusterState, Date clusterStateTime, Date clusterStateChangeTime,
+            Boolean clusterEnabled, Date lastOnlineTime, Long accountId, String mainUserEmail, Boolean locked,
+            APIDevice.OsType osType) {
         super(id);
         this.name = name;
         this.enabled = enabled;
         this.serialId = serialId;
         this.fingerprint = fingerprint;
         this.unlockGesture = unlockGesture;
-        this.softwareVersion = softwareVersion;
+        this.softwareVersion = new APISoftwareVersion(softwareVersionId, releaseVersion, apiLevel);
         this.deviceModelId = deviceModelId;
         this.deviceModelName = deviceModelName;
         this.state = state;
         this.stateTime = stateTime;
         this.initStep = initStep;
         this.ipAddress = ipAddress;
-        this.cluster = cluster;
+        this.cluster = new APICluster(clusterId, clusterName, clusterUrl, clusterState,
+                clusterStateTime, clusterStateChangeTime, clusterEnabled);
         this.lastOnlineTime = lastOnlineTime;
         this.accountId = accountId;
         this.mainUserEmail = mainUserEmail;
         this.locked = locked;
         this.osType = osType;
-        this.dirty = dirty;
     }
 
     public String getName() {
@@ -156,11 +211,11 @@ public class APIAdminDevice extends APIEntity {
         this.deviceModelId = deviceModelId;
     }
 
-    public State getState() {
+    public ComplexState getState() {
         return state;
     }
 
-    public void setState(State state) {
+    public void setState(ComplexState state) {
         this.state = state;
     }
 
@@ -244,14 +299,6 @@ public class APIAdminDevice extends APIEntity {
         this.osType = osType;
     }
 
-    public boolean isDirty() {
-        return dirty;
-    }
-
-    public void setDirty(boolean dirty) {
-        this.dirty = dirty;
-    }
-
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
@@ -275,6 +322,5 @@ public class APIAdminDevice extends APIEntity {
         this.mainUserEmail = adminDevice.mainUserEmail;
         this.locked = adminDevice.locked;
         this.osType = adminDevice.osType;
-        this.dirty = adminDevice.dirty;
     }
 }

@@ -49,12 +49,12 @@ public class APILabelGroup extends APIEntity {
 
     @JsonIgnore
     public APIListResource<APIDeviceProperty> getDevicePropertiesResource() {
-        return new APIListResource(client, getDevicePropertiesURI(), APIDeviceProperty.class);
+        return new APIListResource<>(client, getDevicePropertiesURI(), APIDeviceProperty.class);
     }
 
     @JsonIgnore
     public APIListResource<APIDeviceProperty> getDevicePropertiesResource(Context<APIDeviceProperty> context) {
-        return new APIListResource(client, getDevicePropertiesURI(), context);
+        return new APIListResource<>(client, getDevicePropertiesURI(), context);
     }
 
     @Override

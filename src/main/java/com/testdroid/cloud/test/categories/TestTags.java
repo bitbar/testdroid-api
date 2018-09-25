@@ -13,4 +13,5 @@ public interface TestTags {
 
     String API_CLIENT = "api_client";
 
+    String PORT_FORWARDER_CLIENT = "port_forwarder_client";
 }

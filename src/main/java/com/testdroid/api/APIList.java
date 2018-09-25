@@ -1,9 +1,10 @@
 package com.testdroid.api;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.testdroid.api.dto.Context;
+import com.testdroid.api.filter.FilterEntry;
 
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.testdroid.api.dto.Context.*;
+import static java.util.stream.Collectors.joining;
 
 /**
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
@@ -58,17 +60,19 @@ public class APIList<T extends APIEntity> extends APIEntity {
         this.sort = sort;
         this.data = data;
         this.context = ctx;
+        String filter = ctx.getFilters().stream().map(FilterEntry::toString).collect(joining(FILTER_DELIMITER));
         if (offset + limit < total) {
-            this.next = getListURL(requestURL, offset + limit, limit, search, sort);
+            this.next = getListURL(requestURL, offset + limit, limit, search, sort, filter);
         }
         if (offset - limit >= 0) {
-            this.previous = getListURL(requestURL, offset - limit, limit, search, sort);
+            this.previous = getListURL(requestURL, offset - limit, limit, search, sort, filter);
         }
     }
 
-    private String getListURL(String requestURL, long offset, long limit, String search, String sort) {
-        return String.format("%s?%s=%s&%s=%s&%s=%s&%s=%s", requestURL, OFFSET_REQUEST_PARAM, offset,
-                LIMIT_REQUEST_PARAM, limit, SEARCH_REQUEST_PARAM, search, SORT_REQUEST_PARAM, sort);
+    private String getListURL(String requestURL, long offset, long limit, String search, String sort, String filter) {
+        return String.format("%s?%s=%s&%s=%s&%s=%s&%s=%s&%s=%s", requestURL, OFFSET_REQUEST_PARAM, offset,
+                LIMIT_REQUEST_PARAM, limit, SEARCH_REQUEST_PARAM, search, SORT_REQUEST_PARAM, sort,
+                FILTER_REQUEST_PARAM, filter);
     }
 
     /**
@@ -96,7 +100,7 @@ public class APIList<T extends APIEntity> extends APIEntity {
         if (!isNextAvailable()) {
             return null;
         }
-        return new APIListResource(client, selfURI, context.setOffset(offset + limit)).getEntity();
+        return new APIListResource<>(client, selfURI, context.setOffset(offset + limit)).getEntity();
     }
 
     /**
@@ -112,7 +116,7 @@ public class APIList<T extends APIEntity> extends APIEntity {
         if (!isPreviousAvailable()) {
             return null;
         }
-        return new APIListResource(client, selfURI, context.setOffset(offset - limit)).getEntity();
+        return new APIListResource<>(client, selfURI, context.setOffset(offset - limit)).getEntity();
     }
 
     /**
@@ -145,6 +149,7 @@ public class APIList<T extends APIEntity> extends APIEntity {
         return this.data.get(index);
     }
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     public boolean isEmpty() {
         return this.data.isEmpty();
     }

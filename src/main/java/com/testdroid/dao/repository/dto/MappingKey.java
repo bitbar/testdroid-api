@@ -185,8 +185,6 @@ public class MappingKey {
 
     public static final String DIRECTION = "direction";
 
-    public static final String DIRTY = "dirty";
-
     public static final String DISPLAY_NAME = "displayName";
 
     public static final String DURATION = "duration";

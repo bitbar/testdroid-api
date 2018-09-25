@@ -18,7 +18,7 @@ public class APIBuildResultConfig extends APIEntity implements Serializable {
     private boolean isDirectory;
 
     private String fileUrlEnvVariable;
-    
+
     private String storage;
 
     public APIBuildResultConfig() {

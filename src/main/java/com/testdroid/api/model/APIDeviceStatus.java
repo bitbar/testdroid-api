@@ -55,7 +55,7 @@ public class APIDeviceStatus extends APIEntity {
 
     private String ssid;
 
-    private APIAdminDevice.State state;
+    private APIAdminDevice.ComplexState state;
 
     private String tdsVersion;
 
@@ -69,7 +69,7 @@ public class APIDeviceStatus extends APIEntity {
     }
 
     public APIDeviceStatus(
-            Long id, Long deviceId, String deviceName, APIAdminDevice.State state, Long clusterId,
+            Long id, Long deviceId, String deviceName, APIAdminDevice.ComplexState state, Long clusterId,
             String clusterName, Date updateTime, Boolean internetAccess, Boolean monitoringOn, Boolean testExecuting,
             String ssid, Boolean flashOn, Boolean alarmOn, Boolean aslOn, Integer batteryLevel, Long deviceTime,
             String deviceTimeZone, Boolean screenLocked, Boolean mockLocationOn, Boolean locationServiceOn,
@@ -304,11 +304,11 @@ public class APIDeviceStatus extends APIEntity {
         this.clusterId = clusterId;
     }
 
-    public APIAdminDevice.State getState() {
+    public APIAdminDevice.ComplexState getState() {
         return state;
     }
 
-    public void setState(APIAdminDevice.State state) {
+    public void setState(APIAdminDevice.ComplexState state) {
         this.state = state;
     }
 
