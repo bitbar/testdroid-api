@@ -25,13 +25,14 @@ public class APIPipelineBuild extends APIEntity {
 
     private Long pipelineJobId;
 
-    public APIPipelineBuild() {
+    private Long userId;
 
+    public APIPipelineBuild() {
     }
 
     public APIPipelineBuild(
             Long id, Long buildNumber, LocalDateTime createTime, Long duration, APIPipelineBuildStatus status,
-            APIPipelineBuildState state, Long pipelineJobId) {
+            APIPipelineBuildState state, Long pipelineJobId, Long userId) {
         super(id);
         this.buildNumber = buildNumber;
         this.pipelineJobId = pipelineJobId;
@@ -39,6 +40,7 @@ public class APIPipelineBuild extends APIEntity {
         this.duration = duration;
         this.status = status;
         this.state = state;
+        this.userId = userId;
     }
 
     public Long getBuildNumber() {
@@ -89,6 +91,14 @@ public class APIPipelineBuild extends APIEntity {
         this.state = state;
     }
 
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
     @Override
     protected <T extends APIEntity> void clone(T from) {
         APIPipelineBuild apiBuild = (APIPipelineBuild) from;
@@ -99,5 +109,6 @@ public class APIPipelineBuild extends APIEntity {
         this.duration = apiBuild.duration;
         this.status = apiBuild.status;
         this.state = apiBuild.state;
+        this.userId = apiBuild.userId;
     }
 }

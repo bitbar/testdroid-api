@@ -4,10 +4,7 @@ import com.testdroid.api.APIEntity;
 import com.testdroid.api.APISort;
 import com.testdroid.api.filter.FilterEntry;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -120,6 +117,10 @@ public class Context<T extends APIEntity> {
 
     public List<FilterEntry> getFilters() {
         return filters;
+    }
+
+    public Optional<FilterEntry> findFilter(String field, Operand operand) {
+        return filters.stream().filter(f -> f.getField().equals(field) && f.getOperand().equals(operand)).findAny();
     }
 
     public Context<T> setFilters(List<FilterEntry> filters) {

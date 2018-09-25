@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.Date;
 
 /**
  * @author Adrian Zybala <adrian.zybala@bitbar.com>
@@ -11,82 +12,37 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class APIUserDeviceTime extends APIEntity {
 
-    private Long totalDeviceTime;
+    private Date createTime;
 
-    private Long inspectorDeviceTime;
+    private Date endTime;
 
-    private Long automaticDeviceTime;
+    private String userName;
 
-    private Long freeDeviceTime;
+    private Long userId;
 
-    private Long periodStart;
+    private Long freeTime;
 
-    private Long periodEnd;
+    private Long billableTime;
 
-    private APIDeviceTimeEntry[] deviceTimeEntries;
+    private Long deviceTime;
+
+    private APIDeviceSession.Type type;
 
     public APIUserDeviceTime() {
 
     }
 
     public APIUserDeviceTime(
-            Long inspectorDeviceTime, Long automaticDeviceTime, Long freeDeviceTime, Long periodStart, 
-            Long periodEnd, APIDeviceTimeEntry... deviceTimeEntries) {
-        this.totalDeviceTime = inspectorDeviceTime + automaticDeviceTime + freeDeviceTime;
-        this.inspectorDeviceTime = inspectorDeviceTime;
-        this.automaticDeviceTime = automaticDeviceTime;
-        this.freeDeviceTime = freeDeviceTime;
-        this.deviceTimeEntries = deviceTimeEntries;
-        this.periodStart = periodStart;
-        this.periodEnd = periodEnd;
-    }
-
-    public Long getTotalDeviceTime() {
-        return totalDeviceTime;
-    }
-
-    public void setTotalDeviceTime(Long totalDeviceTime) {
-        this.totalDeviceTime = totalDeviceTime;
-    }
-
-    public Long getInspectorDeviceTime() {
-        return inspectorDeviceTime;
-    }
-
-    public void setInspectorDeviceTime(Long inspectorDeviceTime) {
-        this.inspectorDeviceTime = inspectorDeviceTime;
-    }
-
-    public Long getAutomaticDeviceTime() {
-        return automaticDeviceTime;
-    }
-
-    public void setAutomaticDeviceTime(Long automaticDeviceTime) {
-        this.automaticDeviceTime = automaticDeviceTime;
-    }
-
-    public APIDeviceTimeEntry[] getDeviceTimeEntries() {
-        return deviceTimeEntries;
-    }
-
-    public Long getPeriodStart() {
-        return periodStart;
-    }
-
-    public Long getPeriodEnd() {
-        return periodEnd;
-    }
-
-    public void setDeviceTimeEntries(APIDeviceTimeEntry[] deviceTimeEntries) {
-        this.deviceTimeEntries = deviceTimeEntries;
-    }
-
-    public Long getFreeDeviceTime() {
-        return freeDeviceTime;
-    }
-
-    public void setFreeDeviceTime(Long freeDeviceTime) {
-        this.freeDeviceTime = freeDeviceTime;
+            Date createTime, Date endTime, String userName, Long userId, Long freeTime, Long billableTime,
+            APIDeviceSession.Type type) {
+        this.createTime = createTime;
+        this.endTime = endTime;
+        this.userName = userName;
+        this.userId = userId;
+        this.freeTime = freeTime;
+        this.billableTime = billableTime;
+        this.deviceTime = freeTime + billableTime;
+        this.type = type;
     }
 
     @Override
@@ -94,12 +50,76 @@ public class APIUserDeviceTime extends APIEntity {
     protected <T extends APIEntity> void clone(T from) {
         APIUserDeviceTime apiUserDeviceTime = (APIUserDeviceTime) from;
         cloneBase(from);
-        this.totalDeviceTime = apiUserDeviceTime.totalDeviceTime;
-        this.inspectorDeviceTime = apiUserDeviceTime.inspectorDeviceTime;
-        this.automaticDeviceTime = apiUserDeviceTime.automaticDeviceTime;
-        this.freeDeviceTime = apiUserDeviceTime.freeDeviceTime;
-        this.deviceTimeEntries = apiUserDeviceTime.deviceTimeEntries;
-        this.periodStart = apiUserDeviceTime.periodStart;
-        this.periodEnd = apiUserDeviceTime.periodEnd;
+        this.createTime = apiUserDeviceTime.createTime;
+        this.endTime = apiUserDeviceTime.endTime;
+        this.userName = apiUserDeviceTime.userName;
+        this.userId = apiUserDeviceTime.userId;
+        this.deviceTime = apiUserDeviceTime.deviceTime;
+        this.type = apiUserDeviceTime.type;
+        this.freeTime = apiUserDeviceTime.freeTime;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public Long getDeviceTime() {
+        return deviceTime;
+    }
+
+    public void setDeviceTime(Long deviceTime) {
+        this.deviceTime = deviceTime;
+    }
+
+    public APIDeviceSession.Type getType() {
+        return type;
+    }
+
+    public void setType(APIDeviceSession.Type type) {
+        this.type = type;
+    }
+
+    public Long getFreeTime() {
+        return freeTime;
+    }
+
+    public void setFreeTime(Long freeTime) {
+        this.freeTime = freeTime;
+    }
+
+    public Long getBillableTime() {
+        return billableTime;
+    }
+
+    public void setBillableTime(Long billableTime) {
+        this.billableTime = billableTime;
     }
 }

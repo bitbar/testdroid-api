@@ -25,9 +25,7 @@ public class APIAdminDeviceEvent extends APIEntity {
 
     private DeviceEventType type;
 
-    private APIAdminDevice.State state;
-
-    private Boolean dirty;
+    private APIAdminDevice.ComplexState state;
 
     private APIAdminDevice device;
 
@@ -40,7 +38,7 @@ public class APIAdminDeviceEvent extends APIEntity {
     }
 
     public APIAdminDeviceEvent(Long id, LocalDateTime time, APIAdminDeviceEvent.DeviceEventType type,
-            APIAdminDevice.State state, Boolean dirty, Long deviceId,
+            APIAdminDevice.ComplexState state, Long deviceId,
             Long clusterId, String name, String url, APICluster.State clusterState, Date stateTime,
             Date stateChangeTime, Boolean enabled,
             Long deviceSessionId, Date createTime, Date startTime, Date endTime, String startedByDisplayName,
@@ -51,7 +49,6 @@ public class APIAdminDeviceEvent extends APIEntity {
         this.time = TimeConverter.toDate(time);
         this.type = type;
         this.state = state;
-        this.dirty = dirty;
         this.device = new APIAdminDevice(deviceId);
         this.cluster = new APICluster(clusterId, name, url, clusterState, stateTime, stateChangeTime, enabled);
         this.deviceSession = new APIAdminDeviceSession(deviceSessionId, createTime, startTime, endTime,
@@ -99,20 +96,12 @@ public class APIAdminDeviceEvent extends APIEntity {
         this.deviceSession = deviceSession;
     }
 
-    public APIAdminDevice.State getState() {
+    public APIAdminDevice.ComplexState getState() {
         return state;
     }
 
-    public void setState(APIAdminDevice.State state) {
+    public void setState(APIAdminDevice.ComplexState state) {
         this.state = state;
-    }
-
-    public Boolean getDirty() {
-        return dirty;
-    }
-
-    public void setDirty(Boolean dirty) {
-        this.dirty = dirty;
     }
 
     @Override
@@ -121,7 +110,6 @@ public class APIAdminDeviceEvent extends APIEntity {
         cloneBase(from);
         this.time = deviceEvent.time;
         this.state = deviceEvent.state;
-        this.dirty = deviceEvent.dirty;
         this.device = deviceEvent.device;
         this.cluster = deviceEvent.cluster;
         this.deviceSession = deviceEvent.deviceSession;

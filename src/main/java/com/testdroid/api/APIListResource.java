@@ -70,7 +70,7 @@ public class APIListResource<T extends APIEntity> {
             return null;
         }
         APIList<T> list = getEntity();
-        return new APIListResource(client, resourceURI, context.setOffset(list.getOffset() + list.getLimit()));
+        return new APIListResource<>(client, resourceURI, context.setOffset(list.getOffset() + list.getLimit()));
     }
 
     /**
@@ -96,6 +96,6 @@ public class APIListResource<T extends APIEntity> {
             return null;
         }
         APIList<T> list = getEntity();
-        return new APIListResource(client, resourceURI, context.setOffset(list.getOffset() - list.getLimit()));
+        return new APIListResource<>(client, resourceURI, context.setOffset(list.getOffset() - list.getLimit()));
     }
 }

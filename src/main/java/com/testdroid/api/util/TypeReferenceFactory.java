@@ -89,6 +89,8 @@ public class TypeReferenceFactory {
         });
         TYPE_REFERENCE_LIST_MAP.put(APIUserFileTag.class, new TypeReference<APIList<APIUserFileTag>>() {
         });
+        TYPE_REFERENCE_LIST_MAP.put(APIUserDeviceTime.class, new TypeReference<APIList<APIUserDeviceTime>>() {
+        });
         TYPE_REFERENCE_LIST_MAP.put(APITestRunParameter.class, new TypeReference<APIList<APITestRunParameter>>() {
         });
         TYPE_REFERENCE_LIST_MAP.put(APIProjectTypeExtended.class, new TypeReference<APIList<APIProjectTypeExtended>>() {
@@ -225,7 +227,7 @@ public class TypeReferenceFactory {
         });
         TYPE_REFERENCE_MAP.put(APIUser.class, new TypeReference<APIUser>() {
         });
-        TYPE_REFERENCE_MAP.put(APIUserDeviceTime.class, new TypeReference<APIUserDeviceTime>() {
+        TYPE_REFERENCE_MAP.put(APIUserDeviceTimeSummary.class, new TypeReference<APIUserDeviceTimeSummary>() {
         });
         TYPE_REFERENCE_MAP.put(APIBasicDeviceTime.class, new TypeReference<APIBasicDeviceTime>() {
         });
