@@ -1,10 +1,14 @@
 package com.testdroid.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIList;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.IOException;
 import java.util.Date;
 
 /**
@@ -32,14 +36,15 @@ public class APITestRunExtended extends APITestRun {
             Integer totalDeviceCount, Integer finishedDeviceCount, Integer excludedDeviceCount,
             Integer errorsDeviceCount, Integer succeededDeviceCount, Integer runningDeviceCount,
             Integer warningDeviceCount, Integer waitingDeviceCount, Integer abortedDeviceCount,
-            Integer timeoutedDeviceCount, String gamebenchJobId, Long frameworkId, String frameworkName) {
+            Integer timeoutedDeviceCount, Long frameworkId, String frameworkName, String testRunConfigurationContent) {
         super(id, number, createTime, displayName, executionRatio, successRatio, startedById, startedByDisplayName,
                 state, userId, projectId, screenshotsFileId, logsFileId,
                 testCaseCount, successfulTestCaseCount, failedTestCaseCount,
                 totalDeviceCount, finishedDeviceCount, excludedDeviceCount, errorsDeviceCount, succeededDeviceCount,
                 runningDeviceCount, warningDeviceCount, waitingDeviceCount, abortedDeviceCount, timeoutedDeviceCount,
-                gamebenchJobId, frameworkId, frameworkName);
+                frameworkId, frameworkName, null);
         this.deviceCount = totalDeviceCount;
+        mapConfig(testRunConfigurationContent);
     }
 
     public Integer getDeviceCount() {
@@ -72,6 +77,26 @@ public class APITestRunExtended extends APITestRun {
 
     public void setBillable(boolean billable) {
         this.billable = billable;
+    }
+
+    @Override
+    @JsonIgnore(false)
+    public APITestRunConfig getConfig() {
+        return super.getConfigOffline();
+    }
+
+    @JsonIgnore
+    private void mapConfig(String content) {
+        if (StringUtils.isBlank(content)) {
+            return;
+        }
+        try {
+            APITestRunConfig config = new ObjectMapper().configure(
+                    DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+                    .readValue(content, APITestRunConfig.class);
+            setConfig(config);
+        } catch (IOException ignore) {
+        }
     }
 
     @Override

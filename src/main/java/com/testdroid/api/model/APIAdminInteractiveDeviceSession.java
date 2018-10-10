@@ -28,6 +28,8 @@ public class APIAdminInteractiveDeviceSession extends APIEntity {
 
     private String errorMessage;
 
+    private Date createTime;
+
     private Date startTime;
 
     private APIDeviceSession.State state;
@@ -38,15 +40,17 @@ public class APIAdminInteractiveDeviceSession extends APIEntity {
 
     private Long deviceTime;
 
-    public APIAdminInteractiveDeviceSession() {
+    private APIDeviceSession.Type type;
 
+    public APIAdminInteractiveDeviceSession() {
     }
 
     public APIAdminInteractiveDeviceSession(
-            Long id, Date startTime, Date endTime, String userEmail, Long userId, Long duration,
+            Long id, Date createTime, Date startTime, Date endTime, String userEmail, Long userId, Long duration,
             String deviceModelName, Long deviceModelId, String deviceName, Long deviceId,
-            APIDeviceSession.State state, Boolean billable, Long deviceTime) {
+            APIDeviceSession.State state, Boolean billable, Long deviceTime, APIDeviceSession.Type type) {
         super(id);
+        this.createTime = createTime;
         this.startTime = startTime;
         this.endTime = endTime;
         this.userEmail = userEmail;
@@ -59,15 +63,7 @@ public class APIAdminInteractiveDeviceSession extends APIEntity {
         this.state = state;
         this.billable = billable;
         this.deviceTime = deviceTime;
-    }
-
-    public APIAdminInteractiveDeviceSession(
-            Long id, Date startTime, Date endTime, String userEmail, Long userId, Long duration,
-            String deviceModelName, Long deviceModelId, String deviceName, Long deviceId,
-            APIDeviceSession.State state, String errorMessage, Boolean billable, Long deviceTime) {
-        this(id, startTime, endTime, userEmail, userId, duration, deviceModelName, deviceModelId, deviceName,
-                deviceId, state, billable, deviceTime);
-        this.errorMessage = errorMessage;
+        this.type = type;
     }
 
     public Boolean getBillable() {
@@ -174,11 +170,28 @@ public class APIAdminInteractiveDeviceSession extends APIEntity {
         this.deviceTime = deviceTime;
     }
 
+    public APIDeviceSession.Type getType() {
+        return type;
+    }
+
+    public void setType(APIDeviceSession.Type type) {
+        this.type = type;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
         APIAdminInteractiveDeviceSession interactiveDeviceSession = (APIAdminInteractiveDeviceSession) from;
         cloneBase(from);
+        this.createTime = interactiveDeviceSession.createTime;
         this.startTime = interactiveDeviceSession.startTime;
         this.endTime = interactiveDeviceSession.endTime;
         this.userEmail = interactiveDeviceSession.userEmail;
@@ -192,5 +205,6 @@ public class APIAdminInteractiveDeviceSession extends APIEntity {
         this.errorMessage = interactiveDeviceSession.errorMessage;
         this.billable = interactiveDeviceSession.billable;
         this.deviceTime = interactiveDeviceSession.deviceTime;
+        this.type = interactiveDeviceSession.type;
     }
 }

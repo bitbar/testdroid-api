@@ -55,11 +55,13 @@ public abstract class APIClientTest {
 
     @AfterAll
     public static void afterAll() throws APIException {
-        String deleteUrl = "%s?password=%s";
+        String deleteUrl = "%s/delete";
+        Map<String, Object> map = new HashMap<>();
+        map.put(PASSWORD, USER_PASSWORD);
         APIUser apiUser1 = USER_API_KEY_CLIENT.me();
-        ADMIN_API_CLIENT.delete(String.format(deleteUrl, apiUser1.getSelfURI(), USER_PASSWORD));
+        ADMIN_API_CLIENT.post(String.format(deleteUrl, apiUser1.getSelfURI()), map, APIUser.class);
         APIUser apiUser2 = USER_API_KEY_CLIENT.me();
-        ADMIN_API_CLIENT.delete(String.format(deleteUrl, apiUser2.getSelfURI(), USER_PASSWORD));
+        ADMIN_API_CLIENT.post(String.format(deleteUrl, apiUser2.getSelfURI()), map, APIUser.class);
     }
 
     public static class APIClientProvider implements ArgumentsProvider {

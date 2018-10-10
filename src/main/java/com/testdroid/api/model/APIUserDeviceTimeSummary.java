@@ -21,6 +21,8 @@ public class APIUserDeviceTimeSummary extends APIEntity {
 
     private Long freeDeviceTime;
 
+    private Long remoteDeviceTime;
+
     private Long periodStart;
 
     private Long periodEnd;
@@ -30,10 +32,11 @@ public class APIUserDeviceTimeSummary extends APIEntity {
     }
 
     public APIUserDeviceTimeSummary(
-            Long inspectorDeviceTime, Long automaticDeviceTime, Long freeDeviceTime) {
-        this.totalDeviceTime = inspectorDeviceTime + automaticDeviceTime + freeDeviceTime;
+            Long inspectorDeviceTime, Long automaticDeviceTime, Long remoteDeviceTime, Long freeDeviceTime) {
+        this.totalDeviceTime = inspectorDeviceTime + automaticDeviceTime + freeDeviceTime + remoteDeviceTime;
         this.inspectorDeviceTime = inspectorDeviceTime;
         this.automaticDeviceTime = automaticDeviceTime;
+        this.remoteDeviceTime = remoteDeviceTime;
         this.freeDeviceTime = freeDeviceTime;
     }
 
@@ -85,6 +88,14 @@ public class APIUserDeviceTimeSummary extends APIEntity {
         this.freeDeviceTime = freeDeviceTime;
     }
 
+    public Long getRemoteDeviceTime() {
+        return remoteDeviceTime;
+    }
+
+    public void setRemoteDeviceTime(Long remoteDeviceTime) {
+        this.remoteDeviceTime = remoteDeviceTime;
+    }
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
@@ -94,6 +105,7 @@ public class APIUserDeviceTimeSummary extends APIEntity {
         this.inspectorDeviceTime = apiUserDeviceTimeSummary.inspectorDeviceTime;
         this.automaticDeviceTime = apiUserDeviceTimeSummary.automaticDeviceTime;
         this.freeDeviceTime = apiUserDeviceTimeSummary.freeDeviceTime;
+        this.remoteDeviceTime = apiUserDeviceTimeSummary.remoteDeviceTime;
         this.periodStart = apiUserDeviceTimeSummary.periodStart;
         this.periodEnd = apiUserDeviceTimeSummary.periodEnd;
     }
