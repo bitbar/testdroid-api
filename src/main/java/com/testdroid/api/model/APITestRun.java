@@ -79,10 +79,6 @@ public class APITestRun extends APIEntity {
 
     private Long userId;
 
-    private String gamebenchResultsUrl;
-
-    private String gamebenchJobId;
-
     private Long frameworkId;
 
     private String frameworkName;
@@ -98,7 +94,7 @@ public class APITestRun extends APIEntity {
             Integer totalDeviceCount, Integer finishedDeviceCount, Integer excludedDeviceCount,
             Integer errorsDeviceCount, Integer succeededDeviceCount, Integer runningDeviceCount,
             Integer warningDeviceCount, Integer waitingDeviceCount, Integer abortedDeviceCount,
-            Integer timeoutedDeviceCount, String gamebenchJobId, Long frameworkId, String frameworkName) {
+            Integer timeoutedDeviceCount, Long frameworkId, String frameworkName, String ignore) {
         super(id);
         this.number = number;
         this.createTime = createTime;
@@ -126,7 +122,6 @@ public class APITestRun extends APIEntity {
         this.waitingDeviceCount = waitingDeviceCount;
         this.abortedDeviceCount = abortedDeviceCount;
         this.timeoutedDeviceCount = timeoutedDeviceCount;
-        this.gamebenchJobId = gamebenchJobId;
         this.frameworkId = frameworkId;
         this.frameworkName = frameworkName;
     }
@@ -376,22 +371,6 @@ public class APITestRun extends APIEntity {
         this.timeoutedDeviceCount = timeoutedDeviceCount;
     }
 
-    public String getGamebenchResultsUrl() {
-        return gamebenchResultsUrl;
-    }
-
-    public void setGamebenchResultsUrl(String gamebenchResultsUrl) {
-        this.gamebenchResultsUrl = gamebenchResultsUrl;
-    }
-
-    public String getGamebenchJobId() {
-        return gamebenchJobId;
-    }
-
-    public void setGamebenchJobId(String gamebenchJobId) {
-        this.gamebenchJobId = gamebenchJobId;
-    }
-
     public Long getUserId() {
         return userId;
     }
@@ -416,6 +395,10 @@ public class APITestRun extends APIEntity {
         this.frameworkName = frameworkName;
     }
 
+    public void setConfig(APITestRunConfig config) {
+        this.config = config;
+    }
+
     public void delete() throws APIException {
         deleteResource(selfURI);
     }
@@ -425,6 +408,11 @@ public class APITestRun extends APIEntity {
         if (config == null) {
             config = getResource(getConfigURI(), APITestRunConfig.class).getEntity();
         }
+        return config;
+    }
+
+    @JsonIgnore
+    public APITestRunConfig getConfigOffline() {
         return config;
     }
 
@@ -527,8 +515,6 @@ public class APITestRun extends APIEntity {
         this.waitingDeviceCount = apiTestRun.waitingDeviceCount;
         this.abortedDeviceCount = apiTestRun.abortedDeviceCount;
         this.timeoutedDeviceCount = apiTestRun.timeoutedDeviceCount;
-        this.gamebenchJobId = apiTestRun.gamebenchJobId;
-        this.gamebenchResultsUrl = apiTestRun.gamebenchResultsUrl;
         this.frameworkId = apiTestRun.frameworkId;
         this.frameworkName = apiTestRun.frameworkName;
     }

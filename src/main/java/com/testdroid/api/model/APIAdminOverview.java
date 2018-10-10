@@ -14,6 +14,8 @@ public class APIAdminOverview extends APIEntity {
 
     private Long inspectorSessionsCount;
 
+    private Long remoteSessionsCount;
+
     private Long runningDeviceModelsCount;
 
     private Long runningTestRunsCount;
@@ -26,10 +28,11 @@ public class APIAdminOverview extends APIEntity {
     }
 
     public APIAdminOverview(
-            Long activeUsersCount, Long inspectorSessionsCount, Long runningDeviceModelsCount,
+            Long activeUsersCount, Long inspectorSessionsCount, Long remoteSessionsCount, Long runningDeviceModelsCount,
             Long runningTestRunsCount, Long waitingDeviceModelsCount, Long waitingTestRunsCount) {
         this.activeUsersCount = activeUsersCount;
         this.inspectorSessionsCount = inspectorSessionsCount;
+        this.remoteSessionsCount = remoteSessionsCount;
         this.runningDeviceModelsCount = runningDeviceModelsCount;
         this.runningTestRunsCount = runningTestRunsCount;
         this.waitingDeviceModelsCount = waitingDeviceModelsCount;
@@ -84,12 +87,21 @@ public class APIAdminOverview extends APIEntity {
         this.waitingTestRunsCount = waitingTestRunsCount;
     }
 
+    public Long getRemoteSessionsCount() {
+        return remoteSessionsCount;
+    }
+
+    public void setRemoteSessionsCount(Long remoteSessionsCount) {
+        this.remoteSessionsCount = remoteSessionsCount;
+    }
+
     @Override
     protected <T extends APIEntity> void clone(T from) {
         APIAdminOverview apiAdminTestRun = (APIAdminOverview) from;
         cloneBase(from);
         this.activeUsersCount = apiAdminTestRun.activeUsersCount;
         this.inspectorSessionsCount = apiAdminTestRun.inspectorSessionsCount;
+        this.remoteSessionsCount = apiAdminTestRun.remoteSessionsCount;
         this.runningTestRunsCount = apiAdminTestRun.runningTestRunsCount;
         this.waitingTestRunsCount = apiAdminTestRun.waitingTestRunsCount;
         this.runningDeviceModelsCount = apiAdminTestRun.runningDeviceModelsCount;

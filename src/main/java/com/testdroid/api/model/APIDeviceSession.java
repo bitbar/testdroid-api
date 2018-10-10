@@ -19,9 +19,9 @@ public class APIDeviceSession extends APIEntity {
 
     @XmlType(namespace = "APIDeviceSession")
     public enum Type {
-        ADB,
         AUTOMATIC,
-        MANUAL
+        MANUAL,
+        REMOTE
     }
 
     @XmlType(namespace = "APIDeviceSession")

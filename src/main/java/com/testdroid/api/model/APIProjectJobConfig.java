@@ -17,7 +17,7 @@ public class APIProjectJobConfig extends APIEntity {
 
     @XmlType(namespace = "APIProjectJobConfig")
     public enum Type {
-        ADB(APIDevice.OsType.ANDROID, "Remote ADB"),
+        REMOTE(APIDevice.OsType.IOS, "Remote Device Session"),
         DEFAULT(APIDevice.OsType.ANDROID, "Android instrumentation"),
         INSTATEST(APIDevice.OsType.ANDROID, "Android App Crawler"),
         INTERACTIVE(APIDevice.OsType.ANDROID, "Testdroid Interactive"),

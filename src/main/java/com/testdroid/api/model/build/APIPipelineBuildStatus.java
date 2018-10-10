@@ -6,5 +6,6 @@ package com.testdroid.api.model.build;
 public enum APIPipelineBuildStatus {
     UNDEFINED,
     SUCCESS,
-    FAILURE
+    FAILURE,
+    ABORTED
 }
