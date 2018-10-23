@@ -2,10 +2,12 @@ package com.testdroid.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
+import com.testdroid.api.util.TimeConverter;
 import org.apache.commons.lang3.EnumUtils;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -71,20 +73,20 @@ public class APIProjectJobConfig extends APIEntity {
 
     public APIProjectJobConfig(
             Long id, String type, String content, Integer version, boolean global,
-            Date lastModificationTime, String lastModifiedBy, Long frameworkId) {
+            LocalDateTime lastModificationTime, String lastModifiedBy, Long frameworkId) {
         this(id, EnumUtils.getEnum(Type.class, type), content, version, global,
                 lastModificationTime, lastModifiedBy, frameworkId);
     }
 
     public APIProjectJobConfig(
             Long id, Type type, String content, Integer version, boolean global,
-            Date lastModificationTime, String lastModifiedBy, Long frameworkId) {
+            LocalDateTime lastModificationTime, String lastModifiedBy, Long frameworkId) {
         super(id);
         this.type = type;
         this.content = content;
         this.version = version;
         this.global = global;
-        this.lastModificationTime = lastModificationTime;
+        this.lastModificationTime = TimeConverter.toDate(lastModificationTime);
         this.lastModifiedBy = lastModifiedBy;
         this.frameworkId = frameworkId;
     }

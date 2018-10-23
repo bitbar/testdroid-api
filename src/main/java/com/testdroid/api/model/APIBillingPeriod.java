@@ -2,8 +2,10 @@ package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.model.enums.APIPaymentMethod;
+import com.testdroid.api.util.TimeConverter;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -33,10 +35,10 @@ public class APIBillingPeriod extends APIEntity {
     }
 
     public APIBillingPeriod(
-            Long invoiceId, Long userId, String mail, String plan, Date startBillingPeriod,
-            Date endBillingPeriod, Date subscriptionStart, Date subscriptionEnd,
+            Long invoiceId, Long userId, String mail, String plan, LocalDateTime startBillingPeriod,
+            LocalDateTime endBillingPeriod, LocalDateTime subscriptionStart, LocalDateTime subscriptionEnd,
             Long additionalHours, Long totalPrice, Long servicePrice, Long additionalHoursPrice, Boolean paid,
-            Date lastPaymentDate, Date createTime, APIPaymentMethod paymentMethod,
+            LocalDateTime lastPaymentDate, LocalDateTime createTime, APIPaymentMethod paymentMethod,
             APIBillingPeriodType apiBillingPeriodType) {
         super(invoiceId);
         this.userId = userId;
@@ -44,16 +46,16 @@ public class APIBillingPeriod extends APIEntity {
         this.plan = plan;
         this.additionalHours = additionalHours;
         this.totalPrice = totalPrice;
-        this.startBillingPeriod = startBillingPeriod;
-        this.endBillingPeriod = endBillingPeriod;
-        this.subscriptionStart = subscriptionStart;
-        this.subscriptionEnd = subscriptionEnd;
+        this.startBillingPeriod = TimeConverter.toDate(startBillingPeriod);
+        this.endBillingPeriod = TimeConverter.toDate(endBillingPeriod);
+        this.subscriptionStart = TimeConverter.toDate(subscriptionStart);
+        this.subscriptionEnd = TimeConverter.toDate(subscriptionEnd);
         this.servicePrice = servicePrice;
         this.additionalHoursPrice = additionalHoursPrice;
         this.paid = paid;
-        this.lastPaymentDate = lastPaymentDate;
+        this.lastPaymentDate = TimeConverter.toDate(lastPaymentDate);
         this.paymentMethod = paymentMethod;
-        this.createTime = createTime;
+        this.createTime = TimeConverter.toDate(createTime);
         this.apiBillingPeriodType = apiBillingPeriodType;
     }
 

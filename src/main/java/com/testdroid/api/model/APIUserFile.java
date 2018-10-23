@@ -4,12 +4,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIException;
 import com.testdroid.api.APIListResource;
+import com.testdroid.api.util.TimeConverter;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -72,11 +74,11 @@ public class APIUserFile extends APIEntity implements Serializable {
     }
 
     public APIUserFile(
-            Long id, String name, Date createTime, Long size, State state, String storage, String uri, String iconUri,
+            Long id, String name, LocalDateTime createTime, Long size, State state, String storage, String uri, String iconUri,
             String mimetype, Direction direction, InputType inputType) {
         super(id);
         this.name = name;
-        this.createTime = createTime;
+        this.createTime = TimeConverter.toDate(createTime);
         this.size = size;
         this.state = state;
         this.storage = storage;

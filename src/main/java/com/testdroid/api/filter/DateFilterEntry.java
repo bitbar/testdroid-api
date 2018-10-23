@@ -7,6 +7,7 @@ import java.util.Date;
 /**
  * @author Damian Sniezek <damian.sniezek@bitbar.com>
  */
+@Deprecated
 public class DateFilterEntry extends FilterEntry<Date> {
 
     public DateFilterEntry(String field, Operand comparison, Date value) {

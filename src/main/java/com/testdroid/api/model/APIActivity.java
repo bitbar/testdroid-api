@@ -1,9 +1,11 @@
 package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
+import com.testdroid.api.util.TimeConverter;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -44,10 +46,10 @@ public class APIActivity extends APIEntity {
     }
 
     public APIActivity(
-            Long id, Date createTime, HttpMethod httpMethod, String userAgent, String parameters, String uri,
+            Long id, LocalDateTime createTime, HttpMethod httpMethod, String userAgent, String parameters, String uri,
             String body, Long userId, String userEmail) {
         super(id);
-        this.createTime = createTime;
+        this.createTime = TimeConverter.toDate(createTime);
         this.httpMethod = httpMethod;
         this.userAgent = userAgent;
         this.parameters = parameters;

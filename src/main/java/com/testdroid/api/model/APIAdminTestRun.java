@@ -1,8 +1,10 @@
 package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
+import com.testdroid.api.util.TimeConverter;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -47,13 +49,13 @@ public class APIAdminTestRun extends APIEntity {
     }
 
     public APIAdminTestRun(
-            Long id, Date createTime, Date startTime, Date endTime, APITestRun.State state, Long startedById,
-            String userName, String projectName, String testRunName, Float successRatio, Integer priority,
-            Long projectId, Long duration, Long frameworkId, String frameworkName) {
+            Long id, LocalDateTime createTime, LocalDateTime startTime, LocalDateTime endTime, APITestRun.State state,
+            Long startedById, String userName, String projectName, String testRunName, Float successRatio,
+            Integer priority, Long projectId, Long duration, Long frameworkId, String frameworkName) {
         super(id);
-        this.createTime = createTime;
-        this.startTime = startTime;
-        this.endTime = endTime;
+        this.createTime = TimeConverter.toDate(createTime);
+        this.startTime = TimeConverter.toDate(startTime);
+        this.endTime = TimeConverter.toDate(endTime);
         this.state = state;
         this.startedById = startedById;
         this.userName = userName;
@@ -68,10 +70,10 @@ public class APIAdminTestRun extends APIEntity {
     }
 
     public APIAdminTestRun(
-            Long id, Date createTime, Date startTime, Date endTime, APITestRun.State state, Long startedById,
-            String userName, String projectName, String testRunName, Boolean appCrawlerRun, Float successRatio,
-            Integer priority, Long projectId, Long duration, APITestRunConfig.Scheduler scheduler, Long frameworkId,
-            String frameworkName) {
+            Long id, LocalDateTime createTime, LocalDateTime startTime, LocalDateTime endTime, APITestRun.State state,
+            Long startedById, String userName, String projectName, String testRunName, Boolean appCrawlerRun,
+            Float successRatio, Integer priority, Long projectId, Long duration,
+            APITestRunConfig.Scheduler scheduler, Long frameworkId, String frameworkName) {
         this(id, createTime, startTime, endTime, state, startedById, userName, projectName, testRunName,
                 successRatio, priority, projectId, duration, frameworkId, frameworkName);
         this.appCrawlerRun = appCrawlerRun;

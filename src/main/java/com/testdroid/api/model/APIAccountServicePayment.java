@@ -2,8 +2,10 @@ package com.testdroid.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
+import com.testdroid.api.util.TimeConverter;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -32,12 +34,12 @@ public class APIAccountServicePayment extends APIEntity {
     }
 
     public APIAccountServicePayment(
-            Long id, Long accountId, Date startBillingPeriod, Date endBillingPeriod, String name, Long totalPrice,
-            Long includedTime, Long additionalTime, Long usedTime) {
+            Long id, Long accountId, LocalDateTime startBillingPeriod, LocalDateTime endBillingPeriod, String name,
+            Long totalPrice, Long includedTime, Long additionalTime, Long usedTime) {
         super(id);
         this.accountId = accountId;
-        this.startBillingPeriod = startBillingPeriod;
-        this.endBillingPeriod = endBillingPeriod;
+        this.startBillingPeriod = TimeConverter.toDate(startBillingPeriod);
+        this.endBillingPeriod = TimeConverter.toDate(endBillingPeriod);
         this.name = name;
         this.totalPrice = totalPrice;
         this.includedTime = includedTime;

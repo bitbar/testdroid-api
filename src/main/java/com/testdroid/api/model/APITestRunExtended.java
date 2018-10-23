@@ -4,12 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.testdroid.api.APIEntity;
-import com.testdroid.api.APIList;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.IOException;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * @author Michał Szpruta <michal.szpruta@bitbar.com>
@@ -21,16 +20,14 @@ public class APITestRunExtended extends APITestRun {
 
     private APITag[] tags;
 
-    private APIList<APIUserFile> files;
-
     private boolean billable;
 
     public APITestRunExtended() {
     }
 
     public APITestRunExtended(
-            Long id, Integer number, Date createTime, String displayName, Float executionRatio, Float successRatio,
-            Long startedById, String startedByDisplayName, State state, Long userId, Long projectId,
+            Long id, Integer number, LocalDateTime createTime, String displayName, Float executionRatio,
+            Float successRatio, Long startedById, String startedByDisplayName, State state, Long userId, Long projectId,
             Long screenshotsFileId, Long logsFileId,
             Integer testCaseCount, Integer successfulTestCaseCount, Integer failedTestCaseCount,
             Integer totalDeviceCount, Integer finishedDeviceCount, Integer excludedDeviceCount,
@@ -61,14 +58,6 @@ public class APITestRunExtended extends APITestRun {
 
     public void setTags(APITag[] tags) {
         this.tags = tags;
-    }
-
-    public APIList<APIUserFile> getFiles() {
-        return files;
-    }
-
-    public void setFiles(APIList<APIUserFile> files) {
-        this.files = files;
     }
 
     public boolean isBillable() {
@@ -104,7 +93,6 @@ public class APITestRunExtended extends APITestRun {
     protected <T extends APIEntity> void clone(T from) {
         APITestRunExtended apiTestRunExtended = (APITestRunExtended) from;
         super.clone(from);
-        this.files = apiTestRunExtended.files;
         this.deviceCount = apiTestRunExtended.deviceCount;
         this.tags = apiTestRunExtended.tags;
         this.billable =apiTestRunExtended.billable;

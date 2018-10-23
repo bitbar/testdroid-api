@@ -10,21 +10,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class APITestRunDataAvailability extends APIEntity {
 
-    private boolean application;
-
     private APIDeviceSessionDataAvailability[] deviceRunDataAvailabilities;
-
-    private boolean test;
 
     private Long testRunId;
 
     public APITestRunDataAvailability() {
     }
 
-    public APITestRunDataAvailability(Long testRunId, boolean application, boolean test) {
+    public APITestRunDataAvailability(Long testRunId, APIDeviceSessionDataAvailability[] deviceRunDataAvailabilities) {
         this.testRunId = testRunId;
-        this.application = application;
-        this.test = test;
+        this.deviceRunDataAvailabilities = deviceRunDataAvailabilities;
     }
 
     public Long getTestRunId() {
@@ -33,22 +28,6 @@ public class APITestRunDataAvailability extends APIEntity {
 
     public void setTestRunId(Long testRunId) {
         this.testRunId = testRunId;
-    }
-
-    public boolean isApplication() {
-        return application;
-    }
-
-    public void setApplication(boolean application) {
-        this.application = application;
-    }
-
-    public boolean isTest() {
-        return test;
-    }
-
-    public void setTest(boolean test) {
-        this.test = test;
     }
 
     public APIDeviceSessionDataAvailability[] getDeviceRunDataAvailabilities() {
@@ -63,8 +42,6 @@ public class APITestRunDataAvailability extends APIEntity {
     protected <T extends APIEntity> void clone(T from) {
         APITestRunDataAvailability apiTestRunDataAvailability = (APITestRunDataAvailability) from;
         cloneBase(from);
-        this.application = apiTestRunDataAvailability.application;
-        this.test = apiTestRunDataAvailability.test;
         this.deviceRunDataAvailabilities = apiTestRunDataAvailability.deviceRunDataAvailabilities;
     }
 }

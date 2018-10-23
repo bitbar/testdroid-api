@@ -28,7 +28,7 @@ public class APIDeviceUsage extends APIEntity {
         super(id);
         this.device = new APIDevice(id, displayName, softwareVersionId, releaseVersion, apiLevel, creditsPrice,
                 imagePrefix, imageTop, imageLeft, imageWidth, imageHeight, frameExtraWidth, osType, online, locked,
-                enabled);
+                enabled, null, null);
         this.totalDeviceSessions = totalDeviceSessions;
         this.failedDeviceSessions = failedDeviceSessions;
     }

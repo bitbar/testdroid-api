@@ -1,9 +1,11 @@
 package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
+import com.testdroid.api.util.TimeConverter;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -37,11 +39,11 @@ public class APIUserIntegration extends APIEntity {
     }
 
     public APIUserIntegration(
-            Long id, Long userId, Date createTime, String apiKey, String username, Type type, String url,
+            Long id, Long userId, LocalDateTime createTime, String apiKey, String username, Type type, String url,
             boolean hasCert) {
         super(id);
         this.userId = userId;
-        this.createTime = createTime;
+        this.createTime = TimeConverter.toDate(createTime);
         this.apiKey = apiKey;
         this.username = username;
         this.type = type;

@@ -3,9 +3,11 @@ package com.testdroid.api.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIList;
+import com.testdroid.api.util.TimeConverter;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -41,14 +43,14 @@ public class APICluster extends APIEntity {
         this.name = name;
     }
 
-    public APICluster(
-            Long id, String name, String url, State state, Date stateTime, Date stateChangeTime, Boolean enabled) {
+    public APICluster(Long id, String name, String url, State state, LocalDateTime stateTime,
+            LocalDateTime stateChangeTime, Boolean enabled) {
         super(id);
         this.name = name;
         this.url = url;
         this.state = state;
-        this.stateTime = stateTime;
-        this.stateChangeTime = stateChangeTime;
+        this.stateTime = TimeConverter.toDate(stateTime);
+        this.stateChangeTime = TimeConverter.toDate(stateChangeTime);
         this.enabled = enabled;
     }
 

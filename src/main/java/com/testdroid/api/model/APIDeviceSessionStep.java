@@ -71,9 +71,9 @@ public class APIDeviceSessionStep extends APIEntity {
 
     public APIDeviceSessionStep(
             Long id, Long deviceSessionId, String failReason, Long finishTimeMS, Long startTimeMS,
-            Type type, String excludeReason) {
+            Type type, APIDeviceSession.ExcludeReason excludeReason) {
         this(id, deviceSessionId, failReason, finishTimeMS, startTimeMS, type);
-        this.excludeReason = excludeReason;
+        this.excludeReason = excludeReason != null ? excludeReason.getDisplayName() : null;
     }
 
     public Long getDeviceSessionId() {

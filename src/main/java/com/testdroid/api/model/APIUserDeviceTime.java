@@ -2,8 +2,10 @@ package com.testdroid.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
+import com.testdroid.api.util.TimeConverter;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -33,10 +35,10 @@ public class APIUserDeviceTime extends APIEntity {
     }
 
     public APIUserDeviceTime(
-            Date createTime, Date endTime, String userName, Long userId, Long freeTime, Long billableTime,
-            APIDeviceSession.Type type) {
-        this.createTime = createTime;
-        this.endTime = endTime;
+            LocalDateTime createTime, LocalDateTime endTime, String userName, Long userId, Long freeTime,
+            Long billableTime, APIDeviceSession.Type type) {
+        this.createTime = TimeConverter.toDate(createTime);
+        this.endTime = TimeConverter.toDate(endTime);
         this.userName = userName;
         this.userId = userId;
         this.freeTime = freeTime;

@@ -2,8 +2,10 @@ package com.testdroid.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
+import com.testdroid.api.util.TimeConverter;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -28,10 +30,10 @@ public class APIAccount extends APIEntity {
 
     }
 
-    public APIAccount(Long id, Date createTime, String mainUserName, String mainUserEmail, Integer maxTimeout,
+    public APIAccount(Long id, LocalDateTime createTime, String mainUserName, String mainUserEmail, Integer maxTimeout,
             Integer testScreenshotLimit, Integer executorsLimit) {
         super(id);
-        this.createTime = createTime;
+        this.createTime = TimeConverter.toDate(createTime);
         this.mainUserName = mainUserName;
         this.mainUserEmail = mainUserEmail;
         this.maxTimeout = maxTimeout;

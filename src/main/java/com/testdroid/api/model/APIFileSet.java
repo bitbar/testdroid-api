@@ -5,8 +5,10 @@ import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIException;
 import com.testdroid.api.APIListResource;
 import com.testdroid.api.dto.Context;
+import com.testdroid.api.util.TimeConverter;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Date;
 
@@ -26,10 +28,10 @@ public class APIFileSet extends APIEntity {
     public APIFileSet() {
     }
 
-    public APIFileSet(Long id, String name, Date createTime, Long fileCount) {
+    public APIFileSet(Long id, String name, LocalDateTime createTime, Long fileCount) {
         super(id);
         this.name = name;
-        this.createTime = createTime;
+        this.createTime = TimeConverter.toDate(createTime);
         this.fileCount = fileCount;
     }
 

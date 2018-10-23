@@ -2,8 +2,10 @@ package com.testdroid.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
+import com.testdroid.api.util.TimeConverter;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -27,12 +29,12 @@ public class APIRole extends APIEntity {
         this.name = name;
     }
 
-    public APIRole(Long id, String name, Date expireTime) {
+    public APIRole(Long id, String name, LocalDateTime expireTime) {
         this(id, name);
-        this.expireTime = expireTime;
+        this.expireTime = TimeConverter.toDate(expireTime);
     }
 
-    public APIRole(Long id, String name, Date expireTime, String addedByEmail) {
+    public APIRole(Long id, String name, LocalDateTime expireTime, String addedByEmail) {
         this(id, name, expireTime);
         this.addedByEmail = addedByEmail;
     }

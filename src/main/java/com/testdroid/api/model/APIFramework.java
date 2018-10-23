@@ -2,8 +2,10 @@ package com.testdroid.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
+import com.testdroid.api.util.TimeConverter;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -52,12 +54,12 @@ public class APIFramework extends APIEntity {
     }
 
     public APIFramework(
-            Long id, Date createTime, String name, String description, APIDevice.OsType osType,
+            Long id, LocalDateTime createTime, String name, String description, APIDevice.OsType osType,
             String type, Long accountId, String mainUserEmail, String mainUserName, String requiredAppExtensions,
             String requiredTestExtensions, Boolean forProjects, Boolean canRunFromUI, Boolean secured,
             Boolean retryable, Boolean skipQueue, Boolean skipOlderSdk, Long labelId, String labelName) {
         super(id);
-        this.createTime = createTime;
+        this.createTime = TimeConverter.toDate(createTime);
         this.name = name;
         this.description = description;
         this.osType = osType;

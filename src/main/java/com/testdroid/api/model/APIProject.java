@@ -5,6 +5,7 @@ import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIException;
 import com.testdroid.api.APIListResource;
 import com.testdroid.api.dto.Context;
+import com.testdroid.api.util.TimeConverter;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -12,6 +13,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.*;
 
 import static com.testdroid.api.model.APIDevice.OsType;
@@ -110,12 +112,12 @@ public class APIProject extends APIEntity {
     }
 
     public APIProject(
-            Long id, Date createTime, Date archiveTime, String name, String description, Type type, Long sharedById,
-            String sharedByEmail, boolean common, APIArchivingStrategy archivingStrategy, Integer archivingItemCount,
-            Long frameworkId, Boolean isShared, APIDevice.OsType osType) {
+            Long id, LocalDateTime createTime, LocalDateTime archiveTime, String name, String description, Type type,
+            Long sharedById, String sharedByEmail, boolean common, APIArchivingStrategy archivingStrategy,
+            Integer archivingItemCount, Long frameworkId, Boolean isShared, APIDevice.OsType osType) {
         super(id);
-        this.createTime = createTime;
-        this.archiveTime = archiveTime;
+        this.createTime = TimeConverter.toDate(createTime);
+        this.archiveTime = TimeConverter.toDate(archiveTime);
         this.name = name;
         this.description = description;
         this.type = type;

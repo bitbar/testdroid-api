@@ -1,10 +1,10 @@
 package com.testdroid.api.model.build;
 
 import com.testdroid.api.APIEntity;
+import com.testdroid.api.util.TimeConverter;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Date;
 
 /**
@@ -36,7 +36,7 @@ public class APIPipelineBuild extends APIEntity {
         super(id);
         this.buildNumber = buildNumber;
         this.pipelineJobId = pipelineJobId;
-        this.createTime = createTime == null ? null : Date.from(createTime.atZone(ZoneId.systemDefault()).toInstant());
+        this.createTime = TimeConverter.toDate(createTime);
         this.duration = duration;
         this.status = status;
         this.state = state;

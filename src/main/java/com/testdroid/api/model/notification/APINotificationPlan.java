@@ -2,8 +2,10 @@ package com.testdroid.api.model.notification;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.testdroid.api.APIEntity;
+import com.testdroid.api.util.TimeConverter;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -39,18 +41,17 @@ public class APINotificationPlan extends APIEntity {
 
     public APINotificationPlan(
             Long id, String name, Long handlerId, String handlerEmail, String contentTemplate, String subjectTemplate,
-            Date createTime, Date updateTime, Date sentTime,
-            APINotificationChannel channel,
-            APINotificationScope scope) {
+            LocalDateTime createTime, LocalDateTime updateTime, LocalDateTime sentTime,
+            APINotificationChannel channel, APINotificationScope scope) {
         super(id);
         this.name = name;
         this.handlerId = handlerId;
         this.handlerEmail = handlerEmail;
         this.contentTemplate = contentTemplate;
         this.subjectTemplate = subjectTemplate;
-        this.createTime = createTime;
-        this.updateTime = updateTime;
-        this.sentTime = sentTime;
+        this.createTime = TimeConverter.toDate(createTime);
+        this.updateTime = TimeConverter.toDate(updateTime);
+        this.sentTime = TimeConverter.toDate(sentTime);
         this.channel = channel;
         this.scope = scope;
     }
