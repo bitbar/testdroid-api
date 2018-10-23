@@ -2,8 +2,10 @@ package com.testdroid.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
+import com.testdroid.api.util.TimeConverter;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -70,18 +72,18 @@ public class APIDeviceStatus extends APIEntity {
 
     public APIDeviceStatus(
             Long id, Long deviceId, String deviceName, APIAdminDevice.ComplexState state, Long clusterId,
-            String clusterName, Date updateTime, Boolean internetAccess, Boolean monitoringOn, Boolean testExecuting,
-            String ssid, Boolean flashOn, Boolean alarmOn, Boolean aslOn, Integer batteryLevel, Long deviceTime,
-            String deviceTimeZone, Boolean screenLocked, Boolean mockLocationOn, Boolean locationServiceOn,
-            Boolean bluetoothOn, Boolean sdcardPresent, Boolean tetheringOn, String tdsVersion, Long internalStorage,
-            Long externalStorage, String emailAccount) {
+            String clusterName, LocalDateTime updateTime, Boolean internetAccess, Boolean monitoringOn,
+            Boolean testExecuting, String ssid, Boolean flashOn, Boolean alarmOn, Boolean aslOn,
+            Integer batteryLevel, Long deviceTime, String deviceTimeZone, Boolean screenLocked,
+            Boolean mockLocationOn, Boolean locationServiceOn, Boolean bluetoothOn, Boolean sdcardPresent,
+            Boolean tetheringOn, String tdsVersion, Long internalStorage, Long externalStorage, String emailAccount) {
         super(id);
         this.deviceId = deviceId;
         this.deviceName = deviceName;
         this.state = state;
         this.clusterId = clusterId;
         this.clusterName = clusterName;
-        this.updateTime = updateTime;
+        this.updateTime = TimeConverter.toDate(updateTime);
         this.internetAccess = internetAccess;
         this.monitoringOn = monitoringOn;
         this.ssid = ssid;

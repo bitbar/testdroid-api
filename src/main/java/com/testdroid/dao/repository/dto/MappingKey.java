@@ -221,10 +221,6 @@ public class MappingKey {
 
     public static final String FILENAME = "filename";
 
-    public static final String FILES_DOT_APP_DOT_ORIGINAL_NAME = "files.app.originalName";
-
-    public static final String FILES_DOT_TEST_DOT_ORIGINAL_NAME = "files.test.originalName";
-
     public static final String FILE_ID = "fileId";
 
     public static final String FILE_TAGS_ARR = "fileTags[]";

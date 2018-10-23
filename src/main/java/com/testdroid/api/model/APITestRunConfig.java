@@ -115,7 +115,7 @@ public class APITestRunConfig extends APIEntity implements Serializable {
     private boolean loadedPrevious;
 
     @JsonIgnore
-    private List<?> computedDevices;
+    private List<Long> computedDevices;
 
     public APITestRunConfig() {
     }
@@ -502,12 +502,11 @@ public class APITestRunConfig extends APIEntity implements Serializable {
         deleteResource(String.format("%s/%s", getParametersURI(), parameterId));
     }
 
-    @SuppressWarnings("unchecked")
-    public <T> List<T> getComputedDevices() {
-        return (List<T>) computedDevices;
+    public List<Long> getComputedDevices() {
+        return computedDevices;
     }
 
-    public <T> void setComputedDevices(List<T> computedDevices) {
+    public void setComputedDevices(List<Long> computedDevices) {
         this.computedDevices = computedDevices;
     }
 

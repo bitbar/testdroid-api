@@ -2,8 +2,10 @@ package com.testdroid.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
+import com.testdroid.api.util.TimeConverter;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -28,14 +30,14 @@ public class APIAdminEmail extends APIEntity {
     }
 
     public APIAdminEmail(
-            Long id, Long userId, String userEmail, String subject, Date createTime, Date lastRetryTime,
-            Boolean sent) {
+            Long id, Long userId, String userEmail, String subject, LocalDateTime createTime,
+            LocalDateTime lastRetryTime, Boolean sent) {
         super(id);
         this.userId = userId;
         this.userEmail = userEmail;
         this.subject = subject;
-        this.createTime = createTime;
-        this.lastRetryTime = lastRetryTime;
+        this.createTime = TimeConverter.toDate(createTime);
+        this.lastRetryTime = TimeConverter.toDate(lastRetryTime);
         this.sent = sent;
     }
 

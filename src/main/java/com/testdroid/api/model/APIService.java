@@ -4,8 +4,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.formatter.CurrencyFormatter;
 import com.testdroid.api.model.enums.Unit;
+import com.testdroid.api.util.TimeConverter;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -42,8 +44,8 @@ public class APIService extends APIEntity {
     }
 
     public APIService(Long id, String name, String description, boolean autoRenew, Integer centPrice,
-            Integer includedHours, Integer pricePerHour, String externalId, Date archiveTime, Date activateTime,
-            Unit unit, Integer unitCount, boolean customPlan) {
+            Integer includedHours, Integer pricePerHour, String externalId, LocalDateTime archiveTime,
+            LocalDateTime activateTime, Unit unit, Integer unitCount, boolean customPlan) {
         super(id);
         this.name = name;
         this.description = description;
@@ -52,8 +54,8 @@ public class APIService extends APIEntity {
         this.includedHours = includedHours;
         this.pricePerHour = pricePerHour;
         this.externalId = externalId;
-        this.archiveTime = archiveTime;
-        this.activateTime = activateTime;
+        this.archiveTime = TimeConverter.toDate(archiveTime);
+        this.activateTime = TimeConverter.toDate(activateTime);
         this.unit = unit;
         this.unitCount = unitCount;
         this.customPlan = customPlan;

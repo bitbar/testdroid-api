@@ -5,10 +5,12 @@ import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIException;
 import com.testdroid.api.APIListResource;
 import com.testdroid.api.dto.Context;
+import com.testdroid.api.util.TimeConverter;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import java.io.InputStream;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -16,6 +18,25 @@ import java.util.Date;
  */
 @XmlRootElement
 public class APIDeviceSession extends APIEntity {
+
+    @XmlType(namespace = "APIDeviceSession")
+    public enum ExcludeReason {
+        ADMIN("Test run was interrupted by user or administrator."),
+        NO_DEVICE("Requested device does not exist or is busy at the moment."),
+        API_LEVEL("The minimum API Level required for the application to run is higher than Device's API Level"),
+        SINGLE_MODE("SINGLE mode test run - another device has started execution."),
+        FRAMEWORK_NOT_SUPPORTED("The device does not support selected framework");
+
+        private String displayName;
+
+        ExcludeReason(String displayName) {
+            this.displayName = displayName;
+        }
+
+        public String getDisplayName() {
+            return displayName;
+        }
+    }
 
     @XmlType(namespace = "APIDeviceSession")
     public enum Type {
@@ -71,6 +92,7 @@ public class APIDeviceSession extends APIEntity {
 
     private State state;
 
+    @Deprecated
     private Long deviceRunId;
 
     private Integer testCaseAllCount;
@@ -100,15 +122,15 @@ public class APIDeviceSession extends APIEntity {
     public APIDeviceSession() {
     }
 
-    public APIDeviceSession(Long id, Type type, Date createTime, Date startTime, Date installTime, Date endTime,
-            APIDevice device, Long timeLimit, Long launchAppDuration, State state, Long deviceRunId,
-            Boolean billable, Long deviceTime) {
+    public APIDeviceSession(Long id, Type type, LocalDateTime createTime, LocalDateTime startTime,
+            LocalDateTime installTime, LocalDateTime endTime, APIDevice device, Long timeLimit,
+            Long  launchAppDuration, State state, Long deviceRunId, Boolean billable, Long deviceTime) {
         super(id);
         this.type = type;
-        this.createTime = createTime;
-        this.startTime = startTime;
-        this.installTime = installTime;
-        this.endTime = endTime;
+        this.createTime = TimeConverter.toDate(createTime);
+        this.startTime = TimeConverter.toDate(startTime);
+        this.installTime = TimeConverter.toDate(installTime);
+        this.endTime = TimeConverter.toDate(endTime);
         this.device = device;
         this.timeLimit = timeLimit;
         this.launchAppDuration = launchAppDuration;
@@ -118,24 +140,31 @@ public class APIDeviceSession extends APIEntity {
         this.deviceTime = deviceTime;
     }
 
-    public APIDeviceSession(Long id, Type type, Date createTime, Date startTime, Date installTime, Date endTime,
+    public APIDeviceSession(Long id, Type type, LocalDateTime createTime, LocalDateTime startTime,
+            LocalDateTime installTime, LocalDateTime endTime,
             APIDevice device, Long timeLimit, Long launchAppDuration, State state, Long deviceRunId,
-            Boolean billable, String excludeReason, Long deviceTime) {
+            Boolean billable, ExcludeReason excludeReason, Long deviceTime) {
         this(id, type, createTime, startTime, installTime, endTime, device, timeLimit, launchAppDuration, state,
                 deviceRunId, billable, deviceTime);
-        this.excludeReason = excludeReason;
+        this.excludeReason = excludeReason != null ? excludeReason.getDisplayName() : null;
     }
 
-    public APIDeviceSession(Long id, Type type, Date createTime, Date startTime, Date installTime, Date endTime,
-            APIDevice device, Long timeLimit, Long launchAppDuration, State state, Long deviceRunId,
-            Integer testCaseAllCount, Integer testCaseSuccessCount, Integer testCasePassedCount,
-            Integer testCaseFailedCount, Integer testCaseSkippedCount, Boolean billable, String excludeReason,
-            Long deviceInstanceId, RetryState retryState, Integer autoRetriesLeftCount, Long deviceTime,
-            Long duration) {
-        this(id, type, createTime, startTime, installTime, endTime, device, timeLimit, launchAppDuration, state,
-                deviceRunId, billable, excludeReason, deviceTime);
-        this.testCaseAllCount = testCaseAllCount;
-        this.testCaseSuccessCount = testCaseSuccessCount;
+    public APIDeviceSession(Long id, APIDeviceSession.Type type, LocalDateTime createTime, LocalDateTime startTime,
+            LocalDateTime installTime, LocalDateTime endTime, Long timeLimit, Long launchAppDuration,
+            APIDeviceSession.State state, Long deviceSessionId, Integer testCasePassedCount,
+            Integer testCaseFailedCount, Integer testCaseSkippedCount,
+            Boolean billable, Long deviceModelId, String displayName, Integer creditsPrice, String imagePrefix,
+            Integer imageTop, Integer imageLeft, Integer imageWidth, Integer imageHeight, Integer frameExtraWidth,
+            APIDevice.OsType osType, Long softwareVersionId, String releaseVersion,
+            Integer apiLevel, ExcludeReason excludeReason, Long deviceInstanceId, RetryState retryState,
+            Integer autoRetriesLeftCount, Long deviceTime, Long duration) {
+        this(id, type, createTime, startTime, installTime, endTime,
+                new APIDevice(deviceModelId, displayName, softwareVersionId, releaseVersion, apiLevel, creditsPrice,
+                        imagePrefix, imageTop, imageLeft, imageWidth, imageHeight, frameExtraWidth, osType, null,
+                        null, null, null, null), timeLimit, launchAppDuration, state,
+                deviceSessionId, billable, excludeReason, deviceTime);
+        this.testCaseAllCount = testCasePassedCount + testCaseFailedCount + testCaseSkippedCount;
+        this.testCaseSuccessCount = testCasePassedCount + testCaseFailedCount;
         this.testCasePassedCount = testCasePassedCount;
         this.testCaseFailedCount = testCaseFailedCount;
         this.testCaseSkippedCount = testCaseSkippedCount;

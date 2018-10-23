@@ -5,9 +5,11 @@ import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIException;
 import com.testdroid.api.APIListResource;
 import com.testdroid.api.dto.Context;
+import com.testdroid.api.util.TimeConverter;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Date;
 
@@ -87,8 +89,8 @@ public class APITestRun extends APIEntity {
     }
 
     public APITestRun(
-            Long id, Integer number, Date createTime, String displayName, Float executionRatio, Float successRatio,
-            Long startedById, String startedByDisplayName, State state, Long userId, Long projectId,
+            Long id, Integer number, LocalDateTime createTime, String displayName, Float executionRatio,
+            Float successRatio, Long startedById, String startedByDisplayName, State state, Long userId, Long projectId,
             Long screenshotsFileId, Long logsFileId,
             Integer testCaseCount, Integer successfulTestCaseCount, Integer failedTestCaseCount,
             Integer totalDeviceCount, Integer finishedDeviceCount, Integer excludedDeviceCount,
@@ -97,7 +99,7 @@ public class APITestRun extends APIEntity {
             Integer timeoutedDeviceCount, Long frameworkId, String frameworkName, String ignore) {
         super(id);
         this.number = number;
-        this.createTime = createTime;
+        this.createTime = TimeConverter.toDate(createTime);
         this.displayName = displayName;
         this.executionRatio = executionRatio;
         this.successRatio = successRatio;

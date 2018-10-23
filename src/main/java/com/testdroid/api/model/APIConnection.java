@@ -1,15 +1,20 @@
 package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
+import com.testdroid.api.util.TimeConverter;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
  * @author Jarno Tuovinen <jarno.tuovinen@bitbar.com>
  */
 @XmlRootElement
-public class APIConnection extends APIEntity {
+public class APIConnection extends APIEntity implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private Date createTime;
 
@@ -36,11 +41,11 @@ public class APIConnection extends APIEntity {
     }
 
     public APIConnection(
-            Long id, Date createTime, Date endTime, Long deviceSessionId, String password, String type,
+            Long id, LocalDateTime createTime, LocalDateTime endTime, Long deviceSessionId, String password, String type,
             String urlSchema, String host, Integer port, String path) {
         super(id);
-        this.createTime = createTime;
-        this.endTime = endTime;
+        this.createTime = TimeConverter.toDate(createTime);
+        this.endTime = TimeConverter.toDate(endTime);
         this.deviceSessionId = deviceSessionId;
         this.password = password;
         this.type = type;

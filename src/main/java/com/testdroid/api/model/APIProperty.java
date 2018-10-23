@@ -2,8 +2,10 @@ package com.testdroid.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
+import com.testdroid.api.util.TimeConverter;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -33,16 +35,16 @@ public class APIProperty extends APIEntity {
 
     public APIProperty(
             Long id, String name, String value, String description, Long updatedById, String updatedByDisplayName,
-            Date updateTime, Date fromTime, Date toTime) {
+            LocalDateTime updateTime, LocalDateTime fromTime, LocalDateTime toTime) {
         super(id);
         this.name = name;
         this.value = value;
         this.description = description;
         this.updatedById = updatedById;
         this.updatedByDisplayName = updatedByDisplayName;
-        this.updateTime = updateTime;
-        this.fromTime = fromTime;
-        this.toTime = toTime;
+        this.updateTime = TimeConverter.toDate(updateTime);
+        this.fromTime = TimeConverter.toDate(fromTime);
+        this.toTime = TimeConverter.toDate(toTime);
     }
 
     public String getName() {

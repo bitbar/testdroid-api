@@ -39,10 +39,10 @@ public class APIAdminDeviceEvent extends APIEntity {
 
     public APIAdminDeviceEvent(Long id, LocalDateTime time, APIAdminDeviceEvent.DeviceEventType type,
             APIAdminDevice.ComplexState state, Long deviceId,
-            Long clusterId, String name, String url, APICluster.State clusterState, Date stateTime,
-            Date stateChangeTime, Boolean enabled,
-            Long deviceSessionId, Date createTime, Date startTime, Date endTime, String startedByDisplayName,
-            Long projectId, String projectName, Long testRunId, String testRunName,
+            Long clusterId, String name, String url, APICluster.State clusterState, LocalDateTime stateTime,
+            LocalDateTime stateChangeTime, Boolean enabled,
+            Long deviceSessionId, LocalDateTime createTime, LocalDateTime startTime, LocalDateTime endTime,
+            String startedByDisplayName, Long projectId, String projectName, Long testRunId, String testRunName,
             APIDeviceSession.State deviceSessionState, Integer priority, Boolean billable, Long deviceTime,
             APIDeviceSessionStep.Type currentStepType, String retriedFailReason) {
         super(id);

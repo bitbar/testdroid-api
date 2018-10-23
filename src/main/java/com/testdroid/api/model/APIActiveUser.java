@@ -1,8 +1,10 @@
 package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
+import com.testdroid.api.util.TimeConverter;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -26,16 +28,14 @@ public class APIActiveUser extends APIEntity {
     public APIActiveUser() {
     }
 
-    public APIActiveUser(
-            Long id, String country, String email, String organization, String timeZone, Date loginTime,
-            Integer priority) {
+    public APIActiveUser(Long id, String country, String email, String organization, String timeZone,
+            LocalDateTime loginTime) {
         super(id);
         this.country = country;
         this.email = email;
         this.organization = organization;
         this.timeZone = timeZone;
-        this.loginTime = loginTime;
-        this.priority = priority;
+        this.loginTime = TimeConverter.toDate(loginTime);
     }
 
     public String getCountry() {

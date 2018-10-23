@@ -5,10 +5,12 @@ import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIException;
 import com.testdroid.api.APIListResource;
 import com.testdroid.api.dto.Context;
+import com.testdroid.api.util.TimeConverter;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import java.io.File;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -112,9 +114,9 @@ public class APIUser extends APIEntity {
 
     public APIUser(
             Long id, Long accountId, String email, String name, String state, String country, String city, String code,
-            String address, String phone, String organization, String vatId, String timeZone, Date createTime,
-            Date deleteTime, Date lastLoginTime, Boolean isMainUser, Long mainUserId, String mainUserEmail,
-            Long activeServiceId, String apiKey, Status status) {
+            String address, String phone, String organization, String vatId, String timeZone, LocalDateTime createTime,
+            LocalDateTime deleteTime, LocalDateTime lastLoginTime, Boolean isMainUser, Long mainUserId,
+            String mainUserEmail, Long activeServiceId, String apiKey, Status status) {
         super(id);
         this.accountId = accountId;
         this.email = email;
@@ -128,9 +130,9 @@ public class APIUser extends APIEntity {
         this.organization = organization;
         this.vatId = vatId;
         this.timeZone = timeZone;
-        this.createTime = createTime;
-        this.deleteTime = deleteTime;
-        this.lastLoginTime = lastLoginTime;
+        this.createTime = TimeConverter.toDate(createTime);
+        this.deleteTime = TimeConverter.toDate(deleteTime);
+        this.lastLoginTime = TimeConverter.toDate(lastLoginTime);
         this.isMainUser = isMainUser;
         this.mainUserId = mainUserId;
         this.mainUserEmail = mainUserEmail;

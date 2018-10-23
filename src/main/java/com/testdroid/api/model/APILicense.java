@@ -2,10 +2,12 @@ package com.testdroid.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
+import com.testdroid.api.util.TimeConverter;
 import org.apache.commons.lang3.EnumUtils;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -72,17 +74,17 @@ public class APILicense extends APIEntity {
     }
 
     public APILicense(
-            Long id, Long userId, String userEmail, boolean autoRenew, boolean enterprise, Date activateTime,
-            Date expireTime, Integer androidDeviceLimit, Boolean androidEnabled, Boolean seleniumEnabled,
+            Long id, Long userId, String userEmail, boolean autoRenew, boolean enterprise, LocalDateTime activateTime,
+            LocalDateTime expireTime, Integer androidDeviceLimit, Boolean androidEnabled, Boolean seleniumEnabled,
             Boolean serverAndroidEnabled, Boolean calabashEnabled, Boolean uiautomatorEnabled, Boolean recorderEnabled,
             Integer iosProjectLimit, Boolean serverIosEnabled, Integer recorderLimit, Boolean remoteControlEnabled,
             Boolean xcTestEnabled, Boolean xcuiTestEnabled, Boolean ctsEnabled, Integer androidProjectLimit,
             Boolean appiumEnabled, Boolean serverEnabled, Boolean inspectorEnabled, Boolean iosEnabled,
-            Integer iosDeviceLimit, Date closeTime, String status, Boolean buildEnabled, Integer buildLimit) {
+            Integer iosDeviceLimit, LocalDateTime closeTime, String status, Boolean buildEnabled, Integer buildLimit) {
         super(id);
         this.privateInstance = enterprise;
-        this.activateTime = activateTime;
-        this.expireTime = expireTime;
+        this.activateTime = TimeConverter.toDate(activateTime);
+        this.expireTime = TimeConverter.toDate(expireTime);
         this.userEmail = userEmail;
         this.userId = userId;
         this.autoRenew = autoRenew;
@@ -100,17 +102,17 @@ public class APILicense extends APIEntity {
         this.remoteControl = new RemoteControlLicense(remoteControlEnabled);
         this.xcTest = new XCTestLicense(xcTestEnabled);
         this.xcuiTest = new XCUITestLicense(xcuiTestEnabled);
-        this.closeTime = closeTime;
+        this.closeTime = TimeConverter.toDate(closeTime);
         this.status = EnumUtils.getEnum(Status.class, status);
     }
 
     public APILicense(
-            boolean privateInstance, Date expireTime, String userEmail, AndroidLicense android, IOSLicense ios,
+            boolean privateInstance, LocalDateTime expireTime, String userEmail, AndroidLicense android, IOSLicense ios,
             RecorderLicense recorder, ServerLicense server, CalabashLicense calabash, AppiumLicense appium,
             SeleniumLicense selenium, InspectorLicense inspector, RemoteControlLicense remoteControl,
             XCTestLicense xcTest, XCUITestLicense xcuiTest, BuildLicense build) {
         this.privateInstance = privateInstance;
-        this.expireTime = expireTime;
+        this.expireTime = TimeConverter.toDate(expireTime);
         this.userEmail = userEmail;
         this.android = android;
         this.ios = ios;

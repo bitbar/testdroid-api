@@ -3,9 +3,11 @@ package com.testdroid.api.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIList;
+import com.testdroid.api.util.TimeConverter;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -45,13 +47,13 @@ public class APITestCaseRun extends APIEntity {
 
     public APITestCaseRun(
             Long id, double duration, Result result, String errorMessage, String stacktrace,
-            Date createTime, APIList<APITestCaseRunStep> steps, String className, String methodName, String suiteName) {
+            LocalDateTime createTime, APIList<APITestCaseRunStep> steps, String className, String methodName, String suiteName) {
         super(id);
         this.duration = duration;
         this.result = result;
         this.errorMessage = errorMessage;
         this.stacktrace = stacktrace;
-        this.createTime = createTime;
+        this.createTime = TimeConverter.toDate(createTime);
         this.steps = steps;
         this.className = className;
         this.methodName = methodName;

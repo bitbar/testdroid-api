@@ -4,9 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.model.enums.APIPaymentMethod;
 import com.testdroid.api.model.enums.Unit;
+import com.testdroid.api.util.TimeConverter;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Locale;
 
@@ -78,10 +80,11 @@ public class APIAccountService extends APIEntity {
 
     public APIAccountService(
             Long accountId, Long activatedById, String activatedByName, boolean active, boolean autoRenew,
-            String braintreeId, Date createTime, Long deactivatedById, String deactivatedByName, Date endTime,
-            boolean finished, Long id, Date lastPaymentTime, APIPaymentMethod paymentMethod, Integer price,
-            Long serviceId, Date startTime, String userEmail, Long userId, Integer vatRate, Unit unit,
-            Integer unitCount, Integer serviceCount, String serviceName, DeactivateReason deactivateReason) {
+            String braintreeId, LocalDateTime createTime, Long deactivatedById, String deactivatedByName,
+            LocalDateTime endTime, boolean finished, Long id, LocalDateTime lastPaymentTime,
+            APIPaymentMethod paymentMethod, Integer price, Long serviceId, LocalDateTime startTime,
+            String userEmail, Long userId, Integer vatRate, Unit unit, Integer unitCount, Integer serviceCount,
+            String serviceName, DeactivateReason deactivateReason) {
         super(id);
         this.accountId = accountId;
         this.activatedById = activatedById;
@@ -89,16 +92,16 @@ public class APIAccountService extends APIEntity {
         this.active = active;
         this.autoRenew = autoRenew;
         this.braintreeId = braintreeId;
-        this.createTime = createTime;
+        this.createTime = TimeConverter.toDate(createTime);
         this.deactivatedById = deactivatedById;
         this.deactivatedByName = deactivatedByName;
-        this.endTime = endTime;
+        this.endTime = TimeConverter.toDate(endTime);
         this.finished = finished;
-        this.lastPaymentTime = lastPaymentTime;
+        this.lastPaymentTime = TimeConverter.toDate(lastPaymentTime);
         this.paymentMethod = paymentMethod;
         this.price = price;
         this.serviceId = serviceId;
-        this.startTime = startTime;
+        this.startTime = TimeConverter.toDate(startTime);
         this.userEmail = userEmail;
         this.userId = userId;
         this.vatRate = vatRate;

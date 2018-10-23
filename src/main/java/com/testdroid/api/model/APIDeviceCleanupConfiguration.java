@@ -2,8 +2,10 @@ package com.testdroid.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
+import com.testdroid.api.util.TimeConverter;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -30,16 +32,16 @@ public class APIDeviceCleanupConfiguration extends APIEntity {
     }
 
     public APIDeviceCleanupConfiguration(
-            Long id, String content, Boolean enabled, Date createTime, String createdByEmail, Long createdById,
-            APIDevice.OsType osType, Date lastModificationTime) {
+            Long id, String content, Boolean enabled, LocalDateTime createTime, String createdByEmail, Long createdById,
+            APIDevice.OsType osType, LocalDateTime lastModificationTime) {
         super(id);
         this.content = content;
         this.enabled = enabled;
-        this.createTime = createTime;
+        this.createTime = TimeConverter.toDate(createTime);
         this.createdByEmail = createdByEmail;
         this.createdById = createdById;
         this.osType = osType;
-        this.lastModificationTime = lastModificationTime;
+        this.lastModificationTime = TimeConverter.toDate(lastModificationTime);
     }
 
     public String getContent() {

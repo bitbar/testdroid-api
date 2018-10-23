@@ -2,11 +2,16 @@ package com.testdroid.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
+import com.testdroid.api.util.TimeConverter;
 import org.apache.commons.lang3.tuple.Pair;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
-import java.util.*;
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
@@ -129,10 +134,10 @@ public class APIAdminDevice extends APIEntity {
     public APIAdminDevice(
             Long id, String name, boolean enabled, String serialId, String fingerprint, String unlockGesture,
             Long softwareVersionId, String releaseVersion, Integer apiLevel, Long deviceModelId, String deviceModelName,
-            ComplexState state, Date stateTime, InitStep initStep, String ipAddress, Long clusterId, String clusterName,
-            String clusterUrl, APICluster.State clusterState, Date clusterStateTime, Date clusterStateChangeTime,
-            Boolean clusterEnabled, Date lastOnlineTime, Long accountId, String mainUserEmail, Boolean locked,
-            APIDevice.OsType osType) {
+            ComplexState state, LocalDateTime stateTime, InitStep initStep, String ipAddress, Long clusterId,
+            String clusterName, String clusterUrl, APICluster.State clusterState, LocalDateTime clusterStateTime,
+            LocalDateTime clusterStateChangeTime, Boolean clusterEnabled, LocalDateTime lastOnlineTime, Long accountId,
+            String mainUserEmail, Boolean locked, APIDevice.OsType osType) {
         super(id);
         this.name = name;
         this.enabled = enabled;
@@ -143,12 +148,12 @@ public class APIAdminDevice extends APIEntity {
         this.deviceModelId = deviceModelId;
         this.deviceModelName = deviceModelName;
         this.state = state;
-        this.stateTime = stateTime;
+        this.stateTime = TimeConverter.toDate(stateTime);
         this.initStep = initStep;
         this.ipAddress = ipAddress;
         this.cluster = new APICluster(clusterId, clusterName, clusterUrl, clusterState,
                 clusterStateTime, clusterStateChangeTime, clusterEnabled);
-        this.lastOnlineTime = lastOnlineTime;
+        this.lastOnlineTime = TimeConverter.toDate(lastOnlineTime);
         this.accountId = accountId;
         this.mainUserEmail = mainUserEmail;
         this.locked = locked;

@@ -131,6 +131,7 @@ public abstract class APIEntity {
         this.id = id;
     }
 
+    @Deprecated
     @JsonIgnore
     public static String format(Date date) {
         return API_DATE_FORMAT.format(date);

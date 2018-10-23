@@ -2,8 +2,10 @@ package com.testdroid.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
+import com.testdroid.api.util.TimeConverter;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -46,13 +48,13 @@ public class APIAdminInteractiveDeviceSession extends APIEntity {
     }
 
     public APIAdminInteractiveDeviceSession(
-            Long id, Date createTime, Date startTime, Date endTime, String userEmail, Long userId, Long duration,
-            String deviceModelName, Long deviceModelId, String deviceName, Long deviceId,
+            Long id, LocalDateTime createTime, LocalDateTime startTime, LocalDateTime endTime, String userEmail,
+            Long userId, Long duration, String deviceModelName, Long deviceModelId, String deviceName, Long deviceId,
             APIDeviceSession.State state, Boolean billable, Long deviceTime, APIDeviceSession.Type type) {
         super(id);
-        this.createTime = createTime;
-        this.startTime = startTime;
-        this.endTime = endTime;
+        this.createTime = TimeConverter.toDate(createTime);
+        this.startTime = TimeConverter.toDate(startTime);
+        this.endTime = TimeConverter.toDate(endTime);
         this.userEmail = userEmail;
         this.userId = userId;
         this.duration = duration;
