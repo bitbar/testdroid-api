@@ -5,7 +5,6 @@ import com.google.api.client.auth.oauth2.BearerToken;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.http.*;
 import com.google.api.client.http.apache.ApacheHttpTransport;
-import com.google.api.client.http.javanet.NetHttpTransport;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpHost;
@@ -16,9 +15,11 @@ import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.AuthCache;
 import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.conn.params.ConnRoutePNames;
+import org.apache.http.conn.params.ConnRouteParams;
 import org.apache.http.impl.auth.BasicScheme;
 import org.apache.http.impl.client.BasicAuthCache;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.HttpConnectionParams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -61,39 +62,25 @@ public class DefaultAPIClient extends AbstractAPIClient {
     }
 
     public DefaultAPIClient(String cloudURL, String username, String password, boolean skipCheckCertificate) {
-        NetHttpTransport.Builder netHttpBuilder;
+        ApacheHttpTransport.Builder apacheBuilder = new ApacheHttpTransport.Builder();
         if (skipCheckCertificate) {
             try {
-                netHttpBuilder = new NetHttpTransport.Builder().doNotValidateCertificate();
+                apacheBuilder.doNotValidateCertificate();
             } catch (GeneralSecurityException ex) {
                 LOGGER.warn("Cannot set not-validating certificate. Certificate will be validating.", ex);
-                netHttpBuilder = new NetHttpTransport.Builder();
             }
-        } else {
-            netHttpBuilder = new NetHttpTransport.Builder();
         }
-
-        httpTransport = netHttpBuilder.build();
+        httpTransport = apacheBuilder.build();
+        DefaultHttpClient apacheClient = (DefaultHttpClient) ((ApacheHttpTransport) httpTransport).getHttpClient();
+        HttpConnectionParams.setStaleCheckingEnabled(apacheClient.getParams(), true);
         initializeDefaultAPIClient(cloudURL, username, password);
     }
 
     public DefaultAPIClient(
-            String cloudURL, String username, String password, HttpHost proxy,
-            boolean skipCheckCertificate) {
-        ApacheHttpTransport.Builder apacheBuilder;
-        if (skipCheckCertificate) {
-            try {
-                apacheBuilder = new ApacheHttpTransport.Builder().setProxy(proxy).doNotValidateCertificate();
-            } catch (GeneralSecurityException ex) {
-                LOGGER.warn("Cannot set not-validating certificate. Certificate will be validating.", ex);
-                apacheBuilder = new ApacheHttpTransport.Builder().setProxy(proxy);
-            }
-        } else {
-            apacheBuilder = new ApacheHttpTransport.Builder().setProxy(proxy);
-        }
-
-        httpTransport = apacheBuilder.build();
-        initializeDefaultAPIClient(cloudURL, username, password);
+            String cloudURL, String username, String password, HttpHost proxy, boolean skipCheckCertificate) {
+        this(cloudURL, username, password, skipCheckCertificate);
+        DefaultHttpClient apacheClient = (DefaultHttpClient) ((ApacheHttpTransport) httpTransport).getHttpClient();
+        ConnRouteParams.setDefaultProxy(apacheClient.getParams(), proxy);
     }
 
     public DefaultAPIClient(
