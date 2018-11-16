@@ -44,12 +44,12 @@ public abstract class AbstractAPIClient implements APIClient {
 
     protected HttpTransport httpTransport;
 
-    protected ObjectMapper objectMapper = new ObjectMapper()
+    protected final ObjectMapper objectMapper = new ObjectMapper()
             .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
     protected String apiURL;
 
-    private static List<Integer> POSSIBLE_DELETE_STATUSES = Arrays.asList(SC_OK, SC_ACCEPTED, SC_NO_CONTENT);
+    private static final List<Integer> POSSIBLE_DELETE_STATUSES = Arrays.asList(SC_OK, SC_ACCEPTED, SC_NO_CONTENT);
 
     protected HttpRequestFactory getRequestFactory() throws APIException {
         return httpTransport.createRequestFactory();
@@ -90,7 +90,7 @@ public abstract class AbstractAPIClient implements APIClient {
         // Build request
         HttpRequestFactory factory = getRequestFactory();
         HttpRequest request;
-        HttpResponse response;
+        HttpResponse response = null;
         try {
             // Call request and parse result
             request = factory.buildGetRequest(new GenericUrl(buildUrl(apiURL + uri, context)));
@@ -116,6 +116,8 @@ public abstract class AbstractAPIClient implements APIClient {
         } catch (IOException ex) {
             throw new APIException(String
                     .format("Failed to execute API call: %s. Reason: %s", uri, ex.getMessage()), ex);
+        } finally {
+            disconnectQuitely(response);
         }
     }
 
@@ -154,7 +156,7 @@ public abstract class AbstractAPIClient implements APIClient {
         }
         HttpRequestFactory factory = getRequestFactory();
         HttpRequest request;
-        HttpResponse response;
+        HttpResponse response = null;
         String resourceUrl = apiURL + uri;
         try {
             HttpContent content;
@@ -222,6 +224,8 @@ public abstract class AbstractAPIClient implements APIClient {
         } catch (IOException ex) {
             throw new APIException(String
                     .format("Failed to execute API call: %s. Reason: %s", uri, ex.getMessage()), ex);
+        } finally {
+            disconnectQuitely(response);
         }
     }
 
@@ -239,7 +243,7 @@ public abstract class AbstractAPIClient implements APIClient {
     protected void deleteOnce(String uri) throws APIException {
         HttpRequestFactory factory = getRequestFactory();
         HttpRequest request;
-        HttpResponse response;
+        HttpResponse response = null;
         try {
             request = factory.buildDeleteRequest(new GenericUrl(apiURL + uri));
             request.setHeaders(getHttpHeaders());
@@ -260,6 +264,8 @@ public abstract class AbstractAPIClient implements APIClient {
         } catch (IOException ex) {
             throw new APIException(String
                     .format("Failed to execute API call: %s. Reason: %s", uri, ex.getMessage()), ex);
+        } finally {
+            disconnectQuitely(response);
         }
     }
 
@@ -318,7 +324,7 @@ public abstract class AbstractAPIClient implements APIClient {
         }
     }
 
-    protected Map fixMapParameters(Map<String, Object> map) {
+    protected void fixMapParameters(Map<String, Object> map) {
         String key;
         Object value;
         for (Map.Entry<String, Object> entry : map.entrySet()) {
@@ -331,7 +337,6 @@ public abstract class AbstractAPIClient implements APIClient {
                 map.put(key, value.toString());
             }
         }
-        return map;
     }
 
     protected APIException getAPIException(HttpResponseException ex) {
@@ -341,6 +346,16 @@ public abstract class AbstractAPIClient implements APIClient {
             return new APIException(ex.getStatusCode(), exceptionMessage.getMessage(), ex);
         } catch (APIException e) {
             return new APIException(ex.getStatusCode(), ex.getMessage());
+        }
+    }
+
+    protected void disconnectQuitely(HttpResponse httpResponse) {
+        if (httpResponse != null) {
+            try {
+                httpResponse.disconnect();
+            } catch (IOException exc) {
+                //ignore
+            }
         }
     }
 }
