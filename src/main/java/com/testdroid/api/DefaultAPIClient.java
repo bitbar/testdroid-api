@@ -133,6 +133,7 @@ public class DefaultAPIClient extends AbstractAPIClient {
     }
 
     protected String acquireAccessToken() throws APIException {
+        HttpResponse response = null;
         try {
             if (username == null && password == null) {
                 return "";
@@ -151,7 +152,7 @@ public class DefaultAPIClient extends AbstractAPIClient {
             request.setReadTimeout(HTTP_READ_TIMEOUT); // one minute            
             request.setHeaders(new HttpHeaders().setAccept("application/json"));
 
-            HttpResponse response = request.execute();
+            response = request.execute();
             if (response.getStatusCode() != 200) {
                 throw new APIException(response.getStatusCode(), "Failed to acquire access token");
             }
@@ -166,10 +167,13 @@ public class DefaultAPIClient extends AbstractAPIClient {
                     .format("Failed to acquire access token. Reason: %s", ex.getStatusMessage()), ex);
         } catch (IOException ex) {
             throw new APIException(String.format("Failed to acquire access token. Reason: %s", ex.getMessage()), ex);
+        } finally {
+            disconnectQuitely(response);
         }
     }
 
     protected String refreshAccessToken() throws APIException {
+        HttpResponse response = null;
         try {
             if (refreshToken == null) {
                 return null;
@@ -186,7 +190,7 @@ public class DefaultAPIClient extends AbstractAPIClient {
             request.setConnectTimeout(HTTP_CONNECT_TIMEOUT); // one minute
             request.setReadTimeout(HTTP_READ_TIMEOUT); // one minute
             request.setHeaders(getHttpHeaders());
-            HttpResponse response = request.execute();
+            response = request.execute();
 
             if (response.getStatusCode() != 200) {
                 throw new APIException(response.getStatusCode(), "Failed to refresh access token");
@@ -199,6 +203,8 @@ public class DefaultAPIClient extends AbstractAPIClient {
             return json.get("access_token");
         } catch (IOException ex) {
             throw new APIException(String.format("Failed to refresh access token. Reason: %s", ex.getMessage()), ex);
+        } finally {
+            disconnectQuitely(response);
         }
     }
 
