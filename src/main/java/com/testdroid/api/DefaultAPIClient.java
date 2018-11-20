@@ -14,11 +14,10 @@ import org.apache.http.auth.ChallengeState;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.AuthCache;
 import org.apache.http.client.protocol.HttpClientContext;
-import org.apache.http.conn.params.ConnRoutePNames;
-import org.apache.http.conn.params.ConnRouteParams;
 import org.apache.http.impl.auth.BasicScheme;
 import org.apache.http.impl.client.BasicAuthCache;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.conn.DefaultProxyRoutePlanner;
 import org.apache.http.params.HttpConnectionParams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -80,7 +79,7 @@ public class DefaultAPIClient extends AbstractAPIClient {
             String cloudURL, String username, String password, HttpHost proxy, boolean skipCheckCertificate) {
         this(cloudURL, username, password, skipCheckCertificate);
         DefaultHttpClient apacheClient = (DefaultHttpClient) ((ApacheHttpTransport) httpTransport).getHttpClient();
-        ConnRouteParams.setDefaultProxy(apacheClient.getParams(), proxy);
+        apacheClient.setRoutePlanner(new DefaultProxyRoutePlanner(proxy));
     }
 
     public DefaultAPIClient(
@@ -89,7 +88,6 @@ public class DefaultAPIClient extends AbstractAPIClient {
         this(cloudURL, username, password, proxy, skipCheckCertificate);
 
         DefaultHttpClient apacheClient = (DefaultHttpClient) ((ApacheHttpTransport) httpTransport).getHttpClient();
-        apacheClient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
         apacheClient.getCredentialsProvider().setCredentials(
                 new AuthScope(proxy.getHostName(), proxy.getPort()),
                 new UsernamePasswordCredentials(proxyUser, proxyPassword));
