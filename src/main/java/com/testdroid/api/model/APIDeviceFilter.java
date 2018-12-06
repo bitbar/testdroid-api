@@ -13,14 +13,17 @@ public class APIDeviceFilter extends APIEntity {
 
     private String name;
 
+    private String displayName;
+
     private boolean hidden;
 
     public APIDeviceFilter() {
     }
 
-    public APIDeviceFilter(Long id, String name, boolean hidden) {
+    public APIDeviceFilter(Long id, String name, String displayName, boolean hidden) {
         super(id);
         this.name = name;
+        this.displayName = displayName;
         this.hidden = hidden;
     }
 
@@ -30,6 +33,14 @@ public class APIDeviceFilter extends APIEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 
     public boolean isHidden() {
@@ -46,6 +57,7 @@ public class APIDeviceFilter extends APIEntity {
         APIDeviceFilter apiDeviceFilter = (APIDeviceFilter) from;
         cloneBase(from);
         this.name = apiDeviceFilter.name;
+        this.displayName = apiDeviceFilter.displayName;
         this.hidden = apiDeviceFilter.hidden;
     }
 

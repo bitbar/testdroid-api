@@ -1,4 +1,4 @@
-package com.testdroid.dao.repository.dto;
+package com.testdroid.api.dto;
 
 /**
  * @author Michał Szpruta <michal.szpruta@bitbar.com>
@@ -78,6 +78,10 @@ public class MappingKey {
     public static final String BLUETOOTH_ON = "bluetoothOn";
 
     public static final String BODY = "body";
+
+    public static final String BRAINTREE_CLIENT_TOKEN = "braintreeClientToken";
+
+    public static final String BRAINTREE_NONCE = "braintreeNonce";
 
     public static final String CALABASH_ENABLED = "calabashEnabled";
 
@@ -212,8 +216,6 @@ public class MappingKey {
     public static final String EXTERNAL_STORAGE = "externalStorage";
 
     public static final String FAILED_DEVICE_SESSIONS = "failedDeviceSessions";
-
-    public static final String FEEDBACK = "feedback";
 
     public static final String FIELD = "field";
 
@@ -448,8 +450,6 @@ public class MappingKey {
     public static final String RECOVERY_KEY = "recoveryKey";
 
     public static final String RELEASE_VERSION = "releaseVersion";
-
-    public static final String RELOAD = "reload";
 
     public static final String REMOTE_CONTROL_ENABLED = "remoteControlEnabled";
 

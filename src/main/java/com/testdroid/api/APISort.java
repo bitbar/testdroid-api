@@ -16,7 +16,7 @@ public class APISort {
         ASC("a"),
         DESC("d");
 
-        private String urlValue;
+        private final String urlValue;
 
         Type(String urlValue) {
             this.urlValue = urlValue;

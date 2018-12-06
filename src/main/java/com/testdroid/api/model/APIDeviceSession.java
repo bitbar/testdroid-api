@@ -27,7 +27,7 @@ public class APIDeviceSession extends APIEntity {
         SINGLE_MODE("SINGLE mode test run - another device has started execution."),
         FRAMEWORK_NOT_SUPPORTED("The device does not support selected framework");
 
-        private String displayName;
+        private final String displayName;
 
         ExcludeReason(String displayName) {
             this.displayName = displayName;
@@ -119,50 +119,38 @@ public class APIDeviceSession extends APIEntity {
 
     private Long duration;
 
+    private Long testRunId;
+
+    private Long projectId;
+
     public APIDeviceSession() {
     }
 
-    public APIDeviceSession(Long id, Type type, LocalDateTime createTime, LocalDateTime startTime,
-            LocalDateTime installTime, LocalDateTime endTime, APIDevice device, Long timeLimit,
-            Long  launchAppDuration, State state, Long deviceRunId, Boolean billable, Long deviceTime) {
+    public APIDeviceSession(Long id, APIDeviceSession.Type type, LocalDateTime createTime, LocalDateTime startTime,
+            LocalDateTime installTime, LocalDateTime endTime, Long timeLimit, Long launchAppDuration,
+            APIDeviceSession.State state, Integer testCasePassedCount, Integer testCaseFailedCount,
+            Integer testCaseSkippedCount, Boolean billable, Long deviceModelId, String displayName,
+            Integer creditsPrice, String imagePrefix, Integer imageTop, Integer imageLeft, Integer imageWidth,
+            Integer imageHeight, Integer frameExtraWidth, APIDevice.OsType osType, Long softwareVersionId,
+            String releaseVersion, Integer apiLevel, ExcludeReason excludeReason, Long deviceInstanceId,
+            RetryState retryState, Integer autoRetriesLeftCount, Long deviceTime, Long duration, Long projectId,
+            Long testRunId) {
         super(id);
         this.type = type;
         this.createTime = TimeConverter.toDate(createTime);
         this.startTime = TimeConverter.toDate(startTime);
         this.installTime = TimeConverter.toDate(installTime);
         this.endTime = TimeConverter.toDate(endTime);
-        this.device = device;
+        this.device = new APIDevice(deviceModelId, displayName, softwareVersionId, releaseVersion, apiLevel,
+                creditsPrice, imagePrefix, imageTop, imageLeft, imageWidth, imageHeight, frameExtraWidth, osType, null,
+                null, null, null, null);
         this.timeLimit = timeLimit;
         this.launchAppDuration = launchAppDuration;
         this.state = state;
-        this.deviceRunId = deviceRunId;
+        this.deviceRunId = id;
         this.billable = billable;
         this.deviceTime = deviceTime;
-    }
-
-    public APIDeviceSession(Long id, Type type, LocalDateTime createTime, LocalDateTime startTime,
-            LocalDateTime installTime, LocalDateTime endTime,
-            APIDevice device, Long timeLimit, Long launchAppDuration, State state, Long deviceRunId,
-            Boolean billable, ExcludeReason excludeReason, Long deviceTime) {
-        this(id, type, createTime, startTime, installTime, endTime, device, timeLimit, launchAppDuration, state,
-                deviceRunId, billable, deviceTime);
         this.excludeReason = excludeReason != null ? excludeReason.getDisplayName() : null;
-    }
-
-    public APIDeviceSession(Long id, APIDeviceSession.Type type, LocalDateTime createTime, LocalDateTime startTime,
-            LocalDateTime installTime, LocalDateTime endTime, Long timeLimit, Long launchAppDuration,
-            APIDeviceSession.State state, Long deviceSessionId, Integer testCasePassedCount,
-            Integer testCaseFailedCount, Integer testCaseSkippedCount,
-            Boolean billable, Long deviceModelId, String displayName, Integer creditsPrice, String imagePrefix,
-            Integer imageTop, Integer imageLeft, Integer imageWidth, Integer imageHeight, Integer frameExtraWidth,
-            APIDevice.OsType osType, Long softwareVersionId, String releaseVersion,
-            Integer apiLevel, ExcludeReason excludeReason, Long deviceInstanceId, RetryState retryState,
-            Integer autoRetriesLeftCount, Long deviceTime, Long duration) {
-        this(id, type, createTime, startTime, installTime, endTime,
-                new APIDevice(deviceModelId, displayName, softwareVersionId, releaseVersion, apiLevel, creditsPrice,
-                        imagePrefix, imageTop, imageLeft, imageWidth, imageHeight, frameExtraWidth, osType, null,
-                        null, null, null, null), timeLimit, launchAppDuration, state,
-                deviceSessionId, billable, excludeReason, deviceTime);
         this.testCaseAllCount = testCasePassedCount + testCaseFailedCount + testCaseSkippedCount;
         this.testCaseSuccessCount = testCasePassedCount + testCaseFailedCount;
         this.testCasePassedCount = testCasePassedCount;
@@ -172,6 +160,8 @@ public class APIDeviceSession extends APIEntity {
         this.retryState = retryState;
         this.autoRetriesLeftCount = autoRetriesLeftCount;
         this.duration = duration;
+        this.projectId = projectId;
+        this.testRunId = testRunId;
     }
 
     public Type getType() {
@@ -350,6 +340,22 @@ public class APIDeviceSession extends APIEntity {
         this.duration = duration;
     }
 
+    public Long getTestRunId() {
+        return testRunId;
+    }
+
+    public void setTestRunId(Long testRunId) {
+        this.testRunId = testRunId;
+    }
+
+    public Long getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(Long projectId) {
+        this.projectId = projectId;
+    }
+
     @JsonIgnore
     public APIListResource<APIDeviceSessionStep> getDeviceSessionStepsResource() throws APIException {
         return getListResource(createUri(selfURI, "/steps"), APIDeviceSessionStep.class);
@@ -406,5 +412,7 @@ public class APIDeviceSession extends APIEntity {
         this.autoRetriesLeftCount = apiDeviceSession.autoRetriesLeftCount;
         this.deviceTime = apiDeviceSession.deviceTime;
         this.duration = apiDeviceSession.duration;
+        this.testRunId = apiDeviceSession.testRunId;
+        this.projectId = apiDeviceSession.projectId;
     }
 }

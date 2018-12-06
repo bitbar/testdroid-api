@@ -36,9 +36,9 @@ public class APIProjectJobConfig extends APIEntity {
         XCUITEST(APIDevice.OsType.IOS, "iOS XCUITest"),
         GENERIC(APIDevice.OsType.UNDEFINED, "Undefined Framework");
 
-        private String name;
+        private final String name;
 
-        private APIDevice.OsType osType;
+        private final APIDevice.OsType osType;
 
         Type(APIDevice.OsType osType, String name) {
             this.osType = osType;

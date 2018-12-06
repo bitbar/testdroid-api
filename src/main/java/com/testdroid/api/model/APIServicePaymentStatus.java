@@ -26,36 +26,6 @@ public class APIServicePaymentStatus {
 
     private APIAccountService accountService;
 
-    public static APIServicePaymentStatus createSucceededStatus(APIAccountService accountService) {
-        return createSucceededStatus(accountService, null);
-    }
-
-    public static APIServicePaymentStatus createSucceededStatus(APIAccountService accountService, String message) {
-        APIServicePaymentStatus result = new APIServicePaymentStatus();
-        result.accountService = accountService;
-        result.status = Status.SUCCEEDED;
-        result.message = message;
-        return result;
-    }
-
-    public static APIServicePaymentStatus createFailedStatus(APIAccountService accountService, String message) {
-        APIServicePaymentStatus result = new APIServicePaymentStatus();
-        result.accountService = accountService;
-        result.status = Status.FAILED;
-        result.message = message;
-        return result;
-    }
-
-    public static APIServicePaymentStatus createRedirectionStatus(
-            APIAccountService accountService, String redirectionUrl, String redirectionPostData) {
-        APIServicePaymentStatus result = new APIServicePaymentStatus();
-        result.accountService = accountService;
-        result.status = Status.REDIRECTED;
-        result.redirectionUrl = redirectionUrl;
-        result.redirectionPostData = redirectionPostData;
-        return result;
-    }
-
     public APIAccountService getAccountService() {
         return accountService;
     }

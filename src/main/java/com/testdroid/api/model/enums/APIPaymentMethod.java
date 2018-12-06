@@ -11,7 +11,6 @@ public enum APIPaymentMethod {
     BRAINTREE(TRUE),
     INVOICE(FALSE),
     PROMOTION,
-    BLUEMIX(TRUE),
     AWS(FALSE);
 
     private Boolean allowUpdate;

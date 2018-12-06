@@ -8,11 +8,11 @@ import com.testdroid.api.dto.Context;
  */
 public class APIListResource<T extends APIEntity> {
 
-    private APIClient client;
+    private final APIClient client;
 
-    private Context<T> context;
+    private final Context<T> context;
 
-    private String resourceURI;
+    private final String resourceURI;
 
     private APIList<T> entity;
 
