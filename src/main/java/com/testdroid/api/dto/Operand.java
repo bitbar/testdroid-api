@@ -22,7 +22,7 @@ public enum Operand {
     BEFOREOREQUAL(2),
     AFTERORNULL(2);
 
-    private int arity;
+    private final int arity;
 
     Operand(Integer arity) {
         this.arity = arity;

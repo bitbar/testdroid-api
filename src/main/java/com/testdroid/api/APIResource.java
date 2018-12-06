@@ -7,11 +7,11 @@ import java.io.InputStream;
  */
 public class APIResource<T extends APIEntity> {
 
-    protected APIClient client;
+    protected final APIClient client;
 
-    protected Class<T> type;
+    protected final Class<T> type;
 
-    protected String resourceURI;
+    protected final String resourceURI;
 
     private T entity;
 

@@ -5,6 +5,7 @@ import com.testdroid.api.filter.BooleanFilterEntry;
 import com.testdroid.api.filter.StringFilterEntry;
 import com.testdroid.api.model.APIFramework;
 import com.testdroid.api.model.APIUser;
+import org.apache.http.HttpHost;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -13,14 +14,16 @@ import org.junit.jupiter.params.provider.ArgumentsProvider;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Stream;
 
+import static com.testdroid.api.dto.MappingKey.*;
 import static com.testdroid.api.dto.Operand.EQ;
 import static com.testdroid.api.model.APIDevice.OsType.ANDROID;
-import static com.testdroid.dao.repository.dto.MappingKey.*;
 import static java.lang.Boolean.TRUE;
 import static java.lang.Integer.MAX_VALUE;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
+import static org.apache.commons.lang3.StringUtils.isNoneBlank;
 
 /**
  * @author Damian Sniezek <damian.sniezek@bitbar.com>
@@ -35,11 +38,17 @@ public abstract class APIClientTest {
 
     private static final String EMAIL_PATTERN = System.getenv("EMAIL_PATTERN");
 
-    protected static APIKeyClient ADMIN_API_CLIENT = new APIKeyClient(CLOUD_URL, ADMIN_API_KEY, true);
+    private static final String PROXY_HOST = System.getenv("API_CLIENT_TEST_PROXY_HOST");
+
+    private static final String PROXY_PORT = System.getenv("API_CLIENT_TEST_PROXY_PORT");
+
+    protected static final APIKeyClient ADMIN_API_CLIENT = new APIKeyClient(CLOUD_URL, ADMIN_API_KEY, true);
 
     private static APIKeyClient USER_API_KEY_CLIENT;
 
     private static DefaultAPIClient USER_DEFAULT_CLIENT;
+
+    private static DefaultAPIClient USER_DEFAULT_CLIENT_WITH_PROXY;
 
     protected static final String TEST_PATH = "/fixtures/BitbarSampleAppTest.apk";
 
@@ -51,6 +60,10 @@ public abstract class APIClientTest {
         USER_API_KEY_CLIENT = new APIKeyClient(CLOUD_URL, apiUser1.getApiKey());
         APIUser apiUser2 = create(ADMIN_API_CLIENT);
         USER_DEFAULT_CLIENT = new DefaultAPIClient(CLOUD_URL, apiUser2.getEmail(), USER_PASSWORD);
+        if (isNoneBlank(PROXY_HOST, PROXY_PORT)) {
+            USER_DEFAULT_CLIENT_WITH_PROXY = createDefaultApiClientWithProxy(new HttpHost(PROXY_HOST, Integer
+                    .valueOf(PROXY_PORT)));
+        }
     }
 
     @AfterAll
@@ -58,17 +71,20 @@ public abstract class APIClientTest {
         String deleteUrl = "%s/delete";
         Map<String, Object> map = new HashMap<>();
         map.put(PASSWORD, USER_PASSWORD);
-        APIUser apiUser1 = USER_API_KEY_CLIENT.me();
-        ADMIN_API_CLIENT.post(String.format(deleteUrl, apiUser1.getSelfURI()), map, APIUser.class);
-        APIUser apiUser2 = USER_API_KEY_CLIENT.me();
-        ADMIN_API_CLIENT.post(String.format(deleteUrl, apiUser2.getSelfURI()), map, APIUser.class);
+        ADMIN_API_CLIENT.post(String.format(deleteUrl, USER_API_KEY_CLIENT.me().getSelfURI()), map, APIUser.class);
+        ADMIN_API_CLIENT.post(String.format(deleteUrl, USER_DEFAULT_CLIENT.me().getSelfURI()), map, APIUser.class);
+        if (USER_DEFAULT_CLIENT_WITH_PROXY != null) {
+            ADMIN_API_CLIENT.post(String
+                    .format(deleteUrl, USER_DEFAULT_CLIENT_WITH_PROXY.me().getSelfURI()), map, APIUser.class);
+        }
     }
 
     public static class APIClientProvider implements ArgumentsProvider {
 
         @Override
         public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
-            return Stream.of(USER_API_KEY_CLIENT, USER_DEFAULT_CLIENT).map(Arguments::of);
+            return Stream.of(USER_API_KEY_CLIENT, USER_DEFAULT_CLIENT, USER_DEFAULT_CLIENT_WITH_PROXY).filter
+                    (Objects::nonNull).map(Arguments::of);
         }
     }
 
@@ -77,7 +93,7 @@ public abstract class APIClientTest {
         BooleanFilterEntry forProject = new BooleanFilterEntry(FOR_PROJECTS, EQ, TRUE);
         BooleanFilterEntry canRunFromUI = new BooleanFilterEntry(CAN_RUN_FROM_UI, EQ, TRUE);
         StringFilterEntry defaultFrameworkName = new StringFilterEntry(TYPE, EQ, frameworkName);
-        Context<APIFramework> context = new Context(APIFramework.class, 0, MAX_VALUE, EMPTY, EMPTY);
+        Context<APIFramework> context = new Context<>(APIFramework.class, 0, MAX_VALUE, EMPTY, EMPTY);
         context.addFilter(osTypeFilter);
         context.addFilter(forProject);
         context.addFilter(canRunFromUI);
@@ -103,6 +119,10 @@ public abstract class APIClientTest {
 
     public static String generateUnique(String prefix) {
         return String.format("%s%d",prefix, System.currentTimeMillis());
+    }
+
+    protected static DefaultAPIClient createDefaultApiClientWithProxy(HttpHost proxy) throws APIException{
+        return new DefaultAPIClient(CLOUD_URL, create(ADMIN_API_CLIENT).getEmail(), USER_PASSWORD, proxy, false);
     }
 
 }

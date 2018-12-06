@@ -42,14 +42,11 @@ public class Context<T extends APIEntity> {
 
     private List<FilterEntry> filters = new ArrayList<>();
 
-    private Class<T> type;
+    private final Class<T> type;
 
     private Boolean cacheable = Boolean.FALSE;
 
     private Map<String, Object> extraParams = new HashMap<>();
-
-    private Context() {
-    }
 
     public Context(Class<T> type) {
         this.type = type;

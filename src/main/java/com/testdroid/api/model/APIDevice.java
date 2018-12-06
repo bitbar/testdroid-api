@@ -36,7 +36,7 @@ public class APIDevice extends APIEntity {
         ANDROID("Android"),
         UNDEFINED("Undefined");
 
-        private String displayName;
+        private final String displayName;
 
         OsType(String displayName) {
             this.displayName = displayName;

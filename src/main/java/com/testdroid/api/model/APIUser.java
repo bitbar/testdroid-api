@@ -27,7 +27,7 @@ public class APIUser extends APIEntity {
         DISABLED("Disabled"),
         ENABLED("Enabled");
 
-        private String displayName;
+        private final String displayName;
 
         Status(String displayName) {
             this.displayName = displayName;
@@ -98,7 +98,7 @@ public class APIUser extends APIEntity {
         NEVER("never"),
         ON_FAILURE("on failure");
 
-        private String displayName;
+        private final String displayName;
 
         EmailNotification(String displayName) {
             this.displayName = displayName;

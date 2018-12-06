@@ -49,11 +49,11 @@ public class APIProject extends APIEntity {
                 "Appium iOS server side"),
         GENERIC(OsType.UNDEFINED, APIProjectJobConfig.Type.GENERIC, "Generic");
 
-        private APIProjectJobConfig.Type jobConfigType;
+        private final APIProjectJobConfig.Type jobConfigType;
 
-        private APIDevice.OsType osType;
+        private final APIDevice.OsType osType;
 
-        private String title;
+        private final String title;
 
         Type(OsType osType, APIProjectJobConfig.Type jobConfigType, String title) {
             this.osType = osType;

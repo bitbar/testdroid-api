@@ -4,22 +4,26 @@ import com.testdroid.api.dto.Context;
 import com.testdroid.api.filter.BooleanFilterEntry;
 import com.testdroid.api.filter.StringFilterEntry;
 import com.testdroid.api.model.*;
+import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
+import static com.testdroid.api.dto.MappingKey.*;
 import static com.testdroid.api.dto.Operand.EQ;
 import static com.testdroid.api.model.APIDevice.OsType.ANDROID;
 import static com.testdroid.api.model.APIFileConfig.Action.INSTALL;
 import static com.testdroid.api.model.APIFileConfig.Action.RUN_TEST;
 import static com.testdroid.api.model.APITestRun.State.WAITING;
 import static com.testdroid.cloud.test.categories.TestTags.API_CLIENT;
-import static com.testdroid.dao.repository.dto.MappingKey.*;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static java.lang.Integer.MAX_VALUE;
@@ -81,7 +85,7 @@ public class APIUserAPIClientTest extends APIClientTest{
         StringFilterEntry osTypeFilter = new StringFilterEntry(OS_TYPE, EQ, ANDROID.name());
         BooleanFilterEntry forProject = new BooleanFilterEntry(FOR_PROJECTS, EQ, TRUE);
         BooleanFilterEntry canRunFromUI = new BooleanFilterEntry(CAN_RUN_FROM_UI, EQ, TRUE);
-        Context<APIFramework> context = new Context(APIFramework.class, 0, MAX_VALUE, EMPTY, EMPTY);
+        Context<APIFramework> context = new Context<>(APIFramework.class, 0, MAX_VALUE, EMPTY, EMPTY);
         context.addFilter(osTypeFilter);
         context.addFilter(forProject);
         context.addFilter(canRunFromUI);
@@ -139,7 +143,7 @@ public class APIUserAPIClientTest extends APIClientTest{
 
     @ParameterizedTest
     @ArgumentsSource(APIClientProvider.class)
-    public void requestScreenshotsZip(AbstractAPIClient apiKeyClient) throws APIException {
+    public void requestScreenshotsZip(AbstractAPIClient apiKeyClient) throws APIException, IOException {
         APIUser me = apiKeyClient.me();
         APIProject project = me.createProject(APIProject.Type.ANDROID, generateUnique("testProject"));
         APITestRunConfig config = project.getTestRunConfig();
@@ -163,7 +167,9 @@ public class APIUserAPIClientTest extends APIClientTest{
             } catch (InterruptedException ignore) {
             }
         }
-        file.getFile();
+        try (InputStream inputStream = file.getFile()) {
+            FileUtils.copyInputStreamToFile(inputStream, Files.createTempFile(null, null).toFile());
+        }
     }
 
 }

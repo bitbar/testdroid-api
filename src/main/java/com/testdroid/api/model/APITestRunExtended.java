@@ -1,13 +1,9 @@
 package com.testdroid.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.testdroid.api.APIEntity;
-import org.apache.commons.lang3.StringUtils;
 
 import javax.xml.bind.annotation.XmlRootElement;
-import java.io.IOException;
 import java.time.LocalDateTime;
 
 /**
@@ -39,9 +35,8 @@ public class APITestRunExtended extends APITestRun {
                 testCaseCount, successfulTestCaseCount, failedTestCaseCount,
                 totalDeviceCount, finishedDeviceCount, excludedDeviceCount, errorsDeviceCount, succeededDeviceCount,
                 runningDeviceCount, warningDeviceCount, waitingDeviceCount, abortedDeviceCount, timeoutedDeviceCount,
-                frameworkId, frameworkName, null);
+                frameworkId, frameworkName, testRunConfigurationContent);
         this.deviceCount = totalDeviceCount;
-        mapConfig(testRunConfigurationContent);
     }
 
     public Integer getDeviceCount() {
@@ -66,26 +61,6 @@ public class APITestRunExtended extends APITestRun {
 
     public void setBillable(boolean billable) {
         this.billable = billable;
-    }
-
-    @Override
-    @JsonIgnore(false)
-    public APITestRunConfig getConfig() {
-        return super.getConfigOffline();
-    }
-
-    @JsonIgnore
-    private void mapConfig(String content) {
-        if (StringUtils.isBlank(content)) {
-            return;
-        }
-        try {
-            APITestRunConfig config = new ObjectMapper().configure(
-                    DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-                    .readValue(content, APITestRunConfig.class);
-            setConfig(config);
-        } catch (IOException ignore) {
-        }
     }
 
     @Override

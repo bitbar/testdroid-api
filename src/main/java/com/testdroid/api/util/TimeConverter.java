@@ -3,6 +3,7 @@ package com.testdroid.api.util;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -59,6 +60,13 @@ public class TimeConverter {
 
     public static long toMilli(LocalDateTime localDateTime, ZoneId zoneId) {
         return localDateTime.atZone(zoneId).toInstant().toEpochMilli();
+    }
+
+    public static Long atMidnight(LocalDateTime date) {
+        return date
+                .atZone(ZoneId.of("UTC"))
+                .truncatedTo(ChronoUnit.DAYS)
+                .toInstant().toEpochMilli();
     }
 
 }

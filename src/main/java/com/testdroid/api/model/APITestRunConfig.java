@@ -17,6 +17,10 @@ import java.util.*;
 @XmlRootElement
 public class APITestRunConfig extends APIEntity implements Serializable {
 
+    public static final String DEFAULT_RUNNER = "android.test.InstrumentationTestRunner";
+
+    public static final String SCREENSHOT_DIR = "/sdcard/test-screenshots";
+
     private static final long serialVersionUID = 1L;
 
     @XmlType(namespace = "APITestRunConfig")

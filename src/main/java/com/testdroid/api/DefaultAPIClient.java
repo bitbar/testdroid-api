@@ -17,6 +17,7 @@ import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.impl.auth.BasicScheme;
 import org.apache.http.impl.client.BasicAuthCache;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.StandardHttpRequestRetryHandler;
 import org.apache.http.impl.conn.DefaultProxyRoutePlanner;
 import org.apache.http.params.HttpConnectionParams;
 import org.slf4j.Logger;
@@ -71,6 +72,7 @@ public class DefaultAPIClient extends AbstractAPIClient {
         }
         httpTransport = apacheBuilder.build();
         DefaultHttpClient apacheClient = (DefaultHttpClient) ((ApacheHttpTransport) httpTransport).getHttpClient();
+        apacheClient.setHttpRequestRetryHandler(new StandardHttpRequestRetryHandler());
         HttpConnectionParams.setStaleCheckingEnabled(apacheClient.getParams(), true);
         initializeDefaultAPIClient(cloudURL, username, password);
     }

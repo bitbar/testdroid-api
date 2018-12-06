@@ -12,7 +12,7 @@ import java.util.List;
 public class PagingResult<T extends APIEntity> {
 
     public static <T extends APIEntity> PagingResult<T> empty() {
-        return new PagingResult<>(Collections.<T>emptyList(), 0L);
+        return new PagingResult<>(Collections.emptyList(), 0L);
     }
 
     private List<T> result;

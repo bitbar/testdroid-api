@@ -15,6 +15,7 @@ import java.util.Date;
 public class APIBillingPeriod extends APIEntity {
 
     private Long userId;
+    private Long accountServiceId;
     private String mail;
     private Date startBillingPeriod;
     private Date endBillingPeriod;
@@ -35,28 +36,44 @@ public class APIBillingPeriod extends APIEntity {
     }
 
     public APIBillingPeriod(
-            Long invoiceId, Long userId, String mail, String plan, LocalDateTime startBillingPeriod,
-            LocalDateTime endBillingPeriod, LocalDateTime subscriptionStart, LocalDateTime subscriptionEnd,
-            Long additionalHours, Long totalPrice, Long servicePrice, Long additionalHoursPrice, Boolean paid,
-            LocalDateTime lastPaymentDate, LocalDateTime createTime, APIPaymentMethod paymentMethod,
-            APIBillingPeriodType apiBillingPeriodType) {
-        super(invoiceId);
+            Long billingPeriodId, Long accountServiceId, Long userId, String mail, String plan,
+            LocalDateTime startBillingPeriod, LocalDateTime endBillingPeriod,
+            LocalDateTime subscriptionStart, LocalDateTime subscriptionEnd,
+            Long additionalHours, Long servicePrice, Long additionalHoursPrice,
+            LocalDateTime paymentDate, LocalDateTime additionalHoursPaymentDate,
+            LocalDateTime lastPaymentDate, LocalDateTime createTime, APIPaymentMethod paymentMethod) {
+        super(billingPeriodId);
+        this.accountServiceId = accountServiceId;
         this.userId = userId;
         this.mail = mail;
         this.plan = plan;
         this.additionalHours = additionalHours;
-        this.totalPrice = totalPrice;
+        this.totalPrice = servicePrice + additionalHoursPrice;
         this.startBillingPeriod = TimeConverter.toDate(startBillingPeriod);
         this.endBillingPeriod = TimeConverter.toDate(endBillingPeriod);
         this.subscriptionStart = TimeConverter.toDate(subscriptionStart);
         this.subscriptionEnd = TimeConverter.toDate(subscriptionEnd);
         this.servicePrice = servicePrice;
         this.additionalHoursPrice = additionalHoursPrice;
-        this.paid = paid;
+        this.paid = paymentDate != null && additionalHoursPaymentDate != null;
         this.lastPaymentDate = TimeConverter.toDate(lastPaymentDate);
         this.paymentMethod = paymentMethod;
         this.createTime = TimeConverter.toDate(createTime);
-        this.apiBillingPeriodType = apiBillingPeriodType;
+        this.apiBillingPeriodType = type(startBillingPeriod, endBillingPeriod, subscriptionStart, subscriptionEnd);
+    }
+
+    public static APIBillingPeriodType type(
+            LocalDateTime startBillingPeriod, LocalDateTime endBillingPeriod, LocalDateTime subscriptionStart,
+            LocalDateTime subscriptionEnd) {
+        if (startBillingPeriod == null && endBillingPeriod == null
+                && subscriptionStart != null && subscriptionEnd != null) {
+            return APIBillingPeriodType.BUY;
+        }
+        if (startBillingPeriod != null && endBillingPeriod != null
+                && subscriptionStart == null && subscriptionEnd == null) {
+            return APIBillingPeriodType.CANCEL;
+        }
+        return APIBillingPeriodType.CHARGE;
     }
 
     public String getMail() {
@@ -187,6 +204,14 @@ public class APIBillingPeriod extends APIEntity {
         this.apiBillingPeriodType = apiBillingPeriodType;
     }
 
+    public Long getAccountServiceId() {
+        return accountServiceId;
+    }
+
+    public void setAccountServiceId(Long accountServiceId) {
+        this.accountServiceId = accountServiceId;
+    }
+
     @Override
     protected <T extends APIEntity> void clone(T from) {
         APIBillingPeriod period = (APIBillingPeriod) from;
@@ -205,5 +230,6 @@ public class APIBillingPeriod extends APIEntity {
         this.paymentMethod = period.paymentMethod;
         this.createTime = period.createTime;
         this.apiBillingPeriodType = period.apiBillingPeriodType;
+        this.accountServiceId = period.accountServiceId;
     }
 }

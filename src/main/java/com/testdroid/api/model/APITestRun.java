@@ -1,14 +1,18 @@
 package com.testdroid.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIException;
 import com.testdroid.api.APIListResource;
 import com.testdroid.api.dto.Context;
 import com.testdroid.api.util.TimeConverter;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Date;
@@ -96,7 +100,7 @@ public class APITestRun extends APIEntity {
             Integer totalDeviceCount, Integer finishedDeviceCount, Integer excludedDeviceCount,
             Integer errorsDeviceCount, Integer succeededDeviceCount, Integer runningDeviceCount,
             Integer warningDeviceCount, Integer waitingDeviceCount, Integer abortedDeviceCount,
-            Integer timeoutedDeviceCount, Long frameworkId, String frameworkName, String ignore) {
+            Integer timeoutedDeviceCount, Long frameworkId, String frameworkName, String testRunConfigurationContent) {
         super(id);
         this.number = number;
         this.createTime = TimeConverter.toDate(createTime);
@@ -126,6 +130,7 @@ public class APITestRun extends APIEntity {
         this.timeoutedDeviceCount = timeoutedDeviceCount;
         this.frameworkId = frameworkId;
         this.frameworkName = frameworkName;
+        mapConfig(testRunConfigurationContent);
     }
 
     public Integer getNumber() {
@@ -405,16 +410,7 @@ public class APITestRun extends APIEntity {
         deleteResource(selfURI);
     }
 
-    @JsonIgnore
-    public APITestRunConfig getConfig() throws APIException {
-        if (config == null) {
-            config = getResource(getConfigURI(), APITestRunConfig.class).getEntity();
-        }
-        return config;
-    }
-
-    @JsonIgnore
-    public APITestRunConfig getConfigOffline() {
+    public APITestRunConfig getConfig() {
         return config;
     }
 
@@ -484,6 +480,20 @@ public class APITestRun extends APIEntity {
 
     public void abort() throws APIException {
         postResource(getAbortURI(), null, null);
+    }
+
+    @JsonIgnore
+    private void mapConfig(String content) {
+        if (StringUtils.isBlank(content)) {
+            return;
+        }
+        try {
+            APITestRunConfig config = new ObjectMapper()
+                    .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+                    .readValue(content, APITestRunConfig.class);
+            setConfig(config);
+        } catch (IOException ignore) {
+        }
     }
 
     @Override
