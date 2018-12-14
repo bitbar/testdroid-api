@@ -42,6 +42,8 @@ public class APILicense extends APIEntity {
 
     private Date closeTime;
 
+    private DesktopLicense desktop;
+
     private InspectorLicense inspector;
 
     private IOSLicense ios;
@@ -80,7 +82,8 @@ public class APILicense extends APIEntity {
             Integer iosProjectLimit, Boolean serverIosEnabled, Integer recorderLimit, Boolean remoteControlEnabled,
             Boolean xcTestEnabled, Boolean xcuiTestEnabled, Boolean ctsEnabled, Integer androidProjectLimit,
             Boolean appiumEnabled, Boolean serverEnabled, Boolean inspectorEnabled, Boolean iosEnabled,
-            Integer iosDeviceLimit, LocalDateTime closeTime, String status, Boolean buildEnabled, Integer buildLimit) {
+            Integer iosDeviceLimit, LocalDateTime closeTime, String status, Boolean buildEnabled, Integer buildLimit,
+            Boolean desktopEnabled, Integer desktopDeviceLimit, Integer desktopProjectLimit) {
         super(id);
         this.privateInstance = enterprise;
         this.activateTime = TimeConverter.toDate(activateTime);
@@ -102,6 +105,7 @@ public class APILicense extends APIEntity {
         this.remoteControl = new RemoteControlLicense(remoteControlEnabled);
         this.xcTest = new XCTestLicense(xcTestEnabled);
         this.xcuiTest = new XCUITestLicense(xcuiTestEnabled);
+        this.desktop = new DesktopLicense(desktopDeviceLimit, desktopProjectLimit, desktopEnabled);
         this.closeTime = TimeConverter.toDate(closeTime);
         this.status = EnumUtils.getEnum(Status.class, status);
     }
@@ -110,7 +114,7 @@ public class APILicense extends APIEntity {
             boolean privateInstance, LocalDateTime expireTime, String userEmail, AndroidLicense android, IOSLicense ios,
             RecorderLicense recorder, ServerLicense server, CalabashLicense calabash, AppiumLicense appium,
             SeleniumLicense selenium, InspectorLicense inspector, RemoteControlLicense remoteControl,
-            XCTestLicense xcTest, XCUITestLicense xcuiTest, BuildLicense build) {
+            XCTestLicense xcTest, XCUITestLicense xcuiTest, BuildLicense build, DesktopLicense desktop) {
         this.privateInstance = privateInstance;
         this.expireTime = TimeConverter.toDate(expireTime);
         this.userEmail = userEmail;
@@ -126,6 +130,7 @@ public class APILicense extends APIEntity {
         this.xcTest = xcTest;
         this.xcuiTest = xcuiTest;
         this.build = build;
+        this.desktop = desktop;
     }
 
     private static String getTextValue(Integer i) {
@@ -306,6 +311,14 @@ public class APILicense extends APIEntity {
         this.closeTime = closeTime;
     }
 
+    public DesktopLicense getDesktop() {
+        return desktop;
+    }
+
+    public void setDesktop(DesktopLicense desktop) {
+        this.desktop = desktop;
+    }
+
     public String generateSignContent() {
         return String.format("%s:%s:%s%s%s%s", getTextValue(privateInstance), getUserEmail(), getAndroid()
                 .generateSignContent(), getIos().generateSignContent(),
@@ -479,6 +492,53 @@ public class APILicense extends APIEntity {
         }
 
         public IOSLicense(Integer deviceLimit, Integer projectLimit, boolean enabled) {
+            super(enabled);
+            this.deviceLimit = deviceLimit;
+            this.projectLimit = projectLimit;
+        }
+
+        public Integer getDeviceLimit() {
+            return deviceLimit;
+        }
+
+        public void setDeviceLimit(Integer deviceLimit) {
+            this.deviceLimit = deviceLimit;
+        }
+
+        public Integer getProjectLimit() {
+            return projectLimit;
+        }
+
+        public void setProjectLimit(Integer projectLimit) {
+            this.projectLimit = projectLimit;
+        }
+
+        public boolean isDeviceLimited() {
+            return deviceLimit != null;
+        }
+
+        public boolean isProjectLimited() {
+            return projectLimit != null;
+        }
+
+        @Override
+        public String generateSignContent() {
+            return String
+                    .format("%s%s%s", getTextValue(enabled), getTextValue(projectLimit), getTextValue(deviceLimit));
+        }
+
+    }
+
+    public static class DesktopLicense extends FeatureLicense {
+
+        private Integer deviceLimit;
+
+        private Integer projectLimit;
+
+        public DesktopLicense() {
+        }
+
+        public DesktopLicense(Integer deviceLimit, Integer projectLimit, boolean enabled) {
             super(enabled);
             this.deviceLimit = deviceLimit;
             this.projectLimit = projectLimit;

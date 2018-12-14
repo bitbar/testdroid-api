@@ -5,6 +5,8 @@ package com.testdroid.api.dto;
  */
 public class MappingKey {
 
+    public static final String ACCESS_GROUP_ID = "accessGroupId";
+
     public static final String ACCOUNT_ID = "accountId";
 
     public static final String ACCOUNT_ROLE_ID = "accountRoleId";
@@ -12,6 +14,8 @@ public class MappingKey {
     public static final String ACTIVATED_BY_NAME = "activatedByName";
 
     public static final String ACTIVATE_TIME = "activateTime";
+
+    public static final String ACTIVE_ONLY = "activeOnly";
 
     public static final String ACTIVE_SERVICE_ID = "activeServiceId";
 
@@ -151,6 +155,12 @@ public class MappingKey {
 
     public static final String DESCRIPTION = "description";
 
+    public static final String DESKTOP_DEVICE_LIMIT = "desktopDeviceLimit";
+
+    public static final String DESKTOP_ENABLED = "desktopEnabled";
+
+    public static final String DESKTOP_PROJECT_LIMIT = "desktopProjectLimit";
+
     public static final String DEVICE_COUNT = "deviceCount";
 
     public static final String DEVICE_DOT_ARCHIVE_TIME = "device.archiveTime";
@@ -235,8 +245,6 @@ public class MappingKey {
 
     public static final String FOR_PROJECTS = "forProjects";
 
-    public static final String FOR_SECONDS = "forSeconds";
-
     public static final String FRAMEWORK_ID = "frameworkId";
 
     public static final String FRAMEWORK_NAME = "frameworkName";
@@ -286,6 +294,8 @@ public class MappingKey {
     public static final String INSPECTOR_ENABLED = "inspectorEnabled";
 
     public static final String INSTRUMENTATION_RUNNER = "instrumentationRunner";
+
+    public static final String IN_USE = "inUse";
 
     public static final String INTERNAL_STORAGE = "internalStorage";
 
@@ -443,6 +453,8 @@ public class MappingKey {
 
     public static final String QUEUE_SIZE = "queueSize";
 
+    public static final String READ_ONLY = "readOnly";
+
     public static final String RECORDER_ENABLED = "recorderEnabled";
 
     public static final String RECORDER_LIMIT = "recorderLimit";
@@ -456,6 +468,8 @@ public class MappingKey {
     public static final String REQUIRED_APP_EXTENSIONS = "requiredAppExtensions";
 
     public static final String REQUIRED_TEST_EXTENSIONS = "requiredTestExtensions";
+
+    public static final String RESOURCE_ID = "resourceId";
 
     public static final String RESULT = "result";
 
@@ -475,6 +489,8 @@ public class MappingKey {
 
     public static final String SCHEDULER = "scheduler";
 
+    public static final String SCOPE = "scope";
+
     public static final String SCREENSHOT = "screenshot";
 
     public static final String SCREENSHOT_DIR = "screenshotDir";
@@ -490,8 +506,6 @@ public class MappingKey {
     public static final String SELECTOR_IDS_ARR = "selectorIds[]";
 
     public static final String SELENIUM_ENABLED = "seleniumEnabled";
-
-    public static final String SEND_MAIL = "sendMail";
 
     public static final String SENT = "sent";
 

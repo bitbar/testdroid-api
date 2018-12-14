@@ -25,14 +25,24 @@ public class APIFileSet extends APIEntity {
 
     private String name;
 
+    private String userEmail;
+
+    private Long userId;
+
+    private boolean isShared;
+
     public APIFileSet() {
     }
 
-    public APIFileSet(Long id, String name, LocalDateTime createTime, Long fileCount) {
+    public APIFileSet(Long id, String name, LocalDateTime createTime, Long fileCount, Long ownerEmail,
+            String userEmail, boolean isShared) {
         super(id);
         this.name = name;
         this.createTime = TimeConverter.toDate(createTime);
         this.fileCount = fileCount;
+        this.userId = ownerEmail;
+        this.userEmail = userEmail;
+        this.isShared = isShared;
     }
 
     public String getName() {
@@ -57,6 +67,30 @@ public class APIFileSet extends APIEntity {
 
     public void setFileCount(Long fileCount) {
         this.fileCount = fileCount;
+    }
+
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public boolean isShared() {
+        return isShared;
+    }
+
+    public void setShared(boolean shared) {
+        isShared = shared;
     }
 
     private String getIncludedFilesURI() {
@@ -102,5 +136,8 @@ public class APIFileSet extends APIEntity {
         this.name = apiFileSet.name;
         this.createTime = apiFileSet.createTime;
         this.fileCount = apiFileSet.fileCount;
+        this.userId = apiFileSet.userId;
+        this.userEmail = apiFileSet.userEmail;
+        this.isShared = apiFileSet.isShared;
     }
 }

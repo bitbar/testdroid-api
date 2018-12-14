@@ -31,6 +31,8 @@ public class TypeReferenceFactory {
     private static final Map<Class, TypeReference<?>> TYPE_REFERENCE_LIST_MAP = new HashMap<>();
 
     static {
+        TYPE_REFERENCE_LIST_MAP.put(APIAccessGroup.class, new TypeReference<APIList<APIAccessGroup>>() {
+        });
         TYPE_REFERENCE_LIST_MAP.put(APIFramework.class, new TypeReference<APIList<APIFramework>>() {
         });
         TYPE_REFERENCE_LIST_MAP.put(APITestCaseRun.class, new TypeReference<APIList<APITestCaseRun>>() {
@@ -76,6 +78,8 @@ public class TypeReferenceFactory {
         TYPE_REFERENCE_LIST_MAP.put(APIScreenshotExtended.class, new TypeReference<APIList<APIScreenshotExtended>>() {
         });
         TYPE_REFERENCE_LIST_MAP.put(APIService.class, new TypeReference<APIList<APIService>>() {
+        });
+        TYPE_REFERENCE_LIST_MAP.put(APISharedResource.class, new TypeReference<APIList<APISharedResource>>() {
         });
         TYPE_REFERENCE_LIST_MAP.put(APITag.class, new TypeReference<APIList<APITag>>() {
         });
@@ -167,6 +171,8 @@ public class TypeReferenceFactory {
     private static final Map<Class, TypeReference<?>> TYPE_REFERENCE_MAP = new HashMap<>();
 
     static {
+        TYPE_REFERENCE_MAP.put(APIAccessGroup.class, new TypeReference<APIAccessGroup>() {
+        });
         TYPE_REFERENCE_MAP.put(APIBillingPeriod.class, new TypeReference<APIBillingPeriod>() {
         });
         TYPE_REFERENCE_MAP.put(APIFramework.class, new TypeReference<APIFramework>() {
@@ -212,6 +218,8 @@ public class TypeReferenceFactory {
         TYPE_REFERENCE_MAP.put(APIRole.class, new TypeReference<APIRole>() {
         });
         TYPE_REFERENCE_MAP.put(APIService.class, new TypeReference<APIService>() {
+        });
+        TYPE_REFERENCE_MAP.put(APISharedResource.class, new TypeReference<APISharedResource>() {
         });
         TYPE_REFERENCE_MAP.put(APIServicePaymentStatus.class, new TypeReference<APIServicePaymentStatus>() {
         });

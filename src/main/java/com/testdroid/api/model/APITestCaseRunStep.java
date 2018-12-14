@@ -43,15 +43,13 @@ public class APITestCaseRunStep extends APIEntity {
     }
 
     public APITestCaseRunStep(
-            Long id, String description, String fromActivity, String errorMessage, Long duration,
-            Type type, APIList<APIScreenshot> screenshots) {
+            Long id, String description, String fromActivity, String errorMessage, Long duration, String type) {
         super(id);
         this.description = description;
         this.fromActivity = fromActivity;
         this.errorMessage = errorMessage;
         this.duration = duration;
-        this.type = type;
-        this.screenshots = screenshots;
+        this.type = APITestCaseRunStep.Type.valueOf(type.toUpperCase());
     }
 
     public String getDescription() {

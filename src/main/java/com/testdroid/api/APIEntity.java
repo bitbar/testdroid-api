@@ -27,6 +27,7 @@ import java.util.Date;
  */
 @XmlRootElement(namespace = "com.testdroid.api")
 @XmlSeeAlso({
+        APIAccessGroup.class,
         APIAccount.class,
         APIAccountService.class,
         APIAccountServicePayment.class,
@@ -96,6 +97,7 @@ import java.util.Date;
         APIScreenshot.class,
         APIScreenshotExtended.class,
         APIService.class,
+        APISharedResource.class,
         APISoftwareVersion.class,
         APITag.class,
         APITestCaseRun.class,

@@ -34,6 +34,7 @@ public class APIDevice extends APIEntity {
     public enum OsType {
         IOS("iOS"),
         ANDROID("Android"),
+        DESKTOP("Desktop"),
         UNDEFINED("Undefined");
 
         private final String displayName;
@@ -52,6 +53,10 @@ public class APIDevice extends APIEntity {
 
         public boolean isIos() {
             return this == IOS;
+        }
+
+        public boolean isDesktop() {
+            return this == DESKTOP;
         }
     }
 

@@ -16,13 +16,19 @@ public class APIProjectSharing extends APIEntity {
 
     private Long userId;
 
+    private Long accessGroupId;
+
+    private Long resourceId;
+
     public APIProjectSharing() {
     }
 
-    public APIProjectSharing(Long id, Long userId, String userEmail) {
+    public APIProjectSharing(Long id, Long userId, String userEmail, Long accessGroupId, Long resourceId) {
         super(id);
         this.userId = userId;
         this.userEmail = userEmail;
+        this.accessGroupId = accessGroupId;
+        this.resourceId = resourceId;
     }
 
     public Long getUserId() {
@@ -41,6 +47,22 @@ public class APIProjectSharing extends APIEntity {
         this.userEmail = userEmail;
     }
 
+    public Long getAccessGroupId() {
+        return accessGroupId;
+    }
+
+    public void setAccessGroupId(Long accessGroupId) {
+        this.accessGroupId = accessGroupId;
+    }
+
+    public Long getResourceId() {
+        return resourceId;
+    }
+
+    public void setResourceId(Long resourceId) {
+        this.resourceId = resourceId;
+    }
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
@@ -48,6 +70,8 @@ public class APIProjectSharing extends APIEntity {
         cloneBase(from);
         this.userId = apiProjectSharing.userId;
         this.userEmail = apiProjectSharing.userEmail;
+        this.accessGroupId = apiProjectSharing.accessGroupId;
+        this.resourceId = apiProjectSharing.resourceId;
     }
 
 }
