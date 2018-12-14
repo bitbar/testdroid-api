@@ -19,6 +19,8 @@ public class APIProjectJobConfig extends APIEntity {
 
     @XmlType(namespace = "APIProjectJobConfig")
     public enum Type {
+        DESKTOP_BROWSER(APIDevice.OsType.DESKTOP, "Desktop Browser"),
+        DESKTOP_BROWSER_SERVER_SIDE(APIDevice.OsType.DESKTOP, "Desktop Browser server side"),
         REMOTE(APIDevice.OsType.IOS, "Remote Device Session"),
         DEFAULT(APIDevice.OsType.ANDROID, "Android instrumentation"),
         INSTATEST(APIDevice.OsType.ANDROID, "Android App Crawler"),

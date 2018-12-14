@@ -112,15 +112,19 @@ public class APIUser extends APIEntity {
     public APIUser() {
     }
 
+    public APIUser(Long id, String email, String name) {
+        super(id);
+        this.email = email;
+        this.name = name;
+    }
+
     public APIUser(
             Long id, Long accountId, String email, String name, String state, String country, String city, String code,
             String address, String phone, String organization, String vatId, String timeZone, LocalDateTime createTime,
             LocalDateTime deleteTime, LocalDateTime lastLoginTime, Boolean isMainUser, Long mainUserId,
             String mainUserEmail, Long activeServiceId, String apiKey, Status status) {
-        super(id);
+        this(id, email, name);
         this.accountId = accountId;
-        this.email = email;
-        this.name = name;
         this.state = state;
         this.country = country;
         this.city = city;

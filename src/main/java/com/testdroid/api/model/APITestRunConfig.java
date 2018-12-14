@@ -118,6 +118,8 @@ public class APITestRunConfig extends APIEntity implements Serializable {
 
     private boolean loadedPrevious;
 
+    private APIClientSideTestConfig clientSideTestConfig;
+
     @JsonIgnore
     private List<Long> computedDevices;
 
@@ -480,6 +482,14 @@ public class APITestRunConfig extends APIEntity implements Serializable {
 
     public void setLoadedPrevious(boolean loadedPrevious) {
         this.loadedPrevious = loadedPrevious;
+    }
+
+    public APIClientSideTestConfig getClientSideTestConfig() {
+        return clientSideTestConfig;
+    }
+
+    public void setClientSideTestConfig(APIClientSideTestConfig clientSideTestConfig) {
+        this.clientSideTestConfig = clientSideTestConfig;
     }
 
     @JsonIgnore

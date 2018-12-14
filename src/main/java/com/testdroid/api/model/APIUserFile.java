@@ -45,6 +45,12 @@ public class APIUserFile extends APIEntity implements Serializable {
 
     private boolean duplicate;
 
+    private String userEmail;
+
+    private Long userId;
+
+    private boolean isShared;
+
     private transient String storage;
 
     private transient String uri;
@@ -74,8 +80,9 @@ public class APIUserFile extends APIEntity implements Serializable {
     }
 
     public APIUserFile(
-            Long id, String name, LocalDateTime createTime, Long size, State state, String storage, String uri, String iconUri,
-            String mimetype, Direction direction, InputType inputType) {
+            Long id, String name, LocalDateTime createTime, Long size, State state, String storage, String uri,
+            String iconUri, String mimetype, Direction direction, InputType inputType, Long userId, String userEmail,
+            boolean isShared) {
         super(id);
         this.name = name;
         this.createTime = TimeConverter.toDate(createTime);
@@ -87,6 +94,9 @@ public class APIUserFile extends APIEntity implements Serializable {
         this.mimetype = mimetype;
         this.direction = direction;
         this.inputType = inputType;
+        this.userId = userId;
+        this.userEmail = userEmail;
+        this.isShared = isShared;
     }
 
     public String getName() {
@@ -207,6 +217,30 @@ public class APIUserFile extends APIEntity implements Serializable {
         this.iconDirectUrl = iconDirectUrl;
     }
 
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public boolean isShared() {
+        return isShared;
+    }
+
+    public void setShared(boolean shared) {
+        isShared = shared;
+    }
+
     @JsonIgnore
     public String getIconUri() {
         return iconUri;
@@ -253,5 +287,8 @@ public class APIUserFile extends APIEntity implements Serializable {
         this.direction = apiUserFile.direction;
         this.mimetype = apiUserFile.mimetype;
         this.inputType = apiUserFile.inputType;
+        this.userId = apiUserFile.userId;
+        this.userEmail = apiUserFile.userEmail;
+        this.isShared = apiUserFile.isShared;
     }
 }

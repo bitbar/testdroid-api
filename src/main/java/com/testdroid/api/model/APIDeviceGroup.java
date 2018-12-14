@@ -30,11 +30,16 @@ public class APIDeviceGroup extends APIEntity {
 
     private Long userId;
 
+    private String userEmail;
+
+    private boolean isShared;
+
     public APIDeviceGroup() {
     }
 
     public APIDeviceGroup(
-            Long id, String name, String displayName, APIDevice.OsType osType, Long deviceCount, Long userId) {
+            Long id, String name, String displayName, APIDevice.OsType osType, Long deviceCount, Long userId,
+            String userEmail, boolean isShared) {
         this.id = id;
         this.name = name;
         this.displayName = displayName;
@@ -42,6 +47,8 @@ public class APIDeviceGroup extends APIEntity {
         this.deviceCount = deviceCount;
         this.userId = userId;
         this.osType = osType;
+        this.userEmail = userEmail;
+        this.isShared = isShared;
     }
 
     public String getName() {
@@ -90,6 +97,22 @@ public class APIDeviceGroup extends APIEntity {
 
     public void setOsType(APIDevice.OsType osType) {
         this.osType = osType;
+    }
+
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
+
+    public boolean isShared() {
+        return isShared;
+    }
+
+    public void setShared(boolean shared) {
+        isShared = shared;
     }
 
     @JsonIgnore
@@ -143,5 +166,7 @@ public class APIDeviceGroup extends APIEntity {
         this.displayName = apiDeviceGroup.displayName;
         this.userId = apiDeviceGroup.userId;
         this.osType = apiDeviceGroup.osType;
+        this.userEmail = apiDeviceGroup.userEmail;
+        this.isShared = apiDeviceGroup.isShared;
     }
 }

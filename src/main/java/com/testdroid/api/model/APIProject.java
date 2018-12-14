@@ -88,8 +88,10 @@ public class APIProject extends APIEntity {
 
     private String name;
 
+    @Deprecated // use userEmail
     private String sharedByEmail;
 
+    @Deprecated // use userId
     private Long sharedById;
 
     private APITestRunConfig testRunConfig;
@@ -108,13 +110,19 @@ public class APIProject extends APIEntity {
 
     private APIDevice.OsType osType;
 
+    private boolean readOnly;
+
+    private Long userId;
+
+    private String userEmail;
+
     public APIProject() {
     }
 
     public APIProject(
             Long id, LocalDateTime createTime, LocalDateTime archiveTime, String name, String description, Type type,
             Long sharedById, String sharedByEmail, boolean common, APIArchivingStrategy archivingStrategy,
-            Integer archivingItemCount, Long frameworkId, Boolean isShared, APIDevice.OsType osType) {
+            Integer archivingItemCount, Long frameworkId, Boolean isShared, APIDevice.OsType osType, boolean readOnly) {
         super(id);
         this.createTime = TimeConverter.toDate(createTime);
         this.archiveTime = TimeConverter.toDate(archiveTime);
@@ -130,6 +138,9 @@ public class APIProject extends APIEntity {
         this.isShared = isShared;
         this.jobConfig = new HashMap<>();
         this.osType = osType;
+        this.readOnly = readOnly;
+        this.userEmail = sharedByEmail;
+        this.userId = sharedById;
     }
 
     public String getName() {
@@ -260,6 +271,30 @@ public class APIProject extends APIEntity {
 
     public void setOsType(OsType osType) {
         this.osType = osType;
+    }
+
+    public boolean isReadOnly() {
+        return readOnly;
+    }
+
+    public void setReadOnly(boolean readOnly) {
+        this.readOnly = readOnly;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 
     private String getConfigURI() {
@@ -569,5 +604,8 @@ public class APIProject extends APIEntity {
         this.frameworkId = apiProject.frameworkId;
         this.successRatio = apiProject.successRatio;
         this.osType = apiProject.osType;
+        this.readOnly = apiProject.readOnly;
+        this.userId = apiProject.userId;
+        this.userEmail = apiProject.userEmail;
     }
 }
