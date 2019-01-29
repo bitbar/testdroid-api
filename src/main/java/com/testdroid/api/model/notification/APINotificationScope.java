@@ -13,5 +13,7 @@ public enum APINotificationScope {
     CUSTOM,//User, Project, All
     NEWS,
     SYSTEM,
-    CHECK
+    CHECK,
+    PLAN_LIMIT_REACHED,
+    PLAN_INVOICE
 }

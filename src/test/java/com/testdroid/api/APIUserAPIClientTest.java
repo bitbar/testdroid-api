@@ -65,10 +65,10 @@ public class APIUserAPIClientTest extends APIClientTest{
         assertThat(deviceGroupLabelGroup.getDisplayName(), is("Device groups"));
         APIList<APIDeviceProperty> apiDeviceProperties = deviceGroupLabelGroup.getDevicePropertiesResource(new
                 Context<>(APIDeviceProperty.class).setLimit(0)).getEntity();
-        assertThat(apiDeviceProperties.getTotal(), is(3));
+        assertThat(apiDeviceProperties.getTotal(), is(4));
         assertThat(apiDeviceProperties.getData().stream().map(APIDeviceProperty::getDisplayName)
                 .collect(Collectors.toList()
-                ), containsInAnyOrder("Android devices", "iOS devices", "Trial devices"));
+                ), containsInAnyOrder("Android devices", "iOS devices", "Trial devices", "Desktop Browsers"));
     }
 
     @ParameterizedTest

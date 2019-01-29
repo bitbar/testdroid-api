@@ -62,6 +62,8 @@ public class APILicense extends APIEntity {
 
     private ServerLicense server;
 
+    private GlobalLicense global;
+
     private XCTestLicense xcTest;
 
     private XCUITestLicense xcuiTest;
@@ -83,7 +85,8 @@ public class APILicense extends APIEntity {
             Boolean xcTestEnabled, Boolean xcuiTestEnabled, Boolean ctsEnabled, Integer androidProjectLimit,
             Boolean appiumEnabled, Boolean serverEnabled, Boolean inspectorEnabled, Boolean iosEnabled,
             Integer iosDeviceLimit, LocalDateTime closeTime, String status, Boolean buildEnabled, Integer buildLimit,
-            Boolean desktopEnabled, Integer desktopDeviceLimit, Integer desktopProjectLimit) {
+            Boolean desktopEnabled, Integer desktopDeviceLimit, Integer desktopProjectLimit, Integer globalDeviceLimit,
+            Integer globalProjectLimit) {
         super(id);
         this.privateInstance = enterprise;
         this.activateTime = TimeConverter.toDate(activateTime);
@@ -106,6 +109,7 @@ public class APILicense extends APIEntity {
         this.xcTest = new XCTestLicense(xcTestEnabled);
         this.xcuiTest = new XCUITestLicense(xcuiTestEnabled);
         this.desktop = new DesktopLicense(desktopDeviceLimit, desktopProjectLimit, desktopEnabled);
+        this.global = new GlobalLicense(globalDeviceLimit, globalProjectLimit);
         this.closeTime = TimeConverter.toDate(closeTime);
         this.status = EnumUtils.getEnum(Status.class, status);
     }
@@ -114,7 +118,8 @@ public class APILicense extends APIEntity {
             boolean privateInstance, LocalDateTime expireTime, String userEmail, AndroidLicense android, IOSLicense ios,
             RecorderLicense recorder, ServerLicense server, CalabashLicense calabash, AppiumLicense appium,
             SeleniumLicense selenium, InspectorLicense inspector, RemoteControlLicense remoteControl,
-            XCTestLicense xcTest, XCUITestLicense xcuiTest, BuildLicense build, DesktopLicense desktop) {
+            XCTestLicense xcTest, XCUITestLicense xcuiTest, BuildLicense build, DesktopLicense desktop,
+            GlobalLicense global) {
         this.privateInstance = privateInstance;
         this.expireTime = TimeConverter.toDate(expireTime);
         this.userEmail = userEmail;
@@ -131,6 +136,7 @@ public class APILicense extends APIEntity {
         this.xcuiTest = xcuiTest;
         this.build = build;
         this.desktop = desktop;
+        this.global = global;
     }
 
     private static String getTextValue(Integer i) {
@@ -319,10 +325,58 @@ public class APILicense extends APIEntity {
         this.desktop = desktop;
     }
 
+    public GlobalLicense getGlobal() {
+        return global;
+    }
+
+    public void setGlobal(GlobalLicense global) {
+        this.global = global;
+    }
+
     public String generateSignContent() {
         return String.format("%s:%s:%s%s%s%s", getTextValue(privateInstance), getUserEmail(), getAndroid()
                 .generateSignContent(), getIos().generateSignContent(),
                 getRecorder().generateSignContent(), getServer().generateSignContent());
+    }
+
+    public static class GlobalLicense {
+
+        private Integer deviceLimit;
+
+        private Integer projectLimit;
+
+        public GlobalLicense() {
+
+        }
+
+        public GlobalLicense(Integer deviceLimit, Integer projectLimit) {
+            this.deviceLimit = deviceLimit;
+            this.projectLimit = projectLimit;
+        }
+
+        public Integer getDeviceLimit() {
+            return deviceLimit;
+        }
+
+        public void setDeviceLimit(Integer deviceLimit) {
+            this.deviceLimit = deviceLimit;
+        }
+
+        public Integer getProjectLimit() {
+            return projectLimit;
+        }
+
+        public void setProjectLimit(Integer projectLimit) {
+            this.projectLimit = projectLimit;
+        }
+
+        public boolean isDeviceLimited() {
+            return deviceLimit != null;
+        }
+
+        public boolean isProjectLimited() {
+            return projectLimit != null;
+        }
     }
 
     public static abstract class FeatureLicense {

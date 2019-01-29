@@ -13,33 +13,22 @@ public class APIDeviceSessionStep extends APIEntity {
 
     @XmlType(namespace = "APIDeviceSessionStep")
     public enum Type {
-        WAITING,
-        PREPARING,
-        UNINSTALL,
-        INSTALL,
-        RUNNING,
-        SENDING_RESULTS,
-        PROCESSING_RESULTS;
+        WAITING("Waiting for device"),
+        PREPARING("Preparing device"),
+        UNINSTALL("Uninstall apps"),
+        INSTALL("Install apps"),
+        RUNNING("Running session"),
+        SENDING_RESULTS("Sending results"),
+        PROCESSING_RESULTS("Processing results");
+
+        private final String displayName;
+
+        Type(String displayName) {
+            this.displayName = displayName;
+        }
 
         public String getDisplayName() {
-            switch (this) {
-                case PREPARING:
-                    return "Preparing device";
-                case WAITING:
-                    return "Waiting for device";
-                case UNINSTALL:
-                    return "Uninstall apps";
-                case INSTALL:
-                    return "Install apps";
-                case RUNNING:
-                    return "Running session";
-                case SENDING_RESULTS:
-                    return "Sending results";
-                case PROCESSING_RESULTS:
-                    return "Processing results";
-                default:
-                    return "";
-            }
+            return displayName;
         }
     }
 
