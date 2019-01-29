@@ -1,8 +1,6 @@
 package com.testdroid.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIException;
 import com.testdroid.api.APIListResource;
@@ -488,9 +486,7 @@ public class APITestRun extends APIEntity {
             return;
         }
         try {
-            APITestRunConfig config = new ObjectMapper()
-                    .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-                    .readValue(content, APITestRunConfig.class);
+            APITestRunConfig config = OBJECT_MAPPER.readValue(content, APITestRunConfig.class);
             setConfig(config);
         } catch (IOException ignore) {
         }

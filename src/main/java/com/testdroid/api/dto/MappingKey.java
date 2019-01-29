@@ -257,6 +257,10 @@ public class MappingKey {
 
     public static final String GLOBAL = "global";
 
+    public static final String GLOBAL_DEVICE_LIMIT = "globalDeviceLimit";
+
+    public static final String GLOBAL_PROJECT_LIMIT = "globalProjectLimit";
+
     public static final String HANDLER_EMAIL = "handlerEmail";
 
     public static final String HANDLER_ID = "handlerId";

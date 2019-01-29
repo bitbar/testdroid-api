@@ -1,8 +1,6 @@
 package com.testdroid.api;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.api.client.http.*;
 import com.testdroid.api.dto.Context;
 import com.testdroid.api.http.MultipartFormDataContent;
@@ -22,6 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import static com.testdroid.api.APIEntity.OBJECT_MAPPER;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.apache.http.HttpStatus.*;
 
@@ -43,9 +42,6 @@ public abstract class AbstractAPIClient implements APIClient {
     protected int clientRequestTimeout = 60000;
 
     protected HttpTransport httpTransport;
-
-    protected final ObjectMapper objectMapper = new ObjectMapper()
-            .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
     protected String apiURL;
 
@@ -296,7 +292,7 @@ public abstract class AbstractAPIClient implements APIClient {
 
     protected <T> T fromJson(InputStream inputStream, TypeReference<T> type) throws APIException {
         try {
-            return objectMapper.readValue(inputStream, type);
+            return OBJECT_MAPPER.readValue(inputStream, type);
         } catch (IOException e) {
             throw new APIException(String.format("Failed to parse response as %s", type.getType().getTypeName()));
         }
@@ -304,7 +300,7 @@ public abstract class AbstractAPIClient implements APIClient {
 
     protected <T> T fromJson(String content, TypeReference<T> type) throws APIException {
         try {
-            return objectMapper.readValue(content, type);
+            return OBJECT_MAPPER.readValue(content, type);
         } catch (IOException e) {
             throw new APIException(String.format("Failed to parse response as %s", type.getType().getTypeName()));
         }

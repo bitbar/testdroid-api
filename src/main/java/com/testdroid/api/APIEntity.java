@@ -2,6 +2,7 @@ package com.testdroid.api;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.testdroid.api.dto.Context;
 import com.testdroid.api.model.*;
@@ -120,6 +121,12 @@ public abstract class APIEntity {
 
     private static final DateFormat API_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd_HH:mm");
 
+    public static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+
+    static {
+        OBJECT_MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+    }
+
     protected APIClient client;
 
     protected Long id;
@@ -230,7 +237,7 @@ public abstract class APIEntity {
 
     @JsonIgnore
     public String toJson() throws JsonProcessingException {
-        return new ObjectMapper().writeValueAsString(this);
+        return OBJECT_MAPPER.writeValueAsString(this);
     }
 
     @JsonIgnore
