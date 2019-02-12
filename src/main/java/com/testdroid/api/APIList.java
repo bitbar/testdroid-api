@@ -60,7 +60,7 @@ public class APIList<T extends APIEntity> extends APIEntity {
         this.sort = sort;
         this.data = data;
         this.context = ctx;
-        String filter = ctx.getFilters().stream().map(FilterEntry::toString).collect(joining(FILTER_DELIMITER));
+        String filter = filterParam(ctx.getFilters());
         if (offset + limit < total) {
             this.next = getListURL(requestURL, offset + limit, limit, search, sort, filter);
         }
@@ -222,6 +222,10 @@ public class APIList<T extends APIEntity> extends APIEntity {
     @Override
     public void refresh() {
         throw new UnsupportedOperationException();
+    }
+
+    public static String filterParam(List<FilterEntry> filters){
+        return filters.stream().map(FilterEntry::toString).collect(joining(FILTER_DELIMITER));
     }
 
     @Override

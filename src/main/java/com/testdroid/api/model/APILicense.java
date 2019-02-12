@@ -381,12 +381,12 @@ public class APILicense extends APIEntity {
 
     public static abstract class FeatureLicense {
 
-        protected boolean enabled;
+        boolean enabled;
 
-        public FeatureLicense() {
+        FeatureLicense() {
         }
 
-        public FeatureLicense(boolean enabled) {
+        FeatureLicense(boolean enabled) {
             this.enabled = enabled;
         }
 

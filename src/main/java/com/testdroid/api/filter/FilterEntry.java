@@ -19,13 +19,13 @@ public class FilterEntry<T> {
     private FilterEntry() {
     }
 
-    public FilterEntry(String field, Operand comparison, T value) {
+    FilterEntry(String field, Operand comparison, T value) {
         this.field = field;
         this.operand = comparison;
         this.value = value;
     }
 
-    public FilterEntry(String field, Operand comparison) {
+    FilterEntry(String field, Operand comparison) {
         this.field = field;
         this.operand = comparison;
     }

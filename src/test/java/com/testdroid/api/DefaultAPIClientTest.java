@@ -22,7 +22,7 @@ public class DefaultAPIClientTest extends APIClientTest{
 
     private static final String UNKNOW_HOST_EXCEPTION_MESSAGE = "Failed to acquire access token. Reason: %s: %s";
 
-    public static Collection<Object[]> data() {
+    private static Collection<Object[]> data() {
         Object[][] data = new Object[][]{
                 // @formatter:off
                 {"127.0.0.a", 8080, APIException.class, getUnknownHostExceptionMessage("127.0.0.a")},
@@ -34,7 +34,7 @@ public class DefaultAPIClientTest extends APIClientTest{
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testWrongProxy(String host, Integer port, Class<Exception> exc, String excMessage) throws APIException {
+    void testWrongProxy(String host, Integer port, Class<Exception> exc, String excMessage) throws APIException {
         DefaultAPIClient defaultAPIClient = createDefaultApiClientWithProxy(new HttpHost(host, port));
         Throwable throwable = assertThrows(exc, defaultAPIClient::me);
         assertThat(throwable.getMessage(), is(excMessage));

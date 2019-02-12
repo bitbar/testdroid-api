@@ -20,7 +20,7 @@ public class APIProjectAPIClientTest extends APIClientTest{
 
     @ParameterizedTest
     @ArgumentsSource(APIClientTest.APIClientProvider.class)
-    public void createProjectTest(AbstractAPIClient apiKeyClient) throws APIException {
+    void createProjectTest(AbstractAPIClient apiKeyClient) throws APIException {
         String projectName = generateUnique("testProject");
         APIProject project = apiKeyClient.me().createProject(ANDROID, projectName);
         assertThat(project.getName(), is(projectName));
@@ -28,7 +28,7 @@ public class APIProjectAPIClientTest extends APIClientTest{
 
     @ParameterizedTest
     @ArgumentsSource(APIClientTest.APIClientProvider.class)
-    public void updateProjectTest(AbstractAPIClient apiKeyClient) throws APIException {
+    void updateProjectTest(AbstractAPIClient apiKeyClient) throws APIException {
         APIProject project = apiKeyClient.me().createProject(ANDROID, generateUnique("testProject"));
         String updatedProjectName = generateUnique("testProject");
         project.setName(updatedProjectName);
@@ -40,14 +40,14 @@ public class APIProjectAPIClientTest extends APIClientTest{
 
     @ParameterizedTest
     @ArgumentsSource(APIClientTest.APIClientProvider.class)
-    public void deleteProjectTest(AbstractAPIClient apiKeyClient) throws APIException {
+    void deleteProjectTest(AbstractAPIClient apiKeyClient) throws APIException {
         APIProject project = apiKeyClient.me().createProject(ANDROID, generateUnique("testProject"));
         project.delete();
     }
 
     @ParameterizedTest
     @ArgumentsSource(APIClientTest.APIClientProvider.class)
-    public void shareProjectTest(AbstractAPIClient apiKeyClient) throws APIException {
+    void shareProjectTest(AbstractAPIClient apiKeyClient) throws APIException {
         APIProject project = apiKeyClient.me().createProject(ANDROID, generateUnique("testProject"));
         APIList<APIProjectSharing> projectSharings = project.getProjectSharings().getEntity();
         assertThat(projectSharings.isEmpty(), is(TRUE));

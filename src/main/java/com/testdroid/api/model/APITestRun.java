@@ -231,10 +231,6 @@ public class APITestRun extends APIEntity {
         return createUri(selfURI, "/tags");
     }
 
-    private String getDeviceRunsURI() {
-        return createUri(selfURI, "/device-runs");
-    }
-
     private String getDeviceSessionsURI() {
         return createUri(selfURI, "/device-sessions");
     }
@@ -427,11 +423,6 @@ public class APITestRun extends APIEntity {
     }
 
     @JsonIgnore
-    public APIListResource<APIDeviceSession> getDeviceRunsResource() throws APIException {
-        return getListResource(getDeviceRunsURI(), APIDeviceSession.class);
-    }
-
-    @JsonIgnore
     public APIListResource<APIDeviceSession> getDeviceSessionsResource() throws APIException {
         return getListResource(getDeviceSessionsURI(), APIDeviceSession.class);
     }
@@ -440,12 +431,6 @@ public class APITestRun extends APIEntity {
     public APIListResource<APIDeviceSession> getDeviceSessionsResource(Context<APIDeviceSession> context)
             throws APIException {
         return getListResource(getDeviceSessionsURI(), context);
-    }
-
-    @JsonIgnore
-    public APIListResource<APIDeviceSession> getDeviceRunsResource(Context<APIDeviceSession> context)
-            throws APIException {
-        return getListResource(getDeviceRunsURI(), context);
     }
 
     @JsonIgnore

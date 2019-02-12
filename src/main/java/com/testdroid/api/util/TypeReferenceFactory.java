@@ -21,13 +21,6 @@ import java.util.Properties;
  */
 public class TypeReferenceFactory {
 
-    private static final Map<Class<?>, TypeReference<?>> TYPE_REFERENCE_ARRAY_MAP = new HashMap<>();
-
-    static {
-        TYPE_REFERENCE_ARRAY_MAP.put(APIProject.Type.class, new TypeReference<APIArray<APIProject.Type>>() {
-        });
-    }
-
     private static final Map<Class, TypeReference<?>> TYPE_REFERENCE_LIST_MAP = new HashMap<>();
 
     static {
@@ -303,10 +296,6 @@ public class TypeReferenceFactory {
 
     public static <T extends APIEntity> TypeReference<APIList<T>> getListTypeRef(Class<T> clazz) {
         return (TypeReference<APIList<T>>) TYPE_REFERENCE_LIST_MAP.get(clazz);
-    }
-
-    public static <T> TypeReference<APIArray<T>> getArrayTypeRef(Class<T> clazz) {
-        return (TypeReference<APIArray<T>>) TYPE_REFERENCE_ARRAY_MAP.get(clazz);
     }
 
     public static TypeReference<Map<String, String>> getMapTypeReference() {

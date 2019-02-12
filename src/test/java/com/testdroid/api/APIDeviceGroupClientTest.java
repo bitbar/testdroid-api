@@ -28,7 +28,7 @@ public class APIDeviceGroupClientTest extends APIClientTest {
 
     @ParameterizedTest
     @ArgumentsSource(APIClientProvider.class)
-    public void createDeviceGroupTest(AbstractAPIClient apiKeyClient) throws APIException {
+    void createDeviceGroupTest(AbstractAPIClient apiKeyClient) throws APIException {
         APIDeviceGroup deviceGroup = apiKeyClient.me().createDeviceGroup("testDeviceGroup", ANDROID);
         assertThat(deviceGroup.getDisplayName(), is("testDeviceGroup"));
         assertThat(deviceGroup.getOsType(), is(ANDROID));
@@ -36,7 +36,7 @@ public class APIDeviceGroupClientTest extends APIClientTest {
 
     @ParameterizedTest
     @ArgumentsSource(APIClientProvider.class)
-    public void addDeviceTest(AbstractAPIClient apiKeyClient) throws APIException {
+    void addDeviceTest(AbstractAPIClient apiKeyClient) throws APIException {
         APIDeviceGroup deviceGroup = apiKeyClient.me().createDeviceGroup("iosDevicesGroup", IOS);
         APIList<APIDevice> devicesList = apiKeyClient.getDevices(new Context<>(APIDevice.class)
                 .addFilter(new StringFilterEntry(OS_TYPE, EQ, IOS.name()))).getEntity();
@@ -49,7 +49,7 @@ public class APIDeviceGroupClientTest extends APIClientTest {
 
     @ParameterizedTest
     @ArgumentsSource(APIClientProvider.class)
-    public void addSelectorTest(AbstractAPIClient apiKeyClient) throws APIException {
+    void addSelectorTest(AbstractAPIClient apiKeyClient) throws APIException {
         APIList<APILabelGroup> labelGroups = apiKeyClient.getLabelGroups(new Context<>(APILabelGroup.class)
                 .addFilter(new StringFilterEntry(DISPLAY_NAME, EQ, "Device groups"))).getEntity();
         APILabelGroup deviceGroupLabelGroup = labelGroups.getData().stream().findFirst().get();
@@ -68,7 +68,7 @@ public class APIDeviceGroupClientTest extends APIClientTest {
 
     @ParameterizedTest
     @ArgumentsSource(APIClientProvider.class)
-    public void getIncludedDevicesTest(AbstractAPIClient apiKeyClient) throws APIException {
+    void getIncludedDevicesTest(AbstractAPIClient apiKeyClient) throws APIException {
         APIDeviceGroup deviceGroup = apiKeyClient.me().createDeviceGroup("iosDevicesGroup", IOS);
         APIList<APIDevice> devicesList = apiKeyClient.getDevices(new Context<>(APIDevice.class)
                 .addFilter(new StringFilterEntry(OS_TYPE, EQ, IOS.name()))).getEntity();

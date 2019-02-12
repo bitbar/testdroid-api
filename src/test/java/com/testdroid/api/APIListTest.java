@@ -30,7 +30,7 @@ public class APIListTest {
 
     private static final APISort SORT_EMPTY = APISort.deserialize(EMPTY);
 
-    public static Collection<Object[]> data() {
+    private static Collection<Object[]> data() {
         Object[][] data = new Object[][]{
                 {
                         0,
@@ -109,7 +109,7 @@ public class APIListTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void testLinks(int total, Context<?> ctx, String expectedPrevious, String expectedNext) {
+    void testLinks(int total, Context<?> ctx, String expectedPrevious, String expectedNext) {
         APIList<?> apiList = new APIList<>(URL, null, total, ctx);
         assertThat(apiList.getPrevious(), is(expectedPrevious));
         assertThat(apiList.getNext(), is(expectedNext));

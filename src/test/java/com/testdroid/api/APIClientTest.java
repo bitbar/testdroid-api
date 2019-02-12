@@ -19,8 +19,8 @@ import java.util.stream.Stream;
 
 import static com.testdroid.api.dto.MappingKey.*;
 import static com.testdroid.api.dto.Operand.EQ;
+import static com.testdroid.api.filter.BooleanFilterEntry.trueFilterEntry;
 import static com.testdroid.api.model.APIDevice.OsType.ANDROID;
-import static java.lang.Boolean.TRUE;
 import static java.lang.Integer.MAX_VALUE;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.apache.commons.lang3.StringUtils.isNoneBlank;
@@ -30,7 +30,7 @@ import static org.apache.commons.lang3.StringUtils.isNoneBlank;
  */
 public abstract class APIClientTest {
 
-    protected static final String APP_PATH = "/fixtures/BitbarSampleApp.apk";
+    static final String APP_PATH = "/fixtures/BitbarSampleApp.apk";
 
     private static final String CLOUD_URL = System.getenv("CLOUD_URL");
 
@@ -42,7 +42,7 @@ public abstract class APIClientTest {
 
     private static final String PROXY_PORT = System.getenv("API_CLIENT_TEST_PROXY_PORT");
 
-    protected static final APIKeyClient ADMIN_API_CLIENT = new APIKeyClient(CLOUD_URL, ADMIN_API_KEY, true);
+    static final APIKeyClient ADMIN_API_CLIENT = new APIKeyClient(CLOUD_URL, ADMIN_API_KEY, true);
 
     private static APIKeyClient USER_API_KEY_CLIENT;
 
@@ -50,7 +50,7 @@ public abstract class APIClientTest {
 
     private static DefaultAPIClient USER_DEFAULT_CLIENT_WITH_PROXY;
 
-    protected static final String TEST_PATH = "/fixtures/BitbarSampleAppTest.apk";
+    static final String TEST_PATH = "/fixtures/BitbarSampleAppTest.apk";
 
     private static final String USER_PASSWORD = "TSV3ma2n)c3~L/96hQTw";
 
@@ -79,7 +79,7 @@ public abstract class APIClientTest {
         }
     }
 
-    public static class APIClientProvider implements ArgumentsProvider {
+    static class APIClientProvider implements ArgumentsProvider {
 
         @Override
         public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
@@ -88,10 +88,10 @@ public abstract class APIClientTest {
         }
     }
 
-    protected APIFramework getApiFramework(AbstractAPIClient apiKeyClient, String frameworkName) throws APIException {
+    APIFramework getApiFramework(AbstractAPIClient apiKeyClient, String frameworkName) throws APIException {
         StringFilterEntry osTypeFilter = new StringFilterEntry(OS_TYPE, EQ, ANDROID.name());
-        BooleanFilterEntry forProject = new BooleanFilterEntry(FOR_PROJECTS, EQ, TRUE);
-        BooleanFilterEntry canRunFromUI = new BooleanFilterEntry(CAN_RUN_FROM_UI, EQ, TRUE);
+        BooleanFilterEntry forProject = trueFilterEntry(FOR_PROJECTS);
+        BooleanFilterEntry canRunFromUI = trueFilterEntry(CAN_RUN_FROM_UI);
         StringFilterEntry defaultFrameworkName = new StringFilterEntry(TYPE, EQ, frameworkName);
         Context<APIFramework> context = new Context<>(APIFramework.class, 0, MAX_VALUE, EMPTY, EMPTY);
         context.addFilter(osTypeFilter);
@@ -117,11 +117,11 @@ public abstract class APIClientTest {
         return String.format(emailPattern, System.currentTimeMillis());
     }
 
-    public static String generateUnique(String prefix) {
+    static String generateUnique(String prefix) {
         return String.format("%s%d",prefix, System.currentTimeMillis());
     }
 
-    protected static DefaultAPIClient createDefaultApiClientWithProxy(HttpHost proxy) throws APIException{
+    static DefaultAPIClient createDefaultApiClientWithProxy(HttpHost proxy) throws APIException{
         return new DefaultAPIClient(CLOUD_URL, create(ADMIN_API_CLIENT).getEmail(), USER_PASSWORD, proxy, false);
     }
 

@@ -42,6 +42,8 @@ public class APIUser extends APIEntity {
 
     private Long accountId;
 
+    private Long accountServiceId;
+
     private String address;
 
     private String city;
@@ -122,7 +124,8 @@ public class APIUser extends APIEntity {
             Long id, Long accountId, String email, String name, String state, String country, String city, String code,
             String address, String phone, String organization, String vatId, String timeZone, LocalDateTime createTime,
             LocalDateTime deleteTime, LocalDateTime lastLoginTime, Boolean isMainUser, Long mainUserId,
-            String mainUserEmail, Long activeServiceId, String apiKey, Status status) {
+            String mainUserEmail, Long activeServiceId, String apiKey, Status status, Long accountServiceId,
+            Long createdById, String createdByEmail) {
         this(id, email, name);
         this.accountId = accountId;
         this.state = state;
@@ -145,6 +148,9 @@ public class APIUser extends APIEntity {
         this.activeServiceId = activeServiceId;
         this.status = status;
         this.enabled = status == Status.ENABLED;
+        this.accountServiceId = accountServiceId;
+        this.createdById = createdById;
+        this.createdByEmail = createdByEmail;
         this.selfURI = String.format("/users/%s", id);
     }
 
@@ -357,10 +363,6 @@ public class APIUser extends APIEntity {
         return createUri(selfURI, "/notifications/" + id);
     }
 
-    private String getAvailbleProjectTypesURI() {
-        return createUri(selfURI, "/available-project-types");
-    }
-
     public Long getAccountId() {
         return accountId;
     }
@@ -383,6 +385,14 @@ public class APIUser extends APIEntity {
 
     public void setDeleteTime(Date deleteTime) {
         this.deleteTime = deleteTime;
+    }
+
+    public Long getAccountServiceId() {
+        return accountServiceId;
+    }
+
+    public void setAccountServiceId(Long accountServiceId) {
+        this.accountServiceId = accountServiceId;
     }
 
     private Map<String, Object> getUpdateUserParams(
@@ -531,5 +541,6 @@ public class APIUser extends APIEntity {
         this.apiKey = apiUser.apiKey;
         this.createdById = apiUser.createdById;
         this.createdByEmail = apiUser.createdByEmail;
+        this.accountServiceId = apiUser.accountServiceId;
     }
 }
