@@ -19,7 +19,7 @@ import static org.hamcrest.CoreMatchers.is;
 public class APIAccountServiceTest {
 
     @Test
-    public void testAccountServiceIsActiveAt() {
+    void testAccountServiceIsActiveAt() {
         //GIVEN
         Date startTime = dateOf(2014, 3, 11, 10, 34);
         Date endTime = dateOf(2015, 3, 11, 10, 34);
@@ -42,7 +42,7 @@ public class APIAccountServiceTest {
     }
 
     @Test
-    public void testAccountServiceIsActiveAt_withNullEndDate() {
+    void testAccountServiceIsActiveAt_withNullEndDate() {
         //GIVEN
         Date startTime = dateOf(2014, 3, 11, 10, 34);
         APIAccountService service = prepareAccountService(startTime, null);
@@ -63,7 +63,7 @@ public class APIAccountServiceTest {
     }
 
     @Test
-    public void testAccountServiceIsActiveAt_nullParam() {
+    void testAccountServiceIsActiveAt_nullParam() {
         //GIVEN
         Date startTime = dateOf(2014, 3, 11, 10, 34);
         Date endTime = dateOf(2015, 3, 11, 10, 34);

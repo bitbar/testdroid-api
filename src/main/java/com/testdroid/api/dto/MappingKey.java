@@ -19,6 +19,8 @@ public class MappingKey {
 
     public static final String ACTIVE_SERVICE_ID = "activeServiceId";
 
+    public static final String ACCOUNT_SERVICE_ID = "accountServiceId";
+
     public static final String ADD_LABEL_TO_DEVICES = "addLabelToDevices";
 
     public static final String ADDED_BY_EMAIL = "addedByEmail";
@@ -163,6 +165,8 @@ public class MappingKey {
 
     public static final String DEVICE_COUNT = "deviceCount";
 
+    public static final String DEVICE_CLEANUP_CONFIGURATION_ID = "deviceCleanupConfigurationId";
+
     public static final String DEVICE_DOT_ARCHIVE_TIME = "device.archiveTime";
 
     public static final String DEVICE_DOT_DISPLAY_NAME = "device.displayName";
@@ -198,6 +202,8 @@ public class MappingKey {
     public static final String DEVICE_TIME_ZONE = "deviceTimeZone";
 
     public static final String DIRECTION = "direction";
+
+    public static final String DISCRIMINATOR = "discriminator";
 
     public static final String DISPLAY_NAME = "displayName";
 

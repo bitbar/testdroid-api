@@ -7,12 +7,13 @@ import com.testdroid.api.util.TimeConverter;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * @author Michał Szpruta <michal.szpruta@bitbar.com>
  */
 @XmlRootElement
-public class APIDeviceCleanupConfiguration extends APIEntity {
+public class APIDeviceCleanupConfiguration extends APIEntity implements Cloneable {
 
     private String content;
 
@@ -28,12 +29,16 @@ public class APIDeviceCleanupConfiguration extends APIEntity {
 
     private Boolean enabled;
 
+    private Boolean global;
+
+    private String discriminator;
+
     public APIDeviceCleanupConfiguration() {
     }
 
     public APIDeviceCleanupConfiguration(
             Long id, String content, Boolean enabled, LocalDateTime createTime, String createdByEmail, Long createdById,
-            APIDevice.OsType osType, LocalDateTime lastModificationTime) {
+            APIDevice.OsType osType, LocalDateTime lastModificationTime, String discriminator, Boolean global) {
         super(id);
         this.content = content;
         this.enabled = enabled;
@@ -42,6 +47,8 @@ public class APIDeviceCleanupConfiguration extends APIEntity {
         this.createdById = createdById;
         this.osType = osType;
         this.lastModificationTime = TimeConverter.toDate(lastModificationTime);
+        this.global = global;
+        this.discriminator = discriminator;
     }
 
     public String getContent() {
@@ -100,9 +107,25 @@ public class APIDeviceCleanupConfiguration extends APIEntity {
         this.enabled = enabled;
     }
 
+    public Boolean getGlobal() {
+        return global;
+    }
+
+    public void setGlobal(Boolean global) {
+        this.global = global;
+    }
+
+    public void setDiscriminator(String discriminator) {
+        this.discriminator = discriminator;
+    }
+
+    public String getDiscriminator() {
+        return discriminator;
+    }
+
     @Override
     @JsonIgnore
-    protected <T extends APIEntity> void clone(T from) {
+    public <T extends APIEntity> void clone(T from) {
         APIDeviceCleanupConfiguration deviceCleanupConfiguration = (APIDeviceCleanupConfiguration) from;
         cloneBase(from);
         this.createTime = deviceCleanupConfiguration.createTime;
@@ -112,5 +135,39 @@ public class APIDeviceCleanupConfiguration extends APIEntity {
         this.createdByEmail = deviceCleanupConfiguration.createdByEmail;
         this.createdById = deviceCleanupConfiguration.createdById;
         this.lastModificationTime = deviceCleanupConfiguration.lastModificationTime;
+        this.global = deviceCleanupConfiguration.global;
+        this.discriminator = deviceCleanupConfiguration.discriminator;
+    }
+
+    @Override
+    public APIDeviceCleanupConfiguration clone() throws CloneNotSupportedException {
+        return (APIDeviceCleanupConfiguration) super.clone();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        APIDeviceCleanupConfiguration that = (APIDeviceCleanupConfiguration) o;
+        return Objects.equals(content, that.content) &&
+                Objects.equals(createTime, that.createTime) &&
+                Objects.equals(createdByEmail, that.createdByEmail) &&
+                Objects.equals(createdById, that.createdById) &&
+                osType == that.osType &&
+                Objects.equals(lastModificationTime, that.lastModificationTime) &&
+                Objects.equals(enabled, that.enabled) &&
+                Objects.equals(global, that.global) &&
+                Objects.equals(discriminator, that.discriminator);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects
+                .hash(content, createTime, createdByEmail, createdById, osType, lastModificationTime, enabled,
+                        global, discriminator);
     }
 }

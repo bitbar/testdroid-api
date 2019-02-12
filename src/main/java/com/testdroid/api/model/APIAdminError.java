@@ -14,6 +14,7 @@ public class APIAdminError extends APIEntity {
 
     @XmlType(namespace = "APIAdminError")
     public enum Type {
+        ABORT_REQUEST,
         DEVICE_OFFLINE,
         NO_NETWORK_CONNECTION,
         REBOOTING_TIMEOUT,

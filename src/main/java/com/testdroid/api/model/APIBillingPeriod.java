@@ -62,7 +62,7 @@ public class APIBillingPeriod extends APIEntity {
         this.apiBillingPeriodType = type(startBillingPeriod, endBillingPeriod, subscriptionStart, subscriptionEnd);
     }
 
-    public static APIBillingPeriodType type(
+    private static APIBillingPeriodType type(
             LocalDateTime startBillingPeriod, LocalDateTime endBillingPeriod, LocalDateTime subscriptionStart,
             LocalDateTime subscriptionEnd) {
         if (startBillingPeriod == null && endBillingPeriod == null

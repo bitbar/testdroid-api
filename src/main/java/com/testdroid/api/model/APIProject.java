@@ -325,12 +325,9 @@ public class APIProject extends APIEntity {
         return createUri(selfURI, "/runs/" + id);
     }
 
+    @Deprecated
     private String getPublicDeviceGroupsURI() {
         return createUri(selfURI, "/public-device-groups");
-    }
-
-    private String getDeviceGroupsURI() {
-        return createUri(selfURI, "/device-groups");
     }
 
     private String getUploadApplicationURI() {
@@ -347,10 +344,6 @@ public class APIProject extends APIEntity {
 
     private String getNotificationEmailsURI() {
         return createUri(selfURI, "/notifications");
-    }
-
-    private String getParametersURI() {
-        return createUri(selfURI, "/config/parameters");
     }
 
     private Map<String, Object> getCreateRunParameters(String testRunName) {
@@ -533,11 +526,6 @@ public class APIProject extends APIEntity {
     }
 
     @JsonIgnore
-    public APIListResource<APIDeviceGroup> getDeviceGroups() throws APIException {
-        return getListResource(getDeviceGroupsURI(), APIDeviceGroup.class);
-    }
-
-    @JsonIgnore
     public APIUserFile uploadApplication(File file, String contentType) throws APIException {
         return postFile(getUploadApplicationURI(), file, contentType, APIUserFile.class);
     }
@@ -550,27 +538,6 @@ public class APIProject extends APIEntity {
     @JsonIgnore
     public APIUserFile uploadData(File file, String contentType) throws APIException {
         return postFile(getUploadDataURI(), file, contentType, APIUserFile.class);
-    }
-
-    @JsonIgnore
-    public APITestRunParameter createParameter(String key, String value) throws APIException {
-        return postResource(getParametersURI(), getCreateParameterParameters(key, value), APITestRunParameter.class);
-    }
-
-    @JsonIgnore
-    public APIListResource<APITestRunParameter> getParameters() throws APIException {
-        return getListResource(getParametersURI(), APITestRunParameter.class);
-    }
-
-    @JsonIgnore
-    public APIListResource<APITestRunParameter> getParameters(Context<APITestRunParameter> context)
-            throws APIException {
-        return getListResource(getParametersURI(), context);
-    }
-
-    @JsonIgnore
-    public void deleteParameter(long parameterId) throws APIException {
-        deleteResource(String.format("%s/%s", getParametersURI(), parameterId));
     }
 
     public void update() throws APIException {

@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 
 import static com.testdroid.api.dto.MappingKey.*;
 import static com.testdroid.api.dto.Operand.EQ;
+import static com.testdroid.api.filter.BooleanFilterEntry.trueFilterEntry;
 import static com.testdroid.api.model.APIDevice.OsType.ANDROID;
 import static com.testdroid.api.model.APIFileConfig.Action.INSTALL;
 import static com.testdroid.api.model.APIFileConfig.Action.RUN_TEST;
@@ -40,7 +41,7 @@ public class APIUserAPIClientTest extends APIClientTest{
 
     @ParameterizedTest
     @ArgumentsSource(APIClientProvider.class)
-    public void getDevicesTest(AbstractAPIClient apiKeyClient) throws APIException {
+    void getDevicesTest(AbstractAPIClient apiKeyClient) throws APIException {
         APIList<APIDevice> allDevices = apiKeyClient.getDevices(new Context<>(APIDevice.class)).getEntity();
         assertThat(allDevices.isEmpty(), is(FALSE));
 
@@ -57,7 +58,7 @@ public class APIUserAPIClientTest extends APIClientTest{
 
     @ParameterizedTest
     @ArgumentsSource(APIClientProvider.class)
-    public void getLabelGroups(AbstractAPIClient apiKeyClient) throws APIException {
+    void getLabelGroups(AbstractAPIClient apiKeyClient) throws APIException {
         APIList<APILabelGroup> labelGroups = apiKeyClient.getLabelGroups(new Context<>(APILabelGroup.class)
                 .addFilter(new StringFilterEntry(DISPLAY_NAME, EQ, "Device groups"))).getEntity();
         assertThat(labelGroups.getTotal(), is(1));
@@ -73,7 +74,7 @@ public class APIUserAPIClientTest extends APIClientTest{
 
     @ParameterizedTest
     @ArgumentsSource(APIClientProvider.class)
-    public void uploadFileTest(AbstractAPIClient apiKeyClient) throws APIException {
+    void uploadFileTest(AbstractAPIClient apiKeyClient) throws APIException {
         APIUserFile apiUserFile = apiKeyClient.me()
                 .uploadFile(new File(getClass().getResource(APP_PATH).getFile()));
         assertThat(apiUserFile.getName(), is("BitbarSampleApp.apk"));
@@ -81,10 +82,10 @@ public class APIUserAPIClientTest extends APIClientTest{
 
     @ParameterizedTest
     @ArgumentsSource(APIClientProvider.class)
-    public void getAvailableFrameworksTest(AbstractAPIClient apiKeyClient) throws APIException {
+    void getAvailableFrameworksTest(AbstractAPIClient apiKeyClient) throws APIException {
         StringFilterEntry osTypeFilter = new StringFilterEntry(OS_TYPE, EQ, ANDROID.name());
-        BooleanFilterEntry forProject = new BooleanFilterEntry(FOR_PROJECTS, EQ, TRUE);
-        BooleanFilterEntry canRunFromUI = new BooleanFilterEntry(CAN_RUN_FROM_UI, EQ, TRUE);
+        BooleanFilterEntry forProject = trueFilterEntry(FOR_PROJECTS);
+        BooleanFilterEntry canRunFromUI = trueFilterEntry(CAN_RUN_FROM_UI);
         Context<APIFramework> context = new Context<>(APIFramework.class, 0, MAX_VALUE, EMPTY, EMPTY);
         context.addFilter(osTypeFilter);
         context.addFilter(forProject);
@@ -97,7 +98,7 @@ public class APIUserAPIClientTest extends APIClientTest{
 
     @ParameterizedTest
     @ArgumentsSource(APIClientProvider.class)
-    public void startTestRunTest(AbstractAPIClient apiKeyClient) throws APIException {
+    void startTestRunTest(AbstractAPIClient apiKeyClient) throws APIException {
         APIUser me = apiKeyClient.me();
         APIProject project = me.createProject(APIProject.Type.ANDROID, generateUnique("testProject"));
         APITestRunConfig config = project.getTestRunConfig();
@@ -116,7 +117,7 @@ public class APIUserAPIClientTest extends APIClientTest{
 
     @ParameterizedTest
     @ArgumentsSource(APIClientProvider.class)
-    public void addTagTest(AbstractAPIClient apiKeyClient) throws APIException {
+    void addTagTest(AbstractAPIClient apiKeyClient) throws APIException {
         APIUser me = apiKeyClient.me();
         APIProject project = me.createProject(APIProject.Type.ANDROID, generateUnique("testProject"));
         APITestRunConfig config = project.getTestRunConfig();
@@ -143,7 +144,7 @@ public class APIUserAPIClientTest extends APIClientTest{
 
     @ParameterizedTest
     @ArgumentsSource(APIClientProvider.class)
-    public void requestScreenshotsZip(AbstractAPIClient apiKeyClient) throws APIException, IOException {
+    void requestScreenshotsZip(AbstractAPIClient apiKeyClient) throws APIException, IOException {
         APIUser me = apiKeyClient.me();
         APIProject project = me.createProject(APIProject.Type.ANDROID, generateUnique("testProject"));
         APITestRunConfig config = project.getTestRunConfig();
