@@ -3,8 +3,6 @@ package com.testdroid.api.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIException;
-import com.testdroid.api.APIListResource;
-import com.testdroid.api.dto.Context;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
@@ -320,10 +318,6 @@ public class APITestRunConfig extends APIEntity implements Serializable {
         this.instrumentationRunner = instrumentationRunner;
     }
 
-    private String getParametersURI() {
-        return createUri(selfURI, "/parameters");
-    }
-
     public Long getTimeout() {
         return timeout;
     }
@@ -490,30 +484,6 @@ public class APITestRunConfig extends APIEntity implements Serializable {
 
     public void setClientSideTestConfig(APIClientSideTestConfig clientSideTestConfig) {
         this.clientSideTestConfig = clientSideTestConfig;
-    }
-
-    @JsonIgnore
-    public APITestRunParameter createParameter(final String key, final String value) throws APIException {
-        Map<String, Object> body = new HashMap<>();
-        body.put("key", key);
-        body.put("value", value);
-        return postResource(getParametersURI(), body, APITestRunParameter.class);
-    }
-
-    @JsonIgnore
-    public APIListResource<APITestRunParameter> getParameters() throws APIException {
-        return getListResource(getParametersURI(), APITestRunParameter.class);
-    }
-
-    @JsonIgnore
-    public APIListResource<APITestRunParameter> getParameters(Context<APITestRunParameter> context)
-            throws APIException {
-        return getListResource(getParametersURI(), context);
-    }
-
-    @JsonIgnore
-    public void deleteParameter(long parameterId) throws APIException {
-        deleteResource(String.format("%s/%s", getParametersURI(), parameterId));
     }
 
     public List<Long> getComputedDevices() {

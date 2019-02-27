@@ -23,8 +23,8 @@ public class APIUserStatistics extends APIEntity {
 
     }
 
-    public APIUserStatistics(Long devicesUsed, Double overallTestCaseSuccessRatio, Long runningTestRuns,
-            Long totalTestRuns) {
+    public APIUserStatistics(
+            Long devicesUsed, Double overallTestCaseSuccessRatio, Long runningTestRuns, Long totalTestRuns) {
         this.devicesUsed = devicesUsed;
         this.overallTestCaseSuccessRatio = overallTestCaseSuccessRatio;
         this.runningTestRuns = runningTestRuns;

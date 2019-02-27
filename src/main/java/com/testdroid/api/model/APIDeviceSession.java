@@ -126,14 +126,16 @@ public class APIDeviceSession extends APIEntity {
     public APIDeviceSession() {
     }
 
-    public APIDeviceSession(Long id, APIDeviceSession.Type type, LocalDateTime createTime, LocalDateTime startTime,
+    public APIDeviceSession(
+            Long id, APIDeviceSession.Type type, LocalDateTime createTime, LocalDateTime startTime,
             LocalDateTime installTime, LocalDateTime endTime, Long timeLimit, Long launchAppDuration,
             APIDeviceSession.State state, Integer testCasePassedCount, Integer testCaseFailedCount,
             Integer testCaseSkippedCount, Boolean billable, Long deviceModelId, String displayName,
             Integer creditsPrice, String imagePrefix, Integer imageTop, Integer imageLeft, Integer imageWidth,
-            Integer imageHeight, Integer frameExtraWidth, APIDevice.OsType osType, Long softwareVersionId,
-            String releaseVersion, Integer apiLevel, ExcludeReason excludeReason, Long deviceInstanceId,
-            RetryState retryState, Integer autoRetriesLeftCount, Long deviceTime, Long duration, Long projectId,
+            Integer imageHeight, Integer frameExtraWidth, APIDevice.OsType osType,
+            Boolean enabled, Long softwareVersionId, String releaseVersion, Integer apiLevel,
+            ExcludeReason excludeReason, Long deviceInstanceId, RetryState retryState, Integer autoRetriesLeftCount,
+            Long deviceTime, Long duration, Long projectId,
             Long testRunId) {
         super(id);
         this.type = type;
@@ -143,7 +145,7 @@ public class APIDeviceSession extends APIEntity {
         this.endTime = TimeConverter.toDate(endTime);
         this.device = new APIDevice(deviceModelId, displayName, softwareVersionId, releaseVersion, apiLevel,
                 creditsPrice, imagePrefix, imageTop, imageLeft, imageWidth, imageHeight, frameExtraWidth, osType, null,
-                null, null, null, null);
+                null, enabled, null, null);
         this.timeLimit = timeLimit;
         this.launchAppDuration = launchAppDuration;
         this.state = state;
@@ -374,12 +376,6 @@ public class APIDeviceSession extends APIEntity {
     @JsonIgnore
     public InputStream getOutputFiles() throws APIException {
         return client.get(createUri(selfURI, "/output-file-set/files.zip"));
-    }
-
-    @JsonIgnore
-    public APIDeviceSessionDataAvailability getDataAvailability() throws APIException {
-        return getResource(createUri(selfURI, "/data-availability"), APIDeviceSessionDataAvailability.class)
-                .getEntity();
     }
 
     private String getScreenshotsURI() {

@@ -1,6 +1,5 @@
 package com.testdroid.api.filter;
 
-
 import com.testdroid.api.dto.Operand;
 import com.testdroid.api.util.TimeConverter;
 

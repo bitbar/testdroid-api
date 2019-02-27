@@ -219,14 +219,6 @@ public class APITestRun extends APIEntity {
         this.projectId = projectId;
     }
 
-    private String getFilesURI() {
-        return createUri(selfURI, "/files");
-    }
-
-    private String getConfigURI() {
-        return createUri(selfURI, "/config");
-    }
-
     private String getTagsURI() {
         return createUri(selfURI, "/tags");
     }
@@ -261,11 +253,6 @@ public class APITestRun extends APIEntity {
 
     public void setWaitingDeviceCount(Integer waitingDeviceCount) {
         this.waitingDeviceCount = waitingDeviceCount;
-    }
-
-    @JsonIgnore
-    public APIListResource<APIUserFile> getFilesResource() throws APIException {
-        return getListResource(getFilesURI(), APIUserFile.class);
     }
 
     public Integer getWarningDeviceCount() {

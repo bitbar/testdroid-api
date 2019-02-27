@@ -37,7 +37,7 @@ import static org.hamcrest.Matchers.*;
  * @author Damian Sniezek <damian.sniezek@bitbar.com>
  */
 @Tag(API_CLIENT)
-public class APIUserAPIClientTest extends APIClientTest{
+class APIUserAPIClientTest extends APIClientTest {
 
     @ParameterizedTest
     @ArgumentsSource(APIClientProvider.class)
@@ -100,9 +100,10 @@ public class APIUserAPIClientTest extends APIClientTest{
     @ArgumentsSource(APIClientProvider.class)
     void startTestRunTest(AbstractAPIClient apiKeyClient) throws APIException {
         APIUser me = apiKeyClient.me();
-        APIProject project = me.createProject(APIProject.Type.ANDROID, generateUnique("testProject"));
-        APITestRunConfig config = project.getTestRunConfig();
+        APITestRunConfig config = new APITestRunConfig();
+        config.setProjectName(generateUnique("testProject"));
         APIFramework defaultApiFramework = getApiFramework(apiKeyClient, "DEFAULT");
+        config.setOsType(defaultApiFramework.getOsType());
         config.setFrameworkId(defaultApiFramework.getId());
         Long apkFileId = me.uploadFile(new File(APIKeyClient.class.getResource(APP_PATH).getFile())).getId();
         APIFileConfig apkFileConfig = new APIFileConfig(apkFileId, INSTALL);
@@ -119,9 +120,10 @@ public class APIUserAPIClientTest extends APIClientTest{
     @ArgumentsSource(APIClientProvider.class)
     void addTagTest(AbstractAPIClient apiKeyClient) throws APIException {
         APIUser me = apiKeyClient.me();
-        APIProject project = me.createProject(APIProject.Type.ANDROID, generateUnique("testProject"));
-        APITestRunConfig config = project.getTestRunConfig();
+        APITestRunConfig config = new APITestRunConfig();
+        config.setProjectName(generateUnique("testProject"));
         APIFramework defaultApiFramework = getApiFramework(apiKeyClient, "DEFAULT");
+        config.setOsType(defaultApiFramework.getOsType());
         config.setFrameworkId(defaultApiFramework.getId());
         Long apkFileId = me.uploadFile(new File(APIKeyClient.class.getResource(APP_PATH).getFile())).getId();
         APIFileConfig apkFileConfig = new APIFileConfig(apkFileId, INSTALL);
@@ -146,9 +148,10 @@ public class APIUserAPIClientTest extends APIClientTest{
     @ArgumentsSource(APIClientProvider.class)
     void requestScreenshotsZip(AbstractAPIClient apiKeyClient) throws APIException, IOException {
         APIUser me = apiKeyClient.me();
-        APIProject project = me.createProject(APIProject.Type.ANDROID, generateUnique("testProject"));
-        APITestRunConfig config = project.getTestRunConfig();
+        APITestRunConfig config = new APITestRunConfig();
+        config.setProjectName(generateUnique("testProject"));
         APIFramework defaultApiFramework = getApiFramework(apiKeyClient, "DEFAULT");
+        config.setOsType(defaultApiFramework.getOsType());
         config.setFrameworkId(defaultApiFramework.getId());
         Long apkFileId = me.uploadFile(new File(APIKeyClient.class.getResource(APP_PATH).getFile())).getId();
         APIFileConfig apkFileConfig = new APIFileConfig(apkFileId, INSTALL);

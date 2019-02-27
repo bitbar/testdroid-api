@@ -87,6 +87,10 @@ public abstract class AbstractAPIClient implements APIClient {
         HttpRequestFactory factory = getRequestFactory();
         HttpRequest request;
         HttpResponse response = null;
+        //Fix for https://jira.bitbar.com/browse/TD-12086
+        //caused by https://github.com/googleapis/google-http-java-client/issues/398
+        //We should used pure Apache Http Client
+        uri = uri.replaceAll("\\+", "%2B");
         try {
             // Call request and parse result
             request = factory.buildGetRequest(new GenericUrl(buildUrl(apiURL + uri, context)));
@@ -113,7 +117,7 @@ public abstract class AbstractAPIClient implements APIClient {
             throw new APIException(String
                     .format("Failed to execute API call: %s. Reason: %s", uri, ex.getMessage()), ex);
         } finally {
-            disconnectQuitely(response);
+            disconnectQuietly(response);
         }
     }
 
@@ -221,7 +225,7 @@ public abstract class AbstractAPIClient implements APIClient {
             throw new APIException(String
                     .format("Failed to execute API call: %s. Reason: %s", uri, ex.getMessage()), ex);
         } finally {
-            disconnectQuitely(response);
+            disconnectQuietly(response);
         }
     }
 
@@ -261,7 +265,7 @@ public abstract class AbstractAPIClient implements APIClient {
             throw new APIException(String
                     .format("Failed to execute API call: %s. Reason: %s", uri, ex.getMessage()), ex);
         } finally {
-            disconnectQuitely(response);
+            disconnectQuietly(response);
         }
     }
 
@@ -345,7 +349,7 @@ public abstract class AbstractAPIClient implements APIClient {
         }
     }
 
-    protected void disconnectQuitely(HttpResponse httpResponse) {
+    protected void disconnectQuietly(HttpResponse httpResponse) {
         if (httpResponse != null) {
             try {
                 httpResponse.disconnect();

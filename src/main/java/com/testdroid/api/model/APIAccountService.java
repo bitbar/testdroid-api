@@ -26,7 +26,6 @@ public class APIAccountService extends APIEntity {
         SUSPENDED
     }
 
-
     private Long accountId;
 
     private Long activatedById;

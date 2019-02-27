@@ -15,11 +15,11 @@ public class BooleanFilterEntry extends FilterEntry<Boolean> {
         super(field, comparison, value);
     }
 
-    public static BooleanFilterEntry trueFilterEntry(String field){
+    public static BooleanFilterEntry trueFilterEntry(String field) {
         return new BooleanFilterEntry(field, EQ, TRUE);
     }
 
-    public static BooleanFilterEntry falseFilterEntry(String field){
+    public static BooleanFilterEntry falseFilterEntry(String field) {
         return new BooleanFilterEntry(field, EQ, FALSE);
     }
 

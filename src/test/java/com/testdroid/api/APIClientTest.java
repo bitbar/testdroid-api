@@ -3,14 +3,18 @@ package com.testdroid.api;
 import com.testdroid.api.dto.Context;
 import com.testdroid.api.filter.BooleanFilterEntry;
 import com.testdroid.api.filter.StringFilterEntry;
+import com.testdroid.api.model.APIEnum;
 import com.testdroid.api.model.APIFramework;
 import com.testdroid.api.model.APIUser;
 import org.apache.http.HttpHost;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.extension.ExtensionContext;
+import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
+import org.junit.jupiter.params.provider.ArgumentsSource;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,14 +25,19 @@ import static com.testdroid.api.dto.MappingKey.*;
 import static com.testdroid.api.dto.Operand.EQ;
 import static com.testdroid.api.filter.BooleanFilterEntry.trueFilterEntry;
 import static com.testdroid.api.model.APIDevice.OsType.ANDROID;
+import static com.testdroid.cloud.test.categories.TestTags.API_CLIENT;
 import static java.lang.Integer.MAX_VALUE;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.apache.commons.lang3.StringUtils.isNoneBlank;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * @author Damian Sniezek <damian.sniezek@bitbar.com>
  */
-public abstract class APIClientTest {
+@Tag(API_CLIENT)
+class APIClientTest {
 
     static final String APP_PATH = "/fixtures/BitbarSampleApp.apk";
 
@@ -42,7 +51,7 @@ public abstract class APIClientTest {
 
     private static final String PROXY_PORT = System.getenv("API_CLIENT_TEST_PROXY_PORT");
 
-    static final APIKeyClient ADMIN_API_CLIENT = new APIKeyClient(CLOUD_URL, ADMIN_API_KEY, true);
+    private static final APIKeyClient ADMIN_API_CLIENT = new APIKeyClient(CLOUD_URL, ADMIN_API_KEY, true);
 
     private static APIKeyClient USER_API_KEY_CLIENT;
 
@@ -55,7 +64,7 @@ public abstract class APIClientTest {
     private static final String USER_PASSWORD = "TSV3ma2n)c3~L/96hQTw";
 
     @BeforeAll
-    public static void beforeAll() throws APIException {
+    static void beforeAll() throws APIException {
         APIUser apiUser1 = create(ADMIN_API_CLIENT);
         USER_API_KEY_CLIENT = new APIKeyClient(CLOUD_URL, apiUser1.getApiKey());
         APIUser apiUser2 = create(ADMIN_API_CLIENT);
@@ -67,7 +76,7 @@ public abstract class APIClientTest {
     }
 
     @AfterAll
-    public static void afterAll() throws APIException {
+    static void afterAll() throws APIException {
         String deleteUrl = "%s/delete";
         Map<String, Object> map = new HashMap<>();
         map.put(PASSWORD, USER_PASSWORD);
@@ -118,11 +127,21 @@ public abstract class APIClientTest {
     }
 
     static String generateUnique(String prefix) {
-        return String.format("%s%d",prefix, System.currentTimeMillis());
+        return String.format("%s%d", prefix, System.currentTimeMillis());
     }
 
-    static DefaultAPIClient createDefaultApiClientWithProxy(HttpHost proxy) throws APIException{
+    static DefaultAPIClient createDefaultApiClientWithProxy(HttpHost proxy) throws APIException {
         return new DefaultAPIClient(CLOUD_URL, create(ADMIN_API_CLIENT).getEmail(), USER_PASSWORD, proxy, false);
+    }
+
+    @Tag("TD-12086")
+    @ParameterizedTest
+    @ArgumentsSource(APIClientTest.APIClientProvider.class)
+    void td12086(AbstractAPIClient apiKeyClient) throws APIException {
+        APIUser user = apiKeyClient.me();
+        Exception exception = assertThrows(APIException.class, () ->
+                user.getResource(user.selfURI + "/notifications/channels/SLACK+/scopes", APIEnum.class).getEntity());
+        assertThat(exception.getMessage(), is("Invalid Notification Channel: SLACK+"));
     }
 
 }

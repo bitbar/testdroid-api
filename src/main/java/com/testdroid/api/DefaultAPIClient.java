@@ -158,7 +158,8 @@ public class DefaultAPIClient extends AbstractAPIClient {
             }
 
             String responseJson = StringUtils.join(IOUtils.readLines(response.getContent(), UTF_8), "\n");
-            Map<String, String> json = fromJson(responseJson, new TypeReference<Map<String, String>>(){});
+            Map<String, String> json = fromJson(responseJson, new TypeReference<Map<String, String>>() {
+            });
             accessTokenExpireTime = System.currentTimeMillis() + (Long.parseLong(json.get("expires_in")) * 1000);
             refreshToken = json.get("refresh_token");
             return json.get("access_token");
@@ -168,7 +169,7 @@ public class DefaultAPIClient extends AbstractAPIClient {
         } catch (IOException ex) {
             throw new APIException(String.format("Failed to acquire access token. Reason: %s", ex.getMessage()), ex);
         } finally {
-            disconnectQuitely(response);
+            disconnectQuietly(response);
         }
     }
 
@@ -197,14 +198,15 @@ public class DefaultAPIClient extends AbstractAPIClient {
             }
 
             String jsonContent = StringUtils.join(IOUtils.readLines(response.getContent(), UTF_8), "\n");
-            Map<String, String> json = fromJson(jsonContent, new TypeReference<Map<String, String>>(){});
+            Map<String, String> json = fromJson(jsonContent, new TypeReference<Map<String, String>>() {
+            });
             accessTokenExpireTime = System.currentTimeMillis() + (Long.parseLong(json.get("expires_in")) * 1000);
             refreshToken = json.get("refresh_token");
             return json.get("access_token");
         } catch (IOException ex) {
             throw new APIException(String.format("Failed to refresh access token. Reason: %s", ex.getMessage()), ex);
         } finally {
-            disconnectQuitely(response);
+            disconnectQuietly(response);
         }
     }
 

@@ -10,12 +10,12 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 
+import static com.testdroid.api.dto.MappingKey.DISPLAY_NAME;
+import static com.testdroid.api.dto.MappingKey.OS_TYPE;
 import static com.testdroid.api.dto.Operand.EQ;
 import static com.testdroid.api.model.APIDevice.OsType.ANDROID;
 import static com.testdroid.api.model.APIDevice.OsType.IOS;
 import static com.testdroid.cloud.test.categories.TestTags.API_CLIENT;
-import static com.testdroid.api.dto.MappingKey.DISPLAY_NAME;
-import static com.testdroid.api.dto.MappingKey.OS_TYPE;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
@@ -24,7 +24,7 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
  * @author Damian Sniezek <damian.sniezek@bitbar.com>
  */
 @Tag(API_CLIENT)
-public class APIDeviceGroupClientTest extends APIClientTest {
+class APIDeviceGroupClientTest extends APIClientTest {
 
     @ParameterizedTest
     @ArgumentsSource(APIClientProvider.class)

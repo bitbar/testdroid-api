@@ -117,7 +117,6 @@ public class APIAccountServicePayment extends APIEntity {
         APIAccountServicePayment payment = (APIAccountServicePayment) from;
         cloneBase(from);
         this.accountId = payment.accountId;
-        this.accountId = payment.accountId;
         this.startBillingPeriod = payment.startBillingPeriod;
         this.endBillingPeriod = payment.endBillingPeriod;
         this.name = payment.name;

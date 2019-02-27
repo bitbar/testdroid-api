@@ -15,21 +15,37 @@ import java.util.Date;
 public class APIBillingPeriod extends APIEntity {
 
     private Long userId;
+
     private Long accountServiceId;
+
     private String mail;
+
     private Date startBillingPeriod;
+
     private Date endBillingPeriod;
+
     private Date subscriptionStart;
+
     private Date subscriptionEnd;
+
     private String plan;
+
     private Long additionalHours;
+
     private Long totalPrice;
+
     private Long servicePrice;
+
     private Long additionalHoursPrice;
+
     private Boolean paid;
+
     private Date lastPaymentDate;
+
     private Date createTime;
+
     private APIPaymentMethod paymentMethod;
+
     private APIBillingPeriodType apiBillingPeriodType;
 
     public APIBillingPeriod() {

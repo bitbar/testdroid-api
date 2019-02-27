@@ -11,11 +11,11 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.Arrays;
 import java.util.Collection;
 
+import static com.testdroid.api.dto.MappingKey.ID;
+import static com.testdroid.api.dto.MappingKey.NAME;
 import static com.testdroid.api.dto.Operand.EQ;
 import static com.testdroid.api.dto.Operand.IN;
 import static com.testdroid.cloud.test.categories.TestTags.UNIT;
-import static com.testdroid.api.dto.MappingKey.ID;
-import static com.testdroid.api.dto.MappingKey.NAME;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -24,7 +24,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @author Michał Szpruta <michal.szpruta@bitbar.com>
  */
 @Tag(UNIT)
-public class APIListTest {
+class APIListTest {
 
     private static final String URL = "https://cloud.bitbar.com/api/v2/users";
 

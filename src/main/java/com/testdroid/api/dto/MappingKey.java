@@ -67,6 +67,8 @@ public class MappingKey {
 
     public static final String ASL_ON = "aslOn";
 
+    public static final String ATTACHMENT = "attachment";
+
     public static final String AUTO_RENEW = "autoRenew";
 
     public static final String AVG_WAITING_TIME = "avgWaitingTime";

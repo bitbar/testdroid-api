@@ -11,13 +11,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class APIAdminDeviceSessionStatistics extends APIEntity {
 
     private Double avgDeviceSessionDuration;
-    
+
     private Long minDeviceSessionDuration;
-    
+
     private Long maxDeviceSessionDuration;
-    
+
     private Double avgDeviceSessionSuccessRatio;
-    
+
     private Double avgDeviceSessionDeviceTime;
 
     private Long totalDeviceCount;
@@ -174,7 +174,7 @@ public class APIAdminDeviceSessionStatistics extends APIEntity {
     }
 
     @Override
-    protected  <T extends APIEntity> void clone(T from) {
+    protected <T extends APIEntity> void clone(T from) {
         APIAdminDeviceSessionStatistics apiAdminDeviceSessionStatistics = (APIAdminDeviceSessionStatistics) from;
         cloneBase(from);
         this.avgDeviceSessionDuration = apiAdminDeviceSessionStatistics.avgDeviceSessionDuration;

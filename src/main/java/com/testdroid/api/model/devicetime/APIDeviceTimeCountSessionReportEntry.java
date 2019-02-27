@@ -103,7 +103,8 @@ public class APIDeviceTimeCountSessionReportEntry extends APIBasicDeviceTime {
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
-        APIDeviceTimeCountSessionReportEntry apiDeviceTimeCountSessionReportEntry = (APIDeviceTimeCountSessionReportEntry) from;
+        APIDeviceTimeCountSessionReportEntry apiDeviceTimeCountSessionReportEntry =
+                (APIDeviceTimeCountSessionReportEntry) from;
         super.clone(from);
         this.day = apiDeviceTimeCountSessionReportEntry.day;
         this.userId = apiDeviceTimeCountSessionReportEntry.userId;

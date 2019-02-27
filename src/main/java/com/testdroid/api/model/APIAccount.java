@@ -30,7 +30,8 @@ public class APIAccount extends APIEntity {
 
     }
 
-    public APIAccount(Long id, LocalDateTime createTime, String mainUserName, String mainUserEmail, Integer maxTimeout,
+    public APIAccount(
+            Long id, LocalDateTime createTime, String mainUserName, String mainUserEmail, Integer maxTimeout,
             Integer testScreenshotLimit, Integer executorsLimit) {
         super(id);
         this.createTime = TimeConverter.toDate(createTime);

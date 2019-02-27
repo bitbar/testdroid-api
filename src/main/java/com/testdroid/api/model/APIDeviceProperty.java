@@ -25,7 +25,8 @@ public class APIDeviceProperty extends APIEntity {
     public APIDeviceProperty() {
     }
 
-    public APIDeviceProperty(Long id, String name, String displayName, Long propertyGroupId,
+    public APIDeviceProperty(
+            Long id, String name, String displayName, Long propertyGroupId,
             String propertyGroupName, String labelGroupName) {
         super(id);
         this.name = name;

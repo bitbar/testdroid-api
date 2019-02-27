@@ -49,7 +49,8 @@ public class APIAdminDeviceSession extends APIEntity {
     }
 
     public APIAdminDeviceSession(
-            Long id, LocalDateTime createTime, LocalDateTime startTime, LocalDateTime endTime, String startedByDisplayName, Long projectId,
+            Long id, LocalDateTime createTime, LocalDateTime startTime, LocalDateTime endTime,
+            String startedByDisplayName, Long projectId,
             String projectName, Long testRunId, String testRunName, APIDeviceSession.State state, Integer priority,
             Boolean billable, Long deviceTime, APIDeviceSessionStep.Type currentStepType, String retriedFailReason) {
         super(id);
