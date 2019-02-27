@@ -3,8 +3,6 @@ package com.testdroid.api.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIException;
-import com.testdroid.api.APIListResource;
-import com.testdroid.api.dto.Context;
 import com.testdroid.api.util.TimeConverter;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -34,8 +32,9 @@ public class APIFileSet extends APIEntity {
     public APIFileSet() {
     }
 
-    public APIFileSet(Long id, String name, LocalDateTime createTime, Long fileCount, Long ownerEmail,
-            String userEmail, boolean isShared) {
+    public APIFileSet(
+            Long id, String name, LocalDateTime createTime, Long fileCount, Long ownerEmail, String userEmail,
+            boolean isShared) {
         super(id);
         this.name = name;
         this.createTime = TimeConverter.toDate(createTime);
@@ -93,34 +92,8 @@ public class APIFileSet extends APIEntity {
         isShared = shared;
     }
 
-    private String getIncludedFilesURI() {
-        return createUri(selfURI, "/files");
-    }
-
-    private String getIncludedFilesURI(Long fileId) {
-        return createUri(selfURI, "/files/" + fileId);
-    }
-
-    @JsonIgnore
-    public APIListResource<APIUserFile> getIncludedFilesResource() throws APIException {
-        return getListResource(getIncludedFilesURI(), APIUserFile.class);
-    }
-
-    @JsonIgnore
-    public APIListResource<APIUserFile> getIncludedFilesResource(Context<APIUserFile> context) throws APIException {
-        return getListResource(getIncludedFilesURI(), context);
-    }
-
     public void delete() throws APIException {
         deleteResource(selfURI);
-    }
-
-    public void addFile(APIUserFile file) throws APIException {
-        postResource(getIncludedFilesURI(), Collections.singletonMap("fileId", file.getId()), null);
-    }
-
-    public void removeFile(APIUserFile file) throws APIException {
-        deleteResource(getIncludedFilesURI(file.getId()));
     }
 
     public void update() throws APIException {

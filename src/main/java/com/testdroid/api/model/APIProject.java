@@ -6,15 +6,13 @@ import com.testdroid.api.APIException;
 import com.testdroid.api.APIListResource;
 import com.testdroid.api.dto.Context;
 import com.testdroid.api.util.TimeConverter;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
-import java.io.File;
-import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.testdroid.api.model.APIDevice.OsType;
 
@@ -102,8 +100,6 @@ public class APIProject extends APIEntity {
 
     private Date archiveTime;
 
-    private Long frameworkId;
-
     private boolean isShared;
 
     private Double successRatio;
@@ -122,7 +118,7 @@ public class APIProject extends APIEntity {
     public APIProject(
             Long id, LocalDateTime createTime, LocalDateTime archiveTime, String name, String description, Type type,
             Long sharedById, String sharedByEmail, boolean common, APIArchivingStrategy archivingStrategy,
-            Integer archivingItemCount, Long frameworkId, Boolean isShared, APIDevice.OsType osType, boolean readOnly) {
+            Integer archivingItemCount, Boolean isShared, APIDevice.OsType osType, boolean readOnly) {
         super(id);
         this.createTime = TimeConverter.toDate(createTime);
         this.archiveTime = TimeConverter.toDate(archiveTime);
@@ -134,7 +130,6 @@ public class APIProject extends APIEntity {
         this.common = common;
         this.archivingStrategy = archivingStrategy;
         this.archivingItemCount = archivingItemCount;
-        this.frameworkId = frameworkId;
         this.isShared = isShared;
         this.jobConfig = new HashMap<>();
         this.osType = osType;
@@ -191,11 +186,6 @@ public class APIProject extends APIEntity {
         this.archiveTime = archiveTime;
     }
 
-    /**
-     * Returns user ID sharing this project or null if project is owned or common.
-     *
-     * @return user ID sharing this project
-     */
     public Long getSharedById() {
         return sharedById;
     }
@@ -234,27 +224,6 @@ public class APIProject extends APIEntity {
 
     public void setArchivingItemCount(Integer archivingItemCount) {
         this.archivingItemCount = archivingItemCount;
-    }
-
-    public String getArchivingStrategyDisplayValue() {
-        switch (archivingStrategy) {
-            case NEVER:
-                return "never";
-            case RUNS:
-                return String.format("%s run%s", archivingItemCount, archivingItemCount != 1 ? "s" : "");
-            case DAYS:
-                return String.format("%s day%s", archivingItemCount, archivingItemCount != 1 ? "s" : "");
-            default:
-                return "";
-        }
-    }
-
-    public Long getFrameworkId() {
-        return frameworkId;
-    }
-
-    public void setFrameworkId(Long frameworkId) {
-        this.frameworkId = frameworkId;
     }
 
     public Double getSuccessRatio() {
@@ -297,193 +266,12 @@ public class APIProject extends APIEntity {
         this.userEmail = userEmail;
     }
 
-    private String getConfigURI() {
-        return createUri(selfURI, "/config");
-    }
-
-    private String getJobConfigURI(APIProjectJobConfig.Type type) {
-        return createUri(selfURI, "/job-configs/" + type.toString());
-    }
-
-    private String getFilesURI() {
-        return createUri(selfURI, "/files");
-    }
-
-    private String getIconURI() {
-        return createUri(selfURI, "/icon");
-    }
-
-    private String getSharingsURI() {
-        return createUri(selfURI, "/sharings");
-    }
-
     private String getRunsURI() {
         return createUri(selfURI, "/runs");
     }
 
     private String getRunURI(Long id) {
         return createUri(selfURI, "/runs/" + id);
-    }
-
-    @Deprecated
-    private String getPublicDeviceGroupsURI() {
-        return createUri(selfURI, "/public-device-groups");
-    }
-
-    private String getUploadApplicationURI() {
-        return createUri(selfURI, "/files/application");
-    }
-
-    private String getUploadTestURI() {
-        return createUri(selfURI, "/files/test");
-    }
-
-    private String getUploadDataURI() {
-        return createUri(selfURI, "/files/data");
-    }
-
-    private String getNotificationEmailsURI() {
-        return createUri(selfURI, "/notifications");
-    }
-
-    private Map<String, Object> getCreateRunParameters(String testRunName) {
-        return Collections.singletonMap("name", testRunName);
-    }
-
-    private Map<String, Object> getCreateRunParameters(Long testRunId) {
-        return Collections.singletonMap("testRunId", testRunId);
-    }
-
-    private Map<String, Object> getCreateRunParameters(List<Long> usedDeviceIds) {
-        return Collections.singletonMap("usedDeviceIds[]", StringUtils.join(usedDeviceIds, ","));
-    }
-
-    private Map<String, Object> getCreateRunParameters(String testRunName, List<Long> usedDeviceIds) {
-        Map<String, Object> result = new HashMap<>();
-        result.putAll(getCreateRunParameters(testRunName));
-        result.putAll(getCreateRunParameters(usedDeviceIds));
-        return result;
-    }
-
-    private Map<String, Object> getCreateRunParameters(String testRunName, List<Long> usedDeviceIds, Long testRunId) {
-        Map<String, Object> result = new HashMap<>();
-        result.putAll(getCreateRunParameters(testRunName));
-        result.putAll(getCreateRunParameters(usedDeviceIds));
-        result.putAll(getCreateRunParameters(testRunId));
-        return result;
-    }
-
-    private Map<String, Object> getCreateRunParameters(String testRunName, String deviceNamePattern,
-            Long testRunId) {
-        Map<String, Object> result = new HashMap<>(getCreateRunParameters(testRunName));
-        result.put("deviceNamePattern", deviceNamePattern);
-        result.putAll(getCreateRunParameters(testRunId));
-        return result;
-    }
-
-    private Map<String, Object> getCreateParameterParameters(final String key, final String value) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("key", key);
-        map.put("value", value);
-        return map;
-    }
-
-    private Map<String, Object> getShareParameters(final String email) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("email", email);
-        return map;
-    }
-
-    @JsonIgnore
-    public APITestRunConfig getTestRunConfig() throws APIException {
-        if (testRunConfig == null) {
-            testRunConfig = getResource(getConfigURI(), APITestRunConfig.class).getEntity();
-        }
-        return testRunConfig;
-    }
-
-    @JsonIgnore
-    public APIProjectJobConfig getJobConfig(APIProjectJobConfig.Type type) throws APIException {
-        if (jobConfig == null) {
-            jobConfig = new HashMap<>();
-        }
-        if (jobConfig.get(type) == null) {
-            jobConfig.put(type, getResource(getJobConfigURI(type), APIProjectJobConfig.class).getEntity());
-        }
-        return jobConfig.get(type);
-    }
-
-    @JsonIgnore
-    public APIListResource<APIUserFile> getFiles() throws APIException {
-        return getListResource(getFilesURI(), APIUserFile.class);
-    }
-
-    @JsonIgnore
-    public byte[] getIcon() throws APIException, IOException {
-        if (icon == null) {
-            icon = IOUtils.toByteArray(getResource(getIconURI(), null).getStream());
-        }
-        return icon;
-    }
-
-    @JsonIgnore
-    public APITestRun run() throws APIException {
-        return postResource(getRunsURI(), null, APITestRun.class);
-    }
-
-    @JsonIgnore
-    public APITestRun run(String testRunName) throws APIException {
-        return postResource(getRunsURI(), getCreateRunParameters(testRunName), APITestRun.class);
-    }
-
-    @JsonIgnore
-    public APITestRun run(List<Long> usedDevicesId) throws APIException {
-        return postResource(getRunsURI(), getCreateRunParameters(usedDevicesId), APITestRun.class);
-    }
-
-    @JsonIgnore
-    public APITestRun run(String testRunName, List<Long> usedDevicesId) throws APIException {
-        return postResource(getRunsURI(), getCreateRunParameters(testRunName, usedDevicesId), APITestRun.class);
-    }
-
-    @JsonIgnore
-    public APITestRun run(String testRunName, List<Long> usedDevicesId, Long testRunId) throws APIException {
-        return postResource(getRunsURI(), getCreateRunParameters(testRunName, usedDevicesId, testRunId), APITestRun.class);
-    }
-
-    @JsonIgnore
-    public APITestRun run(String testRunName, String deviceNamePattern, Long testRunId) throws APIException {
-        return postResource(getRunsURI(), getCreateRunParameters(testRunName, deviceNamePattern, testRunId),
-                APITestRun.class);
-    }
-
-    @JsonIgnore
-    public APITestRun runWithConfig(
-            String testRunName, List<Long> deviceIds, APITestRunConfig config, Long appFileId, Long testFileId,
-            Long dataFileId) throws APIException {
-        Map<String, Object> body = new HashMap<>();
-        body.put("scheduler", config.getScheduler() != null ? config.getScheduler().name() : null);
-        body.put("appCrawlerRun", config.isAppCrawlerRun());
-        body.put("screenshotDir", config.getScreenshotDir());
-        body.put("limitationType", config.getLimitationType() != null ? config.getLimitationType().name() : null);
-        body.put("limitationValue", config.getLimitationValue());
-        body.put("withAnnotation", config.getWithAnnotation());
-        body.put("withoutAnnotation", config.getWithoutAnnotation());
-        body.put("applicationUsername", config.getApplicationUsername());
-        body.put("applicationPassword", config.getApplicationPassword());
-        body.put("usedDeviceGroupId", config.getDeviceGroupId());
-        body.put("deviceLanguageCode", config.getDeviceLanguageCode());
-        body.put("hookURL", config.getHookURL());
-        body.put("uiAutomatorTestClasses", config.getUiAutomatorTestClasses());
-        body.put("launchApp", config.isLaunchApp());
-        body.put("instrumentationRunner", config.getInstrumentationRunner());
-        body.put("timeout", config.getTimeout());
-        body.put("name", testRunName);
-        body.put("usedDeviceIds[]", StringUtils.join(deviceIds, ","));
-        body.put("appFileId", appFileId);
-        body.put("testFileId", testFileId);
-        body.put("dataFileId", dataFileId);
-        return postResource(getRunsURI(), body, APITestRun.class);
     }
 
     public void delete() throws APIException {
@@ -502,42 +290,6 @@ public class APIProject extends APIEntity {
 
     public APITestRun getTestRun(Long id) throws APIException {
         return getResource(getRunURI(id), APITestRun.class).getEntity();
-    }
-
-    @JsonIgnore
-    public APIProjectSharing share(String email) throws APIException {
-        return postResource(getSharingsURI(), getShareParameters(email), APIProjectSharing.class);
-    }
-
-    @JsonIgnore
-    public APIListResource<APIProjectSharing> getProjectSharings() throws APIException {
-        return getListResource(getSharingsURI(), APIProjectSharing.class);
-    }
-
-    @JsonIgnore
-    public APIListResource<APIProjectSharing> getProjectSharings(Context<APIProjectSharing> context)
-            throws APIException {
-        return getListResource(getSharingsURI(), context);
-    }
-
-    @JsonIgnore
-    public APIListResource<APIDeviceGroup> getPublicDeviceGroups() throws APIException {
-        return getListResource(getPublicDeviceGroupsURI(), APIDeviceGroup.class);
-    }
-
-    @JsonIgnore
-    public APIUserFile uploadApplication(File file, String contentType) throws APIException {
-        return postFile(getUploadApplicationURI(), file, contentType, APIUserFile.class);
-    }
-
-    @JsonIgnore
-    public APIUserFile uploadTest(File file, String contentType) throws APIException {
-        return postFile(getUploadTestURI(), file, contentType, APIUserFile.class);
-    }
-
-    @JsonIgnore
-    public APIUserFile uploadData(File file, String contentType) throws APIException {
-        return postFile(getUploadDataURI(), file, contentType, APIUserFile.class);
     }
 
     public void update() throws APIException {
@@ -568,7 +320,6 @@ public class APIProject extends APIEntity {
         this.type = apiProject.type;
         this.archivingStrategy = apiProject.archivingStrategy;
         this.archivingItemCount = apiProject.archivingItemCount;
-        this.frameworkId = apiProject.frameworkId;
         this.successRatio = apiProject.successRatio;
         this.osType = apiProject.osType;
         this.readOnly = apiProject.readOnly;

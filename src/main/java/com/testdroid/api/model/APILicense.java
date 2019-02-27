@@ -17,7 +17,6 @@ import java.util.Date;
 @XmlRootElement
 public class APILicense extends APIEntity {
 
-
     @XmlType(namespace = "APILicense")
     public enum Status {
         ACTIVE,
@@ -335,7 +334,7 @@ public class APILicense extends APIEntity {
 
     public String generateSignContent() {
         return String.format("%s:%s:%s%s%s%s", getTextValue(privateInstance), getUserEmail(), getAndroid()
-                .generateSignContent(), getIos().generateSignContent(),
+                        .generateSignContent(), getIos().generateSignContent(),
                 getRecorder().generateSignContent(), getServer().generateSignContent());
     }
 
@@ -470,7 +469,7 @@ public class APILicense extends APIEntity {
             return String
                     .format("%s%s%s%s%s", getTextValue(enabled), getTextValue(projectLimit),
                             getTextValue(deviceLimit), cts
-                            .generateSignContent(), uiAutomator.generateSignContent());
+                                    .generateSignContent(), uiAutomator.generateSignContent());
         }
 
         public static class CTSLicense extends FeatureLicense {

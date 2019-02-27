@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  * @author Damian Sniezek <damian.sniezek@bitbar.com>
  */
 @Tag(API_CLIENT)
-public class DefaultAPIClientTest extends APIClientTest{
+class DefaultAPIClientTest extends APIClientTest {
 
     private static final String UNKNOW_HOST_EXCEPTION_MESSAGE = "Failed to acquire access token. Reason: %s: %s";
 

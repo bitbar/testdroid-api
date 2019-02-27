@@ -224,7 +224,7 @@ public class APIList<T extends APIEntity> extends APIEntity {
         throw new UnsupportedOperationException();
     }
 
-    public static String filterParam(List<FilterEntry> filters){
+    public static String filterParam(List<FilterEntry> filters) {
         return filters.stream().map(FilterEntry::toString).collect(joining(FILTER_DELIMITER));
     }
 

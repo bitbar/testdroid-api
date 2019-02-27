@@ -14,7 +14,6 @@ package com.testdroid.api.dto;
  * </ul>
  *
  * @author Damian Sniezek <damian.sniezek@bitbar.com>
- *
  */
 public enum Type {
     N,

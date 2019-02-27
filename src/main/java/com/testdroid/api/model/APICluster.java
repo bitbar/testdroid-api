@@ -43,7 +43,8 @@ public class APICluster extends APIEntity {
         this.name = name;
     }
 
-    public APICluster(Long id, String name, String url, State state, LocalDateTime stateTime,
+    public APICluster(
+            Long id, String name, String url, State state, LocalDateTime stateTime,
             LocalDateTime stateChangeTime, Boolean enabled) {
         super(id);
         this.name = name;

@@ -114,20 +114,12 @@ public class APIUser extends APIEntity {
     public APIUser() {
     }
 
-    public APIUser(Long id, String email, String name) {
+    public APIUser(Long id, String email, String name, String state, String country, String city, String code,
+            String address, String phone, String organization, String vatId, String timeZone, LocalDateTime createTime,
+            LocalDateTime deleteTime, LocalDateTime lastLoginTime, Status status) {
         super(id);
         this.email = email;
         this.name = name;
-    }
-
-    public APIUser(
-            Long id, Long accountId, String email, String name, String state, String country, String city, String code,
-            String address, String phone, String organization, String vatId, String timeZone, LocalDateTime createTime,
-            LocalDateTime deleteTime, LocalDateTime lastLoginTime, Boolean isMainUser, Long mainUserId,
-            String mainUserEmail, Long activeServiceId, String apiKey, Status status, Long accountServiceId,
-            Long createdById, String createdByEmail) {
-        this(id, email, name);
-        this.accountId = accountId;
         this.state = state;
         this.country = country;
         this.city = city;
@@ -140,14 +132,24 @@ public class APIUser extends APIEntity {
         this.createTime = TimeConverter.toDate(createTime);
         this.deleteTime = TimeConverter.toDate(deleteTime);
         this.lastLoginTime = TimeConverter.toDate(lastLoginTime);
+        this.status = status;
+        this.enabled = status == Status.ENABLED;
+    }
+
+    public APIUser(
+            Long id, Long accountId, String email, String name, String state, String country, String city, String code,
+            String address, String phone, String organization, String vatId, String timeZone, LocalDateTime createTime,
+            LocalDateTime deleteTime, LocalDateTime lastLoginTime, Boolean isMainUser, Long mainUserId,
+            String mainUserEmail, Long activeServiceId, String apiKey, Status status, Long accountServiceId,
+            Long createdById, String createdByEmail) {
+        this(id, email, name, state, country, city, code, address, phone, organization, vatId, timeZone, createTime,
+                deleteTime, lastLoginTime, status);
+        this.accountId = accountId;
         this.isMainUser = isMainUser;
         this.mainUserId = mainUserId;
         this.mainUserEmail = mainUserEmail;
-        this.accountId = accountId;
         this.apiKey = apiKey;
         this.activeServiceId = activeServiceId;
-        this.status = status;
-        this.enabled = status == Status.ENABLED;
         this.accountServiceId = accountServiceId;
         this.createdById = createdById;
         this.createdByEmail = createdByEmail;
@@ -355,10 +357,6 @@ public class APIUser extends APIEntity {
         return createUri(selfURI, "/notifications");
     }
 
-    private String getDeviceSessionVNCConnectionsURI(long id) {
-        return createUri(selfURI, String.format("/device-sessions/%s/connections?filter=s_type_eq_VNC", id));
-    }
-
     private String getNotificationURI(long id) {
         return createUri(selfURI, "/notifications/" + id);
     }
@@ -421,24 +419,14 @@ public class APIUser extends APIEntity {
         return map;
     }
 
-    private Map<String, Object> getCreateProjectParams(final APIProject.Type type) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("type", type);
-        return map;
-    }
-
-    private Map<String, Object> getCreateProjectParams(APIProject.Type type, String name) {
-        Map<String, Object> result = getCreateProjectParams(type);
+    private Map<String, Object> getCreateProjectParams(String name) {
+        Map<String, Object> result = new HashMap<>();
         result.put("name", name);
         return result;
     }
 
-    public APIProject createProject(APIProject.Type projectType) throws APIException {
-        return postResource(getProjectsURI(), getCreateProjectParams(projectType), APIProject.class);
-    }
-
-    public APIProject createProject(APIProject.Type type, String name) throws APIException {
-        return postResource(getProjectsURI(), getCreateProjectParams(type, name), APIProject.class);
+    public APIProject createProject(String name) throws APIException {
+        return postResource(getProjectsURI(), getCreateProjectParams(name), APIProject.class);
     }
 
     public void update() throws APIException {
@@ -485,7 +473,8 @@ public class APIUser extends APIEntity {
     }
 
     @JsonIgnore
-    public APIListResource<APIDeviceGroup> getDeviceGroupsResource(Context<APIDeviceGroup> context) throws APIException {
+    public APIListResource<APIDeviceGroup> getDeviceGroupsResource(Context<APIDeviceGroup> context)
+            throws APIException {
         return getListResource(getDeviceGroupsURI(), context);
     }
 
@@ -497,17 +486,8 @@ public class APIUser extends APIEntity {
 
     @JsonIgnore
     public APIDeviceGroup createDeviceGroup(String displayName, APIDevice.OsType osType) throws APIException {
-        return postResource(getDeviceGroupsURI(), getCreateDeviceGroupParams(displayName, osType), APIDeviceGroup.class);
-    }
-
-    @JsonIgnore
-    public APIListResource<APIConnection> getDeviceSessionConnections(Long deviceSessionId) throws APIException {
-        return getListResource(getDeviceSessionVNCConnectionsURI(deviceSessionId), APIConnection.class);
-    }
-
-    @JsonIgnore
-    public void deleteNotificationEmail(long id) throws APIException {
-        deleteResource(getNotificationURI(id));
+        return postResource(getDeviceGroupsURI(), getCreateDeviceGroupParams(displayName, osType),
+                APIDeviceGroup.class);
     }
 
     @Override

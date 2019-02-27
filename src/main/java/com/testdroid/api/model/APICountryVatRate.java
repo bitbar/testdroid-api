@@ -11,6 +11,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class APICountryVatRate extends APIEntity {
 
+    private String country;
+
     private String countryCode;
 
     private Integer vatRate;
@@ -18,9 +20,10 @@ public class APICountryVatRate extends APIEntity {
     public APICountryVatRate() {
     }
 
-    public APICountryVatRate(Long id, String countryCode, Integer vatRate) {
+    public APICountryVatRate(Long id, String countryCode, String country, Integer vatRate) {
         super(id);
         this.countryCode = countryCode;
+        this.country = country;
         this.vatRate = vatRate;
     }
 
@@ -40,11 +43,20 @@ public class APICountryVatRate extends APIEntity {
         this.vatRate = vatRate;
     }
 
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
         APICountryVatRate countryVatRate = (APICountryVatRate) from;
         cloneBase(from);
+        this.country = countryVatRate.country;
         this.countryCode = countryVatRate.countryCode;
         this.vatRate = countryVatRate.vatRate;
     }

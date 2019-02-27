@@ -41,7 +41,8 @@ public class APIConnection extends APIEntity implements Serializable {
     }
 
     public APIConnection(
-            Long id, LocalDateTime createTime, LocalDateTime endTime, Long deviceSessionId, String password, String type,
+            Long id, LocalDateTime createTime, LocalDateTime endTime, Long deviceSessionId, String password,
+            String type,
             String urlSchema, String host, Integer port, String path) {
         super(id);
         this.createTime = TimeConverter.toDate(createTime);

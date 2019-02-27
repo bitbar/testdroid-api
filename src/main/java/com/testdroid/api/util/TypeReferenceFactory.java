@@ -1,7 +1,10 @@
 package com.testdroid.api.util;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.testdroid.api.*;
+import com.testdroid.api.APIEntity;
+import com.testdroid.api.APIExceptionMessage;
+import com.testdroid.api.APIList;
+import com.testdroid.api.APIMessage;
 import com.testdroid.api.model.*;
 import com.testdroid.api.model.build.APIPipelineBuild;
 import com.testdroid.api.model.build.APIPipelineJob;
@@ -89,8 +92,6 @@ public class TypeReferenceFactory {
         TYPE_REFERENCE_LIST_MAP.put(APIUserDeviceTime.class, new TypeReference<APIList<APIUserDeviceTime>>() {
         });
         TYPE_REFERENCE_LIST_MAP.put(APITestRunParameter.class, new TypeReference<APIList<APITestRunParameter>>() {
-        });
-        TYPE_REFERENCE_LIST_MAP.put(APIProjectTypeExtended.class, new TypeReference<APIList<APIProjectTypeExtended>>() {
         });
         TYPE_REFERENCE_LIST_MAP.put(APIDeviceTimeStepTimeReportEntry.class,
                 new TypeReference<APIList<APIDeviceTimeStepTimeReportEntry>>() {

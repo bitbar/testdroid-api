@@ -28,8 +28,8 @@ public class APIActiveUser extends APIEntity {
     public APIActiveUser() {
     }
 
-    public APIActiveUser(Long id, String country, String email, String organization, String timeZone,
-            LocalDateTime loginTime) {
+    public APIActiveUser(
+            Long id, String country, String email, String organization, String timeZone, LocalDateTime loginTime) {
         super(id);
         this.country = country;
         this.email = email;

@@ -43,7 +43,8 @@ public class APIService extends APIEntity {
     public APIService() {
     }
 
-    public APIService(Long id, String name, String description, boolean autoRenew, Integer centPrice,
+    public APIService(
+            Long id, String name, String description, boolean autoRenew, Integer centPrice,
             Integer includedHours, Integer pricePerHour, String externalId, LocalDateTime archiveTime,
             LocalDateTime activateTime, Unit unit, Integer unitCount, boolean customPlan) {
         super(id);

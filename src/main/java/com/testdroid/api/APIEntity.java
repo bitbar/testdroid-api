@@ -91,7 +91,6 @@ import java.util.Date;
         APIProject.class,
         APIProjectJobConfig.class,
         APIProjectSharing.class,
-        APIProjectTypeExtended.class,
         APIProperty.class,
         APIRole.class,
         APIS3Url.class,
@@ -125,6 +124,7 @@ public abstract class APIEntity {
 
     static {
         OBJECT_MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        OBJECT_MAPPER.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
     }
 
     protected APIClient client;

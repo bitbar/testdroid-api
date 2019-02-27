@@ -9,8 +9,8 @@ import java.time.ZoneId;
 import java.util.Date;
 
 import static com.testdroid.cloud.test.categories.TestTags.UNIT;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * @author Stefano Gregori <stefano.gregori@bitbar.com>
@@ -79,7 +79,7 @@ public class APIAccountServiceTest {
         service.setEndTime(endTime);
         return service;
     }
-    
+
     private Date dateOf(int year, int month, int day, int hour, int minute) {
         return Date.from(LocalDateTime.of(year, month, day, hour, minute).atZone(ZoneId.systemDefault()).toInstant());
     }

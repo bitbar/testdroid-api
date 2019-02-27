@@ -70,6 +70,6 @@ public class APITestRunExtended extends APITestRun {
         super.clone(from);
         this.deviceCount = apiTestRunExtended.deviceCount;
         this.tags = apiTestRunExtended.tags;
-        this.billable =apiTestRunExtended.billable;
+        this.billable = apiTestRunExtended.billable;
     }
 }

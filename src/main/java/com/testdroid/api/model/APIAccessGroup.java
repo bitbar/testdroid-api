@@ -25,14 +25,17 @@ public class APIAccessGroup extends APIEntity {
 
     private Scope scope;
 
+    private String userEmail;
+
     public APIAccessGroup() {
     }
 
-    public APIAccessGroup(Long id, String name, Scope scope, Long userId) {
+    public APIAccessGroup(Long id, String name, Scope scope, Long userId, String userEmail) {
         super(id);
         this.name = name;
         this.scope = scope;
         this.userId = userId;
+        this.userEmail = userEmail;
     }
 
     public String getName() {
@@ -59,6 +62,14 @@ public class APIAccessGroup extends APIEntity {
         this.scope = scope;
     }
 
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
@@ -67,5 +78,6 @@ public class APIAccessGroup extends APIEntity {
         this.name = original.name;
         this.userId = original.userId;
         this.scope = original.scope;
+        this.userEmail = original.userEmail;
     }
 }

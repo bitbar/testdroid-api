@@ -37,7 +37,8 @@ public class APIAdminDeviceEvent extends APIEntity {
 
     }
 
-    public APIAdminDeviceEvent(Long id, LocalDateTime time, APIAdminDeviceEvent.DeviceEventType type,
+    public APIAdminDeviceEvent(
+            Long id, LocalDateTime time, APIAdminDeviceEvent.DeviceEventType type,
             APIAdminDevice.ComplexState state, Long deviceId,
             Long clusterId, String name, String url, APICluster.State clusterState, LocalDateTime stateTime,
             LocalDateTime stateChangeTime, Boolean enabled,
