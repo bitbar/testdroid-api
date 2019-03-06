@@ -23,6 +23,10 @@ public class APIClientSideTestConfig implements Serializable {
 
     private Target target;
 
+    private String screenResolution;
+
+    private String appiumVersion;
+
     @XmlType(namespace = "APIClientSideTestConfig")
     public enum Target {
         ANDROID,
@@ -39,13 +43,6 @@ public class APIClientSideTestConfig implements Serializable {
     }
 
     public APIClientSideTestConfig() {
-    }
-
-    public APIClientSideTestConfig(Target target, String browserName, String platform, String version) {
-        this.target = target;
-        this.browserName = browserName;
-        this.platform = platform;
-        this.version = version;
     }
 
     public Target getTarget() {
@@ -78,5 +75,21 @@ public class APIClientSideTestConfig implements Serializable {
 
     public void setVersion(String version) {
         this.version = version;
+    }
+
+    public String getScreenResolution() {
+        return screenResolution;
+    }
+
+    public void setScreenResolution(String screenResolution) {
+        this.screenResolution = screenResolution;
+    }
+
+    public String getAppiumVersion() {
+        return appiumVersion;
+    }
+
+    public void setAppiumVersion(String appiumVersion) {
+        this.appiumVersion = appiumVersion;
     }
 }
