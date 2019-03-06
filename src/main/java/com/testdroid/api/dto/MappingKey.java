@@ -323,6 +323,8 @@ public class MappingKey {
 
     public static final String ISSUE_TYPE_ID = "issueTypeId";
 
+    public static final String IS_EXCLUDED = "isExcluded";
+
     public static final String IS_MAIN_USER = "isMainUser";
 
     public static final String JOB_CONFIG_ID = "jobConfigId";

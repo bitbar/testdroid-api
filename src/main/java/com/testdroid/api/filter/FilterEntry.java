@@ -71,11 +71,7 @@ public class FilterEntry<T> {
         if (operand != that.operand) {
             return false;
         }
-        if (value != null ? !value.equals(that.value) : that.value != null) {
-            return false;
-        }
-
-        return true;
+        return value != null ? value.equals(that.value) : that.value == null;
     }
 
     @Override
@@ -96,7 +92,7 @@ public class FilterEntry<T> {
             case Integer.MAX_VALUE:
             default:
                 return String.format("%s_%s_%s", field, operand,
-                        List.class.cast(value).stream().map(Object::toString).collect(Collectors.joining("|")));
+                        ((List) value).stream().map(Object::toString).collect(Collectors.joining("|")));
         }
     }
 }
