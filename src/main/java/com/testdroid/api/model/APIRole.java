@@ -21,21 +21,36 @@ public class APIRole extends APIEntity {
 
     private String name;
 
+    private Integer value;
+
+    private boolean valueCalculated;
+
     public APIRole() {
     }
 
+    // FrameworkRole, Role
     public APIRole(Long id, String name) {
         super(id);
         this.name = name;
     }
 
-    public APIRole(Long id, String name, LocalDateTime expireTime) {
-        this(id, name);
+    // ServiceRole
+    public APIRole(Long id, String name, Integer value, boolean valueCalculated) {
+        super(id);
+        this.name = name;
+        this.value = value;
+        this.valueCalculated = valueCalculated;
+    }
+
+    // AccountRole
+    public APIRole(Long id, String name, LocalDateTime expireTime, Integer value) {
+        this(id, name, value, false);
         this.expireTime = TimeConverter.toDate(expireTime);
     }
 
-    public APIRole(Long id, String name, LocalDateTime expireTime, String addedByEmail) {
-        this(id, name, expireTime);
+    // AdminAccountRole
+    public APIRole(Long id, String name, LocalDateTime expireTime, String addedByEmail, Integer value) {
+        this(id, name, expireTime, value);
         this.addedByEmail = addedByEmail;
     }
 
@@ -63,6 +78,22 @@ public class APIRole extends APIEntity {
         this.addedByEmail = addedByEmail;
     }
 
+    public Integer getValue() {
+        return value;
+    }
+
+    public void setValue(Integer value) {
+        this.value = value;
+    }
+
+    public boolean isValueCalculated() {
+        return valueCalculated;
+    }
+
+    public void setValueCalculated(boolean valueCalculated) {
+        this.valueCalculated = valueCalculated;
+    }
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
@@ -71,5 +102,7 @@ public class APIRole extends APIEntity {
         this.expireTime = apiRole.expireTime;
         this.name = apiRole.name;
         this.addedByEmail = apiRole.addedByEmail;
+        this.value = apiRole.value;
+        this.valueCalculated = apiRole.valueCalculated;
     }
 }

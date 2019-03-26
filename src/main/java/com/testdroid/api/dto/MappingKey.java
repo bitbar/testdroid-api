@@ -101,6 +101,8 @@ public class MappingKey {
 
     public static final String CERT = "cert";
 
+    public static final String CHARGE_TYPE = "chargeType";
+
     public static final String CITY = "city";
 
     public static final String CLOSE_TIME = "closeTime";
@@ -122,6 +124,8 @@ public class MappingKey {
     public static final String CONFIRM_PASSWORD = "confirmPassword";
 
     public static final String CONTENT = "content";
+
+    public static final String COUNT = "count";
 
     public static final String COUNTRY = "country";
 
@@ -223,13 +227,9 @@ public class MappingKey {
 
     public static final String EXECUTION_RATIO = "executionRatio";
 
-    public static final String EXECUTORS_LIMIT = "executorsLimit";
-
     public static final String EXPIRATION_DATE = "expirationDate";
 
     public static final String EXPIRE_TIME = "expireTime";
-
-    public static final String EXTERNAL_ID = "externalId";
 
     public static final String EXTERNAL_STORAGE = "externalStorage";
 
@@ -385,8 +385,6 @@ public class MappingKey {
 
     public static final String MAX_BATTERY_LEVEL = "maxBatteryLevel";
 
-    public static final String MAX_TIMEOUT = "maxTimeout";
-
     public static final String MIMETYPE = "mimetype";
 
     public static final String MIN_BATTERY_LEVEL = "minBatteryLevel";
@@ -493,8 +491,6 @@ public class MappingKey {
 
     public static final String ROLE = "role";
 
-    public static final String ROLES_ARR = "roles[]";
-
     public static final String ROLE_ID = "roleId";
 
     public static final String ROLE_IDS_ARR = "roleIds[]";
@@ -594,8 +590,6 @@ public class MappingKey {
     public static final String TEST_RUN_ID = "testRunId";
 
     public static final String TEST_RUN_NAME = "testRunName";
-
-    public static final String TEST_SCREENSHOTS_LIMIT = "testScreenshotLimit";
 
     public static final String TETHERING_ON = "tetheringOn";
 

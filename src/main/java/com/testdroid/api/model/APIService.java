@@ -3,12 +3,14 @@ package com.testdroid.api.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.formatter.CurrencyFormatter;
-import com.testdroid.api.model.enums.Unit;
 import com.testdroid.api.util.TimeConverter;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
@@ -30,23 +32,29 @@ public class APIService extends APIEntity {
 
     private String name;
 
-    private Unit unit;
-
-    private Integer unitCount;
-
     private Date archiveTime;
 
     private Date activateTime;
 
     private boolean customPlan;
 
+    private ChargeType chargeType;
+
+    private List<APIRole> roles = new ArrayList<>();
+
+    @XmlType(namespace = "APIService")
+    public enum ChargeType {
+        USAGE,
+        CONCURRENCY
+    }
+
     public APIService() {
     }
 
     public APIService(
-            Long id, String name, String description, boolean autoRenew, Integer centPrice,
-            Integer includedHours, Integer pricePerHour, String externalId, LocalDateTime archiveTime,
-            LocalDateTime activateTime, Unit unit, Integer unitCount, boolean customPlan) {
+            Long id, String name, String description, boolean autoRenew, Integer centPrice, Integer includedHours,
+            Integer pricePerHour, String externalId, LocalDateTime archiveTime, LocalDateTime activateTime,
+            boolean customPlan, ChargeType chargeType) {
         super(id);
         this.name = name;
         this.description = description;
@@ -57,9 +65,8 @@ public class APIService extends APIEntity {
         this.externalId = externalId;
         this.archiveTime = TimeConverter.toDate(archiveTime);
         this.activateTime = TimeConverter.toDate(activateTime);
-        this.unit = unit;
-        this.unitCount = unitCount;
         this.customPlan = customPlan;
+        this.chargeType = chargeType;
     }
 
     public boolean isAutoRenew() {
@@ -86,14 +93,13 @@ public class APIService extends APIEntity {
         this.description = apiService.description;
         this.autoRenew = apiService.autoRenew;
         this.centPrice = apiService.centPrice;
-        this.unitCount = apiService.unitCount;
-        this.unit = apiService.unit;
         this.externalId = apiService.externalId;
         this.includedHours = apiService.includedHours;
         this.pricePerHour = apiService.pricePerHour;
         this.archiveTime = apiService.archiveTime;
         this.activateTime = apiService.activateTime;
         this.customPlan = apiService.customPlan;
+        this.chargeType = apiService.chargeType;
     }
 
     public String getName() {
@@ -110,22 +116,6 @@ public class APIService extends APIEntity {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Unit getUnit() {
-        return unit;
-    }
-
-    public void setUnit(Unit unit) {
-        this.unit = unit;
-    }
-
-    public Integer getUnitCount() {
-        return unitCount;
-    }
-
-    public void setUnitCount(Integer unitCount) {
-        this.unitCount = unitCount;
     }
 
     public String getExternalId() {
@@ -178,6 +168,22 @@ public class APIService extends APIEntity {
 
     public void setCustomPlan(boolean customPlan) {
         this.customPlan = customPlan;
+    }
+
+    public ChargeType getChargeType() {
+        return chargeType;
+    }
+
+    public void setChargeType(ChargeType chargeType) {
+        this.chargeType = chargeType;
+    }
+
+    public List<APIRole> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<APIRole> roles) {
+        this.roles = roles;
     }
 
     @JsonIgnore
