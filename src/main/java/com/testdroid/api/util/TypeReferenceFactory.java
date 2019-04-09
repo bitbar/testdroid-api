@@ -65,8 +65,6 @@ public class TypeReferenceFactory {
         });
         TYPE_REFERENCE_LIST_MAP.put(APIProjectJobConfig.class, new TypeReference<APIList<APIProjectJobConfig>>() {
         });
-        TYPE_REFERENCE_LIST_MAP.put(APIProjectSharing.class, new TypeReference<APIList<APIProjectSharing>>() {
-        });
         TYPE_REFERENCE_LIST_MAP.put(APIRole.class, new TypeReference<APIList<APIRole>>() {
         });
         TYPE_REFERENCE_LIST_MAP.put(APIScreenshot.class, new TypeReference<APIList<APIScreenshot>>() {
@@ -205,8 +203,6 @@ public class TypeReferenceFactory {
         });
         TYPE_REFERENCE_MAP.put(APIProjectJobConfig.class, new TypeReference<APIProjectJobConfig>() {
         });
-        TYPE_REFERENCE_MAP.put(APIProjectSharing.class, new TypeReference<APIProjectSharing>() {
-        });
         TYPE_REFERENCE_MAP.put(APIProperty.class, new TypeReference<APIProperty>() {
         });
         TYPE_REFERENCE_MAP.put(APIRole.class, new TypeReference<APIRole>() {
@@ -266,6 +262,8 @@ public class TypeReferenceFactory {
                 new TypeReference<APIAdminDeviceSessionStatistics>() {
                 });
         TYPE_REFERENCE_MAP.put(APIDevicePicker.class, new TypeReference<APIDevicePicker>() {
+        });
+        TYPE_REFERENCE_MAP.put(APIDesktopBrowserCapabilities.class, new TypeReference<APIDesktopBrowserCapabilities>() {
         });
         TYPE_REFERENCE_MAP.put(APINotificationPlan.class, new TypeReference<APINotificationPlan>() {
         });

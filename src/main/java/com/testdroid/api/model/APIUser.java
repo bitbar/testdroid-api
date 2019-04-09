@@ -13,6 +13,7 @@ import java.io.File;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -38,11 +39,11 @@ public class APIUser extends APIEntity {
         }
     }
 
-    private Long activeServiceId;
+    private List<Long> serviceIds;
 
     private Long accountId;
 
-    private Long accountServiceId;
+    private List<Long> accountServiceIds;
 
     private String address;
 
@@ -57,9 +58,6 @@ public class APIUser extends APIEntity {
     private Date deleteTime;
 
     private String email;
-
-    @Deprecated
-    private EmailNotification emailNotification;
 
     private boolean enabled;
 
@@ -140,8 +138,7 @@ public class APIUser extends APIEntity {
             Long id, Long accountId, String email, String name, String state, String country, String city, String code,
             String address, String phone, String organization, String vatId, String timeZone, LocalDateTime createTime,
             LocalDateTime deleteTime, LocalDateTime lastLoginTime, Boolean isMainUser, Long mainUserId,
-            String mainUserEmail, Long activeServiceId, String apiKey, Status status, Long accountServiceId,
-            Long createdById, String createdByEmail) {
+            String mainUserEmail, String apiKey, Status status, Long createdById, String createdByEmail) {
         this(id, email, name, state, country, city, code, address, phone, organization, vatId, timeZone, createTime,
                 deleteTime, lastLoginTime, status);
         this.accountId = accountId;
@@ -149,8 +146,6 @@ public class APIUser extends APIEntity {
         this.mainUserId = mainUserId;
         this.mainUserEmail = mainUserEmail;
         this.apiKey = apiKey;
-        this.activeServiceId = activeServiceId;
-        this.accountServiceId = accountServiceId;
         this.createdById = createdById;
         this.createdByEmail = createdByEmail;
         this.selfURI = String.format("/users/%s", id);
@@ -268,14 +263,6 @@ public class APIUser extends APIEntity {
         this.roles = roles;
     }
 
-    public EmailNotification getEmailNotification() {
-        return emailNotification;
-    }
-
-    public void setEmailNotification(EmailNotification emailNotification) {
-        this.emailNotification = emailNotification;
-    }
-
     public Date getCreateTime() {
         return createTime;
     }
@@ -315,14 +302,6 @@ public class APIUser extends APIEntity {
 
     public void setMainUserEmail(String mainUserEmail) {
         this.mainUserEmail = mainUserEmail;
-    }
-
-    public Long getActiveServiceId() {
-        return activeServiceId;
-    }
-
-    public void setActiveServiceId(Long activeServiceId) {
-        this.activeServiceId = activeServiceId;
     }
 
     public Long getCreatedById() {
@@ -385,12 +364,20 @@ public class APIUser extends APIEntity {
         this.deleteTime = deleteTime;
     }
 
-    public Long getAccountServiceId() {
-        return accountServiceId;
+    public List<Long> getServiceIds() {
+        return serviceIds;
     }
 
-    public void setAccountServiceId(Long accountServiceId) {
-        this.accountServiceId = accountServiceId;
+    public void setServiceIds(List<Long> serviceIds) {
+        this.serviceIds = serviceIds;
+    }
+
+    public List<Long> getAccountServiceIds() {
+        return accountServiceIds;
+    }
+
+    public void setAccountServiceIds(List<Long> accountServiceIds) {
+        this.accountServiceIds = accountServiceIds;
     }
 
     private Map<String, Object> getUpdateUserParams(
@@ -507,20 +494,19 @@ public class APIUser extends APIEntity {
         this.state = apiUser.state;
         this.timeZone = apiUser.timeZone;
         this.vatId = apiUser.vatId;
-        this.emailNotification = apiUser.emailNotification;
         this.createTime = apiUser.createTime;
         this.deleteTime = apiUser.deleteTime;
         this.isMainUser = apiUser.isMainUser;
         this.status = apiUser.status;
         this.lastLoginTime = apiUser.lastLoginTime;
         this.mainUserId = apiUser.mainUserId;
-        this.activeServiceId = apiUser.activeServiceId;
         this.mainUserEmail = apiUser.mainUserEmail;
         this.enabled = apiUser.enabled;
         this.accountId = apiUser.accountId;
         this.apiKey = apiUser.apiKey;
         this.createdById = apiUser.createdById;
         this.createdByEmail = apiUser.createdByEmail;
-        this.accountServiceId = apiUser.accountServiceId;
+        this.serviceIds = apiUser.serviceIds;
+        this.accountServiceIds = apiUser.accountServiceIds;
     }
 }
