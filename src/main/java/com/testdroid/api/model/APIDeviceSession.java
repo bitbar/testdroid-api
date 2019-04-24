@@ -123,6 +123,8 @@ public class APIDeviceSession extends APIEntity {
 
     private Long projectId;
 
+    private Float successRatio;
+
     public APIDeviceSession() {
     }
 
@@ -136,7 +138,7 @@ public class APIDeviceSession extends APIEntity {
             Boolean enabled, Long softwareVersionId, String releaseVersion, Integer apiLevel,
             ExcludeReason excludeReason, Long deviceInstanceId, RetryState retryState, Integer autoRetriesLeftCount,
             Long deviceTime, Long duration, Long projectId,
-            Long testRunId) {
+            Long testRunId, Float successRatio) {
         super(id);
         this.type = type;
         this.createTime = TimeConverter.toDate(createTime);
@@ -164,6 +166,7 @@ public class APIDeviceSession extends APIEntity {
         this.duration = duration;
         this.projectId = projectId;
         this.testRunId = testRunId;
+        this.successRatio = successRatio;
     }
 
     public Type getType() {
@@ -358,6 +361,14 @@ public class APIDeviceSession extends APIEntity {
         this.projectId = projectId;
     }
 
+    public Float getSuccessRatio() {
+        return successRatio;
+    }
+
+    public void setSuccessRatio(Float successRatio) {
+        this.successRatio = successRatio;
+    }
+
     @JsonIgnore
     public APIListResource<APIDeviceSessionStep> getDeviceSessionStepsResource() throws APIException {
         return getListResource(createUri(selfURI, "/steps"), APIDeviceSessionStep.class);
@@ -410,5 +421,6 @@ public class APIDeviceSession extends APIEntity {
         this.duration = apiDeviceSession.duration;
         this.testRunId = apiDeviceSession.testRunId;
         this.projectId = apiDeviceSession.projectId;
+        this.successRatio = apiDeviceSession.successRatio;
     }
 }

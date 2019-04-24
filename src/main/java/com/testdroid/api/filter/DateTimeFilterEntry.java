@@ -23,4 +23,9 @@ public class DateTimeFilterEntry extends FilterEntry<LocalDateTime> {
     public DateTimeFilterEntry(String field, Operand comparison) {
         super(field, comparison);
     }
+
+    @Override
+    public String toString() {
+        return String.format("d_%s", super.toString());
+    }
 }

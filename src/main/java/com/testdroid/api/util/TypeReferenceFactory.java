@@ -158,6 +158,9 @@ public class TypeReferenceFactory {
         });
         TYPE_REFERENCE_LIST_MAP.put(APIJiraPriority.class, new TypeReference<APIList<APIJiraPriority>>() {
         });
+        TYPE_REFERENCE_LIST_MAP.put(APIAdminFrameworkStatistics.class,
+                new TypeReference<APIList<APIAdminFrameworkStatistics>>() {
+                });
     }
 
     private static final Map<Class, TypeReference<?>> TYPE_REFERENCE_MAP = new HashMap<>();

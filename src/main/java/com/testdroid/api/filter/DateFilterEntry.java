@@ -18,4 +18,9 @@ public class DateFilterEntry extends FilterEntry<Date> {
         super(field, comparison);
     }
 
+    @Override
+    public String toString() {
+        return String.format("d_%s", super.toString());
+    }
+
 }

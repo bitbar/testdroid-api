@@ -100,8 +100,8 @@ class APIListTest {
                         new Context<>(APIUser.class).setOffset(25).setLimit(5).setSort(APISort.deserialize("state_d"))
                                 .setSearch(EMPTY)
                                 .addFilter(new ListStringFilterEntry(NAME, IN, Arrays.asList("Nowak", "Skrobak"))),
-                        String.format("%s?offset=20&limit=5&search=&sort=state_d&filter=name_IN_Nowak|Skrobak", URL),
-                        String.format("%s?offset=30&limit=5&search=&sort=state_d&filter=name_IN_Nowak|Skrobak", URL)
+                        String.format("%s?offset=20&limit=5&search=&sort=state_d&filter=ls_name_IN_Nowak|Skrobak", URL),
+                        String.format("%s?offset=30&limit=5&search=&sort=state_d&filter=ls_name_IN_Nowak|Skrobak", URL)
                 },
         };
         return Arrays.asList(data);
