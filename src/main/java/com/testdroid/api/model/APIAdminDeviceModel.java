@@ -17,9 +17,9 @@ public class APIAdminDeviceModel extends APIEntity {
 
     private Integer total;
 
-    private Integer running;
+    private Long running;
 
-    private Integer queueSize;
+    private Long queueSize;
 
     private Long avgWaitingTime;
 
@@ -30,7 +30,7 @@ public class APIAdminDeviceModel extends APIEntity {
     }
 
     public APIAdminDeviceModel(
-            Long id, String name, Boolean enabled, Integer online, Integer total, Integer running, Integer queueSize,
+            Long id, String name, Boolean enabled, Integer online, Integer total, Long running, Long queueSize,
             Double avgWaitingTime) {
         super(id);
         this.name = name;
@@ -80,19 +80,19 @@ public class APIAdminDeviceModel extends APIEntity {
         this.total = total;
     }
 
-    public Integer getRunning() {
+    public Long getRunning() {
         return running;
     }
 
-    public void setRunning(Integer running) {
+    public void setRunning(Long running) {
         this.running = running;
     }
 
-    public Integer getQueueSize() {
+    public Long getQueueSize() {
         return queueSize;
     }
 
-    public void setQueueSize(Integer queueSize) {
+    public void setQueueSize(Long queueSize) {
         this.queueSize = queueSize;
     }
 

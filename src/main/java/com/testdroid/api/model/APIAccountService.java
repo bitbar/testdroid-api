@@ -74,6 +74,8 @@ public class APIAccountService extends APIEntity {
 
     private DeactivateReason deactivateReason;
 
+    private APIService.ChargeType chargeType;
+
     public APIAccountService() {
     }
 
@@ -83,7 +85,7 @@ public class APIAccountService extends APIEntity {
             LocalDateTime endTime, boolean finished, Long id, LocalDateTime lastPaymentTime,
             APIPaymentMethod paymentMethod, Integer price, Long serviceId, LocalDateTime startTime,
             String userEmail, Long userId, Integer vatRate, Unit unit, Integer unitCount, Integer serviceCount,
-            String serviceName, DeactivateReason deactivateReason) {
+            String serviceName, DeactivateReason deactivateReason, APIService.ChargeType chargeType) {
         super(id);
         this.accountId = accountId;
         this.activatedById = activatedById;
@@ -109,6 +111,7 @@ public class APIAccountService extends APIEntity {
         this.serviceCount = serviceCount;
         this.serviceName = serviceName;
         this.deactivateReason = deactivateReason;
+        this.chargeType = chargeType;
     }
 
     public Long getAccountId() {
@@ -307,6 +310,14 @@ public class APIAccountService extends APIEntity {
         this.deactivateReason = deactivateReason;
     }
 
+    public APIService.ChargeType getChargeType() {
+        return chargeType;
+    }
+
+    public void setChargeType(APIService.ChargeType chargeType) {
+        this.chargeType = chargeType;
+    }
+
     @JsonIgnore
     public Integer getPayUnitCount() {
         return autoRenew ? unitCount : unitCount * serviceCount;
@@ -357,6 +368,7 @@ public class APIAccountService extends APIEntity {
         this.userId = accountService.userId;
         this.braintreeId = accountService.braintreeId;
         this.deactivateReason = accountService.deactivateReason;
+        this.chargeType = accountService.chargeType;
     }
 
     public boolean isActiveAt(Date date) {

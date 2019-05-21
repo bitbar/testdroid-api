@@ -3,63 +3,34 @@ package com.testdroid.api.model.enums;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.xml.bind.annotation.XmlType;
-import java.util.HashSet;
-import java.util.Set;
+import java.time.temporal.ChronoUnit;
 
 /**
  * @author Adrian Zybała <adrian.zybala@bitbar.com>
  */
 @XmlType
 public enum Unit {
-    MONTH,
-    DAY,
-    YEAR,
-    HOUR,
-    RUN,
-    PROJECT;
+    MONTH(ChronoUnit.MONTHS),
+    DAY(ChronoUnit.DAYS),
+    YEAR(ChronoUnit.YEARS),
+    HOUR(ChronoUnit.HOURS),
+    RUN(null),
+    PROJECT(null);
 
-    @JsonIgnore
-    public static Unit fromName(String name) {
-        for (Unit u : values()) {
-            if (u.name().equals(name)) {
-                return u;
-            }
-        }
-        return null;
+    private ChronoUnit chronoUnit;
+
+    Unit(ChronoUnit chronoUnit){
+        this.chronoUnit = chronoUnit;
     }
 
     @JsonIgnore
-    public static Set<Unit> getTimeUnits() {
-        Set<Unit> result = new HashSet<>();
-        for (Unit u : values()) {
-            if (u.isTimeUnit()) {
-                result.add(u);
-            }
-        }
-        return result;
+    public ChronoUnit getChronoUnit() {
+        return chronoUnit;
     }
 
     @JsonIgnore
-    public boolean limitsRoles() {
-        switch (this) {
-            case RUN:
-            case PROJECT:
-                return true;
-            default:
-                return false;
-        }
+    public boolean isNotTimeUnit() {
+        return this.chronoUnit == null;
     }
 
-    @JsonIgnore
-    public boolean isTimeUnit() {
-        switch (this) {
-            case MONTH:
-            case DAY:
-            case YEAR:
-            case HOUR:
-                return true;
-            default:
-                return false;
-        }
-    }
 }
