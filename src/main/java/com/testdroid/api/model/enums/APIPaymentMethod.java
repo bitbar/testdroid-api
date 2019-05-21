@@ -9,6 +9,7 @@ import static java.lang.Boolean.TRUE;
 public enum APIPaymentMethod {
     PAYPAL,
     BRAINTREE(TRUE),
+    STRIPE(TRUE),
     INVOICE(FALSE),
     PROMOTION,
     AWS(FALSE);

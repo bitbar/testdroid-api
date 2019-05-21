@@ -27,6 +27,8 @@ public class APIClientSideTestConfig implements Serializable {
 
     private String appiumVersion;
 
+    private String location;
+
     @XmlType(namespace = "APIClientSideTestConfig")
     public enum Target {
         ANDROID,
@@ -91,5 +93,13 @@ public class APIClientSideTestConfig implements Serializable {
 
     public void setAppiumVersion(String appiumVersion) {
         this.appiumVersion = appiumVersion;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 }

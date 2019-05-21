@@ -13,7 +13,7 @@ public class APIAdminFrameworkStatistics extends APIEntity {
 
     private String cloudName;
 
-    private Date currentDate;
+    private Date day;
 
     private Long frameworkId;
 
@@ -29,13 +29,22 @@ public class APIAdminFrameworkStatistics extends APIEntity {
 
     private APIDeviceSession.Type type;
 
+    private Long userId;
+
+    private String userEmail;
+
+    private Long deviceModelId;
+
+    private String deviceModelName;
+
     public APIAdminFrameworkStatistics() {
     }
 
     public APIAdminFrameworkStatistics(
-            Date currentDate, Long frameworkId, APIDevice.OsType osType, String releaseVersion,
-            String frameworkName, APIDeviceSession.State state, Long count, APIDeviceSession.Type type) {
-        this.currentDate = currentDate;
+            Date day, Long frameworkId, APIDevice.OsType osType, String releaseVersion, String frameworkName,
+            APIDeviceSession.State state, Long count, APIDeviceSession.Type type, Long userId, String userEmail,
+            Long deviceModelId, String deviceModelName) {
+        this.day = day;
         this.frameworkId = frameworkId;
         this.osType = osType;
         this.releaseVersion = releaseVersion;
@@ -43,6 +52,10 @@ public class APIAdminFrameworkStatistics extends APIEntity {
         this.state = state;
         this.count = count;
         this.type = type;
+        this.userId = userId;
+        this.userEmail = userEmail;
+        this.deviceModelId = deviceModelId;
+        this.deviceModelName = deviceModelName;
     }
 
     public String getCloudName() {
@@ -53,12 +66,12 @@ public class APIAdminFrameworkStatistics extends APIEntity {
         this.cloudName = cloudName;
     }
 
-    public Date getCurrentDate() {
-        return currentDate;
+    public Date getDay() {
+        return day;
     }
 
-    public void setCurrentDate(Date currentDate) {
-        this.currentDate = currentDate;
+    public void setDay(Date day) {
+        this.day = day;
     }
 
     public Long getFrameworkId() {
@@ -117,12 +130,44 @@ public class APIAdminFrameworkStatistics extends APIEntity {
         this.type = type;
     }
 
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
+
+    public Long getDeviceModelId() {
+        return deviceModelId;
+    }
+
+    public void setDeviceModelId(Long deviceModelId) {
+        this.deviceModelId = deviceModelId;
+    }
+
+    public String getDeviceModelName() {
+        return deviceModelName;
+    }
+
+    public void setDeviceModelName(String deviceModelName) {
+        this.deviceModelName = deviceModelName;
+    }
+
     @Override
     protected <T extends APIEntity> void clone(T from) {
         APIAdminFrameworkStatistics original = (APIAdminFrameworkStatistics) from;
         cloneBase(from);
         this.cloudName = original.cloudName;
-        this.currentDate = original.currentDate;
+        this.day = original.day;
         this.frameworkId = original.frameworkId;
         this.osType = original.osType;
         this.releaseVersion = original.releaseVersion;
@@ -130,5 +175,9 @@ public class APIAdminFrameworkStatistics extends APIEntity {
         this.state = original.state;
         this.count = original.count;
         this.type = original.type;
+        this.userId = original.userId;
+        this.userEmail = original.userEmail;
+        this.deviceModelId = original.deviceModelId;
+        this.deviceModelName = original.deviceModelName;
     }
 }

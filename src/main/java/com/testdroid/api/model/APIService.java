@@ -3,6 +3,7 @@ package com.testdroid.api.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.formatter.CurrencyFormatter;
+import com.testdroid.api.model.enums.Unit;
 import com.testdroid.api.util.TimeConverter;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -42,10 +43,16 @@ public class APIService extends APIEntity {
 
     private List<APIRole> roles = new ArrayList<>();
 
+    private Unit unit;
+
     @XmlType(namespace = "APIService")
     public enum ChargeType {
         USAGE,
-        CONCURRENCY
+        CONCURRENCY;
+
+        public static ChargeType fromValue(String value) {
+            return "metered".equals(value) ? ChargeType.USAGE : ChargeType.CONCURRENCY;
+        }
     }
 
     public APIService() {
@@ -54,7 +61,7 @@ public class APIService extends APIEntity {
     public APIService(
             Long id, String name, String description, boolean autoRenew, Integer centPrice, Integer includedHours,
             Integer pricePerHour, String externalId, LocalDateTime archiveTime, LocalDateTime activateTime,
-            boolean customPlan, ChargeType chargeType) {
+            boolean customPlan, ChargeType chargeType, Unit unit) {
         super(id);
         this.name = name;
         this.description = description;
@@ -67,6 +74,7 @@ public class APIService extends APIEntity {
         this.activateTime = TimeConverter.toDate(activateTime);
         this.customPlan = customPlan;
         this.chargeType = chargeType;
+        this.unit = unit;
     }
 
     public boolean isAutoRenew() {
@@ -100,6 +108,7 @@ public class APIService extends APIEntity {
         this.activateTime = apiService.activateTime;
         this.customPlan = apiService.customPlan;
         this.chargeType = apiService.chargeType;
+        this.unit = apiService.unit;
     }
 
     public String getName() {
@@ -186,6 +195,14 @@ public class APIService extends APIEntity {
         this.roles = roles;
     }
 
+    public Unit getUnit() {
+        return unit;
+    }
+
+    public void setUnit(Unit unit) {
+        this.unit = unit;
+    }
+
     @JsonIgnore
     @Override
     public int hashCode() {
@@ -204,9 +221,6 @@ public class APIService extends APIEntity {
             return false;
         }
         APIService other = (APIService) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return (this.id != null || other.id == null) && (this.id == null || this.id.equals(other.id));
     }
 }

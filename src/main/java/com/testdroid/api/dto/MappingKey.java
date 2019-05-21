@@ -287,6 +287,7 @@ public class MappingKey {
     public static final String STATE_CHANGE_TIME = "stateChangeTime";
     public static final String STATE_TIME = "stateTime";
     public static final String STATUS = "status";
+    public static final String STRIPE_TOKEN = "stripeToken";
     public static final String SUBJECT = "subject";
     public static final String SUBSCRIPTION_END = "subscriptionEnd";
     public static final String SUBSCRIPTION_START = "subscriptionStart";
