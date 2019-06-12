@@ -26,7 +26,6 @@ public class APIProjectJobConfig extends APIEntity {
         INSTATEST(APIDevice.OsType.ANDROID, "Android App Crawler"),
         INTERACTIVE(APIDevice.OsType.ANDROID, "Testdroid Interactive"),
         INTERACTIVE_IOS(APIDevice.OsType.IOS, "Testdroid iOS Interactive"),
-        UIAUTOMATOR(APIDevice.OsType.ANDROID, "UI Automator"),
         CALABASH(APIDevice.OsType.ANDROID, "Android Calabash"),
         CALABASH_IOS(APIDevice.OsType.IOS, "iOS Calabash"),
         APPIUM_ANDROID_SERVER_SIDE(APIDevice.OsType.ANDROID, "Android Appium server side"),

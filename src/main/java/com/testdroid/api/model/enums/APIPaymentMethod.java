@@ -1,30 +1,45 @@
 package com.testdroid.api.model.enums;
 
-import static java.lang.Boolean.FALSE;
-import static java.lang.Boolean.TRUE;
-
 /**
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
  */
 public enum APIPaymentMethod {
-    PAYPAL,
-    BRAINTREE(TRUE),
-    STRIPE(TRUE),
-    INVOICE(FALSE),
-    PROMOTION,
-    AWS(FALSE);
+    PAYPAL(false, false, false, false, false, false, false, false),
+    BRAINTREE(true, true, true, true, false, false, false, true),
+    STRIPE(true, true, true, true, false, false, false, true),
+    INVOICE(true, false, true, false, true, true, true, true),
+    PROMOTION(false, false, false, false, false, false, false, false),
+    AWS(true, true, false, true, false, false, false, true);
 
-    private Boolean allowUpdate;
+    private boolean createByUser, activateByUser, changeByUser, cancelByUser,
+            createByAdmin, activateByAdmin, changeByAdmin, cancelByAdmin;
 
-    APIPaymentMethod() {
-
+    APIPaymentMethod(
+            boolean createByUser, boolean activateByUser, boolean changeByUser, boolean cancelByUser,
+            boolean createByAdmin, boolean activateByAdmin, boolean changeByAdmin, boolean cancelByAdmin) {
+        this.createByUser = createByUser;
+        this.activateByUser = activateByUser;
+        this.changeByUser = changeByUser;
+        this.cancelByUser = cancelByUser;
+        this.createByAdmin = createByAdmin;
+        this.activateByAdmin = activateByAdmin;
+        this.changeByAdmin = changeByAdmin;
+        this.cancelByAdmin = cancelByAdmin;
     }
 
-    APIPaymentMethod(Boolean allowUpdate) {
-        this.allowUpdate = allowUpdate;
+    public boolean canActivate(boolean byUser) {
+        return byUser ? activateByUser : activateByAdmin;
     }
 
-    public Boolean getAllowUpdate() {
-        return allowUpdate;
+    public boolean canCreate(boolean byUser) {
+        return byUser ? createByUser : createByAdmin;
+    }
+
+    public boolean canCancel(boolean byUser) {
+        return byUser ? cancelByUser : cancelByAdmin;
+    }
+
+    public boolean canChange(boolean byUser) {
+        return byUser ? changeByUser : changeByAdmin;
     }
 }
