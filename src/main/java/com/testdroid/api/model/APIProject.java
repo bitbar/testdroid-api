@@ -34,7 +34,6 @@ public class APIProject extends APIEntity {
     public enum Type {
         ANDROID(OsType.ANDROID, APIProjectJobConfig.Type.DEFAULT, "Android Instrumentation"),
         IOS(OsType.IOS, APIProjectJobConfig.Type.APPCRAWLER_IOS, "AppCrawler iOS"),
-        UIAUTOMATOR(OsType.ANDROID, APIProjectJobConfig.Type.UIAUTOMATOR, "Android UIAutomator"),
         CALABASH(OsType.ANDROID, APIProjectJobConfig.Type.CALABASH, "Calabash Android"),
         CALABASH_IOS(OsType.IOS, APIProjectJobConfig.Type.CALABASH_IOS, "Calabash iOS"),
         XCTEST(OsType.IOS, APIProjectJobConfig.Type.XCTEST, "XCTest"),

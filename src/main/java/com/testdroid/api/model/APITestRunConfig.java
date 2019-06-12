@@ -51,8 +51,6 @@ public class APITestRunConfig extends APIEntity implements Serializable {
 
     private String instrumentationRunner;
 
-    private boolean launchApp = true;
-
     private LimitationType limitationType;
 
     private String limitationValue;
@@ -66,8 +64,6 @@ public class APITestRunConfig extends APIEntity implements Serializable {
     private Scheduler scheduler = Scheduler.PARALLEL;
 
     private String screenshotDir;
-
-    private String uiAutomatorTestClasses;
 
     private Long deviceGroupId;
 
@@ -128,9 +124,8 @@ public class APITestRunConfig extends APIEntity implements Serializable {
             Long id, Scheduler scheduler, Boolean appCrawlerRun, String screenshotDir, LimitationType limitationType,
             String limitationValue, String withAnnotation, String withoutAnnotation, String applicationUsername,
             String applicationPassword, Long deviceGroupId, String usedDeviceGroupName, Long creditsPrice,
-            String deviceLanguageCode, String hookURL, String uiAutomatorTestClasses, Boolean launchApp,
-            String instrumentationRunner, Boolean videoRecordingEnabled, Long timeout, String appiumBrokerAddress,
-            Integer maxAutoRetriesCount) {
+            String deviceLanguageCode, String hookURL, String instrumentationRunner, Boolean videoRecordingEnabled,
+            Long timeout, String appiumBrokerAddress, Integer maxAutoRetriesCount) {
         super(id);
         this.scheduler = scheduler;
         this.appCrawlerRun = appCrawlerRun;
@@ -147,8 +142,6 @@ public class APITestRunConfig extends APIEntity implements Serializable {
         this.creditsPrice = creditsPrice;
         this.deviceLanguageCode = deviceLanguageCode;
         this.hookURL = hookURL;
-        this.uiAutomatorTestClasses = uiAutomatorTestClasses;
-        this.launchApp = launchApp;
         this.instrumentationRunner = instrumentationRunner;
         this.videoRecordingEnabled = videoRecordingEnabled;
         this.timeout = timeout;
@@ -292,22 +285,6 @@ public class APITestRunConfig extends APIEntity implements Serializable {
 
     public void setHookURL(String hookURL) {
         this.hookURL = hookURL;
-    }
-
-    public String getUiAutomatorTestClasses() {
-        return uiAutomatorTestClasses;
-    }
-
-    public void setUiAutomatorTestClasses(String uiAutomatorTestClasses) {
-        this.uiAutomatorTestClasses = uiAutomatorTestClasses;
-    }
-
-    public boolean isLaunchApp() {
-        return launchApp;
-    }
-
-    public void setLaunchApp(boolean launchApp) {
-        this.launchApp = launchApp;
     }
 
     public String getInstrumentationRunner() {
@@ -508,8 +485,6 @@ public class APITestRunConfig extends APIEntity implements Serializable {
         body.put("usedDeviceGroupId", deviceGroupId);
         body.put("deviceLanguageCode", deviceLanguageCode);
         body.put("hookURL", hookURL);
-        body.put("uiAutomatorTestClasses", uiAutomatorTestClasses);
-        body.put("launchApp", launchApp);
         body.put("instrumentationRunner", instrumentationRunner);
         body.put("timeout", timeout);
         body.put("appiumBrokerAddress", appiumBrokerAddress);
@@ -530,7 +505,6 @@ public class APITestRunConfig extends APIEntity implements Serializable {
         this.videoRecordingEnabled = apiTestRunConfig.videoRecordingEnabled;
         this.hookURL = apiTestRunConfig.hookURL;
         this.instrumentationRunner = apiTestRunConfig.instrumentationRunner;
-        this.launchApp = apiTestRunConfig.launchApp;
         this.limitationType = apiTestRunConfig.limitationType;
         this.limitationValue = apiTestRunConfig.limitationValue;
         this.appCrawlerRun = apiTestRunConfig.appCrawlerRun;
@@ -538,7 +512,6 @@ public class APITestRunConfig extends APIEntity implements Serializable {
         this.runAvailable = apiTestRunConfig.runAvailable;
         this.scheduler = apiTestRunConfig.scheduler;
         this.screenshotDir = apiTestRunConfig.screenshotDir;
-        this.uiAutomatorTestClasses = apiTestRunConfig.uiAutomatorTestClasses;
         this.deviceGroupId = apiTestRunConfig.deviceGroupId;
         this.usedDeviceGroupId = apiTestRunConfig.usedDeviceGroupId;
         this.usedDeviceGroupName = apiTestRunConfig.usedDeviceGroupName;

@@ -181,7 +181,6 @@ public class MappingKey {
     public static final String LAST_MODIFIED_BY = "lastModifiedBy";
     public static final String LAST_PAYMENT_DATE = "lastPaymentDate";
     public static final String LAST_RETRY_TIME = "lastRetryTime";
-    public static final String LAUNCH_APP = "launchApp";
     public static final String LAUNCH_APP_DURATION = "launchAppDuration";
     public static final String LIMITATION_TYPE = "limitationType";
     public static final String LIMITATION_VALUE = "limitationValue";
@@ -314,7 +313,6 @@ public class MappingKey {
     public static final String TYPE = "type";
     public static final String TYPE_ID = "typeId";
     public static final String UIAUTOMATOR_ENABLED = "uiautomatorEnabled";
-    public static final String UI_AUTOMATOR_TEST_CLASSES = "uiAutomatorTestClasses";
     public static final String UNIT = "unit";
     public static final String UNIT_COUNT = "unitCount";
     public static final String UNLOCK_GESTURE = "unlockGesture";
