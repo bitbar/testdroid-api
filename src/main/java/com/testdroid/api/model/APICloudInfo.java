@@ -16,13 +16,16 @@ public class APICloudInfo extends APIEntity {
 
     private String version;
 
+    private boolean licenseInstalled;
+
     public APICloudInfo() {
     }
 
-    public APICloudInfo(String version, String frontendUrl, String cloudUrl) {
+    public APICloudInfo(String version, String frontendUrl, String cloudUrl, boolean licenseInstalled) {
         this.version = version;
         this.frontendUrl = frontendUrl;
         this.cloudUrl = cloudUrl;
+        this.licenseInstalled = licenseInstalled;
     }
 
     public String getVersion() {
@@ -49,12 +52,21 @@ public class APICloudInfo extends APIEntity {
         this.cloudUrl = cloudUrl;
     }
 
+    public boolean isLicenseInstalled() {
+        return licenseInstalled;
+    }
+
+    public void setLicenseInstalled(boolean licenseInstalled) {
+        this.licenseInstalled = licenseInstalled;
+    }
+
     @Override
     protected <T extends APIEntity> void clone(T from) {
-        APICloudInfo apiUserFileTag = (APICloudInfo) from;
+        APICloudInfo original = (APICloudInfo) from;
         cloneBase(from);
-        this.cloudUrl = apiUserFileTag.cloudUrl;
-        this.frontendUrl = apiUserFileTag.frontendUrl;
-        this.version = apiUserFileTag.version;
+        this.cloudUrl = original.cloudUrl;
+        this.frontendUrl = original.frontendUrl;
+        this.version = original.version;
+        this.licenseInstalled = original.licenseInstalled;
     }
 }

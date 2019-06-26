@@ -298,6 +298,15 @@ public abstract class AbstractAPIClient implements APIClient {
         try {
             return OBJECT_MAPPER.readValue(inputStream, type);
         } catch (IOException e) {
+            throw new APIException(String.format("Failed to parse response as %s: %s", type.getType().getTypeName(),
+                    getAPIResponceContent(inputStream, type)));
+        }
+    }
+
+    private String getAPIResponceContent(InputStream inputStream, TypeReference<?> type) throws APIException {
+        try {
+            return IOUtils.toString(inputStream, UTF_8.name());
+        } catch (IOException e) {
             throw new APIException(String.format("Failed to parse response as %s", type.getType().getTypeName()));
         }
     }
@@ -306,7 +315,8 @@ public abstract class AbstractAPIClient implements APIClient {
         try {
             return OBJECT_MAPPER.readValue(content, type);
         } catch (IOException e) {
-            throw new APIException(String.format("Failed to parse response as %s", type.getType().getTypeName()));
+            throw new APIException(String.format("Failed to parse response as %s: %s", type.getType().getTypeName(),
+                    content));
         }
     }
 
@@ -340,6 +350,9 @@ public abstract class AbstractAPIClient implements APIClient {
     }
 
     protected APIException getAPIException(HttpResponseException ex) {
+        if (ex.getContent() == null) {
+            return getNoContentAPIException(ex);
+        }
         try {
             APIExceptionMessage exceptionMessage = fromJson(ex.getContent(),
                     TypeReferenceFactory.getTypeRef(APIExceptionMessage.class));
@@ -347,6 +360,21 @@ public abstract class AbstractAPIClient implements APIClient {
         } catch (APIException e) {
             return new APIException(ex.getStatusCode(), ex.getMessage());
         }
+    }
+
+    private APIException getNoContentAPIException(HttpResponseException ex) {
+        String message;
+        switch (ex.getStatusCode()) {
+            case 401:
+                message = "Unauthenticated access";
+                break;
+            case 403:
+                message = "Unauthorized access";
+                break;
+            default:
+                message = String.format("Unknown exception: %s - %s", ex.getStatusCode(), ex.getStatusMessage());
+        }
+        return new APIException(ex.getStatusCode(), message);
     }
 
     protected void disconnectQuietly(HttpResponse httpResponse) {

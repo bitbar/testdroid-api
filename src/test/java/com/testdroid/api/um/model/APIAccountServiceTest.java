@@ -16,7 +16,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @author Stefano Gregori <stefano.gregori@bitbar.com>
  */
 @Tag(UNIT)
-public class APIAccountServiceTest {
+class APIAccountServiceTest {
 
     @Test
     void testAccountServiceIsActiveAt() {
