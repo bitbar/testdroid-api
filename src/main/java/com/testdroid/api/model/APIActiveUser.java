@@ -21,7 +21,9 @@ public class APIActiveUser extends APIEntity {
 
     private String organization;
 
-    private Integer priority;
+    private Integer priorityDesktop;
+
+    private Integer priorityMobile;
 
     private String timeZone;
 
@@ -70,20 +72,28 @@ public class APIActiveUser extends APIEntity {
         this.organization = organization;
     }
 
-    public Integer getPriority() {
-        return priority;
-    }
-
-    public void setPriority(Integer priority) {
-        this.priority = priority;
-    }
-
     public String getTimeZone() {
         return timeZone;
     }
 
     public void setTimeZone(String timeZone) {
         this.timeZone = timeZone;
+    }
+
+    public Integer getPriorityDesktop() {
+        return priorityDesktop;
+    }
+
+    public void setPriorityDesktop(Integer priorityDesktop) {
+        this.priorityDesktop = priorityDesktop;
+    }
+
+    public Integer getPriorityMobile() {
+        return priorityMobile;
+    }
+
+    public void setPriorityMobile(Integer priorityMobile) {
+        this.priorityMobile = priorityMobile;
     }
 
     @Override
@@ -95,6 +105,7 @@ public class APIActiveUser extends APIEntity {
         this.organization = apiActiveUser.organization;
         this.timeZone = apiActiveUser.timeZone;
         this.loginTime = apiActiveUser.loginTime;
-        this.priority = apiActiveUser.priority;
+        this.priorityDesktop = apiActiveUser.priorityDesktop;
+        this.priorityMobile = apiActiveUser.priorityMobile;
     }
 }

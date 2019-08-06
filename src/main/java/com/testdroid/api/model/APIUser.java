@@ -39,6 +39,22 @@ public class APIUser extends APIEntity {
         }
     }
 
+    public enum MfaStatus {
+        VERIFICATION_NEED("Verification needed"),
+        DISABLED("Disabled"),
+        ENABLED("Enabled");
+
+        private final String displayName;
+
+        MfaStatus(String displayName) {
+            this.displayName = displayName;
+        }
+
+        public String getDisplayName() {
+            return displayName;
+        }
+    }
+
     private List<Long> serviceIds;
 
     private Long accountId;
@@ -91,6 +107,10 @@ public class APIUser extends APIEntity {
 
     private String createdByEmail;
 
+    private String mfaQRCodeUrl;
+
+    private MfaStatus mfaStatus;
+
     @Deprecated
     @XmlType(namespace = "APIUser", name = "APIUserEmailNotification")
     public enum EmailNotification {
@@ -138,7 +158,8 @@ public class APIUser extends APIEntity {
             Long id, Long accountId, String email, String name, String state, String country, String city, String code,
             String address, String phone, String organization, String vatId, String timeZone, LocalDateTime createTime,
             LocalDateTime deleteTime, LocalDateTime lastLoginTime, Boolean isMainUser, Long mainUserId,
-            String mainUserEmail, String apiKey, Status status, Long createdById, String createdByEmail) {
+            String mainUserEmail, String apiKey, Status status, Long createdById, String createdByEmail,
+            MfaStatus mfaStatus) {
         this(id, email, name, state, country, city, code, address, phone, organization, vatId, timeZone, createTime,
                 deleteTime, lastLoginTime, status);
         this.accountId = accountId;
@@ -148,6 +169,7 @@ public class APIUser extends APIEntity {
         this.apiKey = apiKey;
         this.createdById = createdById;
         this.createdByEmail = createdByEmail;
+        this.mfaStatus = mfaStatus;
         this.selfURI = String.format("/users/%s", id);
     }
 
@@ -380,6 +402,22 @@ public class APIUser extends APIEntity {
         this.accountServiceIds = accountServiceIds;
     }
 
+    public void setMfaQRCodeUrl(String mfaQRCodeUrl) {
+        this.mfaQRCodeUrl = mfaQRCodeUrl;
+    }
+
+    public String getMfaQRCodeUrl() {
+        return mfaQRCodeUrl;
+    }
+
+    public MfaStatus getMfaStatus() {
+        return mfaStatus;
+    }
+
+    public void setMfaStatus(MfaStatus mfaStatus) {
+        this.mfaStatus = mfaStatus;
+    }
+
     private Map<String, Object> getUpdateUserParams(
             final String address, final String city, final String code, final String country, final String email,
             final String name, final String organization, final String phone, final String state, final String timeZone,
@@ -508,5 +546,7 @@ public class APIUser extends APIEntity {
         this.createdByEmail = apiUser.createdByEmail;
         this.serviceIds = apiUser.serviceIds;
         this.accountServiceIds = apiUser.accountServiceIds;
+        this.mfaStatus = apiUser.mfaStatus;
+        this.mfaQRCodeUrl = apiUser.mfaQRCodeUrl;
     }
 }

@@ -201,6 +201,8 @@ public class MappingKey {
     public static final String MONITORING_ON = "monitoringOn";
     public static final String NAME = "name";
     public static final String NEW_PASSWORD = "newPassword";
+    public static final String MFA_ENABLED = "mfaEnabled";
+    public static final String MFA_CODE = "mfaCode";
     public static final String NOTIFICATION_CHANNEL = "channel";
     public static final String NOTIFICATION_CONTENT = "notificationContent";
     public static final String NOTIFICATION_DESTINATION = "destination";

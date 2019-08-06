@@ -16,7 +16,6 @@ public class APISharedResource extends APIEntity {
     public enum Type {
         DEVICE_GROUP,
         FILE,
-        FILE_SET,
         PROJECT
     }
 

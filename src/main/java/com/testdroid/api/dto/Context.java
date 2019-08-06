@@ -3,8 +3,12 @@ package com.testdroid.api.dto;
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.APISort;
 import com.testdroid.api.filter.FilterEntry;
+import org.apache.commons.collections4.MultiValuedMap;
+import org.apache.commons.collections4.multimap.HashSetValuedHashMap;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -46,7 +50,7 @@ public class Context<T extends APIEntity> {
 
     private Boolean cacheable = Boolean.FALSE;
 
-    private Map<String, Object> extraParams = new HashMap<>();
+    private MultiValuedMap<String, Object> extraParams = new HashSetValuedHashMap<>();
 
     public Context(Class<T> type) {
         this.type = type;
@@ -143,16 +147,16 @@ public class Context<T extends APIEntity> {
         return this;
     }
 
-    public Map<String, Object> getExtraParams() {
+    public MultiValuedMap<String, Object> getExtraParams() {
         return extraParams;
     }
 
-    public void setExtraParams(Map<String, Object> extraParams) {
+    public void setExtraParams(MultiValuedMap<String, Object> extraParams) {
         this.extraParams = extraParams;
     }
 
-    public Map<String, Object> build() {
-        Map<String, Object> map = new HashMap<>();
+    public MultiValuedMap<String, Object> build() {
+        MultiValuedMap<String, Object> map = new HashSetValuedHashMap<>();
         map.put(LIMIT_REQUEST_PARAM, limit);
         map.put(OFFSET_REQUEST_PARAM, offset);
         map.put(SEARCH_REQUEST_PARAM, search);
