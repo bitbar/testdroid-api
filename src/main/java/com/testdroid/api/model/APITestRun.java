@@ -33,6 +33,8 @@ public class APITestRun extends APIEntity {
 
     private Date createTime;
 
+    private Date startTime;
+
     private String displayName;
 
     private Integer errorsDeviceCount;
@@ -48,6 +50,8 @@ public class APITestRun extends APIEntity {
     private Integer number;
 
     private Long projectId;
+
+    private String projectName;
 
     private Long screenshotsFileId;
 
@@ -67,6 +71,7 @@ public class APITestRun extends APIEntity {
 
     private Integer testCaseCount;
 
+    @Deprecated
     private Integer totalDeviceCount;
 
     private Integer warningDeviceCount;
@@ -87,21 +92,28 @@ public class APITestRun extends APIEntity {
 
     private String frameworkName;
 
+    private Integer deviceCount;
+
+    private APITag[] tags;
+
+    private boolean billable;
+
     public APITestRun() {
     }
 
     public APITestRun(
-            Long id, Integer number, LocalDateTime createTime, String displayName, Float executionRatio,
-            Float successRatio, Long startedById, String startedByDisplayName, State state, Long userId, Long projectId,
-            Long screenshotsFileId, Long logsFileId,
-            Integer testCaseCount, Integer successfulTestCaseCount, Integer failedTestCaseCount,
-            Integer totalDeviceCount, Integer finishedDeviceCount, Integer excludedDeviceCount,
-            Integer errorsDeviceCount, Integer succeededDeviceCount, Integer runningDeviceCount,
-            Integer warningDeviceCount, Integer waitingDeviceCount, Integer abortedDeviceCount,
-            Integer timeoutedDeviceCount, Long frameworkId, String frameworkName, String testRunConfigurationContent) {
+            Long id, Integer number, LocalDateTime createTime, LocalDateTime startTime, String displayName,
+            Float executionRatio, Float successRatio, Long startedById, String startedByDisplayName, State state,
+            Long userId, Long projectId, String projectName, Long screenshotsFileId, Long logsFileId,
+            Integer testCaseCount, Integer successfulTestCaseCount, Integer failedTestCaseCount, Integer deviceCount,
+            Integer finishedDeviceCount, Integer excludedDeviceCount, Integer errorsDeviceCount,
+            Integer succeededDeviceCount, Integer runningDeviceCount, Integer warningDeviceCount,
+            Integer waitingDeviceCount, Integer abortedDeviceCount, Integer timeoutedDeviceCount, Long frameworkId,
+            String frameworkName, String testRunConfigurationContent) {
         super(id);
         this.number = number;
         this.createTime = TimeConverter.toDate(createTime);
+        this.startTime = TimeConverter.toDate(startTime);
         this.displayName = displayName;
         this.executionRatio = executionRatio;
         this.successRatio = successRatio;
@@ -110,13 +122,14 @@ public class APITestRun extends APIEntity {
         this.state = state;
         this.userId = userId;
         this.projectId = projectId;
+        this.projectName = projectName;
         this.screenshotsFileId = screenshotsFileId;
         this.logsFileId = logsFileId;
         this.testCaseCount = testCaseCount;
         this.successfulTestCaseCount = successfulTestCaseCount;
         this.failedTestCaseCount = failedTestCaseCount;
         this.executedTestCaseCount = successfulTestCaseCount + failedTestCaseCount;
-        this.totalDeviceCount = totalDeviceCount;
+        this.totalDeviceCount = deviceCount;
         this.finishedDeviceCount = finishedDeviceCount;
         this.excludedDeviceCount = excludedDeviceCount;
         this.errorsDeviceCount = errorsDeviceCount;
@@ -128,6 +141,7 @@ public class APITestRun extends APIEntity {
         this.timeoutedDeviceCount = timeoutedDeviceCount;
         this.frameworkId = frameworkId;
         this.frameworkName = frameworkName;
+        this.deviceCount = deviceCount;
         mapConfig(testRunConfigurationContent);
     }
 
@@ -145,6 +159,14 @@ public class APITestRun extends APIEntity {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
     }
 
     public String getDisplayName() {
@@ -387,6 +409,38 @@ public class APITestRun extends APIEntity {
         this.config = config;
     }
 
+    public Integer getDeviceCount() {
+        return deviceCount;
+    }
+
+    public void setDeviceCount(Integer deviceCount) {
+        this.deviceCount = deviceCount;
+    }
+
+    public APITag[] getTags() {
+        return tags;
+    }
+
+    public void setTags(APITag[] tags) {
+        this.tags = tags;
+    }
+
+    public boolean isBillable() {
+        return billable;
+    }
+
+    public void setBillable(boolean billable) {
+        this.billable = billable;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
     public void delete() throws APIException {
         deleteResource(selfURI);
     }
@@ -471,6 +525,7 @@ public class APITestRun extends APIEntity {
         cloneBase(from);
         this.config = apiTestRun.config;
         this.createTime = apiTestRun.createTime;
+        this.startTime = apiTestRun.startTime;
         this.displayName = apiTestRun.displayName;
         this.executionRatio = apiTestRun.executionRatio;
         this.number = apiTestRun.number;
@@ -497,5 +552,9 @@ public class APITestRun extends APIEntity {
         this.timeoutedDeviceCount = apiTestRun.timeoutedDeviceCount;
         this.frameworkId = apiTestRun.frameworkId;
         this.frameworkName = apiTestRun.frameworkName;
+        this.projectName = apiTestRun.projectName;
+        this.deviceCount = apiTestRun.deviceCount;
+        this.tags = apiTestRun.tags;
+        this.billable = apiTestRun.billable;
     }
 }

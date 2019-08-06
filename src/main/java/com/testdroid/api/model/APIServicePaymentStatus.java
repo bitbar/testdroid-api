@@ -18,9 +18,7 @@ public class APIServicePaymentStatus {
 
     private String message;
 
-    private String redirectionPostData;
-
-    private String redirectionUrl;
+    private String redirectUrl;
 
     private Status status;
 
@@ -50,20 +48,12 @@ public class APIServicePaymentStatus {
         this.message = message;
     }
 
-    public String getRedirectionUrl() {
-        return redirectionUrl;
+    public String getRedirectUrl() {
+        return redirectUrl;
     }
 
-    public void setRedirectionUrl(String redirectionUrl) {
-        this.redirectionUrl = redirectionUrl;
-    }
-
-    public String getRedirectionPostData() {
-        return redirectionPostData;
-    }
-
-    public void setRedirectionPostData(String redirectionPostData) {
-        this.redirectionPostData = redirectionPostData;
+    public void setRedirectUrl(String redirectUrl) {
+        this.redirectUrl = redirectUrl;
     }
 
 }

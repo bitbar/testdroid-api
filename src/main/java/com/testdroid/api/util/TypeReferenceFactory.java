@@ -53,8 +53,6 @@ public class TypeReferenceFactory {
         });
         TYPE_REFERENCE_LIST_MAP.put(APIDeviceUsage.class, new TypeReference<APIList<APIDeviceUsage>>() {
         });
-        TYPE_REFERENCE_LIST_MAP.put(APIFileSet.class, new TypeReference<APIList<APIFileSet>>() {
-        });
         TYPE_REFERENCE_LIST_MAP.put(APILabelGroup.class, new TypeReference<APIList<APILabelGroup>>() {
         });
         TYPE_REFERENCE_LIST_MAP.put(APILicense.class, new TypeReference<APIList<APILicense>>() {
@@ -78,8 +76,6 @@ public class TypeReferenceFactory {
         TYPE_REFERENCE_LIST_MAP.put(APITag.class, new TypeReference<APIList<APITag>>() {
         });
         TYPE_REFERENCE_LIST_MAP.put(APITestRun.class, new TypeReference<APIList<APITestRun>>() {
-        });
-        TYPE_REFERENCE_LIST_MAP.put(APITestRunExtended.class, new TypeReference<APIList<APITestRunExtended>>() {
         });
         TYPE_REFERENCE_LIST_MAP.put(APIUser.class, new TypeReference<APIList<APIUser>>() {
         });
@@ -196,8 +192,6 @@ public class TypeReferenceFactory {
         });
         TYPE_REFERENCE_MAP.put(APIMessage.class, new TypeReference<APIMessage>() {
         });
-        TYPE_REFERENCE_MAP.put(APIFileSet.class, new TypeReference<APIFileSet>() {
-        });
         TYPE_REFERENCE_MAP.put(APILabelGroup.class, new TypeReference<APILabelGroup>() {
         });
         TYPE_REFERENCE_MAP.put(APINotification.class, new TypeReference<APINotification>() {
@@ -223,8 +217,6 @@ public class TypeReferenceFactory {
         TYPE_REFERENCE_MAP.put(APITestRunConfig.class, new TypeReference<APITestRunConfig>() {
         });
         TYPE_REFERENCE_MAP.put(APITestRunDataAvailability.class, new TypeReference<APITestRunDataAvailability>() {
-        });
-        TYPE_REFERENCE_MAP.put(APITestRunExtended.class, new TypeReference<APITestRunExtended>() {
         });
         TYPE_REFERENCE_MAP.put(APIUser.class, new TypeReference<APIUser>() {
         });
@@ -289,6 +281,8 @@ public class TypeReferenceFactory {
         TYPE_REFERENCE_MAP.put(APIBuildExecutor.class, new TypeReference<APIBuildExecutor>() {
         });
         TYPE_REFERENCE_MAP.put(APIAccountServicePayment.class, new TypeReference<APIAccountServicePayment>() {
+        });
+        TYPE_REFERENCE_MAP.put(APIHealthCheck.class, new TypeReference<APIHealthCheck>() {
         });
     }
 

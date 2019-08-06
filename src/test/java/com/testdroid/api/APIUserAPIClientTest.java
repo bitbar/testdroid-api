@@ -113,7 +113,7 @@ class APIUserAPIClientTest extends APIClientTest {
         me.validateTestRunConfig(config);
         APITestRun apiTestRun = me.startTestRun(config);
         assertThat(apiTestRun.getState(), is(oneOf(RUNNING, WAITING)));
-        apiTestRun.abort();
+        apiTestRun.delete();
     }
 
     @ParameterizedTest
@@ -142,6 +142,7 @@ class APIUserAPIClientTest extends APIClientTest {
         apiTag.delete();
         apiTestRun.refresh();
         assertThat(apiTestRun.getTagsResource().getTotal(), is(0));
+        apiTestRun.delete();
     }
 
     @ParameterizedTest
@@ -161,7 +162,6 @@ class APIUserAPIClientTest extends APIClientTest {
         me.validateTestRunConfig(config);
         APITestRun apiTestRun = me.startTestRun(config);
         assertThat(apiTestRun.getState(), is(oneOf(RUNNING, WAITING)));
-        apiTestRun.abort();
         apiTestRun.requestScreenshotsZip();
         APIUserFile file = apiTestRun.getScreenshotsZip();
         while (file.getState() != APIUserFile.State.READY) {
@@ -174,6 +174,7 @@ class APIUserAPIClientTest extends APIClientTest {
         try (InputStream inputStream = file.getFile()) {
             FileUtils.copyInputStreamToFile(inputStream, Files.createTempFile(null, null).toFile());
         }
+        apiTestRun.delete();
     }
 
 }

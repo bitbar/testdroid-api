@@ -42,8 +42,7 @@ public class APIProject extends APIEntity {
         APPIUM_ANDROID_SERVER_SIDE(OsType.ANDROID, APIProjectJobConfig.Type.APPIUM_ANDROID_SERVER_SIDE,
                 "Appium Android server side"),
         APPIUM_IOS(OsType.IOS, APIProjectJobConfig.Type.APPIUM_IOS, "Appium iOS client side"),
-        APPIUM_IOS_SERVER_SIDE(OsType.IOS, APIProjectJobConfig.Type.APPIUM_IOS_SERVER_SIDE,
-                "Appium iOS server side"),
+        APPIUM_IOS_SERVER_SIDE(OsType.IOS, APIProjectJobConfig.Type.APPIUM_IOS_SERVER_SIDE, "Appium iOS server side"),
         GENERIC(OsType.UNDEFINED, APIProjectJobConfig.Type.GENERIC, "Generic");
 
         private final APIProjectJobConfig.Type jobConfigType;

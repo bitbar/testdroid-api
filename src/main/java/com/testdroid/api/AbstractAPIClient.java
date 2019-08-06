@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -324,8 +325,10 @@ public abstract class AbstractAPIClient implements APIClient {
         try {
             URIBuilder builder = new URIBuilder(url);
             if (context != null) {
-                for (Map.Entry<String, Object> entry : context.build().entrySet()) {
-                    builder.addParameter(entry.getKey(), entry.getValue() == null ? "" : entry.getValue().toString());
+                for (Map.Entry<String, Collection<Object>> entry : context.build().asMap().entrySet()) {
+                    for (Object value : entry.getValue()) {
+                        builder.addParameter(entry.getKey(), value == null ? "" : value.toString());
+                    }
                 }
             }
             return builder.build().toString();
