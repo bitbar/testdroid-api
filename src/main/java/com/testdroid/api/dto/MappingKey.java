@@ -56,7 +56,6 @@ public class MappingKey {
     public static final String CHARGE_TYPE = "chargeType";
     public static final String CITY = "city";
     public static final String CLOSE_TIME = "closeTime";
-    public static final String CLUSTER_DOT_ID = "cluster.id";
     public static final String CLUSTER_DOT_NAME = "cluster.name";
     public static final String CLUSTER_ID = "clusterId";
     public static final String CLUSTER_NAME = "clusterName";
@@ -109,6 +108,7 @@ public class MappingKey {
     public static final String DIRECTION = "direction";
     public static final String DISCRIMINATOR = "discriminator";
     public static final String DISPLAY_NAME = "displayName";
+    public static final String DOCUMENTATION_URL = "documentationUrl";
     public static final String DURATION = "duration";
     public static final String EMAIL = "email";
     public static final String EMAIL_ACCOUNT = "emailAccount";
@@ -123,7 +123,6 @@ public class MappingKey {
     public static final String FIELD = "field";
     public static final String FILE = "file";
     public static final String FILENAME = "filename";
-    public static final String FILE_ID = "fileId";
     public static final String FILE_TAGS_ARR = "fileTags[]";
     public static final String FINGERPRINT = "fingerprint";
     public static final String FINISH_TIME_MS = "finishTimeMS";
@@ -193,9 +192,7 @@ public class MappingKey {
     public static final String MAIN_USER_ID = "mainUserId";
     public static final String MAIN_USER_NAME = "mainUserName";
     public static final String MAX_AUTO_RETRIES_COUNT = "maxAutoRetriesCount";
-    public static final String MAX_BATTERY_LEVEL = "maxBatteryLevel";
     public static final String MIMETYPE = "mimetype";
-    public static final String MIN_BATTERY_LEVEL = "minBatteryLevel";
     public static final String MOCK_LOCATION_ON = "mockLocationOn";
     public static final String MODE = "mode";
     public static final String MONITORING_ON = "monitoringOn";
@@ -224,6 +221,7 @@ public class MappingKey {
     public static final String PHONE = "phone";
     public static final String PIPELINE_JOB_ID = "pipelineJobId";
     public static final String PLAN = "plan";
+    public static final String PLUGIN_VERSION = "pluginVersion";
     public static final String PORT = "port";
     public static final String PRICE = "price";
     public static final String PRICE_PER_HOUR = "pricePerHour";
@@ -244,6 +242,7 @@ public class MappingKey {
     public static final String REMOTE_CONTROL_ENABLED = "remoteControlEnabled";
     public static final String REQUIRED_APP_EXTENSIONS = "requiredAppExtensions";
     public static final String REQUIRED_TEST_EXTENSIONS = "requiredTestExtensions";
+    public static final String REQUIRED_TEST_FILE_TAGS = "requiredTestFileTags";
     public static final String RESOURCE_ID = "resourceId";
     public static final String RESULT = "result";
     public static final String RETRYABLE = "retryable";
@@ -302,7 +301,6 @@ public class MappingKey {
     public static final String TEST_RUN_ID = "testRunId";
     public static final String TEST_RUN_NAME = "testRunName";
     public static final String TETHERING_ON = "tetheringOn";
-    public static final String TIME = "time";
     public static final String TIMEOUT = "timeout";
     public static final String TIMESTAMP = "timestamp";
     public static final String TIME_LIMIT = "timeLimit";

@@ -36,15 +36,13 @@ public class APICluster extends APIEntity {
 
     private String url;
 
+    private String pluginVersion;
+
     public APICluster() {
     }
 
-    public APICluster(String name) {
-        this.name = name;
-    }
-
     public APICluster(
-            Long id, String name, String url, State state, LocalDateTime stateTime,
+            Long id, String name, String url, String pluginVersion, State state, LocalDateTime stateTime,
             LocalDateTime stateChangeTime, Boolean enabled) {
         super(id);
         this.name = name;
@@ -53,6 +51,7 @@ public class APICluster extends APIEntity {
         this.stateTime = TimeConverter.toDate(stateTime);
         this.stateChangeTime = TimeConverter.toDate(stateChangeTime);
         this.enabled = enabled;
+        this.pluginVersion = pluginVersion;
     }
 
     public String getName() {
@@ -69,6 +68,14 @@ public class APICluster extends APIEntity {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getPluginVersion() {
+        return pluginVersion;
+    }
+
+    public void setPluginVersion(String pluginVersion) {
+        this.pluginVersion = pluginVersion;
     }
 
     public State getState() {
@@ -123,6 +130,7 @@ public class APICluster extends APIEntity {
         this.stateChangeTime = apiCluster.stateChangeTime;
         this.stateTime = apiCluster.stateTime;
         this.url = apiCluster.url;
+        this.pluginVersion = apiCluster.pluginVersion;
     }
 
 }
