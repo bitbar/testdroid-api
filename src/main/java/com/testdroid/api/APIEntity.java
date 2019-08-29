@@ -35,7 +35,6 @@ import java.util.Date;
         APIActiveUser.class,
         APIActivity.class,
         APIAdminDevice.class,
-        APIAdminDeviceEvent.class,
         APIAdminDeviceModel.class,
         APIAdminDeviceProblem.class,
         APIAdminDeviceProblemPair.class,

@@ -146,8 +146,6 @@ public class TypeReferenceFactory {
         });
         TYPE_REFERENCE_LIST_MAP.put(APIBuildExecutor.class, new TypeReference<APIList<APIBuildExecutor>>() {
         });
-        TYPE_REFERENCE_LIST_MAP.put(APIAdminDeviceEvent.class, new TypeReference<APIList<APIAdminDeviceEvent>>() {
-        });
         TYPE_REFERENCE_LIST_MAP.put(APIBasicJiraProject.class, new TypeReference<APIList<APIBasicJiraProject>>() {
         });
         TYPE_REFERENCE_LIST_MAP.put(APIJiraIssueType.class, new TypeReference<APIList<APIJiraIssueType>>() {

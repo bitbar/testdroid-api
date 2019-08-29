@@ -20,7 +20,8 @@ public enum Operand {
     INORNULL(Integer.MAX_VALUE),
     BEFOREORNULL(2),
     BEFOREOREQUAL(2),
-    AFTERORNULL(2);
+    AFTERORNULL(2),
+    AFTEROREQUAL(2);
 
     private final int arity;
 

@@ -36,6 +36,10 @@ public class APIFramework extends APIEntity {
 
     private String requiredTestExtensions;
 
+    private String documentationUrl;
+
+    private String requiredTestFileTags;
+
     private Boolean retryable;
 
     private Boolean secured;
@@ -56,8 +60,9 @@ public class APIFramework extends APIEntity {
     public APIFramework(
             Long id, LocalDateTime createTime, String name, String description, APIDevice.OsType osType,
             String type, Long accountId, String mainUserEmail, String mainUserName, String requiredAppExtensions,
-            String requiredTestExtensions, Boolean forProjects, Boolean canRunFromUI, Boolean secured,
-            Boolean retryable, Boolean skipQueue, Boolean skipOlderSdk, Long labelId, String labelName) {
+            String requiredTestExtensions, String requiredTestFileTags, String documentationUrl, Boolean forProjects,
+            Boolean canRunFromUI, Boolean secured, Boolean retryable, Boolean skipQueue, Boolean skipOlderSdk,
+            Long labelId, String labelName) {
         super(id);
         this.createTime = TimeConverter.toDate(createTime);
         this.name = name;
@@ -69,6 +74,8 @@ public class APIFramework extends APIEntity {
         this.mainUserName = mainUserName;
         this.requiredAppExtensions = requiredAppExtensions;
         this.requiredTestExtensions = requiredTestExtensions;
+        this.requiredTestFileTags = requiredTestFileTags;
+        this.documentationUrl = documentationUrl;
         this.forProjects = forProjects;
         this.canRunFromUI = canRunFromUI;
         this.secured = secured;
@@ -141,6 +148,22 @@ public class APIFramework extends APIEntity {
 
     public void setRequiredTestExtensions(String requiredTestExtensions) {
         this.requiredTestExtensions = requiredTestExtensions;
+    }
+
+    public String getRequiredTestFileTags() {
+        return requiredTestFileTags;
+    }
+
+    public void setRequiredTestFileTags(String requiredTestFileTags) {
+        this.requiredTestFileTags = requiredTestFileTags;
+    }
+
+    public String getDocumentationUrl() {
+        return documentationUrl;
+    }
+
+    public void setDocumentationUrl(String documentationUrl) {
+        this.documentationUrl = documentationUrl;
     }
 
     public Boolean getForProjects() {
@@ -238,6 +261,8 @@ public class APIFramework extends APIEntity {
         this.mainUserEmail = apiFramework.mainUserEmail;
         this.requiredAppExtensions = apiFramework.requiredAppExtensions;
         this.requiredTestExtensions = apiFramework.requiredTestExtensions;
+        this.requiredTestFileTags = apiFramework.requiredTestFileTags;
+        this.documentationUrl = apiFramework.documentationUrl;
         this.forProjects = apiFramework.forProjects;
         this.canRunFromUI = apiFramework.canRunFromUI;
         this.secured = apiFramework.secured;

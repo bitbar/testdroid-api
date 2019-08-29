@@ -58,11 +58,10 @@ public enum APIPaymentMethod {
 
     private static Map<List<Boolean>, List<PlanOperation>> createStripeMapping(){
         Map<List<Boolean>, List<PlanOperation>> result = new HashMap<>();
-        result.put(asList(TRUE, FALSE, FALSE, TRUE), singletonList(CREATE));
+        result.put(asList(TRUE, FALSE, FALSE, TRUE), asList(CREATE, ACTIVATE));
         result.put(asList(FALSE, TRUE, FALSE, TRUE), singletonList(CANCEL));
         result.put(asList(FALSE, TRUE, FALSE, FALSE), singletonList(CANCEL));
-        result.put(asList(FALSE, FALSE, TRUE, TRUE), singletonList(ACTIVATE));
-        result.put(asList(TRUE, TRUE, FALSE, TRUE), asList(CREATE, CANCEL));
+        result.put(asList(TRUE, TRUE, FALSE, TRUE), asList(CREATE, ACTIVATE, CANCEL));
         return Collections.unmodifiableMap(result);
     }
 
