@@ -18,9 +18,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import java.io.File;
 import java.io.InputStream;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
@@ -49,6 +46,7 @@ import java.util.Date;
         APIBasicDeviceTime.class,
         APIBasicJiraProject.class,
         APIBillingPeriod.class,
+        APIBillingPeriodUsage.class,
         APIBuildConfig.class,
         APIBuildExecutor.class,
         APIBuildResultConfig.class,
@@ -115,8 +113,6 @@ import java.util.Date;
 })
 public abstract class APIEntity {
 
-    private static final DateFormat API_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd_HH:mm");
-
     public static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     static {
@@ -135,12 +131,6 @@ public abstract class APIEntity {
 
     public APIEntity(Long id) {
         this.id = id;
-    }
-
-    @Deprecated
-    @JsonIgnore
-    public static String format(Date date) {
-        return API_DATE_FORMAT.format(date);
     }
 
     @JsonIgnore

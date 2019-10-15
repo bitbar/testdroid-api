@@ -23,6 +23,7 @@ import java.util.Map;
 
 import static com.testdroid.api.APIEntity.OBJECT_MAPPER;
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.apache.http.HttpStatus.*;
 
 /**
@@ -327,7 +328,7 @@ public abstract class AbstractAPIClient implements APIClient {
             if (context != null) {
                 for (Map.Entry<String, Collection<Object>> entry : context.build().asMap().entrySet()) {
                     for (Object value : entry.getValue()) {
-                        builder.addParameter(entry.getKey(), value == null ? "" : value.toString());
+                        builder.addParameter(entry.getKey(), value == null ? EMPTY : value.toString());
                     }
                 }
             }
@@ -344,7 +345,7 @@ public abstract class AbstractAPIClient implements APIClient {
             key = entry.getKey();
             value = entry.getValue();
             if (value == null) {
-                map.put(key, "");
+                map.put(key, EMPTY);
             }
             if (value instanceof Enum<?>) {
                 map.put(key, value.toString());

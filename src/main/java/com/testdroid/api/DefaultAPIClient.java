@@ -1,10 +1,10 @@
 package com.testdroid.api;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.api.client.auth.oauth2.BearerToken;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.http.*;
 import com.google.api.client.http.apache.ApacheHttpTransport;
+import com.testdroid.api.util.TypeReferenceFactory;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpHost;
@@ -136,7 +136,7 @@ public class DefaultAPIClient extends AbstractAPIClient {
         HttpResponse response = null;
         try {
             if (username == null && password == null) {
-                return "";
+                return StringUtils.EMPTY;
             }
 
             GenericUrl url = new GenericUrl(String.format("%s/oauth/token", cloudURL));
@@ -158,8 +158,7 @@ public class DefaultAPIClient extends AbstractAPIClient {
             }
 
             String responseJson = StringUtils.join(IOUtils.readLines(response.getContent(), UTF_8), "\n");
-            Map<String, String> json = fromJson(responseJson, new TypeReference<Map<String, String>>() {
-            });
+            Map<String, String> json = fromJson(responseJson, TypeReferenceFactory.getMapTypeReference());
             accessTokenExpireTime = System.currentTimeMillis() + (Long.parseLong(json.get("expires_in")) * 1000);
             refreshToken = json.get("refresh_token");
             return json.get("access_token");
@@ -198,8 +197,7 @@ public class DefaultAPIClient extends AbstractAPIClient {
             }
 
             String jsonContent = StringUtils.join(IOUtils.readLines(response.getContent(), UTF_8), "\n");
-            Map<String, String> json = fromJson(jsonContent, new TypeReference<Map<String, String>>() {
-            });
+            Map<String, String> json = fromJson(jsonContent, TypeReferenceFactory.getMapTypeReference());
             accessTokenExpireTime = System.currentTimeMillis() + (Long.parseLong(json.get("expires_in")) * 1000);
             refreshToken = json.get("refresh_token");
             return json.get("access_token");

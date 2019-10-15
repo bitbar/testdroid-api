@@ -19,6 +19,8 @@ import org.slf4j.LoggerFactory;
 
 import java.security.GeneralSecurityException;
 
+import static org.apache.commons.lang3.StringUtils.EMPTY;
+
 /**
  * @author Michał Szpruta <michal.szpruta@bitbar.com>
  */
@@ -91,6 +93,6 @@ public class APIKeyClient extends AbstractAPIClient {
 
     @Override
     protected HttpHeaders getHttpHeaders() {
-        return new HttpHeaders().setAccept(ACCEPT_HEADER).setBasicAuthentication(apiKey, "");
+        return new HttpHeaders().setAccept(ACCEPT_HEADER).setBasicAuthentication(apiKey, EMPTY);
     }
 }
