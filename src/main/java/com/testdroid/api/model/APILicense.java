@@ -10,6 +10,8 @@ import javax.xml.bind.annotation.XmlType;
 import java.time.LocalDateTime;
 import java.util.Date;
 
+import static org.apache.commons.lang3.StringUtils.EMPTY;
+
 /**
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
  * @author Michał Szpruta <michal.szpruta@bitbar.com>
@@ -25,7 +27,7 @@ public class APILicense extends APIEntity {
         CLOSED
     }
 
-    public static final String DISABLED_TEXT = "";
+    public static final String DISABLED_TEXT = EMPTY;
 
     public static final String ENABLED_TEXT = "on";
 
@@ -139,7 +141,7 @@ public class APILicense extends APIEntity {
     }
 
     private static String getTextValue(Integer i) {
-        return i != null ? Integer.toString(i) : "";
+        return i != null ? Integer.toString(i) : EMPTY;
     }
 
     private static String getTextValue(boolean b) {

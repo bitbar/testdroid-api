@@ -100,6 +100,8 @@ public class APIProject extends APIEntity {
 
     private boolean isShared;
 
+    private boolean isSharedWithCaller;
+
     private Double successRatio;
 
     private APIDevice.OsType osType;
@@ -208,6 +210,14 @@ public class APIProject extends APIEntity {
         this.isShared = isShared;
     }
 
+    public boolean isSharedWithCaller() {
+        return isSharedWithCaller;
+    }
+
+    public void setSharedWithCaller(boolean sharedWithCaller) {
+        isSharedWithCaller = sharedWithCaller;
+    }
+
     public APIArchivingStrategy getArchivingStrategy() {
         return archivingStrategy;
     }
@@ -314,6 +324,8 @@ public class APIProject extends APIEntity {
         this.jobConfig = apiProject.jobConfig;
         this.name = apiProject.name;
         this.sharedById = apiProject.sharedById;
+        this.isShared = apiProject.isShared;
+        this.isSharedWithCaller = apiProject.isSharedWithCaller;
         this.testRunConfig = apiProject.testRunConfig;
         this.type = apiProject.type;
         this.archivingStrategy = apiProject.archivingStrategy;

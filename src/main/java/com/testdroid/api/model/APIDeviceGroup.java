@@ -17,9 +17,6 @@ import static java.util.Collections.singletonMap;
 @XmlRootElement
 public class APIDeviceGroup extends APIEntity {
 
-    @Deprecated
-    private Long creditsPrice;
-
     private Long deviceCount;
 
     private String displayName;
@@ -43,7 +40,6 @@ public class APIDeviceGroup extends APIEntity {
         this.id = id;
         this.name = name;
         this.displayName = displayName;
-        this.creditsPrice = deviceCount;
         this.deviceCount = deviceCount;
         this.userId = userId;
         this.osType = osType;
@@ -73,14 +69,6 @@ public class APIDeviceGroup extends APIEntity {
 
     public void setDeviceCount(Long deviceCount) {
         this.deviceCount = deviceCount;
-    }
-
-    public Long getCreditsPrice() {
-        return creditsPrice;
-    }
-
-    public void setCreditsPrice(Long creditsPrice) {
-        this.creditsPrice = creditsPrice;
     }
 
     public Long getUserId() {
@@ -160,7 +148,6 @@ public class APIDeviceGroup extends APIEntity {
     protected <T extends APIEntity> void clone(T from) {
         APIDeviceGroup apiDeviceGroup = (APIDeviceGroup) from;
         cloneBase(from);
-        this.creditsPrice = apiDeviceGroup.creditsPrice;
         this.deviceCount = apiDeviceGroup.deviceCount;
         this.name = apiDeviceGroup.name;
         this.displayName = apiDeviceGroup.displayName;

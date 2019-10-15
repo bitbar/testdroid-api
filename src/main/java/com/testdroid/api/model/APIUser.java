@@ -23,6 +23,7 @@ import java.util.Map;
 @XmlRootElement
 public class APIUser extends APIEntity {
 
+    @XmlType(namespace = "APIUser")
     public enum Status {
         INACTIVE("Inactive"),
         DISABLED("Disabled"),
@@ -110,24 +111,6 @@ public class APIUser extends APIEntity {
     private String mfaQRCodeUrl;
 
     private MfaStatus mfaStatus;
-
-    @Deprecated
-    @XmlType(namespace = "APIUser", name = "APIUserEmailNotification")
-    public enum EmailNotification {
-        ALWAYS("always"),
-        NEVER("never"),
-        ON_FAILURE("on failure");
-
-        private final String displayName;
-
-        EmailNotification(String displayName) {
-            this.displayName = displayName;
-        }
-
-        public String getDisplayName() {
-            return displayName;
-        }
-    }
 
     public APIUser() {
     }

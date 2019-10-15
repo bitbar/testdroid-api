@@ -39,6 +39,8 @@ public class TypeReferenceFactory {
         });
         TYPE_REFERENCE_LIST_MAP.put(APIBillingPeriod.class, new TypeReference<APIList<APIBillingPeriod>>() {
         });
+        TYPE_REFERENCE_LIST_MAP.put(APIBillingPeriodUsage.class, new TypeReference<APIList<APIBillingPeriodUsage>>() {
+        });
         TYPE_REFERENCE_LIST_MAP.put(APIConnection.class, new TypeReference<APIList<APIConnection>>() {
         });
         TYPE_REFERENCE_LIST_MAP.put(APIDevice.class, new TypeReference<APIList<APIDevice>>() {
@@ -163,6 +165,8 @@ public class TypeReferenceFactory {
         TYPE_REFERENCE_MAP.put(APIAccessGroup.class, new TypeReference<APIAccessGroup>() {
         });
         TYPE_REFERENCE_MAP.put(APIBillingPeriod.class, new TypeReference<APIBillingPeriod>() {
+        });
+        TYPE_REFERENCE_MAP.put(APIBillingPeriodUsage.class, new TypeReference<APIBillingPeriodUsage>() {
         });
         TYPE_REFERENCE_MAP.put(APIFramework.class, new TypeReference<APIFramework>() {
         });

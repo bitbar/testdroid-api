@@ -71,7 +71,7 @@ public class APITestRun extends APIEntity {
 
     private Integer testCaseCount;
 
-    @Deprecated
+    @Deprecated // use deviceCount
     private Integer totalDeviceCount;
 
     private Integer warningDeviceCount;

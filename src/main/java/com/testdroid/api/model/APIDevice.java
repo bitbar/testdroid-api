@@ -16,14 +16,6 @@ import javax.xml.bind.annotation.XmlType;
 public class APIDevice extends APIEntity {
 
     @XmlType
-    @Deprecated
-    public enum DeviceFilter {
-        FREE,
-        RECOMMENDED,
-        NEW
-    }
-
-    @XmlType
     public enum DeviceGroupOrigin {
         STATIC,
         DYNAMIC,
