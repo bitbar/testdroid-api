@@ -37,7 +37,7 @@ import static org.hamcrest.Matchers.*;
  * @author Damian Sniezek <damian.sniezek@bitbar.com>
  */
 @Tag(API_CLIENT)
-class APIUserAPIClientTest extends APIClientTest {
+class APIUserAPIClientTest extends BaseAPIClientTest {
 
     @ParameterizedTest
     @ArgumentsSource(APIClientProvider.class)

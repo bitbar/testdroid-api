@@ -23,7 +23,8 @@ public class APIAccountService extends APIEntity {
         INITIAL_FAILURE,
         CHARGE_FAILURE,
         CANCEL,
-        SUSPENDED
+        SUSPENDED,
+        ANOTHER_PURCHASE
     }
 
     private Long accountId;

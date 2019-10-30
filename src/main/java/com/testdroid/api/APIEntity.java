@@ -126,6 +126,10 @@ public abstract class APIEntity {
 
     protected String selfURI;
 
+    //Technical field to allow group APIEntity with CriteriaQuery by parent ID.
+    @JsonIgnore
+    protected Long parentId;
+
     public APIEntity() {
     }
 
@@ -162,6 +166,10 @@ public abstract class APIEntity {
 
     public void setSelfURI(String selfURI) {
         this.selfURI = selfURI;
+    }
+
+    public Long getParentId() {
+        return parentId;
     }
 
     @JsonIgnore

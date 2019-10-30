@@ -34,7 +34,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
- * @author Sławomir Pawluk <slawomir.pawluk@bitbar.com>
+ * @author Slawomir Pawluk <slawomir.pawluk@bitbar.com>
  * @author Krzysztof Fonał <krzysztof.fonal@bitbar.com>
  */
 public class DefaultAPIClient extends AbstractAPIClient {

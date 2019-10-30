@@ -16,17 +16,22 @@ public class APIAccount extends APIEntity {
 
     private Date createTime;
 
-    private String mainUserName;
+    private String mainUserFirstName;
+
+    private String mainUserLastName;
 
     private String mainUserEmail;
 
     public APIAccount() {
     }
 
-    public APIAccount(Long id, LocalDateTime createTime, String mainUserName, String mainUserEmail) {
+    public APIAccount(
+            Long id, LocalDateTime createTime, String mainUserFirstName, String mainUserLastName,
+            String mainUserEmail) {
         super(id);
         this.createTime = TimeConverter.toDate(createTime);
-        this.mainUserName = mainUserName;
+        this.mainUserFirstName = mainUserFirstName;
+        this.mainUserLastName = mainUserLastName;
         this.mainUserEmail = mainUserEmail;
     }
 
@@ -38,12 +43,20 @@ public class APIAccount extends APIEntity {
         this.createTime = createTime;
     }
 
-    public String getMainUserName() {
-        return mainUserName;
+    public String getMainUserFirstName() {
+        return mainUserFirstName;
     }
 
-    public void setMainUserName(String mainUserName) {
-        this.mainUserName = mainUserName;
+    public void setMainUserFirstName(String mainUserFirstName) {
+        this.mainUserFirstName = mainUserFirstName;
+    }
+
+    public String getMainUserLastName() {
+        return mainUserLastName;
+    }
+
+    public void setMainUserLastName(String mainUserLastName) {
+        this.mainUserLastName = mainUserLastName;
     }
 
     public String getMainUserEmail() {
@@ -60,7 +73,8 @@ public class APIAccount extends APIEntity {
         APIAccount account = (APIAccount) from;
         cloneBase(from);
         this.createTime = account.createTime;
-        this.mainUserName = account.mainUserName;
+        this.mainUserFirstName = account.mainUserFirstName;
+        this.mainUserLastName = account.mainUserLastName;
         this.mainUserEmail = account.mainUserEmail;
     }
 }

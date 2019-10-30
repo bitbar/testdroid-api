@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlType;
 import java.time.temporal.ChronoUnit;
 
 /**
- * @author Adrian Zybała <adrian.zybala@bitbar.com>
+ * @author Adrian Zybala <adrian.zybala@bitbar.com>
  */
 @XmlType
 public enum Unit {
