@@ -24,7 +24,7 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
  * @author Damian Sniezek <damian.sniezek@bitbar.com>
  */
 @Tag(API_CLIENT)
-class APIDeviceGroupClientTest extends APIClientTest {
+class APIDeviceGroupClientTest extends BaseAPIClientTest {
 
     @ParameterizedTest
     @ArgumentsSource(APIClientProvider.class)

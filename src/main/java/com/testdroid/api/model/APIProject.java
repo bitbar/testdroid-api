@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.testdroid.api.dto.MappingKey.*;
 import static com.testdroid.api.model.APIDevice.OsType;
 
 /**
@@ -302,11 +303,11 @@ public class APIProject extends APIEntity {
 
     public void update() throws APIException {
         Map<String, Object> body = new HashMap<>();
-        body.put("name", name);
-        body.put("description", description);
-        body.put("common", common);
-        body.put("archivingStrategy", archivingStrategy.name());
-        body.put("archivingItemCount", archivingItemCount);
+        body.put(NAME, name);
+        body.put(DESCRIPTION, description);
+        body.put(COMMON, common);
+        body.put(ARCHIVING_STRATEGY, archivingStrategy.name());
+        body.put(ARCHIVING_ITEM_COUNT, archivingItemCount);
         APIProject project = postResource(selfURI, body, APIProject.class);
         clone(project);
     }

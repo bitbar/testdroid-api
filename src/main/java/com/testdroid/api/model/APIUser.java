@@ -16,6 +16,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.testdroid.api.dto.MappingKey.*;
+
 /**
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
  * @author Slawomir Pawluk <slawomir.pawluk@bitbar.com>
@@ -86,7 +88,9 @@ public class APIUser extends APIEntity {
 
     private Long mainUserId;
 
-    private String name;
+    private String firstName;
+
+    private String lastName;
 
     private String organization;
 
@@ -115,12 +119,15 @@ public class APIUser extends APIEntity {
     public APIUser() {
     }
 
-    public APIUser(Long id, String email, String name, String state, String country, String city, String code,
-            String address, String phone, String organization, String vatId, String timeZone, LocalDateTime createTime,
-            LocalDateTime deleteTime, LocalDateTime lastLoginTime, Status status) {
+    public APIUser(
+            Long id, String email, String firstName, String lastName, String state, String country,
+            String city, String code, String address, String phone, String organization, String vatId,
+            String timeZone, LocalDateTime createTime, LocalDateTime deleteTime, LocalDateTime lastLoginTime,
+            Status status) {
         super(id);
         this.email = email;
-        this.name = name;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.state = state;
         this.country = country;
         this.city = city;
@@ -138,13 +145,13 @@ public class APIUser extends APIEntity {
     }
 
     public APIUser(
-            Long id, Long accountId, String email, String name, String state, String country, String city, String code,
-            String address, String phone, String organization, String vatId, String timeZone, LocalDateTime createTime,
-            LocalDateTime deleteTime, LocalDateTime lastLoginTime, Boolean isMainUser, Long mainUserId,
-            String mainUserEmail, String apiKey, Status status, Long createdById, String createdByEmail,
-            MfaStatus mfaStatus) {
-        this(id, email, name, state, country, city, code, address, phone, organization, vatId, timeZone, createTime,
-                deleteTime, lastLoginTime, status);
+            Long id, Long accountId, String email, String firstName, String lastName, String state,
+            String country, String city, String code, String address, String phone, String organization, String vatId,
+            String timeZone, LocalDateTime createTime, LocalDateTime deleteTime, LocalDateTime lastLoginTime,
+            Boolean isMainUser, Long mainUserId, String mainUserEmail, String apiKey, Status status, Long createdById,
+            String createdByEmail, MfaStatus mfaStatus) {
+        this(id, email, firstName, lastName, state, country, city, code, address, phone, organization, vatId,
+                timeZone, createTime, deleteTime, lastLoginTime, status);
         this.accountId = accountId;
         this.isMainUser = isMainUser;
         this.mainUserId = mainUserId;
@@ -164,12 +171,20 @@ public class APIUser extends APIEntity {
         this.email = email;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getState() {
@@ -401,35 +416,33 @@ public class APIUser extends APIEntity {
         this.mfaStatus = mfaStatus;
     }
 
-    private Map<String, Object> getUpdateUserParams(
-            final String address, final String city, final String code, final String country, final String email,
-            final String name, final String organization, final String phone, final String state, final String timeZone,
-            final String vatId) {
+    private Map<String, Object> getUpdateUserParams() {
         Map<String, Object> map = new HashMap<>();
-        map.put("address", address);
-        map.put("city", city);
-        map.put("code", code);
-        map.put("country", country);
-        map.put("email", email);
-        map.put("name", name);
-        map.put("organization", organization);
-        map.put("phone", phone);
-        map.put("state", state);
-        map.put("timeZone", timeZone);
-        map.put("vatId", vatId);
+        map.put(ADDRESS, address);
+        map.put(CITY, city);
+        map.put(CODE, code);
+        map.put(COUNTRY, country);
+        map.put(EMAIL, email);
+        map.put(FIRST_NAME, firstName);
+        map.put(LAST_NAME, lastName);
+        map.put(ORGANIZATION, organization);
+        map.put(PHONE, phone);
+        map.put(STATE, state);
+        map.put(TIME_ZONE, timeZone);
+        map.put(VAT_ID, vatId);
         return map;
     }
 
     private Map<String, Object> getCreateDeviceGroupParams(final String displayName, final APIDevice.OsType osType) {
         Map<String, Object> map = new HashMap<>();
-        map.put("displayName", displayName);
-        map.put("osType", osType);
+        map.put(DISPLAY_NAME, displayName);
+        map.put(OS_TYPE, osType);
         return map;
     }
 
     private Map<String, Object> getCreateProjectParams(String name) {
         Map<String, Object> result = new HashMap<>();
-        result.put("name", name);
+        result.put(NAME, name);
         return result;
     }
 
@@ -438,10 +451,7 @@ public class APIUser extends APIEntity {
     }
 
     public void update() throws APIException {
-        APIUser user = postResource(selfURI,
-                getUpdateUserParams(address, city, code, country, email, name, organization, phone, state, timeZone,
-                        vatId), APIUser.class
-        );
+        APIUser user = postResource(selfURI, getUpdateUserParams(), APIUser.class);
         clone(user);
     }
 
@@ -508,7 +518,8 @@ public class APIUser extends APIEntity {
         this.code = apiUser.code;
         this.country = apiUser.country;
         this.email = apiUser.email;
-        this.name = apiUser.name;
+        this.firstName = apiUser.firstName;
+        this.lastName = apiUser.lastName;
         this.organization = apiUser.organization;
         this.phone = apiUser.phone;
         this.roles = apiUser.roles;

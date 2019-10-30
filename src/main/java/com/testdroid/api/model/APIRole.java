@@ -36,8 +36,7 @@ public class APIRole extends APIEntity {
 
     // ServiceRole
     public APIRole(Long id, String name, Integer value, boolean valueCalculated) {
-        super(id);
-        this.name = name;
+        this(id, name);
         this.value = value;
         this.valueCalculated = valueCalculated;
     }
@@ -46,6 +45,13 @@ public class APIRole extends APIEntity {
     public APIRole(Long id, String name, LocalDateTime expireTime, Integer value) {
         this(id, name, value, false);
         this.expireTime = TimeConverter.toDate(expireTime);
+    }
+
+    // AccountRole
+    public APIRole(Long parentId, Long id, String name, LocalDateTime expireTime, Integer value) {
+        this(id, name, value, false);
+        this.expireTime = TimeConverter.toDate(expireTime);
+        this.parentId = parentId;
     }
 
     // AdminAccountRole

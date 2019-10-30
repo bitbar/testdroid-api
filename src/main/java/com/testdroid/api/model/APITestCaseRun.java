@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
- * @author Sławomir Pawluk <slawomir.pawluk@bitbar.com>
+ * @author Slawomir Pawluk <slawomir.pawluk@bitbar.com>
  */
 @XmlRootElement
 public class APITestCaseRun extends APIEntity {

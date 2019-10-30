@@ -43,8 +43,6 @@ public class APIAdminDevice extends APIEntity {
 
     @XmlType(namespace = "APIAdminDevice")
     public enum ComplexState {
-        OFFLINE(State.OFFLINE, SubState.DIRTY), // for backward compatibility
-        ONLINE(State.ONLINE, SubState.FREE), // for backward compatibility
         OFFLINE_CLEANING(State.OFFLINE, SubState.CLEANING),
         OFFLINE_DIRTY(State.OFFLINE, SubState.DIRTY),
         OFFLINE_FREE(State.OFFLINE, SubState.FREE),

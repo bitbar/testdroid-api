@@ -26,8 +26,6 @@ public class APIFramework extends APIEntity {
 
     private String mainUserEmail;
 
-    private String mainUserName;
-
     private String name;
 
     private APIDevice.OsType osType;
@@ -54,15 +52,17 @@ public class APIFramework extends APIEntity {
 
     private String labelName;
 
+    private String icon;
+
     public APIFramework() {
     }
 
     public APIFramework(
             Long id, LocalDateTime createTime, String name, String description, APIDevice.OsType osType,
-            String type, Long accountId, String mainUserEmail, String mainUserName, String requiredAppExtensions,
+            String type, Long accountId, String mainUserEmail, String requiredAppExtensions,
             String requiredTestExtensions, String requiredTestFileTags, String documentationUrl, Boolean forProjects,
             Boolean canRunFromUI, Boolean secured, Boolean retryable, Boolean skipQueue, Boolean skipOlderSdk,
-            Long labelId, String labelName) {
+            Long labelId, String labelName, String icon) {
         super(id);
         this.createTime = TimeConverter.toDate(createTime);
         this.name = name;
@@ -71,7 +71,6 @@ public class APIFramework extends APIEntity {
         this.type = type;
         this.accountId = accountId;
         this.mainUserEmail = mainUserEmail;
-        this.mainUserName = mainUserName;
         this.requiredAppExtensions = requiredAppExtensions;
         this.requiredTestExtensions = requiredTestExtensions;
         this.requiredTestFileTags = requiredTestFileTags;
@@ -84,6 +83,7 @@ public class APIFramework extends APIEntity {
         this.skipOlderSdk = skipOlderSdk;
         this.labelId = labelId;
         this.labelName = labelName;
+        this.icon = icon;
     }
 
     public Date getCreateTime() {
@@ -190,14 +190,6 @@ public class APIFramework extends APIEntity {
         this.mainUserEmail = mainUserEmail;
     }
 
-    public String getMainUserName() {
-        return mainUserName;
-    }
-
-    public void setMainUserName(String mainUserName) {
-        this.mainUserName = mainUserName;
-    }
-
     public Boolean getSecured() {
         return secured;
     }
@@ -246,6 +238,14 @@ public class APIFramework extends APIEntity {
         this.labelName = labelName;
     }
 
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
@@ -257,7 +257,6 @@ public class APIFramework extends APIEntity {
         this.osType = apiFramework.osType;
         this.type = apiFramework.type;
         this.accountId = apiFramework.accountId;
-        this.mainUserName = apiFramework.mainUserName;
         this.mainUserEmail = apiFramework.mainUserEmail;
         this.requiredAppExtensions = apiFramework.requiredAppExtensions;
         this.requiredTestExtensions = apiFramework.requiredTestExtensions;
@@ -271,5 +270,6 @@ public class APIFramework extends APIEntity {
         this.skipOlderSdk = apiFramework.skipOlderSdk;
         this.labelId = apiFramework.labelId;
         this.labelName = apiFramework.labelName;
+        this.icon = apiFramework.icon;
     }
 }

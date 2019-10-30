@@ -94,6 +94,8 @@ public class APIDevice extends APIEntity {
 
     private DeviceGroupOrigin deviceGroupOrigin;
 
+    private boolean available;
+
     public APIDevice() {
     }
 
@@ -288,6 +290,14 @@ public class APIDevice extends APIEntity {
         this.deviceGroupOrigin = deviceGroupOrigin;
     }
 
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
+    }
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
@@ -314,6 +324,7 @@ public class APIDevice extends APIEntity {
         this.mainUserEmail = apiDevice.mainUserEmail;
         this.deviceGroupOrigin = apiDevice.deviceGroupOrigin;
         this.properties = apiDevice.properties;
+        this.available = apiDevice.available;
     }
 
 }

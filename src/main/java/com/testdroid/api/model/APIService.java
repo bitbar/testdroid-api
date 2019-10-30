@@ -37,6 +37,8 @@ public class APIService extends APIEntity {
 
     private Date activateTime;
 
+    private boolean activated;
+
     private boolean customPlan;
 
     private ChargeType chargeType;
@@ -61,7 +63,7 @@ public class APIService extends APIEntity {
     public APIService(
             Long id, String name, String description, boolean autoRenew, Integer centPrice, Integer includedHours,
             Integer pricePerHour, String externalId, LocalDateTime archiveTime, LocalDateTime activateTime,
-            boolean customPlan, ChargeType chargeType, Unit unit) {
+            boolean activated, boolean customPlan, ChargeType chargeType, Unit unit) {
         super(id);
         this.name = name;
         this.description = description;
@@ -72,6 +74,7 @@ public class APIService extends APIEntity {
         this.externalId = externalId;
         this.archiveTime = TimeConverter.toDate(archiveTime);
         this.activateTime = TimeConverter.toDate(activateTime);
+        this.activated = activated;
         this.customPlan = customPlan;
         this.chargeType = chargeType;
         this.unit = unit;
@@ -106,6 +109,7 @@ public class APIService extends APIEntity {
         this.pricePerHour = apiService.pricePerHour;
         this.archiveTime = apiService.archiveTime;
         this.activateTime = apiService.activateTime;
+        this.activated = apiService.activated;
         this.customPlan = apiService.customPlan;
         this.chargeType = apiService.chargeType;
         this.unit = apiService.unit;
@@ -201,6 +205,14 @@ public class APIService extends APIEntity {
 
     public void setUnit(Unit unit) {
         this.unit = unit;
+    }
+
+    public boolean isActivated() {
+        return activated;
+    }
+
+    public void setActivated(boolean activated) {
+        this.activated = activated;
     }
 
     @JsonIgnore

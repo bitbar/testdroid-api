@@ -13,10 +13,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @author Damian Sniezek <damian.sniezek@bitbar.com>
  */
 @Tag(API_CLIENT)
-class APIProjectAPIClientTest extends APIClientTest {
+class APIProjectAPIClientTest extends BaseAPIClientTest {
 
     @ParameterizedTest
-    @ArgumentsSource(APIClientTest.APIClientProvider.class)
+    @ArgumentsSource(BaseAPIClientTest.APIClientProvider.class)
     void createProjectTest(AbstractAPIClient apiKeyClient) throws APIException {
         String projectName = generateUnique("testProject");
         APIProject project = apiKeyClient.me().createProject(projectName);
@@ -24,7 +24,7 @@ class APIProjectAPIClientTest extends APIClientTest {
     }
 
     @ParameterizedTest
-    @ArgumentsSource(APIClientTest.APIClientProvider.class)
+    @ArgumentsSource(BaseAPIClientTest.APIClientProvider.class)
     void updateProjectTest(AbstractAPIClient apiKeyClient) throws APIException {
         APIProject project = apiKeyClient.me().createProject(generateUnique("testProject"));
         String updatedProjectName = generateUnique("testProject");
@@ -36,7 +36,7 @@ class APIProjectAPIClientTest extends APIClientTest {
     }
 
     @ParameterizedTest
-    @ArgumentsSource(APIClientTest.APIClientProvider.class)
+    @ArgumentsSource(BaseAPIClientTest.APIClientProvider.class)
     void deleteProjectTest(AbstractAPIClient apiKeyClient) throws APIException {
         APIProject project = apiKeyClient.me().createProject(generateUnique("testProject"));
         project.delete();
