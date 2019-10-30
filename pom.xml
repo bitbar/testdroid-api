@@ -10,7 +10,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <jackson.version>2.9.9</jackson.version>
+        <jackson.version>2.10.0</jackson.version>
         <slf4j.version>1.7.26</slf4j.version>
         <junit.jupiter.version>5.4.2</junit.jupiter.version>
         <org.apache.commons.io.version>2.6</org.apache.commons.io.version>
