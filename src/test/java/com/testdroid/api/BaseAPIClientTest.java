@@ -88,7 +88,7 @@ abstract class BaseAPIClientTest {
         }
     }
 
-    APIFramework getApiFramework(AbstractAPIClient apiKeyClient, String frameworkName) throws APIException {
+    APIFramework getApiFramework(APIClient apiClient, String frameworkName) throws APIException {
         StringFilterEntry osTypeFilter = new StringFilterEntry(OS_TYPE, EQ, ANDROID.name());
         BooleanFilterEntry forProject = trueFilterEntry(FOR_PROJECTS);
         BooleanFilterEntry canRunFromUI = trueFilterEntry(CAN_RUN_FROM_UI);
@@ -98,7 +98,7 @@ abstract class BaseAPIClientTest {
         context.addFilter(forProject);
         context.addFilter(canRunFromUI);
         context.addFilter(defaultFrameworkName);
-        return apiKeyClient.me().getAvailableFrameworksResource(context).getEntity().get(0);
+        return apiClient.me().getAvailableFrameworksResource(context).getEntity().get(0);
     }
 
     private static APIUser create(APIKeyClient adminApiClient) throws APIException {

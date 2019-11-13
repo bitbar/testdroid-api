@@ -28,7 +28,6 @@ public class MappingKey {
     public static final String API_KEY = "apiKey";
     public static final String API_LEVEL = "apiLevel";
     public static final String APPIUM_BROKER_ADDRESS = "appiumBrokerAddress";
-    public static final String APPIUM_ENABLED = "appiumEnabled";
     public static final String APPLICATION_PASSWORD = "applicationPassword";
     public static final String APPLICATION_USERNAME = "applicationUsername";
     public static final String APP_CRAWLER_RUN = "appCrawlerRun";
@@ -49,7 +48,6 @@ public class MappingKey {
     public static final String BUILD_ENABLED = "buildEnabled";
     public static final String BUILD_LIMIT = "buildLimit";
     public static final String BUILD_NUMBER = "buildNumber";
-    public static final String CALABASH_ENABLED = "calabashEnabled";
     public static final String CAN_RUN_FROM_UI = "canRunFromUI";
     public static final String CARD_NUMBER = "cardNumber";
     public static final String CENT_PRICE = "centPrice";
@@ -72,7 +70,6 @@ public class MappingKey {
     public static final String CREATED_BY_ID = "createdById";
     public static final String CREATE_TIME = "createTime";
     public static final String CREDITS_PRICE = "creditsPrice";
-    public static final String CTS_ENABLED = "ctsEnabled";
     public static final String CURRENT_STEP_TYPE = "currentStepType";
     public static final String CUSTOM_PLAN = "customPlan";
     public static final String CVV = "cvv";
@@ -178,6 +175,7 @@ public class MappingKey {
     public static final String LABEL_ID = "labelId";
     public static final String LABEL_IDS_ARR = "labelIds[]";
     public static final String LABEL_NAME = "labelName";
+    public static final String LAST_LAUNCHED_TEST_TIME = "lastLaunchedTestTime";
     public static final String LAST_LOGIN_TIME = "lastLoginTime";
     public static final String LAST_MODIFICATION_TIME = "lastModificationTime";
     public static final String LAST_MODIFIED_BY = "lastModifiedBy";
@@ -190,7 +188,6 @@ public class MappingKey {
     public static final String LOCALE_COUNTRY = "localeCountry";
     public static final String LOCATION_SERVICES_ON = "locationServiceOn";
     public static final String LOCKED = "locked";
-    public static final String LOGIN_TIME = "loginTime";
     public static final String MAIL = "mail";
     public static final String MAIN_USER_EMAIL = "mainUserEmail";
     public static final String MAIN_USER_ID = "mainUserId";
@@ -241,11 +238,8 @@ public class MappingKey {
     public static final String QUANTITY = "quantity";
     public static final String QUEUE_SIZE = "queueSize";
     public static final String READ_ONLY = "readOnly";
-    public static final String RECORDER_ENABLED = "recorderEnabled";
-    public static final String RECORDER_LIMIT = "recorderLimit";
     public static final String RECOVERY_KEY = "recoveryKey";
     public static final String RELEASE_VERSION = "releaseVersion";
-    public static final String REMOTE_CONTROL_ENABLED = "remoteControlEnabled";
     public static final String REQUIRED_APP_EXTENSIONS = "requiredAppExtensions";
     public static final String REQUIRED_TEST_EXTENSIONS = "requiredTestExtensions";
     public static final String REQUIRED_TEST_FILE_TAGS = "requiredTestFileTags";
@@ -257,6 +251,8 @@ public class MappingKey {
     public static final String ROLE_ID = "roleId";
     public static final String ROLE_IDS_ARR = "roleIds[]";
     public static final String RUNNING = "running";
+    public static final String SAMPLE_APP_ID = "sampleAppId";
+    public static final String SAMPLE_TEST_ID = "sampleTestId";
     public static final String SCHEDULER = "scheduler";
     public static final String SCOPE = "scope";
     public static final String SCREENSHOT = "screenshot";
@@ -266,13 +262,9 @@ public class MappingKey {
     public static final String SECURED = "secured";
     public static final String SELECTOR_ID = "selectorId";
     public static final String SELECTOR_IDS_ARR = "selectorIds[]";
-    public static final String SELENIUM_ENABLED = "seleniumEnabled";
     public static final String SENT = "sent";
     public static final String SENT_TIME = "sentTime";
     public static final String SERIAL_ID = "serialId";
-    public static final String SERVER_ANDROID_ENABLED = "serverAndroidEnabled";
-    public static final String SERVER_ENABLED = "serverEnabled";
-    public static final String SERVER_IOS_ENABLED = "serverIosEnabled";
     public static final String SERVICE_ID = "serviceId";
     public static final String SERVICE_IDS = "serviceIds";
     public static final String SERVICE_NAME = "serviceName";
@@ -318,7 +310,6 @@ public class MappingKey {
     public static final String TO_TIME = "toTime";
     public static final String TYPE = "type";
     public static final String TYPE_ID = "typeId";
-    public static final String UIAUTOMATOR_ENABLED = "uiautomatorEnabled";
     public static final String UNIT = "unit";
     public static final String UNIT_COUNT = "unitCount";
     public static final String UNLOCK_GESTURE = "unlockGesture";
@@ -354,8 +345,6 @@ public class MappingKey {
     public static final String WITH_ROLE = "withRole";
     public static final String WITH_ROLES = "withRoles";
     public static final String WITH_VULNERABLE_DATA = "withVulnerableData";
-    public static final String XCTEST_ENABLED = "xctestEnabled";
-    public static final String XCUITEST_ENABLED = "xcuitestEnabled";
     public static final String ZIP = "zip";
 
     // @formatter:on

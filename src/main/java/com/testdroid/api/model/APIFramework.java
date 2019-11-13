@@ -54,6 +54,10 @@ public class APIFramework extends APIEntity {
 
     private String icon;
 
+    private APIUserFile sampleApp;
+
+    private APIUserFile sampleTest;
+
     public APIFramework() {
     }
 
@@ -62,7 +66,7 @@ public class APIFramework extends APIEntity {
             String type, Long accountId, String mainUserEmail, String requiredAppExtensions,
             String requiredTestExtensions, String requiredTestFileTags, String documentationUrl, Boolean forProjects,
             Boolean canRunFromUI, Boolean secured, Boolean retryable, Boolean skipQueue, Boolean skipOlderSdk,
-            Long labelId, String labelName, String icon) {
+            Long labelId, String labelName, String icon, Long sampleAppId, Long sampleTestId) {
         super(id);
         this.createTime = TimeConverter.toDate(createTime);
         this.name = name;
@@ -84,6 +88,8 @@ public class APIFramework extends APIEntity {
         this.labelId = labelId;
         this.labelName = labelName;
         this.icon = icon;
+        this.sampleApp = new APIUserFile(sampleAppId);
+        this.sampleTest = new APIUserFile(sampleTestId);
     }
 
     public Date getCreateTime() {
@@ -246,6 +252,22 @@ public class APIFramework extends APIEntity {
         this.icon = icon;
     }
 
+    public APIUserFile getSampleApp() {
+        return sampleApp;
+    }
+
+    public void setSampleApp(APIUserFile sampleApp) {
+        this.sampleApp = sampleApp;
+    }
+
+    public APIUserFile getSampleTest() {
+        return sampleTest;
+    }
+
+    public void setSampleTest(APIUserFile sampleTest) {
+        this.sampleTest = sampleTest;
+    }
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
@@ -271,5 +293,7 @@ public class APIFramework extends APIEntity {
         this.labelId = apiFramework.labelId;
         this.labelName = apiFramework.labelName;
         this.icon = apiFramework.icon;
+        this.sampleApp = apiFramework.sampleApp;
+        this.sampleTest = apiFramework.sampleTest;
     }
 }

@@ -17,16 +17,16 @@ class APIProjectAPIClientTest extends BaseAPIClientTest {
 
     @ParameterizedTest
     @ArgumentsSource(BaseAPIClientTest.APIClientProvider.class)
-    void createProjectTest(AbstractAPIClient apiKeyClient) throws APIException {
+    void createProjectTest(APIClient apiClient) throws APIException {
         String projectName = generateUnique("testProject");
-        APIProject project = apiKeyClient.me().createProject(projectName);
+        APIProject project = apiClient.me().createProject(projectName);
         assertThat(project.getName(), is(projectName));
     }
 
     @ParameterizedTest
     @ArgumentsSource(BaseAPIClientTest.APIClientProvider.class)
-    void updateProjectTest(AbstractAPIClient apiKeyClient) throws APIException {
-        APIProject project = apiKeyClient.me().createProject(generateUnique("testProject"));
+    void updateProjectTest(APIClient apiClient) throws APIException {
+        APIProject project = apiClient.me().createProject(generateUnique("testProject"));
         String updatedProjectName = generateUnique("testProject");
         project.setName(updatedProjectName);
         project.setDescription("Description of testProject");
@@ -37,8 +37,8 @@ class APIProjectAPIClientTest extends BaseAPIClientTest {
 
     @ParameterizedTest
     @ArgumentsSource(BaseAPIClientTest.APIClientProvider.class)
-    void deleteProjectTest(AbstractAPIClient apiKeyClient) throws APIException {
-        APIProject project = apiKeyClient.me().createProject(generateUnique("testProject"));
+    void deleteProjectTest(APIClient apiClient) throws APIException {
+        APIProject project = apiClient.me().createProject(generateUnique("testProject"));
         project.delete();
     }
 }

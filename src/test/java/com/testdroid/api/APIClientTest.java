@@ -20,8 +20,8 @@ class APIClientTest extends BaseAPIClientTest {
     @Tag("TD-12086")
     @ParameterizedTest
     @ArgumentsSource(APIClientProvider.class)
-    void td12086(AbstractAPIClient apiKeyClient) throws APIException {
-        APIUser user = apiKeyClient.me();
+    void td12086(APIClient apiClient) throws APIException {
+        APIUser user = apiClient.me();
         Exception exception = assertThrows(APIException.class, () ->
                 user.getResource(user.selfURI + "/notifications/channels/SLACK+/scopes", APIEnum.class).getEntity());
         assertThat(exception.getMessage(), is("Invalid Notification Channel: SLACK+"));

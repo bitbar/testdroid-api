@@ -3,11 +3,16 @@ package com.testdroid.api;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.api.client.http.*;
 import com.testdroid.api.dto.Context;
+import com.testdroid.api.dto.MappingKey;
+import com.testdroid.api.dto.Operand;
+import com.testdroid.api.filter.StringFilterEntry;
 import com.testdroid.api.http.MultipartFormDataContent;
 import com.testdroid.api.model.APIDevice;
+import com.testdroid.api.model.APIDeviceProperty;
 import com.testdroid.api.model.APILabelGroup;
 import com.testdroid.api.model.APIUser;
 import com.testdroid.api.util.TypeReferenceFactory;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.utils.URIBuilder;
@@ -16,10 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.testdroid.api.APIEntity.OBJECT_MAPPER;
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -294,6 +296,21 @@ public abstract class AbstractAPIClient implements APIClient {
     @Override
     public APIListResource<APILabelGroup> getLabelGroups(Context<APILabelGroup> context) {
         return new APIListResource<>(this, LABEL_GROUPS_URI, context);
+    }
+
+    @Override
+    public Optional<APIDeviceProperty> findDevicePropertyInLabelGroup(String groupName, String labelName)
+            throws APIException {
+        Optional<APIDeviceProperty> result = Optional.empty();
+        Context<APILabelGroup> ctx = new Context<>(APILabelGroup.class);
+        ctx.addFilter(new StringFilterEntry(MappingKey.NAME, Operand.EQ, groupName));
+        List<APILabelGroup> labelGroups = this.getLabelGroups(ctx).getEntity().getData();
+        if (CollectionUtils.isNotEmpty(labelGroups)) {
+            Context<APIDeviceProperty> lCtx = new Context<>(APIDeviceProperty.class);
+            lCtx.addFilter(new StringFilterEntry(MappingKey.NAME, Operand.EQ, labelName));
+            result = labelGroups.get(0).getDevicePropertiesResource(lCtx).getEntity().getData().stream().findFirst();
+        }
+        return result;
     }
 
     protected <T> T fromJson(InputStream inputStream, TypeReference<T> type) throws APIException {
