@@ -49,6 +49,8 @@ public class APITestRun extends APIEntity {
 
     private Integer number;
 
+    private Integer rowIndex;
+
     private Long projectId;
 
     private String projectName;
@@ -441,6 +443,14 @@ public class APITestRun extends APIEntity {
         this.projectName = projectName;
     }
 
+    public Integer getRowIndex() {
+        return rowIndex;
+    }
+
+    public void setRowIndex(Integer rowIndex) {
+        this.rowIndex = rowIndex;
+    }
+
     public void delete() throws APIException {
         deleteResource(selfURI);
     }
@@ -529,6 +539,7 @@ public class APITestRun extends APIEntity {
         this.displayName = apiTestRun.displayName;
         this.executionRatio = apiTestRun.executionRatio;
         this.number = apiTestRun.number;
+        this.rowIndex = apiTestRun.rowIndex;
         this.startedById = apiTestRun.startedById;
         this.startedByDisplayName = apiTestRun.startedByDisplayName;
         this.state = apiTestRun.state;

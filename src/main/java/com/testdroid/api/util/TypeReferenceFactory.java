@@ -95,8 +95,6 @@ public class TypeReferenceFactory {
         TYPE_REFERENCE_LIST_MAP.put(APIDeviceTimeCountSessionReportEntry.class,
                 new TypeReference<APIList<APIDeviceTimeCountSessionReportEntry>>() {
                 });
-        TYPE_REFERENCE_LIST_MAP.put(APIActiveUser.class, new TypeReference<APIList<APIActiveUser>>() {
-        });
         TYPE_REFERENCE_LIST_MAP.put(APIAdminDevice.class, new TypeReference<APIList<APIAdminDevice>>() {
         });
         TYPE_REFERENCE_LIST_MAP.put(APIAdminDeviceModel.class, new TypeReference<APIList<APIAdminDeviceModel>>() {

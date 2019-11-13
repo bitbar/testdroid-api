@@ -2,11 +2,13 @@ package com.testdroid.api;
 
 import com.testdroid.api.dto.Context;
 import com.testdroid.api.model.APIDevice;
+import com.testdroid.api.model.APIDeviceProperty;
 import com.testdroid.api.model.APILabelGroup;
 import com.testdroid.api.model.APIUser;
 
 import java.io.File;
 import java.io.InputStream;
+import java.util.Optional;
 
 /**
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
@@ -102,5 +104,7 @@ public interface APIClient {
     APIListResource<APILabelGroup> getLabelGroups();
 
     APIListResource<APILabelGroup> getLabelGroups(Context<APILabelGroup> context);
+
+    Optional<APIDeviceProperty> findDevicePropertyInLabelGroup(String groupName, String labelName) throws APIException;
 
 }

@@ -84,6 +84,8 @@ public class APIUser extends APIEntity {
 
     private Date lastLoginTime;
 
+    private Date lastLaunchedTestTime;
+
     private String mainUserEmail;
 
     private Long mainUserId;
@@ -123,7 +125,7 @@ public class APIUser extends APIEntity {
             Long id, String email, String firstName, String lastName, String state, String country,
             String city, String code, String address, String phone, String organization, String vatId,
             String timeZone, LocalDateTime createTime, LocalDateTime deleteTime, LocalDateTime lastLoginTime,
-            Status status) {
+            LocalDateTime lastLaunchedTestTime, Status status) {
         super(id);
         this.email = email;
         this.firstName = firstName;
@@ -140,6 +142,7 @@ public class APIUser extends APIEntity {
         this.createTime = TimeConverter.toDate(createTime);
         this.deleteTime = TimeConverter.toDate(deleteTime);
         this.lastLoginTime = TimeConverter.toDate(lastLoginTime);
+        this.lastLaunchedTestTime = TimeConverter.toDate(lastLaunchedTestTime);
         this.status = status;
         this.enabled = status == Status.ENABLED;
     }
@@ -148,10 +151,10 @@ public class APIUser extends APIEntity {
             Long id, Long accountId, String email, String firstName, String lastName, String state,
             String country, String city, String code, String address, String phone, String organization, String vatId,
             String timeZone, LocalDateTime createTime, LocalDateTime deleteTime, LocalDateTime lastLoginTime,
-            Boolean isMainUser, Long mainUserId, String mainUserEmail, String apiKey, Status status, Long createdById,
-            String createdByEmail, MfaStatus mfaStatus) {
+            LocalDateTime lastLaunchedTestTime, Boolean isMainUser, Long mainUserId, String mainUserEmail,
+            String apiKey, Status status, Long createdById, String createdByEmail, MfaStatus mfaStatus) {
         this(id, email, firstName, lastName, state, country, city, code, address, phone, organization, vatId,
-                timeZone, createTime, deleteTime, lastLoginTime, status);
+                timeZone, createTime, deleteTime, lastLoginTime, lastLaunchedTestTime, status);
         this.accountId = accountId;
         this.isMainUser = isMainUser;
         this.mainUserId = mainUserId;
@@ -306,6 +309,14 @@ public class APIUser extends APIEntity {
 
     public void setLastLoginTime(Date lastLoginTime) {
         this.lastLoginTime = lastLoginTime;
+    }
+
+    public Date getLastLaunchedTestTime() {
+        return lastLaunchedTestTime;
+    }
+
+    public void setLastLaunchedTestTime(Date lastLaunchedTestTime) {
+        this.lastLaunchedTestTime = lastLaunchedTestTime;
     }
 
     public Long getMainUserId() {
@@ -531,6 +542,7 @@ public class APIUser extends APIEntity {
         this.isMainUser = apiUser.isMainUser;
         this.status = apiUser.status;
         this.lastLoginTime = apiUser.lastLoginTime;
+        this.lastLaunchedTestTime = apiUser.lastLaunchedTestTime;
         this.mainUserId = apiUser.mainUserId;
         this.mainUserEmail = apiUser.mainUserEmail;
         this.enabled = apiUser.enabled;

@@ -400,6 +400,11 @@ public class APIDeviceSession extends APIEntity {
         return client.get(createUri(selfURI, "/output-file-set/files.zip"));
     }
 
+    @JsonIgnore
+    public APIDeviceSession release() throws APIException {
+        return client.post(createUri(selfURI, "/release"), null, APIDeviceSession.class);
+    }
+
     private String getScreenshotsURI() {
         return createUri(selfURI, "/screenshots");
     }

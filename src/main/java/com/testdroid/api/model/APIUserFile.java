@@ -79,6 +79,10 @@ public class APIUserFile extends APIEntity implements Serializable {
     public APIUserFile() {
     }
 
+    public APIUserFile(Long id) {
+        super(id);
+    }
+
     public APIUserFile(
             Long id, String name, LocalDateTime createTime, Long size, State state, String storage, String uri,
             String iconUri, String mimetype, Direction direction, InputType inputType, Long userId, String userEmail,

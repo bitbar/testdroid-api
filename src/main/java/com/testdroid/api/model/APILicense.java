@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.util.TimeConverter;
 import org.apache.commons.lang3.EnumUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
@@ -33,10 +34,6 @@ public class APILicense extends APIEntity {
 
     private AndroidLicense android;
 
-    private AppiumLicense appium;
-
-    private CalabashLicense calabash;
-
     private Date expireTime;
 
     private Date activateTime;
@@ -51,23 +48,13 @@ public class APILicense extends APIEntity {
 
     private boolean privateInstance;
 
-    private boolean autoRenew;
-
     private Long userId;
 
     private RecorderLicense recorder;
 
-    private RemoteControlLicense remoteControl;
-
-    private SeleniumLicense selenium;
-
     private ServerLicense server;
 
     private GlobalLicense global;
-
-    private XCTestLicense xcTest;
-
-    private XCUITestLicense xcuiTest;
 
     private BuildLicense build;
 
@@ -79,22 +66,20 @@ public class APILicense extends APIEntity {
     }
 
     public APILicense(
-            Long id, Long userId, String userEmail, boolean autoRenew, boolean enterprise, LocalDateTime activateTime,
-            LocalDateTime expireTime, Integer androidDeviceLimit, Boolean androidEnabled, Boolean seleniumEnabled,
-            Boolean serverAndroidEnabled, Boolean calabashEnabled, Boolean uiautomatorEnabled, Boolean recorderEnabled,
-            Integer iosProjectLimit, Boolean serverIosEnabled, Integer recorderLimit, Boolean remoteControlEnabled,
-            Boolean xcTestEnabled, Boolean xcuiTestEnabled, Boolean ctsEnabled, Integer androidProjectLimit,
-            Boolean appiumEnabled, Boolean serverEnabled, Boolean inspectorEnabled, Boolean iosEnabled,
-            Integer iosDeviceLimit, LocalDateTime closeTime, String status, Boolean buildEnabled, Integer buildLimit,
-            Boolean desktopEnabled, Integer desktopDeviceLimit, Integer desktopProjectLimit, Integer globalDeviceLimit,
+            Long id, Long userId, String userEmail, boolean privateInstance, LocalDateTime activateTime,
+            LocalDateTime expireTime, Integer androidDeviceLimit, Boolean androidEnabled, Boolean serverAndroidEnabled,
+            Boolean uiautomatorEnabled, Boolean recorderEnabled, Integer iosProjectLimit, Boolean serverIosEnabled,
+            Integer recorderLimit, Boolean ctsEnabled, Integer androidProjectLimit, Boolean serverEnabled,
+            Boolean inspectorEnabled, Boolean iosEnabled, Integer iosDeviceLimit, LocalDateTime closeTime,
+            String status, Boolean buildEnabled, Integer buildLimit, Boolean desktopEnabled,
+            Integer desktopDeviceLimit, Integer desktopProjectLimit, Integer globalDeviceLimit,
             Integer globalProjectLimit) {
         super(id);
-        this.privateInstance = enterprise;
+        this.privateInstance = privateInstance;
         this.activateTime = TimeConverter.toDate(activateTime);
         this.expireTime = TimeConverter.toDate(expireTime);
         this.userEmail = userEmail;
         this.userId = userId;
-        this.autoRenew = autoRenew;
         this.android = new AndroidLicense(androidDeviceLimit, androidProjectLimit,
                 new AndroidLicense.CTSLicense(ctsEnabled), new AndroidLicense.UIAutomatorLicense(uiautomatorEnabled),
                 androidEnabled);
@@ -102,13 +87,7 @@ public class APILicense extends APIEntity {
         this.build = new BuildLicense(buildLimit, buildEnabled);
         this.recorder = new RecorderLicense(recorderLimit, recorderEnabled);
         this.server = new ServerLicense(serverAndroidEnabled, serverIosEnabled, serverEnabled);
-        this.calabash = new CalabashLicense(calabashEnabled);
-        this.appium = new AppiumLicense(appiumEnabled);
-        this.selenium = new SeleniumLicense(seleniumEnabled);
         this.inspector = new InspectorLicense(inspectorEnabled);
-        this.remoteControl = new RemoteControlLicense(remoteControlEnabled);
-        this.xcTest = new XCTestLicense(xcTestEnabled);
-        this.xcuiTest = new XCUITestLicense(xcuiTestEnabled);
         this.desktop = new DesktopLicense(desktopDeviceLimit, desktopProjectLimit, desktopEnabled);
         this.global = new GlobalLicense(globalDeviceLimit, globalProjectLimit);
         this.closeTime = TimeConverter.toDate(closeTime);
@@ -117,10 +96,8 @@ public class APILicense extends APIEntity {
 
     public APILicense(
             boolean privateInstance, LocalDateTime expireTime, String userEmail, AndroidLicense android, IOSLicense ios,
-            RecorderLicense recorder, ServerLicense server, CalabashLicense calabash, AppiumLicense appium,
-            SeleniumLicense selenium, InspectorLicense inspector, RemoteControlLicense remoteControl,
-            XCTestLicense xcTest, XCUITestLicense xcuiTest, BuildLicense build, DesktopLicense desktop,
-            GlobalLicense global) {
+            RecorderLicense recorder, ServerLicense server, InspectorLicense inspector, BuildLicense build,
+            DesktopLicense desktop, GlobalLicense global) {
         this.privateInstance = privateInstance;
         this.expireTime = TimeConverter.toDate(expireTime);
         this.userEmail = userEmail;
@@ -128,13 +105,7 @@ public class APILicense extends APIEntity {
         this.ios = ios;
         this.recorder = recorder;
         this.server = server;
-        this.calabash = calabash;
-        this.appium = appium;
-        this.selenium = selenium;
         this.inspector = inspector;
-        this.remoteControl = remoteControl;
-        this.xcTest = xcTest;
-        this.xcuiTest = xcuiTest;
         this.build = build;
         this.desktop = desktop;
         this.global = global;
@@ -222,54 +193,6 @@ public class APILicense extends APIEntity {
         this.server = server;
     }
 
-    public CalabashLicense getCalabash() {
-        return calabash;
-    }
-
-    public void setCalabash(CalabashLicense calabash) {
-        this.calabash = calabash;
-    }
-
-    public RemoteControlLicense getRemoteControl() {
-        return remoteControl;
-    }
-
-    public void setRemoteControl(RemoteControlLicense remoteControl) {
-        this.remoteControl = remoteControl;
-    }
-
-    public AppiumLicense getAppium() {
-        return appium;
-    }
-
-    public void setAppium(AppiumLicense appium) {
-        this.appium = appium;
-    }
-
-    public SeleniumLicense getSelenium() {
-        return selenium;
-    }
-
-    public void setSelenium(SeleniumLicense selenium) {
-        this.selenium = selenium;
-    }
-
-    public XCTestLicense getXcTest() {
-        return xcTest;
-    }
-
-    public void setXcTest(XCTestLicense xcTest) {
-        this.xcTest = xcTest;
-    }
-
-    public XCUITestLicense getXcuiTest() {
-        return xcuiTest;
-    }
-
-    public void setXcuiTest(XCUITestLicense xcuiTest) {
-        this.xcuiTest = xcuiTest;
-    }
-
     public BuildLicense getBuild() {
         return build;
     }
@@ -284,14 +207,6 @@ public class APILicense extends APIEntity {
 
     public void setUserEmail(String userEmail) {
         this.userEmail = userEmail;
-    }
-
-    public boolean isAutoRenew() {
-        return autoRenew;
-    }
-
-    public void setAutoRenew(boolean autoRenew) {
-        this.autoRenew = autoRenew;
     }
 
     public Long getUserId() {
@@ -335,9 +250,9 @@ public class APILicense extends APIEntity {
     }
 
     public String generateSignContent() {
-        return String.format("%s:%s:%s%s%s%s", getTextValue(privateInstance), getUserEmail(), getAndroid()
-                        .generateSignContent(), getIos().generateSignContent(),
-                getRecorder().generateSignContent(), getServer().generateSignContent());
+        return StringUtils.joinWith(":", getTextValue(privateInstance), userEmail,
+                StringUtils.join(android.generateSignContent(), ios.generateSignContent(),
+                        recorder.generateSignContent(), server.generateSignContent()));
     }
 
     public static class GlobalLicense {
@@ -468,10 +383,8 @@ public class APILicense extends APIEntity {
 
         @Override
         public String generateSignContent() {
-            return String
-                    .format("%s%s%s%s%s", getTextValue(enabled), getTextValue(projectLimit),
-                            getTextValue(deviceLimit), cts
-                                    .generateSignContent(), uiAutomator.generateSignContent());
+            return StringUtils.join(getTextValue(enabled), getTextValue(projectLimit),
+                    getTextValue(deviceLimit), cts.generateSignContent(), uiAutomator.generateSignContent());
         }
 
         public static class CTSLicense extends FeatureLicense {
@@ -532,7 +445,7 @@ public class APILicense extends APIEntity {
 
         @Override
         public String generateSignContent() {
-            return String.format("%s%s", getTextValue(enabled), getTextValue(limit));
+            return StringUtils.join(getTextValue(enabled), getTextValue(limit));
         }
 
     }
@@ -578,8 +491,7 @@ public class APILicense extends APIEntity {
 
         @Override
         public String generateSignContent() {
-            return String
-                    .format("%s%s%s", getTextValue(enabled), getTextValue(projectLimit), getTextValue(deviceLimit));
+            return StringUtils.join(getTextValue(enabled), getTextValue(projectLimit), getTextValue(deviceLimit));
         }
 
     }
@@ -625,8 +537,7 @@ public class APILicense extends APIEntity {
 
         @Override
         public String generateSignContent() {
-            return String
-                    .format("%s%s%s", getTextValue(enabled), getTextValue(projectLimit), getTextValue(deviceLimit));
+            return StringUtils.join(getTextValue(enabled), getTextValue(projectLimit), getTextValue(deviceLimit));
         }
 
     }
@@ -657,7 +568,7 @@ public class APILicense extends APIEntity {
 
         @Override
         public String generateSignContent() {
-            return String.format("%s%s", getTextValue(enabled), getTextValue(limit));
+            return StringUtils.join(getTextValue(enabled), getTextValue(limit));
         }
 
     }
@@ -695,73 +606,8 @@ public class APILicense extends APIEntity {
 
         @Override
         public String generateSignContent() {
-            return String
-                    .format("%s%s%s", getTextValue(enabled), getTextValue(androidEnabled), getTextValue(iosEnabled));
+            return StringUtils.join(getTextValue(enabled), getTextValue(androidEnabled), getTextValue(iosEnabled));
         }
-    }
-
-    public static class CalabashLicense extends FeatureLicense {
-
-        public CalabashLicense() {
-        }
-
-        public CalabashLicense(boolean enabled) {
-            super(enabled);
-        }
-
-        @Override
-        public String generateSignContent() {
-            return getTextValue(enabled);
-        }
-
-    }
-
-    public static class RemoteControlLicense extends FeatureLicense {
-
-        public RemoteControlLicense() {
-        }
-
-        public RemoteControlLicense(boolean enabled) {
-            super(enabled);
-        }
-
-        @Override
-        public String generateSignContent() {
-            return getTextValue(enabled);
-        }
-
-    }
-
-    public static class AppiumLicense extends FeatureLicense {
-
-        public AppiumLicense() {
-        }
-
-        public AppiumLicense(boolean enabled) {
-            super(enabled);
-        }
-
-        @Override
-        public String generateSignContent() {
-            return getTextValue(enabled);
-        }
-
-    }
-
-    public static class SeleniumLicense extends FeatureLicense {
-
-        public SeleniumLicense() {
-        }
-
-        public SeleniumLicense(boolean enabled) {
-            super(enabled);
-        }
-
-        @Override
-        public String generateSignContent() {
-            return getTextValue(enabled);
-        }
-
     }
 
     public static class InspectorLicense extends FeatureLicense {
@@ -778,37 +624,4 @@ public class APILicense extends APIEntity {
             return getTextValue(enabled);
         }
     }
-
-    public static class XCTestLicense extends FeatureLicense {
-
-        public XCTestLicense() {
-        }
-
-        public XCTestLicense(boolean enabled) {
-            super(enabled);
-        }
-
-        @Override
-        public String generateSignContent() {
-            return getTextValue(enabled);
-        }
-
-    }
-
-    public static class XCUITestLicense extends FeatureLicense {
-
-        public XCUITestLicense() {
-        }
-
-        public XCUITestLicense(boolean enabled) {
-            super(enabled);
-        }
-
-        @Override
-        public String generateSignContent() {
-            return getTextValue(enabled);
-        }
-
-    }
-
 }

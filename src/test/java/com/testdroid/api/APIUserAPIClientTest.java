@@ -41,25 +41,25 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
 
     @ParameterizedTest
     @ArgumentsSource(APIClientProvider.class)
-    void getDevicesTest(AbstractAPIClient apiKeyClient) throws APIException {
-        APIList<APIDevice> allDevices = apiKeyClient.getDevices(new Context<>(APIDevice.class)).getEntity();
+    void getDevicesTest(APIClient apiClient) throws APIException {
+        APIList<APIDevice> allDevices = apiClient.getDevices(new Context<>(APIDevice.class)).getEntity();
         assertThat(allDevices.isEmpty(), is(FALSE));
 
-        APIList<APIDevice> androidDevices = apiKeyClient.getDevices(new Context<>(APIDevice.class)
+        APIList<APIDevice> androidDevices = apiClient.getDevices(new Context<>(APIDevice.class)
                 .addFilter(new StringFilterEntry(OS_TYPE, EQ, ANDROID.name()))).getEntity();
         assertThat(androidDevices.isEmpty(), is(FALSE));
         assertThat(androidDevices.getData().stream().allMatch(d -> d.getOsType().equals(ANDROID)), is(TRUE));
         assertThat(androidDevices.getTotal(), is(lessThanOrEqualTo(allDevices.getTotal())));
 
-        APIList<APIDevice> samsungDevices = apiKeyClient.getDevices(new Context<>(APIDevice.class)
+        APIList<APIDevice> samsungDevices = apiClient.getDevices(new Context<>(APIDevice.class)
                 .addFilter(new StringFilterEntry(DISPLAY_NAME, EQ, "%Samsung%"))).getEntity();
         assertThat(samsungDevices.getTotal(), is(lessThanOrEqualTo(androidDevices.getTotal())));
     }
 
     @ParameterizedTest
     @ArgumentsSource(APIClientProvider.class)
-    void getLabelGroups(AbstractAPIClient apiKeyClient) throws APIException {
-        APIList<APILabelGroup> labelGroups = apiKeyClient.getLabelGroups(new Context<>(APILabelGroup.class)
+    void getLabelGroups(APIClient apiClient) throws APIException {
+        APIList<APILabelGroup> labelGroups = apiClient.getLabelGroups(new Context<>(APILabelGroup.class)
                 .addFilter(new StringFilterEntry(DISPLAY_NAME, EQ, "Device groups"))).getEntity();
         assertThat(labelGroups.getTotal(), is(1));
         APILabelGroup deviceGroupLabelGroup = labelGroups.getData().stream().findFirst().get();
@@ -74,15 +74,15 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
 
     @ParameterizedTest
     @ArgumentsSource(APIClientProvider.class)
-    void uploadFileTest(AbstractAPIClient apiKeyClient) throws APIException {
-        APIUserFile apiUserFile = apiKeyClient.me()
+    void uploadFileTest(APIClient apiClient) throws APIException {
+        APIUserFile apiUserFile = apiClient.me()
                 .uploadFile(new File(getClass().getResource(APP_PATH).getFile()));
         assertThat(apiUserFile.getName(), is("BitbarSampleApp.apk"));
     }
 
     @ParameterizedTest
     @ArgumentsSource(APIClientProvider.class)
-    void getAvailableFrameworksTest(AbstractAPIClient apiKeyClient) throws APIException {
+    void getAvailableFrameworksTest(APIClient apiClient) throws APIException {
         StringFilterEntry osTypeFilter = new StringFilterEntry(OS_TYPE, EQ, ANDROID.name());
         BooleanFilterEntry forProject = trueFilterEntry(FOR_PROJECTS);
         BooleanFilterEntry canRunFromUI = trueFilterEntry(CAN_RUN_FROM_UI);
@@ -90,7 +90,7 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
         context.addFilter(osTypeFilter);
         context.addFilter(forProject);
         context.addFilter(canRunFromUI);
-        APIList<APIFramework> availableFrameworks = apiKeyClient.me().getAvailableFrameworksResource(context)
+        APIList<APIFramework> availableFrameworks = apiClient.me().getAvailableFrameworksResource(context)
                 .getEntity();
         assertThat(availableFrameworks.getData().stream().allMatch(f -> f.getForProjects() && f.getCanRunFromUI() && f
                 .getOsType() == ANDROID), is(TRUE));
@@ -98,11 +98,11 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
 
     @ParameterizedTest
     @ArgumentsSource(APIClientProvider.class)
-    void startTestRunTest(AbstractAPIClient apiKeyClient) throws APIException {
-        APIUser me = apiKeyClient.me();
+    void startTestRunTest(APIClient apiClient) throws APIException {
+        APIUser me = apiClient.me();
         APITestRunConfig config = new APITestRunConfig();
         config.setProjectName(generateUnique("testProject"));
-        APIFramework defaultApiFramework = getApiFramework(apiKeyClient, "DEFAULT");
+        APIFramework defaultApiFramework = getApiFramework(apiClient, "DEFAULT");
         config.setOsType(defaultApiFramework.getOsType());
         config.setFrameworkId(defaultApiFramework.getId());
         Long apkFileId = me.uploadFile(new File(APIKeyClient.class.getResource(APP_PATH).getFile())).getId();
@@ -118,11 +118,11 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
 
     @ParameterizedTest
     @ArgumentsSource(APIClientProvider.class)
-    void addTagTest(AbstractAPIClient apiKeyClient) throws APIException {
-        APIUser me = apiKeyClient.me();
+    void addTagTest(APIClient apiClient) throws APIException {
+        APIUser me = apiClient.me();
         APITestRunConfig config = new APITestRunConfig();
         config.setProjectName(generateUnique("testProject"));
-        APIFramework defaultApiFramework = getApiFramework(apiKeyClient, "DEFAULT");
+        APIFramework defaultApiFramework = getApiFramework(apiClient, "DEFAULT");
         config.setOsType(defaultApiFramework.getOsType());
         config.setFrameworkId(defaultApiFramework.getId());
         Long apkFileId = me.uploadFile(new File(APIKeyClient.class.getResource(APP_PATH).getFile())).getId();
@@ -147,11 +147,11 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
 
     @ParameterizedTest
     @ArgumentsSource(APIClientProvider.class)
-    void requestScreenshotsZip(AbstractAPIClient apiKeyClient) throws APIException, IOException {
-        APIUser me = apiKeyClient.me();
+    void requestScreenshotsZip(APIClient apiClient) throws APIException, IOException {
+        APIUser me = apiClient.me();
         APITestRunConfig config = new APITestRunConfig();
         config.setProjectName(generateUnique("testProject"));
-        APIFramework defaultApiFramework = getApiFramework(apiKeyClient, "DEFAULT");
+        APIFramework defaultApiFramework = getApiFramework(apiClient, "DEFAULT");
         config.setOsType(defaultApiFramework.getOsType());
         config.setFrameworkId(defaultApiFramework.getId());
         Long apkFileId = me.uploadFile(new File(APIKeyClient.class.getResource(APP_PATH).getFile())).getId();

@@ -2,7 +2,6 @@ package com.testdroid.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
-import com.testdroid.api.APIException;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
@@ -67,7 +66,7 @@ public class APITestRunConfig extends APIEntity implements Serializable {
 
     private Long deviceGroupId;
 
-    @Deprecated
+    @Deprecated // use deviceGroupId
     private Long usedDeviceGroupId;
 
     private String usedDeviceGroupName;
@@ -112,41 +111,14 @@ public class APITestRunConfig extends APIEntity implements Serializable {
 
     private boolean loadedPrevious;
 
+    private boolean useSamples;
+
     private APIClientSideTestConfig clientSideTestConfig;
 
     @JsonIgnore
     private List<Long> computedDevices;
 
     public APITestRunConfig() {
-    }
-
-    public APITestRunConfig(
-            Long id, Scheduler scheduler, Boolean appCrawlerRun, String screenshotDir, LimitationType limitationType,
-            String limitationValue, String withAnnotation, String withoutAnnotation, String applicationUsername,
-            String applicationPassword, Long deviceGroupId, String usedDeviceGroupName, Long creditsPrice,
-            String deviceLanguageCode, String hookURL, String instrumentationRunner, Boolean videoRecordingEnabled,
-            Long timeout, String appiumBrokerAddress, Integer maxAutoRetriesCount) {
-        super(id);
-        this.scheduler = scheduler;
-        this.appCrawlerRun = appCrawlerRun;
-        this.screenshotDir = screenshotDir;
-        this.limitationType = limitationType;
-        this.limitationValue = limitationValue;
-        this.withAnnotation = withAnnotation;
-        this.withoutAnnotation = withoutAnnotation;
-        this.applicationUsername = applicationUsername;
-        this.applicationPassword = applicationPassword;
-        this.deviceGroupId = deviceGroupId;
-        this.usedDeviceGroupId = deviceGroupId;
-        this.usedDeviceGroupName = usedDeviceGroupName;
-        this.creditsPrice = creditsPrice;
-        this.deviceLanguageCode = deviceLanguageCode;
-        this.hookURL = hookURL;
-        this.instrumentationRunner = instrumentationRunner;
-        this.videoRecordingEnabled = videoRecordingEnabled;
-        this.timeout = timeout;
-        this.appiumBrokerAddress = appiumBrokerAddress;
-        this.maxAutoRetriesCount = maxAutoRetriesCount;
     }
 
     public Long getProjectId() {
@@ -471,26 +443,12 @@ public class APITestRunConfig extends APIEntity implements Serializable {
         this.computedDevices = computedDevices;
     }
 
-    public void update() throws APIException {
-        Map<String, Object> body = new HashMap<>();
-        body.put("scheduler", scheduler != null ? scheduler.name() : null);
-        body.put("appCrawlerRun", appCrawlerRun);
-        body.put("screenshotDir", screenshotDir);
-        body.put("limitationType", limitationType != null ? limitationType.name() : null);
-        body.put("limitationValue", limitationValue);
-        body.put("withAnnotation", withAnnotation);
-        body.put("withoutAnnotation", withoutAnnotation);
-        body.put("applicationUsername", applicationUsername);
-        body.put("applicationPassword", applicationPassword);
-        body.put("usedDeviceGroupId", deviceGroupId);
-        body.put("deviceLanguageCode", deviceLanguageCode);
-        body.put("hookURL", hookURL);
-        body.put("instrumentationRunner", instrumentationRunner);
-        body.put("timeout", timeout);
-        body.put("appiumBrokerAddress", appiumBrokerAddress);
-        body.put("maxAutoRetriesCount", maxAutoRetriesCount);
-        APITestRunConfig config = postResource(selfURI, body, APITestRunConfig.class);
-        clone(config);
+    public boolean isUseSamples() {
+        return useSamples;
+    }
+
+    public void setUseSamples(boolean useSamples) {
+        this.useSamples = useSamples;
     }
 
     @Override
@@ -534,5 +492,6 @@ public class APITestRunConfig extends APIEntity implements Serializable {
         this.projectName = apiTestRunConfig.projectName;
         this.statusCode = apiTestRunConfig.statusCode;
         this.resignFiles = apiTestRunConfig.resignFiles;
+        this.useSamples = apiTestRunConfig.useSamples;
     }
 }

@@ -28,17 +28,17 @@ class APIDeviceGroupClientTest extends BaseAPIClientTest {
 
     @ParameterizedTest
     @ArgumentsSource(APIClientProvider.class)
-    void createDeviceGroupTest(AbstractAPIClient apiKeyClient) throws APIException {
-        APIDeviceGroup deviceGroup = apiKeyClient.me().createDeviceGroup("testDeviceGroup", ANDROID);
+    void createDeviceGroupTest(APIClient apiClient) throws APIException {
+        APIDeviceGroup deviceGroup = apiClient.me().createDeviceGroup("testDeviceGroup", ANDROID);
         assertThat(deviceGroup.getDisplayName(), is("testDeviceGroup"));
         assertThat(deviceGroup.getOsType(), is(ANDROID));
     }
 
     @ParameterizedTest
     @ArgumentsSource(APIClientProvider.class)
-    void addDeviceTest(AbstractAPIClient apiKeyClient) throws APIException {
-        APIDeviceGroup deviceGroup = apiKeyClient.me().createDeviceGroup("iosDevicesGroup", IOS);
-        APIList<APIDevice> devicesList = apiKeyClient.getDevices(new Context<>(APIDevice.class)
+    void addDeviceTest(APIClient apiClient) throws APIException {
+        APIDeviceGroup deviceGroup = apiClient.me().createDeviceGroup("iosDevicesGroup", IOS);
+        APIList<APIDevice> devicesList = apiClient.getDevices(new Context<>(APIDevice.class)
                 .addFilter(new StringFilterEntry(OS_TYPE, EQ, IOS.name()))).getEntity();
         for (APIDevice device : devicesList.getData()) {
             deviceGroup.addDevice(device);
@@ -49,8 +49,8 @@ class APIDeviceGroupClientTest extends BaseAPIClientTest {
 
     @ParameterizedTest
     @ArgumentsSource(APIClientProvider.class)
-    void addSelectorTest(AbstractAPIClient apiKeyClient) throws APIException {
-        APIList<APILabelGroup> labelGroups = apiKeyClient.getLabelGroups(new Context<>(APILabelGroup.class)
+    void addSelectorTest(APIClient apiClient) throws APIException {
+        APIList<APILabelGroup> labelGroups = apiClient.getLabelGroups(new Context<>(APILabelGroup.class)
                 .addFilter(new StringFilterEntry(DISPLAY_NAME, EQ, "Device groups"))).getEntity();
         APILabelGroup deviceGroupLabelGroup = labelGroups.getData().stream().findFirst().get();
         APIList<APIDeviceProperty> apiDeviceProperties = deviceGroupLabelGroup.getDevicePropertiesResource(new
@@ -58,19 +58,19 @@ class APIDeviceGroupClientTest extends BaseAPIClientTest {
                 .addFilter(new StringFilterEntry(DISPLAY_NAME, EQ, "Android devices")))
                 .getEntity();
         APIDeviceProperty androidDevicesLabel = apiDeviceProperties.getData().stream().findFirst().get();
-        APIDeviceGroup dynamicAndroidDeviceGroup = apiKeyClient.me()
+        APIDeviceGroup dynamicAndroidDeviceGroup = apiClient.me()
                 .createDeviceGroup("dynamicAndroidDeviceGroup", ANDROID);
         dynamicAndroidDeviceGroup = dynamicAndroidDeviceGroup.addSelector(androidDevicesLabel);
-        APIList<APIDevice> devicesList = apiKeyClient.getDevices(new Context<>(APIDevice.class)
+        APIList<APIDevice> devicesList = apiClient.getDevices(new Context<>(APIDevice.class)
                 .addFilter(new StringFilterEntry(OS_TYPE, EQ, ANDROID.name()))).getEntity();
         assertThat(dynamicAndroidDeviceGroup.getDeviceCount(), is(Long.valueOf(devicesList.getTotal())));
     }
 
     @ParameterizedTest
     @ArgumentsSource(APIClientProvider.class)
-    void getIncludedDevicesTest(AbstractAPIClient apiKeyClient) throws APIException {
-        APIDeviceGroup deviceGroup = apiKeyClient.me().createDeviceGroup("iosDevicesGroup", IOS);
-        APIList<APIDevice> devicesList = apiKeyClient.getDevices(new Context<>(APIDevice.class)
+    void getIncludedDevicesTest(APIClient apiClient) throws APIException {
+        APIDeviceGroup deviceGroup = apiClient.me().createDeviceGroup("iosDevicesGroup", IOS);
+        APIList<APIDevice> devicesList = apiClient.getDevices(new Context<>(APIDevice.class)
                 .addFilter(new StringFilterEntry(OS_TYPE, EQ, IOS.name()))).getEntity();
         for (APIDevice device : devicesList.getData()) {
             deviceGroup.addDevice(device);

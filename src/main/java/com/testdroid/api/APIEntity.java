@@ -29,7 +29,6 @@ import java.io.InputStream;
         APIAccount.class,
         APIAccountService.class,
         APIAccountServicePayment.class,
-        APIActiveUser.class,
         APIActivity.class,
         APIAdminDevice.class,
         APIAdminDeviceModel.class,
