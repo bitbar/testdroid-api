@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -24,6 +23,7 @@ import static com.testdroid.api.model.APIDevice.OsType.ANDROID;
 import static com.testdroid.api.model.APIFileConfig.Action.INSTALL;
 import static com.testdroid.api.model.APIFileConfig.Action.RUN_TEST;
 import static com.testdroid.api.model.APITestRun.State.WAITING;
+import static com.testdroid.api.util.BitbarUtils.loadFile;
 import static com.testdroid.cloud.test.categories.TestTags.API_CLIENT;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
@@ -75,8 +75,7 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
     @ParameterizedTest
     @ArgumentsSource(APIClientProvider.class)
     void uploadFileTest(APIClient apiClient) throws APIException {
-        APIUserFile apiUserFile = apiClient.me()
-                .uploadFile(new File(getClass().getResource(APP_PATH).getFile()));
+        APIUserFile apiUserFile = apiClient.me().uploadFile(loadFile(APP_PATH));
         assertThat(apiUserFile.getName(), is("BitbarSampleApp.apk"));
     }
 
@@ -105,9 +104,9 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
         APIFramework defaultApiFramework = getApiFramework(apiClient, "DEFAULT");
         config.setOsType(defaultApiFramework.getOsType());
         config.setFrameworkId(defaultApiFramework.getId());
-        Long apkFileId = me.uploadFile(new File(APIKeyClient.class.getResource(APP_PATH).getFile())).getId();
+        Long apkFileId = me.uploadFile(loadFile(APP_PATH)).getId();
         APIFileConfig apkFileConfig = new APIFileConfig(apkFileId, INSTALL);
-        Long testFileId = me.uploadFile(new File(APIKeyClient.class.getResource(TEST_PATH).getFile())).getId();
+        Long testFileId = me.uploadFile(loadFile(TEST_PATH)).getId();
         APIFileConfig testFileConfig = new APIFileConfig(testFileId, RUN_TEST);
         config.setFiles(Arrays.asList(apkFileConfig, testFileConfig));
         me.validateTestRunConfig(config);
@@ -125,9 +124,9 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
         APIFramework defaultApiFramework = getApiFramework(apiClient, "DEFAULT");
         config.setOsType(defaultApiFramework.getOsType());
         config.setFrameworkId(defaultApiFramework.getId());
-        Long apkFileId = me.uploadFile(new File(APIKeyClient.class.getResource(APP_PATH).getFile())).getId();
+        Long apkFileId = me.uploadFile(loadFile(APP_PATH)).getId();
         APIFileConfig apkFileConfig = new APIFileConfig(apkFileId, INSTALL);
-        Long testFileId = me.uploadFile(new File(APIKeyClient.class.getResource(TEST_PATH).getFile())).getId();
+        Long testFileId = me.uploadFile(loadFile(TEST_PATH)).getId();
         APIFileConfig testFileConfig = new APIFileConfig(testFileId, RUN_TEST);
         config.setFiles(Arrays.asList(apkFileConfig, testFileConfig));
         me.validateTestRunConfig(config);
@@ -154,9 +153,9 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
         APIFramework defaultApiFramework = getApiFramework(apiClient, "DEFAULT");
         config.setOsType(defaultApiFramework.getOsType());
         config.setFrameworkId(defaultApiFramework.getId());
-        Long apkFileId = me.uploadFile(new File(APIKeyClient.class.getResource(APP_PATH).getFile())).getId();
+        Long apkFileId = me.uploadFile(loadFile(APP_PATH)).getId();
         APIFileConfig apkFileConfig = new APIFileConfig(apkFileId, INSTALL);
-        Long testFileId = me.uploadFile(new File(APIKeyClient.class.getResource(TEST_PATH).getFile())).getId();
+        Long testFileId = me.uploadFile(loadFile(TEST_PATH)).getId();
         APIFileConfig testFileConfig = new APIFileConfig(testFileId, RUN_TEST);
         config.setFiles(Arrays.asList(apkFileConfig, testFileConfig));
         me.validateTestRunConfig(config);

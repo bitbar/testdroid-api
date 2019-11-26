@@ -30,6 +30,7 @@ public class APIAdminError extends APIEntity {
         TEST_RUN_WARNED,
         TEST_RUN_FAILED,
         RESULTS_PROCESSING,
+        RESULTS_PREPARING,
         INVALID_TEST_SESSION_FILE,
         LOCK_TIMEOUT,
         LOCK_EXPIRED,
