@@ -17,7 +17,7 @@ public enum Unit {
     RUN(null),
     PROJECT(null);
 
-    private ChronoUnit chronoUnit;
+    private final ChronoUnit chronoUnit;
 
     Unit(ChronoUnit chronoUnit){
         this.chronoUnit = chronoUnit;

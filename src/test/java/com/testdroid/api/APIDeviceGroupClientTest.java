@@ -1,7 +1,7 @@
 package com.testdroid.api;
 
 import com.testdroid.api.dto.Context;
-import com.testdroid.api.filter.StringFilterEntry;
+import com.testdroid.api.filter.FilterEntry;
 import com.testdroid.api.model.APIDevice;
 import com.testdroid.api.model.APIDeviceGroup;
 import com.testdroid.api.model.APIDeviceProperty;
@@ -39,7 +39,7 @@ class APIDeviceGroupClientTest extends BaseAPIClientTest {
     void addDeviceTest(APIClient apiClient) throws APIException {
         APIDeviceGroup deviceGroup = apiClient.me().createDeviceGroup("iosDevicesGroup", IOS);
         APIList<APIDevice> devicesList = apiClient.getDevices(new Context<>(APIDevice.class)
-                .addFilter(new StringFilterEntry(OS_TYPE, EQ, IOS.name()))).getEntity();
+                .addFilter(new FilterEntry(OS_TYPE, EQ, IOS.name()))).getEntity();
         for (APIDevice device : devicesList.getData()) {
             deviceGroup.addDevice(device);
         }
@@ -51,18 +51,18 @@ class APIDeviceGroupClientTest extends BaseAPIClientTest {
     @ArgumentsSource(APIClientProvider.class)
     void addSelectorTest(APIClient apiClient) throws APIException {
         APIList<APILabelGroup> labelGroups = apiClient.getLabelGroups(new Context<>(APILabelGroup.class)
-                .addFilter(new StringFilterEntry(DISPLAY_NAME, EQ, "Device groups"))).getEntity();
+                .addFilter(new FilterEntry(DISPLAY_NAME, EQ, "Device groups"))).getEntity();
         APILabelGroup deviceGroupLabelGroup = labelGroups.getData().stream().findFirst().get();
         APIList<APIDeviceProperty> apiDeviceProperties = deviceGroupLabelGroup.getDevicePropertiesResource(new
                 Context<>(APIDeviceProperty.class)
-                .addFilter(new StringFilterEntry(DISPLAY_NAME, EQ, "Android devices")))
+                .addFilter(new FilterEntry(DISPLAY_NAME, EQ, "Android devices")))
                 .getEntity();
         APIDeviceProperty androidDevicesLabel = apiDeviceProperties.getData().stream().findFirst().get();
         APIDeviceGroup dynamicAndroidDeviceGroup = apiClient.me()
                 .createDeviceGroup("dynamicAndroidDeviceGroup", ANDROID);
         dynamicAndroidDeviceGroup = dynamicAndroidDeviceGroup.addSelector(androidDevicesLabel);
         APIList<APIDevice> devicesList = apiClient.getDevices(new Context<>(APIDevice.class)
-                .addFilter(new StringFilterEntry(OS_TYPE, EQ, ANDROID.name()))).getEntity();
+                .addFilter(new FilterEntry(OS_TYPE, EQ, ANDROID.name()))).getEntity();
         assertThat(dynamicAndroidDeviceGroup.getDeviceCount(), is(Long.valueOf(devicesList.getTotal())));
     }
 
@@ -71,14 +71,14 @@ class APIDeviceGroupClientTest extends BaseAPIClientTest {
     void getIncludedDevicesTest(APIClient apiClient) throws APIException {
         APIDeviceGroup deviceGroup = apiClient.me().createDeviceGroup("iosDevicesGroup", IOS);
         APIList<APIDevice> devicesList = apiClient.getDevices(new Context<>(APIDevice.class)
-                .addFilter(new StringFilterEntry(OS_TYPE, EQ, IOS.name()))).getEntity();
+                .addFilter(new FilterEntry(OS_TYPE, EQ, IOS.name()))).getEntity();
         for (APIDevice device : devicesList.getData()) {
             deviceGroup.addDevice(device);
         }
         deviceGroup.refresh();
         APIList<APIDevice> allDevices = deviceGroup.getIncludedDevicesResource().getEntity();
         APIList<APIDevice> samsungDevices = deviceGroup.getIncludedDevicesResource(new Context<>(APIDevice.class)
-                .addFilter(new StringFilterEntry(DISPLAY_NAME, EQ, "%Samsung%"))).getEntity();
+                .addFilter(new FilterEntry(DISPLAY_NAME, EQ, "%Samsung%"))).getEntity();
 
         assertThat(allDevices.getTotal(), is(greaterThanOrEqualTo(samsungDevices.getTotal())));
     }

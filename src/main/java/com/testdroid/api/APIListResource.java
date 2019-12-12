@@ -46,10 +46,7 @@ public class APIListResource<T extends APIEntity> {
         return getEntity().getTotal();
     }
 
-    /**
-     * Returns <code>true</code> if next page of items is available.
-     */
-    public boolean isNextAvailable() {
+    private boolean isNextAvailable() {
         try {
             APIList<T> list = getEntity();
             return list.getOffset() + list.getLimit() < list.getTotal();
@@ -73,10 +70,7 @@ public class APIListResource<T extends APIEntity> {
         return new APIListResource<>(client, resourceURI, context.setOffset(list.getOffset() + list.getLimit()));
     }
 
-    /**
-     * Returns <code>true</code> if previous page of items is available.
-     */
-    public boolean isPreviousAvailable() {
+    private boolean isPreviousAvailable() {
         try {
             return getEntity().getOffset() > 0;
         } catch (APIException ex) {

@@ -1,8 +1,7 @@
 package com.testdroid.api;
 
 import com.testdroid.api.dto.Context;
-import com.testdroid.api.filter.BooleanFilterEntry;
-import com.testdroid.api.filter.StringFilterEntry;
+import com.testdroid.api.filter.FilterEntry;
 import com.testdroid.api.model.APIFramework;
 import com.testdroid.api.model.APIUser;
 import org.apache.http.HttpHost;
@@ -19,7 +18,7 @@ import java.util.stream.Stream;
 
 import static com.testdroid.api.dto.MappingKey.*;
 import static com.testdroid.api.dto.Operand.EQ;
-import static com.testdroid.api.filter.BooleanFilterEntry.trueFilterEntry;
+import static com.testdroid.api.filter.FilterEntry.trueFilterEntry;
 import static com.testdroid.api.model.APIDevice.OsType.ANDROID;
 import static java.lang.Integer.MAX_VALUE;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
@@ -89,15 +88,11 @@ abstract class BaseAPIClientTest {
     }
 
     APIFramework getApiFramework(APIClient apiClient, String frameworkName) throws APIException {
-        StringFilterEntry osTypeFilter = new StringFilterEntry(OS_TYPE, EQ, ANDROID.name());
-        BooleanFilterEntry forProject = trueFilterEntry(FOR_PROJECTS);
-        BooleanFilterEntry canRunFromUI = trueFilterEntry(CAN_RUN_FROM_UI);
-        StringFilterEntry defaultFrameworkName = new StringFilterEntry(TYPE, EQ, frameworkName);
         Context<APIFramework> context = new Context<>(APIFramework.class, 0, MAX_VALUE, EMPTY, EMPTY);
-        context.addFilter(osTypeFilter);
-        context.addFilter(forProject);
-        context.addFilter(canRunFromUI);
-        context.addFilter(defaultFrameworkName);
+        context.addFilter(new FilterEntry(OS_TYPE, EQ, ANDROID.name()));
+        context.addFilter(trueFilterEntry(FOR_PROJECTS));
+        context.addFilter(trueFilterEntry(CAN_RUN_FROM_UI));
+        context.addFilter(new FilterEntry(TYPE, EQ, frameworkName));
         return apiClient.me().getAvailableFrameworksResource(context).getEntity().get(0);
     }
 

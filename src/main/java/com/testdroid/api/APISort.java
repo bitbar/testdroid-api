@@ -22,7 +22,7 @@ public class APISort {
             this.urlValue = urlValue;
         }
 
-        public static Type fromURLValue(String urlValue) {
+        static Type fromURLValue(String urlValue) {
             for (Type t : Type.values()) {
                 if (t.getURLValue().equals(urlValue)) {
                     return t;

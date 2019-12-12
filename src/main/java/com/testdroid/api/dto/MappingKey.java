@@ -10,6 +10,7 @@ public class MappingKey {
     public static final String ACCOUNT_ID = "accountId";
     public static final String ACCOUNT_ROLE_ID = "accountRoleId";
     public static final String ACCOUNT_SERVICE_IDS = "accountServiceIds";
+    public static final String ACTIVE = "active";
     public static final String ACTIVATED = "activated";
     public static final String ACTIVATED_BY_NAME = "activatedByName";
     public static final String ACTIVATE_TIME = "activateTime";
@@ -80,6 +81,7 @@ public class MappingKey {
     public static final String DEACTIVATED_BY_NAME = "deactivatedByName";
     public static final String DEACTIVATE_REASON = "deactivateReason";
     public static final String DELETE_TIME = "deleteTime";
+    public static final String DEPRECATED_RESOURCE = "deprecatedResource";
     public static final String DESCRIPTION = "description";
     public static final String DESKTOP_DEVICE_LIMIT = "desktopDeviceLimit";
     public static final String DESKTOP_ENABLED = "desktopEnabled";

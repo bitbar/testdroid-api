@@ -12,7 +12,6 @@ import java.util.Collections;
 /**
  * Created by sakari on 6/10/13.
  */
-
 public class MultipartFormDataContent extends AbstractHttpContent {
 
     private static final String NEWLINE = "\r\n";

@@ -3,6 +3,7 @@ package com.testdroid.api.model;
 import com.testdroid.api.APIEntity;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.List;
 
 /**
  * @author Michał Szpruta <michal.szpruta@bitbar.com>
@@ -10,14 +11,15 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class APITestRunDataAvailability extends APIEntity {
 
-    private APIDeviceSessionDataAvailability[] deviceRunDataAvailabilities;
+    private List<APIDeviceSessionDataAvailability> deviceRunDataAvailabilities;
 
     private Long testRunId;
 
     public APITestRunDataAvailability() {
     }
 
-    public APITestRunDataAvailability(Long testRunId, APIDeviceSessionDataAvailability[] deviceRunDataAvailabilities) {
+    public APITestRunDataAvailability(Long testRunId,
+            List<APIDeviceSessionDataAvailability> deviceRunDataAvailabilities) {
         this.testRunId = testRunId;
         this.deviceRunDataAvailabilities = deviceRunDataAvailabilities;
     }
@@ -30,11 +32,11 @@ public class APITestRunDataAvailability extends APIEntity {
         this.testRunId = testRunId;
     }
 
-    public APIDeviceSessionDataAvailability[] getDeviceRunDataAvailabilities() {
+    public List<APIDeviceSessionDataAvailability> getDeviceRunDataAvailabilities() {
         return deviceRunDataAvailabilities;
     }
 
-    public void setDeviceRunDataAvailabilities(APIDeviceSessionDataAvailability[] deviceRunDataAvailabilities) {
+    public void setDeviceRunDataAvailabilities(List<APIDeviceSessionDataAvailability> deviceRunDataAvailabilities) {
         this.deviceRunDataAvailabilities = deviceRunDataAvailabilities;
     }
 

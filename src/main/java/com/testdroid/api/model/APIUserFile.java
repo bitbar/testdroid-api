@@ -13,6 +13,7 @@ import java.io.Serializable;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Michał Szpruta <michal.szpruta@bitbar.com>
@@ -25,7 +26,7 @@ public class APIUserFile extends APIEntity implements Serializable {
 
     private Date createTime;
 
-    private APIUserFileProperty[] fileProperties;
+    private List<APIUserFileProperty> fileProperties;
 
     private State state;
 
@@ -127,11 +128,11 @@ public class APIUserFile extends APIEntity implements Serializable {
         this.size = size;
     }
 
-    public APIUserFileProperty[] getFileProperties() {
+    public List<APIUserFileProperty> getFileProperties() {
         return fileProperties;
     }
 
-    public void setFileProperties(APIUserFileProperty[] fileProperties) {
+    public void setFileProperties(List<APIUserFileProperty> fileProperties) {
         this.fileProperties = fileProperties;
     }
 

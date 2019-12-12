@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
@@ -96,7 +97,7 @@ public class APITestRun extends APIEntity {
 
     private Integer deviceCount;
 
-    private APITag[] tags;
+    private List<APITag> tags;
 
     private boolean billable;
 
@@ -419,11 +420,11 @@ public class APITestRun extends APIEntity {
         this.deviceCount = deviceCount;
     }
 
-    public APITag[] getTags() {
+    public List<APITag> getTags() {
         return tags;
     }
 
-    public void setTags(APITag[] tags) {
+    public void setTags(List<APITag> tags) {
         this.tags = tags;
     }
 

@@ -65,7 +65,7 @@ public enum APIPaymentMethod {
         return Collections.unmodifiableMap(result);
     }
 
-    private Map<List<Boolean>, List<PlanOperation>>  operationSchema;
+    private final Map<List<Boolean>, List<PlanOperation>> operationSchema;
 
     APIPaymentMethod(Map<List<Boolean>, List<PlanOperation>> operationSchema) {
         this.operationSchema = operationSchema;
