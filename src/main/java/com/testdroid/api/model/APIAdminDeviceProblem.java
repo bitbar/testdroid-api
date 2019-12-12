@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.List;
 
 /**
  * @author Michał Szpruta <michal.szpruta@bitbar.com>
@@ -23,14 +24,14 @@ public class APIAdminDeviceProblem extends APIEntity {
 
     private String deviceName;
 
-    private APIAdminDeviceProblemPair[] problems;
+    private List<APIAdminDeviceProblemPair> problems;
 
     public APIAdminDeviceProblem() {
     }
 
     public APIAdminDeviceProblem(
             Long clusterId, String clusterName, Long deviceId, String deviceName, Long deviceModelId,
-            String deviceModelName, APIAdminDeviceProblemPair[] problems) {
+            String deviceModelName, List<APIAdminDeviceProblemPair> problems) {
         this.clusterId = clusterId;
         this.clusterName = clusterName;
         this.deviceId = deviceId;
@@ -88,11 +89,11 @@ public class APIAdminDeviceProblem extends APIEntity {
         this.deviceModelName = deviceModelName;
     }
 
-    public APIAdminDeviceProblemPair[] getProblems() {
+    public List<APIAdminDeviceProblemPair> getProblems() {
         return problems;
     }
 
-    public void setProblems(APIAdminDeviceProblemPair[] problems) {
+    public void setProblems(List<APIAdminDeviceProblemPair> problems) {
         this.problems = problems;
     }
 

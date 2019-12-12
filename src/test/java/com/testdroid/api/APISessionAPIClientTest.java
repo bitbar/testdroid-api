@@ -1,8 +1,7 @@
 package com.testdroid.api;
 
 import com.testdroid.api.dto.Context;
-import com.testdroid.api.filter.BooleanFilterEntry;
-import com.testdroid.api.filter.StringFilterEntry;
+import com.testdroid.api.filter.FilterEntry;
 import com.testdroid.api.model.APIDevice;
 import com.testdroid.api.model.APIDeviceSession;
 import com.testdroid.api.model.APIDeviceSessionConfig;
@@ -16,6 +15,8 @@ import java.util.List;
 
 import static com.testdroid.api.dto.MappingKey.*;
 import static com.testdroid.api.dto.Operand.EQ;
+import static com.testdroid.api.filter.FilterEntry.falseFilterEntry;
+import static com.testdroid.api.filter.FilterEntry.trueFilterEntry;
 import static com.testdroid.api.model.APIDevice.OsType.ANDROID;
 import static com.testdroid.api.model.APIDeviceSession.State.WAITING;
 import static com.testdroid.api.model.APIDeviceSession.Type.REMOTE;
@@ -47,10 +48,10 @@ class APISessionAPIClientTest extends BaseAPIClientTest {
 
     private List<APIDevice> getFreeTrialAndroidDevices(APIClient apiClient) throws APIException {
         Context<APIDevice> ctx = new Context<>(APIDevice.class);
-        ctx.getFilters().add(new StringFilterEntry(OS_TYPE, EQ, ANDROID.getDisplayName()));
-        ctx.getFilters().add(BooleanFilterEntry.trueFilterEntry(ONLINE));
-        ctx.getFilters().add(BooleanFilterEntry.falseFilterEntry(LOCKED));
-        ctx.getFilters().add(BooleanFilterEntry.trueFilterEntry(ENABLED));
+        ctx.getFilters().add(new FilterEntry(OS_TYPE, EQ, ANDROID.getDisplayName()));
+        ctx.getFilters().add(trueFilterEntry(ONLINE));
+        ctx.getFilters().add(falseFilterEntry(LOCKED));
+        ctx.getFilters().add(trueFilterEntry(ENABLED));
         apiClient.findDevicePropertyInLabelGroup("device-groups", "trial-devices").ifPresent(val -> ctx.setExtraParams(
                 new HashSetValuedHashMap<>(singletonMap(LABEL_IDS_ARR, val.getId()))
         ));

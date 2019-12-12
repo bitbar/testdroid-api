@@ -87,11 +87,7 @@ public class APIList<T extends APIEntity> extends APIEntity {
         this.next = next;
     }
 
-    /**
-     * Returns <code>true</code> if next page of items is available.
-     */
-    @JsonIgnore
-    public boolean isNextAvailable() {
+    private boolean isNextAvailable() {
         return offset + limit < total && !data.isEmpty();
     }
 
@@ -103,11 +99,7 @@ public class APIList<T extends APIEntity> extends APIEntity {
         return new APIListResource<>(client, selfURI, context.setOffset(offset + limit)).getEntity();
     }
 
-    /**
-     * Returns <code>true</code> if previous page of items is available.
-     */
-    @JsonIgnore
-    public boolean isPreviousAvailable() {
+    private boolean isPreviousAvailable() {
         return offset > 0;
     }
 

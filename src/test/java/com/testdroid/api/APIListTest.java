@@ -1,9 +1,9 @@
 package com.testdroid.api;
 
 import com.testdroid.api.dto.Context;
-import com.testdroid.api.filter.ListStringFilterEntry;
-import com.testdroid.api.filter.NumberFilterEntry;
+import com.testdroid.api.filter.FilterEntry;
 import com.testdroid.api.model.APIUser;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -28,7 +28,15 @@ class APIListTest {
 
     private static final String URL = "https://cloud.bitbar.com/api/v2/users";
 
+    private static final String FORMAT = "%s?offset=%s&limit=%s&search=%s&sort=%s&filter=%s";
+
+    private static final String SEARCH = RandomStringUtils.randomAlphanumeric(30);
+
     private static final APISort SORT_EMPTY = APISort.deserialize(EMPTY);
+
+    private static final String SORT_RAW = "state_d";
+
+    private static final APISort SORT = APISort.deserialize(SORT_RAW);
 
     private static Collection<Object[]> data() {
         Object[][] data = new Object[][]{
@@ -48,60 +56,58 @@ class APIListTest {
                         20,
                         new Context<>(APIUser.class).setSort(SORT_EMPTY).setSearch(EMPTY).setLimit(10),
                         null,
-                        String.format("%s?offset=10&limit=10&search=&sort=&filter=", URL)
+                        String.format(FORMAT, URL, 10, 10, EMPTY, EMPTY, EMPTY)
                 },
                 {
                         100,
                         new Context<>(APIUser.class).setSort(SORT_EMPTY).setSearch(EMPTY),
                         null,
-                        String.format("%s?offset=20&limit=20&search=&sort=&filter=", URL)
+                        String.format(FORMAT, URL, 20, 20, EMPTY, EMPTY, EMPTY)
                 },
                 {
                         100,
-                        new Context<>(APIUser.class).setSort(SORT_EMPTY).setSearch("text"),
+                        new Context<>(APIUser.class).setSort(SORT_EMPTY).setSearch(SEARCH),
                         null,
-                        String.format("%s?offset=20&limit=20&search=text&sort=&filter=", URL)
+                        String.format(FORMAT, URL, 20, 20, SEARCH, EMPTY, EMPTY)
                 },
                 {
                         100,
-                        new Context<>(APIUser.class).setOffset(25).setSort(SORT_EMPTY).setSearch("text"),
-                        String.format("%s?offset=5&limit=20&search=text&sort=&filter=", URL),
-                        String.format("%s?offset=45&limit=20&search=text&sort=&filter=", URL)
+                        new Context<>(APIUser.class).setOffset(25).setSort(SORT_EMPTY).setSearch(SEARCH),
+                        String.format(FORMAT, URL, 5, 20, SEARCH, EMPTY, EMPTY),
+                        String.format(FORMAT, URL, 45, 20, SEARCH, EMPTY, EMPTY)
                 },
                 {
                         100,
-                        new Context<>(APIUser.class).setOffset(25).setLimit(5).setSort(SORT_EMPTY).setSearch("text"),
-                        String.format("%s?offset=20&limit=5&search=text&sort=&filter=", URL),
-                        String.format("%s?offset=30&limit=5&search=text&sort=&filter=", URL)
+                        new Context<>(APIUser.class).setOffset(25).setLimit(5).setSort(SORT_EMPTY).setSearch(SEARCH),
+                        String.format(FORMAT, URL, 20, 5, SEARCH, EMPTY, EMPTY),
+                        String.format(FORMAT, URL, 30, 5, SEARCH, EMPTY, EMPTY)
                 },
                 {
                         100,
-                        new Context<>(APIUser.class).setOffset(25).setLimit(5).setSort(APISort.deserialize("email_a"))
-                                .setSearch("text"),
-                        String.format("%s?offset=20&limit=5&search=text&sort=email_a&filter=", URL),
-                        String.format("%s?offset=30&limit=5&search=text&sort=email_a&filter=", URL)
+                        new Context<>(APIUser.class).setOffset(25).setLimit(5).setSort(SORT)
+                                .setSearch(SEARCH),
+                        String.format(FORMAT, URL, 20, 5, SEARCH, SORT_RAW, EMPTY),
+                        String.format(FORMAT, URL, 30, 5, SEARCH, SORT_RAW, EMPTY)
                 },
                 {
                         100,
-                        new Context<>(APIUser.class).setOffset(25).setLimit(5).setSort(APISort.deserialize("state_d"))
-                                .setSearch("text"),
-                        String.format("%s?offset=20&limit=5&search=text&sort=state_d&filter=", URL),
-                        String.format("%s?offset=30&limit=5&search=text&sort=state_d&filter=", URL)
+                        new Context<>(APIUser.class).setOffset(25).setLimit(5).setSort(SORT).setSearch(SEARCH),
+                        String.format(FORMAT, URL, 20, 5, SEARCH, SORT_RAW, EMPTY),
+                        String.format(FORMAT, URL, 30, 5, SEARCH, SORT_RAW, EMPTY)
                 },
                 {
                         100,
-                        new Context<>(APIUser.class).setOffset(25).setLimit(5).setSort(APISort.deserialize("state_d"))
-                                .setSearch("text").addFilter(new NumberFilterEntry(ID, EQ, 10)),
-                        String.format("%s?offset=20&limit=5&search=text&sort=state_d&filter=n_id_EQ_10", URL),
-                        String.format("%s?offset=30&limit=5&search=text&sort=state_d&filter=n_id_EQ_10", URL)
+                        new Context<>(APIUser.class).setOffset(25).setLimit(5).setSort(SORT).setSearch(SEARCH)
+                                .addFilter(new FilterEntry(ID, EQ, 10)),
+                        String.format(FORMAT, URL, 20, 5, SEARCH, SORT_RAW, "id_EQ_10"),
+                        String.format(FORMAT, URL, 30, 5, SEARCH, SORT_RAW, "id_EQ_10")
                 },
                 {
                         100,
-                        new Context<>(APIUser.class).setOffset(25).setLimit(5).setSort(APISort.deserialize("state_d"))
-                                .setSearch(EMPTY)
-                                .addFilter(new ListStringFilterEntry(NAME, IN, Arrays.asList("Nowak", "Skrobak"))),
-                        String.format("%s?offset=20&limit=5&search=&sort=state_d&filter=ls_name_IN_Nowak|Skrobak", URL),
-                        String.format("%s?offset=30&limit=5&search=&sort=state_d&filter=ls_name_IN_Nowak|Skrobak", URL)
+                        new Context<>(APIUser.class).setOffset(25).setLimit(5).setSort(SORT).setSearch(EMPTY)
+                                .addFilter(new FilterEntry(NAME, IN, Arrays.asList("Nowak", "Skrobak"))),
+                        String.format(FORMAT, URL, 20, 5, EMPTY, SORT_RAW, "name_IN_Nowak|Skrobak"),
+                        String.format(FORMAT, URL, 30, 5, EMPTY, SORT_RAW, "name_IN_Nowak|Skrobak")
                 },
         };
         return Arrays.asList(data);

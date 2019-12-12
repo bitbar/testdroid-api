@@ -98,7 +98,7 @@ public class APIUser extends APIEntity {
 
     private String phone;
 
-    private APIRole[] roles;
+    private List<APIRole> roles;
 
     private String state;
 
@@ -278,11 +278,11 @@ public class APIUser extends APIEntity {
         this.isMainUser = isMainUser;
     }
 
-    public APIRole[] getRoles() {
+    public List<APIRole> getRoles() {
         return roles;
     }
 
-    public void setRoles(APIRole[] roles) {
+    public void setRoles(List<APIRole> roles) {
         this.roles = roles;
     }
 

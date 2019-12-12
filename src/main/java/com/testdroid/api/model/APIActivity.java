@@ -42,12 +42,14 @@ public class APIActivity extends APIEntity {
 
     private String body;
 
+    private boolean deprecatedResource;
+
     public APIActivity() {
     }
 
     public APIActivity(
             Long id, LocalDateTime createTime, HttpMethod httpMethod, String userAgent, String parameters, String uri,
-            String body, Long userId, String userEmail) {
+            String body, Long userId, String userEmail, boolean deprecatedResource) {
         super(id);
         this.createTime = TimeConverter.toDate(createTime);
         this.httpMethod = httpMethod;
@@ -57,6 +59,7 @@ public class APIActivity extends APIEntity {
         this.body = body;
         this.userId = userId;
         this.userEmail = userEmail;
+        this.deprecatedResource = deprecatedResource;
     }
 
     public Date getCreateTime() {
@@ -123,6 +126,14 @@ public class APIActivity extends APIEntity {
         this.body = body;
     }
 
+    public boolean isDeprecatedResource() {
+        return deprecatedResource;
+    }
+
+    public void setDeprecatedResource(boolean deprecatedResource) {
+        this.deprecatedResource = deprecatedResource;
+    }
+
     @Override
     protected <T extends APIEntity> void clone(T from) {
         APIActivity apiActivity = (APIActivity) from;
@@ -135,5 +146,6 @@ public class APIActivity extends APIEntity {
         this.userId = apiActivity.userId;
         this.userEmail = apiActivity.userEmail;
         this.body = apiActivity.body;
+        this.deprecatedResource = apiActivity.deprecatedResource;
     }
 }

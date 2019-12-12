@@ -127,20 +127,21 @@ public class APIDeviceSession extends APIEntity {
 
     private Float successRatio;
 
+    private String name;
+
     public APIDeviceSession() {
     }
 
     public APIDeviceSession(
             Long id, APIDeviceSession.Type type, LocalDateTime createTime, LocalDateTime startTime,
             LocalDateTime installTime, LocalDateTime endTime, Long timeLimit, Long launchAppDuration,
-            Long deviceLogFirstTimestamp, APIDeviceSession.State state, Integer testCasePassedCount, Integer testCaseFailedCount,
-            Integer testCaseSkippedCount, Boolean billable, Long deviceModelId, String displayName,
-            Integer creditsPrice, String imagePrefix, Integer imageTop, Integer imageLeft, Integer imageWidth,
-            Integer imageHeight, Integer frameExtraWidth, APIDevice.OsType osType,
-            Boolean enabled, Long softwareVersionId, String releaseVersion, Integer apiLevel,
-            ExcludeReason excludeReason, Long deviceInstanceId, RetryState retryState, Integer autoRetriesLeftCount,
-            Long deviceTime, Long duration, Long projectId,
-            Long testRunId, Float successRatio) {
+            Long deviceLogFirstTimestamp, APIDeviceSession.State state, Integer testCasePassedCount,
+            Integer testCaseFailedCount, Integer testCaseSkippedCount, Boolean billable, Long deviceModelId,
+            String displayName, Integer creditsPrice, String imagePrefix, Integer imageTop, Integer imageLeft,
+            Integer imageWidth, Integer imageHeight, Integer frameExtraWidth, APIDevice.OsType osType, Boolean enabled,
+            Long softwareVersionId, String releaseVersion, Integer apiLevel, ExcludeReason excludeReason,
+            Long deviceInstanceId, RetryState retryState, Integer autoRetriesLeftCount, Long deviceTime, Long duration,
+            Long projectId, Long testRunId, Float successRatio, String name) {
         super(id);
         this.type = type;
         this.createTime = TimeConverter.toDate(createTime);
@@ -170,6 +171,7 @@ public class APIDeviceSession extends APIEntity {
         this.projectId = projectId;
         this.testRunId = testRunId;
         this.successRatio = successRatio;
+        this.name = name;
     }
 
     public Type getType() {
@@ -380,6 +382,14 @@ public class APIDeviceSession extends APIEntity {
         this.successRatio = successRatio;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @JsonIgnore
     public APIListResource<APIDeviceSessionStep> getDeviceSessionStepsResource() throws APIException {
         return getListResource(createUri(selfURI, "/steps"), APIDeviceSessionStep.class);
@@ -439,5 +449,6 @@ public class APIDeviceSession extends APIEntity {
         this.testRunId = apiDeviceSession.testRunId;
         this.projectId = apiDeviceSession.projectId;
         this.successRatio = apiDeviceSession.successRatio;
+        this.name = apiDeviceSession.name;
     }
 }

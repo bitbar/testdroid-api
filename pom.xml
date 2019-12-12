@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.testdroid</groupId>
     <artifactId>testdroid-api</artifactId>
-    <version>2.86</version>
+    <version>2.87</version>
     <packaging>jar</packaging>
     <name>Bitbar API v2</name>
     <url>https://github.com/bitbar/testdroid-api</url>
@@ -61,11 +61,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.22.1</version>
-                <!--Workaround for https://issues.apache.org/jira/browse/SUREFIRE-1588-->
-                <configuration>
-                    <useSystemClassLoader>false</useSystemClassLoader>
-                </configuration>
+                <version>3.0.0-M4</version>
             </plugin>
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
@@ -88,6 +84,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.6</version>
                 <configuration>
                     <gpgArguments>
                         <arg>--pinentry-mode</arg>

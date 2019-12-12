@@ -1,8 +1,7 @@
 package com.testdroid.api;
 
 import com.testdroid.api.dto.Context;
-import com.testdroid.api.filter.BooleanFilterEntry;
-import com.testdroid.api.filter.StringFilterEntry;
+import com.testdroid.api.filter.FilterEntry;
 import com.testdroid.api.model.*;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Tag;
@@ -18,7 +17,7 @@ import java.util.stream.Collectors;
 
 import static com.testdroid.api.dto.MappingKey.*;
 import static com.testdroid.api.dto.Operand.EQ;
-import static com.testdroid.api.filter.BooleanFilterEntry.trueFilterEntry;
+import static com.testdroid.api.filter.FilterEntry.trueFilterEntry;
 import static com.testdroid.api.model.APIDevice.OsType.ANDROID;
 import static com.testdroid.api.model.APIFileConfig.Action.INSTALL;
 import static com.testdroid.api.model.APIFileConfig.Action.RUN_TEST;
@@ -46,13 +45,13 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
         assertThat(allDevices.isEmpty(), is(FALSE));
 
         APIList<APIDevice> androidDevices = apiClient.getDevices(new Context<>(APIDevice.class)
-                .addFilter(new StringFilterEntry(OS_TYPE, EQ, ANDROID.name()))).getEntity();
+                .addFilter(new FilterEntry(OS_TYPE, EQ, ANDROID.name()))).getEntity();
         assertThat(androidDevices.isEmpty(), is(FALSE));
         assertThat(androidDevices.getData().stream().allMatch(d -> d.getOsType().equals(ANDROID)), is(TRUE));
         assertThat(androidDevices.getTotal(), is(lessThanOrEqualTo(allDevices.getTotal())));
 
         APIList<APIDevice> samsungDevices = apiClient.getDevices(new Context<>(APIDevice.class)
-                .addFilter(new StringFilterEntry(DISPLAY_NAME, EQ, "%Samsung%"))).getEntity();
+                .addFilter(new FilterEntry(DISPLAY_NAME, EQ, "%Samsung%"))).getEntity();
         assertThat(samsungDevices.getTotal(), is(lessThanOrEqualTo(androidDevices.getTotal())));
     }
 
@@ -60,7 +59,7 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
     @ArgumentsSource(APIClientProvider.class)
     void getLabelGroups(APIClient apiClient) throws APIException {
         APIList<APILabelGroup> labelGroups = apiClient.getLabelGroups(new Context<>(APILabelGroup.class)
-                .addFilter(new StringFilterEntry(DISPLAY_NAME, EQ, "Device groups"))).getEntity();
+                .addFilter(new FilterEntry(DISPLAY_NAME, EQ, "Device groups"))).getEntity();
         assertThat(labelGroups.getTotal(), is(1));
         APILabelGroup deviceGroupLabelGroup = labelGroups.getData().stream().findFirst().get();
         assertThat(deviceGroupLabelGroup.getDisplayName(), is("Device groups"));
@@ -82,13 +81,10 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
     @ParameterizedTest
     @ArgumentsSource(APIClientProvider.class)
     void getAvailableFrameworksTest(APIClient apiClient) throws APIException {
-        StringFilterEntry osTypeFilter = new StringFilterEntry(OS_TYPE, EQ, ANDROID.name());
-        BooleanFilterEntry forProject = trueFilterEntry(FOR_PROJECTS);
-        BooleanFilterEntry canRunFromUI = trueFilterEntry(CAN_RUN_FROM_UI);
         Context<APIFramework> context = new Context<>(APIFramework.class, 0, MAX_VALUE, EMPTY, EMPTY);
-        context.addFilter(osTypeFilter);
-        context.addFilter(forProject);
-        context.addFilter(canRunFromUI);
+        context.addFilter(new FilterEntry(OS_TYPE, EQ, ANDROID.name()));
+        context.addFilter(trueFilterEntry(FOR_PROJECTS));
+        context.addFilter(trueFilterEntry(CAN_RUN_FROM_UI));
         APIList<APIFramework> availableFrameworks = apiClient.me().getAvailableFrameworksResource(context)
                 .getEntity();
         assertThat(availableFrameworks.getData().stream().allMatch(f -> f.getForProjects() && f.getCanRunFromUI() && f

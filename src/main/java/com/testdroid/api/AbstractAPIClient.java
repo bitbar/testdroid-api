@@ -5,7 +5,7 @@ import com.google.api.client.http.*;
 import com.testdroid.api.dto.Context;
 import com.testdroid.api.dto.MappingKey;
 import com.testdroid.api.dto.Operand;
-import com.testdroid.api.filter.StringFilterEntry;
+import com.testdroid.api.filter.FilterEntry;
 import com.testdroid.api.http.MultipartFormDataContent;
 import com.testdroid.api.model.APIDevice;
 import com.testdroid.api.model.APIDeviceProperty;
@@ -303,11 +303,11 @@ public abstract class AbstractAPIClient implements APIClient {
             throws APIException {
         Optional<APIDeviceProperty> result = Optional.empty();
         Context<APILabelGroup> ctx = new Context<>(APILabelGroup.class);
-        ctx.addFilter(new StringFilterEntry(MappingKey.NAME, Operand.EQ, groupName));
+        ctx.addFilter(new FilterEntry(MappingKey.NAME, Operand.EQ, groupName));
         List<APILabelGroup> labelGroups = this.getLabelGroups(ctx).getEntity().getData();
         if (CollectionUtils.isNotEmpty(labelGroups)) {
             Context<APIDeviceProperty> lCtx = new Context<>(APIDeviceProperty.class);
-            lCtx.addFilter(new StringFilterEntry(MappingKey.NAME, Operand.EQ, labelName));
+            lCtx.addFilter(new FilterEntry(MappingKey.NAME, Operand.EQ, labelName));
             result = labelGroups.get(0).getDevicePropertiesResource(lCtx).getEntity().getData().stream().findFirst();
         }
         return result;
