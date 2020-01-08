@@ -118,6 +118,8 @@ public class APIUser extends APIEntity {
 
     private MfaStatus mfaStatus;
 
+    private String registrationIP;
+
     public APIUser() {
     }
 
@@ -152,7 +154,8 @@ public class APIUser extends APIEntity {
             String country, String city, String code, String address, String phone, String organization, String vatId,
             String timeZone, LocalDateTime createTime, LocalDateTime deleteTime, LocalDateTime lastLoginTime,
             LocalDateTime lastLaunchedTestTime, Boolean isMainUser, Long mainUserId, String mainUserEmail,
-            String apiKey, Status status, Long createdById, String createdByEmail, MfaStatus mfaStatus) {
+            String apiKey, Status status, Long createdById, String createdByEmail, MfaStatus mfaStatus,
+            String registrationIP) {
         this(id, email, firstName, lastName, state, country, city, code, address, phone, organization, vatId,
                 timeZone, createTime, deleteTime, lastLoginTime, lastLaunchedTestTime, status);
         this.accountId = accountId;
@@ -163,6 +166,7 @@ public class APIUser extends APIEntity {
         this.createdById = createdById;
         this.createdByEmail = createdByEmail;
         this.mfaStatus = mfaStatus;
+        this.registrationIP = registrationIP;
         this.selfURI = String.format("/users/%s", id);
     }
 
@@ -427,6 +431,14 @@ public class APIUser extends APIEntity {
         this.mfaStatus = mfaStatus;
     }
 
+    public String getRegistrationIP() {
+        return registrationIP;
+    }
+
+    public void setRegistrationIP(String registrationIP) {
+        this.registrationIP = registrationIP;
+    }
+
     private Map<String, Object> getUpdateUserParams() {
         Map<String, Object> map = new HashMap<>();
         map.put(ADDRESS, address);
@@ -554,5 +566,6 @@ public class APIUser extends APIEntity {
         this.accountServiceIds = apiUser.accountServiceIds;
         this.mfaStatus = apiUser.mfaStatus;
         this.mfaQRCodeUrl = apiUser.mfaQRCodeUrl;
+        this.registrationIP = apiUser.registrationIP;
     }
 }

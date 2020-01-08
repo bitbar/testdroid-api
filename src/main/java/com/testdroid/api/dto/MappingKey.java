@@ -133,7 +133,6 @@ public class MappingKey {
     public static final String FRAMEWORK_NAME = "frameworkName";
     public static final String FRAME_EXTRA_WIDTH = "frameExtraWidth";
     public static final String FROM_TIME = "fromTime";
-    public static final String FROM_TIMESTAMP = "fromTimestamp";
     public static final String GLOBAL = "global";
     public static final String GLOBAL_DEVICE_LIMIT = "globalDeviceLimit";
     public static final String GLOBAL_PROJECT_LIMIT = "globalProjectLimit";

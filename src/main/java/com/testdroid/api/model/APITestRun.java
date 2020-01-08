@@ -101,6 +101,8 @@ public class APITestRun extends APIEntity {
 
     private boolean billable;
 
+    private String message;
+
     public APITestRun() {
     }
 
@@ -464,6 +466,14 @@ public class APITestRun extends APIEntity {
         return postResource(getTagsURI(), Collections.singletonMap("name", name), APITag.class);
     }
 
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
     @JsonIgnore
     public APIListResource<APITag> getTagsResource() throws APIException {
         return getListResource(getTagsURI(), APITag.class);
@@ -568,5 +578,6 @@ public class APITestRun extends APIEntity {
         this.deviceCount = apiTestRun.deviceCount;
         this.tags = apiTestRun.tags;
         this.billable = apiTestRun.billable;
+        this.message = apiTestRun.message;
     }
 }

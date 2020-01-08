@@ -25,7 +25,8 @@ public class APIDeviceSession extends APIEntity {
         NO_DEVICE("Requested device does not exist or is busy at the moment."),
         API_LEVEL("The minimum API Level required for the application to run is higher than Device's API Level"),
         SINGLE_MODE("SINGLE mode test run - another device has started execution."),
-        FRAMEWORK_NOT_SUPPORTED("The device does not support selected framework");
+        FRAMEWORK_NOT_SUPPORTED("The device does not support selected framework"),
+        CONCURRENCY_LIMIT("Account's device sessions concurrency limit reached");
 
         private final String displayName;
 

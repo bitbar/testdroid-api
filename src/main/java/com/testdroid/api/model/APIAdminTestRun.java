@@ -45,6 +45,8 @@ public class APIAdminTestRun extends APIEntity {
 
     private String frameworkName;
 
+    private String message;
+
     public APIAdminTestRun() {
     }
 
@@ -208,6 +210,14 @@ public class APIAdminTestRun extends APIEntity {
         this.frameworkName = frameworkName;
     }
 
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
     @Override
     protected <T extends APIEntity> void clone(T from) {
         APIAdminTestRun apiAdminTestRun = (APIAdminTestRun) from;
@@ -228,5 +238,6 @@ public class APIAdminTestRun extends APIEntity {
         this.scheduler = apiAdminTestRun.scheduler;
         this.frameworkId = apiAdminTestRun.frameworkId;
         this.frameworkName = apiAdminTestRun.frameworkName;
+        this.message = apiAdminTestRun.message;
     }
 }
