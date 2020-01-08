@@ -6,6 +6,10 @@ import com.testdroid.api.APIList;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import java.util.List;
+
+import static java.util.Arrays.asList;
+import static java.util.Collections.singletonList;
 
 /**
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
@@ -49,6 +53,10 @@ public class APIDevice extends APIEntity {
 
         public boolean isDesktop() {
             return this == DESKTOP;
+        }
+
+        public List<OsType> getFamily() {
+            return this.isDesktop() ? singletonList(this) : asList(IOS, ANDROID);
         }
     }
 
