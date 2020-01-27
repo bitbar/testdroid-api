@@ -166,4 +166,9 @@ public class Context<T extends APIEntity> {
         map.putAll(extraParams);
         return map;
     }
+
+    public <R extends T> Context<R> as(Class<R> clazz) {
+        return new Context<>(clazz, this.offset, this.limit, this.search, this.sort
+                .serialize(), this.filters, this.groups);
+    }
 }

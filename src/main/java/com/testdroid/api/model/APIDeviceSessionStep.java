@@ -48,8 +48,7 @@ public class APIDeviceSessionStep extends APIEntity {
     }
 
     public APIDeviceSessionStep(
-            Long id, Long deviceSessionId, String failReason, Long finishTimeMS, Long startTimeMS,
-            Type type) {
+            Long id, Long deviceSessionId, String failReason, Long finishTimeMS, Long startTimeMS, Type type) {
         super(id);
         this.deviceSessionId = deviceSessionId;
         this.failReason = failReason;
