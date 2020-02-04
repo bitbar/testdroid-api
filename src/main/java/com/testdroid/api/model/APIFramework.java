@@ -5,6 +5,7 @@ import com.testdroid.api.APIEntity;
 import com.testdroid.api.util.TimeConverter;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -13,6 +14,14 @@ import java.util.Date;
  */
 @XmlRootElement
 public class APIFramework extends APIEntity {
+
+    @XmlType(namespace = "APIFramework")
+    public enum Type {
+        APP_CRAWLER,
+        CLIENT_SIDE,
+        MANUAL,
+        REMOTE
+    }
 
     private Long accountId;
 

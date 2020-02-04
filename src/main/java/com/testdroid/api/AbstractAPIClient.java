@@ -25,6 +25,7 @@ import java.util.*;
 
 import static com.testdroid.api.APIEntity.OBJECT_MAPPER;
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.util.stream.Collectors.toMap;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.apache.http.HttpStatus.*;
 
@@ -182,10 +183,8 @@ public abstract class AbstractAPIClient implements APIClient {
             } else if (body instanceof HttpContent) {
                 content = (HttpContent) body;
             } else if (body instanceof Map) {
-                Map map = (Map) body;
                 // Set empty strings for nulls - otherwise it is not passed at all to server and parameters is ignored
-                fixMapParameters(map);
-                content = new UrlEncodedContent(map);
+                content = new UrlEncodedContent(fixMapParameters((Map<String, Object>) body));
             } else if (body == null) {
                 content = null;
             } else {
@@ -355,19 +354,9 @@ public abstract class AbstractAPIClient implements APIClient {
         }
     }
 
-    protected void fixMapParameters(Map<String, Object> map) {
-        String key;
-        Object value;
-        for (Map.Entry<String, Object> entry : map.entrySet()) {
-            key = entry.getKey();
-            value = entry.getValue();
-            if (value == null) {
-                map.put(key, EMPTY);
-            }
-            if (value instanceof Enum<?>) {
-                map.put(key, value.toString());
-            }
-        }
+    protected Map<String, Object> fixMapParameters(Map<String, Object> map) {
+        return map.entrySet().stream().collect(toMap(Map.Entry::getKey, p -> p.getValue() == null ? EMPTY :
+                p.getValue() instanceof Enum<?> ? p.getValue().toString() : p.getValue()));
     }
 
     protected APIException getAPIException(HttpResponseException ex) {

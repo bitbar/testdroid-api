@@ -28,11 +28,6 @@ public class MappingKey {
     public static final String ANDROID_PROJECT_LIMIT = "androidProjectLimit";
     public static final String API_KEY = "apiKey";
     public static final String API_LEVEL = "apiLevel";
-    public static final String APPIUM_BROKER_ADDRESS = "appiumBrokerAddress";
-    public static final String APPLICATION_PASSWORD = "applicationPassword";
-    public static final String APPLICATION_USERNAME = "applicationUsername";
-    public static final String APP_CRAWLER_RUN = "appCrawlerRun";
-    public static final String APP_FILE_ID = "appFileId";
     public static final String ARCHIVE_TIME = "archiveTime";
     public static final String ARCHIVING_ITEM_COUNT = "archivingItemCount";
     public static final String ARCHIVING_STRATEGY = "archivingStrategy";
@@ -75,7 +70,6 @@ public class MappingKey {
     public static final String CUSTOM_PLAN = "customPlan";
     public static final String CVV = "cvv";
     public static final String DATA = "data";
-    public static final String DATA_FILE_ID = "dataFileId";
     public static final String DAY = "day";
     public static final String DAYS = "days";
     public static final String DEACTIVATED_BY_NAME = "deactivatedByName";
@@ -93,12 +87,10 @@ public class MappingKey {
     public static final String DEVICE_DOT_ID = "device.id";
     public static final String DEVICE_ID = "deviceId";
     public static final String DEVICE_IDS_ARR = "deviceIds[]";
-    public static final String DEVICE_LANGUAGE_CODE = "deviceLanguageCode";
     public static final String DEVICE_MODEL_DOT_ID = "deviceModel.id";
     public static final String DEVICE_MODEL_ID = "deviceModelId";
     public static final String DEVICE_MODEL_NAME = "deviceModelName";
     public static final String DEVICE_NAME = "deviceName";
-    public static final String DEVICE_NAME_PATTERN = "deviceNamePattern";
     public static final String DEVICE_RUN_IDS_ARR = "deviceRunIds[]";
     public static final String DEVICE_SESSION_ID = "deviceSessionId";
     public static final String DEVICE_SESSION_START_TIME = "deviceSession.startTime";
@@ -141,7 +133,6 @@ public class MappingKey {
     public static final String HASH = "hash";
     public static final String HEAR_FROM = "hearFrom";
     public static final String HEIGHT = "height";
-    public static final String HOOK_URL = "hookURL";
     public static final String HOST = "host";
     public static final String HTTP_METHOD = "httpMethod";
     public static final String ICON = "icon";
@@ -155,7 +146,6 @@ public class MappingKey {
     public static final String INIT_STEP = "initStep";
     public static final String INPUT_TYPE = "inputType";
     public static final String INSPECTOR_ENABLED = "inspectorEnabled";
-    public static final String INSTRUMENTATION_RUNNER = "instrumentationRunner";
     public static final String INTERNAL_STORAGE = "internalStorage";
     public static final String INTERNET_ACCESS = "internetAccess";
     public static final String IN_USE = "inUse";
@@ -184,8 +174,6 @@ public class MappingKey {
     public static final String LAST_PAYMENT_DATE = "lastPaymentDate";
     public static final String LAST_RETRY_TIME = "lastRetryTime";
     public static final String LAUNCH_APP_DURATION = "launchAppDuration";
-    public static final String LIMITATION_TYPE = "limitationType";
-    public static final String LIMITATION_VALUE = "limitationValue";
     public static final String LOCALE_COUNTRY = "localeCountry";
     public static final String LOCATION_SERVICES_ON = "locationServiceOn";
     public static final String LOCKED = "locked";
@@ -194,12 +182,10 @@ public class MappingKey {
     public static final String MAIN_USER_ID = "mainUserId";
     public static final String MAIN_USER_FIRST_NAME = "mainUserFirstName";
     public static final String MAIN_USER_LAST_NAME = "mainUserLastName";
-    public static final String MAX_AUTO_RETRIES_COUNT = "maxAutoRetriesCount";
     public static final String MFA_CODE = "mfaCode";
     public static final String MFA_ENABLED = "mfaEnabled";
     public static final String MIMETYPE = "mimetype";
     public static final String MOCK_LOCATION_ON = "mockLocationOn";
-    public static final String MODE = "mode";
     public static final String MONITORING_ON = "monitoringOn";
     public static final String NAME = "name";
     public static final String NEW_PASSWORD = "newPassword";
@@ -254,10 +240,8 @@ public class MappingKey {
     public static final String RUNNING = "running";
     public static final String SAMPLE_APP_ID = "sampleAppId";
     public static final String SAMPLE_TEST_ID = "sampleTestId";
-    public static final String SCHEDULER = "scheduler";
     public static final String SCOPE = "scope";
     public static final String SCREENSHOT = "screenshot";
-    public static final String SCREENSHOT_DIR = "screenshotDir";
     public static final String SCREEN_LOCKED = "screenLocked";
     public static final String SDCARD_PRESENT = "sdcardPresent";
     public static final String SECURED = "secured";
@@ -296,15 +280,12 @@ public class MappingKey {
     public static final String TAKE_TIMESTAMP = "takeTimestamp";
     public static final String TDS_VERSION = "tdsVersion";
     public static final String TEST_EXECUTING = "testExecuting";
-    public static final String TEST_FILE_ID = "testFileId";
     public static final String TEST_RUN_ID = "testRunId";
     public static final String TEST_RUN_NAME = "testRunName";
     public static final String TETHERING_ON = "tetheringOn";
-    public static final String TIMEOUT = "timeout";
     public static final String TIMESTAMP = "timestamp";
     public static final String TIME_LIMIT = "timeLimit";
     public static final String TIME_ZONE = "timeZone";
-    public static final String TOKEN = "token";
     public static final String TOTAL = "total";
     public static final String TOTAL_DEVICE_SESSIONS = "totalDeviceSessions";
     public static final String TOTAL_PRICE = "totalPrice";
@@ -320,8 +301,6 @@ public class MappingKey {
     public static final String URI = "uri";
     public static final String URL = "url";
     public static final String URL_SCHEMA = "urlSchema";
-    public static final String USED_DEVICE_GROUP_ID = "usedDeviceGroupId";
-    public static final String USED_DEVICE_IDS_ARR = "usedDeviceIds[]";
     public static final String USERNAME = "username";
     public static final String USER_AGENT = "userAgent";
     public static final String USER_DOT_ID = "user.id";
@@ -334,10 +313,8 @@ public class MappingKey {
     public static final String VERSION = "version";
     public static final String VIDEO_RECORDING_ENABLED = "videoRecordingEnabled";
     public static final String WIDTH = "width";
-    public static final String WITHOUT_ANNOTATION = "withoutAnnotation";
     public static final String WITHOUT_PRIORITIES = "withoutPriorities";
     public static final String WITH_ADDITIONAL_USERS = "withAdditionalUsers";
-    public static final String WITH_ANNOTATION = "withAnnotation";
     public static final String WITH_DEDICATED = "withDedicated";
     public static final String WITH_DEVICES = "withDevices";
     public static final String WITH_DISABLED = "withDisabled";

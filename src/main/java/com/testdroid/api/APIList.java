@@ -210,10 +210,9 @@ public class APIList<T extends APIEntity> extends APIEntity {
         return context;
     }
 
-    //TODO it will be nice to implement it
     @Override
-    public void refresh() {
-        throw new UnsupportedOperationException();
+    public void refresh() throws APIException {
+        clone(new APIListResource<>(client, selfURI, context).getEntity());
     }
 
     public static String filterParam(List<FilterEntry> filters) {

@@ -3,10 +3,8 @@ package com.testdroid.api.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.util.TimeConverter;
-import org.apache.commons.lang3.EnumUtils;
 
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -16,44 +14,6 @@ import java.util.Date;
  */
 @XmlRootElement
 public class APIProjectJobConfig extends APIEntity {
-
-    @XmlType(namespace = "APIProjectJobConfig")
-    public enum Type {
-        DESKTOP_BROWSER(APIDevice.OsType.DESKTOP, "Desktop Browser"),
-        DESKTOP_BROWSER_SERVER_SIDE(APIDevice.OsType.DESKTOP, "Desktop Browser server side"),
-        REMOTE(APIDevice.OsType.IOS, "Remote Device Session"),
-        DEFAULT(APIDevice.OsType.ANDROID, "Android instrumentation"),
-        INSTATEST(APIDevice.OsType.ANDROID, "Android App Crawler"),
-        INTERACTIVE(APIDevice.OsType.ANDROID, "Testdroid Interactive"),
-        INTERACTIVE_IOS(APIDevice.OsType.IOS, "Testdroid iOS Interactive"),
-        CALABASH(APIDevice.OsType.ANDROID, "Android Calabash"),
-        CALABASH_IOS(APIDevice.OsType.IOS, "iOS Calabash"),
-        APPIUM_ANDROID_SERVER_SIDE(APIDevice.OsType.ANDROID, "Android Appium server side"),
-        APPIUM_ANDROID(APIDevice.OsType.ANDROID, "Android Appium"),
-        APPIUM_IOS(APIDevice.OsType.IOS, "iOS Appium"),
-        APPIUM_IOS_SERVER_SIDE(APIDevice.OsType.IOS, "iOS Appium server side"),
-        APPCRAWLER_IOS(APIDevice.OsType.IOS, "AppCrawler iOS"),
-        XCTEST(APIDevice.OsType.IOS, "iOS XCTest"),
-        XCUITEST(APIDevice.OsType.IOS, "iOS XCUITest"),
-        GENERIC(APIDevice.OsType.UNDEFINED, "Undefined Framework");
-
-        private final String name;
-
-        private final APIDevice.OsType osType;
-
-        Type(APIDevice.OsType osType, String name) {
-            this.osType = osType;
-            this.name = name;
-        }
-
-        public APIDevice.OsType getOsType() {
-            return osType;
-        }
-
-        public String getName() {
-            return name;
-        }
-    }
 
     private String content;
 
@@ -65,39 +25,21 @@ public class APIProjectJobConfig extends APIEntity {
 
     private String lastModifiedBy;
 
-    private Type type;
-
     private Integer version;
 
     public APIProjectJobConfig() {
     }
 
     public APIProjectJobConfig(
-            Long id, String type, String content, Integer version, boolean global,
-            LocalDateTime lastModificationTime, String lastModifiedBy, Long frameworkId) {
-        this(id, EnumUtils.getEnum(Type.class, type), content, version, global,
-                lastModificationTime, lastModifiedBy, frameworkId);
-    }
-
-    public APIProjectJobConfig(
-            Long id, Type type, String content, Integer version, boolean global,
+            Long id, String content, Integer version, boolean global,
             LocalDateTime lastModificationTime, String lastModifiedBy, Long frameworkId) {
         super(id);
-        this.type = type;
         this.content = content;
         this.version = version;
         this.global = global;
         this.lastModificationTime = TimeConverter.toDate(lastModificationTime);
         this.lastModifiedBy = lastModifiedBy;
         this.frameworkId = frameworkId;
-    }
-
-    public Type getType() {
-        return type;
-    }
-
-    public void setType(Type type) {
-        this.type = type;
     }
 
     public String getContent() {
@@ -154,7 +96,6 @@ public class APIProjectJobConfig extends APIEntity {
         APIProjectJobConfig apiProjectJobConfig = (APIProjectJobConfig) from;
         cloneBase(from);
         this.content = apiProjectJobConfig.content;
-        this.type = apiProjectJobConfig.type;
         this.version = apiProjectJobConfig.version;
         this.global = apiProjectJobConfig.global;
         this.lastModificationTime = apiProjectJobConfig.lastModificationTime;
