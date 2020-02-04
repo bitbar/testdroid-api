@@ -92,7 +92,7 @@ abstract class BaseAPIClientTest {
         context.addFilter(new FilterEntry(OS_TYPE, EQ, ANDROID.name()));
         context.addFilter(trueFilterEntry(FOR_PROJECTS));
         context.addFilter(trueFilterEntry(CAN_RUN_FROM_UI));
-        context.addFilter(new FilterEntry(TYPE, EQ, frameworkName));
+        context.addFilter(new FilterEntry(NAME, EQ, frameworkName));
         return apiClient.me().getAvailableFrameworksResource(context).getEntity().get(0);
     }
 

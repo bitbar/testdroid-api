@@ -25,7 +25,7 @@ public enum APIPaymentMethod {
     STRIPE(createStripeMapping()),
     INVOICE(createInvoiceMapping()),
     PROMOTION(emptyMap()),
-    AWS(createAwsMapping());
+    AWS(emptyMap());
 
     private static Map<List<Boolean>, List<PlanOperation>> createInvoiceMapping(){
         Map<List<Boolean>, List<PlanOperation>> result = new HashMap<>();
@@ -36,14 +36,6 @@ public enum APIPaymentMethod {
         result.put(asList(TRUE, FALSE, FALSE, FALSE), asList(CREATE, ACTIVATE));
         result.put(asList(TRUE, TRUE, FALSE, FALSE), asList(CREATE, ACTIVATE, CANCEL));
         result.put(asList(FALSE, TRUE, TRUE, FALSE), asList(ACTIVATE, CANCEL));
-        return Collections.unmodifiableMap(result);
-    }
-
-    private static Map<List<Boolean>, List<PlanOperation>> createAwsMapping(){
-        Map<List<Boolean>, List<PlanOperation>> result = new HashMap<>();
-        result.put(asList(TRUE, FALSE, FALSE, TRUE), asList(CREATE, ACTIVATE));
-        result.put(asList(FALSE, TRUE, FALSE, TRUE), singletonList(CANCEL));
-        result.put(asList(FALSE, TRUE, FALSE, FALSE), singletonList(CANCEL));
         return Collections.unmodifiableMap(result);
     }
 

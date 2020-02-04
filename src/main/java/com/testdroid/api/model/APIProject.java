@@ -31,46 +31,6 @@ public class APIProject extends APIEntity {
         RUNS
     }
 
-    @XmlType(namespace = "APIProject")
-    public enum Type {
-        ANDROID(OsType.ANDROID, APIProjectJobConfig.Type.DEFAULT, "Android Instrumentation"),
-        IOS(OsType.IOS, APIProjectJobConfig.Type.APPCRAWLER_IOS, "AppCrawler iOS"),
-        CALABASH(OsType.ANDROID, APIProjectJobConfig.Type.CALABASH, "Calabash Android"),
-        CALABASH_IOS(OsType.IOS, APIProjectJobConfig.Type.CALABASH_IOS, "Calabash iOS"),
-        XCTEST(OsType.IOS, APIProjectJobConfig.Type.XCTEST, "XCTest"),
-        XCUITEST(OsType.IOS, APIProjectJobConfig.Type.XCUITEST, "XCUITest"),
-        APPIUM_ANDROID(OsType.ANDROID, APIProjectJobConfig.Type.APPIUM_ANDROID, "Appium Android client side"),
-        APPIUM_ANDROID_SERVER_SIDE(OsType.ANDROID, APIProjectJobConfig.Type.APPIUM_ANDROID_SERVER_SIDE,
-                "Appium Android server side"),
-        APPIUM_IOS(OsType.IOS, APIProjectJobConfig.Type.APPIUM_IOS, "Appium iOS client side"),
-        APPIUM_IOS_SERVER_SIDE(OsType.IOS, APIProjectJobConfig.Type.APPIUM_IOS_SERVER_SIDE, "Appium iOS server side"),
-        GENERIC(OsType.UNDEFINED, APIProjectJobConfig.Type.GENERIC, "Generic");
-
-        private final APIProjectJobConfig.Type jobConfigType;
-
-        private final APIDevice.OsType osType;
-
-        private final String title;
-
-        Type(OsType osType, APIProjectJobConfig.Type jobConfigType, String title) {
-            this.osType = osType;
-            this.jobConfigType = jobConfigType;
-            this.title = title;
-        }
-
-        public APIDevice.OsType getOsType() {
-            return osType;
-        }
-
-        public String getTitle() {
-            return title;
-        }
-
-        public APIProjectJobConfig.Type getJobConfigType() {
-            return jobConfigType;
-        }
-    }
-
     private Integer archivingItemCount;
 
     private APIArchivingStrategy archivingStrategy;
@@ -81,8 +41,6 @@ public class APIProject extends APIEntity {
 
     private byte[] icon;
 
-    private Map<APIProjectJobConfig.Type, APIProjectJobConfig> jobConfig;
-
     private String name;
 
     @Deprecated // use userEmail
@@ -92,8 +50,6 @@ public class APIProject extends APIEntity {
     private Long sharedById;
 
     private APITestRunConfig testRunConfig;
-
-    private Type type;
 
     private Date createTime;
 
@@ -117,7 +73,7 @@ public class APIProject extends APIEntity {
     }
 
     public APIProject(
-            Long id, LocalDateTime createTime, LocalDateTime archiveTime, String name, String description, Type type,
+            Long id, LocalDateTime createTime, LocalDateTime archiveTime, String name, String description,
             Long sharedById, String sharedByEmail, boolean common, APIArchivingStrategy archivingStrategy,
             Integer archivingItemCount, Boolean isShared, APIDevice.OsType osType, boolean readOnly) {
         super(id);
@@ -125,14 +81,12 @@ public class APIProject extends APIEntity {
         this.archiveTime = TimeConverter.toDate(archiveTime);
         this.name = name;
         this.description = description;
-        this.type = type;
         this.sharedById = sharedById;
         this.sharedByEmail = sharedByEmail;
         this.common = common;
         this.archivingStrategy = archivingStrategy;
         this.archivingItemCount = archivingItemCount;
         this.isShared = isShared;
-        this.jobConfig = new HashMap<>();
         this.osType = osType;
         this.readOnly = readOnly;
         this.userEmail = sharedByEmail;
@@ -153,14 +107,6 @@ public class APIProject extends APIEntity {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Type getType() {
-        return type;
-    }
-
-    public void setType(Type type) {
-        this.type = type;
     }
 
     public boolean isCommon() {
@@ -322,13 +268,11 @@ public class APIProject extends APIEntity {
         this.archiveTime = apiProject.archiveTime;
         this.description = apiProject.description;
         this.icon = apiProject.icon;
-        this.jobConfig = apiProject.jobConfig;
         this.name = apiProject.name;
         this.sharedById = apiProject.sharedById;
         this.isShared = apiProject.isShared;
         this.isSharedWithCaller = apiProject.isSharedWithCaller;
         this.testRunConfig = apiProject.testRunConfig;
-        this.type = apiProject.type;
         this.archivingStrategy = apiProject.archivingStrategy;
         this.archivingItemCount = apiProject.archivingItemCount;
         this.successRatio = apiProject.successRatio;
