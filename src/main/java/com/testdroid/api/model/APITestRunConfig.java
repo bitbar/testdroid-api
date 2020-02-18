@@ -451,6 +451,10 @@ public class APITestRunConfig extends APIEntity implements Serializable {
         this.useSamples = useSamples;
     }
 
+    public Optional<APIUserFile> findAnyFileByAction(APIFileConfig.Action action) {
+        return getFiles().stream().filter(fc -> fc.getAction() == action).map(APIFileConfig::getFile).findAny();
+    }
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
