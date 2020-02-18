@@ -128,13 +128,19 @@ public class APIDeviceSession extends APIEntity {
 
     private Float successRatio;
 
+    private String projectName;
+
+    private String testRunName;
+
     private String name;
+
+    private Long userId;
 
     public APIDeviceSession() {
     }
 
     public APIDeviceSession(
-            Long id, APIDeviceSession.Type type, LocalDateTime createTime, LocalDateTime startTime,
+            Long id, Long userId, APIDeviceSession.Type type, LocalDateTime createTime, LocalDateTime startTime,
             LocalDateTime installTime, LocalDateTime endTime, Long timeLimit, Long launchAppDuration,
             Long deviceLogFirstTimestamp, APIDeviceSession.State state, Integer testCasePassedCount,
             Integer testCaseFailedCount, Integer testCaseSkippedCount, Boolean billable, Long deviceModelId,
@@ -142,8 +148,9 @@ public class APIDeviceSession extends APIEntity {
             Integer imageWidth, Integer imageHeight, Integer frameExtraWidth, APIDevice.OsType osType, Boolean enabled,
             Long softwareVersionId, String releaseVersion, Integer apiLevel, ExcludeReason excludeReason,
             Long deviceInstanceId, RetryState retryState, Integer autoRetriesLeftCount, Long deviceTime, Long duration,
-            Long projectId, Long testRunId, Float successRatio, String name) {
+            Long projectId, String projectName, Long testRunId, String testRunName, Float successRatio, String name) {
         super(id);
+        this.userId = userId;
         this.type = type;
         this.createTime = TimeConverter.toDate(createTime);
         this.startTime = TimeConverter.toDate(startTime);
@@ -170,7 +177,9 @@ public class APIDeviceSession extends APIEntity {
         this.autoRetriesLeftCount = autoRetriesLeftCount;
         this.duration = duration;
         this.projectId = projectId;
+        this.projectName = projectName;
         this.testRunId = testRunId;
+        this.testRunName = testRunName;
         this.successRatio = successRatio;
         this.name = name;
     }
@@ -181,6 +190,14 @@ public class APIDeviceSession extends APIEntity {
 
     public void setType(Type type) {
         this.type = type;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public Date getCreateTime() {
@@ -391,6 +408,22 @@ public class APIDeviceSession extends APIEntity {
         this.name = name;
     }
 
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
+    public String getTestRunName() {
+        return testRunName;
+    }
+
+    public void setTestRunName(String testRunName) {
+        this.testRunName = testRunName;
+    }
+
     @JsonIgnore
     public APIListResource<APIDeviceSessionStep> getDeviceSessionStepsResource() throws APIException {
         return getListResource(createUri(selfURI, "/steps"), APIDeviceSessionStep.class);
@@ -424,6 +457,7 @@ public class APIDeviceSession extends APIEntity {
     protected <T extends APIEntity> void clone(T from) {
         APIDeviceSession apiDeviceSession = (APIDeviceSession) from;
         cloneBase(from);
+        this.userId = apiDeviceSession.userId;
         this.createTime = apiDeviceSession.createTime;
         this.startTime = apiDeviceSession.startTime;
         this.installTime = apiDeviceSession.installTime;
@@ -448,7 +482,9 @@ public class APIDeviceSession extends APIEntity {
         this.deviceTime = apiDeviceSession.deviceTime;
         this.duration = apiDeviceSession.duration;
         this.testRunId = apiDeviceSession.testRunId;
+        this.testRunName = apiDeviceSession.testRunName;
         this.projectId = apiDeviceSession.projectId;
+        this.projectName = apiDeviceSession.projectName;
         this.successRatio = apiDeviceSession.successRatio;
         this.name = apiDeviceSession.name;
     }

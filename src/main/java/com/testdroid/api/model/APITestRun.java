@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIException;
 import com.testdroid.api.APIListResource;
+import com.testdroid.api.UiPresentable;
 import com.testdroid.api.dto.Context;
 import com.testdroid.api.util.TimeConverter;
 import org.apache.commons.lang3.StringUtils;
@@ -21,7 +22,7 @@ import java.util.List;
  * @author Slawomir Pawluk <slawomir.pawluk@bitbar.com>
  */
 @XmlRootElement
-public class APITestRun extends APIEntity {
+public class APITestRun extends APIEntity implements UiPresentable {
 
     @XmlType(namespace = "APITestRun", name = "APITestRunState")
     public enum State {
@@ -102,6 +103,8 @@ public class APITestRun extends APIEntity {
     private boolean billable;
 
     private String message;
+
+    private String uiLink;
 
     public APITestRun() {
     }
@@ -474,6 +477,16 @@ public class APITestRun extends APIEntity {
         return message;
     }
 
+    @Override
+    public String getUiLink() {
+        return uiLink;
+    }
+
+    @Override
+    public void setUiLink(String uiLink) {
+        this.uiLink = uiLink;
+    }
+
     @JsonIgnore
     public APIListResource<APITag> getTagsResource() throws APIException {
         return getListResource(getTagsURI(), APITag.class);
@@ -579,5 +592,6 @@ public class APITestRun extends APIEntity {
         this.tags = apiTestRun.tags;
         this.billable = apiTestRun.billable;
         this.message = apiTestRun.message;
+        this.uiLink = apiTestRun.uiLink;
     }
 }

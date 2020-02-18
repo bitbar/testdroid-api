@@ -47,11 +47,11 @@ class APISessionAPIClientTest extends BaseAPIClientTest {
     }
 
     private List<APIDevice> getFreeTrialAndroidDevices(APIClient apiClient) throws APIException {
-        Context<APIDevice> ctx = new Context<>(APIDevice.class);
-        ctx.getFilters().add(new FilterEntry(OS_TYPE, EQ, ANDROID.getDisplayName()));
-        ctx.getFilters().add(trueFilterEntry(ONLINE));
-        ctx.getFilters().add(falseFilterEntry(LOCKED));
-        ctx.getFilters().add(trueFilterEntry(ENABLED));
+        Context<APIDevice> ctx = new Context<>(APIDevice.class)
+                .addFilter(new FilterEntry(OS_TYPE, EQ, ANDROID.getDisplayName()))
+                .addFilter(trueFilterEntry(ONLINE))
+                .addFilter(falseFilterEntry(LOCKED))
+                .addFilter(trueFilterEntry(ENABLED));
         apiClient.findDevicePropertyInLabelGroup("device-groups", "trial-devices").ifPresent(val -> ctx.setExtraParams(
                 new HashSetValuedHashMap<>(singletonMap(LABEL_IDS_ARR, val.getId()))
         ));

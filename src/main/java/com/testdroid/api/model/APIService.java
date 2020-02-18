@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
@@ -49,11 +50,20 @@ public class APIService extends APIEntity {
 
     @XmlType(namespace = "APIService")
     public enum ChargeType {
-        USAGE,
-        CONCURRENCY;
+        USAGE_MOBILE,
+        CONCURRENCY_MOBILE,
+        CONCURRENCY_DESKTOP;
 
-        public static ChargeType fromValue(String value) {
-            return "metered".equals(value) ? ChargeType.USAGE : ChargeType.CONCURRENCY;
+        public static Boolean isConcurrency(String value) {
+            return !Objects.equals("metered", value);
+        }
+
+        public Boolean isConcurrency() {
+            return this == CONCURRENCY_MOBILE || this == CONCURRENCY_DESKTOP;
+        }
+
+        public Boolean isUsage() {
+            return this == USAGE_MOBILE;
         }
     }
 
