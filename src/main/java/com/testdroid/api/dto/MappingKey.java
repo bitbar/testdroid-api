@@ -131,7 +131,6 @@ public class MappingKey {
     public static final String HANDLER_EMAIL = "handlerEmail";
     public static final String HANDLER_ID = "handlerId";
     public static final String HASH = "hash";
-    public static final String HEAR_FROM = "hearFrom";
     public static final String HEIGHT = "height";
     public static final String HOST = "host";
     public static final String HTTP_METHOD = "httpMethod";
@@ -234,14 +233,12 @@ public class MappingKey {
     public static final String RESULT = "result";
     public static final String RETRYABLE = "retryable";
     public static final String RETRY_STATE = "retryState";
-    public static final String ROLE = "role";
     public static final String ROLE_ID = "roleId";
     public static final String ROLE_IDS_ARR = "roleIds[]";
     public static final String RUNNING = "running";
     public static final String SAMPLE_APP_ID = "sampleAppId";
     public static final String SAMPLE_TEST_ID = "sampleTestId";
     public static final String SCOPE = "scope";
-    public static final String SCREENSHOT = "screenshot";
     public static final String SCREEN_LOCKED = "screenLocked";
     public static final String SDCARD_PRESENT = "sdcardPresent";
     public static final String SECURED = "secured";
@@ -276,6 +273,7 @@ public class MappingKey {
     public static final String SUBSCRIPTION_START = "subscriptionStart";
     public static final String SUCCESS_RATIO = "successRatio";
     public static final String SUMMARY = "summary";
+    public static final String TAG = "tag";
     public static final String TAG_ARR = "tag[]";
     public static final String TAKE_TIMESTAMP = "takeTimestamp";
     public static final String TDS_VERSION = "tdsVersion";
