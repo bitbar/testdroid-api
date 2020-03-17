@@ -61,7 +61,7 @@ abstract class BaseAPIClientTest {
         USER_DEFAULT_CLIENT = new DefaultAPIClient(CLOUD_URL, apiUser2.getEmail(), USER_PASSWORD);
         if (isNoneBlank(PROXY_HOST, PROXY_PORT)) {
             USER_DEFAULT_CLIENT_WITH_PROXY = createDefaultApiClientWithProxy(new HttpHost(PROXY_HOST, Integer
-                    .valueOf(PROXY_PORT)));
+                    .parseInt(PROXY_PORT)));
         }
     }
 
