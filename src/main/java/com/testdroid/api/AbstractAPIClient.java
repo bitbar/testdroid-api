@@ -42,6 +42,8 @@ public abstract class AbstractAPIClient implements APIClient {
 
     protected static final String LABEL_GROUPS_URI = "/label-groups";
 
+    private static final String FAILED_TO_EXECUTE_API_CALL_WITH_REASON = "Failed to execute API call: %s. Reason: %s";
+
     protected int clientConnectTimeout = 20000;
 
     protected int clientRequestTimeout = 60000;
@@ -51,6 +53,9 @@ public abstract class AbstractAPIClient implements APIClient {
     protected String apiURL;
 
     private static final List<Integer> POSSIBLE_DELETE_STATUSES = Arrays.asList(SC_OK, SC_ACCEPTED, SC_NO_CONTENT);
+
+    private static final List<Integer> POSSIBLE_GET_STATUSES = Arrays.asList(SC_OK, SC_ACCEPTED, SC_CREATED,
+            SC_NO_CONTENT);
 
     protected HttpRequestFactory getRequestFactory() throws APIException {
         return httpTransport.createRequestFactory();
@@ -88,10 +93,35 @@ public abstract class AbstractAPIClient implements APIClient {
      */
     protected <T extends APIEntity> T getOnce(String uri, Context<?> context, TypeReference<T> type)
             throws APIException {
+        HttpResponse response = getHttpResponse(uri, context);
+        try {
+            T result = fromJson(response.getContent(), type);
+            result.client = this;
+            if (result.selfURI == null) {
+                result.selfURI = uri;
+            }
+            return result;
+        } catch (IOException ex) {
+            throw new APIException(String.format(FAILED_TO_EXECUTE_API_CALL_WITH_REASON, uri, ex.getMessage()), ex);
+        } finally {
+            disconnectQuietly(response);
+        }
+    }
+
+    protected InputStream getStream(String uri) throws APIException {
+        try {
+            return getHttpResponse(uri, null).getContent();
+        } catch (IOException ex) {
+            throw new APIException(String.format(FAILED_TO_EXECUTE_API_CALL_WITH_REASON, uri, ex.getMessage()), ex);
+        }
+    }
+
+    @Override
+    public HttpResponse getHttpResponse(String uri, Context<?> context) throws APIException {
         // Build request
         HttpRequestFactory factory = getRequestFactory();
         HttpRequest request;
-        HttpResponse response = null;
+        HttpResponse response;
         //Fix for https://jira.bitbar.com/browse/TD-12086
         //caused by https://github.com/googleapis/google-http-java-client/issues/398
         //We should used pure Apache Http Client
@@ -104,48 +134,15 @@ public abstract class AbstractAPIClient implements APIClient {
             request.setReadTimeout(clientRequestTimeout);
 
             response = request.execute();
-            if (!Arrays
-                    .asList(SC_OK, HttpStatus.SC_ACCEPTED, HttpStatus.SC_CREATED, SC_NO_CONTENT)
-                    .contains(response.getStatusCode())) {
+            if (!POSSIBLE_GET_STATUSES.contains(response.getStatusCode())) {
                 throw new APIException(response.getStatusCode(), String.format("Failed to execute api call: %s", uri));
             }
-
-            T result = fromJson(response.getContent(), type);
-            result.client = this;
-            if (result.selfURI == null) {
-                result.selfURI = uri;
-            }
-            return result;
+            return response;
         } catch (HttpResponseException ex) {
             throw getAPIException(ex);
-        } catch (IOException ex) {
-            throw new APIException(String
-                    .format("Failed to execute API call: %s. Reason: %s", uri, ex.getMessage()), ex);
-        } finally {
-            disconnectQuietly(response);
-        }
-    }
 
-    protected InputStream getStream(String uri) throws APIException {
-        HttpRequestFactory factory = getRequestFactory();
-        HttpRequest request;
-        HttpResponse response;
-        try {
-            request = factory.buildGetRequest(new GenericUrl(apiURL + uri));
-            request.setConnectTimeout(clientConnectTimeout);
-            request.setReadTimeout(clientRequestTimeout);
-            request.setHeaders(getHttpHeaders());
-            response = request.execute();
-            if (!Arrays.asList(SC_OK, HttpStatus.SC_ACCEPTED, HttpStatus.SC_CREATED)
-                    .contains(response.getStatusCode())) {
-                throw new APIException(response.getStatusCode(), String.format("Failed to execute api call: %s", uri));
-            }
-            return response.getContent();
-        } catch (HttpResponseException ex) {
-            throw getAPIException(ex);
         } catch (IOException ex) {
-            throw new APIException(String
-                    .format("Failed to execute API call: %s. Reason: %s", uri, ex.getMessage()), ex);
+            throw new APIException(String.format(FAILED_TO_EXECUTE_API_CALL_WITH_REASON, uri, ex.getMessage()), ex);
         }
     }
 

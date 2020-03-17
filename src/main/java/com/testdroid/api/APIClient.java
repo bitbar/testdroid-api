@@ -1,5 +1,6 @@
 package com.testdroid.api;
 
+import com.google.api.client.http.HttpResponse;
 import com.testdroid.api.dto.Context;
 import com.testdroid.api.model.APIDevice;
 import com.testdroid.api.model.APIDeviceProperty;
@@ -106,5 +107,7 @@ public interface APIClient {
     APIListResource<APILabelGroup> getLabelGroups(Context<APILabelGroup> context);
 
     Optional<APIDeviceProperty> findDevicePropertyInLabelGroup(String groupName, String labelName) throws APIException;
+
+    HttpResponse getHttpResponse(String uri, Context<?> context) throws APIException;
 
 }
