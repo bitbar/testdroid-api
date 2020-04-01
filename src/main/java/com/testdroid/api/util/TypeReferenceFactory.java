@@ -284,6 +284,8 @@ public class TypeReferenceFactory {
         });
         TYPE_REFERENCE_MAP.put(APIHealthCheck.class, new TypeReference<APIHealthCheck>() {
         });
+        TYPE_REFERENCE_MAP.put(APIUserPreference.class, new TypeReference<APIUserPreference>() {
+        });
     }
 
     public static <T> TypeReference<T> getTypeRef(Class<T> clazz) {
