@@ -155,6 +155,8 @@ public class TypeReferenceFactory {
         TYPE_REFERENCE_LIST_MAP.put(APIAdminFrameworkStatistics.class,
                 new TypeReference<APIList<APIAdminFrameworkStatistics>>() {
                 });
+        TYPE_REFERENCE_LIST_MAP.put(APIDeviceStatistic.class, new TypeReference<APIList<APIDeviceStatistic>>() {
+        });
     }
 
     private static final Map<Class, TypeReference<?>> TYPE_REFERENCE_MAP = new HashMap<>();

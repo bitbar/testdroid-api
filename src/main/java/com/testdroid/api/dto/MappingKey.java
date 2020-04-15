@@ -10,10 +10,10 @@ public class MappingKey {
     public static final String ACCOUNT_ID = "accountId";
     public static final String ACCOUNT_ROLE_ID = "accountRoleId";
     public static final String ACCOUNT_SERVICE_IDS = "accountServiceIds";
-    public static final String ACTIVE = "active";
     public static final String ACTIVATED = "activated";
     public static final String ACTIVATED_BY_NAME = "activatedByName";
     public static final String ACTIVATE_TIME = "activateTime";
+    public static final String ACTIVE = "active";
     public static final String ACTIVE_ONLY = "activeOnly";
     public static final String ADDED_BY_EMAIL = "addedByEmail";
     public static final String ADDITIONAL_HOURS = "additionalHours";
@@ -92,8 +92,8 @@ public class MappingKey {
     public static final String DEVICE_MODEL_NAME = "deviceModelName";
     public static final String DEVICE_NAME = "deviceName";
     public static final String DEVICE_RUN_IDS_ARR = "deviceRunIds[]";
+    public static final String DEVICE_SESSION_CREATE_TIME = "deviceSession.createTime";
     public static final String DEVICE_SESSION_ID = "deviceSessionId";
-    public static final String DEVICE_SESSION_START_TIME = "deviceSession.startTime";
     public static final String DEVICE_SESSION_USER_ID = "deviceSession.userId";
     public static final String DEVICE_TIME = "deviceTime";
     public static final String DEVICE_TIME_ZONE = "deviceTimeZone";
@@ -111,7 +111,10 @@ public class MappingKey {
     public static final String EXPIRATION_DATE = "expirationDate";
     public static final String EXPIRE_TIME = "expireTime";
     public static final String EXTERNAL_STORAGE = "externalStorage";
+    public static final String FAILED_DEVICES = "failedDevices";
     public static final String FAILED_DEVICE_SESSIONS = "failedDeviceSessions";
+    public static final String FAILED_RATIO = "failedRatio";
+    public static final String FAILED_TESTS = "failedTests";
     public static final String FIELD = "field";
     public static final String FILE = "file";
     public static final String FILENAME = "filename";
@@ -120,6 +123,7 @@ public class MappingKey {
     public static final String FINISH_TIME_MS = "finishTimeMS";
     public static final String FIRST_NAME = "firstName";
     public static final String FLASH_ON = "flashOn";
+    public static final String FOR_WHOLE_ACCOUNT = "forWholeAccount";
     public static final String FOR_PROJECTS = "forProjects";
     public static final String FRAMEWORK_ID = "frameworkId";
     public static final String FRAMEWORK_NAME = "frameworkName";
@@ -178,13 +182,14 @@ public class MappingKey {
     public static final String LOCKED = "locked";
     public static final String MAIL = "mail";
     public static final String MAIN_USER_EMAIL = "mainUserEmail";
-    public static final String MAIN_USER_ID = "mainUserId";
     public static final String MAIN_USER_FIRST_NAME = "mainUserFirstName";
+    public static final String MAIN_USER_ID = "mainUserId";
     public static final String MAIN_USER_LAST_NAME = "mainUserLastName";
     public static final String MFA_CODE = "mfaCode";
     public static final String MFA_ENABLED = "mfaEnabled";
     public static final String MIMETYPE = "mimetype";
     public static final String MOCK_LOCATION_ON = "mockLocationOn";
+    public static final String MODE = "mode";
     public static final String MONITORING_ON = "monitoringOn";
     public static final String NAME = "name";
     public static final String NEW_PASSWORD = "newPassword";
@@ -203,6 +208,8 @@ public class MappingKey {
     public static final String OS_TYPE = "osType";
     public static final String PAID = "paid";
     public static final String PARAMETERS = "parameters";
+    public static final String PASSED_RATIO = "passedRatio";
+    public static final String PASSED_TESTS = "passedTests";
     public static final String PASSWORD = "password";
     public static final String PATH = "path";
     public static final String PAYMENT_DATE = "paymentDate";
@@ -287,6 +294,7 @@ public class MappingKey {
     public static final String TOTAL = "total";
     public static final String TOTAL_DEVICE_SESSIONS = "totalDeviceSessions";
     public static final String TOTAL_PRICE = "totalPrice";
+    public static final String TOTAL_TESTS = "totalTests";
     public static final String TO_TIME = "toTime";
     public static final String TYPE = "type";
     public static final String TYPE_ID = "typeId";
@@ -299,6 +307,8 @@ public class MappingKey {
     public static final String URI = "uri";
     public static final String URL = "url";
     public static final String URL_SCHEMA = "urlSchema";
+    public static final String USAGE_COUNT = "usageCount";
+    public static final String USAGE_MILLIS = "usageMillis";
     public static final String USERNAME = "username";
     public static final String USER_AGENT = "userAgent";
     public static final String USER_DOT_ID = "user.id";
@@ -312,7 +322,6 @@ public class MappingKey {
     public static final String VIDEO_RECORDING_ENABLED = "videoRecordingEnabled";
     public static final String WIDTH = "width";
     public static final String WITHOUT_PRIORITIES = "withoutPriorities";
-    public static final String WITH_ADDITIONAL_USERS = "withAdditionalUsers";
     public static final String WITH_DEDICATED = "withDedicated";
     public static final String WITH_DEVICES = "withDevices";
     public static final String WITH_DISABLED = "withDisabled";
