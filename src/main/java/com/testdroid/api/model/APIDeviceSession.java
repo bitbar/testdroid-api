@@ -138,6 +138,8 @@ public class APIDeviceSession extends APIEntity {
 
     private String userEmail;
 
+    private Integer rowIndex;
+
     public APIDeviceSession() {
     }
 
@@ -436,6 +438,14 @@ public class APIDeviceSession extends APIEntity {
         this.userEmail = userEmail;
     }
 
+    public Integer getRowIndex() {
+        return rowIndex;
+    }
+
+    public void setRowIndex(Integer rowIndex) {
+        this.rowIndex = rowIndex;
+    }
+
     @JsonIgnore
     public APIListResource<APIDeviceSessionStep> getDeviceSessionStepsResource() throws APIException {
         return getListResource(createUri(selfURI, "/steps"), APIDeviceSessionStep.class);
@@ -500,5 +510,6 @@ public class APIDeviceSession extends APIEntity {
         this.projectName = apiDeviceSession.projectName;
         this.successRatio = apiDeviceSession.successRatio;
         this.name = apiDeviceSession.name;
+        this.rowIndex = apiDeviceSession.rowIndex;
     }
 }

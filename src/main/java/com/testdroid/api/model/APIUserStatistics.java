@@ -13,18 +13,17 @@ public class APIUserStatistics extends APIEntity {
 
     private Long devicesUsed;
 
-    private Double overallTestCaseSuccessRatio;
+    private Float overallTestCaseSuccessRatio;
 
     private Long runningTestRuns;
 
     private Long totalTestRuns;
 
     public APIUserStatistics() {
-
     }
 
     public APIUserStatistics(
-            Long devicesUsed, Double overallTestCaseSuccessRatio, Long runningTestRuns, Long totalTestRuns) {
+            Long devicesUsed, Float overallTestCaseSuccessRatio, Long runningTestRuns, Long totalTestRuns) {
         this.devicesUsed = devicesUsed;
         this.overallTestCaseSuccessRatio = overallTestCaseSuccessRatio;
         this.runningTestRuns = runningTestRuns;
@@ -39,11 +38,11 @@ public class APIUserStatistics extends APIEntity {
         this.devicesUsed = devicesUsed;
     }
 
-    public Double getOverallTestCaseSuccessRatio() {
+    public Float getOverallTestCaseSuccessRatio() {
         return overallTestCaseSuccessRatio;
     }
 
-    public void setOverallTestCaseSuccessRatio(Double overallTestCaseSuccessRatio) {
+    public void setOverallTestCaseSuccessRatio(Float overallTestCaseSuccessRatio) {
         this.overallTestCaseSuccessRatio = overallTestCaseSuccessRatio;
     }
 

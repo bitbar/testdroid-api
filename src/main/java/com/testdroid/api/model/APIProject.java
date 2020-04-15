@@ -69,6 +69,8 @@ public class APIProject extends APIEntity {
 
     private String userEmail;
 
+    private Integer rowIndex;
+
     public APIProject() {
     }
 
@@ -221,6 +223,14 @@ public class APIProject extends APIEntity {
         this.userEmail = userEmail;
     }
 
+    public Integer getRowIndex() {
+        return rowIndex;
+    }
+
+    public void setRowIndex(Integer rowIndex) {
+        this.rowIndex = rowIndex;
+    }
+
     private String getRunsURI() {
         return createUri(selfURI, "/runs");
     }
@@ -280,5 +290,6 @@ public class APIProject extends APIEntity {
         this.readOnly = apiProject.readOnly;
         this.userId = apiProject.userId;
         this.userEmail = apiProject.userEmail;
+        this.rowIndex = apiProject.rowIndex;
     }
 }
