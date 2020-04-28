@@ -107,6 +107,8 @@ public class APIAdminDevice extends APIEntity {
 
     private Date stateTime;
 
+    private Date stateChangeTime;
+
     private Date lastOnlineTime;
 
     private String unlockGesture;
@@ -132,10 +134,10 @@ public class APIAdminDevice extends APIEntity {
     public APIAdminDevice(
             Long id, String name, boolean enabled, String serialId, String fingerprint, String unlockGesture,
             Long softwareVersionId, String releaseVersion, Integer apiLevel, Long deviceModelId, String deviceModelName,
-            ComplexState state, LocalDateTime stateTime, InitStep initStep, String ipAddress, Long clusterId,
-            String clusterName, String clusterUrl, String pluginVersion, APICluster.State clusterState,
-            LocalDateTime clusterStateTime, LocalDateTime clusterStateChangeTime, Boolean clusterEnabled,
-            LocalDateTime lastOnlineTime, Long accountId, String mainUserEmail, Boolean locked,
+            ComplexState state, LocalDateTime stateTime,  LocalDateTime stateChangeTime, InitStep initStep,
+            String ipAddress, Long clusterId, String clusterName, String clusterUrl, String pluginVersion,
+            APICluster.State clusterState, LocalDateTime clusterStateTime, LocalDateTime clusterStateChangeTime,
+            Boolean clusterEnabled, LocalDateTime lastOnlineTime, Long accountId, String mainUserEmail, Boolean locked,
             APIDevice.OsType osType) {
         super(id);
         this.name = name;
@@ -148,6 +150,7 @@ public class APIAdminDevice extends APIEntity {
         this.deviceModelName = deviceModelName;
         this.state = state;
         this.stateTime = TimeConverter.toDate(stateTime);
+        this.stateChangeTime = TimeConverter.toDate(stateChangeTime);
         this.initStep = initStep;
         this.ipAddress = ipAddress;
         this.cluster = new APICluster(clusterId, clusterName, clusterUrl, pluginVersion, clusterState,
@@ -229,6 +232,14 @@ public class APIAdminDevice extends APIEntity {
 
     public void setStateTime(Date stateTime) {
         this.stateTime = stateTime;
+    }
+
+    public Date getStateChangeTime() {
+        return stateChangeTime;
+    }
+
+    public void setStateChangeTime(Date stateChangeTime) {
+        this.stateChangeTime = stateChangeTime;
     }
 
     public InitStep getInitStep() {
@@ -319,6 +330,7 @@ public class APIAdminDevice extends APIEntity {
         this.softwareVersion = adminDevice.softwareVersion;
         this.state = adminDevice.state;
         this.stateTime = adminDevice.stateTime;
+        this.stateChangeTime = adminDevice.stateChangeTime;
         this.unlockGesture = adminDevice.unlockGesture;
         this.ipAddress = adminDevice.ipAddress;
         this.lastOnlineTime = adminDevice.lastOnlineTime;
