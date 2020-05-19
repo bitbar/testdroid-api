@@ -13,8 +13,6 @@ public class APIHealthCheck extends APIEntity {
 
     private boolean dbHealthy;
 
-    private boolean jmsHealthy;
-
     private boolean rabbitMQHealthy;
 
     private int status;
@@ -22,9 +20,8 @@ public class APIHealthCheck extends APIEntity {
     public APIHealthCheck() {
     }
 
-    public APIHealthCheck(boolean dbHealthy, boolean jmsHealthy, boolean rabbitmqHealthy, int status) {
+    public APIHealthCheck(boolean dbHealthy, boolean rabbitmqHealthy, int status) {
         this.dbHealthy = dbHealthy;
-        this.jmsHealthy = jmsHealthy;
         this.rabbitMQHealthy = rabbitmqHealthy;
         this.status = status;
     }
@@ -35,14 +32,6 @@ public class APIHealthCheck extends APIEntity {
 
     public void setDbHealthy(boolean dbHealthy) {
         this.dbHealthy = dbHealthy;
-    }
-
-    public boolean isJmsHealthy() {
-        return jmsHealthy;
-    }
-
-    public void setJmsHealthy(boolean jmsHealthy) {
-        this.jmsHealthy = jmsHealthy;
     }
 
     public boolean isRabbitMQHealthy() {
@@ -67,7 +56,6 @@ public class APIHealthCheck extends APIEntity {
         APIHealthCheck original = (APIHealthCheck) from;
         cloneBase(from);
         this.dbHealthy = original.dbHealthy;
-        this.jmsHealthy = original.jmsHealthy;
         this.rabbitMQHealthy = original.rabbitMQHealthy;
         this.status = original.status;
     }

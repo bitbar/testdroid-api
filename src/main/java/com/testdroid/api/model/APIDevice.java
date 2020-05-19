@@ -7,6 +7,7 @@ import com.testdroid.api.APIList;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import java.util.List;
+import java.util.Set;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
@@ -24,6 +25,13 @@ public class APIDevice extends APIEntity {
         STATIC,
         DYNAMIC,
         HYBRID
+    }
+
+    @XmlType
+    public enum Creator {
+        MANUAL,
+        ROBOT,
+        AUTOMATIC
     }
 
     @XmlType(namespace = "APIDevice")
@@ -103,6 +111,8 @@ public class APIDevice extends APIEntity {
     private DeviceGroupOrigin deviceGroupOrigin;
 
     private boolean available;
+
+    private Set<Creator> supportedCreators;
 
     public APIDevice() {
     }
@@ -306,6 +316,14 @@ public class APIDevice extends APIEntity {
         this.available = available;
     }
 
+    public void setSupportedCreators(Set<Creator> supportedCreators) {
+        this.supportedCreators = supportedCreators;
+    }
+
+    public Set<Creator> getSupportedCreators() {
+        return supportedCreators;
+    }
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
@@ -333,6 +351,7 @@ public class APIDevice extends APIEntity {
         this.deviceGroupOrigin = apiDevice.deviceGroupOrigin;
         this.properties = apiDevice.properties;
         this.available = apiDevice.available;
+        this.supportedCreators = apiDevice.supportedCreators;
     }
 
 }

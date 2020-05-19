@@ -6,7 +6,10 @@ import com.testdroid.api.APIEntity;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Optional;
 
 /**
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
@@ -115,7 +118,6 @@ public class APITestRunConfig extends APIEntity implements Serializable {
 
     private APIClientSideTestConfig clientSideTestConfig;
 
-    @JsonIgnore
     private List<Long> computedDevices;
 
     public APITestRunConfig() {
