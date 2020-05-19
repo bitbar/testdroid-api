@@ -120,6 +120,8 @@ public class APIUser extends APIEntity {
 
     private String registrationIP;
 
+    private Boolean originPortal;
+
     public APIUser() {
     }
 
@@ -155,7 +157,7 @@ public class APIUser extends APIEntity {
             String timeZone, LocalDateTime createTime, LocalDateTime deleteTime, LocalDateTime lastLoginTime,
             LocalDateTime lastLaunchedTestTime, Boolean isMainUser, Long mainUserId, String mainUserEmail,
             String apiKey, Status status, Long createdById, String createdByEmail, MfaStatus mfaStatus,
-            String registrationIP) {
+            String registrationIP, Boolean originPortal) {
         this(id, email, firstName, lastName, state, country, city, code, address, phone, organization, vatId,
                 timeZone, createTime, deleteTime, lastLoginTime, lastLaunchedTestTime, status);
         this.accountId = accountId;
@@ -167,6 +169,7 @@ public class APIUser extends APIEntity {
         this.createdByEmail = createdByEmail;
         this.mfaStatus = mfaStatus;
         this.registrationIP = registrationIP;
+        this.originPortal = originPortal;
         this.selfURI = String.format("/users/%s", id);
     }
 
@@ -439,6 +442,14 @@ public class APIUser extends APIEntity {
         this.registrationIP = registrationIP;
     }
 
+    public Boolean getOriginPortal() {
+        return originPortal;
+    }
+
+    public void setOriginPortal(Boolean originPortal) {
+        this.originPortal = originPortal;
+    }
+
     private Map<String, Object> getUpdateUserParams() {
         Map<String, Object> map = new HashMap<>();
         map.put(ADDRESS, address);
@@ -567,5 +578,6 @@ public class APIUser extends APIEntity {
         this.mfaStatus = apiUser.mfaStatus;
         this.mfaQRCodeUrl = apiUser.mfaQRCodeUrl;
         this.registrationIP = apiUser.registrationIP;
+        this.originPortal = apiUser.originPortal;
     }
 }

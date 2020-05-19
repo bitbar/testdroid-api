@@ -42,7 +42,7 @@ class DefaultAPIClientTest extends BaseAPIClientTest {
 
     private static String getUnknownHostExceptionMessage(String host) {
         return String.format(UNKNOW_HOST_EXCEPTION_MESSAGE, host, IS_OS_MAC_OSX ?
-                "nodename nor servname provided, or not known" : "Name or service not known");
+                "nodename nor servname provided, or not known" : "Temporary failure in name resolution");
     }
 
 }
