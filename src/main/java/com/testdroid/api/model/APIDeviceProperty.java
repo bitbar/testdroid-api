@@ -26,14 +26,21 @@ public class APIDeviceProperty extends APIEntity {
     }
 
     public APIDeviceProperty(
-            Long id, String name, String displayName, Long propertyGroupId,
+            Long parentId, Long id, String name, String displayName, Long propertyGroupId,
             String propertyGroupName, String labelGroupName) {
         super(id);
+        this.parentId = parentId;
         this.name = name;
         this.displayName = displayName;
         this.propertyGroupId = propertyGroupId;
         this.propertyGroupName = propertyGroupName;
         this.labelGroupName = labelGroupName;
+    }
+
+    public APIDeviceProperty(
+            Long id, String name, String displayName, Long propertyGroupId,
+            String propertyGroupName, String labelGroupName) {
+        this(null, id, name, displayName, propertyGroupId, propertyGroupName, labelGroupName);
     }
 
     public String getName() {
