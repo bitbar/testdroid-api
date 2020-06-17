@@ -157,6 +157,8 @@ public class TypeReferenceFactory {
                 });
         TYPE_REFERENCE_LIST_MAP.put(APIDeviceStatistic.class, new TypeReference<APIList<APIDeviceStatistic>>() {
         });
+        TYPE_REFERENCE_LIST_MAP.put(APIUserFileProperty.class, new TypeReference<APIList<APIUserFileProperty>>() {
+        });
     }
 
     private static final Map<Class, TypeReference<?>> TYPE_REFERENCE_MAP = new HashMap<>();
@@ -288,12 +290,16 @@ public class TypeReferenceFactory {
         });
         TYPE_REFERENCE_MAP.put(APIUserPreference.class, new TypeReference<APIUserPreference>() {
         });
+        TYPE_REFERENCE_MAP.put(APIUserFileProperty.class, new TypeReference<APIUserFileProperty>() {
+        });
     }
 
+    @SuppressWarnings("unchecked")
     public static <T> TypeReference<T> getTypeRef(Class<T> clazz) {
         return (TypeReference<T>) TYPE_REFERENCE_MAP.get(clazz);
     }
 
+    @SuppressWarnings("unchecked")
     public static <T extends APIEntity> TypeReference<APIList<T>> getListTypeRef(Class<T> clazz) {
         return (TypeReference<APIList<T>>) TYPE_REFERENCE_LIST_MAP.get(clazz);
     }
