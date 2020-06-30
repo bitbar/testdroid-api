@@ -38,6 +38,8 @@ import static org.hamcrest.Matchers.*;
 @Tag(API_CLIENT)
 class APIUserAPIClientTest extends BaseAPIClientTest {
 
+    private static final Long VIRUS_SCAN_TIMEOUT = 180000L;
+
     @ParameterizedTest
     @ArgumentsSource(APIClientProvider.class)
     void getDevicesTest(APIClient apiClient) throws APIException {
@@ -65,10 +67,9 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
         assertThat(deviceGroupLabelGroup.getDisplayName(), is("Device groups"));
         APIList<APIDeviceProperty> apiDeviceProperties = deviceGroupLabelGroup.getDevicePropertiesResource(new
                 Context<>(APIDeviceProperty.class).setLimit(0)).getEntity();
-        assertThat(apiDeviceProperties.getTotal(), is(4));
+        assertThat(apiDeviceProperties.getTotal(), is(3));
         assertThat(apiDeviceProperties.getData().stream().map(APIDeviceProperty::getDisplayName)
-                .collect(Collectors.toList()
-                ), containsInAnyOrder("Android devices", "iOS devices", "Trial devices", "Desktop Browsers"));
+                .collect(Collectors.toList()), containsInAnyOrder("Android devices", "iOS devices", "Trial devices"));
     }
 
     @ParameterizedTest
@@ -93,18 +94,19 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
 
     @ParameterizedTest
     @ArgumentsSource(APIClientProvider.class)
-    void startTestRunTest(APIClient apiClient) throws APIException {
+    void startTestRunTest(APIClient apiClient) throws APIException, InterruptedException {
         APIUser me = apiClient.me();
         APITestRunConfig config = new APITestRunConfig();
         config.setProjectName(generateUnique("testProject"));
         APIFramework defaultApiFramework = getApiFramework(apiClient, "Android Instrumentation");
         config.setOsType(defaultApiFramework.getOsType());
         config.setFrameworkId(defaultApiFramework.getId());
-        Long apkFileId = me.uploadFile(loadFile(APP_PATH)).getId();
-        APIFileConfig apkFileConfig = new APIFileConfig(apkFileId, INSTALL);
-        Long testFileId = me.uploadFile(loadFile(TEST_PATH)).getId();
-        APIFileConfig testFileConfig = new APIFileConfig(testFileId, RUN_TEST);
+        APIUserFile apkFile = me.uploadFile(loadFile(APP_PATH));
+        APIFileConfig apkFileConfig = new APIFileConfig(apkFile.getId(), INSTALL);
+        APIUserFile testFile = me.uploadFile(loadFile(TEST_PATH));
+        APIFileConfig testFileConfig = new APIFileConfig(testFile.getId(), RUN_TEST);
         config.setFiles(Arrays.asList(apkFileConfig, testFileConfig));
+        APIUserFile.waitForVirusScans(VIRUS_SCAN_TIMEOUT, apkFile, testFile);
         me.validateTestRunConfig(config);
         APITestRun apiTestRun = me.startTestRun(config);
         assertThat(apiTestRun.getState(), is(oneOf(RUNNING, WAITING)));
@@ -113,18 +115,19 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
 
     @ParameterizedTest
     @ArgumentsSource(APIClientProvider.class)
-    void addTagTest(APIClient apiClient) throws APIException {
+    void addTagTest(APIClient apiClient) throws APIException, InterruptedException {
         APIUser me = apiClient.me();
         APITestRunConfig config = new APITestRunConfig();
         config.setProjectName(generateUnique("testProject"));
         APIFramework defaultApiFramework = getApiFramework(apiClient, "Android Instrumentation");
         config.setOsType(defaultApiFramework.getOsType());
         config.setFrameworkId(defaultApiFramework.getId());
-        Long apkFileId = me.uploadFile(loadFile(APP_PATH)).getId();
-        APIFileConfig apkFileConfig = new APIFileConfig(apkFileId, INSTALL);
-        Long testFileId = me.uploadFile(loadFile(TEST_PATH)).getId();
-        APIFileConfig testFileConfig = new APIFileConfig(testFileId, RUN_TEST);
+        APIUserFile apkFile = me.uploadFile(loadFile(APP_PATH));
+        APIFileConfig apkFileConfig = new APIFileConfig(apkFile.getId(), INSTALL);
+        APIUserFile testFile = me.uploadFile(loadFile(TEST_PATH));
+        APIFileConfig testFileConfig = new APIFileConfig(testFile.getId(), RUN_TEST);
         config.setFiles(Arrays.asList(apkFileConfig, testFileConfig));
+        APIUserFile.waitForVirusScans(VIRUS_SCAN_TIMEOUT, apkFile, testFile);
         me.validateTestRunConfig(config);
         APITestRun apiTestRun = me.startTestRun(config);
         assertThat(apiTestRun.getState(), is(oneOf(RUNNING, WAITING)));
@@ -142,18 +145,19 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
 
     @ParameterizedTest
     @ArgumentsSource(APIClientProvider.class)
-    void requestScreenshotsZip(APIClient apiClient) throws APIException, IOException {
+    void requestScreenshotsZip(APIClient apiClient) throws APIException, InterruptedException, IOException {
         APIUser me = apiClient.me();
         APITestRunConfig config = new APITestRunConfig();
         config.setProjectName(generateUnique("testProject"));
         APIFramework defaultApiFramework = getApiFramework(apiClient, "Android Instrumentation");
         config.setOsType(defaultApiFramework.getOsType());
         config.setFrameworkId(defaultApiFramework.getId());
-        Long apkFileId = me.uploadFile(loadFile(APP_PATH)).getId();
-        APIFileConfig apkFileConfig = new APIFileConfig(apkFileId, INSTALL);
-        Long testFileId = me.uploadFile(loadFile(TEST_PATH)).getId();
-        APIFileConfig testFileConfig = new APIFileConfig(testFileId, RUN_TEST);
+        APIUserFile apkFile = me.uploadFile(loadFile(APP_PATH));
+        APIFileConfig apkFileConfig = new APIFileConfig(apkFile.getId(), INSTALL);
+        APIUserFile testFile = me.uploadFile(loadFile(TEST_PATH));
+        APIFileConfig testFileConfig = new APIFileConfig(testFile.getId(), RUN_TEST);
         config.setFiles(Arrays.asList(apkFileConfig, testFileConfig));
+        APIUserFile.waitForVirusScans(VIRUS_SCAN_TIMEOUT, apkFile, testFile);
         me.validateTestRunConfig(config);
         APITestRun apiTestRun = me.startTestRun(config);
         assertThat(apiTestRun.getState(), is(oneOf(RUNNING, WAITING)));

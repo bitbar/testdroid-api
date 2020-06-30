@@ -12,8 +12,10 @@ import java.io.InputStream;
 import java.io.Serializable;
 import java.net.URL;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
+
+import static com.testdroid.api.model.APIUserFileProperty.VirusScanStatus;
 
 /**
  * @author Michał Szpruta <michal.szpruta@bitbar.com>
@@ -23,6 +25,11 @@ import java.util.List;
 public class APIUserFile extends APIEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    public static final long VIRUS_SCAN_TIMEOUT_DEFAULT = 5 * 60 * 1000L;
+
+    private static final Set<String> VIRUS_SCAN_ACCEPTED_VALUES = Collections.unmodifiableSet(
+            new HashSet<>(Arrays.asList(VirusScanStatus.safe.name(), VirusScanStatus.disabled.name(), null)));
 
     private Date createTime;
 
@@ -272,6 +279,58 @@ public class APIUserFile extends APIEntity implements Serializable {
 
     public void delete() throws APIException {
         deleteResource(selfURI);
+    }
+
+    public APIUserFile waitForVirusScan() throws APIException, InterruptedException {
+        return waitForVirusScan(VIRUS_SCAN_TIMEOUT_DEFAULT);
+    }
+
+    public APIUserFile waitForVirusScan(long timeout) throws APIException, InterruptedException {
+        long end = System.currentTimeMillis() + timeout;
+        String virusScanStatus;
+        while (end > System.currentTimeMillis()) {
+            refresh();
+            virusScanStatus = getVirusScanStatus();
+            if (VirusScanStatus.infected.name().equals(virusScanStatus)) {
+                throw new APIException(400, "File rejected by virus scan");
+            } else if (VIRUS_SCAN_ACCEPTED_VALUES.contains(virusScanStatus)) {
+                return this;
+            }
+            Thread.sleep(500);
+        }
+        throw new APIException(408, "Waiting for virus scan timed out");
+    }
+
+    public static void waitForVirusScans(APIUserFile... files) throws APIException, InterruptedException {
+        waitForVirusScans(VIRUS_SCAN_TIMEOUT_DEFAULT, files);
+    }
+
+    public static void waitForVirusScans(long timeout, APIUserFile... files) throws APIException, InterruptedException {
+        long end = System.currentTimeMillis() + timeout;
+        List<APIUserFile> filteredFiles = Arrays.stream(files).filter(Objects::nonNull).collect(Collectors.toList());
+        while (end > System.currentTimeMillis()) {
+            for (APIUserFile file : filteredFiles) {
+                if (!VIRUS_SCAN_ACCEPTED_VALUES.contains(file.getVirusScanStatus())) {
+                    file.refresh();
+                }
+            }
+            if (filteredFiles.stream().map(APIUserFile::getVirusScanStatus)
+                    .anyMatch(VirusScanStatus.infected.name()::equals)) {
+                throw new APIException(400, "File rejected by virus scan");
+            }
+            if (filteredFiles.stream().map(APIUserFile::getVirusScanStatus)
+                    .allMatch(VIRUS_SCAN_ACCEPTED_VALUES::contains)) {
+                return;
+            }
+            Thread.sleep(500);
+        }
+        throw new APIException(408, "Waiting for virus scan timed out");
+    }
+
+    private String getVirusScanStatus() {
+        return getFileProperties().stream()
+                .filter(p -> APIUserFileProperty.Key.virus_scan_status.name().equals(p.getKey()))
+                .map(APIUserFileProperty::getValue).findAny().orElse(null);
     }
 
     @Override

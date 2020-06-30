@@ -506,6 +506,11 @@ public class APIUser extends APIEntity {
     }
 
     @JsonIgnore
+    public APIUserFile getFile(Long id) throws APIException {
+        return getResource(createUri(selfURI, String.format("/files/%s", id)), APIUserFile.class).getEntity();
+    }
+
+    @JsonIgnore
     public APIListResource<APIProject> getProjectsResource() throws APIException {
         return getListResource(getProjectsURI(), APIProject.class);
     }
