@@ -6,8 +6,6 @@ import com.testdroid.api.APIExceptionMessage;
 import com.testdroid.api.APIList;
 import com.testdroid.api.APIMessage;
 import com.testdroid.api.model.*;
-import com.testdroid.api.model.build.APIPipelineBuild;
-import com.testdroid.api.model.build.APIPipelineJob;
 import com.testdroid.api.model.devicetime.APIBasicDeviceTime;
 import com.testdroid.api.model.devicetime.APIDeviceTimeCountSessionReportEntry;
 import com.testdroid.api.model.devicetime.APIDeviceTimeStepTimeReportEntry;
@@ -138,13 +136,7 @@ public class TypeReferenceFactory {
         });
         TYPE_REFERENCE_LIST_MAP.put(APICountryVatRate.class, new TypeReference<APIList<APICountryVatRate>>() {
         });
-        TYPE_REFERENCE_LIST_MAP.put(APIPipelineBuild.class, new TypeReference<APIList<APIPipelineBuild>>() {
-        });
-        TYPE_REFERENCE_LIST_MAP.put(APIPipelineJob.class, new TypeReference<APIList<APIPipelineJob>>() {
-        });
         TYPE_REFERENCE_LIST_MAP.put(APIMarketShare.class, new TypeReference<APIList<APIMarketShare>>() {
-        });
-        TYPE_REFERENCE_LIST_MAP.put(APIBuildExecutor.class, new TypeReference<APIList<APIBuildExecutor>>() {
         });
         TYPE_REFERENCE_LIST_MAP.put(APIBasicJiraProject.class, new TypeReference<APIList<APIBasicJiraProject>>() {
         });
@@ -274,15 +266,9 @@ public class TypeReferenceFactory {
         });
         TYPE_REFERENCE_MAP.put(APICountryVatRate.class, new TypeReference<APICountryVatRate>() {
         });
-        TYPE_REFERENCE_MAP.put(APIPipelineBuild.class, new TypeReference<APIPipelineBuild>() {
-        });
-        TYPE_REFERENCE_MAP.put(APIPipelineJob.class, new TypeReference<APIPipelineJob>() {
-        });
         TYPE_REFERENCE_MAP.put(APIUserStatistics.class, new TypeReference<APIUserStatistics>() {
         });
         TYPE_REFERENCE_MAP.put(APIMarketShare.class, new TypeReference<APIMarketShare>() {
-        });
-        TYPE_REFERENCE_MAP.put(APIBuildExecutor.class, new TypeReference<APIBuildExecutor>() {
         });
         TYPE_REFERENCE_MAP.put(APIAccountServicePayment.class, new TypeReference<APIAccountServicePayment>() {
         });

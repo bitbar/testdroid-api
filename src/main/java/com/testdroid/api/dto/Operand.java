@@ -12,6 +12,7 @@ public enum Operand {
     EQ(2),
     CONTAINS(2),
     LIKE(2),
+    NOTLIKE(2),
     EMPTY(1),
     ISNULL(1),
     ISNOTNULL(1),

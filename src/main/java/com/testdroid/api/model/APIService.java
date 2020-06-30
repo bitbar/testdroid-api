@@ -9,10 +9,7 @@ import com.testdroid.api.util.TimeConverter;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
@@ -47,6 +44,8 @@ public class APIService extends APIEntity {
     private List<APIRole> roles = new ArrayList<>();
 
     private Unit unit;
+
+    private Set<Integer> defaultConcurrences = new HashSet<>();
 
     @XmlType(namespace = "APIService")
     public enum ChargeType {
@@ -223,6 +222,14 @@ public class APIService extends APIEntity {
 
     public void setActivated(boolean activated) {
         this.activated = activated;
+    }
+
+    public Set<Integer> getDefaultConcurrences() {
+        return defaultConcurrences;
+    }
+
+    public void setDefaultConcurrences(Set<Integer> defaultAvailableConcurrences) {
+        this.defaultConcurrences = defaultAvailableConcurrences;
     }
 
     @JsonIgnore

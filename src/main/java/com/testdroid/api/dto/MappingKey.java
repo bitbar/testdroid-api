@@ -15,7 +15,6 @@ public class MappingKey {
     public static final String ACTIVATE_TIME = "activateTime";
     public static final String ACTIVE = "active";
     public static final String ACTIVE_ONLY = "activeOnly";
-    public static final String ADDED_BY_EMAIL = "addedByEmail";
     public static final String ADDITIONAL_HOURS = "additionalHours";
     public static final String ADDITIONAL_HOURS_PAYMENT_DATE = "additionalHoursPaymentDate";
     public static final String ADDITIONAL_HOURS_PRICE = "additionalHoursPrice";
@@ -43,7 +42,6 @@ public class MappingKey {
     public static final String BRAINTREE_NONCE = "braintreeNonce";
     public static final String BUILD_ENABLED = "buildEnabled";
     public static final String BUILD_LIMIT = "buildLimit";
-    public static final String BUILD_NUMBER = "buildNumber";
     public static final String CAN_RUN_FROM_UI = "canRunFromUI";
     public static final String CARD_NUMBER = "cardNumber";
     public static final String CENT_PRICE = "centPrice";
@@ -161,9 +159,6 @@ public class MappingKey {
     public static final String IS_MAIN_USER = "isMainUser";
     public static final String JOB_CONFIG_ID = "jobConfigId";
     public static final String KEY = "key";
-    public static final String LABEL_DOT_DISPLAY_NAME = "label.displayName";
-    public static final String LABEL_DOT_ID = "label.id";
-    public static final String LABEL_DOT_NAME = "label.name";
     public static final String LABEL_GROUP_ID = "labelGroupId";
     public static final String LABEL_GROUP_NAME = "labelGroupName";
     public static final String LABEL_ID = "labelId";
@@ -215,7 +210,6 @@ public class MappingKey {
     public static final String PAYMENT_DATE = "paymentDate";
     public static final String PAYMENT_METHOD = "paymentMethod";
     public static final String PHONE = "phone";
-    public static final String PIPELINE_JOB_ID = "pipelineJobId";
     public static final String PLAN = "plan";
     public static final String PLUGIN_VERSION = "pluginVersion";
     public static final String PORT = "port";

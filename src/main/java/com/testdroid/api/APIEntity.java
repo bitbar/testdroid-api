@@ -4,10 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.testdroid.api.dto.Context;
 import com.testdroid.api.model.*;
-import com.testdroid.api.model.build.APIBuildConfig;
-import com.testdroid.api.model.build.APIBuildResultConfig;
 import com.testdroid.api.model.devicetime.APIBasicDeviceTime;
 import com.testdroid.api.model.devicetime.APIDeviceTimeCountSessionReportEntry;
 import com.testdroid.api.model.jrjc.*;
@@ -46,9 +45,6 @@ import java.io.InputStream;
         APIBasicJiraProject.class,
         APIBillingPeriod.class,
         APIBillingPeriodUsage.class,
-        APIBuildConfig.class,
-        APIBuildExecutor.class,
-        APIBuildResultConfig.class,
         APICloudInfo.class,
         APICluster.class,
         APIConnection.class,
@@ -117,6 +113,7 @@ public abstract class APIEntity {
     static {
         OBJECT_MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         OBJECT_MAPPER.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+        OBJECT_MAPPER.registerModule(new JavaTimeModule());
     }
 
     protected APIClient client;
