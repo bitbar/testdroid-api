@@ -38,8 +38,6 @@ import static org.hamcrest.Matchers.*;
 @Tag(API_CLIENT)
 class APIUserAPIClientTest extends BaseAPIClientTest {
 
-    private static final Long VIRUS_SCAN_TIMEOUT = 180000L;
-
     @ParameterizedTest
     @ArgumentsSource(APIClientProvider.class)
     void getDevicesTest(APIClient apiClient) throws APIException {
@@ -106,7 +104,7 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
         APIUserFile testFile = me.uploadFile(loadFile(TEST_PATH));
         APIFileConfig testFileConfig = new APIFileConfig(testFile.getId(), RUN_TEST);
         config.setFiles(Arrays.asList(apkFileConfig, testFileConfig));
-        APIUserFile.waitForVirusScans(VIRUS_SCAN_TIMEOUT, apkFile, testFile);
+        APIUserFile.waitForVirusScans(apkFile, testFile);
         me.validateTestRunConfig(config);
         APITestRun apiTestRun = me.startTestRun(config);
         assertThat(apiTestRun.getState(), is(oneOf(RUNNING, WAITING)));
@@ -127,7 +125,7 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
         APIUserFile testFile = me.uploadFile(loadFile(TEST_PATH));
         APIFileConfig testFileConfig = new APIFileConfig(testFile.getId(), RUN_TEST);
         config.setFiles(Arrays.asList(apkFileConfig, testFileConfig));
-        APIUserFile.waitForVirusScans(VIRUS_SCAN_TIMEOUT, apkFile, testFile);
+        APIUserFile.waitForVirusScans(apkFile, testFile);
         me.validateTestRunConfig(config);
         APITestRun apiTestRun = me.startTestRun(config);
         assertThat(apiTestRun.getState(), is(oneOf(RUNNING, WAITING)));
@@ -157,7 +155,7 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
         APIUserFile testFile = me.uploadFile(loadFile(TEST_PATH));
         APIFileConfig testFileConfig = new APIFileConfig(testFile.getId(), RUN_TEST);
         config.setFiles(Arrays.asList(apkFileConfig, testFileConfig));
-        APIUserFile.waitForVirusScans(VIRUS_SCAN_TIMEOUT, apkFile, testFile);
+        APIUserFile.waitForVirusScans(apkFile, testFile);
         me.validateTestRunConfig(config);
         APITestRun apiTestRun = me.startTestRun(config);
         assertThat(apiTestRun.getState(), is(oneOf(RUNNING, WAITING)));
