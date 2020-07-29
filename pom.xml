@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.testdroid</groupId>
     <artifactId>testdroid-api</artifactId>
-    <version>2.101</version>
+    <version>2.102</version>
     <packaging>jar</packaging>
     <name>Bitbar API v2</name>
     <url>https://github.com/bitbar/testdroid-api</url>
@@ -109,11 +109,6 @@
             <version>${org.apache.httpcomponents.httpclient.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-collections4</artifactId>
-            <version>${org.apache.commons.collections4.version}</version>
-        </dependency>
-        <dependency>
             <groupId>com.google.oauth-client</groupId>
             <artifactId>google-oauth-client</artifactId>
             <version>${com.google.http-client}</version>
@@ -122,6 +117,11 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>${org.apache.commons.lang3.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>${org.apache.commons.collections4.version}</version>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>

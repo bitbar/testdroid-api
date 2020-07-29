@@ -172,6 +172,7 @@ public class MappingKey {
     public static final String LAST_PAYMENT_DATE = "lastPaymentDate";
     public static final String LAST_RETRY_TIME = "lastRetryTime";
     public static final String LAUNCH_APP_DURATION = "launchAppDuration";
+    public static final String LIVE_TESTING_ONLY= "liveTestingOnly";
     public static final String LOCALE_COUNTRY = "localeCountry";
     public static final String LOCATION_SERVICES_ON = "locationServiceOn";
     public static final String LOCKED = "locked";
@@ -281,6 +282,7 @@ public class MappingKey {
     public static final String TEST_EXECUTING = "testExecuting";
     public static final String TEST_RUN_ID = "testRunId";
     public static final String TEST_RUN_NAME = "testRunName";
+    public static final String TEST_TIME_LIMIT = "testTimeLimit";
     public static final String TETHERING_ON = "tetheringOn";
     public static final String TIMESTAMP = "timestamp";
     public static final String TIME_LIMIT = "timeLimit";
