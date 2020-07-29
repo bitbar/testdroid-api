@@ -119,6 +119,8 @@ public class APIAdminDevice extends APIEntity {
 
     private String mainUserEmail;
 
+    private Long testTimeLimit;
+
     private boolean locked;
 
     private APIDevice.OsType osType;
@@ -137,7 +139,8 @@ public class APIAdminDevice extends APIEntity {
             ComplexState state, LocalDateTime stateTime,  LocalDateTime stateChangeTime, InitStep initStep,
             String ipAddress, Long clusterId, String clusterName, String clusterUrl, String pluginVersion,
             APICluster.State clusterState, LocalDateTime clusterStateTime, LocalDateTime clusterStateChangeTime,
-            Boolean clusterEnabled, LocalDateTime lastOnlineTime, Long accountId, String mainUserEmail, Boolean locked,
+            Boolean clusterEnabled, LocalDateTime lastOnlineTime, Long accountId, String mainUserEmail,
+            Long testTimeLimit, Boolean locked,
             APIDevice.OsType osType) {
         super(id);
         this.name = name;
@@ -157,6 +160,7 @@ public class APIAdminDevice extends APIEntity {
                 clusterStateTime, clusterStateChangeTime, clusterEnabled);
         this.lastOnlineTime = TimeConverter.toDate(lastOnlineTime);
         this.accountId = accountId;
+        this.testTimeLimit = testTimeLimit;
         this.mainUserEmail = mainUserEmail;
         this.locked = locked;
         this.osType = osType;
@@ -298,6 +302,15 @@ public class APIAdminDevice extends APIEntity {
         this.mainUserEmail = mainUserEmail;
     }
 
+    public APIAdminDevice setTestTimeLimit(Long testTimeLimit) {
+        this.testTimeLimit = testTimeLimit;
+        return this;
+    }
+
+    public Long getTestTimeLimit() {
+        return testTimeLimit;
+    }
+
     public boolean isLocked() {
         return locked;
     }
@@ -310,8 +323,9 @@ public class APIAdminDevice extends APIEntity {
         return osType;
     }
 
-    public void setOsType(APIDevice.OsType osType) {
+    public APIAdminDevice setOsType(APIDevice.OsType osType) {
         this.osType = osType;
+        return this;
     }
 
     @Override
@@ -336,6 +350,7 @@ public class APIAdminDevice extends APIEntity {
         this.lastOnlineTime = adminDevice.lastOnlineTime;
         this.accountId = adminDevice.accountId;
         this.mainUserEmail = adminDevice.mainUserEmail;
+        this.testTimeLimit = adminDevice.testTimeLimit;
         this.locked = adminDevice.locked;
         this.osType = adminDevice.osType;
     }

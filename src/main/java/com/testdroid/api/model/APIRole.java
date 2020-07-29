@@ -7,6 +7,7 @@ import com.testdroid.api.util.TimeConverter;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
@@ -105,5 +106,26 @@ public class APIRole extends APIEntity {
         this.addedByEmail = apiRole.addedByEmail;
         this.value = apiRole.value;
         this.valueCalculated = apiRole.valueCalculated;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        APIRole apiRole = (APIRole) o;
+        return valueCalculated == apiRole.valueCalculated &&
+                Objects.equals(addedByEmail, apiRole.addedByEmail) &&
+                Objects.equals(expireTime, apiRole.expireTime) &&
+                name.equals(apiRole.name) &&
+                Objects.equals(value, apiRole.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(addedByEmail, expireTime, name, value, valueCalculated);
     }
 }

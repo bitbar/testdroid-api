@@ -1,5 +1,7 @@
 package com.testdroid.api;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -26,6 +28,14 @@ public class APIExceptionMessage extends APIMessage {
 
     public void setStatusCode(Integer statusCode) {
         this.statusCode = statusCode;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("message", getMessage())
+                .append("statusCode", statusCode)
+                .toString();
     }
 
 }
