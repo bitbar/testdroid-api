@@ -166,6 +166,8 @@ public class TypeReferenceFactory {
         });
         TYPE_REFERENCE_MAP.put(APIAccount.class, new TypeReference<APIAccount>() {
         });
+        TYPE_REFERENCE_MAP.put(APIAccountPreference.class, new TypeReference<APIAccountPreference>() {
+        });
         TYPE_REFERENCE_MAP.put(APIAdminOverview.class, new TypeReference<APIAdminOverview>() {
         });
         TYPE_REFERENCE_MAP.put(APICloudInfo.class, new TypeReference<APICloudInfo>() {

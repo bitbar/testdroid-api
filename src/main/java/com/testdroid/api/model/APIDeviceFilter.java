@@ -17,14 +17,22 @@ public class APIDeviceFilter extends APIEntity {
 
     private boolean hidden;
 
+    //Technical field to allow group by it
+    @JsonIgnore
+    private String labelGroupDisplayName;
+
     public APIDeviceFilter() {
     }
 
-    public APIDeviceFilter(Long id, String name, String displayName, boolean hidden) {
-        super(id);
-        this.name = name;
-        this.displayName = displayName;
+    public APIDeviceFilter(
+            Long labelId, String labelName, String labelDisplayName, Long labelGroupId, String labelGroupDisplayName,
+            boolean hidden, Long order) {
+        super(labelId);
+        this.parentId = labelGroupId;
+        this.name = labelName;
+        this.displayName = labelDisplayName;
         this.hidden = hidden;
+        this.labelGroupDisplayName = labelGroupDisplayName;
     }
 
     public String getName() {
@@ -49,6 +57,10 @@ public class APIDeviceFilter extends APIEntity {
 
     public void setHidden(boolean hidden) {
         this.hidden = hidden;
+    }
+
+    public String getLabelGroupDisplayName() {
+        return labelGroupDisplayName;
     }
 
     @Override
