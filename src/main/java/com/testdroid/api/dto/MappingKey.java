@@ -83,6 +83,7 @@ public class MappingKey {
     public static final String DEVICE_DOT_ARCHIVE_TIME = "device.archiveTime";
     public static final String DEVICE_DOT_DISPLAY_NAME = "device.displayName";
     public static final String DEVICE_DOT_ID = "device.id";
+    public static final String DEVICE_FILTER_GROUP_NAME= "deviceFilterGroup.name";
     public static final String DEVICE_ID = "deviceId";
     public static final String DEVICE_IDS_ARR = "deviceIds[]";
     public static final String DEVICE_MODEL_DOT_ID = "deviceModel.id";

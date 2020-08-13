@@ -140,13 +140,15 @@ public class APIDeviceSession extends APIEntity {
 
     private Integer rowIndex;
 
+    private Long accountId;
+
     public APIDeviceSession() {
     }
 
     public APIDeviceSession(
-            Long id, Long userId, String userEmail, APIDeviceSession.Type type, LocalDateTime createTime,
-            LocalDateTime startTime, LocalDateTime installTime, LocalDateTime endTime, Long timeLimit,
-            Long launchAppDuration, Long deviceLogFirstTimestamp, APIDeviceSession.State state,
+            Long id, Long userId, String userEmail, Long accountId, APIDeviceSession.Type type,
+            LocalDateTime createTime, LocalDateTime startTime, LocalDateTime installTime, LocalDateTime endTime,
+            Long timeLimit, Long launchAppDuration, Long deviceLogFirstTimestamp, APIDeviceSession.State state,
             Integer testCasePassedCount, Integer testCaseFailedCount, Integer testCaseSkippedCount, Boolean billable,
             Long deviceModelId, String displayName, Integer creditsPrice, String imagePrefix, Integer imageTop,
             Integer imageLeft, Integer imageWidth, Integer imageHeight, Integer frameExtraWidth,
@@ -157,6 +159,7 @@ public class APIDeviceSession extends APIEntity {
         super(id);
         this.userId = userId;
         this.userEmail = userEmail;
+        this.accountId = accountId;
         this.type = type;
         this.createTime = TimeConverter.toDate(createTime);
         this.startTime = TimeConverter.toDate(startTime);
@@ -446,6 +449,14 @@ public class APIDeviceSession extends APIEntity {
         this.rowIndex = rowIndex;
     }
 
+    public Long getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(Long accountId) {
+        this.accountId = accountId;
+    }
+
     @JsonIgnore
     public APIListResource<APIDeviceSessionStep> getDeviceSessionStepsResource() throws APIException {
         return getListResource(createUri(selfURI, "/steps"), APIDeviceSessionStep.class);
@@ -481,6 +492,7 @@ public class APIDeviceSession extends APIEntity {
         cloneBase(from);
         this.userId = apiDeviceSession.userId;
         this.userEmail = apiDeviceSession.userEmail;
+        this.accountId = apiDeviceSession.accountId;
         this.createTime = apiDeviceSession.createTime;
         this.startTime = apiDeviceSession.startTime;
         this.installTime = apiDeviceSession.installTime;

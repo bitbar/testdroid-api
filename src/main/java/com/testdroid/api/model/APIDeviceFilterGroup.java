@@ -37,8 +37,9 @@ public class APIDeviceFilterGroup extends APIEntity {
         return deviceFilters;
     }
 
-    public void setDeviceFilters(List<APIDeviceFilter> deviceFilters) {
+    public APIDeviceFilterGroup setDeviceFilters(List<APIDeviceFilter> deviceFilters) {
         this.deviceFilters = deviceFilters;
+        return this;
     }
 
     @Override
