@@ -4,7 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
 
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.Objects;
+
+import static java.lang.Boolean.FALSE;
 
 /**
  * @author Damian Sniezek <damian.sniezek@smartbear.com>
@@ -32,6 +33,11 @@ public class APIAccountConcurrencyStatus extends APIEntity {
         return accountConcurrency;
     }
 
+    public APIAccountConcurrencyStatus setAccountConcurrency(Integer accountConcurrency) {
+        this.accountConcurrency = accountConcurrency;
+        return this;
+    }
+
     public Long getRunningSessions() {
         return runningSessions;
     }
@@ -52,16 +58,19 @@ public class APIAccountConcurrencyStatus extends APIEntity {
         return unlimitedConcurrency;
     }
 
+    public APIAccountConcurrencyStatus setUnlimitedConcurrency(Boolean unlimitedConcurrency) {
+        this.unlimitedConcurrency = unlimitedConcurrency;
+        return this;
+    }
+
     public APIAccountConcurrencyStatus(
-            Long accountId, String mainUserEmail, Long waitingSessions, Long runningSessions,
-            Integer accountConcurrency, Boolean hasMobileConcurrencyRole) {
+            Long accountId, String mainUserEmail, Long waitingSessions, Long runningSessions) {
         super(accountId);
         this.runningSessions = runningSessions;
         this.waitingSessions = waitingSessions;
         this.sessions = runningSessions + waitingSessions;
         this.mainUserEmail = mainUserEmail;
-        this.accountConcurrency = accountConcurrency;
-        this.unlimitedConcurrency = hasMobileConcurrencyRole && Objects.isNull(accountConcurrency);
+        this.unlimitedConcurrency = FALSE;
     }
 
     @Override

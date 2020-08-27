@@ -275,6 +275,7 @@ public class MappingKey {
     public static final String SUBSCRIPTION_END = "subscriptionEnd";
     public static final String SUBSCRIPTION_START = "subscriptionStart";
     public static final String SUCCESS_RATIO = "successRatio";
+    public static final String SYNC = "sync";
     public static final String SUMMARY = "summary";
     public static final String TAG = "tag";
     public static final String TAG_ARR = "tag[]";
