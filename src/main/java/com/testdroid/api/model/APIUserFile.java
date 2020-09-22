@@ -59,8 +59,6 @@ public class APIUserFile extends APIEntity implements Serializable {
 
     private boolean isShared;
 
-    private transient String storage;
-
     private transient String uri;
 
     private transient String iconUri;
@@ -92,7 +90,7 @@ public class APIUserFile extends APIEntity implements Serializable {
     }
 
     public APIUserFile(
-            Long id, String name, LocalDateTime createTime, Long size, State state, String storage, String uri,
+            Long id, String name, LocalDateTime createTime, Long size, State state, String uri,
             String iconUri, String mimetype, Direction direction, InputType inputType, Long userId, String userEmail,
             boolean isShared) {
         super(id);
@@ -100,7 +98,6 @@ public class APIUserFile extends APIEntity implements Serializable {
         this.createTime = TimeConverter.toDate(createTime);
         this.size = size;
         this.state = state;
-        this.storage = storage;
         this.uri = uri;
         this.iconUri = iconUri;
         this.mimetype = mimetype;
@@ -169,15 +166,6 @@ public class APIUserFile extends APIEntity implements Serializable {
 
     public void setDirectUrl(URL directUrl) {
         this.directUrl = directUrl;
-    }
-
-    @JsonIgnore
-    public String getStorage() {
-        return storage;
-    }
-
-    public void setStorage(String storage) {
-        this.storage = storage;
     }
 
     @JsonIgnore
@@ -345,7 +333,6 @@ public class APIUserFile extends APIEntity implements Serializable {
         this.state = apiUserFile.state;
         this.directUrl = apiUserFile.directUrl;
         this.iconDirectUrl = apiUserFile.iconDirectUrl;
-        this.storage = apiUserFile.storage;
         this.uri = apiUserFile.uri;
         this.iconUri = apiUserFile.iconUri;
         this.direction = apiUserFile.direction;

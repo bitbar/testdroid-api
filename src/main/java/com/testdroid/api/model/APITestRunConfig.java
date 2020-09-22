@@ -80,6 +80,8 @@ public class APITestRunConfig extends APIEntity implements Serializable {
 
     private Long timeout;
 
+    private APIDuration maxTestTimeout;
+
     private Integer maxAutoRetriesCount;
 
     private Long frameworkId;
@@ -275,6 +277,14 @@ public class APITestRunConfig extends APIEntity implements Serializable {
 
     public void setTimeout(Long timeout) {
         this.timeout = timeout;
+    }
+
+    public void setMaxTestTimeout(APIDuration maxTestTimeout) {
+        this.maxTestTimeout = maxTestTimeout;
+    }
+
+    public APIDuration getMaxTestTimeout() {
+        return maxTestTimeout;
     }
 
     public boolean isVideoRecordingEnabled() {
