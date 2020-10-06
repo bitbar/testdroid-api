@@ -120,33 +120,17 @@ public class APIUser extends APIEntity {
 
     private String registrationIP;
 
-    private Boolean originPortal;
-
     public APIUser() {
     }
 
     public APIUser(
-            Long id, String email, String firstName, String lastName, String state, String country,
-            String city, String code, String address, String phone, String organization, String vatId,
-            String timeZone, LocalDateTime createTime, LocalDateTime deleteTime, LocalDateTime lastLoginTime,
-            LocalDateTime lastLaunchedTestTime, Status status) {
+            Long id, String email, String firstName, String lastName, LocalDateTime createTime, LocalDateTime deleteTime, Status status) {
         super(id);
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.state = state;
-        this.country = country;
-        this.city = city;
-        this.code = code;
-        this.address = address;
-        this.phone = phone;
-        this.organization = organization;
-        this.vatId = vatId;
-        this.timeZone = timeZone;
         this.createTime = TimeConverter.toDate(createTime);
         this.deleteTime = TimeConverter.toDate(deleteTime);
-        this.lastLoginTime = TimeConverter.toDate(lastLoginTime);
-        this.lastLaunchedTestTime = TimeConverter.toDate(lastLaunchedTestTime);
         this.status = status;
         this.enabled = status == Status.ENABLED;
     }
@@ -157,9 +141,19 @@ public class APIUser extends APIEntity {
             String timeZone, LocalDateTime createTime, LocalDateTime deleteTime, LocalDateTime lastLoginTime,
             LocalDateTime lastLaunchedTestTime, Boolean isMainUser, Long mainUserId, String mainUserEmail,
             String apiKey, Status status, Long createdById, String createdByEmail, MfaStatus mfaStatus,
-            String registrationIP, Boolean originPortal) {
-        this(id, email, firstName, lastName, state, country, city, code, address, phone, organization, vatId,
-                timeZone, createTime, deleteTime, lastLoginTime, lastLaunchedTestTime, status);
+            String registrationIP) {
+        this(id, email, firstName, lastName, createTime, deleteTime, status);
+        this.state = state;
+        this.country = country;
+        this.city = city;
+        this.code = code;
+        this.address = address;
+        this.phone = phone;
+        this.organization = organization;
+        this.vatId = vatId;
+        this.timeZone = timeZone;
+        this.lastLoginTime = TimeConverter.toDate(lastLoginTime);
+        this.lastLaunchedTestTime = TimeConverter.toDate(lastLaunchedTestTime);
         this.accountId = accountId;
         this.isMainUser = isMainUser;
         this.mainUserId = mainUserId;
@@ -169,7 +163,6 @@ public class APIUser extends APIEntity {
         this.createdByEmail = createdByEmail;
         this.mfaStatus = mfaStatus;
         this.registrationIP = registrationIP;
-        this.originPortal = originPortal;
         this.selfURI = String.format("/users/%s", id);
     }
 
@@ -442,14 +435,6 @@ public class APIUser extends APIEntity {
         this.registrationIP = registrationIP;
     }
 
-    public Boolean getOriginPortal() {
-        return originPortal;
-    }
-
-    public void setOriginPortal(Boolean originPortal) {
-        this.originPortal = originPortal;
-    }
-
     private Map<String, Object> getUpdateUserParams() {
         Map<String, Object> map = new HashMap<>();
         map.put(ADDRESS, address);
@@ -583,6 +568,5 @@ public class APIUser extends APIEntity {
         this.mfaStatus = apiUser.mfaStatus;
         this.mfaQRCodeUrl = apiUser.mfaQRCodeUrl;
         this.registrationIP = apiUser.registrationIP;
-        this.originPortal = apiUser.originPortal;
     }
 }

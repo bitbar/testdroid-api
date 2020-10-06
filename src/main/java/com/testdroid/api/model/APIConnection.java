@@ -37,13 +37,14 @@ public class APIConnection extends APIEntity implements Serializable {
 
     private String host;
 
+    private String externalId;
+
     public APIConnection() {
     }
 
     public APIConnection(
             Long id, LocalDateTime createTime, LocalDateTime endTime, Long deviceSessionId, String password,
-            String type,
-            String urlSchema, String host, Integer port, String path) {
+            String type, String urlSchema, String host, Integer port, String path, String externalId) {
         super(id);
         this.createTime = TimeConverter.toDate(createTime);
         this.endTime = TimeConverter.toDate(endTime);
@@ -55,6 +56,7 @@ public class APIConnection extends APIEntity implements Serializable {
         this.urlSchema = urlSchema;
         this.host = host;
         this.url = String.format("%s:%d", host, port);
+        this.externalId = externalId;
     }
 
     public Date getCreateTime() {
@@ -137,6 +139,14 @@ public class APIConnection extends APIEntity implements Serializable {
         this.path = path;
     }
 
+    public String getExternalId() {
+        return externalId;
+    }
+
+    public void setExternalId(String externalId) {
+        this.externalId = externalId;
+    }
+
     @Override
     protected <T extends APIEntity> void clone(T from) {
         APIConnection apiConnection = (APIConnection) from;
@@ -150,6 +160,7 @@ public class APIConnection extends APIEntity implements Serializable {
         this.path = apiConnection.path;
         this.urlSchema = apiConnection.urlSchema;
         this.host = apiConnection.host;
+        this.externalId = apiConnection.externalId;
     }
 
 }
