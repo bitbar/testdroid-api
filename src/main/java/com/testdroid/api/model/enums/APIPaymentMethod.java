@@ -16,7 +16,7 @@ import static java.util.Collections.singletonList;
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
  * @author Damian Sniezek <damian.sniezek@bitbar.com>
  *
- * Mapping is (isServiceIdPresent, isOldAcountServiceIdPresent, isNewServiceIdPresent, isCallByUser)
+ * Mapping is (isServiceIdPresent, isOldAccountServiceIdPresent, isNewAccountServiceIdPresent, isCallByUser)
  */
 public enum APIPaymentMethod {
 
