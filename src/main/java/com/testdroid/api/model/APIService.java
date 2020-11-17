@@ -21,6 +21,8 @@ public class APIService extends APIEntity {
 
     private String externalId;
 
+    private String commonId;
+
     private Integer centPrice;
 
     private Integer includedHours;
@@ -71,7 +73,7 @@ public class APIService extends APIEntity {
 
     public APIService(
             Long id, String name, String description, boolean autoRenew, Integer centPrice, Integer includedHours,
-            Integer pricePerHour, String externalId, LocalDateTime archiveTime, LocalDateTime activateTime,
+            Integer pricePerHour, String externalId, String commonId, LocalDateTime archiveTime, LocalDateTime activateTime,
             boolean activated, boolean customPlan, ChargeType chargeType, Unit unit) {
         super(id);
         this.name = name;
@@ -87,6 +89,7 @@ public class APIService extends APIEntity {
         this.customPlan = customPlan;
         this.chargeType = chargeType;
         this.unit = unit;
+        this.commonId = commonId;
     }
 
     public boolean isAutoRenew() {
@@ -114,6 +117,7 @@ public class APIService extends APIEntity {
         this.autoRenew = apiService.autoRenew;
         this.centPrice = apiService.centPrice;
         this.externalId = apiService.externalId;
+        this.commonId = apiService.commonId;
         this.includedHours = apiService.includedHours;
         this.pricePerHour = apiService.pricePerHour;
         this.archiveTime = apiService.archiveTime;
@@ -226,6 +230,14 @@ public class APIService extends APIEntity {
 
     public Set<Integer> getDefaultConcurrences() {
         return defaultConcurrences;
+    }
+
+    public String getCommonId() {
+        return commonId;
+    }
+
+    public void setCommonId(String commonId) {
+        this.commonId = commonId;
     }
 
     public void setDefaultConcurrences(Set<Integer> defaultAvailableConcurrences) {
