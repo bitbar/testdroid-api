@@ -77,6 +77,8 @@ public class APIAccountService extends APIEntity {
 
     private APIService.ChargeType chargeType;
 
+    private String subscriptionManagementURL;
+
     public APIAccountService() {
     }
 
@@ -319,6 +321,14 @@ public class APIAccountService extends APIEntity {
         this.chargeType = chargeType;
     }
 
+    public void setSubscriptionManagementURL(String subscriptionManagementURL) {
+        this.subscriptionManagementURL = subscriptionManagementURL;
+    }
+
+    public String getSubscriptionManagementURL() {
+        return subscriptionManagementURL;
+    }
+
     @JsonIgnore
     public Integer getPayUnitCount() {
         return autoRenew ? unitCount : unitCount * serviceCount;
@@ -370,6 +380,7 @@ public class APIAccountService extends APIEntity {
         this.braintreeId = accountService.braintreeId;
         this.deactivateReason = accountService.deactivateReason;
         this.chargeType = accountService.chargeType;
+        this.subscriptionManagementURL = accountService.subscriptionManagementURL;
     }
 
     public boolean isActiveAt(Date date) {

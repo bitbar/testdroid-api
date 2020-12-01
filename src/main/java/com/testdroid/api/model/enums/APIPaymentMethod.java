@@ -61,11 +61,11 @@ public enum APIPaymentMethod {
     private static Map<List<Boolean>, List<PlanOperation>> createCBTMapping(){
         Map<List<Boolean>, List<PlanOperation>> result = new HashMap<>();
         //create and activate by CBT
-        result.put(asList(TRUE, FALSE, FALSE, TRUE), asList(CREATE, ACTIVATE));
+        result.put(asList(TRUE, FALSE, FALSE, FALSE), asList(CREATE, ACTIVATE));
         //upgrade by CBT
-        result.put(asList(TRUE, TRUE, FALSE, TRUE), asList(CREATE, ACTIVATE, CANCEL));
+        result.put(asList(TRUE, TRUE, FALSE, FALSE), asList(CREATE, ACTIVATE, CANCEL));
         //cancel by CBT
-        result.put(asList(FALSE, TRUE, FALSE, TRUE), singletonList(CANCEL));
+        result.put(asList(FALSE, TRUE, FALSE, FALSE), singletonList(CANCEL));
         return Collections.unmodifiableMap(result);
     }
 
