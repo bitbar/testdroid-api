@@ -1,6 +1,7 @@
 package com.testdroid.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIException;
 import com.testdroid.api.APIListResource;
@@ -11,10 +12,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import java.io.File;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.testdroid.api.dto.MappingKey.*;
 
@@ -23,6 +21,7 @@ import static com.testdroid.api.dto.MappingKey.*;
  * @author Slawomir Pawluk <slawomir.pawluk@bitbar.com>
  */
 @XmlRootElement
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class APIUser extends APIEntity {
 
     @XmlType(namespace = "APIUser")
@@ -78,7 +77,7 @@ public class APIUser extends APIEntity {
 
     private String email;
 
-    private boolean enabled;
+    private Boolean enabled;
 
     private Boolean isMainUser;
 
@@ -120,6 +119,10 @@ public class APIUser extends APIEntity {
 
     private String registrationIP;
 
+    private Boolean sdcSync;
+
+    private Collection<APIUser> accountOwners;
+
     public APIUser() {
     }
 
@@ -141,7 +144,7 @@ public class APIUser extends APIEntity {
             String timeZone, LocalDateTime createTime, LocalDateTime deleteTime, LocalDateTime lastLoginTime,
             LocalDateTime lastLaunchedTestTime, Boolean isMainUser, Long mainUserId, String mainUserEmail,
             String apiKey, Status status, Long createdById, String createdByEmail, MfaStatus mfaStatus,
-            String registrationIP) {
+            String registrationIP, Boolean sdcSync) {
         this(id, email, firstName, lastName, createTime, deleteTime, status);
         this.state = state;
         this.country = country;
@@ -164,6 +167,7 @@ public class APIUser extends APIEntity {
         this.mfaStatus = mfaStatus;
         this.registrationIP = registrationIP;
         this.selfURI = String.format("/users/%s", id);
+        this.sdcSync = sdcSync;
     }
 
     public String getEmail() {
@@ -262,7 +266,7 @@ public class APIUser extends APIEntity {
         this.timeZone = timeZone;
     }
 
-    public boolean isEnabled() {
+    public Boolean isEnabled() {
         return enabled;
     }
 
@@ -435,6 +439,22 @@ public class APIUser extends APIEntity {
         this.registrationIP = registrationIP;
     }
 
+    public Boolean getSdcSync() {
+        return sdcSync;
+    }
+
+    public void setSdcSync(Boolean sdcSync) {
+        this.sdcSync = sdcSync;
+    }
+
+    public void setAccountOwners(Collection<APIUser> accountOwners) {
+        this.accountOwners = accountOwners;
+    }
+
+    public Collection<APIUser> getAccountOwners() {
+        return accountOwners;
+    }
+
     private Map<String, Object> getUpdateUserParams() {
         Map<String, Object> map = new HashMap<>();
         map.put(ADDRESS, address);
@@ -568,5 +588,7 @@ public class APIUser extends APIEntity {
         this.mfaStatus = apiUser.mfaStatus;
         this.mfaQRCodeUrl = apiUser.mfaQRCodeUrl;
         this.registrationIP = apiUser.registrationIP;
+        this.sdcSync = apiUser.sdcSync;
+        this.accountOwners = apiUser.accountOwners;
     }
 }
