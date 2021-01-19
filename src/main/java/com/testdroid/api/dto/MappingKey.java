@@ -296,6 +296,7 @@ public class MappingKey {
     public static final String TOTAL_PRICE = "totalPrice";
     public static final String TOTAL_TESTS = "totalTests";
     public static final String TO_TIME = "toTime";
+    public static final String TUNNEL_ID = "tunnelId";
     public static final String TYPE = "type";
     public static final String TYPE_ID = "typeId";
     public static final String UNIT = "unit";
