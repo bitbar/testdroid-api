@@ -6,6 +6,7 @@ import com.testdroid.api.APIExceptionMessage;
 import com.testdroid.api.APIList;
 import com.testdroid.api.APIMessage;
 import com.testdroid.api.model.*;
+import com.testdroid.api.model.capabilities.APIDesktopBrowserCapabilities;
 import com.testdroid.api.model.devicetime.APIBasicDeviceTime;
 import com.testdroid.api.model.devicetime.APIDeviceTimeCountSessionReportEntry;
 import com.testdroid.api.model.devicetime.APIDeviceTimeStepTimeReportEntry;
@@ -26,6 +27,8 @@ public class TypeReferenceFactory {
 
     static {
         TYPE_REFERENCE_LIST_MAP.put(APIAccessGroup.class, new TypeReference<APIList<APIAccessGroup>>() {
+        });
+        TYPE_REFERENCE_LIST_MAP.put(APIBrowser.class, new TypeReference<APIList<APIBrowser>>() {
         });
         TYPE_REFERENCE_LIST_MAP.put(APIFramework.class, new TypeReference<APIList<APIFramework>>() {
         });
@@ -161,6 +164,8 @@ public class TypeReferenceFactory {
         TYPE_REFERENCE_MAP.put(APIBillingPeriod.class, new TypeReference<APIBillingPeriod>() {
         });
         TYPE_REFERENCE_MAP.put(APIBillingPeriodUsage.class, new TypeReference<APIBillingPeriodUsage>() {
+        });
+        TYPE_REFERENCE_MAP.put(APIBrowser.class, new TypeReference<APIBrowser>() {
         });
         TYPE_REFERENCE_MAP.put(APIFramework.class, new TypeReference<APIFramework>() {
         });

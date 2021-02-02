@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.testdroid.api.dto.Context;
 import com.testdroid.api.model.*;
+import com.testdroid.api.model.capabilities.APIDesktopBrowserCapabilities;
 import com.testdroid.api.model.devicetime.APIBasicDeviceTime;
 import com.testdroid.api.model.devicetime.APIDeviceTimeCountSessionReportEntry;
 import com.testdroid.api.model.jrjc.*;
@@ -45,6 +46,7 @@ import java.io.InputStream;
         APIBasicJiraProject.class,
         APIBillingPeriod.class,
         APIBillingPeriodUsage.class,
+        APIBrowser.class,
         APICloudInfo.class,
         APICluster.class,
         APIConnection.class,
