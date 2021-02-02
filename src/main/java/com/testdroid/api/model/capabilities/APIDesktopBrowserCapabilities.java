@@ -1,4 +1,4 @@
-package com.testdroid.api.model;
+package com.testdroid.api.model.capabilities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;

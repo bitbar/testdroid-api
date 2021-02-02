@@ -1,4 +1,4 @@
-package com.testdroid.api.model;
+package com.testdroid.api.model.capabilities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
@@ -11,15 +11,17 @@ import java.util.List;
  * @author Michał Szpruta <michal.szpruta@bitbar.com>
  */
 @XmlRootElement
-public class APIDesktopBrowser extends APIEntity {
+public class APIDesktopPlatform extends APIEntity {
 
     private String name;
 
     private String value;
 
-    private List<String> versions = new ArrayList<>();
+    private List<APIDesktopBrowser> browsers = new ArrayList<>();
 
-    public APIDesktopBrowser() {
+    private List<String> resolutions = new ArrayList<>();
+
+    public APIDesktopPlatform() {
     }
 
     public String getName() {
@@ -38,21 +40,30 @@ public class APIDesktopBrowser extends APIEntity {
         this.value = value;
     }
 
-    public List<String> getVersions() {
-        return versions;
+    public List<APIDesktopBrowser> getBrowsers() {
+        return browsers;
     }
 
-    public void setVersions(List<String> versions) {
-        this.versions = versions;
+    public void setBrowsers(List<APIDesktopBrowser> browsers) {
+        this.browsers = browsers;
+    }
+
+    public List<String> getResolutions() {
+        return resolutions;
+    }
+
+    public void setResolutions(List<String> resolutions) {
+        this.resolutions = resolutions;
     }
 
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
-        APIDesktopBrowser apiDeviceFilterGroup = (APIDesktopBrowser) from;
+        APIDesktopPlatform apiDeviceFilterGroup = (APIDesktopPlatform) from;
         cloneBase(from);
         this.name = apiDeviceFilterGroup.name;
         this.value = apiDeviceFilterGroup.value;
-        this.versions = apiDeviceFilterGroup.versions;
+        this.browsers = apiDeviceFilterGroup.browsers;
+        this.resolutions = apiDeviceFilterGroup.resolutions;
     }
 }
