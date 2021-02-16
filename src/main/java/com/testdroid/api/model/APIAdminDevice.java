@@ -119,6 +119,8 @@ public class APIAdminDevice extends APIEntity {
 
     private String mainUserEmail;
 
+    private String location;
+
     private Long testTimeLimit;
 
     private boolean locked;
@@ -139,7 +141,7 @@ public class APIAdminDevice extends APIEntity {
             ComplexState state, LocalDateTime stateTime,  LocalDateTime stateChangeTime, InitStep initStep,
             String ipAddress, Long clusterId, String clusterName, String clusterUrl, String pluginVersion,
             APICluster.State clusterState, LocalDateTime clusterStateTime, LocalDateTime clusterStateChangeTime,
-            Boolean clusterEnabled, LocalDateTime lastOnlineTime, Long accountId, String mainUserEmail,
+            Boolean clusterEnabled, LocalDateTime lastOnlineTime, Long accountId, String mainUserEmail, String location,
             Long testTimeLimit, Boolean locked,
             APIDevice.OsType osType) {
         super(id);
@@ -162,6 +164,7 @@ public class APIAdminDevice extends APIEntity {
         this.accountId = accountId;
         this.testTimeLimit = testTimeLimit;
         this.mainUserEmail = mainUserEmail;
+        this.location = location;
         this.locked = locked;
         this.osType = osType;
     }
@@ -328,6 +331,15 @@ public class APIAdminDevice extends APIEntity {
         return this;
     }
 
+    public APIAdminDevice setLocation(String location) {
+        this.location = location;
+        return this;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
@@ -350,6 +362,7 @@ public class APIAdminDevice extends APIEntity {
         this.lastOnlineTime = adminDevice.lastOnlineTime;
         this.accountId = adminDevice.accountId;
         this.mainUserEmail = adminDevice.mainUserEmail;
+        this.location = adminDevice.location;
         this.testTimeLimit = adminDevice.testTimeLimit;
         this.locked = adminDevice.locked;
         this.osType = adminDevice.osType;

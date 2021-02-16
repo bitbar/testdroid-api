@@ -154,6 +154,8 @@ public class TypeReferenceFactory {
         });
         TYPE_REFERENCE_LIST_MAP.put(APIUserFileProperty.class, new TypeReference<APIList<APIUserFileProperty>>() {
         });
+        TYPE_REFERENCE_LIST_MAP.put(APIDeviceModelPool.class, new TypeReference<APIList<APIDeviceModelPool>>() {
+        });
     }
 
     private static final Map<Class, TypeReference<?>> TYPE_REFERENCE_MAP = new HashMap<>();
@@ -286,6 +288,10 @@ public class TypeReferenceFactory {
         TYPE_REFERENCE_MAP.put(APIUserPreference.class, new TypeReference<APIUserPreference>() {
         });
         TYPE_REFERENCE_MAP.put(APIUserFileProperty.class, new TypeReference<APIUserFileProperty>() {
+        });
+        TYPE_REFERENCE_MAP.put(APIDeviceModelPool.class, new TypeReference<APIDeviceModelPool>() {
+        });
+        TYPE_REFERENCE_MAP.put(APIDeviceModelPoolStatistics.class, new TypeReference<APIDeviceModelPoolStatistics>() {
         });
     }
 

@@ -23,6 +23,10 @@ public class APIClientSideTestConfig implements Serializable {
 
     private Target target;
 
+    private String testName;
+
+    private String timeZone;
+
     private String screenResolution;
 
     private String appiumVersion;
@@ -101,5 +105,21 @@ public class APIClientSideTestConfig implements Serializable {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public String getTestName() {
+        return testName;
+    }
+
+    public void setTestName(String testName) {
+        this.testName = testName;
+    }
+
+    public String getTimeZone() {
+        return timeZone;
+    }
+
+    public void setTimeZone(String timeZone) {
+        this.timeZone = timeZone;
     }
 }
