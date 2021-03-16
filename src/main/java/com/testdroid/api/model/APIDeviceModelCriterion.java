@@ -23,7 +23,8 @@ public class APIDeviceModelCriterion extends APIEntity {
         UNLOCK_GESTURE,
         SOFTWARE_VERSION,
         INIT_STEP,
-        ACCOUNT
+        ACCOUNT,
+        BROWSERS
     }
 
     private Date createTime;

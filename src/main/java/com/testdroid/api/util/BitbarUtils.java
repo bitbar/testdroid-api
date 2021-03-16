@@ -1,10 +1,9 @@
 package com.testdroid.api.util;
 
 import org.apache.commons.io.IOUtils;
+import org.xml.sax.InputSource;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
@@ -31,6 +30,21 @@ public class BitbarUtils {
 
     public static InputStream loadStream(String path) {
         return BitbarUtils.class.getResourceAsStream(path);
+    }
+
+    public static InputSource loadInputSource(String path) {
+        return toInputSource(loadStream(path));
+    }
+
+    public static InputSource toInputSource(File file) throws FileNotFoundException {
+        return toInputSource(new FileInputStream(file));
+    }
+
+    private static InputSource toInputSource(InputStream inputStream) {
+        Reader reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
+        InputSource result = new InputSource(reader);
+        result.setEncoding(StandardCharsets.UTF_8.name());
+        return result;
     }
 
 }

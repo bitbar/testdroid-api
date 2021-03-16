@@ -13,7 +13,6 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 import static com.testdroid.api.dto.MappingKey.*;
 import static com.testdroid.api.dto.Operand.EQ;
@@ -61,13 +60,14 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
         APIList<APILabelGroup> labelGroups = apiClient.getLabelGroups(new Context<>(APILabelGroup.class)
                 .addFilter(new FilterEntry(DISPLAY_NAME, EQ, "Device groups"))).getEntity();
         assertThat(labelGroups.getTotal(), is(1));
-        APILabelGroup deviceGroupLabelGroup = labelGroups.getData().stream().findFirst().get();
+        APILabelGroup deviceGroupLabelGroup = labelGroups.getData().stream().findFirst().orElseThrow(APIException::new);
         assertThat(deviceGroupLabelGroup.getDisplayName(), is("Device groups"));
         APIList<APIDeviceProperty> apiDeviceProperties = deviceGroupLabelGroup.getDevicePropertiesResource(new
                 Context<>(APIDeviceProperty.class).setLimit(0)).getEntity();
-        assertThat(apiDeviceProperties.getTotal(), is(3));
-        assertThat(apiDeviceProperties.getData().stream().map(APIDeviceProperty::getDisplayName)
-                .collect(Collectors.toList()), containsInAnyOrder("Android devices", "iOS devices", "Trial devices"));
+        assertThat(apiDeviceProperties.getTotal(), lessThanOrEqualTo(4));
+        assertThat(Arrays.asList("Android devices", "iOS devices", "Trial devices", "Desktops"),
+                hasItems(apiDeviceProperties.getData().stream().map(APIDeviceProperty::getDisplayName)
+                        .toArray(String[]::new)));
     }
 
     @ParameterizedTest

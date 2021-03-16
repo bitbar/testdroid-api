@@ -8,6 +8,7 @@ import org.apache.commons.collections4.multimap.HashSetValuedHashMap;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -51,6 +52,8 @@ public class Context<T extends APIEntity> {
     private Boolean cacheable = Boolean.FALSE;
 
     private MultiValuedMap<String, Object> extraParams = new HashSetValuedHashMap<>();
+
+    private Long count;
 
     public Context(Class<T> type) {
         this.type = type;
@@ -153,6 +156,23 @@ public class Context<T extends APIEntity> {
 
     public void setExtraParams(MultiValuedMap<String, Object> extraParams) {
         this.extraParams = extraParams;
+    }
+
+    public Context<T> setCount(Long count) {
+        this.count = count;
+        return this;
+    }
+
+    public Optional<Integer> computeMaxResult() {
+        Optional<Integer> maxResult = Optional.empty();
+        if (limit != 0 && limit != Integer.MAX_VALUE) {
+            if (Objects.nonNull(count) && offset + limit > count){
+                maxResult = Optional.of(count.intValue() % limit);
+            } else {
+                maxResult = Optional.of(limit);
+            }
+        }
+        return maxResult;
     }
 
     public MultiValuedMap<String, Object> build() {
