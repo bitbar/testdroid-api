@@ -121,7 +121,7 @@ public class APILicense extends APIEntity {
 
     @Override
     protected <T extends APIEntity> void clone(T from) {
-        throw new UnsupportedOperationException("Not supported yet."); // Not used for licenses
+        throw new UnsupportedOperationException();
     }
 
     public boolean isPrivateInstance() {
