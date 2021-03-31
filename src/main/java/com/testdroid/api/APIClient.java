@@ -9,6 +9,7 @@ import com.testdroid.api.model.APIUser;
 
 import java.io.File;
 import java.io.InputStream;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -74,15 +75,17 @@ public interface APIClient {
     /**
      * Calls POST request to API
      *
-     * @param <T>         expected result class to be parsed from response
-     * @param uri         context URI of the resource (without <code>/api/v2</code> prefix)
-     * @param contentType content type of uploaded file
-     * @param file        file to be uploaded with that request
-     * @param type        expected result class to be parsed from response
+     * @param <T>               expected result class to be parsed from response
+     * @param uri               context URI of the resource (without <code>/api/v2</code> prefix)
+     * @param contentType       content type of uploaded file
+     * @param file              file to be uploaded with that request
+     * @param fileExtraParams   extra parameters for form-data describing the file
+     * @param type              expected result class to be parsed from response
      * @return object defined as <code>T</code> if successfully returned and parsed
      * @throws APIException on any problem related to API communication
      */
-    <T extends APIEntity> T postFile(String uri, String contentType, File file, Class<T> type)
+    <T extends APIEntity> T postFile(
+            String uri, String contentType, File file, Map<String, String> fileExtraParams, Class<T> type)
             throws APIException;
 
     /**

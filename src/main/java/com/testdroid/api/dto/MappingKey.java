@@ -31,7 +31,6 @@ public class MappingKey {
     public static final String ARCHIVING_ITEM_COUNT = "archivingItemCount";
     public static final String ARCHIVING_STRATEGY = "archivingStrategy";
     public static final String ASL_ON = "aslOn";
-    public static final String ATTACHMENT = "attachment";
     public static final String AUTO_RENEW = "autoRenew";
     public static final String AVG_WAITING_TIME = "avgWaitingTime";
     public static final String BATTERY_LEVEL = "batteryLevel";
@@ -111,6 +110,7 @@ public class MappingKey {
     public static final String EXECUTION_RATIO = "executionRatio";
     public static final String EXPIRATION_DATE = "expirationDate";
     public static final String EXPIRE_TIME = "expireTime";
+    public static final String EXTERNAL_ID = "externalId";
     public static final String EXTERNAL_STORAGE = "externalStorage";
     public static final String FAILED_DEVICES = "failedDevices";
     public static final String FAILED_DEVICE_SESSIONS = "failedDeviceSessions";

@@ -41,7 +41,7 @@ abstract class BaseAPIClientTest {
 
     private static final String PROXY_PORT = System.getenv("API_CLIENT_TEST_PROXY_PORT");
 
-    private static final APIKeyClient ADMIN_API_CLIENT = new APIKeyClient(CLOUD_URL, ADMIN_API_KEY, true);
+    static final APIKeyClient ADMIN_API_CLIENT = new APIKeyClient(CLOUD_URL, ADMIN_API_KEY, true);
 
     private static APIKeyClient USER_API_KEY_CLIENT;
 

@@ -9,9 +9,11 @@ import com.testdroid.api.util.TimeConverter;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import java.io.File;
 import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.Map;
 
 /**
  * @author Slawomir Pawluk <slawomir.pawluk@bitbar.com>
@@ -134,6 +136,8 @@ public class APIDeviceSession extends APIEntity {
 
     private String name;
 
+    private String externalId;
+
     private Long userId;
 
     private String userEmail;
@@ -146,7 +150,7 @@ public class APIDeviceSession extends APIEntity {
     }
 
     public APIDeviceSession(
-            Long id, Long userId, String userEmail, Long accountId, APIDeviceSession.Type type,
+            Long id, String externalId, Long userId, String userEmail, Long accountId, APIDeviceSession.Type type,
             LocalDateTime createTime, LocalDateTime startTime, LocalDateTime installTime, LocalDateTime endTime,
             Long timeLimit, Long launchAppDuration, Long deviceLogFirstTimestamp, APIDeviceSession.State state,
             Integer testCasePassedCount, Integer testCaseFailedCount, Integer testCaseSkippedCount, Boolean billable,
@@ -157,6 +161,7 @@ public class APIDeviceSession extends APIEntity {
             Long deviceTime, Long duration, Long projectId, String projectName, Long testRunId, String testRunName,
             Float successRatio, String name) {
         super(id);
+        this.externalId = externalId;
         this.userId = userId;
         this.userEmail = userEmail;
         this.accountId = accountId;
@@ -191,6 +196,14 @@ public class APIDeviceSession extends APIEntity {
         this.testRunName = testRunName;
         this.successRatio = successRatio;
         this.name = name;
+    }
+
+    public String getExternalId() {
+        return externalId;
+    }
+
+    public void setExternalId(String externalId) {
+        this.externalId = externalId;
     }
 
     public Type getType() {
@@ -486,10 +499,16 @@ public class APIDeviceSession extends APIEntity {
         return createUri(selfURI, "/screenshots");
     }
 
+    @JsonIgnore
+    public APIUserFile uploadResultsFile(File file, Map<String, String> fileParams) throws APIException {
+        return postFile(createUri(selfURI, "/output-file-set/files"), file, fileParams, null, APIUserFile.class);
+    }
+
     @Override
     protected <T extends APIEntity> void clone(T from) {
         APIDeviceSession apiDeviceSession = (APIDeviceSession) from;
         cloneBase(from);
+        this.externalId = apiDeviceSession.externalId;
         this.userId = apiDeviceSession.userId;
         this.userEmail = apiDeviceSession.userEmail;
         this.accountId = apiDeviceSession.accountId;

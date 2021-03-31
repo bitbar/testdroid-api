@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIList;
 import com.testdroid.api.util.TimeConverter;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
@@ -16,6 +17,8 @@ import java.util.Date;
  */
 @XmlRootElement
 public class APITestCaseRun extends APIEntity {
+
+    public static final String DEFAULT_SUITE_NAME = "all";
 
     @XmlType(namespace = "APITestCaseRun")
     public enum Result {
@@ -35,13 +38,13 @@ public class APITestCaseRun extends APIEntity {
 
     private String methodName;
 
-    private Result result;
+    private Result result = Result.PASSED;
 
     private String stacktrace;
 
     private APIList<APITestCaseRunStep> steps;
 
-    private String suiteName;
+    private String suiteName = DEFAULT_SUITE_NAME;
 
     public APITestCaseRun() {
     }
@@ -66,6 +69,17 @@ public class APITestCaseRun extends APIEntity {
 
     public void setDuration(double duration) {
         this.duration = duration;
+    }
+
+    public void setDuration(String durationString) {
+        BigDecimal result = BigDecimal.ZERO;
+        if (StringUtils.isNotEmpty(durationString)) {
+            try {
+                result = new BigDecimal(durationString.replace(",", "."));
+            } catch (NumberFormatException ignored) {
+            }
+        }
+        duration = result.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
     }
 
     public Result getResult() {
@@ -129,7 +143,7 @@ public class APITestCaseRun extends APIEntity {
     }
 
     public void setSuiteName(String suiteName) {
-        this.suiteName = suiteName;
+        this.suiteName = StringUtils.defaultIfEmpty(suiteName, DEFAULT_SUITE_NAME);
     }
 
     @Override

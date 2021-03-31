@@ -25,6 +25,7 @@ import java.util.*;
 
 import static com.testdroid.api.APIEntity.OBJECT_MAPPER;
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.util.Collections.emptyMap;
 import static java.util.stream.Collectors.toMap;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.apache.http.HttpStatus.*;
@@ -148,10 +149,11 @@ public abstract class AbstractAPIClient implements APIClient {
 
     @Override
     public <T extends APIEntity> T post(String uri, Object body, Class<T> type) throws APIException {
-        return postOnce(uri, body, null, TypeReferenceFactory.getTypeRef(type));
+        return postOnce(uri, body, emptyMap(), null, TypeReferenceFactory.getTypeRef(type));
     }
 
-    protected <T extends APIEntity> T postOnce(String uri, Object body, String contentType, TypeReference<T> type)
+    protected <T extends APIEntity> T postOnce(
+            String uri, Object body, Map<String, String> fileExtraParams, String contentType, TypeReference<T> type)
             throws APIException {
         if (contentType == null) {
             contentType = ACCEPT_HEADER;
@@ -170,6 +172,13 @@ public abstract class AbstractAPIClient implements APIClient {
                 MultipartFormDataContent.Part filePart = new MultipartFormDataContent.Part("file", fileContent);
                 multipartContent.addPart(filePart);
 
+                for (String name : fileExtraParams.keySet()) {
+                    MultipartFormDataContent.Part part = new MultipartFormDataContent.Part(name,
+                            new ByteArrayContent(null, fileExtraParams.get(name).getBytes()));
+                    part.setHeaders(new HttpHeaders().set(
+                            "Content-Disposition", String.format("form-data; name=\"%s\"", name)));
+                    multipartContent.addPart(part);
+                }
                 content = multipartContent;
             } else if (body instanceof InputStream) {
                 headers.setContentType(contentType);
@@ -230,9 +239,10 @@ public abstract class AbstractAPIClient implements APIClient {
     }
 
     @Override
-    public <T extends APIEntity> T postFile(String uri, String contentType, File file, Class<T> type)
+    public <T extends APIEntity> T postFile(
+            String uri, String contentType, File file, Map<String, String> fileExtraParams, Class<T> type)
             throws APIException {
-        return postOnce(uri, file, contentType, TypeReferenceFactory.getTypeRef(type));
+        return postOnce(uri, file, fileExtraParams, contentType, TypeReferenceFactory.getTypeRef(type));
     }
 
     @Override
