@@ -2,8 +2,11 @@ package com.testdroid.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.Arrays;
+import java.util.List;
 
 import static java.lang.Boolean.FALSE;
 
@@ -22,6 +25,8 @@ public class APIAccountConcurrencyStatus extends APIEntity {
     private Integer accountConcurrency;
 
     private String mainUserEmail;
+
+    private List<String> usedBy;
 
     private Boolean unlimitedConcurrency;
 
@@ -58,16 +63,21 @@ public class APIAccountConcurrencyStatus extends APIEntity {
         return unlimitedConcurrency;
     }
 
+    public List<String> getUsedBy() {
+        return usedBy;
+    }
+
     public APIAccountConcurrencyStatus setUnlimitedConcurrency(Boolean unlimitedConcurrency) {
         this.unlimitedConcurrency = unlimitedConcurrency;
         return this;
     }
 
     public APIAccountConcurrencyStatus(
-            Long accountId, String mainUserEmail, Long waitingSessions, Long runningSessions) {
+            Long accountId, String mainUserEmail, String userEmails, Long waitingSessions, Long runningSessions) {
         super(accountId);
         this.runningSessions = runningSessions;
         this.waitingSessions = waitingSessions;
+        this.usedBy = Arrays.asList(StringUtils.split(userEmails, ","));
         this.sessions = runningSessions + waitingSessions;
         this.mainUserEmail = mainUserEmail;
         this.unlimitedConcurrency = FALSE;
@@ -83,5 +93,6 @@ public class APIAccountConcurrencyStatus extends APIEntity {
         this.sessions = origin.sessions;
         this.accountConcurrency = origin.accountConcurrency;
         this.mainUserEmail = origin.mainUserEmail;
+        this.usedBy = origin.usedBy;
     }
 }

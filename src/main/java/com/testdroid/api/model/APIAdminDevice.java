@@ -141,9 +141,9 @@ public class APIAdminDevice extends APIEntity {
             ComplexState state, LocalDateTime stateTime,  LocalDateTime stateChangeTime, InitStep initStep,
             String ipAddress, Long clusterId, String clusterName, String clusterUrl, String pluginVersion,
             APICluster.State clusterState, LocalDateTime clusterStateTime, LocalDateTime clusterStateChangeTime,
-            Boolean clusterEnabled, LocalDateTime lastOnlineTime, Long accountId, String mainUserEmail, String location,
-            Long testTimeLimit, Boolean locked,
-            APIDevice.OsType osType) {
+            Boolean clusterEnabled, APICluster.Type clusterType, String clusterIpAddress, String clusterRegion,
+            String clusterLocation, LocalDateTime lastOnlineTime, Long accountId, String mainUserEmail, String location,
+            Long testTimeLimit, Boolean locked, APIDevice.OsType osType) {
         super(id);
         this.name = name;
         this.enabled = enabled;
@@ -159,7 +159,8 @@ public class APIAdminDevice extends APIEntity {
         this.initStep = initStep;
         this.ipAddress = ipAddress;
         this.cluster = new APICluster(clusterId, clusterName, clusterUrl, pluginVersion, clusterState,
-                clusterStateTime, clusterStateChangeTime, clusterEnabled);
+                clusterStateTime, clusterStateChangeTime, clusterEnabled, clusterType, clusterIpAddress, clusterRegion,
+                clusterLocation);
         this.lastOnlineTime = TimeConverter.toDate(lastOnlineTime);
         this.accountId = accountId;
         this.testTimeLimit = testTimeLimit;

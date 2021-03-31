@@ -33,6 +33,8 @@ public class APIClientSideTestConfig implements Serializable {
 
     private String location;
 
+    private String externalId;
+
     @XmlType(namespace = "APIClientSideTestConfig")
     public enum Target {
         ANDROID,
@@ -121,5 +123,13 @@ public class APIClientSideTestConfig implements Serializable {
 
     public void setTimeZone(String timeZone) {
         this.timeZone = timeZone;
+    }
+
+    public String getExternalId() {
+        return externalId;
+    }
+
+    public void setExternalId(String externalId) {
+        this.externalId = externalId;
     }
 }

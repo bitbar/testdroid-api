@@ -10,7 +10,6 @@ import com.testdroid.api.model.*;
 import com.testdroid.api.model.capabilities.APIDesktopBrowserCapabilities;
 import com.testdroid.api.model.devicetime.APIBasicDeviceTime;
 import com.testdroid.api.model.devicetime.APIDeviceTimeCountSessionReportEntry;
-import com.testdroid.api.model.jrjc.*;
 import com.testdroid.api.model.notification.APINotification;
 import com.testdroid.api.model.notification.APINotificationPlan;
 
@@ -18,6 +17,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import java.io.File;
 import java.io.InputStream;
+import java.util.Map;
 
 /**
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
@@ -43,7 +43,6 @@ import java.io.InputStream;
         APIAdminOverview.class,
         APIAdminTestRun.class,
         APIBasicDeviceTime.class,
-        APIBasicJiraProject.class,
         APIBillingPeriod.class,
         APIBillingPeriodUsage.class,
         APIBrowser.class,
@@ -71,11 +70,6 @@ import java.io.InputStream;
         APIFileConfig.class,
         APIFramework.class,
         APIHealthCheck.class,
-        APIJiraIssue.class,
-        APIJiraIssueType.class,
-        APIJiraPriority.class,
-        APIJiraProject.class,
-        APIJiraServerInfo.class,
         APILabelGroup.class,
         APILicense.class,
         APIList.class,
@@ -105,7 +99,6 @@ import java.io.InputStream;
         APIUserFile.class,
         APIUserFileProperty.class,
         APIUserFileTag.class,
-        APIUserIntegration.class,
         APIUserStatistics.class
 })
 public abstract class APIEntity {
@@ -197,10 +190,11 @@ public abstract class APIEntity {
     }
 
     @JsonIgnore
-    protected <T extends APIEntity> T postFile(String uri, File file, String contentType, Class<T> type)
+    protected <T extends APIEntity> T postFile(
+            String uri, File file, Map<String, String> fileExtraParams, String contentType, Class<T> type)
             throws APIException {
         checkClient(client);
-        return client.postFile(uri, contentType, file, type);
+        return client.postFile(uri, contentType, file, fileExtraParams, type);
     }
 
     @JsonIgnore

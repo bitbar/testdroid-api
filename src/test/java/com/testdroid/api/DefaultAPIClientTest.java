@@ -10,7 +10,6 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import static com.testdroid.cloud.test.categories.TestTags.API_CLIENT;
-import static org.apache.commons.lang3.SystemUtils.IS_OS_MAC_OSX;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.anyOf;
 import static org.hamcrest.MatcherAssert.assertThat;

@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 import static com.testdroid.api.dto.MappingKey.*;
+import static java.util.Collections.emptyMap;
 
 /**
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
@@ -507,7 +508,7 @@ public class APIUser extends APIEntity {
 
     @JsonIgnore
     public APIUserFile uploadFile(File file) throws APIException {
-        return postFile(createUri(selfURI, "/files"), file, null, APIUserFile.class);
+        return postFile(createUri(selfURI, "/files"), file, emptyMap(), null, APIUserFile.class);
     }
 
     @JsonIgnore

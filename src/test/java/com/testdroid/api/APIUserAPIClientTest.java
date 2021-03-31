@@ -1,5 +1,6 @@
 package com.testdroid.api;
 
+import com.google.api.client.http.HttpResponse;
 import com.testdroid.api.dto.Context;
 import com.testdroid.api.filter.FilterEntry;
 import com.testdroid.api.model.*;
@@ -75,6 +76,26 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
     void uploadFileTest(APIClient apiClient) throws APIException {
         APIUserFile apiUserFile = apiClient.me().uploadFile(loadFile(APP_PATH));
         assertThat(apiUserFile.getName(), is("BitbarSampleApp.apk"));
+        assertThat(apiUserFile.isDuplicate(), is(FALSE));
+        HttpResponse httpResponse;
+        //For oAuth2 Authenticated users(DefaultAPIClient) we serve files from backend instead of s3
+        if(!(apiClient instanceof DefaultAPIClient)) {
+            httpResponse = apiClient.getHttpResponse("/me/files/" + apiUserFile.id + "/file", null);
+            assertThat(httpResponse.getHeaders().getFirstHeaderStringValue("x-amz-tagging-count"), is("1"));
+            assertThat(httpResponse.getHeaders()
+                    .getFirstHeaderStringValue("x-amz-expiration"), containsString("rule-id=\"keep 365d\""));
+        }
+        //Verify file duplication
+        apiUserFile = apiClient.me().uploadFile(loadFile(APP_PATH));
+        assertThat(apiUserFile.getName(), is("BitbarSampleApp.apk"));
+        assertThat(apiUserFile.isDuplicate(), is(TRUE));
+        //For oAuth2 Authenticated users(DefaultAPIClient) we serve files from backend instead of s3
+        if(!(apiClient instanceof DefaultAPIClient)) {
+            httpResponse = apiClient.getHttpResponse("/me/files/" + apiUserFile.id + "/file", null);
+            assertThat(httpResponse.getHeaders().getFirstHeaderStringValue("x-amz-tagging-count"), is("1"));
+            assertThat(httpResponse.getHeaders()
+                    .getFirstHeaderStringValue("x-amz-expiration"), containsString("rule-id=\"keep 365d\""));
+        }
     }
 
     @ParameterizedTest

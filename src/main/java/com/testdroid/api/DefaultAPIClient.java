@@ -149,7 +149,7 @@ public class DefaultAPIClient extends AbstractAPIClient {
 
             HttpRequest request = httpTransport.createRequestFactory().buildPostRequest(url, content);
             request.setConnectTimeout(HTTP_CONNECT_TIMEOUT); // one minute
-            request.setReadTimeout(HTTP_READ_TIMEOUT); // one minute            
+            request.setReadTimeout(HTTP_READ_TIMEOUT); // one minute
             request.setHeaders(new HttpHeaders().setAccept("application/json"));
 
             response = request.execute();
@@ -254,15 +254,16 @@ public class DefaultAPIClient extends AbstractAPIClient {
     }
 
     @Override
-    public <T extends APIEntity> T postFile(String uri, String contentType, File file, Class<T> type)
+    public <T extends APIEntity> T postFile(
+            String uri, String contentType, File file, Map<String, String> fileExtraParams, Class<T> type)
             throws APIException {
         try {
-            return super.postFile(uri, contentType, file, type);
+            return super.postFile(uri, contentType, file, fileExtraParams, type);
         } catch (APIException ex) {
             if (ex.getStatus() != null && HttpStatus.SC_UNAUTHORIZED == ex.getStatus()) {
                 // Access token may have expired. Clean and try again.
                 accessToken = null;
-                return super.postFile(uri, contentType, file, type);
+                return super.postFile(uri, contentType, file, fileExtraParams, type);
             } else {
                 throw ex;
             }

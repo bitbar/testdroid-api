@@ -10,7 +10,6 @@ import com.testdroid.api.model.capabilities.APIDesktopBrowserCapabilities;
 import com.testdroid.api.model.devicetime.APIBasicDeviceTime;
 import com.testdroid.api.model.devicetime.APIDeviceTimeCountSessionReportEntry;
 import com.testdroid.api.model.devicetime.APIDeviceTimeStepTimeReportEntry;
-import com.testdroid.api.model.jrjc.*;
 import com.testdroid.api.model.notification.APINotification;
 import com.testdroid.api.model.notification.APINotificationPlan;
 
@@ -41,7 +40,6 @@ public class TypeReferenceFactory {
         LIST_MAP.put(APIAdminFrameworkStatistics.class, new TypeReference<APIList<APIAdminFrameworkStatistics>>() {});
         LIST_MAP.put(APIAdminInteractiveDeviceSession.class, new TypeReference<APIList<APIAdminInteractiveDeviceSession>>() {});
         LIST_MAP.put(APIAdminTestRun.class, new TypeReference<APIList<APIAdminTestRun>>() {});
-        LIST_MAP.put(APIBasicJiraProject.class, new TypeReference<APIList<APIBasicJiraProject>>() {});
         LIST_MAP.put(APIBillingPeriod.class, new TypeReference<APIList<APIBillingPeriod>>() {});
         LIST_MAP.put(APIBillingPeriodUsage.class, new TypeReference<APIList<APIBillingPeriodUsage>>() {});
         LIST_MAP.put(APIBrowser.class, new TypeReference<APIList<APIBrowser>>() {});
@@ -64,9 +62,6 @@ public class TypeReferenceFactory {
         LIST_MAP.put(APIDeviceUsage.class, new TypeReference<APIList<APIDeviceUsage>>() {});
         LIST_MAP.put(APIEnum.class, new TypeReference<APIList<APIEnum>>() {});
         LIST_MAP.put(APIFramework.class, new TypeReference<APIList<APIFramework>>() {});
-        LIST_MAP.put(APIJiraIssue.class, new TypeReference<APIList<APIJiraIssue>>() {});
-        LIST_MAP.put(APIJiraIssueType.class, new TypeReference<APIList<APIJiraIssueType>>() {});
-        LIST_MAP.put(APIJiraPriority.class, new TypeReference<APIList<APIJiraPriority>>() {});
         LIST_MAP.put(APILabelGroup.class, new TypeReference<APIList<APILabelGroup>>() {});
         LIST_MAP.put(APILicense.class, new TypeReference<APIList<APILicense>>() {});
         LIST_MAP.put(APIMarketShare.class, new TypeReference<APIList<APIMarketShare>>() {});
@@ -89,7 +84,6 @@ public class TypeReferenceFactory {
         LIST_MAP.put(APIUserFile.class, new TypeReference<APIList<APIUserFile>>() {});
         LIST_MAP.put(APIUserFileProperty.class, new TypeReference<APIList<APIUserFileProperty>>() {});
         LIST_MAP.put(APIUserFileTag.class, new TypeReference<APIList<APIUserFileTag>>() {});
-        LIST_MAP.put(APIUserIntegration.class, new TypeReference<APIList<APIUserIntegration>>() {});
         //@formatter:on
     }
 
@@ -131,9 +125,6 @@ public class TypeReferenceFactory {
         MAP.put(APIExceptionMessage.class, new TypeReference<APIExceptionMessage>() {});
         MAP.put(APIFramework.class, new TypeReference<APIFramework>() {});
         MAP.put(APIHealthCheck.class, new TypeReference<APIHealthCheck>() {});
-        MAP.put(APIJiraIssue.class, new TypeReference<APIJiraIssue>() {});
-        MAP.put(APIJiraProject.class, new TypeReference<APIJiraProject>() {});
-        MAP.put(APIJiraServerInfo.class, new TypeReference<APIJiraServerInfo>() {});
         MAP.put(APILabelGroup.class, new TypeReference<APILabelGroup>() {});
         MAP.put(APILicense.class, new TypeReference<APILicense>() {});
         MAP.put(APIMarketShare.class, new TypeReference<APIMarketShare>() {});
@@ -157,7 +148,6 @@ public class TypeReferenceFactory {
         MAP.put(APIUserDeviceTimeSummary.class, new TypeReference<APIUserDeviceTimeSummary>() {});
         MAP.put(APIUserFile.class, new TypeReference<APIUserFile>() {});
         MAP.put(APIUserFileProperty.class, new TypeReference<APIUserFileProperty>() {});
-        MAP.put(APIUserIntegration.class, new TypeReference<APIUserIntegration>() {});
         MAP.put(APIUserPreference.class, new TypeReference<APIUserPreference>() {});
         MAP.put(APIUserStatistics.class, new TypeReference<APIUserStatistics>() {});
         MAP.put(Properties.class, new TypeReference<Properties>() {});

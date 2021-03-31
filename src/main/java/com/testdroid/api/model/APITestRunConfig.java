@@ -106,6 +106,8 @@ public class APITestRunConfig extends APIEntity implements Serializable {
 
     private String testRunName;
 
+    private String testRunNameGrouping;
+
     private Long testRunId;
 
     private String deviceNamePattern;
@@ -467,6 +469,14 @@ public class APITestRunConfig extends APIEntity implements Serializable {
         return getFiles().stream().filter(fc -> fc.getAction() == action).map(APIFileConfig::getFile).findAny();
     }
 
+    public String getTestRunNameGrouping() {
+        return testRunNameGrouping;
+    }
+
+    public void setTestRunNameGrouping(String testRunNameGrouping) {
+        this.testRunNameGrouping = testRunNameGrouping;
+    }
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
@@ -504,6 +514,7 @@ public class APITestRunConfig extends APIEntity implements Serializable {
         this.testRunParameters = apiTestRunConfig.testRunParameters;
         this.deviceIds = apiTestRunConfig.deviceIds;
         this.testRunName = apiTestRunConfig.testRunName;
+        this.testRunNameGrouping = apiTestRunConfig.testRunNameGrouping;
         this.testRunId = apiTestRunConfig.testRunId;
         this.projectName = apiTestRunConfig.projectName;
         this.statusCode = apiTestRunConfig.statusCode;
