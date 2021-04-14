@@ -19,7 +19,7 @@ public enum Unit {
 
     private final ChronoUnit chronoUnit;
 
-    Unit(ChronoUnit chronoUnit){
+    Unit(ChronoUnit chronoUnit) {
         this.chronoUnit = chronoUnit;
     }
 

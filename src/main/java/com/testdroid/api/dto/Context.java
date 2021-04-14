@@ -166,7 +166,7 @@ public class Context<T extends APIEntity> {
     public Optional<Integer> computeMaxResult() {
         Optional<Integer> maxResult = Optional.empty();
         if (limit != 0 && limit != Integer.MAX_VALUE) {
-            if (Objects.nonNull(count) && offset + limit > count){
+            if (Objects.nonNull(count) && offset + limit > count) {
                 maxResult = Optional.of(count.intValue() % limit);
             } else {
                 maxResult = Optional.of(limit);

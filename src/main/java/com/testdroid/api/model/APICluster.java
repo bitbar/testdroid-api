@@ -22,7 +22,9 @@ public class APICluster extends APIEntity implements Serializable {
     @XmlType(namespace = "APICluster", name = "APIClusterState")
     public enum State {
         OFFLINE,
-        ONLINE
+        ONLINE,
+        RESTARTING,
+        QUIET_DOWN
     }
 
     @XmlType(namespace = "APICluster", name = "APIClusterType")
@@ -38,13 +40,15 @@ public class APICluster extends APIEntity implements Serializable {
 
     private String name;
 
-    private State state = State.OFFLINE;
+    private State state = State.ONLINE;
 
     private Date stateChangeTime = new Date();
 
     private Date stateTime = new Date();
 
     private String url;
+
+    private String jenkinsUrl;
 
     private String pluginVersion;
 
@@ -60,9 +64,9 @@ public class APICluster extends APIEntity implements Serializable {
     }
 
     public APICluster(
-            Long id, String name, String url, String pluginVersion, State state, LocalDateTime stateTime,
-            LocalDateTime stateChangeTime, Boolean enabled, Type type, String ipAddress, String region,
-            String location) {
+            Long id, String name, String url, String jenkinsUrl, String pluginVersion, State state,
+            LocalDateTime stateTime, LocalDateTime stateChangeTime, Boolean enabled, Type type, String ipAddress,
+            String region, String location) {
         super(id);
         this.name = name;
         this.url = url;
@@ -92,6 +96,15 @@ public class APICluster extends APIEntity implements Serializable {
 
     public APICluster setUrl(String url) {
         this.url = url;
+        return this;
+    }
+
+    public String getJenkinsUrl() {
+        return jenkinsUrl;
+    }
+
+    public APICluster setJenkinsUrl(String jenkinsUrl) {
+        this.jenkinsUrl = jenkinsUrl;
         return this;
     }
 
@@ -197,6 +210,7 @@ public class APICluster extends APIEntity implements Serializable {
         this.stateChangeTime = apiCluster.stateChangeTime;
         this.stateTime = apiCluster.stateTime;
         this.url = apiCluster.url;
+        this.jenkinsUrl = apiCluster.jenkinsUrl;
         this.pluginVersion = apiCluster.pluginVersion;
         this.type = apiCluster.type;
         this.ipAddress = apiCluster.ipAddress;

@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.testdroid</groupId>
     <artifactId>testdroid-api</artifactId>
-    <version>2.117</version>
+    <version>2.118</version>
     <packaging>jar</packaging>
     <name>Bitbar API v2</name>
     <url>https://github.com/bitbar/testdroid-api</url>
@@ -20,6 +20,7 @@
         <commons-text.version>1.8</commons-text.version>
         <com.google.http-client>1.25.0</com.google.http-client>
         <hamcrest.version>2.1</hamcrest.version>
+        <dependency-check-maven.version>6.1.1</dependency-check-maven.version>
     </properties>
     <scm>
         <connection>scm:git:git://github.com:bitbar/testdroid-api.git</connection>
@@ -100,6 +101,11 @@
                 <configuration>
                     <additionalJOption>-Xdoclint:none</additionalJOption>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.owasp</groupId>
+                <artifactId>dependency-check-maven</artifactId>
+                <version>${dependency-check-maven.version}</version>
             </plugin>
         </plugins>
     </build>

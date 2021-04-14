@@ -28,7 +28,7 @@ public enum APIPaymentMethod {
     AWS(emptyMap()),
     CBT(createCBTMapping());
 
-    private static Map<List<Boolean>, List<PlanOperation>> createInvoiceMapping(){
+    private static Map<List<Boolean>, List<PlanOperation>> createInvoiceMapping() {
         Map<List<Boolean>, List<PlanOperation>> result = new HashMap<>();
         result.put(asList(TRUE, FALSE, FALSE, TRUE), singletonList(CREATE));
         result.put(asList(TRUE, TRUE, FALSE, TRUE), singletonList(CREATE));
@@ -40,7 +40,7 @@ public enum APIPaymentMethod {
         return Collections.unmodifiableMap(result);
     }
 
-    private static Map<List<Boolean>, List<PlanOperation>> createBraintreeMapping(){
+    private static Map<List<Boolean>, List<PlanOperation>> createBraintreeMapping() {
         Map<List<Boolean>, List<PlanOperation>> result = new HashMap<>();
         result.put(asList(TRUE, FALSE, FALSE, TRUE), asList(CREATE, ACTIVATE));
         result.put(asList(FALSE, TRUE, FALSE, TRUE), singletonList(CANCEL));
@@ -49,7 +49,7 @@ public enum APIPaymentMethod {
         return Collections.unmodifiableMap(result);
     }
 
-    private static Map<List<Boolean>, List<PlanOperation>> createStripeMapping(){
+    private static Map<List<Boolean>, List<PlanOperation>> createStripeMapping() {
         Map<List<Boolean>, List<PlanOperation>> result = new HashMap<>();
         result.put(asList(TRUE, FALSE, FALSE, TRUE), asList(CREATE, ACTIVATE));
         result.put(asList(FALSE, TRUE, FALSE, TRUE), singletonList(CANCEL));
@@ -58,7 +58,7 @@ public enum APIPaymentMethod {
         return Collections.unmodifiableMap(result);
     }
 
-    private static Map<List<Boolean>, List<PlanOperation>> createCBTMapping(){
+    private static Map<List<Boolean>, List<PlanOperation>> createCBTMapping() {
         Map<List<Boolean>, List<PlanOperation>> result = new HashMap<>();
         //create and activate by CBT
         result.put(asList(TRUE, FALSE, FALSE, FALSE), asList(CREATE, ACTIVATE));

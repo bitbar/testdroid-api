@@ -1,6 +1,7 @@
 package com.testdroid.api.util;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.input.BOMInputStream;
 import org.xml.sax.InputSource;
 
 import java.io.*;
@@ -32,16 +33,16 @@ public class BitbarUtils {
         return BitbarUtils.class.getResourceAsStream(path);
     }
 
-    public static InputSource loadInputSource(String path) {
-        return toInputSource(loadStream(path));
+    public static InputSource toInputSourceWithoutBom(String path) {
+        return toInputSourceWithoutBom(loadStream(path));
     }
 
-    public static InputSource toInputSource(File file) throws FileNotFoundException {
-        return toInputSource(new FileInputStream(file));
+    public static InputSource toInputSourceWithoutBom(File file) throws FileNotFoundException {
+        return toInputSourceWithoutBom(new FileInputStream(file));
     }
 
-    private static InputSource toInputSource(InputStream inputStream) {
-        Reader reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
+    private static InputSource toInputSourceWithoutBom(InputStream inputStream) {
+        Reader reader = new InputStreamReader(new BOMInputStream(inputStream), StandardCharsets.UTF_8);
         InputSource result = new InputSource(reader);
         result.setEncoding(StandardCharsets.UTF_8.name());
         return result;

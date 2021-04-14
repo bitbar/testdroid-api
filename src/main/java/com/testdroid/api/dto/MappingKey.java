@@ -52,7 +52,6 @@ public class MappingKey {
     public static final String CLUSTER_ID = "clusterId";
     public static final String CLUSTER_NAME = "clusterName";
     public static final String CODE = "code";
-    public static final String COMMENT = "comment";
     public static final String COMMON = "common";
     public static final String COMMON_ID = "commonId";
     public static final String CONFIRM_PASSWORD = "confirmPassword";
@@ -157,7 +156,6 @@ public class MappingKey {
     public static final String IOS_ENABLED = "iosEnabled";
     public static final String IOS_PROJECT_LIMIT = "iosProjectLimit";
     public static final String IP_ADDRESS = "ipAddress";
-    public static final String ISSUE_TYPE_ID = "issueTypeId";
     public static final String IS_EXCLUDED = "isExcluded";
     public static final String IS_MAIN_USER = "isMainUser";
     public static final String JOB_CONFIG_ID = "jobConfigId";
@@ -220,7 +218,6 @@ public class MappingKey {
     public static final String PRICE = "price";
     public static final String PRICE_PER_HOUR = "pricePerHour";
     public static final String PRIORITY = "priority";
-    public static final String PRIORITY_ID = "priorityId";
     public static final String PRIVATE_INSTANCE = "privateInstance";
     public static final String PROJECT_ID = "projectId";
     public static final String PROJECT_NAME = "projectName";
@@ -228,6 +225,7 @@ public class MappingKey {
     public static final String PROPERTY_GROUP_NAME = "propertyGroupName";
     public static final String QUANTITY = "quantity";
     public static final String QUEUE_SIZE = "queueSize";
+    public static final String QUIET_DOWN = "quietDown";
     public static final String READ_ONLY = "readOnly";
     public static final String RECOVERY_KEY = "recoveryKey";
     public static final String RELEASE_VERSION = "releaseVersion";
@@ -235,6 +233,7 @@ public class MappingKey {
     public static final String REQUIRED_TEST_EXTENSIONS = "requiredTestExtensions";
     public static final String REQUIRED_TEST_FILE_TAGS = "requiredTestFileTags";
     public static final String RESOURCE_ID = "resourceId";
+    public static final String RESTART = "restart";
     public static final String RESULT = "result";
     public static final String RETRYABLE = "retryable";
     public static final String RETRY_STATE = "retryState";
@@ -278,7 +277,6 @@ public class MappingKey {
     public static final String SUBSCRIPTION_START = "subscriptionStart";
     public static final String SUCCESS_RATIO = "successRatio";
     public static final String SYNC = "sync";
-    public static final String SUMMARY = "summary";
     public static final String TAG = "tag";
     public static final String TAG_ARR = "tag[]";
     public static final String TAKE_TIMESTAMP = "takeTimestamp";
@@ -310,7 +308,6 @@ public class MappingKey {
     public static final String URL_SCHEMA = "urlSchema";
     public static final String USAGE_COUNT = "usageCount";
     public static final String USAGE_MILLIS = "usageMillis";
-    public static final String USERNAME = "username";
     public static final String USER_AGENT = "userAgent";
     public static final String USER_DOT_ID = "user.id";
     public static final String USER_EMAIL = "userEmail";
