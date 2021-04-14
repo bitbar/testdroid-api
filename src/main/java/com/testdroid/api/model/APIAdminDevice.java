@@ -139,11 +139,12 @@ public class APIAdminDevice extends APIEntity {
             Long id, String name, boolean enabled, String serialId, String fingerprint, String unlockGesture,
             Long softwareVersionId, String releaseVersion, Integer apiLevel, Long deviceModelId, String deviceModelName,
             ComplexState state, LocalDateTime stateTime,  LocalDateTime stateChangeTime, InitStep initStep,
-            String ipAddress, Long clusterId, String clusterName, String clusterUrl, String pluginVersion,
-            APICluster.State clusterState, LocalDateTime clusterStateTime, LocalDateTime clusterStateChangeTime,
-            Boolean clusterEnabled, APICluster.Type clusterType, String clusterIpAddress, String clusterRegion,
-            String clusterLocation, LocalDateTime lastOnlineTime, Long accountId, String mainUserEmail, String location,
-            Long testTimeLimit, Boolean locked, APIDevice.OsType osType) {
+            String ipAddress, Long clusterId, String clusterName, String clusterUrl, String jenkinsUrl,
+            String pluginVersion, APICluster.State clusterState, LocalDateTime clusterStateTime,
+            LocalDateTime clusterStateChangeTime, Boolean clusterEnabled, APICluster.Type clusterType,
+            String clusterIpAddress, String clusterRegion, String clusterLocation, LocalDateTime lastOnlineTime,
+            Long accountId, String mainUserEmail, String location, Long testTimeLimit, Boolean locked,
+            APIDevice.OsType osType) {
         super(id);
         this.name = name;
         this.enabled = enabled;
@@ -158,7 +159,7 @@ public class APIAdminDevice extends APIEntity {
         this.stateChangeTime = TimeConverter.toDate(stateChangeTime);
         this.initStep = initStep;
         this.ipAddress = ipAddress;
-        this.cluster = new APICluster(clusterId, clusterName, clusterUrl, pluginVersion, clusterState,
+        this.cluster = new APICluster(clusterId, clusterName, clusterUrl, jenkinsUrl, pluginVersion, clusterState,
                 clusterStateTime, clusterStateChangeTime, clusterEnabled, clusterType, clusterIpAddress, clusterRegion,
                 clusterLocation);
         this.lastOnlineTime = TimeConverter.toDate(lastOnlineTime);

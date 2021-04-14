@@ -30,8 +30,7 @@ public class APIAccountConcurrencyStatus extends APIEntity {
 
     private Boolean unlimitedConcurrency;
 
-    APIAccountConcurrencyStatus(){
-
+    APIAccountConcurrencyStatus() {
     }
 
     public Integer getAccountConcurrency() {
