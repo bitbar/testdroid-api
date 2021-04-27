@@ -41,7 +41,7 @@ public class BitbarUtils {
         return toInputSourceWithoutBom(new FileInputStream(file));
     }
 
-    private static InputSource toInputSourceWithoutBom(InputStream inputStream) {
+    public static InputSource toInputSourceWithoutBom(InputStream inputStream) {
         Reader reader = new InputStreamReader(new BOMInputStream(inputStream), StandardCharsets.UTF_8);
         InputSource result = new InputSource(reader);
         result.setEncoding(StandardCharsets.UTF_8.name());

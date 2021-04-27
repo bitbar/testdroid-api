@@ -17,6 +17,8 @@ public class APIDeviceFilter extends APIEntity {
 
     private boolean hidden;
 
+    private APIDevice.OsType osType;
+
     //Technical field to allow group by it
     @JsonIgnore
     private String labelGroupDisplayName;
@@ -26,12 +28,13 @@ public class APIDeviceFilter extends APIEntity {
 
     public APIDeviceFilter(
             Long labelId, String labelName, String labelDisplayName, Long labelGroupId, String labelGroupDisplayName,
-            boolean hidden, Long order) {
+            boolean hidden, APIDevice.OsType osType, Long order) {
         super(labelId);
         this.parentId = labelGroupId;
         this.name = labelName;
         this.displayName = labelDisplayName;
         this.hidden = hidden;
+        this.osType = osType;
         this.labelGroupDisplayName = labelGroupDisplayName;
     }
 
@@ -59,6 +62,14 @@ public class APIDeviceFilter extends APIEntity {
         this.hidden = hidden;
     }
 
+    public APIDevice.OsType getOsType() {
+        return osType;
+    }
+
+    public void setOsType(APIDevice.OsType osType) {
+        this.osType = osType;
+    }
+
     public String getLabelGroupDisplayName() {
         return labelGroupDisplayName;
     }
@@ -71,6 +82,7 @@ public class APIDeviceFilter extends APIEntity {
         this.name = apiDeviceFilter.name;
         this.displayName = apiDeviceFilter.displayName;
         this.hidden = apiDeviceFilter.hidden;
+        this.osType = apiDeviceFilter.osType;
     }
 
 }
