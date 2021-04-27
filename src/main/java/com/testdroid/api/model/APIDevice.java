@@ -6,6 +6,8 @@ import com.testdroid.api.APIList;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -66,6 +68,10 @@ public class APIDevice extends APIEntity {
         public List<OsType> getFamily() {
             return this.isDesktop() ? singletonList(this) : asList(IOS, ANDROID);
         }
+
+        public static List<APIDevice.OsType> MOBILES = Arrays.asList(APIDevice.OsType.ANDROID, APIDevice.OsType.IOS);
+
+        public static List<APIDevice.OsType> DESKTOPS = Collections.singletonList(APIDevice.OsType.DESKTOP);
     }
 
     private Integer creditsPrice;

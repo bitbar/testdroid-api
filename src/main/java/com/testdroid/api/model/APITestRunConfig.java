@@ -92,6 +92,8 @@ public class APITestRunConfig extends APIEntity implements Serializable {
 
     private List<APIFramework> availableFrameworks;
 
+    private List<APIDevice.OsType> availableOsTypes;
+
     private List<APIFileConfig> files = new ArrayList<>();
 
     private APIDevice.OsType osType = APIDevice.OsType.UNDEFINED;
@@ -345,6 +347,14 @@ public class APITestRunConfig extends APIEntity implements Serializable {
         this.availableFrameworks = availableFrameworks;
     }
 
+    public List<APIDevice.OsType> getAvailableOsTypes() {
+        return availableOsTypes;
+    }
+
+    public void setAvailableOsTypes(List<APIDevice.OsType> availableOsTypes) {
+        this.availableOsTypes = availableOsTypes;
+    }
+
     public List<APIFileConfig> getFiles() {
         return files;
     }
@@ -508,6 +518,7 @@ public class APITestRunConfig extends APIEntity implements Serializable {
         this.availableDeviceGroups = apiTestRunConfig.availableDeviceGroups;
         this.availableDevices = apiTestRunConfig.availableDevices;
         this.availableFrameworks = apiTestRunConfig.availableFrameworks;
+        this.availableOsTypes = apiTestRunConfig.availableOsTypes;
         this.files = apiTestRunConfig.files;
         this.status = apiTestRunConfig.status;
         this.osType = apiTestRunConfig.osType;

@@ -70,6 +70,7 @@ public class APICluster extends APIEntity implements Serializable {
         super(id);
         this.name = name;
         this.url = url;
+        this.jenkinsUrl = jenkinsUrl;
         this.state = state;
         this.stateTime = TimeConverter.toDate(stateTime);
         this.stateChangeTime = TimeConverter.toDate(stateChangeTime);
