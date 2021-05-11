@@ -1,6 +1,7 @@
 package com.testdroid.api.util;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.testdroid.api.APIMaintenance;
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIExceptionMessage;
 import com.testdroid.api.APIList;
@@ -127,6 +128,7 @@ public class TypeReferenceFactory {
         MAP.put(APIHealthCheck.class, new TypeReference<APIHealthCheck>() {});
         MAP.put(APILabelGroup.class, new TypeReference<APILabelGroup>() {});
         MAP.put(APILicense.class, new TypeReference<APILicense>() {});
+        MAP.put(APIMaintenance.class, new TypeReference<APIMaintenance>() {});
         MAP.put(APIMarketShare.class, new TypeReference<APIMarketShare>() {});
         MAP.put(APIMessage.class, new TypeReference<APIMessage>() {});
         MAP.put(APINotification.class, new TypeReference<APINotification>() {});

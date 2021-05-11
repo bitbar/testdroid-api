@@ -31,7 +31,7 @@ abstract class BaseAPIClientTest {
 
     static final String APP_PATH = "/fixtures/BitbarSampleApp.apk";
 
-    private static final String CLOUD_URL = System.getenv("CLOUD_URL");
+    protected static final String CLOUD_URL = System.getenv("CLOUD_URL");
 
     private static final String ADMIN_API_KEY = System.getenv("ADMIN_API_KEY");
 
@@ -96,7 +96,7 @@ abstract class BaseAPIClientTest {
         return apiClient.me().getAvailableFrameworksResource(context).getEntity().get(0);
     }
 
-    private static APIUser create(APIKeyClient adminApiClient) throws APIException {
+    protected static APIUser create(APIKeyClient adminApiClient) throws APIException {
         Map<String, Object> map = new HashMap<>();
         map.put(EMAIL, generateUniqueEmail(EMAIL_PATTERN));
         APIUser userForTest = adminApiClient.post("/admin/users", map, APIUser.class);

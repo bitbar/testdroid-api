@@ -13,11 +13,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import static com.testdroid.api.dto.MappingKey.*;
 import static com.testdroid.api.dto.Operand.EQ;
 import static com.testdroid.api.filter.FilterEntry.trueFilterEntry;
+import static com.testdroid.api.model.APIAccessGroup.Scope.USER;
 import static com.testdroid.api.model.APIDevice.OsType.ANDROID;
 import static com.testdroid.api.model.APIFileConfig.Action.INSTALL;
 import static com.testdroid.api.model.APIFileConfig.Action.RUN_TEST;
@@ -27,10 +30,12 @@ import static com.testdroid.cloud.test.categories.TestTags.API_CLIENT;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static java.lang.Integer.MAX_VALUE;
+import static java.util.Collections.singletonMap;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 /**
  * @author Damian Sniezek <damian.sniezek@bitbar.com>
@@ -79,7 +84,7 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
         assertThat(apiUserFile.isDuplicate(), is(FALSE));
         HttpResponse httpResponse;
         //For oAuth2 Authenticated users(DefaultAPIClient) we serve files from backend instead of s3
-        if(!(apiClient instanceof DefaultAPIClient)) {
+        if (!(apiClient instanceof DefaultAPIClient)) {
             httpResponse = apiClient.getHttpResponse("/me/files/" + apiUserFile.id + "/file", null);
             assertThat(httpResponse.getHeaders().getFirstHeaderStringValue("x-amz-tagging-count"), is("1"));
             assertThat(httpResponse.getHeaders()
@@ -90,7 +95,7 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
         assertThat(apiUserFile.getName(), is("BitbarSampleApp.apk"));
         assertThat(apiUserFile.isDuplicate(), is(TRUE));
         //For oAuth2 Authenticated users(DefaultAPIClient) we serve files from backend instead of s3
-        if(!(apiClient instanceof DefaultAPIClient)) {
+        if (!(apiClient instanceof DefaultAPIClient)) {
             httpResponse = apiClient.getHttpResponse("/me/files/" + apiUserFile.id + "/file", null);
             assertThat(httpResponse.getHeaders().getFirstHeaderStringValue("x-amz-tagging-count"), is("1"));
             assertThat(httpResponse.getHeaders()
@@ -193,6 +198,42 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
             FileUtils.copyInputStreamToFile(inputStream, Files.createTempFile(null, null).toFile());
         }
         apiTestRun.delete();
+    }
+
+    @Tag("SDCC-2690")
+    @ParameterizedTest
+    @ArgumentsSource(APIClientProvider.class)
+    void projectSharingTest(APIClient apiClient) throws APIException, InterruptedException {
+        APIUser user1 = apiClient.me();
+        String projectName = generateUnique("sharedProject");
+        APIProject project = user1.createProject(projectName);
+        Map<String, Object> data = new HashMap<>();
+        data.put(NAME, "sharedProjectAccessGroup");
+        data.put(SCOPE, USER);
+        APIAccessGroup accessGroup = user1.postResource("/me/access-groups", data, APIAccessGroup.class);
+
+        APIUser apiUser2 = create(ADMIN_API_CLIENT);
+        user1.postResource(accessGroup.getSelfURI() + "/users", singletonMap(EMAIL, apiUser2.getEmail()), APIAccessGroup.class);
+        user1.postResource(project.getSelfURI() + "/share", singletonMap(ACCESS_GROUP_ID, accessGroup.getId()), APIList.class);
+
+        APIClient apiClient2 = new APIKeyClient(CLOUD_URL, apiUser2.getApiKey());
+        apiUser2 = apiClient2.me();
+
+        APITestRunConfig config = new APITestRunConfig();
+        config.setProjectId(project.getId());
+        APIFramework defaultApiFramework = getApiFramework(apiClient, "Android Instrumentation");
+        config.setOsType(defaultApiFramework.getOsType());
+        config.setFrameworkId(defaultApiFramework.getId());
+        APIUserFile apkFile = apiUser2.uploadFile(loadFile(APP_PATH));
+        APIFileConfig apkFileConfig = new APIFileConfig(apkFile.getId(), INSTALL);
+        APIUserFile testFile = apiUser2.uploadFile(loadFile(TEST_PATH));
+        APIFileConfig testFileConfig = new APIFileConfig(testFile.getId(), RUN_TEST);
+        config.setFiles(Arrays.asList(apkFileConfig, testFileConfig));
+        APIUserFile.waitForVirusScans(apkFile, testFile);
+        apiUser2.validateTestRunConfig(config);
+        APITestRun apiTestRun = apiUser2.startTestRun(config);
+        apiTestRun.abort();
+        assertDoesNotThrow(() -> user1.getFile(apkFile.getId()));
     }
 
 }
