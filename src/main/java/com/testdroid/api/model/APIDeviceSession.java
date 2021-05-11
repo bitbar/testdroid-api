@@ -500,8 +500,9 @@ public class APIDeviceSession extends APIEntity {
     }
 
     @JsonIgnore
-    public APIUserFile uploadResultsFile(File file, Map<String, String> fileParams) throws APIException {
-        return postFile(createUri(selfURI, "/output-file-set/files"), file, fileParams, null, APIUserFile.class);
+    public APIUserFile uploadResultsFile(File file, String contentType, Map<String, String> fileParams)
+            throws APIException {
+        return postFile(createUri(selfURI, "/output-file-set/files"), file, fileParams, contentType, APIUserFile.class);
     }
 
     @Override

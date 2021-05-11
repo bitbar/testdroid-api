@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIList;
 import com.testdroid.api.util.TimeConverter;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
@@ -24,7 +26,8 @@ public class APICluster extends APIEntity implements Serializable {
         OFFLINE,
         ONLINE,
         RESTARTING,
-        QUIET_DOWN
+        QUIET_DOWN,
+        MAINTENANCE
     }
 
     @XmlType(namespace = "APICluster", name = "APIClusterType")
@@ -219,4 +222,49 @@ public class APICluster extends APIEntity implements Serializable {
         this.location = apiCluster.location;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (!(o instanceof APICluster)) {
+            return false;
+        }
+
+        APICluster cluster = (APICluster) o;
+
+        return new EqualsBuilder()
+                .append(enabled, cluster.enabled)
+                .append(name, cluster.name)
+                .append(state, cluster.state)
+                .append(stateChangeTime, cluster.stateChangeTime)
+                .append(stateTime, cluster.stateTime)
+                .append(url, cluster.url)
+                .append(jenkinsUrl, cluster.jenkinsUrl)
+                .append(pluginVersion, cluster.pluginVersion)
+                .append(type, cluster.type)
+                .append(ipAddress, cluster.ipAddress)
+                .append(region, cluster.region)
+                .append(location, cluster.location)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .append(enabled)
+                .append(name)
+                .append(state)
+                .append(stateChangeTime)
+                .append(stateTime)
+                .append(url)
+                .append(jenkinsUrl)
+                .append(pluginVersion)
+                .append(type)
+                .append(ipAddress)
+                .append(region)
+                .append(location)
+                .toHashCode();
+    }
 }
