@@ -175,8 +175,9 @@ public class APIUser extends APIEntity {
         return email;
     }
 
-    public void setEmail(String email) {
+    public APIUser setEmail(String email) {
         this.email = email;
+        return this;
     }
 
     public String getFirstName() {
@@ -368,6 +369,10 @@ public class APIUser extends APIEntity {
         return createUri(selfURI, "/device-groups");
     }
 
+    private String getDeviceSessionURI(String id) {
+        return createUri(selfURI, "/device-sessions/" + id);
+    }
+
     private String getNotificationsURI() {
         return createUri(selfURI, "/notifications");
     }
@@ -486,6 +491,13 @@ public class APIUser extends APIEntity {
         return result;
     }
 
+    private Map<String, Object> getUpdateDeviceSessionParams(final String name, final APIDeviceSession.State state) {
+        Map<String, Object> map = new HashMap<>();
+        map.put(NAME, name);
+        map.put(STATE, state);
+        return map;
+    }
+
     public APIProject createProject(String name) throws APIException {
         return postResource(getProjectsURI(), getCreateProjectParams(name), APIProject.class);
     }
@@ -551,6 +563,13 @@ public class APIUser extends APIEntity {
     public APIDeviceGroup createDeviceGroup(String displayName, APIDevice.OsType osType) throws APIException {
         return postResource(getDeviceGroupsURI(), getCreateDeviceGroupParams(displayName, osType),
                 APIDeviceGroup.class);
+    }
+
+    @JsonIgnore
+    public APIDeviceSession updateDeviceSession(String sessionId, String name, APIDeviceSession.State state)
+            throws APIException {
+        return postResource(getDeviceSessionURI(sessionId), getUpdateDeviceSessionParams(name, state),
+                APIDeviceSession.class);
     }
 
     @Override

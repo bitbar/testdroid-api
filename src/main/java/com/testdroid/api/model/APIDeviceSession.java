@@ -75,6 +75,17 @@ public class APIDeviceSession extends APIEntity {
                     return true;
             }
         }
+
+        public boolean isSettable() {
+            switch (this) {
+                case WAITING:
+                case RUNNING:
+                case EXCLUDED:
+                    return false;
+                default:
+                    return true;
+            }
+        }
     }
 
     private Date createTime;
