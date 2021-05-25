@@ -52,9 +52,9 @@ public class APIAdminDevice extends APIEntity {
         ONLINE_FREE(State.ONLINE, SubState.FREE),
         ONLINE_TESTING(State.ONLINE, SubState.TESTING);
 
-        private State state;
+        private final State state;
 
-        private SubState subState;
+        private final SubState subState;
 
         private static final Map<Pair<State, SubState>, ComplexState> MAP = new HashMap<>(values().length, 1);
 
