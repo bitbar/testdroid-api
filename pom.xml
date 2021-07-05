@@ -18,7 +18,7 @@
         <org.apache.httpcomponents.httpclient.version>4.5.6</org.apache.httpcomponents.httpclient.version>
         <org.apache.commons.collections4.version>4.3</org.apache.commons.collections4.version>
         <commons-text.version>1.8</commons-text.version>
-        <com.google.http-client>1.25.0</com.google.http-client>
+        <com.google.http-client>1.31.0</com.google.http-client>
         <hamcrest.version>2.1</hamcrest.version>
         <dependency-check-maven.version>6.1.1</dependency-check-maven.version>
     </properties>
