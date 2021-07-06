@@ -39,12 +39,13 @@ public class MappingKey {
     public static final String BODY = "body";
     public static final String BRAINTREE_CLIENT_TOKEN = "braintreeClientToken";
     public static final String BRAINTREE_NONCE = "braintreeNonce";
+    public static final String BROWSER_NAME = "browserName";
+    public static final String BROWSER_VERSION = "browserVersion";
     public static final String BUILD_ENABLED = "buildEnabled";
     public static final String BUILD_LIMIT = "buildLimit";
     public static final String CAN_RUN_FROM_UI = "canRunFromUI";
     public static final String CARD_NUMBER = "cardNumber";
     public static final String CENT_PRICE = "centPrice";
-    public static final String CERT = "cert";
     public static final String CHARGE_TYPE = "chargeType";
     public static final String CITY = "city";
     public static final String CLOSE_TIME = "closeTime";
@@ -213,6 +214,7 @@ public class MappingKey {
     public static final String PAYMENT_METHOD = "paymentMethod";
     public static final String PHONE = "phone";
     public static final String PLAN = "plan";
+    public static final String PLATFORM = "platform";
     public static final String PLUGIN_VERSION = "pluginVersion";
     public static final String PORT = "port";
     public static final String PRICE = "price";
@@ -244,6 +246,7 @@ public class MappingKey {
     public static final String SAMPLE_TEST_ID = "sampleTestId";
     public static final String SCOPE = "scope";
     public static final String SCREEN_LOCKED = "screenLocked";
+    public static final String SCREEN_RESOLUTION = "screenResolution";
     public static final String SDCARD_PRESENT = "sdcardPresent";
     public static final String SECURED = "secured";
     public static final String SELECTOR_ID = "selectorId";
