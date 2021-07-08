@@ -36,12 +36,15 @@ def deploy(uniquePrefix, postfix) {
                 -v \"\$(pwd)\":/usr/src/testdroid-master \
                 -v /home/testdroid/.m2:/root/.m2 \
                 -w /usr/src/testdroid-master maven:3.8.1-jdk-8 \
-                mvn clean deploy -DskipTests -DaltDeploymentRepository=nexus::default::https://nexus.wro.int.bitbar.com/repository/releases/ \
+                mvn clean deploy -DaltDeploymentRepository=nexus::default::https://nexus.wro.int.bitbar.com/repository/releases/ \
                 -Dmaven.color=true \
+                -Djacoco-maven-plugin.skip=false \
             """)
         } finally {
             //cleanup, notification etc...
             sh('sudo chown -R $(whoami):$(whoami) target')
+            junit("**/target/**/TEST-*.xml")
+            step([$class: 'JacocoPublisher'])
         }
     }
 }
