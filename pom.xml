@@ -24,6 +24,8 @@
         <junit.jupiter.version>5.7.1</junit.jupiter.version>
         <hamcrest.version>2.1</hamcrest.version>
         <dependency-check-maven.version>6.1.1</dependency-check-maven.version>
+        <jacoco-maven-plugin.skip>true</jacoco-maven-plugin.skip>
+        <jacoco-maven-plugin.version>0.8.7</jacoco-maven-plugin.version>
     </properties>
     <scm>
         <connection>scm:git:git://github.com:bitbar/testdroid-api.git</connection>
@@ -109,6 +111,27 @@
                 <groupId>org.owasp</groupId>
                 <artifactId>dependency-check-maven</artifactId>
                 <version>${dependency-check-maven.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco-maven-plugin.version}</version>
+                <configuration>
+                    <skip>${jacoco-maven-plugin.skip}</skip>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
