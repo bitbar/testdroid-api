@@ -94,8 +94,6 @@ public class APIDeviceSession extends APIEntity {
 
     private Date endTime;
 
-    private Long launchAppDuration;
-
     private Long deviceLogFirstTimestamp;
 
     private Date startTime;
@@ -163,7 +161,7 @@ public class APIDeviceSession extends APIEntity {
     public APIDeviceSession(
             Long id, String externalId, Long userId, String userEmail, Long accountId, APIDeviceSession.Type type,
             LocalDateTime createTime, LocalDateTime startTime, LocalDateTime installTime, LocalDateTime endTime,
-            Long timeLimit, Long launchAppDuration, Long deviceLogFirstTimestamp, APIDeviceSession.State state,
+            Long timeLimit, Long deviceLogFirstTimestamp, APIDeviceSession.State state,
             Integer testCasePassedCount, Integer testCaseFailedCount, Integer testCaseSkippedCount, Boolean billable,
             Long deviceModelId, String displayName, Integer creditsPrice, String imagePrefix, Integer imageTop,
             Integer imageLeft, Integer imageWidth, Integer imageHeight, Integer frameExtraWidth,
@@ -185,7 +183,6 @@ public class APIDeviceSession extends APIEntity {
                 creditsPrice, imagePrefix, imageTop, imageLeft, imageWidth, imageHeight, frameExtraWidth, osType, null,
                 null, enabled, null, null);
         this.timeLimit = timeLimit;
-        this.launchAppDuration = launchAppDuration;
         this.deviceLogFirstTimestamp = deviceLogFirstTimestamp;
         this.state = state;
         this.deviceRunId = id;
@@ -279,14 +276,6 @@ public class APIDeviceSession extends APIEntity {
 
     public void setInstallTime(Date installTime) {
         this.installTime = installTime;
-    }
-
-    public Long getLaunchAppDuration() {
-        return launchAppDuration;
-    }
-
-    public void setLaunchAppDuration(Long launchAppDuration) {
-        this.launchAppDuration = launchAppDuration;
     }
 
     public Long getDeviceLogFirstTimestamp() {
@@ -531,7 +520,6 @@ public class APIDeviceSession extends APIEntity {
         this.type = apiDeviceSession.type;
         this.device = apiDeviceSession.device;
         this.timeLimit = apiDeviceSession.timeLimit;
-        this.launchAppDuration = apiDeviceSession.launchAppDuration;
         this.deviceLogFirstTimestamp = apiDeviceSession.deviceLogFirstTimestamp;
         this.state = apiDeviceSession.state;
         this.deviceRunId = apiDeviceSession.deviceRunId;

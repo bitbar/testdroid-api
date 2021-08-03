@@ -173,7 +173,6 @@ public class MappingKey {
     public static final String LAST_NAME = "lastName";
     public static final String LAST_PAYMENT_DATE = "lastPaymentDate";
     public static final String LAST_RETRY_TIME = "lastRetryTime";
-    public static final String LAUNCH_APP_DURATION = "launchAppDuration";
     public static final String LIVE_TESTING_ONLY= "liveTestingOnly";
     public static final String LOCALE_COUNTRY = "localeCountry";
     public static final String LOCATION_SERVICES_ON = "locationServiceOn";
