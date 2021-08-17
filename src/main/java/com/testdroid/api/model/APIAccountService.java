@@ -21,6 +21,7 @@ public class APIAccountService extends APIEntity {
     @XmlType(namespace = "APIAccountService")
     public enum DeactivateReason {
         INITIAL_FAILURE,
+        SCA_FAILURE,
         CHARGE_FAILURE,
         CANCEL,
         SUSPENDED,

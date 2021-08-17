@@ -4,8 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
 
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Michał Szpruta <michal.szpruta@bitbar.com>
@@ -17,43 +16,42 @@ public class APIDesktopPlatform extends APIEntity {
 
     private String value;
 
-    private List<APIDesktopBrowser> browsers = new ArrayList<>();
+    private Set<APIDesktopBrowser> browsers = new HashSet<>();
 
     private List<String> resolutions = new ArrayList<>();
 
-    public APIDesktopPlatform() {
+    private APIDesktopPlatform() {
+    }
+
+    public APIDesktopPlatform(String name) {
+        this.name = name;
+        this.value = name.toLowerCase();
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getValue() {
         return value;
     }
 
-    public void setValue(String value) {
-        this.value = value;
-    }
-
-    public List<APIDesktopBrowser> getBrowsers() {
+    public Set<APIDesktopBrowser> getBrowsers() {
         return browsers;
     }
 
-    public void setBrowsers(List<APIDesktopBrowser> browsers) {
+    public APIDesktopPlatform setBrowsers(Set<APIDesktopBrowser> browsers) {
         this.browsers = browsers;
+        return this;
     }
 
     public List<String> getResolutions() {
         return resolutions;
     }
 
-    public void setResolutions(List<String> resolutions) {
+    public APIDesktopPlatform setResolutions(List<String> resolutions) {
         this.resolutions = resolutions;
+        return this;
     }
 
     @Override
@@ -65,5 +63,24 @@ public class APIDesktopPlatform extends APIEntity {
         this.value = apiDeviceFilterGroup.value;
         this.browsers = apiDeviceFilterGroup.browsers;
         this.resolutions = apiDeviceFilterGroup.resolutions;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        APIDesktopPlatform that = (APIDesktopPlatform) o;
+        return name.equals(that.name) &&
+                value.equals(that.value) &&
+                browsers.equals(that.browsers);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, value, browsers);
     }
 }

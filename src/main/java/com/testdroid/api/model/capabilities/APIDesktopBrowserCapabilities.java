@@ -6,6 +6,7 @@ import com.testdroid.api.APIEntity;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Michał Szpruta <michal.szpruta@bitbar.com>
@@ -22,8 +23,9 @@ public class APIDesktopBrowserCapabilities extends APIEntity {
         return platforms;
     }
 
-    public void setPlatforms(List<APIDesktopPlatform> platforms) {
+    public APIDesktopBrowserCapabilities setPlatforms(List<APIDesktopPlatform> platforms) {
         this.platforms = platforms;
+        return this;
     }
 
     @Override
@@ -31,5 +33,22 @@ public class APIDesktopBrowserCapabilities extends APIEntity {
     protected <T extends APIEntity> void clone(T from) {
         APIDesktopBrowserCapabilities original = (APIDesktopBrowserCapabilities) from;
         this.platforms = original.platforms;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        APIDesktopBrowserCapabilities that = (APIDesktopBrowserCapabilities) o;
+        return platforms.equals(that.platforms);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(platforms);
     }
 }
