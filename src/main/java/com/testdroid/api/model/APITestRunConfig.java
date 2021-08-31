@@ -118,6 +118,8 @@ public class APITestRunConfig extends APIEntity implements Serializable {
 
     private boolean resignFiles;
 
+    private boolean disableResigning;
+
     private boolean loadedPrevious;
 
     private boolean useSamples;
@@ -475,6 +477,14 @@ public class APITestRunConfig extends APIEntity implements Serializable {
         this.useSamples = useSamples;
     }
 
+    public boolean isDisableResigning() {
+        return disableResigning;
+    }
+
+    public void setDisableResigning(boolean disableResigning) {
+        this.disableResigning = disableResigning;
+    }
+
     public Optional<APIUserFile> findAnyFileByAction(APIFileConfig.Action action) {
         return getFiles().stream().filter(fc -> fc.getAction() == action).map(APIFileConfig::getFile).findAny();
     }
@@ -531,5 +541,6 @@ public class APITestRunConfig extends APIEntity implements Serializable {
         this.statusCode = apiTestRunConfig.statusCode;
         this.resignFiles = apiTestRunConfig.resignFiles;
         this.useSamples = apiTestRunConfig.useSamples;
+        this.disableResigning = apiTestRunConfig.disableResigning;
     }
 }
