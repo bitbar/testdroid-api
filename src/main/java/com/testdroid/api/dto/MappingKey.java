@@ -175,6 +175,7 @@ public class MappingKey {
     public static final String LAST_RETRY_TIME = "lastRetryTime";
     public static final String LIVE_TESTING_ONLY= "liveTestingOnly";
     public static final String LOCALE_COUNTRY = "localeCountry";
+    public static final String LOCATION = "location";
     public static final String LOCATION_SERVICES_ON = "locationServiceOn";
     public static final String LOCKED = "locked";
     public static final String MAIL = "mail";
@@ -229,6 +230,7 @@ public class MappingKey {
     public static final String QUIET_DOWN = "quietDown";
     public static final String READ_ONLY = "readOnly";
     public static final String RECOVERY_KEY = "recoveryKey";
+    public static final String REGION = "region";
     public static final String RELEASE_VERSION = "releaseVersion";
     public static final String REQUIRED_APP_EXTENSIONS = "requiredAppExtensions";
     public static final String REQUIRED_TEST_EXTENSIONS = "requiredTestExtensions";
