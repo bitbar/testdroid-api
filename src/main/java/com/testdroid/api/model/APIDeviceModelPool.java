@@ -31,17 +31,20 @@ public class APIDeviceModelPool extends APIEntity {
 
     private Date createTime;
 
+    private Boolean enabled;
+
     public APIDeviceModelPool() {
 
     }
 
     public APIDeviceModelPool(
-            Long id, String name, String osVersion, String location,
+            Long id, String name, String osVersion, String location, Boolean enabled,
             Short numberOfBrowsers, Short minAvailable, Short maxTotal, Short running, LocalDateTime createTime) {
         super(id);
         this.name = name;
         this.osVersion = osVersion;
         this.location = location;
+        this.enabled = enabled;
         this.numberOfBrowsers = numberOfBrowsers;
         this.minAvailable = minAvailable;
         this.maxTotal = maxTotal;
@@ -89,6 +92,14 @@ public class APIDeviceModelPool extends APIEntity {
         this.maxTotal = maxTotal;
     }
 
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
+
     @Override
     protected <T extends APIEntity> void clone(T from) {
         APIDeviceModelPool original = (APIDeviceModelPool) from;
@@ -96,6 +107,7 @@ public class APIDeviceModelPool extends APIEntity {
         this.name = original.name;
         this.osVersion = original.osVersion;
         this.location = original.location;
+        this.enabled = original.enabled;
         this.numberOfBrowsers = original.numberOfBrowsers;
         this.minAvailable = original.minAvailable;
         this.maxTotal = original.maxTotal;

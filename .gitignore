@@ -1,10 +1,23 @@
-/target/
-/src/main/resources/rebel.xml
-/src/main/java/com/testdroid/api/Test.java
-/nbactions.xml
-.classpath
-.project
-.idea
-.settings
-*.swp
+# Build ignores
+target
+*/work
+
+# IntelliJ ignores
 *.iml
+.idea/*
+!.idea/codeStyleSettings.xml
+
+# VS Code
+.vscode/*
+
+# Netbeans ignores
+nbactions*.xml
+nb-configuration.xml
+
+# Temporary files
+*.swp
+*~
+*.DS_Store
+
+#Python compiled files
+*.pyc
