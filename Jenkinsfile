@@ -1,4 +1,8 @@
 #!/usr/bin/env groovy
+
+@Library('CloudOrchestrationLibrary')
+import com.bitbar.Github
+
 node('linux && maven && gpg') {
     ansiColor('xterm') {
         stage('Checkout') {
@@ -6,7 +10,7 @@ node('linux && maven && gpg') {
                     $class           : 'GitSCM',
                     branches         : [
                             [
-                                    name: env.BRANCH
+                                    name: 'master'
                             ]
                     ],
                     userRemoteConfigs: [
@@ -17,34 +21,15 @@ node('linux && maven && gpg') {
                     ]
             ])
         }
-        stage('Deploy to nexus.wro.int.bitbar.com or oss.sonatype.org') {
-            if (env.BRANCH == 'devel' || env.BRANCH == 'master') {
-                deploy("${env.BRANCH_NAME}-${env.BUILD_ID}", 'testdroid-api-internal-nexus-deploy')
-            } else {
-                sh('mvn clean package source:jar javadoc:jar gpg:sign deploy:deploy -DaltDeploymentRepository=ossrh::default::https://oss.sonatype.org/service/local/staging/deploy/maven2/')
+        stage('Deploy') {
+            wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
+                script {
+                    def version = sh(returnStdout: true, script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout')
+                    def gh = new Github(this, 'testdroid-api', 'bitbar')
+                    gh.release('master', 'v' + version, "Version ${version}")
+                    sh('mvn clean package source:jar javadoc:jar gpg:sign deploy:deploy -DaltDeploymentRepository=ossrh::default::https://oss.sonatype.org/service/local/staging/deploy/maven2/')
+                }
             }
-        }
-    }
-}
-
-def deploy(uniquePrefix, postfix) {
-    wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
-        def containerName = uniquePrefix + postfix + '-mvn'
-        try {
-            sh("""
-                docker run -i --rm --name $containerName \
-                -v \"\$(pwd)\":/usr/src/testdroid-master \
-                -v /home/testdroid/.m2:/root/.m2 \
-                -w /usr/src/testdroid-master maven:3.8.1-jdk-8 \
-                mvn clean deploy -DaltDeploymentRepository=nexus::default::https://nexus.wro.int.bitbar.com/repository/releases/ \
-                -Dmaven.color=true \
-                -Djacoco-maven-plugin.skip=false \
-            """)
-        } finally {
-            //cleanup, notification etc...
-            sh('sudo chown -R $(whoami):$(whoami) target')
-            junit("**/target/**/TEST-*.xml")
-            step([$class: 'JacocoPublisher'])
         }
     }
 }
