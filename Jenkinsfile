@@ -27,7 +27,7 @@ node('linux && maven && gpg') {
                     def version = sh(returnStdout: true, script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout')
                     def gh = new Github(this, 'testdroid-api', 'bitbar')
                     gh.release('master', 'v' + version, "Version ${version}")
-                    sh('mvn clean package source:jar javadoc:jar gpg:sign deploy:deploy -DaltDeploymentRepository=ossrh::default::https://oss.sonatype.org/service/local/staging/deploy/maven2/')
+                    sh('mvn clean package source:jar javadoc:jar gpg:sign nexus-staging:deploy')
                 }
             }
         }
