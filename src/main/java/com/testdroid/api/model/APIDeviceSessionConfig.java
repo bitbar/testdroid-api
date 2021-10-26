@@ -28,6 +28,8 @@ public class APIDeviceSessionConfig extends APIEntity implements Serializable {
 
     private String screenResolution;
 
+    private String url;
+
     public String getAdbVersion() {
         return adbVersion;
     }
@@ -84,6 +86,14 @@ public class APIDeviceSessionConfig extends APIEntity implements Serializable {
         this.screenResolution = screenResolution;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
@@ -96,5 +106,6 @@ public class APIDeviceSessionConfig extends APIEntity implements Serializable {
         this.browserName = prototype.browserName;
         this.browserVersion = prototype.browserVersion;
         this.screenResolution = prototype.screenResolution;
+        this.url = prototype.url;
     }
 }
