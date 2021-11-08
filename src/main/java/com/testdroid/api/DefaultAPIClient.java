@@ -45,6 +45,8 @@ public class DefaultAPIClient extends AbstractAPIClient {
 
     public static final int HTTP_READ_TIMEOUT = 60000;
 
+    public static final String BITBAR_API_OAUTH2_CLIENT_ID = "testdroid-cloud-api";
+
     protected String accessToken;
 
     protected long accessTokenExpireTime = 0;
@@ -141,7 +143,7 @@ public class DefaultAPIClient extends AbstractAPIClient {
 
             GenericUrl url = new GenericUrl(String.format("%s/oauth/token", cloudURL));
             HashMap<String, Object> data = new HashMap<>();
-            data.put("client_id", "testdroid-cloud-api");
+            data.put("client_id", BITBAR_API_OAUTH2_CLIENT_ID);
             data.put("grant_type", "password");
             data.put("username", username);
             data.put("password", password);
@@ -181,7 +183,7 @@ public class DefaultAPIClient extends AbstractAPIClient {
 
             GenericUrl url = new GenericUrl(String.format("%s/oauth/token", cloudURL));
             HashMap<String, Object> data = new HashMap<>();
-            data.put("client_id", "testdroid-cloud-api");
+            data.put("client_id", BITBAR_API_OAUTH2_CLIENT_ID);
             data.put("grant_type", "refresh_token");
             data.put("refresh_token", refreshToken);
             HttpContent content = new UrlEncodedContent(data);

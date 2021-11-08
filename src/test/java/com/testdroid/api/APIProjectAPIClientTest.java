@@ -6,8 +6,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 
 import static com.testdroid.cloud.test.categories.TestTags.API_CLIENT;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Damian Sniezek <damian.sniezek@bitbar.com>
@@ -20,7 +19,7 @@ class APIProjectAPIClientTest extends BaseAPIClientTest {
     void createProjectTest(APIClient apiClient) throws APIException {
         String projectName = generateUnique("testProject");
         APIProject project = apiClient.me().createProject(projectName);
-        assertThat(project.getName(), is(projectName));
+        assertThat(project.getName()).isEqualTo(projectName);
     }
 
     @ParameterizedTest
@@ -31,8 +30,8 @@ class APIProjectAPIClientTest extends BaseAPIClientTest {
         project.setName(updatedProjectName);
         project.setDescription("Description of testProject");
         project.update();
-        assertThat(project.getName(), is(updatedProjectName));
-        assertThat(project.getDescription(), is("Description of testProject"));
+        assertThat(project.getName()).isEqualTo(updatedProjectName);
+        assertThat(project.getDescription()).isEqualTo("Description of testProject");
     }
 
     @ParameterizedTest

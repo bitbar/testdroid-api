@@ -27,14 +27,10 @@ import static com.testdroid.api.model.APIFileConfig.Action.RUN_TEST;
 import static com.testdroid.api.model.APITestRun.State.WAITING;
 import static com.testdroid.api.util.BitbarUtils.loadFile;
 import static com.testdroid.cloud.test.categories.TestTags.API_CLIENT;
-import static java.lang.Boolean.FALSE;
-import static java.lang.Boolean.TRUE;
 import static java.lang.Integer.MAX_VALUE;
 import static java.util.Collections.singletonMap;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 /**
@@ -47,17 +43,17 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
     @ArgumentsSource(APIClientProvider.class)
     void getDevicesTest(APIClient apiClient) throws APIException {
         APIList<APIDevice> allDevices = apiClient.getDevices(new Context<>(APIDevice.class)).getEntity();
-        assertThat(allDevices.isEmpty(), is(FALSE));
+        assertThat(allDevices.isEmpty()).isFalse();
 
         APIList<APIDevice> androidDevices = apiClient.getDevices(new Context<>(APIDevice.class)
                 .addFilter(new FilterEntry(OS_TYPE, EQ, ANDROID.name()))).getEntity();
-        assertThat(androidDevices.isEmpty(), is(FALSE));
-        assertThat(androidDevices.getData().stream().allMatch(d -> d.getOsType().equals(ANDROID)), is(TRUE));
-        assertThat(androidDevices.getTotal(), is(lessThanOrEqualTo(allDevices.getTotal())));
+        assertThat(androidDevices.isEmpty()).isFalse();
+        assertThat(androidDevices.getData().stream().allMatch(d -> d.getOsType().equals(ANDROID))).isTrue();
+        assertThat(androidDevices.getTotal()).isLessThanOrEqualTo(allDevices.getTotal());
 
         APIList<APIDevice> samsungDevices = apiClient.getDevices(new Context<>(APIDevice.class)
                 .addFilter(new FilterEntry(DISPLAY_NAME, EQ, "%Samsung%"))).getEntity();
-        assertThat(samsungDevices.getTotal(), is(lessThanOrEqualTo(androidDevices.getTotal())));
+        assertThat(samsungDevices.getTotal()).isLessThanOrEqualTo(androidDevices.getTotal());
     }
 
     @ParameterizedTest
@@ -65,41 +61,40 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
     void getLabelGroups(APIClient apiClient) throws APIException {
         APIList<APILabelGroup> labelGroups = apiClient.getLabelGroups(new Context<>(APILabelGroup.class)
                 .addFilter(new FilterEntry(DISPLAY_NAME, EQ, "Device groups"))).getEntity();
-        assertThat(labelGroups.getTotal(), is(1));
+        assertThat(labelGroups.getTotal()).isEqualTo(1);
         APILabelGroup deviceGroupLabelGroup = labelGroups.getData().stream().findFirst().orElseThrow(APIException::new);
-        assertThat(deviceGroupLabelGroup.getDisplayName(), is("Device groups"));
+        assertThat(deviceGroupLabelGroup.getDisplayName()).isEqualTo("Device groups");
         APIList<APIDeviceProperty> apiDeviceProperties = deviceGroupLabelGroup.getDevicePropertiesResource(new
                 Context<>(APIDeviceProperty.class).setLimit(0)).getEntity();
-        assertThat(apiDeviceProperties.getTotal(), lessThanOrEqualTo(4));
-        assertThat(Arrays.asList("Android devices", "iOS devices", "Trial devices", "Desktops"),
-                hasItems(apiDeviceProperties.getData().stream().map(APIDeviceProperty::getDisplayName)
-                        .toArray(String[]::new)));
+        assertThat(apiDeviceProperties.getTotal()).isLessThanOrEqualTo(4);
+        assertThat(apiDeviceProperties.getData()).extracting(APIDeviceProperty::getDisplayName)
+                .containsExactly("Android devices", "iOS devices", "Trial devices", "Desktops");
     }
 
     @ParameterizedTest
     @ArgumentsSource(APIClientProvider.class)
     void uploadFileTest(APIClient apiClient) throws APIException {
         APIUserFile apiUserFile = apiClient.me().uploadFile(loadFile(APP_PATH));
-        assertThat(apiUserFile.getName(), is("BitbarSampleApp.apk"));
-        assertThat(apiUserFile.isDuplicate(), is(FALSE));
+        assertThat(apiUserFile.getName()).isEqualTo("BitbarSampleApp.apk");
+        assertThat(apiUserFile.isDuplicate()).isFalse();
         HttpResponse httpResponse;
         //For oAuth2 Authenticated users(DefaultAPIClient) we serve files from backend instead of s3
         if (!(apiClient instanceof DefaultAPIClient)) {
             httpResponse = apiClient.getHttpResponse("/me/files/" + apiUserFile.id + "/file", null);
-            assertThat(httpResponse.getHeaders().getFirstHeaderStringValue("x-amz-tagging-count"), is("1"));
+            assertThat(httpResponse.getHeaders().getFirstHeaderStringValue("x-amz-tagging-count")).isEqualTo("1");
             assertThat(httpResponse.getHeaders()
-                    .getFirstHeaderStringValue("x-amz-expiration"), containsString("rule-id=\"keep 365d\""));
+                    .getFirstHeaderStringValue("x-amz-expiration")).contains("rule-id=\"keep 365d\"");
         }
         //Verify file duplication
         apiUserFile = apiClient.me().uploadFile(loadFile(APP_PATH));
-        assertThat(apiUserFile.getName(), is("BitbarSampleApp.apk"));
-        assertThat(apiUserFile.isDuplicate(), is(TRUE));
+        assertThat(apiUserFile.getName()).isEqualTo("BitbarSampleApp.apk");
+        assertThat(apiUserFile.isDuplicate()).isTrue();
         //For oAuth2 Authenticated users(DefaultAPIClient) we serve files from backend instead of s3
         if (!(apiClient instanceof DefaultAPIClient)) {
             httpResponse = apiClient.getHttpResponse("/me/files/" + apiUserFile.id + "/file", null);
-            assertThat(httpResponse.getHeaders().getFirstHeaderStringValue("x-amz-tagging-count"), is("1"));
+            assertThat(httpResponse.getHeaders().getFirstHeaderStringValue("x-amz-tagging-count")).isEqualTo("1");
             assertThat(httpResponse.getHeaders()
-                    .getFirstHeaderStringValue("x-amz-expiration"), containsString("rule-id=\"keep 365d\""));
+                    .getFirstHeaderStringValue("x-amz-expiration")).contains("rule-id=\"keep 365d\"");
         }
     }
 
@@ -113,7 +108,7 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
         APIList<APIFramework> availableFrameworks = apiClient.me().getAvailableFrameworksResource(context)
                 .getEntity();
         assertThat(availableFrameworks.getData().stream().allMatch(f -> f.getForProjects() && f.getCanRunFromUI() && f
-                .getOsType() == ANDROID), is(TRUE));
+                .getOsType() == ANDROID)).isTrue();
     }
 
     @ParameterizedTest
@@ -133,7 +128,8 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
         APIUserFile.waitForVirusScans(apkFile, testFile);
         me.validateTestRunConfig(config);
         APITestRun apiTestRun = me.startTestRun(config);
-        assertThat(apiTestRun.getState(), is(oneOf(RUNNING, WAITING)));
+        assertThat(apiTestRun.getState()).isIn(RUNNING, WAITING);
+
         apiTestRun.delete();
     }
 
@@ -154,16 +150,16 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
         APIUserFile.waitForVirusScans(apkFile, testFile);
         me.validateTestRunConfig(config);
         APITestRun apiTestRun = me.startTestRun(config);
-        assertThat(apiTestRun.getState(), is(oneOf(RUNNING, WAITING)));
+        assertThat(apiTestRun.getState()).isIn(RUNNING, WAITING);
         apiTestRun.abort();
         String tag = "aborted";
         APITag apiTag = apiTestRun.addTag(tag);
         apiTestRun.refresh();
-        assertThat(apiTestRun.getTagsResource().getTotal(), is(1));
-        assertThat(apiTestRun.getTagsResource().getEntity().get(0).getName(), is(tag));
+        assertThat(apiTestRun.getTagsResource().getTotal()).isEqualTo(1);
+        assertThat(apiTestRun.getTagsResource().getEntity().get(0).getName()).isEqualTo(tag);
         apiTag.delete();
         apiTestRun.refresh();
-        assertThat(apiTestRun.getTagsResource().getTotal(), is(0));
+        assertThat(apiTestRun.getTagsResource().getTotal()).isZero();
         apiTestRun.delete();
     }
 
@@ -184,7 +180,7 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
         APIUserFile.waitForVirusScans(apkFile, testFile);
         me.validateTestRunConfig(config);
         APITestRun apiTestRun = me.startTestRun(config);
-        assertThat(apiTestRun.getState(), is(oneOf(RUNNING, WAITING)));
+        assertThat(apiTestRun.getState()).isIn(RUNNING, WAITING);
         apiTestRun.requestScreenshotsZip();
         APIUserFile file = apiTestRun.getScreenshotsZip();
         while (file.getState() != APIUserFile.State.READY) {

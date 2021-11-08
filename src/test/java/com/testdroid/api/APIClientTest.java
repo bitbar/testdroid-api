@@ -8,8 +8,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 
 import static com.testdroid.cloud.test.categories.TestTags.API_CLIENT;
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
@@ -25,7 +24,7 @@ class APIClientTest extends BaseAPIClientTest {
         APIUser user = apiClient.me();
         Exception exception = assertThrows(APIException.class, () ->
                 user.getResource(user.selfURI + "/notifications/channels/SLACK+/scopes", APIEnum.class).getEntity());
-        assertThat(exception.getMessage(), is("Invalid Notification Channel: SLACK+"));
+        assertThat(exception.getMessage()).isEqualTo("Invalid Notification Channel: SLACK+");
     }
 
     @Tag("TD-14615")
@@ -34,8 +33,7 @@ class APIClientTest extends BaseAPIClientTest {
     void td14615(APIClient apiClient) throws APIException {
         HttpResponse httpResponse = apiClient.getHttpResponse("/me", null);
         httpResponse.getHeaders().getHeaderStringValues("set-cookie").forEach(
-                s -> assertThat(s, not(containsStringIgnoringCase("SESSION")))
-        );
+                s -> assertThat(s).doesNotContainIgnoringCase("SESSION"));
     }
 
 }

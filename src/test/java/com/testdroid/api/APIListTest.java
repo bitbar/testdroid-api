@@ -17,8 +17,7 @@ import static com.testdroid.api.dto.Operand.EQ;
 import static com.testdroid.api.dto.Operand.IN;
 import static com.testdroid.cloud.test.categories.TestTags.UNIT;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Michał Szpruta <michal.szpruta@bitbar.com>
@@ -117,8 +116,8 @@ class APIListTest {
     @MethodSource("data")
     void testLinks(int total, Context<?> ctx, String expectedPrevious, String expectedNext) {
         APIList<?> apiList = new APIList<>(URL, null, total, ctx);
-        assertThat(apiList.getPrevious(), is(expectedPrevious));
-        assertThat(apiList.getNext(), is(expectedNext));
+        assertThat(apiList.getPrevious()).isEqualTo(expectedPrevious);
+        assertThat(apiList.getNext()).isEqualTo(expectedNext);
     }
 
 }
