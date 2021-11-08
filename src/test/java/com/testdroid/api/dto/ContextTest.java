@@ -10,8 +10,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 import static com.testdroid.cloud.test.categories.TestTags.UNIT;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Damian Sniezek <damian.sniezek@smartbear.com>
@@ -51,6 +50,6 @@ class ContextTest {
         classUnderTest = new Context<>(APIEntity.class, offset, limit, null, null);
         Optional.ofNullable(count).ifPresent(classUnderTest::setCount);
         Optional<Integer> optionalMaxResult = classUnderTest.computeMaxResult();
-        assertThat(optionalMaxResult, is(Optional.ofNullable(expectedMaxResults)));
+        assertThat(optionalMaxResult).isEqualTo(Optional.ofNullable(expectedMaxResults));
     }
 }

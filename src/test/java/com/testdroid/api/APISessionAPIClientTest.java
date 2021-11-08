@@ -22,8 +22,7 @@ import static com.testdroid.api.model.APIDeviceSession.State.WAITING;
 import static com.testdroid.api.model.APIDeviceSession.Type.REMOTE;
 import static com.testdroid.cloud.test.categories.TestTags.API_CLIENT;
 import static java.util.Collections.singletonMap;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 /**
@@ -42,7 +41,7 @@ class APISessionAPIClientTest extends BaseAPIClientTest {
         config.setDeviceModelId(freeAndroidDevices.get(0).id);
         config.setAdbVersion("1.2.3");
         APIDeviceSession deviceSession = apiClient.post("/me/device-sessions", config, APIDeviceSession.class);
-        assertThat(deviceSession.getState(), is(WAITING));
+        assertThat(deviceSession.getState()).isEqualTo(WAITING);
         deviceSession.release();
     }
 

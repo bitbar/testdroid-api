@@ -9,8 +9,7 @@ import java.time.ZoneId;
 import java.util.Date;
 
 import static com.testdroid.cloud.test.categories.TestTags.UNIT;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Stefano Gregori <stefano.gregori@bitbar.com>
@@ -26,19 +25,19 @@ class APIAccountServiceTest {
         APIAccountService service = prepareAccountService(startTime, endTime);
 
         //THEN
-        assertThat(service.isActiveAt(dateOf(2014, 2, 11, 10, 34)), is(false));
-        assertThat(service.isActiveAt(startTime), is(true));
-        assertThat(service.isActiveAt(dateOf(2014, 5, 11, 10, 34)), is(true));
-        assertThat(service.isActiveAt(endTime), is(true));
-        assertThat(service.isActiveAt(dateOf(2016, 2, 11, 10, 34)), is(false));
+        assertThat(service.isActiveAt(dateOf(2014, 2, 11, 10, 34))).isFalse();
+        assertThat(service.isActiveAt(startTime)).isTrue();
+        assertThat(service.isActiveAt(dateOf(2014, 5, 11, 10, 34))).isTrue();
+        assertThat(service.isActiveAt(endTime)).isTrue();
+        assertThat(service.isActiveAt(dateOf(2016, 2, 11, 10, 34))).isFalse();
 
         // AND WHEN
         service.setStartTime(null);
 
         //THEN
-        assertThat(service.isActiveAt(dateOf(2014, 2, 11, 10, 34)), is(false));
-        assertThat(service.isActiveAt(dateOf(2014, 5, 11, 10, 34)), is(false));
-        assertThat(service.isActiveAt(dateOf(2016, 2, 11, 10, 34)), is(false));
+        assertThat(service.isActiveAt(dateOf(2014, 2, 11, 10, 34))).isFalse();
+        assertThat(service.isActiveAt(dateOf(2014, 5, 11, 10, 34))).isFalse();
+        assertThat(service.isActiveAt(dateOf(2016, 2, 11, 10, 34))).isFalse();
     }
 
     @Test
@@ -48,18 +47,18 @@ class APIAccountServiceTest {
         APIAccountService service = prepareAccountService(startTime, null);
 
         //THEN
-        assertThat(service.isActiveAt(dateOf(2014, 2, 11, 10, 34)), is(false));
-        assertThat(service.isActiveAt(dateOf(2014, 5, 11, 10, 34)), is(true));
-        assertThat(service.isActiveAt(startTime), is(true));
-        assertThat(service.isActiveAt(dateOf(2016, 2, 11, 10, 34)), is(true));
+        assertThat(service.isActiveAt(dateOf(2014, 2, 11, 10, 34))).isFalse();
+        assertThat(service.isActiveAt(dateOf(2014, 5, 11, 10, 34))).isTrue();
+        assertThat(service.isActiveAt(startTime)).isTrue();
+        assertThat(service.isActiveAt(dateOf(2016, 2, 11, 10, 34))).isTrue();
 
         // AND WHEN
         service.setStartTime(null);
 
         //THEN
-        assertThat(service.isActiveAt(dateOf(2014, 2, 11, 10, 34)), is(false));
-        assertThat(service.isActiveAt(dateOf(2014, 5, 11, 10, 34)), is(false));
-        assertThat(service.isActiveAt(dateOf(2016, 2, 11, 10, 34)), is(false));
+        assertThat(service.isActiveAt(dateOf(2014, 2, 11, 10, 34))).isFalse();
+        assertThat(service.isActiveAt(dateOf(2014, 5, 11, 10, 34))).isFalse();
+        assertThat(service.isActiveAt(dateOf(2016, 2, 11, 10, 34))).isFalse();
     }
 
     @Test
@@ -70,7 +69,7 @@ class APIAccountServiceTest {
         APIAccountService service = prepareAccountService(startTime, endTime);
 
         //THEN
-        assertThat(service.isActiveAt(null), is(false));
+        assertThat(service.isActiveAt(null)).isFalse();
     }
 
     private APIAccountService prepareAccountService(Date startTime, Date endTime) {

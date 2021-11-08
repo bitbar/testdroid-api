@@ -16,9 +16,7 @@ import static com.testdroid.api.dto.Operand.EQ;
 import static com.testdroid.api.model.APIDevice.OsType.ANDROID;
 import static com.testdroid.api.model.APIDevice.OsType.IOS;
 import static com.testdroid.cloud.test.categories.TestTags.API_CLIENT;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Damian Sniezek <damian.sniezek@bitbar.com>
@@ -30,8 +28,8 @@ class APIDeviceGroupClientTest extends BaseAPIClientTest {
     @ArgumentsSource(APIClientProvider.class)
     void createDeviceGroupTest(APIClient apiClient) throws APIException {
         APIDeviceGroup deviceGroup = apiClient.me().createDeviceGroup("testDeviceGroup", ANDROID);
-        assertThat(deviceGroup.getDisplayName(), is("testDeviceGroup"));
-        assertThat(deviceGroup.getOsType(), is(ANDROID));
+        assertThat(deviceGroup.getDisplayName()).isEqualTo("testDeviceGroup");
+        assertThat(deviceGroup.getOsType()).isSameAs(ANDROID);
     }
 
     @ParameterizedTest
@@ -44,7 +42,7 @@ class APIDeviceGroupClientTest extends BaseAPIClientTest {
             deviceGroup.addDevice(device);
         }
         deviceGroup.refresh();
-        assertThat(deviceGroup.getDeviceCount(), is(Long.valueOf(devicesList.getTotal())));
+        assertThat(deviceGroup.getDeviceCount()).isEqualTo(Long.valueOf(devicesList.getTotal()));
     }
 
     @ParameterizedTest
@@ -63,7 +61,7 @@ class APIDeviceGroupClientTest extends BaseAPIClientTest {
         dynamicAndroidDeviceGroup = dynamicAndroidDeviceGroup.addSelector(androidDevicesLabel);
         APIList<APIDevice> devicesList = apiClient.getDevices(new Context<>(APIDevice.class)
                 .addFilter(new FilterEntry(OS_TYPE, EQ, ANDROID.name()))).getEntity();
-        assertThat(dynamicAndroidDeviceGroup.getDeviceCount(), is(Long.valueOf(devicesList.getTotal())));
+        assertThat(dynamicAndroidDeviceGroup.getDeviceCount()).isEqualTo(Long.valueOf(devicesList.getTotal()));
     }
 
     @ParameterizedTest
@@ -80,7 +78,7 @@ class APIDeviceGroupClientTest extends BaseAPIClientTest {
         APIList<APIDevice> samsungDevices = deviceGroup.getIncludedDevicesResource(new Context<>(APIDevice.class)
                 .addFilter(new FilterEntry(DISPLAY_NAME, EQ, "%Samsung%"))).getEntity();
 
-        assertThat(allDevices.getTotal(), is(greaterThanOrEqualTo(samsungDevices.getTotal())));
+        assertThat(allDevices.getTotal()).isGreaterThanOrEqualTo(samsungDevices.getTotal());
     }
 
 }
