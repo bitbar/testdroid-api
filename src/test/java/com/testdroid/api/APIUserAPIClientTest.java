@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -71,6 +72,18 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
                 .containsExactly("Android devices", "iOS devices", "Trial devices", "Desktops");
     }
 
+    @Tag("SDCB-3881")
+    @ParameterizedTest
+    @ArgumentsSource(APIClientProvider.class)
+    void getFilesDefaultOrderTest(APIClient apiClient) throws APIException, IOException {
+        APIUser me = apiClient.me();
+        me.uploadFile(File.createTempFile("getFilesDefaultOrderTest", ".tmp"));
+        me.uploadFile(File.createTempFile("getFilesDefaultOrderTest", ".tmp"));
+        APIList<APIUserFile> list = me.getListResource("/me/files/", new Context<>(APIUserFile.class, 0, 2, EMPTY,
+                EMPTY).addFilter(FilterEntry.create(DIRECTION, EQ, APIUserFile.Direction.INPUT.name()))).getEntity();
+        assertThat(list.getData().get(0).getId()).isGreaterThan(list.getData().get(1).getId());
+    }
+
     @ParameterizedTest
     @ArgumentsSource(APIClientProvider.class)
     void uploadFileTest(APIClient apiClient) throws APIException {
@@ -109,6 +122,22 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
                 .getEntity();
         assertThat(availableFrameworks.getData().stream().allMatch(f -> f.getForProjects() && f.getCanRunFromUI() && f
                 .getOsType() == ANDROID)).isTrue();
+    }
+
+    @Tag("SDCB-3876")
+    @ParameterizedTest
+    @ArgumentsSource(APIClientProvider.class)
+    void sdcb3876Test(APIClient apiClient) throws APIException {
+        APIUser me = apiClient.me();
+        APITestRunConfig config = new APITestRunConfig();
+        config.setProjectName(generateUnique("testProject"));
+        APIFramework defaultApiFramework = getApiFramework(apiClient, "Android Instrumentation");
+        config.setOsType(defaultApiFramework.getOsType());
+        config.setFrameworkId(defaultApiFramework.getId());
+        //simulate that client set files to null
+        config.setFiles(null);
+        APITestRunConfig validatedConfig = me.validateTestRunConfig(config);
+        assertThat(validatedConfig.getFiles()).isNotNull();
     }
 
     @ParameterizedTest
