@@ -1,6 +1,8 @@
 package com.testdroid.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.testdroid.api.APIEntity;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -361,6 +363,8 @@ public class APITestRunConfig extends APIEntity implements Serializable {
         return files;
     }
 
+    //TODO maybe we should handle all Collections in that way
+    @JsonSetter(nulls = Nulls.AS_EMPTY)
     public void setFiles(List<APIFileConfig> files) {
         this.files = files;
     }
