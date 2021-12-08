@@ -165,10 +165,10 @@ public class APIDeviceSession extends APIEntity {
             Integer testCasePassedCount, Integer testCaseFailedCount, Integer testCaseSkippedCount, Boolean billable,
             Long deviceModelId, String displayName, Integer creditsPrice, String imagePrefix, Integer imageTop,
             Integer imageLeft, Integer imageWidth, Integer imageHeight, Integer frameExtraWidth,
-            APIDevice.OsType osType, Boolean enabled, Long softwareVersionId, String releaseVersion, Integer apiLevel,
-            ExcludeReason excludeReason, Long deviceInstanceId, RetryState retryState, Integer autoRetriesLeftCount,
-            Long deviceTime, Long duration, Long projectId, String projectName, Long testRunId, String testRunName,
-            Float successRatio, String name) {
+            APIDevice.OsType osType, APIDevice.Platform platform ,Boolean enabled, Long softwareVersionId,
+            String releaseVersion, Integer apiLevel, ExcludeReason excludeReason, Long deviceInstanceId,
+            RetryState retryState, Integer autoRetriesLeftCount, Long deviceTime, Long duration, Long projectId,
+            String projectName, Long testRunId, String testRunName, Float successRatio, String name) {
         super(id);
         this.externalId = externalId;
         this.userId = userId;
@@ -180,8 +180,8 @@ public class APIDeviceSession extends APIEntity {
         this.installTime = TimeConverter.toDate(installTime);
         this.endTime = TimeConverter.toDate(endTime);
         this.device = new APIDevice(deviceModelId, displayName, softwareVersionId, releaseVersion, apiLevel,
-                creditsPrice, imagePrefix, imageTop, imageLeft, imageWidth, imageHeight, frameExtraWidth, osType, null,
-                null, enabled, null, null);
+                creditsPrice, imagePrefix, imageTop, imageLeft, imageWidth, imageHeight, frameExtraWidth, osType,
+                platform, null, null, enabled, null, null);
         this.timeLimit = timeLimit;
         this.deviceLogFirstTimestamp = deviceLogFirstTimestamp;
         this.state = state;

@@ -27,6 +27,7 @@ public class MappingKey {
     public static final String ANDROID_PROJECT_LIMIT = "androidProjectLimit";
     public static final String API_KEY = "apiKey";
     public static final String API_LEVEL = "apiLevel";
+    public static final String ARCHITECTURE = "architecture";
     public static final String ARCHIVE_TIME = "archiveTime";
     public static final String ARCHIVING_ITEM_COUNT = "archivingItemCount";
     public static final String ARCHIVING_STRATEGY = "archivingStrategy";
@@ -39,6 +40,7 @@ public class MappingKey {
     public static final String BODY = "body";
     public static final String BRAINTREE_CLIENT_TOKEN = "braintreeClientToken";
     public static final String BRAINTREE_NONCE = "braintreeNonce";
+    public static final String BROWSER_IDS_ARR = "browserIds[]";
     public static final String BROWSER_NAME = "browserName";
     public static final String BROWSER_VERSION = "browserVersion";
     public static final String BUILD_ENABLED = "buildEnabled";
@@ -150,6 +152,7 @@ public class MappingKey {
     public static final String INIT_STEP = "initStep";
     public static final String INPUT_TYPE = "inputType";
     public static final String INSPECTOR_ENABLED = "inspectorEnabled";
+    public static final String INSTALL_URL = "installUrl";
     public static final String INTERNAL_STORAGE = "internalStorage";
     public static final String INTERNET_ACCESS = "internetAccess";
     public static final String IN_USE = "inUse";

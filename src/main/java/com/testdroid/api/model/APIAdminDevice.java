@@ -127,6 +127,8 @@ public class APIAdminDevice extends APIEntity {
 
     private APIDevice.OsType osType;
 
+    private APIDevice.Platform platform;
+
     public APIAdminDevice() {
     }
 
@@ -144,7 +146,7 @@ public class APIAdminDevice extends APIEntity {
             LocalDateTime clusterStateChangeTime, Boolean clusterEnabled, APICluster.Type clusterType,
             String clusterIpAddress, String clusterRegion, String clusterLocation, LocalDateTime lastOnlineTime,
             Long accountId, String mainUserEmail, String location, Long testTimeLimit, Boolean locked,
-            APIDevice.OsType osType) {
+            APIDevice.OsType osType, APIDevice.Platform platform) {
         super(id);
         this.name = name;
         this.enabled = enabled;
@@ -169,6 +171,7 @@ public class APIAdminDevice extends APIEntity {
         this.location = location;
         this.locked = locked;
         this.osType = osType;
+        this.platform = platform;
     }
 
     public String getName() {
@@ -333,6 +336,16 @@ public class APIAdminDevice extends APIEntity {
         return this;
     }
 
+    public APIDevice.Platform getPlatform() {
+        return platform;
+    }
+
+    public APIAdminDevice setPlatform(APIDevice.Platform platform) {
+        this.platform = platform;
+        this.osType = platform.getOsType();
+        return this;
+    }
+
     public APIAdminDevice setLocation(String location) {
         this.location = location;
         return this;
@@ -368,5 +381,6 @@ public class APIAdminDevice extends APIEntity {
         this.testTimeLimit = adminDevice.testTimeLimit;
         this.locked = adminDevice.locked;
         this.osType = adminDevice.osType;
+        this.platform = adminDevice.platform;
     }
 }
