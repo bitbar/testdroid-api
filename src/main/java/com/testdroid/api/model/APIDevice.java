@@ -37,6 +37,37 @@ public class APIDevice extends APIEntity {
     }
 
     @XmlType(namespace = "APIDevice")
+    public enum Platform {
+        IOS(OsType.IOS),
+        ANDROID(OsType.ANDROID),
+        WINDOWS(OsType.DESKTOP, "Windows"),
+        MACOS(OsType.DESKTOP, "macOS"),
+        LINUX(OsType.DESKTOP, "Linux"),
+        UNDEFINED(OsType.UNDEFINED);
+
+        private final OsType osType;
+
+        private final String displayName;
+
+        Platform(OsType osType) {
+            this(osType, osType.getDisplayName());
+        }
+
+        Platform(OsType osType, String displayName) {
+            this.osType = osType;
+            this.displayName = displayName;
+        }
+
+        public OsType getOsType() {
+            return osType;
+        }
+
+        public String getDisplayName() {
+            return displayName;
+        }
+    }
+
+    @XmlType(namespace = "APIDevice")
     public enum OsType {
         IOS("iOS"),
         ANDROID("Android"),
@@ -104,6 +135,8 @@ public class APIDevice extends APIEntity {
 
     private APIDevice.OsType osType;
 
+    private APIDevice.Platform platform;
+
     private APISoftwareVersion softwareVersion;
 
     private Boolean enabled;
@@ -126,8 +159,8 @@ public class APIDevice extends APIEntity {
     public APIDevice(
             Long id, String displayName, Long softwareVersionId, String releaseVersion, Integer apiLevel,
             Integer creditsPrice, String imagePrefix, Integer imageTop, Integer imageLeft, Integer imageWidth,
-            Integer imageHeight, Integer frameExtraWidth, OsType osType, Boolean online, Boolean locked,
-            Boolean enabled, Long accountId, String mainUserEmail) {
+            Integer imageHeight, Integer frameExtraWidth, OsType osType, Platform platform, Boolean online,
+            Boolean locked, Boolean enabled, Long accountId, String mainUserEmail) {
         super(id);
         this.displayName = displayName;
         this.softwareVersion = new APISoftwareVersion(softwareVersionId, releaseVersion, apiLevel);
@@ -139,6 +172,7 @@ public class APIDevice extends APIEntity {
         this.imageHeight = imageHeight;
         this.frameExtraWidth = frameExtraWidth;
         this.osType = osType;
+        this.platform = platform;
         this.locked = locked;
         this.online = online;
         this.enabled = enabled;
@@ -330,6 +364,14 @@ public class APIDevice extends APIEntity {
         return supportedCreators;
     }
 
+    public Platform getPlatform() {
+        return platform;
+    }
+
+    public void setPlatform(Platform platform) {
+        this.platform = platform;
+    }
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
@@ -348,6 +390,7 @@ public class APIDevice extends APIEntity {
         this.imageTop = apiDevice.imageTop;
         this.imageWidth = apiDevice.imageWidth;
         this.osType = apiDevice.osType;
+        this.platform = apiDevice.platform;
         this.softwareVersion = apiDevice.softwareVersion;
         this.online = apiDevice.online;
         this.locked = apiDevice.locked;

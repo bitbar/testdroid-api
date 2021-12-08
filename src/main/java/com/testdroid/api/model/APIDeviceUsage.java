@@ -23,12 +23,12 @@ public class APIDeviceUsage extends APIEntity {
     public APIDeviceUsage(
             Long id, String displayName, Long softwareVersionId, String releaseVersion, Integer apiLevel,
             Integer creditsPrice, String imagePrefix, Integer imageTop, Integer imageLeft, Integer imageWidth,
-            Integer imageHeight, Integer frameExtraWidth, APIDevice.OsType osType, Boolean online, Boolean locked,
-            Boolean enabled, Long totalDeviceSessions, Long failedDeviceSessions) {
+            Integer imageHeight, Integer frameExtraWidth, APIDevice.OsType osType, APIDevice.Platform platform,
+            Boolean online, Boolean locked, Boolean enabled, Long totalDeviceSessions, Long failedDeviceSessions) {
         super(id);
         this.device = new APIDevice(id, displayName, softwareVersionId, releaseVersion, apiLevel, creditsPrice,
-                imagePrefix, imageTop, imageLeft, imageWidth, imageHeight, frameExtraWidth, osType, online, locked,
-                enabled, null, null);
+                imagePrefix, imageTop, imageLeft, imageWidth, imageHeight, frameExtraWidth, osType, platform, online,
+                locked, enabled, null, null);
         this.totalDeviceSessions = totalDeviceSessions;
         this.failedDeviceSessions = failedDeviceSessions;
     }
