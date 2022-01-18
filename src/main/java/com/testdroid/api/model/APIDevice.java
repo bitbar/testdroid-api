@@ -129,6 +129,8 @@ public class APIDevice extends APIEntity {
 
     private Integer imageWidth;
 
+    private String manufacturer;
+
     private Boolean locked;
 
     private Boolean online;
@@ -157,12 +159,13 @@ public class APIDevice extends APIEntity {
     }
 
     public APIDevice(
-            Long id, String displayName, Long softwareVersionId, String releaseVersion, Integer apiLevel,
-            Integer creditsPrice, String imagePrefix, Integer imageTop, Integer imageLeft, Integer imageWidth,
-            Integer imageHeight, Integer frameExtraWidth, OsType osType, Platform platform, Boolean online,
-            Boolean locked, Boolean enabled, Long accountId, String mainUserEmail) {
+            Long id, String displayName, String manufacturer, Long softwareVersionId, String releaseVersion,
+            Integer apiLevel, Integer creditsPrice, String imagePrefix, Integer imageTop, Integer imageLeft,
+            Integer imageWidth, Integer imageHeight, Integer frameExtraWidth, OsType osType, Platform platform,
+            Boolean online, Boolean locked, Boolean enabled, Long accountId, String mainUserEmail) {
         super(id);
         this.displayName = displayName;
+        this.manufacturer = manufacturer;
         this.softwareVersion = new APISoftwareVersion(softwareVersionId, releaseVersion, apiLevel);
         this.creditsPrice = creditsPrice;
         this.imagePrefix = imagePrefix;
@@ -372,6 +375,14 @@ public class APIDevice extends APIEntity {
         this.platform = platform;
     }
 
+    public String getManufacturer() {
+        return manufacturer;
+    }
+
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
+    }
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
@@ -379,6 +390,7 @@ public class APIDevice extends APIEntity {
         cloneBase(from);
         this.creditsPrice = apiDevice.creditsPrice;
         this.displayName = apiDevice.displayName;
+        this.manufacturer = apiDevice.manufacturer;
         this.frame80Url = apiDevice.frame80Url;
         this.frame100Url = apiDevice.frame100Url;
         this.frame160Url = apiDevice.frame160Url;
@@ -402,5 +414,4 @@ public class APIDevice extends APIEntity {
         this.available = apiDevice.available;
         this.supportedCreators = apiDevice.supportedCreators;
     }
-
 }

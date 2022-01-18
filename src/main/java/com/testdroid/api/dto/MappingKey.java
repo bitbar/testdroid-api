@@ -186,6 +186,7 @@ public class MappingKey {
     public static final String MAIN_USER_FIRST_NAME = "mainUserFirstName";
     public static final String MAIN_USER_ID = "mainUserId";
     public static final String MAIN_USER_LAST_NAME = "mainUserLastName";
+    public static final String MANUFACTURER = "manufacturer";
     public static final String MFA_CODE = "mfaCode";
     public static final String MFA_ENABLED = "mfaEnabled";
     public static final String MIMETYPE = "mimetype";

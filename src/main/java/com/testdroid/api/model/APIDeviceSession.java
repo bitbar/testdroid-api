@@ -163,8 +163,8 @@ public class APIDeviceSession extends APIEntity {
             LocalDateTime createTime, LocalDateTime startTime, LocalDateTime installTime, LocalDateTime endTime,
             Long timeLimit, Long deviceLogFirstTimestamp, APIDeviceSession.State state,
             Integer testCasePassedCount, Integer testCaseFailedCount, Integer testCaseSkippedCount, Boolean billable,
-            Long deviceModelId, String displayName, Integer creditsPrice, String imagePrefix, Integer imageTop,
-            Integer imageLeft, Integer imageWidth, Integer imageHeight, Integer frameExtraWidth,
+            Long deviceModelId, String displayName, String deviceManufacturer, Integer creditsPrice, String imagePrefix,
+            Integer imageTop, Integer imageLeft, Integer imageWidth, Integer imageHeight, Integer frameExtraWidth,
             APIDevice.OsType osType, APIDevice.Platform platform ,Boolean enabled, Long softwareVersionId,
             String releaseVersion, Integer apiLevel, ExcludeReason excludeReason, Long deviceInstanceId,
             RetryState retryState, Integer autoRetriesLeftCount, Long deviceTime, Long duration, Long projectId,
@@ -179,9 +179,9 @@ public class APIDeviceSession extends APIEntity {
         this.startTime = TimeConverter.toDate(startTime);
         this.installTime = TimeConverter.toDate(installTime);
         this.endTime = TimeConverter.toDate(endTime);
-        this.device = new APIDevice(deviceModelId, displayName, softwareVersionId, releaseVersion, apiLevel,
-                creditsPrice, imagePrefix, imageTop, imageLeft, imageWidth, imageHeight, frameExtraWidth, osType,
-                platform, null, null, enabled, null, null);
+        this.device = new APIDevice(deviceModelId, displayName, deviceManufacturer, softwareVersionId, releaseVersion,
+                apiLevel, creditsPrice, imagePrefix, imageTop, imageLeft, imageWidth, imageHeight, frameExtraWidth,
+                osType, platform, null, null, enabled, null, null);
         this.timeLimit = timeLimit;
         this.deviceLogFirstTimestamp = deviceLogFirstTimestamp;
         this.state = state;
