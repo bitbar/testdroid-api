@@ -97,6 +97,8 @@ public class APIAdminDevice extends APIEntity {
 
     private InitStep initStep;
 
+    private String manufacturer;
+
     private String name;
 
     private String serialId;
@@ -138,17 +140,18 @@ public class APIAdminDevice extends APIEntity {
     }
 
     public APIAdminDevice(
-            Long id, String name, boolean enabled, String serialId, String fingerprint, String unlockGesture,
-            Long softwareVersionId, String releaseVersion, Integer apiLevel, Long deviceModelId, String deviceModelName,
-            ComplexState state, LocalDateTime stateTime,  LocalDateTime stateChangeTime, InitStep initStep,
-            String ipAddress, Long clusterId, String clusterName, String clusterUrl, String jenkinsUrl,
-            String pluginVersion, APICluster.State clusterState, LocalDateTime clusterStateTime,
+            Long id, String name, String manufacturer, boolean enabled, String serialId, String fingerprint,
+            String unlockGesture, Long softwareVersionId, String releaseVersion, Integer apiLevel, Long deviceModelId,
+            String deviceModelName, ComplexState state, LocalDateTime stateTime,  LocalDateTime stateChangeTime,
+            InitStep initStep, String ipAddress, Long clusterId, String clusterName, String clusterUrl,
+            String jenkinsUrl, String pluginVersion, APICluster.State clusterState, LocalDateTime clusterStateTime,
             LocalDateTime clusterStateChangeTime, Boolean clusterEnabled, APICluster.Type clusterType,
             String clusterIpAddress, String clusterRegion, String clusterLocation, LocalDateTime lastOnlineTime,
             Long accountId, String mainUserEmail, String location, Long testTimeLimit, Boolean locked,
             APIDevice.OsType osType, APIDevice.Platform platform) {
         super(id);
         this.name = name;
+        this.manufacturer = manufacturer;
         this.enabled = enabled;
         this.serialId = serialId;
         this.fingerprint = fingerprint;
@@ -355,6 +358,14 @@ public class APIAdminDevice extends APIEntity {
         return location;
     }
 
+    public String getManufacturer() {
+        return manufacturer;
+    }
+
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
+    }
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
@@ -367,6 +378,7 @@ public class APIAdminDevice extends APIEntity {
         this.fingerprint = adminDevice.fingerprint;
         this.initStep = adminDevice.initStep;
         this.name = adminDevice.name;
+        this.manufacturer = adminDevice.manufacturer;
         this.serialId = adminDevice.serialId;
         this.softwareVersion = adminDevice.softwareVersion;
         this.state = adminDevice.state;
