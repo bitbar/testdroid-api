@@ -16,6 +16,8 @@ public class APIDesktopBrowser extends APIEntity {
 
     private String name;
 
+    private String displayName;
+
     private String value;
 
     private List<String> versions = new ArrayList<>();
@@ -23,13 +25,22 @@ public class APIDesktopBrowser extends APIEntity {
     private APIDesktopBrowser() {
     }
 
-    public APIDesktopBrowser(String name) {
+    public APIDesktopBrowser(String name, String displayName) {
         this.name = name;
+        this.displayName = displayName;
         this.value = name.toLowerCase();
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 
     public void setValue(String value) {
@@ -56,11 +67,12 @@ public class APIDesktopBrowser extends APIEntity {
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
-        APIDesktopBrowser apiDeviceFilterGroup = (APIDesktopBrowser) from;
+        APIDesktopBrowser original = (APIDesktopBrowser) from;
         cloneBase(from);
-        this.name = apiDeviceFilterGroup.name;
-        this.value = apiDeviceFilterGroup.value;
-        this.versions = apiDeviceFilterGroup.versions;
+        this.name = original.name;
+        this.displayName = original.displayName;
+        this.value = original.value;
+        this.versions = original.versions;
     }
 
     @Override
@@ -73,13 +85,14 @@ public class APIDesktopBrowser extends APIEntity {
         }
         APIDesktopBrowser that = (APIDesktopBrowser) o;
         return name.equals(that.name) &&
+                displayName.equals(that.displayName) &&
                 value.equals(that.value) &&
                 Objects.equals(versions, that.versions);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, value, versions);
+        return Objects.hash(name, displayName, value, versions);
     }
 
 

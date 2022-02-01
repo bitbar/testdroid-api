@@ -16,17 +16,19 @@ public class APIDeviceSessionConfig extends APIEntity implements Serializable {
 
     private String adbVersion;
 
-    private Long deviceModelId;
-
-    private APIDeviceSession.Type type = APIDeviceSession.Type.MANUAL;
-
-    private String platform;
-
     private String browserName;
 
     private String browserVersion;
 
+    private Long deviceModelId;
+
+    private String platform;
+
     private String screenResolution;
+
+    private APITunnelSettings tunnelSettings;
+
+    private APIDeviceSession.Type type = APIDeviceSession.Type.MANUAL;
 
     private String url;
 
@@ -94,18 +96,27 @@ public class APIDeviceSessionConfig extends APIEntity implements Serializable {
         this.url = url;
     }
 
+    public APITunnelSettings getTunnelSettings() {
+        return tunnelSettings;
+    }
+
+    public void setTunnelSettings(APITunnelSettings tunnelSettings) {
+        this.tunnelSettings = tunnelSettings;
+    }
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
         APIDeviceSessionConfig prototype = (APIDeviceSessionConfig) from;
         cloneBase(from);
         this.adbVersion = prototype.adbVersion;
-        this.type = prototype.type;
-        this.deviceModelId = prototype.deviceModelId;
-        this.platform = prototype.platform;
         this.browserName = prototype.browserName;
         this.browserVersion = prototype.browserVersion;
+        this.deviceModelId = prototype.deviceModelId;
+        this.platform = prototype.platform;
         this.screenResolution = prototype.screenResolution;
+        this.tunnelSettings = prototype.tunnelSettings;
+        this.type = prototype.type;
         this.url = prototype.url;
     }
 }

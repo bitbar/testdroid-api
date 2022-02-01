@@ -9,6 +9,8 @@ public class APIBrowser extends APIEntity {
 
     private String name;
 
+    private String displayName;
+
     private String version;
 
     private APIDevice.OsType osType;
@@ -23,9 +25,11 @@ public class APIBrowser extends APIEntity {
     }
 
     public APIBrowser(
-            Long id, String name, String version, APIDevice.OsType osType, String architecture, String installUrl) {
+            Long id, String name, String displayName, String version, APIDevice.OsType osType, String architecture,
+            String installUrl) {
         super(id);
         this.name = name;
+        this.displayName = displayName;
         this.version = version;
         this.osType = osType;
         this.architecture = architecture;
@@ -38,6 +42,14 @@ public class APIBrowser extends APIEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 
     public String getVersion() {
@@ -85,6 +97,7 @@ public class APIBrowser extends APIEntity {
         APIBrowser original = (APIBrowser) from;
         cloneBase(from);
         this.name = original.name;
+        this.displayName = original.displayName;
         this.version = original.version;
         this.osType = original.osType;
         this.architecture = original.architecture;

@@ -15,11 +15,17 @@ public class APIClientSideTestConfig implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    private String appiumVersion;
+
     private String browserName;
+
+    private String externalId;
+
+    private String location;
 
     private String platform;
 
-    private String version;
+    private String screenResolution;
 
     private Target target;
 
@@ -27,13 +33,7 @@ public class APIClientSideTestConfig implements Serializable {
 
     private String timeZone;
 
-    private String screenResolution;
-
-    private String appiumVersion;
-
-    private String location;
-
-    private String externalId;
+    private String version;
 
     @XmlType(namespace = "APIClientSideTestConfig")
     public enum Target {
