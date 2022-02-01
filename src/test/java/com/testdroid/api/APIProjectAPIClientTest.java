@@ -7,6 +7,7 @@ import org.junit.jupiter.params.provider.ArgumentsSource;
 
 import static com.testdroid.cloud.test.categories.TestTags.API_CLIENT;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Damian Sniezek <damian.sniezek@bitbar.com>
@@ -39,5 +40,9 @@ class APIProjectAPIClientTest extends BaseAPIClientTest {
     void deleteProjectTest(APIClient apiClient) throws APIException {
         APIProject project = apiClient.me().createProject(generateUnique("testProject"));
         project.delete();
+        assertThatThrownBy(() ->
+                apiClient.me().getProject(project.getId()))
+                .isInstanceOf(APIException.class)
+                .hasMessageContaining(String.format("Project with id %d does not exist", project.getId()));
     }
 }

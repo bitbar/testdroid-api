@@ -39,54 +39,13 @@ public class APITestRunConfig extends APIEntity implements Serializable {
         ALL_INSTANCES
     }
 
+    private boolean appCrawlerRun;
+
     private String appiumBrokerAddress;
 
     private String applicationPassword;
 
     private String applicationUsername;
-
-    private Long creditsPrice;
-
-    private String deviceLanguageCode = Locale.US.toString();
-
-    private boolean videoRecordingEnabled;
-
-    private String hookURL;
-
-    private String instrumentationRunner;
-
-    private LimitationType limitationType;
-
-    private String limitationValue;
-
-    private boolean appCrawlerRun;
-
-    private Long projectId;
-
-    private boolean runAvailable;
-
-    private Scheduler scheduler = Scheduler.PARALLEL;
-
-    private String screenshotDir;
-
-    private Long deviceGroupId;
-
-    @Deprecated // use deviceGroupId
-    private Long usedDeviceGroupId;
-
-    private String usedDeviceGroupName;
-
-    private String withAnnotation;
-
-    private String withoutAnnotation;
-
-    private Long timeout;
-
-    private APIDuration maxTestTimeout;
-
-    private Integer maxAutoRetriesCount;
-
-    private Long frameworkId;
 
     private List<APIDeviceGroup> availableDeviceGroups;
 
@@ -96,39 +55,82 @@ public class APITestRunConfig extends APIEntity implements Serializable {
 
     private List<APIDevice.OsType> availableOsTypes;
 
-    private List<APIFileConfig> files = new ArrayList<>();
+    private APIClientSideTestConfig clientSideTestConfig;
 
-    private APIDevice.OsType osType = APIDevice.OsType.UNDEFINED;
+    private List<Long> computedDevices;
 
-    private List<APITestRunParameter> testRunParameters = new ArrayList<>();
+    private Long creditsPrice;
+
+    private Long deviceGroupId;
 
     private List<Long> deviceIds;
 
-    private String status;
-
-    private int statusCode;
-
-    private String testRunName;
-
-    private String testRunNameGrouping;
-
-    private Long testRunId;
+    private String deviceLanguageCode = Locale.US.toString();
 
     private String deviceNamePattern;
+
+    private boolean disableResigning;
+
+    private List<APIFileConfig> files = new ArrayList<>();
+
+    private Long frameworkId;
+
+    private String hookURL;
+
+    private String instrumentationRunner;
+
+    private LimitationType limitationType;
+
+    private String limitationValue;
+
+    private boolean loadedPrevious;
+
+    private Integer maxAutoRetriesCount;
+
+    private APIDuration maxTestTimeout;
+
+    private APIDevice.OsType osType = APIDevice.OsType.UNDEFINED;
+
+    private Long projectId;
 
     private String projectName;
 
     private boolean resignFiles;
 
-    private boolean disableResigning;
+    private boolean runAvailable;
 
-    private boolean loadedPrevious;
+    private Scheduler scheduler = Scheduler.PARALLEL;
+
+    private String screenshotDir;
+
+    private String status;
+
+    private int statusCode;
+
+    private Long testRunId;
+
+    private String testRunName;
+
+    private String testRunNameGrouping;
+
+    private List<APITestRunParameter> testRunParameters = new ArrayList<>();
+
+    private Long timeout;
+
+    private APITunnelSettings tunnelSettings;
 
     private boolean useSamples;
 
-    private APIClientSideTestConfig clientSideTestConfig;
+    @Deprecated // use deviceGroupId
+    private Long usedDeviceGroupId;
 
-    private List<Long> computedDevices;
+    private String usedDeviceGroupName;
+
+    private boolean videoRecordingEnabled;
+
+    private String withAnnotation;
+
+    private String withoutAnnotation;
 
     public APITestRunConfig() {
     }
@@ -501,50 +503,60 @@ public class APITestRunConfig extends APIEntity implements Serializable {
         this.testRunNameGrouping = testRunNameGrouping;
     }
 
+    public APITunnelSettings getTunnelSettings() {
+        return tunnelSettings;
+    }
+
+    public void setTunnelSettings(APITunnelSettings tunnelSettings) {
+        this.tunnelSettings = tunnelSettings;
+    }
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
         APITestRunConfig apiTestRunConfig = (APITestRunConfig) from;
         cloneBase(from);
+        this.appCrawlerRun = apiTestRunConfig.appCrawlerRun;
+        this.appiumBrokerAddress = apiTestRunConfig.appiumBrokerAddress;
         this.applicationPassword = apiTestRunConfig.applicationPassword;
         this.applicationUsername = apiTestRunConfig.applicationUsername;
-        this.creditsPrice = apiTestRunConfig.creditsPrice;
-        this.deviceLanguageCode = apiTestRunConfig.deviceLanguageCode;
-        this.videoRecordingEnabled = apiTestRunConfig.videoRecordingEnabled;
-        this.hookURL = apiTestRunConfig.hookURL;
-        this.instrumentationRunner = apiTestRunConfig.instrumentationRunner;
-        this.limitationType = apiTestRunConfig.limitationType;
-        this.limitationValue = apiTestRunConfig.limitationValue;
-        this.appCrawlerRun = apiTestRunConfig.appCrawlerRun;
-        this.projectId = apiTestRunConfig.projectId;
-        this.runAvailable = apiTestRunConfig.runAvailable;
-        this.scheduler = apiTestRunConfig.scheduler;
-        this.screenshotDir = apiTestRunConfig.screenshotDir;
-        this.deviceGroupId = apiTestRunConfig.deviceGroupId;
-        this.usedDeviceGroupId = apiTestRunConfig.usedDeviceGroupId;
-        this.usedDeviceGroupName = apiTestRunConfig.usedDeviceGroupName;
-        this.withAnnotation = apiTestRunConfig.withAnnotation;
-        this.withoutAnnotation = apiTestRunConfig.withoutAnnotation;
-        this.timeout = apiTestRunConfig.timeout;
-        this.appiumBrokerAddress = apiTestRunConfig.appiumBrokerAddress;
-        this.maxAutoRetriesCount = apiTestRunConfig.maxAutoRetriesCount;
-        this.frameworkId = apiTestRunConfig.frameworkId;
         this.availableDeviceGroups = apiTestRunConfig.availableDeviceGroups;
         this.availableDevices = apiTestRunConfig.availableDevices;
         this.availableFrameworks = apiTestRunConfig.availableFrameworks;
         this.availableOsTypes = apiTestRunConfig.availableOsTypes;
-        this.files = apiTestRunConfig.files;
-        this.status = apiTestRunConfig.status;
-        this.osType = apiTestRunConfig.osType;
-        this.testRunParameters = apiTestRunConfig.testRunParameters;
+        this.clientSideTestConfig = apiTestRunConfig.clientSideTestConfig;
+        this.creditsPrice = apiTestRunConfig.creditsPrice;
+        this.deviceGroupId = apiTestRunConfig.deviceGroupId;
         this.deviceIds = apiTestRunConfig.deviceIds;
+        this.deviceLanguageCode = apiTestRunConfig.deviceLanguageCode;
+        this.disableResigning = apiTestRunConfig.disableResigning;
+        this.files = apiTestRunConfig.files;
+        this.frameworkId = apiTestRunConfig.frameworkId;
+        this.hookURL = apiTestRunConfig.hookURL;
+        this.instrumentationRunner = apiTestRunConfig.instrumentationRunner;
+        this.limitationType = apiTestRunConfig.limitationType;
+        this.limitationValue = apiTestRunConfig.limitationValue;
+        this.maxAutoRetriesCount = apiTestRunConfig.maxAutoRetriesCount;
+        this.osType = apiTestRunConfig.osType;
+        this.projectId = apiTestRunConfig.projectId;
+        this.projectName = apiTestRunConfig.projectName;
+        this.resignFiles = apiTestRunConfig.resignFiles;
+        this.runAvailable = apiTestRunConfig.runAvailable;
+        this.scheduler = apiTestRunConfig.scheduler;
+        this.screenshotDir = apiTestRunConfig.screenshotDir;
+        this.status = apiTestRunConfig.status;
+        this.statusCode = apiTestRunConfig.statusCode;
+        this.testRunId = apiTestRunConfig.testRunId;
         this.testRunName = apiTestRunConfig.testRunName;
         this.testRunNameGrouping = apiTestRunConfig.testRunNameGrouping;
-        this.testRunId = apiTestRunConfig.testRunId;
-        this.projectName = apiTestRunConfig.projectName;
-        this.statusCode = apiTestRunConfig.statusCode;
-        this.resignFiles = apiTestRunConfig.resignFiles;
+        this.testRunParameters = apiTestRunConfig.testRunParameters;
+        this.timeout = apiTestRunConfig.timeout;
+        this.tunnelSettings = apiTestRunConfig.tunnelSettings;
         this.useSamples = apiTestRunConfig.useSamples;
-        this.disableResigning = apiTestRunConfig.disableResigning;
+        this.usedDeviceGroupId = apiTestRunConfig.usedDeviceGroupId;
+        this.usedDeviceGroupName = apiTestRunConfig.usedDeviceGroupName;
+        this.videoRecordingEnabled = apiTestRunConfig.videoRecordingEnabled;
+        this.withAnnotation = apiTestRunConfig.withAnnotation;
+        this.withoutAnnotation = apiTestRunConfig.withoutAnnotation;
     }
 }
