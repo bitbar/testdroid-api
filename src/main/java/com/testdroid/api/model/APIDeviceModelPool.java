@@ -5,6 +5,7 @@ import com.testdroid.api.APIEntity;
 import com.testdroid.api.util.TimeConverter;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -33,13 +34,23 @@ public class APIDeviceModelPool extends APIEntity {
 
     private Boolean enabled;
 
+    private RetentionStrategy retentionStrategy;
+
+    @XmlType(namespace = "APIDeviceModelPool", name = "APIDeviceModelPoolRetentionStrategy")
+    public enum RetentionStrategy {
+        CLUSTER_ON_OFF,
+        MIN_FREE_MAX_TOTAL,
+        POOL_MANAGER_AWARE
+    }
+
     public APIDeviceModelPool() {
 
     }
 
     public APIDeviceModelPool(
-            Long id, String name, String osVersion, String location, Boolean enabled,
-            Short numberOfBrowsers, Short minAvailable, Short maxTotal, Short running, LocalDateTime createTime) {
+            Long id, String name, String osVersion, String location, Boolean enabled, Short numberOfBrowsers,
+            Short minAvailable, Short maxTotal, Short running, LocalDateTime createTime,
+            RetentionStrategy retentionStrategy) {
         super(id);
         this.name = name;
         this.osVersion = osVersion;
@@ -50,6 +61,7 @@ public class APIDeviceModelPool extends APIEntity {
         this.maxTotal = maxTotal;
         this.running = running;
         this.createTime = TimeConverter.toDate(createTime);
+        this.retentionStrategy = retentionStrategy;
     }
 
     public String getName() {
@@ -100,6 +112,14 @@ public class APIDeviceModelPool extends APIEntity {
         this.enabled = enabled;
     }
 
+    public RetentionStrategy getRetentionStrategy() {
+        return retentionStrategy;
+    }
+
+    public void setRetentionStrategy(RetentionStrategy retentionStrategy) {
+        this.retentionStrategy = retentionStrategy;
+    }
+
     @Override
     protected <T extends APIEntity> void clone(T from) {
         APIDeviceModelPool original = (APIDeviceModelPool) from;
@@ -113,5 +133,6 @@ public class APIDeviceModelPool extends APIEntity {
         this.maxTotal = original.maxTotal;
         this.running = original.running;
         this.createTime = original.createTime;
+        this.retentionStrategy = original.retentionStrategy;
     }
 }

@@ -155,6 +155,8 @@ public class APIDeviceSession extends APIEntity {
 
     private Long accountId;
 
+    private APIDeviceSessionConfig config;
+
     public APIDeviceSession() {
     }
 
@@ -165,10 +167,11 @@ public class APIDeviceSession extends APIEntity {
             Integer testCasePassedCount, Integer testCaseFailedCount, Integer testCaseSkippedCount, Boolean billable,
             Long deviceModelId, String displayName, String deviceManufacturer, Integer creditsPrice, String imagePrefix,
             Integer imageTop, Integer imageLeft, Integer imageWidth, Integer imageHeight, Integer frameExtraWidth,
-            APIDevice.OsType osType, APIDevice.Platform platform ,Boolean enabled, Long softwareVersionId,
+            APIDevice.OsType osType, APIDevice.Platform platform ,Boolean enabled,
             String releaseVersion, Integer apiLevel, ExcludeReason excludeReason, Long deviceInstanceId,
             RetryState retryState, Integer autoRetriesLeftCount, Long deviceTime, Long duration, Long projectId,
-            String projectName, Long testRunId, String testRunName, Float successRatio, String name) {
+            String projectName, Long testRunId, String testRunName, Float successRatio, String name,
+            APIDeviceSessionConfig config) {
         super(id);
         this.externalId = externalId;
         this.userId = userId;
@@ -179,7 +182,7 @@ public class APIDeviceSession extends APIEntity {
         this.startTime = TimeConverter.toDate(startTime);
         this.installTime = TimeConverter.toDate(installTime);
         this.endTime = TimeConverter.toDate(endTime);
-        this.device = new APIDevice(deviceModelId, displayName, deviceManufacturer, softwareVersionId, releaseVersion,
+        this.device = new APIDevice(deviceModelId, displayName, deviceManufacturer, releaseVersion,
                 apiLevel, creditsPrice, imagePrefix, imageTop, imageLeft, imageWidth, imageHeight, frameExtraWidth,
                 osType, platform, null, null, enabled, null, null);
         this.timeLimit = timeLimit;
@@ -204,6 +207,7 @@ public class APIDeviceSession extends APIEntity {
         this.testRunName = testRunName;
         this.successRatio = successRatio;
         this.name = name;
+        this.config = config;
     }
 
     public String getExternalId() {
@@ -470,6 +474,14 @@ public class APIDeviceSession extends APIEntity {
         this.accountId = accountId;
     }
 
+    public APIDeviceSessionConfig getConfig() {
+        return config;
+    }
+
+    public void setConfig(APIDeviceSessionConfig config) {
+        this.config = config;
+    }
+
     @JsonIgnore
     public APIListResource<APIDeviceSessionStep> getDeviceSessionStepsResource() throws APIException {
         return getListResource(createUri(selfURI, "/steps"), APIDeviceSessionStep.class);
@@ -541,6 +553,7 @@ public class APIDeviceSession extends APIEntity {
         this.projectName = apiDeviceSession.projectName;
         this.successRatio = apiDeviceSession.successRatio;
         this.name = apiDeviceSession.name;
+        this.config = apiDeviceSession.config;
         this.rowIndex = apiDeviceSession.rowIndex;
     }
 }

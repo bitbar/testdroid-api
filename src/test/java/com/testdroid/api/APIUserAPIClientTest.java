@@ -238,6 +238,7 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
         APIAccessGroup accessGroup = user1.postResource("/me/access-groups", data, APIAccessGroup.class);
 
         APIUser apiUser2 = create(ADMIN_API_CLIENT);
+        TO_BE_DELETED.add(apiUser2);
         user1.postResource(accessGroup.getSelfURI() + "/users", singletonMap(EMAIL, apiUser2.getEmail()), APIAccessGroup.class);
         user1.postResource(project.getSelfURI() + "/share", singletonMap(ACCESS_GROUP_ID, accessGroup.getId()), APIList.class);
 

@@ -159,14 +159,14 @@ public class APIDevice extends APIEntity {
     }
 
     public APIDevice(
-            Long id, String displayName, String manufacturer, Long softwareVersionId, String releaseVersion,
+            Long id, String displayName, String manufacturer, String releaseVersion,
             Integer apiLevel, Integer creditsPrice, String imagePrefix, Integer imageTop, Integer imageLeft,
             Integer imageWidth, Integer imageHeight, Integer frameExtraWidth, OsType osType, Platform platform,
             Boolean online, Boolean locked, Boolean enabled, Long accountId, String mainUserEmail) {
         super(id);
         this.displayName = displayName;
         this.manufacturer = manufacturer;
-        this.softwareVersion = new APISoftwareVersion(softwareVersionId, releaseVersion, apiLevel);
+        this.softwareVersion = new APISoftwareVersion(releaseVersion, apiLevel);
         this.creditsPrice = creditsPrice;
         this.imagePrefix = imagePrefix;
         this.imageTop = imageTop;

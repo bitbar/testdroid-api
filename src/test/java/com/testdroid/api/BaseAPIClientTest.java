@@ -4,6 +4,7 @@ import com.testdroid.api.dto.Context;
 import com.testdroid.api.filter.FilterEntry;
 import com.testdroid.api.model.APIFramework;
 import com.testdroid.api.model.APIUser;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.http.HttpHost;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -11,9 +12,7 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Stream;
 
 import static com.testdroid.api.dto.MappingKey.*;
@@ -49,15 +48,20 @@ abstract class BaseAPIClientTest {
 
     private static DefaultAPIClient USER_DEFAULT_CLIENT_WITH_PROXY;
 
+    protected static List<APIUser> TO_BE_DELETED;
+
     static final String TEST_PATH = "/fixtures/BitbarSampleAppTest.apk";
 
-    private static final String USER_PASSWORD = "TSV3ma2n)c3~L/96hQTw";
+    private static final String USER_PASSWORD = RandomStringUtils.randomAlphanumeric(20);
 
     @BeforeAll
     static void beforeAll() throws APIException {
+        TO_BE_DELETED = new ArrayList<>();
         APIUser apiUser1 = create(ADMIN_API_CLIENT);
-        USER_API_KEY_CLIENT = new APIKeyClient(CLOUD_URL, apiUser1.getApiKey());
         APIUser apiUser2 = create(ADMIN_API_CLIENT);
+        TO_BE_DELETED.add(apiUser1);
+        TO_BE_DELETED.add(apiUser2);
+        USER_API_KEY_CLIENT = new APIKeyClient(CLOUD_URL, apiUser1.getApiKey());
         USER_DEFAULT_CLIENT = new DefaultAPIClient(CLOUD_URL, apiUser2.getEmail(), USER_PASSWORD);
         if (isNoneBlank(PROXY_HOST, PROXY_PORT)) {
             USER_DEFAULT_CLIENT_WITH_PROXY = createDefaultApiClientWithProxy(new HttpHost(PROXY_HOST, Integer
@@ -70,11 +74,8 @@ abstract class BaseAPIClientTest {
         String deleteUrl = "%s/delete";
         Map<String, Object> map = new HashMap<>();
         map.put(PASSWORD, USER_PASSWORD);
-        ADMIN_API_CLIENT.post(String.format(deleteUrl, USER_API_KEY_CLIENT.me().getSelfURI()), map, APIUser.class);
-        ADMIN_API_CLIENT.post(String.format(deleteUrl, USER_DEFAULT_CLIENT.me().getSelfURI()), map, APIUser.class);
-        if (USER_DEFAULT_CLIENT_WITH_PROXY != null) {
-            ADMIN_API_CLIENT.post(String
-                    .format(deleteUrl, USER_DEFAULT_CLIENT_WITH_PROXY.me().getSelfURI()), map, APIUser.class);
+        for (APIUser toBeDeleted : TO_BE_DELETED) {
+            ADMIN_API_CLIENT.post(String.format(deleteUrl, toBeDeleted.getSelfURI()), map, APIUser.class);
         }
     }
 
@@ -117,7 +118,9 @@ abstract class BaseAPIClientTest {
     }
 
     static DefaultAPIClient createDefaultApiClientWithProxy(HttpHost proxy) throws APIException {
-        return new DefaultAPIClient(CLOUD_URL, create(ADMIN_API_CLIENT).getEmail(), USER_PASSWORD, proxy, false);
+        APIUser user = create(ADMIN_API_CLIENT);
+        TO_BE_DELETED.add(user);
+        return new DefaultAPIClient(CLOUD_URL, user.getEmail(), USER_PASSWORD, proxy, false);
     }
 
 }
