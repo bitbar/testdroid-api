@@ -242,6 +242,7 @@ public class MappingKey {
     public static final String RESOURCE_ID = "resourceId";
     public static final String RESTART = "restart";
     public static final String RESULT = "result";
+    public static final String RETENTION_STRATEGY = "retentionStrategy";
     public static final String RETRYABLE = "retryable";
     public static final String RETRY_STATE = "retryState";
     public static final String ROLE_ID = "roleId";

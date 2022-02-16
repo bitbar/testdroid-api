@@ -19,8 +19,7 @@ public class APISoftwareVersion extends APIEntity {
     public APISoftwareVersion() {
     }
 
-    public APISoftwareVersion(Long id, String releaseVersion, Integer apiLevel) {
-        super(id);
+    public APISoftwareVersion(String releaseVersion, Integer apiLevel) {
         this.releaseVersion = releaseVersion;
         this.apiLevel = apiLevel;
     }

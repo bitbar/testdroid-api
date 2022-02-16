@@ -141,7 +141,7 @@ public class APIAdminDevice extends APIEntity {
 
     public APIAdminDevice(
             Long id, String name, String manufacturer, boolean enabled, String serialId, String fingerprint,
-            String unlockGesture, Long softwareVersionId, String releaseVersion, Integer apiLevel, Long deviceModelId,
+            String unlockGesture, String releaseVersion, Integer apiLevel, Long deviceModelId,
             String deviceModelName, ComplexState state, LocalDateTime stateTime,  LocalDateTime stateChangeTime,
             InitStep initStep, String ipAddress, Long clusterId, String clusterName, String clusterUrl,
             String jenkinsUrl, String pluginVersion, APICluster.State clusterState, LocalDateTime clusterStateTime,
@@ -156,7 +156,7 @@ public class APIAdminDevice extends APIEntity {
         this.serialId = serialId;
         this.fingerprint = fingerprint;
         this.unlockGesture = unlockGesture;
-        this.softwareVersion = new APISoftwareVersion(softwareVersionId, releaseVersion, apiLevel);
+        this.softwareVersion = new APISoftwareVersion(releaseVersion, apiLevel);
         this.deviceModelId = deviceModelId;
         this.deviceModelName = deviceModelName;
         this.state = state;
