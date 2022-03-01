@@ -10,8 +10,14 @@ import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.concurrent.ForkJoinPool;
 
 public class BitbarUtils {
+
+    // Common pool is limited to `Runtime#availableProcessors - 1`,
+    // this is a problem in Azure, where we have only one CPU core
+    // https://stackoverflow.com/questions/45460577/default-forkjoinpool-executor-taking-long-time
+    private static final Integer DEFAULT_POOL_SIZE = 20;
 
     public static File loadFile(String name) {
         return new File(BitbarUtils.class.getResource(name).getFile());
@@ -46,6 +52,23 @@ public class BitbarUtils {
         InputSource result = new InputSource(reader);
         result.setEncoding(StandardCharsets.UTF_8.name());
         return result;
+    }
+
+
+    public static Object runInCustomPool(Runnable runnable) {
+        return runInCustomPool(runnable, DEFAULT_POOL_SIZE);
+    }
+
+    public static Object runInCustomPool(Runnable runnable, int parallelism) {
+        ForkJoinPool forkJoinPool = null;
+        try {
+            forkJoinPool = new ForkJoinPool(parallelism);
+            return forkJoinPool.submit(runnable).join();
+        } finally {
+            if (forkJoinPool != null) {
+                forkJoinPool.shutdown();
+            }
+        }
     }
 
 }
