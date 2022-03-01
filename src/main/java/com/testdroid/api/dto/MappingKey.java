@@ -334,6 +334,7 @@ public class MappingKey {
     public static final String WITH_DEVICES = "withDevices";
     public static final String WITH_DISABLED = "withDisabled";
     public static final String WITH_PROPERTIES = "withProperties";
+    public static final String WITH_BROWSERS = "withBrowsers";
     public static final String WITH_PUBLIC = "withPublic";
     public static final String WITH_ROLE = "withRole";
     public static final String WITH_ROLES = "withRoles";

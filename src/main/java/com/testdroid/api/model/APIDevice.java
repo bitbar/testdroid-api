@@ -100,9 +100,10 @@ public class APIDevice extends APIEntity {
             return this.isDesktop() ? singletonList(this) : asList(IOS, ANDROID);
         }
 
-        public static List<APIDevice.OsType> MOBILES = Arrays.asList(APIDevice.OsType.ANDROID, APIDevice.OsType.IOS);
+        public static final List<APIDevice.OsType> MOBILES = Arrays.asList(APIDevice.OsType.ANDROID,
+                APIDevice.OsType.IOS);
 
-        public static List<APIDevice.OsType> DESKTOPS = Collections.singletonList(APIDevice.OsType.DESKTOP);
+        public static final List<APIDevice.OsType> DESKTOPS = Collections.singletonList(APIDevice.OsType.DESKTOP);
     }
 
     private Integer creditsPrice;
@@ -148,6 +149,8 @@ public class APIDevice extends APIEntity {
     private String mainUserEmail;
 
     private APIList<APIDeviceProperty> properties;
+
+    private APIList<APIBrowser> browsers;
 
     private DeviceGroupOrigin deviceGroupOrigin;
 
@@ -343,6 +346,14 @@ public class APIDevice extends APIEntity {
         this.properties = properties;
     }
 
+    public APIList<APIBrowser> getBrowsers() {
+        return browsers;
+    }
+
+    public void setBrowsers(APIList<APIBrowser> browsers) {
+        this.browsers = browsers;
+    }
+
     public DeviceGroupOrigin getDeviceGroupOrigin() {
         return deviceGroupOrigin;
     }
@@ -411,6 +422,7 @@ public class APIDevice extends APIEntity {
         this.mainUserEmail = apiDevice.mainUserEmail;
         this.deviceGroupOrigin = apiDevice.deviceGroupOrigin;
         this.properties = apiDevice.properties;
+        this.browsers = apiDevice.browsers;
         this.available = apiDevice.available;
         this.supportedCreators = apiDevice.supportedCreators;
     }
