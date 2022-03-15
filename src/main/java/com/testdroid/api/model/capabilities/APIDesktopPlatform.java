@@ -2,6 +2,7 @@ package com.testdroid.api.model.capabilities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
+import com.testdroid.api.model.APIDevice;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.*;
@@ -20,12 +21,15 @@ public class APIDesktopPlatform extends APIEntity {
 
     private List<String> resolutions = new ArrayList<>();
 
+    private String version;
+
     private APIDesktopPlatform() {
     }
 
-    public APIDesktopPlatform(String name) {
-        this.name = name;
-        this.value = name.toLowerCase();
+    public APIDesktopPlatform(APIDevice.Platform platform, String version) {
+        this.name = platform.getDisplayName();
+        this.value = platform.name();
+        this.version = version;
     }
 
     public void setName(String name) {
@@ -62,6 +66,18 @@ public class APIDesktopPlatform extends APIEntity {
         return this;
     }
 
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
+    public APIDevice.Platform toPlatform() {
+        return APIDevice.Platform.getByDisplayName(name);
+    }
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
@@ -71,6 +87,7 @@ public class APIDesktopPlatform extends APIEntity {
         this.value = apiDeviceFilterGroup.value;
         this.browsers = apiDeviceFilterGroup.browsers;
         this.resolutions = apiDeviceFilterGroup.resolutions;
+        this.version = apiDeviceFilterGroup.version;
     }
 
     @Override
@@ -84,11 +101,12 @@ public class APIDesktopPlatform extends APIEntity {
         APIDesktopPlatform that = (APIDesktopPlatform) o;
         return name.equals(that.name) &&
                 value.equals(that.value) &&
-                browsers.equals(that.browsers);
+                browsers.equals(that.browsers) &&
+                version.equals(that.version);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, value, browsers);
+        return Objects.hash(name, value, browsers, version);
     }
 }

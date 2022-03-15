@@ -120,8 +120,6 @@ public class APIUser extends APIEntity {
 
     private String registrationIP;
 
-    private Boolean sdcSync;
-
     private Collection<APIUser> accountOwners;
 
     public APIUser() {
@@ -145,7 +143,7 @@ public class APIUser extends APIEntity {
             String timeZone, LocalDateTime createTime, LocalDateTime deleteTime, LocalDateTime lastLoginTime,
             LocalDateTime lastLaunchedTestTime, Boolean isMainUser, Long mainUserId, String mainUserEmail,
             String apiKey, Status status, Long createdById, String createdByEmail, MfaStatus mfaStatus,
-            String registrationIP, Boolean sdcSync) {
+            String registrationIP) {
         this(id, email, firstName, lastName, createTime, deleteTime, status);
         this.state = state;
         this.country = country;
@@ -168,7 +166,6 @@ public class APIUser extends APIEntity {
         this.mfaStatus = mfaStatus;
         this.registrationIP = registrationIP;
         this.selfURI = String.format("/users/%s", id);
-        this.sdcSync = sdcSync;
     }
 
     public String getEmail() {
@@ -445,14 +442,6 @@ public class APIUser extends APIEntity {
         this.registrationIP = registrationIP;
     }
 
-    public Boolean getSdcSync() {
-        return sdcSync;
-    }
-
-    public void setSdcSync(Boolean sdcSync) {
-        this.sdcSync = sdcSync;
-    }
-
     public void setAccountOwners(Collection<APIUser> accountOwners) {
         this.accountOwners = accountOwners;
     }
@@ -608,7 +597,6 @@ public class APIUser extends APIEntity {
         this.mfaStatus = apiUser.mfaStatus;
         this.mfaQRCodeUrl = apiUser.mfaQRCodeUrl;
         this.registrationIP = apiUser.registrationIP;
-        this.sdcSync = apiUser.sdcSync;
         this.accountOwners = apiUser.accountOwners;
     }
 }
