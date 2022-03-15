@@ -21,7 +21,11 @@ public class APIClientSideTestConfig implements Serializable {
 
     private String externalId;
 
+    private String hookURL;
+
     private String location;
+
+    private String osVersion;
 
     private String platform;
 
@@ -51,6 +55,14 @@ public class APIClientSideTestConfig implements Serializable {
     }
 
     public APIClientSideTestConfig() {
+    }
+
+    public String getHookURL() {
+        return hookURL;
+    }
+
+    public void setHookURL(String hookURL) {
+        this.hookURL = hookURL;
     }
 
     public Target getTarget() {
@@ -131,5 +143,13 @@ public class APIClientSideTestConfig implements Serializable {
 
     public void setExternalId(String externalId) {
         this.externalId = externalId;
+    }
+
+    public String getOsVersion() {
+        return osVersion;
+    }
+
+    public void setOsVersion(String osVersion) {
+        this.osVersion = osVersion;
     }
 }

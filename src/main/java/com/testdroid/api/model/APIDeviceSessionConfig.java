@@ -22,8 +22,6 @@ public class APIDeviceSessionConfig extends APIEntity implements Serializable {
 
     private Long deviceModelId;
 
-    private String platform;
-
     private String screenResolution;
 
     private APITunnelSettings tunnelSettings;
@@ -54,14 +52,6 @@ public class APIDeviceSessionConfig extends APIEntity implements Serializable {
 
     public APIDeviceSession.Type getType() {
         return type;
-    }
-
-    public String getPlatform() {
-        return platform;
-    }
-
-    public void setPlatform(String platform) {
-        this.platform = platform;
     }
 
     public String getBrowserName() {
@@ -113,7 +103,6 @@ public class APIDeviceSessionConfig extends APIEntity implements Serializable {
         this.browserName = prototype.browserName;
         this.browserVersion = prototype.browserVersion;
         this.deviceModelId = prototype.deviceModelId;
-        this.platform = prototype.platform;
         this.screenResolution = prototype.screenResolution;
         this.tunnelSettings = prototype.tunnelSettings;
         this.type = prototype.type;

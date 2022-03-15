@@ -65,7 +65,6 @@ public class MappingKey {
     public static final String CREATED_BY_EMAIL = "createdByEmail";
     public static final String CREATED_BY_ID = "createdById";
     public static final String CREATE_TIME = "createTime";
-    public static final String CREATE_CBT_ACCOUNT = "createCBTAccount";
     public static final String CREDITS_PRICE = "creditsPrice";
     public static final String CURRENT_STEP_TYPE = "currentStepType";
     public static final String CUSTOM_PLAN = "customPlan";
@@ -208,6 +207,7 @@ public class MappingKey {
     public static final String ORGANIZATION = "organization";
     public static final String ORIGINAL_NAME = "originalName";
     public static final String OS_TYPE = "osType";
+    public static final String OS_VERSION = "osVersion";
     public static final String PAID = "paid";
     public static final String PARAMETERS = "parameters";
     public static final String PASSED_RATIO = "passedRatio";

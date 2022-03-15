@@ -3,6 +3,7 @@ package com.testdroid.api.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIList;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
@@ -41,7 +42,8 @@ public class APIDevice extends APIEntity {
         IOS(OsType.IOS),
         ANDROID(OsType.ANDROID),
         WINDOWS(OsType.DESKTOP, "Windows"),
-        MACOS(OsType.DESKTOP, "macOS"),
+        MAC(OsType.DESKTOP, "macOS"),
+        MACOS(OsType.DESKTOP, "oldMac"), // TODO: remove in 2.140
         LINUX(OsType.DESKTOP, "Linux"),
         UNDEFINED(OsType.UNDEFINED);
 
@@ -64,6 +66,12 @@ public class APIDevice extends APIEntity {
 
         public String getDisplayName() {
             return displayName;
+        }
+
+        public static APIDevice.Platform getByDisplayName(String displayName) {
+            return Arrays.stream(APIDevice.Platform.values())
+                    .filter(p -> StringUtils.equalsIgnoreCase(p.getDisplayName(), displayName))
+                    .findAny().orElse(UNDEFINED);
         }
     }
 

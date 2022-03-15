@@ -1,11 +1,7 @@
 package com.testdroid.api.util;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.testdroid.api.APIMaintenance;
-import com.testdroid.api.APIEntity;
-import com.testdroid.api.APIExceptionMessage;
-import com.testdroid.api.APIList;
-import com.testdroid.api.APIMessage;
+import com.testdroid.api.*;
 import com.testdroid.api.model.*;
 import com.testdroid.api.model.capabilities.APIDesktopBrowserCapabilities;
 import com.testdroid.api.model.devicetime.APIBasicDeviceTime;
@@ -88,6 +84,14 @@ public class TypeReferenceFactory {
         //@formatter:on
     }
 
+    private static final Map<Class<? extends APIEntity>, TypeReference<?>> SIMPLE_LIST_MAP = new HashMap<>();
+
+    static {
+        //@formatter:off
+        SIMPLE_LIST_MAP.put(APIBrokerHub.class, new TypeReference<APISimpleList<APIBrokerHub>>() {});
+        //@formatter:on
+    }
+
     private static final Map<Class<?>, TypeReference<?>> MAP = new HashMap<>();
 
     static {
@@ -165,6 +169,10 @@ public class TypeReferenceFactory {
     @SuppressWarnings("unchecked")
     public static <T extends APIEntity> TypeReference<APIList<T>> getListTypeRef(Class<T> clazz) {
         return (TypeReference<APIList<T>>) LIST_MAP.get(clazz);
+    }
+
+    public static <T extends APIEntity> TypeReference<APISimpleList<T>> getSimpleListTypeRef(Class<T> clazz) {
+        return (TypeReference<APISimpleList<T>>) SIMPLE_LIST_MAP.get(clazz);
     }
 
     public static TypeReference<Map<String, String>> getMapTypeReference() {
