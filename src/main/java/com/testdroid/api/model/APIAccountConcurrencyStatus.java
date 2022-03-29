@@ -2,10 +2,8 @@ package com.testdroid.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
-import org.apache.commons.lang3.StringUtils;
 
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.Arrays;
 import java.util.List;
 
 import static java.lang.Boolean.FALSE;
@@ -37,9 +35,8 @@ public class APIAccountConcurrencyStatus extends APIEntity {
         return accountConcurrency;
     }
 
-    public APIAccountConcurrencyStatus setAccountConcurrency(Integer accountConcurrency) {
+    public void setAccountConcurrency(Integer accountConcurrency) {
         this.accountConcurrency = accountConcurrency;
-        return this;
     }
 
     public Long getRunningSessions() {
@@ -66,17 +63,16 @@ public class APIAccountConcurrencyStatus extends APIEntity {
         return usedBy;
     }
 
-    public APIAccountConcurrencyStatus setUnlimitedConcurrency(Boolean unlimitedConcurrency) {
+    public void setUnlimitedConcurrency(Boolean unlimitedConcurrency) {
         this.unlimitedConcurrency = unlimitedConcurrency;
-        return this;
     }
 
     public APIAccountConcurrencyStatus(
-            Long accountId, String mainUserEmail, String userEmails, Long waitingSessions, Long runningSessions) {
+            Long accountId, String mainUserEmail, List<String> usedBy, Long waitingSessions, Long runningSessions) {
         super(accountId);
         this.runningSessions = runningSessions;
         this.waitingSessions = waitingSessions;
-        this.usedBy = Arrays.asList(StringUtils.split(userEmails, ","));
+        this.usedBy = usedBy;
         this.sessions = runningSessions + waitingSessions;
         this.mainUserEmail = mainUserEmail;
         this.unlimitedConcurrency = FALSE;

@@ -61,7 +61,6 @@ public class TypeReferenceFactory {
         LIST_MAP.put(APIFramework.class, new TypeReference<APIList<APIFramework>>() {});
         LIST_MAP.put(APILabelGroup.class, new TypeReference<APIList<APILabelGroup>>() {});
         LIST_MAP.put(APILicense.class, new TypeReference<APIList<APILicense>>() {});
-        LIST_MAP.put(APIMarketShare.class, new TypeReference<APIList<APIMarketShare>>() {});
         LIST_MAP.put(APINotification.class, new TypeReference<APIList<APINotification>>() {});
         LIST_MAP.put(APINotificationPlan.class, new TypeReference<APIList<APINotificationPlan>>() {});
         LIST_MAP.put(APIProject.class, new TypeReference<APIList<APIProject>>() {});
@@ -133,7 +132,6 @@ public class TypeReferenceFactory {
         MAP.put(APILabelGroup.class, new TypeReference<APILabelGroup>() {});
         MAP.put(APILicense.class, new TypeReference<APILicense>() {});
         MAP.put(APIMaintenance.class, new TypeReference<APIMaintenance>() {});
-        MAP.put(APIMarketShare.class, new TypeReference<APIMarketShare>() {});
         MAP.put(APIMessage.class, new TypeReference<APIMessage>() {});
         MAP.put(APINotification.class, new TypeReference<APINotification>() {});
         MAP.put(APINotificationPlan.class, new TypeReference<APINotificationPlan>() {});
@@ -171,6 +169,7 @@ public class TypeReferenceFactory {
         return (TypeReference<APIList<T>>) LIST_MAP.get(clazz);
     }
 
+    @SuppressWarnings("unchecked")
     public static <T extends APIEntity> TypeReference<APISimpleList<T>> getSimpleListTypeRef(Class<T> clazz) {
         return (TypeReference<APISimpleList<T>>) SIMPLE_LIST_MAP.get(clazz);
     }

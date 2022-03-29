@@ -73,7 +73,6 @@ import java.util.Map;
         APILabelGroup.class,
         APILicense.class,
         APIList.class,
-        APIMarketShare.class,
         APIMaintenance.class,
         APINotification.class,
         APINotificationPlan.class,

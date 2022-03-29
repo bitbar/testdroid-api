@@ -167,7 +167,7 @@ public class APIDeviceSession extends APIEntity {
             Integer testCasePassedCount, Integer testCaseFailedCount, Integer testCaseSkippedCount, Boolean billable,
             Long deviceModelId, String displayName, String deviceManufacturer, Integer creditsPrice, String imagePrefix,
             Integer imageTop, Integer imageLeft, Integer imageWidth, Integer imageHeight, Integer frameExtraWidth,
-            APIDevice.OsType osType, APIDevice.Platform platform ,Boolean enabled,
+            APIDevice.OsType osType, APIDevice.Platform platform, Boolean locked, Boolean enabled,
             String releaseVersion, Integer apiLevel, ExcludeReason excludeReason, Long deviceInstanceId,
             RetryState retryState, Integer autoRetriesLeftCount, Long deviceTime, Long duration, Long projectId,
             String projectName, Long testRunId, String testRunName, Float successRatio, String name,
@@ -184,7 +184,7 @@ public class APIDeviceSession extends APIEntity {
         this.endTime = TimeConverter.toDate(endTime);
         this.device = new APIDevice(deviceModelId, displayName, deviceManufacturer, releaseVersion,
                 apiLevel, creditsPrice, imagePrefix, imageTop, imageLeft, imageWidth, imageHeight, frameExtraWidth,
-                osType, platform, null, null, enabled, null, null);
+                osType, platform, null, locked, enabled, null, null);
         this.timeLimit = timeLimit;
         this.deviceLogFirstTimestamp = deviceLogFirstTimestamp;
         this.state = state;
