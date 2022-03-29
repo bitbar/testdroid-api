@@ -43,7 +43,6 @@ public class APIDevice extends APIEntity {
         ANDROID(OsType.ANDROID),
         WINDOWS(OsType.DESKTOP, "Windows"),
         MAC(OsType.DESKTOP, "macOS"),
-        MACOS(OsType.DESKTOP, "oldMac"), // TODO: remove in 2.140
         LINUX(OsType.DESKTOP, "Linux"),
         UNDEFINED(OsType.UNDEFINED);
 
