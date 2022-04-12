@@ -44,8 +44,14 @@ public class APIDeviceSession extends APIEntity {
     @XmlType(namespace = "APIDeviceSession")
     public enum Type {
         AUTOMATIC,
-        MANUAL,
-        REMOTE
+        MANUAL, // TODO to be removed with >= 2.142
+        MANUAL_APP,
+        MANUAL_WEB,
+        REMOTE;
+
+        public boolean isManual() {
+            return this == MANUAL || this == MANUAL_APP || this == MANUAL_WEB;
+        }
     }
 
     @XmlType(namespace = "APIDeviceSession")

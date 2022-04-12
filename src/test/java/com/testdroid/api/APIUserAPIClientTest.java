@@ -26,7 +26,6 @@ import static com.testdroid.api.model.APIDevice.OsType.ANDROID;
 import static com.testdroid.api.model.APIFileConfig.Action.INSTALL;
 import static com.testdroid.api.model.APIFileConfig.Action.RUN_TEST;
 import static com.testdroid.api.model.APITestRun.State.WAITING;
-import static com.testdroid.api.util.BitbarUtils.loadFile;
 import static com.testdroid.cloud.test.categories.TestTags.API_CLIENT;
 import static java.lang.Integer.MAX_VALUE;
 import static java.util.Collections.singletonMap;

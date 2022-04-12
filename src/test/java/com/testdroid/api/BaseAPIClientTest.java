@@ -12,6 +12,7 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
 
+import java.io.File;
 import java.util.*;
 import java.util.stream.Stream;
 
@@ -123,4 +124,7 @@ abstract class BaseAPIClientTest {
         return new DefaultAPIClient(CLOUD_URL, user.getEmail(), USER_PASSWORD, proxy, false);
     }
 
+    static File loadFile(String name) {
+        return new File(BaseAPIClientTest.class.getResource(name).getFile());
+    }
 }

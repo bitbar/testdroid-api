@@ -26,7 +26,7 @@ public class APIDeviceSessionConfig extends APIEntity implements Serializable {
 
     private APITunnelSettings tunnelSettings;
 
-    private APIDeviceSession.Type type = APIDeviceSession.Type.MANUAL;
+    private APIDeviceSession.Type type;
 
     private String url;
 
