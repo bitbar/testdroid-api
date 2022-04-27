@@ -31,6 +31,8 @@ public class APIService extends APIEntity {
 
     private String description;
 
+    private String features;
+
     private String name;
 
     private Date archiveTime;
@@ -74,7 +76,7 @@ public class APIService extends APIEntity {
     public APIService(
             Long id, String name, String description, boolean autoRenew, Integer centPrice, Integer includedHours,
             Integer pricePerHour, String externalId, String commonId, LocalDateTime archiveTime, LocalDateTime activateTime,
-            boolean activated, boolean customPlan, ChargeType chargeType, Unit unit) {
+            boolean activated, boolean customPlan, ChargeType chargeType, Unit unit, String features) {
         super(id);
         this.name = name;
         this.description = description;
@@ -90,6 +92,7 @@ public class APIService extends APIEntity {
         this.chargeType = chargeType;
         this.unit = unit;
         this.commonId = commonId;
+        this.features = features;
     }
 
     public boolean isAutoRenew() {
@@ -114,6 +117,7 @@ public class APIService extends APIEntity {
         cloneBase(from);
         this.name = apiService.name;
         this.description = apiService.description;
+        this.features = apiService.features;
         this.autoRenew = apiService.autoRenew;
         this.centPrice = apiService.centPrice;
         this.externalId = apiService.externalId;
@@ -242,6 +246,14 @@ public class APIService extends APIEntity {
 
     public void setDefaultConcurrences(Set<Integer> defaultAvailableConcurrences) {
         this.defaultConcurrences = defaultAvailableConcurrences;
+    }
+
+    public String getFeatures() {
+        return features;
+    }
+
+    public void setFeatures(String features) {
+        this.features = features;
     }
 
     @JsonIgnore
