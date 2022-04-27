@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.testdroid</groupId>
     <artifactId>testdroid-api</artifactId>
-    <version>2.141</version>
+    <version>2.142</version>
     <packaging>jar</packaging>
     <name>Bitbar API v2</name>
     <url>https://github.com/bitbar/testdroid-api</url>
@@ -12,8 +12,7 @@
         <jacoco-maven-plugin.skip>true</jacoco-maven-plugin.skip>
         <!-- disable default deployment -->
         <maven.deploy.skip>true</maven.deploy.skip>
-        <org.springframework.boot.spring-boot-dependencies>2.6.2</org.springframework.boot.spring-boot-dependencies>
-        <log4j.version>2.17.1</log4j.version>
+        <org.springframework.boot.spring-boot-dependencies>2.6.6</org.springframework.boot.spring-boot-dependencies>
         <org.apache.commons.collections4.version>4.4</org.apache.commons.collections4.version>
         <org.apache.commons.io.version>2.11.0</org.apache.commons.io.version>
         <commons-text.version>1.9</commons-text.version>
@@ -227,17 +226,14 @@
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
-            <version>${log4j.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
-            <version>${log4j.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-slf4j-impl</artifactId>
-            <version>${log4j.version}</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>

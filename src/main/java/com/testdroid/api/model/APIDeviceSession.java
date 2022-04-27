@@ -44,13 +44,12 @@ public class APIDeviceSession extends APIEntity {
     @XmlType(namespace = "APIDeviceSession")
     public enum Type {
         AUTOMATIC,
-        MANUAL, // TODO to be removed with >= 2.142
         MANUAL_APP,
         MANUAL_WEB,
         REMOTE;
 
         public boolean isManual() {
-            return this == MANUAL || this == MANUAL_APP || this == MANUAL_WEB;
+            return this == MANUAL_APP || this == MANUAL_WEB;
         }
     }
 
@@ -511,6 +510,11 @@ public class APIDeviceSession extends APIEntity {
     @JsonIgnore
     public APIDeviceSession release() throws APIException {
         return client.post(createUri(selfURI, "/release"), null, APIDeviceSession.class);
+    }
+
+    @JsonIgnore
+    public APIDeviceSession abort() throws APIException {
+        return client.post(createUri(selfURI, "/abort"), null, APIDeviceSession.class);
     }
 
     private String getScreenshotsURI() {
