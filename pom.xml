@@ -17,7 +17,7 @@
         <org.apache.commons.io.version>2.11.0</org.apache.commons.io.version>
         <commons-text.version>1.9</commons-text.version>
         <com.google.http-client>1.40.1</com.google.http-client>
-        <com.google.oauth-client>1.32.1</com.google.oauth-client>
+        <com.google.oauth-client>1.33.3</com.google.oauth-client>
         <dependency-check-maven.version>6.1.1</dependency-check-maven.version>
         <jacoco-maven-plugin.version>0.8.7</jacoco-maven-plugin.version>
     </properties>
