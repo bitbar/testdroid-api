@@ -191,4 +191,12 @@ public class Context<T extends APIEntity> {
         return new Context<>(clazz, this.offset, this.limit, this.search, this.sort
                 .serialize(), this.filters, this.groups);
     }
+
+    public Optional<FilterEntry> findFilter(Context<T> ctx, String field, Operand operand) {
+        return ctx.getFilters().stream().filter(f -> keyAndOperandEqual(f, field, operand)).findFirst();
+    }
+
+    private Boolean keyAndOperandEqual(FilterEntry fe, String field, Operand operand) {
+        return Objects.equals(fe.getField(), field) && Objects.equals(fe.getOperand(), operand);
+    }
 }

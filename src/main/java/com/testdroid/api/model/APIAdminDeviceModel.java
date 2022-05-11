@@ -25,15 +25,31 @@ public class APIAdminDeviceModel extends APIEntity {
 
     private Boolean enabled;
 
+    private APIDevice.OsType osType;
+
+    private APIDevice.Platform platform;
+
+    private String location;
+
+    private Boolean dedicated;
+
+    private String releaseVersion;
+
     public APIAdminDeviceModel() {
 
     }
 
     public APIAdminDeviceModel(
-            Long id, String name, Boolean enabled, Integer online, Integer total, Long running, Long queueSize,
-            Double avgWaitingTime) {
+            Long id, String name, APIDevice.OsType osType, APIDevice.Platform platform, String location,
+            Boolean dedicated, String releaseVersion, Boolean enabled, Integer online, Integer total, Long running,
+            Long queueSize, Double avgWaitingTime) {
         super(id);
         this.name = name;
+        this.osType = osType;
+        this.platform = platform;
+        this.location = location;
+        this.dedicated = dedicated;
+        this.releaseVersion = releaseVersion;
         this.enabled = enabled;
         this.online = online;
         this.total = total;
@@ -48,6 +64,11 @@ public class APIAdminDeviceModel extends APIEntity {
         APIAdminDeviceModel model = (APIAdminDeviceModel) from;
         cloneBase(from);
         this.name = model.name;
+        this.osType = model.osType;
+        this.platform = model.platform;
+        this.location = model.location;
+        this.dedicated = model.dedicated;
+        this.releaseVersion = model.releaseVersion;
         this.enabled = model.enabled;
         this.online = model.online;
         this.total = model.total;
@@ -110,5 +131,45 @@ public class APIAdminDeviceModel extends APIEntity {
 
     public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public APIDevice.OsType getOsType() {
+        return osType;
+    }
+
+    public void setOsType(APIDevice.OsType osType) {
+        this.osType = osType;
+    }
+
+    public APIDevice.Platform getPlatform() {
+        return platform;
+    }
+
+    public void setPlatform(APIDevice.Platform platform) {
+        this.platform = platform;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public Boolean getDedicated() {
+        return dedicated;
+    }
+
+    public void setDedicated(Boolean dedicated) {
+        this.dedicated = dedicated;
+    }
+
+    public String getReleaseVersion() {
+        return releaseVersion;
+    }
+
+    public void setReleaseVersion(String releaseVersion) {
+        this.releaseVersion = releaseVersion;
     }
 }

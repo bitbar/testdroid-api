@@ -74,6 +74,7 @@ public class MappingKey {
     public static final String DAYS = "days";
     public static final String DEACTIVATED_BY_NAME = "deactivatedByName";
     public static final String DEACTIVATE_REASON = "deactivateReason";
+    public static final String DEDICATED = "dedicated";
     public static final String DELETE_TIME = "deleteTime";
     public static final String DEPRECATED_RESOURCE = "deprecatedResource";
     public static final String DESCRIPTION = "description";
