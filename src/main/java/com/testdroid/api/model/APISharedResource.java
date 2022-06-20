@@ -3,13 +3,11 @@ package com.testdroid.api.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
 
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 /**
  * @author Michał Szpruta <michal.szpruta@bitbar.com>
  */
-@XmlRootElement
 public class APISharedResource extends APIEntity {
 
     @XmlType(namespace = "APISharedResource")

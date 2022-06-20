@@ -2,13 +2,11 @@ package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
 
-import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
 /**
  * @author Michał Szpruta <michal.szpruta@bitbar.com>
  */
-@XmlRootElement
 public class APITestRunDataAvailability extends APIEntity {
 
     private List<APIDeviceSessionDataAvailability> deviceRunDataAvailabilities;

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.testdroid.api.APIEntity;
 
-import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -12,7 +11,6 @@ import java.util.Objects;
  * @author Damian Sniezek <damian.sniezek@bitbar.com>
  */
 @JsonIgnoreProperties(value = {"id"})
-@XmlRootElement
 public class APIUserPreference extends APIEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -7,7 +7,6 @@ import com.testdroid.api.util.TimeConverter;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -16,7 +15,6 @@ import java.util.Date;
 /**
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
  */
-@XmlRootElement
 public class APICluster extends APIEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;

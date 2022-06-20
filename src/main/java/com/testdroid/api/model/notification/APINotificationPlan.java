@@ -4,14 +4,12 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.util.TimeConverter;
 
-import javax.xml.bind.annotation.XmlRootElement;
 import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
  * @author Damian Sniezek <damian.sniezek@bitbar.com>
  */
-@XmlRootElement
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class APINotificationPlan extends APIEntity {
 

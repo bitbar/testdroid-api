@@ -4,13 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.model.APIDevice;
 
-import javax.xml.bind.annotation.XmlRootElement;
 import java.util.*;
 
 /**
  * @author Michał Szpruta <michal.szpruta@bitbar.com>
  */
-@XmlRootElement
 public class APIDesktopPlatform extends APIEntity {
 
     private String name;

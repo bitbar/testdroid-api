@@ -6,23 +6,31 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
-@XmlRootElement
 @JsonIgnoreProperties(value = {"id", "selfURI"})
 public class APIBrokerHub extends APIEntity {
+
+    @XmlType(namespace = "APIBrokerHub")
+    public enum Type {
+        MOBILE,
+        DESKTOP
+    }
 
     private String location;
 
     private String url;
 
+    private Type type;
+
     public APIBrokerHub() {
         // need for serialization/deserialization
     }
 
-    public APIBrokerHub(String location, String url) {
+    public APIBrokerHub(String location, String url, Type type) {
         this.location = location;
         this.url = url;
+        this.type = type;
     }
 
     @Override
@@ -32,6 +40,7 @@ public class APIBrokerHub extends APIEntity {
 
         this.location = source.location;
         this.url = source.url;
+        this.type = source.type;
     }
 
     public String getLocation() {
@@ -50,11 +59,20 @@ public class APIBrokerHub extends APIEntity {
         this.url = url;
     }
 
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this)
                 .append("location", location)
                 .append("url", url)
+                .append("type", type)
                 .toString();
     }
 
@@ -70,11 +88,19 @@ public class APIBrokerHub extends APIEntity {
 
         APIBrokerHub hub = (APIBrokerHub) o;
 
-        return new EqualsBuilder().append(location, hub.location).append(url, hub.url).isEquals();
+        return new EqualsBuilder()
+                .append(location, hub.location)
+                .append(url, hub.url)
+                .append(type, hub.type)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37).append(location).append(url).toHashCode();
+        return new HashCodeBuilder(17, 37)
+                .append(location)
+                .append(url)
+                .append(String.valueOf(type))
+                .toHashCode();
     }
 }

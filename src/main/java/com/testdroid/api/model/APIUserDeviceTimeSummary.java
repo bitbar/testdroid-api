@@ -4,13 +4,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.testdroid.api.APIEntity;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
 /**
  * @author Adrian Zybala <adrian.zybala@bitbar.com>
  */
 @JsonIgnoreProperties("id")
-@XmlRootElement
 public class APIUserDeviceTimeSummary extends APIEntity {
 
     private Long totalDeviceTime;

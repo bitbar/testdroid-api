@@ -3,12 +3,9 @@ package com.testdroid.api.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
 /**
  * @author Adrian Zybala <adrian.zybala@bitbar.com>
  */
-@XmlRootElement
 public class APIDeviceUsage extends APIEntity {
 
     private APIDevice device;

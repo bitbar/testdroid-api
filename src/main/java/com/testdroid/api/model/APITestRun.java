@@ -9,7 +9,6 @@ import com.testdroid.api.dto.Context;
 import com.testdroid.api.util.TimeConverter;
 import org.apache.commons.lang3.StringUtils;
 
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -21,7 +20,6 @@ import java.util.List;
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
  * @author Slawomir Pawluk <slawomir.pawluk@bitbar.com>
  */
-@XmlRootElement
 public class APITestRun extends APIEntity implements UiPresentable {
 
     @XmlType(namespace = "APITestRun", name = "APITestRunState")

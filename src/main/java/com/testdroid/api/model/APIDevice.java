@@ -5,7 +5,6 @@ import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIList;
 import org.apache.commons.lang3.StringUtils;
 
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import java.util.Arrays;
 import java.util.Collections;
@@ -20,17 +19,14 @@ import static java.util.Collections.singletonList;
  * @author Michał Szpruta <michal.szpruta@bitbar.com>
  * @author Slawomir Pawluk <slawomir.pawluk@bitbar.com>
  */
-@XmlRootElement
 public class APIDevice extends APIEntity {
 
-    @XmlType
     public enum DeviceGroupOrigin {
         STATIC,
         DYNAMIC,
         HYBRID
     }
 
-    @XmlType
     public enum Creator {
         MANUAL,
         ROBOT,

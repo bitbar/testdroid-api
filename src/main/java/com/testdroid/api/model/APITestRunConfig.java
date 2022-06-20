@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.testdroid.api.APIEntity;
 
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -16,7 +15,6 @@ import java.util.Optional;
 /**
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
  */
-@XmlRootElement
 public class APITestRunConfig extends APIEntity implements Serializable {
 
     public static final String DEFAULT_RUNNER = "android.test.InstrumentationTestRunner";

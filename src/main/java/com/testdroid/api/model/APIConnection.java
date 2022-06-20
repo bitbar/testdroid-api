@@ -3,7 +3,6 @@ package com.testdroid.api.model;
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.util.TimeConverter;
 
-import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -11,7 +10,6 @@ import java.util.Date;
 /**
  * @author Jarno Tuovinen <jarno.tuovinen@bitbar.com>
  */
-@XmlRootElement
 public class APIConnection extends APIEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;

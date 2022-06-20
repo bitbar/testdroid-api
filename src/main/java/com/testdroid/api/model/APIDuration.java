@@ -1,6 +1,5 @@
 package com.testdroid.api.model;
 
-import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
@@ -8,7 +7,6 @@ import java.util.Objects;
 /**
  * @author Damian Sniezek <damian.sniezek@smartbear.com>
  */
-@XmlType
 public class APIDuration implements Serializable {
 
     private static final long serialVersionUID = 1L;

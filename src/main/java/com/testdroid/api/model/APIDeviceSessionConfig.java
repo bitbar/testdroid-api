@@ -3,13 +3,11 @@ package com.testdroid.api.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
 
-import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 
 /**
  * @author Damian Sniezek <damian.sniezek@bitbar.com>
  */
-@XmlRootElement
 public class APIDeviceSessionConfig extends APIEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;

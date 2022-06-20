@@ -110,6 +110,10 @@ public class Context<T extends APIEntity> {
         return sort;
     }
 
+    public Optional<APISort.SortItem> findSort(String field) {
+        return sort.getSorts().stream().filter(s -> Objects.equals(s.getColumn(), field)).findAny();
+    }
+
     public Context<T> setSort(APISort sort) {
         this.sort = sort;
         return this;
@@ -124,7 +128,7 @@ public class Context<T extends APIEntity> {
     }
 
     public Optional<FilterEntry> findFilter(String field, Operand operand) {
-        return filters.stream().filter(f -> f.getField().equals(field) && f.getOperand().equals(operand)).findAny();
+        return filters.stream().filter(f -> keyAndOperandEqual(f, field, operand)).findAny();
     }
 
     public Context<T> setFilters(List<FilterEntry> filters) {
@@ -190,10 +194,6 @@ public class Context<T extends APIEntity> {
     public <R extends T> Context<R> as(Class<R> clazz) {
         return new Context<>(clazz, this.offset, this.limit, this.search, this.sort
                 .serialize(), this.filters, this.groups);
-    }
-
-    public Optional<FilterEntry> findFilter(Context<T> ctx, String field, Operand operand) {
-        return ctx.getFilters().stream().filter(f -> keyAndOperandEqual(f, field, operand)).findFirst();
     }
 
     private Boolean keyAndOperandEqual(FilterEntry fe, String field, Operand operand) {

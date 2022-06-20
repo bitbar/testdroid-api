@@ -2,12 +2,9 @@ package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
 /**
  * @author Michał Szpruta <michal.szpruta@smartbear.com>
  */
-@XmlRootElement
 public class APICommand extends APIEntity {
 
     private String httpMethod;

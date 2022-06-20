@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.util.TimeConverter;
 
-import javax.xml.bind.annotation.XmlRootElement;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -12,7 +11,6 @@ import java.util.Date;
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
  * @author Slawomir Pawluk <slawomir.pawluk@bitbar.com>
  */
-@XmlRootElement
 public class APIProjectJobConfig extends APIEntity {
 
     private String content;

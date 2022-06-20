@@ -5,13 +5,10 @@ import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIListResource;
 import com.testdroid.api.dto.Context;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
 /**
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
  * @author Slawomir Pawluk <slawomir.pawluk@bitbar.com>
  */
-@XmlRootElement
 public class APILabelGroup extends APIEntity {
 
     private String displayName;

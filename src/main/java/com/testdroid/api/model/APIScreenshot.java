@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIException;
 
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import java.io.InputStream;
 
@@ -12,7 +11,6 @@ import java.io.InputStream;
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
  * @author Slawomir Pawluk <slawomir.pawluk@bitbar.com>
  */
-@XmlRootElement
 public class APIScreenshot extends APIEntity {
 
     @XmlType(namespace = "APIScreenshot")

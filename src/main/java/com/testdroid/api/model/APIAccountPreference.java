@@ -3,7 +3,6 @@ package com.testdroid.api.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
 
-import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +11,6 @@ import java.util.Objects;
 /**
  * @author Damian Sniezek <damian.sniezek@bitbar.com>
  */
-@XmlRootElement
 public class APIAccountPreference extends APIEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;

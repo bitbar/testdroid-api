@@ -3,12 +3,9 @@ package com.testdroid.api.model.notification;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.testdroid.api.APIEntity;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
 /**
  * @author Damian Sniezek <damian.sniezek@bitbar.com>
  */
-@XmlRootElement
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class APINotification extends APIEntity {
 

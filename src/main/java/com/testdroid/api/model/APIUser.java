@@ -8,7 +8,6 @@ import com.testdroid.api.APIListResource;
 import com.testdroid.api.dto.Context;
 import com.testdroid.api.util.TimeConverter;
 
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import java.io.File;
 import java.time.LocalDateTime;
@@ -21,7 +20,6 @@ import static java.util.Collections.emptyMap;
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
  * @author Slawomir Pawluk <slawomir.pawluk@bitbar.com>
  */
-@XmlRootElement
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class APIUser extends APIEntity {
 

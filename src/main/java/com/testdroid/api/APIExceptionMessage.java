@@ -2,14 +2,11 @@ package com.testdroid.api;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
 /**
  * Class used to return body of API response with exception
  *
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
  */
-@XmlRootElement
 public class APIExceptionMessage extends APIMessage {
 
     private Integer statusCode;
