@@ -2,12 +2,9 @@ package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
 /**
  * @author Adrian Zybala <adrian.zybala@bitbar.com>
  */
-@XmlRootElement
 public class APIAdminDeviceType extends APIEntity {
 
     private Integer frameExtraWidth;

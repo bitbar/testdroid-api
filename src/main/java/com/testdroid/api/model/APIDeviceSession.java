@@ -7,7 +7,6 @@ import com.testdroid.api.APIListResource;
 import com.testdroid.api.dto.Context;
 import com.testdroid.api.util.TimeConverter;
 
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import java.io.File;
 import java.io.InputStream;
@@ -18,7 +17,6 @@ import java.util.Map;
 /**
  * @author Slawomir Pawluk <slawomir.pawluk@bitbar.com>
  */
-@XmlRootElement
 public class APIDeviceSession extends APIEntity {
 
     @XmlType(namespace = "APIDeviceSession")
@@ -49,7 +47,7 @@ public class APIDeviceSession extends APIEntity {
         REMOTE;
 
         public boolean isManual() {
-            return this == MANUAL_APP || this == MANUAL_WEB;
+            return this == MANUAL_APP || this == MANUAL_WEB || this == REMOTE;
         }
     }
 

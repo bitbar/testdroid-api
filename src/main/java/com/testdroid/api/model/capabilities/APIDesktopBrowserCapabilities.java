@@ -3,7 +3,6 @@ package com.testdroid.api.model.capabilities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
 
-import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -11,7 +10,6 @@ import java.util.Objects;
 /**
  * @author Michał Szpruta <michal.szpruta@bitbar.com>
  */
-@XmlRootElement
 public class APIDesktopBrowserCapabilities extends APIEntity {
 
     private List<APIDesktopPlatform> platforms = new ArrayList<>();

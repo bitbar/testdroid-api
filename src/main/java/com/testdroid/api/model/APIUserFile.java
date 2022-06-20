@@ -6,7 +6,6 @@ import com.testdroid.api.APIException;
 import com.testdroid.api.APIListResource;
 import com.testdroid.api.util.TimeConverter;
 
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import java.io.InputStream;
 import java.io.Serializable;
@@ -21,7 +20,6 @@ import static com.testdroid.api.model.APIUserFileProperty.VirusScanStatus;
  * @author Michał Szpruta <michal.szpruta@bitbar.com>
  * @author Slawomir Pawluk <slawomir.pawluk@bitbar.com>
  */
-@XmlRootElement
 public class APIUserFile extends APIEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -3,12 +3,9 @@ package com.testdroid.api.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
 /**
  * @author Michał Szpruta <michal.szpruta@bitbar.com>
  */
-@XmlRootElement
 public class APIHealthCheck extends APIEntity {
 
     private boolean dbHealthy;

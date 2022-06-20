@@ -4,14 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.util.TimeConverter;
 
-import javax.xml.bind.annotation.XmlRootElement;
 import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
  * @author Adrian Zybala <adrian.zybala@bitbar.com>
  */
-@XmlRootElement
 public class APIAccount extends APIEntity {
 
     private Date createTime;

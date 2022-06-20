@@ -1,12 +1,10 @@
 package com.testdroid.api.model;
 
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 /**
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
  */
-@XmlRootElement
 public class APIServicePaymentStatus {
 
     @XmlType(name = "APIServicePaymentStatus")

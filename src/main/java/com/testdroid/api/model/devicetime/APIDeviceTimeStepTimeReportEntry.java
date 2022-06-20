@@ -5,13 +5,11 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.model.APIDevice;
 
-import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
 
 /**
  * @author Damian Sniezek <damian.sniezek@bitbar.com>
  */
-@XmlRootElement
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class APIDeviceTimeStepTimeReportEntry extends APIDeviceTimeReportEntry {
 

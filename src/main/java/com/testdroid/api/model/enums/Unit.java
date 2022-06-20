@@ -8,7 +8,6 @@ import java.time.temporal.ChronoUnit;
 /**
  * @author Adrian Zybala <adrian.zybala@bitbar.com>
  */
-@XmlType
 public enum Unit {
     MONTH(ChronoUnit.MONTHS),
     DAY(ChronoUnit.DAYS),

@@ -6,7 +6,6 @@ import com.testdroid.api.util.TimeConverter;
 import org.apache.commons.lang3.EnumUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -17,7 +16,6 @@ import static org.apache.commons.lang3.StringUtils.EMPTY;
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
  * @author Michał Szpruta <michal.szpruta@bitbar.com>
  */
-@XmlRootElement
 public class APILicense extends APIEntity {
 
     @XmlType(namespace = "APILicense")

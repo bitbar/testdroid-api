@@ -1,9 +1,7 @@
 package com.testdroid.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.testdroid.api.APIEntity;
 
-import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
 import static java.lang.Boolean.FALSE;
@@ -11,22 +9,19 @@ import static java.lang.Boolean.FALSE;
 /**
  * @author Damian Sniezek <damian.sniezek@smartbear.com>
  */
-@XmlRootElement
-public class APIAccountConcurrencyStatus extends APIEntity {
-
-    private Long runningSessions;
-
-    private Long waitingSessions;
-
-    private Long sessions;
+public class APIAccountConcurrencyStatus {
 
     private Integer accountConcurrency;
 
-    private String mainUserEmail;
+    private Long runningSessions;
+
+    private Long sessions;
+
+    private Boolean unlimitedConcurrency;
 
     private List<String> usedBy;
 
-    private Boolean unlimitedConcurrency;
+    private Long waitingSessions;
 
     APIAccountConcurrencyStatus() {
     }
@@ -51,10 +46,6 @@ public class APIAccountConcurrencyStatus extends APIEntity {
         return sessions;
     }
 
-    public String getMainUserEmail() {
-        return mainUserEmail;
-    }
-
     public Boolean getUnlimitedConcurrency() {
         return unlimitedConcurrency;
     }
@@ -67,27 +58,21 @@ public class APIAccountConcurrencyStatus extends APIEntity {
         this.unlimitedConcurrency = unlimitedConcurrency;
     }
 
-    public APIAccountConcurrencyStatus(
-            Long accountId, String mainUserEmail, List<String> usedBy, Long waitingSessions, Long runningSessions) {
-        super(accountId);
+    public APIAccountConcurrencyStatus(List<String> usedBy, Long waitingSessions, Long runningSessions) {
         this.runningSessions = runningSessions;
         this.waitingSessions = waitingSessions;
         this.usedBy = usedBy;
         this.sessions = runningSessions + waitingSessions;
-        this.mainUserEmail = mainUserEmail;
         this.unlimitedConcurrency = FALSE;
     }
 
-    @Override
     @JsonIgnore
-    protected <T extends APIEntity> void clone(T from) {
-        APIAccountConcurrencyStatus origin = (APIAccountConcurrencyStatus) from;
-        cloneBase(from);
+    protected void clone(APIAccountConcurrencyStatus origin) {
         this.runningSessions = origin.runningSessions;
         this.waitingSessions = origin.waitingSessions;
         this.sessions = origin.sessions;
         this.accountConcurrency = origin.accountConcurrency;
-        this.mainUserEmail = origin.mainUserEmail;
         this.usedBy = origin.usedBy;
+        this.unlimitedConcurrency = origin.unlimitedConcurrency;
     }
 }

@@ -6,7 +6,6 @@ import com.testdroid.api.formatter.CurrencyFormatter;
 import com.testdroid.api.model.enums.Unit;
 import com.testdroid.api.util.TimeConverter;
 
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -14,7 +13,6 @@ import java.util.*;
 /**
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
  */
-@XmlRootElement
 public class APIService extends APIEntity {
 
     private boolean autoRenew;
@@ -53,21 +51,15 @@ public class APIService extends APIEntity {
 
     @XmlType(namespace = "APIService")
     public enum ChargeType {
+        CONCURRENCY,
+        USAGE,
+        // TODO: Remove in 3.1
+        @Deprecated
         USAGE_MOBILE,
+        @Deprecated
         CONCURRENCY_MOBILE,
+        @Deprecated
         CONCURRENCY_DESKTOP;
-
-        public static Boolean isConcurrency(String value) {
-            return !Objects.equals("metered", value);
-        }
-
-        public Boolean isConcurrency() {
-            return this == CONCURRENCY_MOBILE || this == CONCURRENCY_DESKTOP;
-        }
-
-        public Boolean isUsage() {
-            return this == USAGE_MOBILE;
-        }
     }
 
     public APIService() {

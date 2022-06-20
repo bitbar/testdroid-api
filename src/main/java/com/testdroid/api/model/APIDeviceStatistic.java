@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.testdroid.api.APIEntity;
 
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import static com.testdroid.api.dto.MappingKey.ID;
@@ -12,7 +11,6 @@ import static com.testdroid.api.dto.MappingKey.ID;
 /**
  * @author Michał Szpruta <michal.szpruta@smartbear.com>
  */
-@XmlRootElement
 @JsonIgnoreProperties(value = {ID})
 public class APIDeviceStatistic extends APIEntity {
 

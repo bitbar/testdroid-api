@@ -7,7 +7,6 @@ import com.testdroid.api.APIListResource;
 import com.testdroid.api.dto.Context;
 import com.testdroid.api.util.TimeConverter;
 
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -21,7 +20,6 @@ import static com.testdroid.api.model.APIDevice.OsType;
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
  * @author Slawomir Pawluk <slawomir.pawluk@bitbar.com>
  */
-@XmlRootElement
 public class APIProject extends APIEntity {
 
     @XmlType(namespace = "APIProject")

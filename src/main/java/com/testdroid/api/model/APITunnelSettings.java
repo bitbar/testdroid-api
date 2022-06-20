@@ -1,9 +1,7 @@
 package com.testdroid.api.model;
 
-import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 
-@XmlRootElement
 public class APITunnelSettings implements Serializable {
 
     private String domain;

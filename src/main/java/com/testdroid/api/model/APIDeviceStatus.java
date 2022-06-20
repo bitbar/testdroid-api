@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.util.TimeConverter;
 
-import javax.xml.bind.annotation.XmlRootElement;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -12,7 +11,6 @@ import java.util.Date;
  * @author Roman Kierzkowski <roman.kierzkowski@bitbar.com>
  * @author Krzysztof Fonał <krzysztof.fonal@bitbar.com>
  */
-@XmlRootElement
 public class APIDeviceStatus extends APIEntity {
 
     private Boolean alarmOn;

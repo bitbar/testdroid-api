@@ -2,14 +2,12 @@ package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
 
-import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 
 /**
  * @author Michał Szpruta <michal.szpruta@bitbar.com>
  * @author Slawomir Pawluk <slawomir.pawluk@bitbar.com>
  */
-@XmlRootElement
 public class APIUserFileProperty extends APIEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -2,12 +2,9 @@ package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
 /**
  * @author Michał Szpruta <michal.szpruta@bitbar.com>
  */
-@XmlRootElement
 public class APIBillingPeriodUsage extends APIEntity {
 
     private APIDeviceSession.Type type;

@@ -2,13 +2,11 @@ package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
 
-import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
 
 /**
  * @author Krzysztof Mościchowski <krzysztof.moscichowski@smartbear.com>
  */
-@XmlRootElement
 public class APISmartbearTunnel extends APIEntity {
 
     private Boolean active;

@@ -1,6 +1,5 @@
 package com.testdroid.api;
 
-import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Collections;
 import java.util.List;
 
@@ -8,7 +7,6 @@ import java.util.List;
  * @param <T> type of internal list elements
  * @author Damian Sniezek <damian.sniezek@bitbar.com>
  */
-@XmlRootElement
 public class PagingResult<T extends APIEntity> {
 
     public static <T extends APIEntity> PagingResult<T> empty() {

@@ -3,10 +3,8 @@ package com.testdroid.api;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
-@XmlRootElement
 @JsonIgnoreProperties(value = {"id", "selfURI"})
 public class APISimpleList<T extends APIEntity> extends APIEntity {
 

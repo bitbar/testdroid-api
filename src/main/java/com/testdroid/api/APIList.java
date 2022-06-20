@@ -7,7 +7,6 @@ import com.testdroid.api.dto.Context;
 import com.testdroid.api.filter.FilterEntry;
 
 import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +17,6 @@ import static java.util.stream.Collectors.joining;
 /**
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
  */
-@XmlRootElement
 @JsonIgnoreProperties(value = {"id"})
 public class APIList<T extends APIEntity> extends APIEntity {
 

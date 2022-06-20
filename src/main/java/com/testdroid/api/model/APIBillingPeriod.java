@@ -4,7 +4,6 @@ import com.testdroid.api.APIEntity;
 import com.testdroid.api.model.enums.APIPaymentMethod;
 import com.testdroid.api.util.TimeConverter;
 
-import javax.xml.bind.annotation.XmlRootElement;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -12,7 +11,6 @@ import java.util.List;
 /**
  * @author Damian Sniezek <damian.sniezek@bitbar.com>
  */
-@XmlRootElement
 public class APIBillingPeriod extends APIEntity {
 
     private Long userId;

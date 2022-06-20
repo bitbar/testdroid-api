@@ -6,7 +6,6 @@ import com.testdroid.api.APIList;
 import com.testdroid.api.util.TimeConverter;
 import org.apache.commons.lang3.StringUtils;
 
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -15,7 +14,6 @@ import java.util.Date;
 /**
  * @author Slawomir Pawluk <slawomir.pawluk@bitbar.com>
  */
-@XmlRootElement
 public class APITestCaseRun extends APIEntity {
 
     public static final String DEFAULT_SUITE_NAME = "all";

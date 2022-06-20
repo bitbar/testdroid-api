@@ -5,7 +5,6 @@ import com.testdroid.api.APIEntity;
 import com.testdroid.api.util.TimeConverter;
 import org.apache.commons.lang3.tuple.Pair;
 
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -16,7 +15,6 @@ import java.util.Map;
 /**
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
  */
-@XmlRootElement
 public class APIAdminDevice extends APIEntity {
 
     @XmlType(namespace = "APIAdminDevice")

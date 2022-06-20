@@ -2,7 +2,6 @@ package com.testdroid.api.model;
 
 import org.apache.commons.lang3.EnumUtils;
 
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
 import java.util.Optional;
@@ -10,7 +9,6 @@ import java.util.Optional;
 /**
  * @author Michał Szpruta <michal.szpruta@bitbar.com>
  */
-@XmlRootElement
 public class APIClientSideTestConfig implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -98,6 +98,7 @@ public class TypeReferenceFactory {
         MAP.put(APIAccessGroup.class, new TypeReference<APIAccessGroup>() {});
         MAP.put(APIAccount.class, new TypeReference<APIAccount>() {});
         MAP.put(APIAccountConcurrencyStatus.class, new TypeReference<APIAccountConcurrencyStatus>() {});
+        MAP.put(APIAccountConcurrencyStatusMap.class, new TypeReference<APIAccountConcurrencyStatusMap>() {});
         MAP.put(APIAccountPreference.class, new TypeReference<APIAccountPreference>() {});
         MAP.put(APIAccountService.class, new TypeReference<APIAccountService>() {});
         MAP.put(APIAccountServicePayment.class, new TypeReference<APIAccountServicePayment>() {});

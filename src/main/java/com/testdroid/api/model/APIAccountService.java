@@ -6,7 +6,6 @@ import com.testdroid.api.model.enums.APIPaymentMethod;
 import com.testdroid.api.model.enums.Unit;
 import com.testdroid.api.util.TimeConverter;
 
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -15,7 +14,6 @@ import java.util.Locale;
 /**
  * @author Michał Szpruta <michal.szpruta@bitbar.com>
  */
-@XmlRootElement
 public class APIAccountService extends APIEntity {
 
     @XmlType(namespace = "APIAccountService")
