@@ -52,14 +52,7 @@ public class APIService extends APIEntity {
     @XmlType(namespace = "APIService")
     public enum ChargeType {
         CONCURRENCY,
-        USAGE,
-        // TODO: Remove in 3.1
-        @Deprecated
-        USAGE_MOBILE,
-        @Deprecated
-        CONCURRENCY_MOBILE,
-        @Deprecated
-        CONCURRENCY_DESKTOP;
+        USAGE
     }
 
     public APIService() {
