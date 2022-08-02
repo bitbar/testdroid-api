@@ -208,7 +208,6 @@ public class MappingKey {
     public static final String ORGANIZATION = "organization";
     public static final String ORIGINAL_NAME = "originalName";
     public static final String OS_TYPE = "osType";
-    public static final String OS_VERSION = "osVersion";
     public static final String PAID = "paid";
     public static final String PARAMETERS = "parameters";
     public static final String PASSED_RATIO = "passedRatio";
@@ -242,7 +241,6 @@ public class MappingKey {
     public static final String REQUIRED_TEST_FILE_TAGS = "requiredTestFileTags";
     public static final String RESOURCE_ID = "resourceId";
     public static final String RESTART = "restart";
-    public static final String RESULT = "result";
     public static final String RETENTION_STRATEGY = "retentionStrategy";
     public static final String RETRYABLE = "retryable";
     public static final String RETRY_STATE = "retryState";
@@ -251,6 +249,7 @@ public class MappingKey {
     public static final String RUNNING = "running";
     public static final String SAMPLE_APP_ID = "sampleAppId";
     public static final String SAMPLE_TEST_ID = "sampleTestId";
+    public static final String SCHEDULER = "scheduler";
     public static final String SCOPE = "scope";
     public static final String SCREEN_LOCKED = "screenLocked";
     public static final String SCREEN_RESOLUTION = "screenResolution";

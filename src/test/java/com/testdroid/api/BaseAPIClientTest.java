@@ -18,6 +18,7 @@ import java.util.stream.Stream;
 
 import static com.testdroid.api.dto.MappingKey.*;
 import static com.testdroid.api.dto.Operand.EQ;
+import static com.testdroid.api.dto.Operand.LIKE;
 import static com.testdroid.api.filter.FilterEntry.trueFilterEntry;
 import static com.testdroid.api.model.APIDevice.OsType.ANDROID;
 import static java.lang.Integer.MAX_VALUE;
@@ -89,12 +90,12 @@ abstract class BaseAPIClientTest {
         }
     }
 
-    APIFramework getApiFramework(APIClient apiClient, String frameworkName) throws APIException {
+    APIFramework getApiFramework(APIClient apiClient, String frameworkNameLike) throws APIException {
         Context<APIFramework> context = new Context<>(APIFramework.class, 0, MAX_VALUE, EMPTY, EMPTY);
         context.addFilter(new FilterEntry(OS_TYPE, EQ, ANDROID.name()));
         context.addFilter(trueFilterEntry(FOR_PROJECTS));
         context.addFilter(trueFilterEntry(CAN_RUN_FROM_UI));
-        context.addFilter(new FilterEntry(NAME, EQ, frameworkName));
+        context.addFilter(new FilterEntry(NAME, LIKE, frameworkNameLike));
         return apiClient.me().getAvailableFrameworksResource(context).getEntity().get(0);
     }
 
