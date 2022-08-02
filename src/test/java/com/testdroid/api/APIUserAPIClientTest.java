@@ -39,6 +39,8 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 @Tag(API_CLIENT)
 class APIUserAPIClientTest extends BaseAPIClientTest {
 
+    private static final String DEFAULT_FRAMEWORK_NAME_LIKE = "%Android Instrumentation%";
+
     @ParameterizedTest
     @ArgumentsSource(APIClientProvider.class)
     void getDevicesTest(APIClient apiClient) throws APIException {
@@ -130,7 +132,7 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
         APIUser me = apiClient.me();
         APITestRunConfig config = new APITestRunConfig();
         config.setProjectName(generateUnique("testProject"));
-        APIFramework defaultApiFramework = getApiFramework(apiClient, "Android Instrumentation");
+        APIFramework defaultApiFramework = getApiFramework(apiClient, DEFAULT_FRAMEWORK_NAME_LIKE);
         config.setOsType(defaultApiFramework.getOsType());
         config.setFrameworkId(defaultApiFramework.getId());
         //simulate that client set files to null
@@ -145,7 +147,7 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
         APIUser me = apiClient.me();
         APITestRunConfig config = new APITestRunConfig();
         config.setProjectName(generateUnique("testProject"));
-        APIFramework defaultApiFramework = getApiFramework(apiClient, "Android Instrumentation");
+        APIFramework defaultApiFramework = getApiFramework(apiClient, DEFAULT_FRAMEWORK_NAME_LIKE);
         config.setOsType(defaultApiFramework.getOsType());
         config.setFrameworkId(defaultApiFramework.getId());
         APIUserFile apkFile = me.uploadFile(loadFile(APP_PATH));
@@ -167,7 +169,7 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
         APIUser me = apiClient.me();
         APITestRunConfig config = new APITestRunConfig();
         config.setProjectName(generateUnique("testProject"));
-        APIFramework defaultApiFramework = getApiFramework(apiClient, "Android Instrumentation");
+        APIFramework defaultApiFramework = getApiFramework(apiClient, DEFAULT_FRAMEWORK_NAME_LIKE);
         config.setOsType(defaultApiFramework.getOsType());
         config.setFrameworkId(defaultApiFramework.getId());
         APIUserFile apkFile = me.uploadFile(loadFile(APP_PATH));
@@ -197,7 +199,7 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
         APIUser me = apiClient.me();
         APITestRunConfig config = new APITestRunConfig();
         config.setProjectName(generateUnique("testProject"));
-        APIFramework defaultApiFramework = getApiFramework(apiClient, "Android Instrumentation");
+        APIFramework defaultApiFramework = getApiFramework(apiClient, DEFAULT_FRAMEWORK_NAME_LIKE);
         config.setOsType(defaultApiFramework.getOsType());
         config.setFrameworkId(defaultApiFramework.getId());
         APIUserFile apkFile = me.uploadFile(loadFile(APP_PATH));
@@ -246,7 +248,7 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
 
         APITestRunConfig config = new APITestRunConfig();
         config.setProjectId(project.getId());
-        APIFramework defaultApiFramework = getApiFramework(apiClient, "Android Instrumentation");
+        APIFramework defaultApiFramework = getApiFramework(apiClient, DEFAULT_FRAMEWORK_NAME_LIKE);
         config.setOsType(defaultApiFramework.getOsType());
         config.setFrameworkId(defaultApiFramework.getId());
         APIUserFile apkFile = apiUser2.uploadFile(loadFile(APP_PATH));
