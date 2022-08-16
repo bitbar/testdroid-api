@@ -203,6 +203,7 @@ public class MappingKey {
     public static final String NOT_ARCHIVED = "notArchived";
     public static final String ONLINE = "online";
     public static final String ONLY_MAIN_USERS = "onlyMainUsers";
+    public static final String ONLY_WITH_BROWSERS = "onlyWithBrowsers";
     public static final String ONLY_WITH_DISABLED_SERVICES = "onlyWithDisabledServices";
     public static final String ON_DATE = "onDate";
     public static final String ORGANIZATION = "organization";
