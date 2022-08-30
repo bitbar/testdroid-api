@@ -478,9 +478,11 @@ public class APIUser extends APIEntity {
         return result;
     }
 
-    private Map<String, Object> getUpdateDeviceSessionParams(final String name, final APIDeviceSession.State state) {
+    private Map<String, Object> getUpdateDeviceSessionParams(
+            final String name, final String clientSideId, final APIDeviceSession.State state) {
         Map<String, Object> map = new HashMap<>();
         map.put(NAME, name);
+        map.put(CLIENT_SIDE_ID, clientSideId);
         map.put(STATE, state);
         return map;
     }
@@ -553,9 +555,10 @@ public class APIUser extends APIEntity {
     }
 
     @JsonIgnore
-    public APIDeviceSession updateDeviceSession(String sessionId, String name, APIDeviceSession.State state)
+    public APIDeviceSession updateDeviceSession(
+            String sessionId, String name, String clientSideId, APIDeviceSession.State state)
             throws APIException {
-        return postResource(getDeviceSessionURI(sessionId), getUpdateDeviceSessionParams(name, state),
+        return postResource(getDeviceSessionURI(sessionId), getUpdateDeviceSessionParams(name, clientSideId, state),
                 APIDeviceSession.class);
     }
 
