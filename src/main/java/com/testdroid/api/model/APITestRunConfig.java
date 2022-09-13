@@ -41,6 +41,8 @@ public class APITestRunConfig extends APIEntity implements Serializable {
 
     private String appiumBrokerAddress;
 
+    private String appiumBrokerQueueName;
+
     private String applicationPassword;
 
     private String applicationUsername;
@@ -311,6 +313,14 @@ public class APITestRunConfig extends APIEntity implements Serializable {
         this.appiumBrokerAddress = appiumBrokerAddress;
     }
 
+    public String getAppiumBrokerQueueName() {
+        return appiumBrokerQueueName;
+    }
+
+    public void setAppiumBrokerQueueName(String appiumBrokerQueueName) {
+        this.appiumBrokerQueueName = appiumBrokerQueueName;
+    }
+
     public Integer getMaxAutoRetriesCount() {
         return maxAutoRetriesCount;
     }
@@ -516,6 +526,7 @@ public class APITestRunConfig extends APIEntity implements Serializable {
         cloneBase(from);
         this.appCrawlerRun = apiTestRunConfig.appCrawlerRun;
         this.appiumBrokerAddress = apiTestRunConfig.appiumBrokerAddress;
+        this.appiumBrokerQueueName = apiTestRunConfig.appiumBrokerQueueName;
         this.applicationPassword = apiTestRunConfig.applicationPassword;
         this.applicationUsername = apiTestRunConfig.applicationUsername;
         this.availableDeviceGroups = apiTestRunConfig.availableDeviceGroups;
