@@ -50,6 +50,7 @@ public class MappingKey {
     public static final String CENT_PRICE = "centPrice";
     public static final String CHARGE_TYPE = "chargeType";
     public static final String CITY = "city";
+    public static final String CLIENT_SIDE_ID = "clientSideId";
     public static final String CLOSE_TIME = "closeTime";
     public static final String CLUSTER_DOT_NAME = "cluster.name";
     public static final String CLUSTER_ID = "clusterId";

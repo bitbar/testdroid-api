@@ -150,6 +150,8 @@ public class APIDeviceSession extends APIEntity {
 
     private String externalId;
 
+    private String clientSideId;
+
     private Long userId;
 
     private String userEmail;
@@ -164,9 +166,9 @@ public class APIDeviceSession extends APIEntity {
     }
 
     public APIDeviceSession(
-            Long id, String externalId, Long userId, String userEmail, Long accountId, APIDeviceSession.Type type,
-            LocalDateTime createTime, LocalDateTime startTime, LocalDateTime installTime, LocalDateTime endTime,
-            Long timeLimit, Long deviceLogFirstTimestamp, APIDeviceSession.State state,
+            Long id, String externalId, String clientSideId, Long userId, String userEmail, Long accountId,
+            APIDeviceSession.Type type, LocalDateTime createTime, LocalDateTime startTime, LocalDateTime installTime,
+            LocalDateTime endTime, Long timeLimit, Long deviceLogFirstTimestamp, APIDeviceSession.State state,
             Integer testCasePassedCount, Integer testCaseFailedCount, Integer testCaseSkippedCount, Boolean billable,
             Long deviceModelId, String displayName, String deviceManufacturer, Integer creditsPrice, String imagePrefix,
             Integer imageTop, Integer imageLeft, Integer imageWidth, Integer imageHeight, Integer frameExtraWidth,
@@ -177,6 +179,7 @@ public class APIDeviceSession extends APIEntity {
             APIDeviceSessionConfig config) {
         super(id);
         this.externalId = externalId;
+        this.clientSideId = clientSideId;
         this.userId = userId;
         this.userEmail = userEmail;
         this.accountId = accountId;
@@ -485,6 +488,14 @@ public class APIDeviceSession extends APIEntity {
         this.config = config;
     }
 
+    public String getClientSideId() {
+        return clientSideId;
+    }
+
+    public void setClientSideId(String clientSideId) {
+        this.clientSideId = clientSideId;
+    }
+
     @JsonIgnore
     public APIListResource<APIDeviceSessionStep> getDeviceSessionStepsResource() throws APIException {
         return getListResource(createUri(selfURI, "/steps"), APIDeviceSessionStep.class);
@@ -530,6 +541,7 @@ public class APIDeviceSession extends APIEntity {
         APIDeviceSession apiDeviceSession = (APIDeviceSession) from;
         cloneBase(from);
         this.externalId = apiDeviceSession.externalId;
+        this.clientSideId = apiDeviceSession.clientSideId;
         this.userId = apiDeviceSession.userId;
         this.userEmail = apiDeviceSession.userEmail;
         this.accountId = apiDeviceSession.accountId;

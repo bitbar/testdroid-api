@@ -80,6 +80,7 @@ public class TypeReferenceFactory {
         LIST_MAP.put(APIUserFile.class, new TypeReference<APIList<APIUserFile>>() {});
         LIST_MAP.put(APIUserFileProperty.class, new TypeReference<APIList<APIUserFileProperty>>() {});
         LIST_MAP.put(APIUserFileTag.class, new TypeReference<APIList<APIUserFileTag>>() {});
+        LIST_MAP.put(APIVisualTest.class, new TypeReference<APIList<APIVisualTest>>() {});
         //@formatter:on
     }
 
@@ -157,6 +158,7 @@ public class TypeReferenceFactory {
         MAP.put(APIUserStatistics.class, new TypeReference<APIUserStatistics>() {});
         MAP.put(Properties.class, new TypeReference<Properties>() {});
         MAP.put(String.class, new TypeReference<String>() {});
+        MAP.put(APIVisualTest.class, new TypeReference<APIVisualTest>() {});
         //@formatter:on
     }
 
