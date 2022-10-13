@@ -1,5 +1,6 @@
 package com.testdroid.api;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.api.client.auth.oauth2.BearerToken;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.http.*;
@@ -30,6 +31,7 @@ import java.security.GeneralSecurityException;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.testdroid.api.APIEntity.OBJECT_MAPPER;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
@@ -46,6 +48,10 @@ public class DefaultAPIClient extends AbstractAPIClient {
     public static final int HTTP_READ_TIMEOUT = 60000;
 
     public static final String BITBAR_API_OAUTH2_CLIENT_ID = "testdroid-cloud-api";
+
+    private static final String FAILED_TO_ACQUIRE_ACCESS_TOKEN = "Failed to acquire access token";
+
+    private static final String FAILED_TO_ACQUIRE_ACCESS_TOKEN_REASON = "Failed to acquire access token. Reason: %s";
 
     protected String accessToken;
 
@@ -156,7 +162,7 @@ public class DefaultAPIClient extends AbstractAPIClient {
 
             response = request.execute();
             if (response.getStatusCode() != 200) {
-                throw new APIException(response.getStatusCode(), "Failed to acquire access token");
+                throw new APIException(response.getStatusCode(), FAILED_TO_ACQUIRE_ACCESS_TOKEN);
             }
 
             String responseJson = StringUtils.join(IOUtils.readLines(response.getContent(), UTF_8), "\n");
@@ -165,10 +171,19 @@ public class DefaultAPIClient extends AbstractAPIClient {
             refreshToken = json.get("refresh_token");
             return json.get("access_token");
         } catch (HttpResponseException ex) {
-            throw new APIException(String
-                    .format("Failed to acquire access token. Reason: %s", ex.getStatusMessage()), ex);
+            String message;
+            if (StringUtils.isNotBlank(ex.getContent())) {
+                try {
+                    message = OBJECT_MAPPER.readValue(ex.getContent(), APIExceptionMessage.class).getMessage();
+                } catch (JsonProcessingException e) {
+                    message = FAILED_TO_ACQUIRE_ACCESS_TOKEN;
+                }
+            } else {
+                message = String.format(FAILED_TO_ACQUIRE_ACCESS_TOKEN_REASON, ex.getStatusMessage());
+            }
+            throw new APIException(ex.getStatusCode(), message, ex);
         } catch (IOException ex) {
-            throw new APIException(String.format("Failed to acquire access token. Reason: %s", ex.getMessage()), ex);
+            throw new APIException(String.format(FAILED_TO_ACQUIRE_ACCESS_TOKEN_REASON, ex.getMessage()), ex);
         } finally {
             disconnectQuietly(response);
         }

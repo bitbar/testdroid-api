@@ -1,28 +1,27 @@
 package com.testdroid.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.testdroid.api.APIEntity;
 
-@JsonIgnoreProperties(value = "apiKey", allowSetters = true)
-public class APIVisualTest extends APIEntity {
+/**
+ * @author Artur Ćwikliński <artur.cwiklinski@smartbear.com>
+ */
+public class APIVisualTestAccess extends APIEntity {
 
-    private Boolean enabled;
+    private boolean enabled;
 
-    @JsonProperty("apiKey")
     private String apiKey;
 
-    public APIVisualTest() {
+    public APIVisualTestAccess() {
     }
 
-    public APIVisualTest(Long id, boolean status, String apiKey) {
+    public APIVisualTestAccess(Long id, boolean status, String apiKey) {
         super(id);
         this.enabled = status;
         this.apiKey = apiKey;
     }
 
-    public APIVisualTest(boolean status, String apiKey) {
+    public APIVisualTestAccess(boolean status, String apiKey) {
         this.enabled = status;
         this.apiKey = apiKey;
     }
@@ -46,8 +45,9 @@ public class APIVisualTest extends APIEntity {
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
-        APIVisualTest visualTest = (APIVisualTest) from;
+        APIVisualTestAccess visualTestAccess = (APIVisualTestAccess) from;
         cloneBase(from);
-        this.enabled = visualTest.enabled;
+        this.enabled = visualTestAccess.enabled;
+        this.apiKey = visualTestAccess.apiKey;
     }
 }

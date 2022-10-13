@@ -62,7 +62,6 @@ public class MappingKey {
     public static final String CONTENT = "content";
     public static final String COUNT = "count";
     public static final String COUNTRY = "country";
-    public static final String COUNTRY_CODE = "countryCode";
     public static final String CREATED_BY_EMAIL = "createdByEmail";
     public static final String CREATED_BY_ID = "createdById";
     public static final String CREATE_TIME = "createTime";
@@ -326,7 +325,6 @@ public class MappingKey {
     public static final String USER_ID = "userId";
     public static final String USER_NAME = "userName";
     public static final String VALUE = "value";
-    public static final String VAT_ID = "vatId";
     public static final String VAT_RATE = "vatRate";
     public static final String VERSION = "version";
     public static final String VIDEO_RECORDING_ENABLED = "videoRecordingEnabled";
