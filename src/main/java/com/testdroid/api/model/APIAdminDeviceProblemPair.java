@@ -16,7 +16,6 @@ public class APIAdminDeviceProblemPair extends APIEntity {
         DIRTY,
         OFFLINE,
         LOW_BATTERY,
-        HIGH_FAIL_RATE,
         NO_INTERNET_CONNECTION
     }
 

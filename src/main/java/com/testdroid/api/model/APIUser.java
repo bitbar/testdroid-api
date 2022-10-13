@@ -104,8 +104,6 @@ public class APIUser extends APIEntity {
 
     private String timeZone;
 
-    private String vatId;
-
     private String apiKey;
 
     private Long createdById;
@@ -137,7 +135,7 @@ public class APIUser extends APIEntity {
 
     public APIUser(
             Long id, Long accountId, String email, String firstName, String lastName, String state,
-            String country, String city, String code, String address, String phone, String organization, String vatId,
+            String country, String city, String code, String address, String phone, String organization,
             String timeZone, LocalDateTime createTime, LocalDateTime deleteTime, LocalDateTime lastLoginTime,
             LocalDateTime lastLaunchedTestTime, Boolean isMainUser, Long mainUserId, String mainUserEmail,
             String apiKey, Status status, Long createdById, String createdByEmail, MfaStatus mfaStatus,
@@ -150,7 +148,6 @@ public class APIUser extends APIEntity {
         this.address = address;
         this.phone = phone;
         this.organization = organization;
-        this.vatId = vatId;
         this.timeZone = timeZone;
         this.lastLoginTime = TimeConverter.toDate(lastLoginTime);
         this.lastLaunchedTestTime = TimeConverter.toDate(lastLaunchedTestTime);
@@ -245,14 +242,6 @@ public class APIUser extends APIEntity {
 
     public void setOrganization(String organization) {
         this.organization = organization;
-    }
-
-    public String getVatId() {
-        return vatId;
-    }
-
-    public void setVatId(String vatId) {
-        this.vatId = vatId;
     }
 
     public String getTimeZone() {
@@ -461,7 +450,6 @@ public class APIUser extends APIEntity {
         map.put(PHONE, phone);
         map.put(STATE, state);
         map.put(TIME_ZONE, timeZone);
-        map.put(VAT_ID, vatId);
         return map;
     }
 
@@ -579,7 +567,6 @@ public class APIUser extends APIEntity {
         this.roles = apiUser.roles;
         this.state = apiUser.state;
         this.timeZone = apiUser.timeZone;
-        this.vatId = apiUser.vatId;
         this.createTime = apiUser.createTime;
         this.deleteTime = apiUser.deleteTime;
         this.isMainUser = apiUser.isMainUser;

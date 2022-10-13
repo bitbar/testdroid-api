@@ -43,7 +43,6 @@ public class TypeReferenceFactory {
         LIST_MAP.put(APICluster.class, new TypeReference<APIList<APICluster>>() {});
         LIST_MAP.put(APICommand.class, new TypeReference<APIList<APICommand>>() {});
         LIST_MAP.put(APIConnection.class, new TypeReference<APIList<APIConnection>>() {});
-        LIST_MAP.put(APICountryVatRate.class, new TypeReference<APIList<APICountryVatRate>>() {});
         LIST_MAP.put(APIDevice.class, new TypeReference<APIList<APIDevice>>() {});
         LIST_MAP.put(APIDeviceCleanupConfiguration.class, new TypeReference<APIList<APIDeviceCleanupConfiguration>>() {});
         LIST_MAP.put(APIDeviceGroup.class, new TypeReference<APIList<APIDeviceGroup>>() {});
@@ -80,7 +79,7 @@ public class TypeReferenceFactory {
         LIST_MAP.put(APIUserFile.class, new TypeReference<APIList<APIUserFile>>() {});
         LIST_MAP.put(APIUserFileProperty.class, new TypeReference<APIList<APIUserFileProperty>>() {});
         LIST_MAP.put(APIUserFileTag.class, new TypeReference<APIList<APIUserFileTag>>() {});
-        LIST_MAP.put(APIVisualTest.class, new TypeReference<APIList<APIVisualTest>>() {});
+        LIST_MAP.put(APIVisualTestAccess.class, new TypeReference<APIList<APIVisualTestAccess>>() {});
         //@formatter:on
     }
 
@@ -116,7 +115,6 @@ public class TypeReferenceFactory {
         MAP.put(APICloudInfo.class, new TypeReference<APICloudInfo>() {});
         MAP.put(APICluster.class, new TypeReference<APICluster>() {});
         MAP.put(APIConnection.class, new TypeReference<APIConnection>() {});
-        MAP.put(APICountryVatRate.class, new TypeReference<APICountryVatRate>() {});
         MAP.put(APIDesktopBrowserCapabilities.class, new TypeReference<APIDesktopBrowserCapabilities>() {});
         MAP.put(APIDevice.class, new TypeReference<APIDevice>() {});
         MAP.put(APIDeviceCleanupConfiguration.class, new TypeReference<APIDeviceCleanupConfiguration>() {});
@@ -158,7 +156,7 @@ public class TypeReferenceFactory {
         MAP.put(APIUserStatistics.class, new TypeReference<APIUserStatistics>() {});
         MAP.put(Properties.class, new TypeReference<Properties>() {});
         MAP.put(String.class, new TypeReference<String>() {});
-        MAP.put(APIVisualTest.class, new TypeReference<APIVisualTest>() {});
+        MAP.put(APIVisualTestAccess.class, new TypeReference<APIVisualTestAccess>() {});
         //@formatter:on
     }
 
