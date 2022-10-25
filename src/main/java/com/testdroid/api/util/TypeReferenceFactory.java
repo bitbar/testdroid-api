@@ -176,7 +176,7 @@ public class TypeReferenceFactory {
     }
 
     public static TypeReference<Map<String, String>> getMapTypeReference() {
-        return new TypeReference<Map<String, String>>() {
+        return new TypeReference<>() {
         };
     }
 }

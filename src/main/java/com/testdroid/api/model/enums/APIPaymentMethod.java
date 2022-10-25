@@ -1,7 +1,5 @@
 package com.testdroid.api.model.enums;
 
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,7 +13,7 @@ import static java.util.Collections.singletonList;
 /**
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
  * @author Damian Sniezek <damian.sniezek@bitbar.com>
- *
+ * <p>
  * Mapping is (isServiceIdPresent, isOldAccountServiceIdPresent, isNewAccountServiceIdPresent, isCallByUser)
  */
 public enum APIPaymentMethod {
@@ -28,33 +26,33 @@ public enum APIPaymentMethod {
     AWS(emptyMap());
 
     private static Map<List<Boolean>, List<PlanOperation>> createInvoiceMapping() {
-        Map<List<Boolean>, List<PlanOperation>> result = new HashMap<>();
-        result.put(asList(TRUE, FALSE, FALSE, TRUE), singletonList(CREATE));
-        result.put(asList(TRUE, TRUE, FALSE, TRUE), singletonList(CREATE));
-        result.put(asList(FALSE, TRUE, FALSE, FALSE), singletonList(CANCEL));
-        result.put(asList(FALSE, FALSE, TRUE, FALSE), singletonList(ACTIVATE));
-        result.put(asList(TRUE, FALSE, FALSE, FALSE), asList(CREATE, ACTIVATE));
-        result.put(asList(TRUE, TRUE, FALSE, FALSE), asList(CREATE, ACTIVATE, CANCEL));
-        result.put(asList(FALSE, TRUE, TRUE, FALSE), asList(ACTIVATE, CANCEL));
-        return Collections.unmodifiableMap(result);
+        return Map.of(
+                asList(TRUE, FALSE, FALSE, TRUE), singletonList(CREATE),
+                asList(TRUE, TRUE, FALSE, TRUE), singletonList(CREATE),
+                asList(FALSE, TRUE, FALSE, FALSE), singletonList(CANCEL),
+                asList(FALSE, FALSE, TRUE, FALSE), singletonList(ACTIVATE),
+                asList(TRUE, FALSE, FALSE, FALSE), asList(CREATE, ACTIVATE),
+                asList(TRUE, TRUE, FALSE, FALSE), asList(CREATE, ACTIVATE, CANCEL),
+                asList(FALSE, TRUE, TRUE, FALSE), asList(ACTIVATE, CANCEL)
+        );
     }
 
     private static Map<List<Boolean>, List<PlanOperation>> createBraintreeMapping() {
-        Map<List<Boolean>, List<PlanOperation>> result = new HashMap<>();
-        result.put(asList(TRUE, FALSE, FALSE, TRUE), asList(CREATE, ACTIVATE));
-        result.put(asList(FALSE, TRUE, FALSE, TRUE), singletonList(CANCEL));
-        result.put(asList(FALSE, TRUE, FALSE, FALSE), singletonList(CANCEL));
-        result.put(asList(TRUE, TRUE, FALSE, TRUE), asList(CREATE, ACTIVATE, CANCEL));
-        return Collections.unmodifiableMap(result);
+        return Map.of(
+                asList(TRUE, FALSE, FALSE, TRUE), asList(CREATE, ACTIVATE),
+                asList(FALSE, TRUE, FALSE, TRUE), singletonList(CANCEL),
+                asList(FALSE, TRUE, FALSE, FALSE), singletonList(CANCEL),
+                asList(TRUE, TRUE, FALSE, TRUE), asList(CREATE, ACTIVATE, CANCEL)
+        );
     }
 
     private static Map<List<Boolean>, List<PlanOperation>> createStripeMapping() {
-        Map<List<Boolean>, List<PlanOperation>> result = new HashMap<>();
-        result.put(asList(TRUE, FALSE, FALSE, TRUE), asList(CREATE, ACTIVATE));
-        result.put(asList(FALSE, TRUE, FALSE, TRUE), singletonList(CANCEL));
-        result.put(asList(FALSE, TRUE, FALSE, FALSE), singletonList(CANCEL));
-        result.put(asList(TRUE, TRUE, FALSE, TRUE), asList(CREATE, ACTIVATE, CANCEL));
-        return Collections.unmodifiableMap(result);
+        return Map.of(
+                asList(TRUE, FALSE, FALSE, TRUE), asList(CREATE, ACTIVATE),
+                asList(FALSE, TRUE, FALSE, TRUE), singletonList(CANCEL),
+                asList(FALSE, TRUE, FALSE, FALSE), singletonList(CANCEL),
+                asList(TRUE, TRUE, FALSE, TRUE), asList(CREATE, ACTIVATE, CANCEL)
+        );
     }
 
     private final Map<List<Boolean>, List<PlanOperation>> operationSchema;

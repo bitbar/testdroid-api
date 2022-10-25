@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIException;
 import com.testdroid.api.APIListResource;
+import com.testdroid.api.UiPresentable;
 import com.testdroid.api.dto.Context;
 import com.testdroid.api.util.TimeConverter;
 
@@ -17,7 +18,7 @@ import java.util.Map;
 /**
  * @author Slawomir Pawluk <slawomir.pawluk@bitbar.com>
  */
-public class APIDeviceSession extends APIEntity {
+public class APIDeviceSession extends APIEntity implements UiPresentable {
 
     @XmlType(namespace = "APIDeviceSession")
     public enum ExcludeReason {
@@ -162,6 +163,8 @@ public class APIDeviceSession extends APIEntity {
 
     private APIDeviceSessionConfig config;
 
+    private String uiLink;
+
     public APIDeviceSession() {
     }
 
@@ -214,6 +217,16 @@ public class APIDeviceSession extends APIEntity {
         this.successRatio = successRatio;
         this.name = name;
         this.config = config;
+    }
+
+    @Override
+    public String getUiLink() {
+        return uiLink;
+    }
+
+    @Override
+    public void setUiLink(String uiLink) {
+        this.uiLink = uiLink;
     }
 
     public String getExternalId() {

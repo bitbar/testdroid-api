@@ -20,17 +20,21 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @Tag(API_CLIENT)
 class DefaultAPIClientTest extends BaseAPIClientTest {
 
-    private static final String UNKNOW_HOST_EXCEPTION_MESSAGE = "Failed to acquire access token. Reason: %s: %s";
+    private static final String UNKNOWN_HOST_EXCEPTION_MESSAGE = "Failed to acquire access token. Reason: %s: %s";
 
     private static <T> Condition<T> isEqual(T expected) {
         return new Condition<>(v -> v.equals(expected), "equals" + expected);
+    }
+
+    private static Condition<String> startsWith(String expected) {
+        return new Condition<>(v -> v.startsWith(expected), "startsWith" + expected);
     }
 
     private static Collection<Object[]> data() {
         Object[][] data = new Object[][]{
                 // @formatter:off
                 {"127.0.0.a", 8080, APIException.class, getUnknownHostExceptionMessage("127.0.0.a")},
-                {"127.0.0.1", 0, APIException.class, isEqual("Failed to acquire access token. Reason: Connection refused (Connection refused)")},
+                {"127.0.0.1", 0, APIException.class, startsWith("Failed to acquire access token")},
                 // @formatter:on
         };
         return Arrays.asList(data);
@@ -48,9 +52,9 @@ class DefaultAPIClientTest extends BaseAPIClientTest {
     private static Condition<String> getUnknownHostExceptionMessage(String host) {
         return anyOf(
                 isEqual(String
-                        .format(UNKNOW_HOST_EXCEPTION_MESSAGE, host, "nodename nor servname provided, or not known")),
-                isEqual(String.format(UNKNOW_HOST_EXCEPTION_MESSAGE, host, "Name or service not known")),
-                isEqual(String.format(UNKNOW_HOST_EXCEPTION_MESSAGE, host, "Temporary failure in name resolution"))
+                        .format(UNKNOWN_HOST_EXCEPTION_MESSAGE, host, "nodename nor servname provided, or not known")),
+                isEqual(String.format(UNKNOWN_HOST_EXCEPTION_MESSAGE, host, "Name or service not known")),
+                isEqual(String.format(UNKNOWN_HOST_EXCEPTION_MESSAGE, host, "Temporary failure in name resolution"))
         );
     }
 
