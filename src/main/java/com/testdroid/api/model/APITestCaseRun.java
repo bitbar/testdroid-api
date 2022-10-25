@@ -11,6 +11,8 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Date;
 
+import static java.math.RoundingMode.HALF_UP;
+
 /**
  * @author Slawomir Pawluk <slawomir.pawluk@bitbar.com>
  */
@@ -77,7 +79,7 @@ public class APITestCaseRun extends APIEntity {
             } catch (NumberFormatException ignored) {
             }
         }
-        duration = result.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+        duration = result.setScale(2, HALF_UP).doubleValue();
     }
 
     public Result getResult() {

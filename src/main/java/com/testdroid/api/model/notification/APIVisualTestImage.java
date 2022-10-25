@@ -18,7 +18,7 @@ public class APIVisualTestImage extends APIEntity {
         VIEWPORT("viewport"),
         ELEMENT_SCREENSHOT("element screenshot");
 
-        String type;
+        final String type;
 
         ImageType(String type) {
             this.type = type;
@@ -44,13 +44,13 @@ public class APIVisualTestImage extends APIEntity {
 
     public APIVisualTestImage(
             String imageName, ImageType imageType, String imageUrl, String imageThumbnailUrl, String comparisonStatus,
-            String comparisonUrl, String sessionId, String testUrl, String createdAt) {
+            String appUrl, String sessionId, String testUrl, String createdAt) {
         this.imageName = imageName;
         this.imageType = imageType;
         this.imageUrl = imageUrl;
         this.imageThumbnailUrl = imageThumbnailUrl;
         this.comparisonStatus = comparisonStatus;
-        this.comparisonUrl = comparisonUrl;
+        this.appUrl = appUrl;
         this.sessionId = sessionId;
         this.testUrl = testUrl;
         this.createdAt = createdAt;
@@ -66,7 +66,7 @@ public class APIVisualTestImage extends APIEntity {
 
     private String comparisonStatus;
 
-    private String comparisonUrl;
+    private String appUrl;
 
     private String sessionId;
 
@@ -114,12 +114,12 @@ public class APIVisualTestImage extends APIEntity {
         this.comparisonStatus = comparisonStatus;
     }
 
-    public String getComparisonUrl() {
-        return comparisonUrl;
+    public String getAppUrl() {
+        return appUrl;
     }
 
-    public void setComparisonUrl(String comparisonUrl) {
-        this.comparisonUrl = comparisonUrl;
+    public void setAppUrl(String appUrl) {
+        this.appUrl = appUrl;
     }
 
     public String getSessionId() {
@@ -156,7 +156,7 @@ public class APIVisualTestImage extends APIEntity {
         this.imageUrl = visualTestImage.imageUrl;
         this.imageThumbnailUrl = visualTestImage.imageThumbnailUrl;
         this.comparisonStatus = visualTestImage.comparisonStatus;
-        this.comparisonUrl = visualTestImage.comparisonUrl;
+        this.appUrl = visualTestImage.appUrl;
         this.sessionId = visualTestImage.sessionId;
         this.testUrl = visualTestImage.testUrl;
         this.createdAt = visualTestImage.createdAt;

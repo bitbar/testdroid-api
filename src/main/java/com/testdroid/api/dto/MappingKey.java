@@ -325,7 +325,6 @@ public class MappingKey {
     public static final String USER_ID = "userId";
     public static final String USER_NAME = "userName";
     public static final String VALUE = "value";
-    public static final String VAT_RATE = "vatRate";
     public static final String VERSION = "version";
     public static final String VIDEO_RECORDING_ENABLED = "videoRecordingEnabled";
     public static final String WIDTH = "width";
