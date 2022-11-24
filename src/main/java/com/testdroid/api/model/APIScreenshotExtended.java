@@ -28,7 +28,7 @@ public class APIScreenshotExtended extends APIScreenshot {
         super(id, name, fail, type, timestamp);
         this.device = new APIDevice(deviceModelId, displayName, manufacturer, releaseVersion,
                 apiLevel, creditsPrice, imagePrefix, imageTop, imageLeft, imageWidth, imageHeight, frameExtraWidth,
-                osType, platform, null, null, null, null, null);
+                osType, platform, null, null, null, null, null, null, null);
         this.projectId = projectId;
         this.testRunId = testRunId;
         this.deviceRunId = deviceSessionId;

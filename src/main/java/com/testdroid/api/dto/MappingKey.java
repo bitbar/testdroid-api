@@ -47,6 +47,7 @@ public class MappingKey {
     public static final String BUILD_LIMIT = "buildLimit";
     public static final String CAN_RUN_FROM_UI = "canRunFromUI";
     public static final String CARD_NUMBER = "cardNumber";
+    public static final String CBT_ID = "cbtId";
     public static final String CENT_PRICE = "centPrice";
     public static final String CHARGE_TYPE = "chargeType";
     public static final String CITY = "city";

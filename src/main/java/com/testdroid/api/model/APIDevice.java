@@ -161,6 +161,15 @@ public class APIDevice extends APIEntity {
 
     private Set<Creator> supportedCreators;
 
+    private APIDeviceAvailability availability;
+
+    // Technical fields to calculate others
+    @JsonIgnore
+    private Integer onlineDevices;
+
+    @JsonIgnore
+    private Integer availableDevices;
+
     public APIDevice() {
     }
 
@@ -168,7 +177,8 @@ public class APIDevice extends APIEntity {
             Long id, String displayName, String manufacturer, String releaseVersion,
             Integer apiLevel, Integer creditsPrice, String imagePrefix, Integer imageTop, Integer imageLeft,
             Integer imageWidth, Integer imageHeight, Integer frameExtraWidth, OsType osType, Platform platform,
-            Boolean online, Boolean locked, Boolean enabled, Long accountId, String mainUserEmail) {
+            Boolean online, Boolean locked, Boolean enabled, Long accountId, String mainUserEmail,
+            Integer onlineDevices, Integer availableDevices) {
         super(id);
         this.displayName = displayName;
         this.manufacturer = manufacturer;
@@ -187,6 +197,8 @@ public class APIDevice extends APIEntity {
         this.enabled = enabled;
         this.accountId = accountId;
         this.mainUserEmail = mainUserEmail;
+        this.onlineDevices = onlineDevices;
+        this.availableDevices = availableDevices;
     }
 
     public String getDisplayName() {
@@ -397,6 +409,24 @@ public class APIDevice extends APIEntity {
         this.manufacturer = manufacturer;
     }
 
+    public APIDeviceAvailability getAvailability() {
+        return availability;
+    }
+
+    public void setAvailability(APIDeviceAvailability availability) {
+        this.availability = availability;
+    }
+
+    @JsonIgnore
+    public Integer getOnlineDevices() {
+        return onlineDevices;
+    }
+
+    @JsonIgnore
+    public Integer getAvailableDevices() {
+        return availableDevices;
+    }
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
@@ -428,5 +458,8 @@ public class APIDevice extends APIEntity {
         this.browsers = apiDevice.browsers;
         this.available = apiDevice.available;
         this.supportedCreators = apiDevice.supportedCreators;
+        this.availability = apiDevice.availability;
+        this.onlineDevices = apiDevice.onlineDevices;
+        this.availableDevices = apiDevice.availableDevices;
     }
 }
