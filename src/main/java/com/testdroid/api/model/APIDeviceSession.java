@@ -193,7 +193,7 @@ public class APIDeviceSession extends APIEntity implements UiPresentable {
         this.endTime = TimeConverter.toDate(endTime);
         this.device = new APIDevice(deviceModelId, displayName, deviceManufacturer, releaseVersion,
                 apiLevel, creditsPrice, imagePrefix, imageTop, imageLeft, imageWidth, imageHeight, frameExtraWidth,
-                osType, platform, null, locked, enabled, null, null);
+                osType, platform, null, locked, enabled, null, null, null, null);
         this.timeLimit = timeLimit;
         this.deviceLogFirstTimestamp = deviceLogFirstTimestamp;
         this.state = state;
