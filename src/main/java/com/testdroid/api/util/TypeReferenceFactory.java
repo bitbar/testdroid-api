@@ -8,7 +8,6 @@ import com.testdroid.api.model.devicetime.APIBasicDeviceTime;
 import com.testdroid.api.model.devicetime.APIDeviceTimeCountSessionReportEntry;
 import com.testdroid.api.model.devicetime.APIDeviceTimeStepTimeReportEntry;
 import com.testdroid.api.model.notification.APINotification;
-import com.testdroid.api.model.notification.APINotificationPlan;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -61,7 +60,6 @@ public class TypeReferenceFactory {
         LIST_MAP.put(APILabelGroup.class, new TypeReference<APIList<APILabelGroup>>() {});
         LIST_MAP.put(APILicense.class, new TypeReference<APIList<APILicense>>() {});
         LIST_MAP.put(APINotification.class, new TypeReference<APIList<APINotification>>() {});
-        LIST_MAP.put(APINotificationPlan.class, new TypeReference<APIList<APINotificationPlan>>() {});
         LIST_MAP.put(APIProject.class, new TypeReference<APIList<APIProject>>() {});
         LIST_MAP.put(APIProjectJobConfig.class, new TypeReference<APIList<APIProjectJobConfig>>() {});
         LIST_MAP.put(APIProperty.class, new TypeReference<APIList<APIProperty>>() {});
@@ -134,7 +132,6 @@ public class TypeReferenceFactory {
         MAP.put(APIMaintenance.class, new TypeReference<APIMaintenance>() {});
         MAP.put(APIMessage.class, new TypeReference<APIMessage>() {});
         MAP.put(APINotification.class, new TypeReference<APINotification>() {});
-        MAP.put(APINotificationPlan.class, new TypeReference<APINotificationPlan>() {});
         MAP.put(APIProject.class, new TypeReference<APIProject>() {});
         MAP.put(APIProjectJobConfig.class, new TypeReference<APIProjectJobConfig>() {});
         MAP.put(APIProperty.class, new TypeReference<APIProperty>() {});

@@ -15,8 +15,6 @@ public class APIAdminTestRun extends APIEntity {
 
     private Date endTime;
 
-    private Boolean appCrawlerRun;
-
     private APITestRun.State state;
 
     private Float successRatio;
@@ -71,12 +69,11 @@ public class APIAdminTestRun extends APIEntity {
 
     public APIAdminTestRun(
             Long id, LocalDateTime createTime, LocalDateTime startTime, LocalDateTime endTime, APITestRun.State state,
-            Long startedById, String userName, String projectName, String testRunName, Boolean appCrawlerRun,
-            Float successRatio, Integer priority, Long projectId, Long duration,
-            APITestRunConfig.Scheduler scheduler, Long frameworkId, String frameworkName) {
+            Long startedById, String userName, String projectName, String testRunName, Float successRatio,
+            Integer priority, Long projectId, Long duration, APITestRunConfig.Scheduler scheduler, Long frameworkId,
+            String frameworkName) {
         this(id, createTime, startTime, endTime, state, startedById, userName, projectName, testRunName,
                 successRatio, priority, projectId, duration, frameworkId, frameworkName);
-        this.appCrawlerRun = appCrawlerRun;
         this.scheduler = scheduler;
     }
 
@@ -126,14 +123,6 @@ public class APIAdminTestRun extends APIEntity {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
-    }
-
-    public Boolean getAppCrawlerRun() {
-        return appCrawlerRun;
-    }
-
-    public void setAppCrawlerRun(Boolean appCrawlerRun) {
-        this.appCrawlerRun = appCrawlerRun;
     }
 
     public String getUserName() {
@@ -228,7 +217,6 @@ public class APIAdminTestRun extends APIEntity {
         this.state = apiAdminTestRun.state;
         this.projectName = apiAdminTestRun.projectName;
         this.testRunName = apiAdminTestRun.testRunName;
-        this.appCrawlerRun = apiAdminTestRun.appCrawlerRun;
         this.successRatio = apiAdminTestRun.successRatio;
         this.priority = apiAdminTestRun.priority;
         this.projectId = apiAdminTestRun.projectId;

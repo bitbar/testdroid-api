@@ -37,8 +37,6 @@ public class APITestRunConfig extends APIEntity implements Serializable {
         ALL_INSTANCES
     }
 
-    private boolean appCrawlerRun;
-
     private String appiumBrokerAddress;
 
     private String appiumBrokerQueueName;
@@ -149,14 +147,6 @@ public class APITestRunConfig extends APIEntity implements Serializable {
 
     public void setScheduler(Scheduler scheduler) {
         this.scheduler = scheduler;
-    }
-
-    public boolean isAppCrawlerRun() {
-        return appCrawlerRun;
-    }
-
-    public void setAppCrawlerRun(boolean appCrawlerRun) {
-        this.appCrawlerRun = appCrawlerRun;
     }
 
     public LimitationType getLimitationType() {
@@ -524,7 +514,6 @@ public class APITestRunConfig extends APIEntity implements Serializable {
     protected <T extends APIEntity> void clone(T from) {
         APITestRunConfig apiTestRunConfig = (APITestRunConfig) from;
         cloneBase(from);
-        this.appCrawlerRun = apiTestRunConfig.appCrawlerRun;
         this.appiumBrokerAddress = apiTestRunConfig.appiumBrokerAddress;
         this.appiumBrokerQueueName = apiTestRunConfig.appiumBrokerQueueName;
         this.applicationPassword = apiTestRunConfig.applicationPassword;

@@ -15,7 +15,7 @@ public class APIFramework extends APIEntity {
 
     @XmlType(namespace = "APIFramework")
     public enum Type {
-        APP_CRAWLER,
+        @Deprecated APP_CRAWLER,
         CLIENT_SIDE,
         MANUAL,
         REMOTE
