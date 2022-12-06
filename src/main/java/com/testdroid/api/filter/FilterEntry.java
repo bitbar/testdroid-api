@@ -5,7 +5,7 @@ import com.testdroid.api.util.TimeConverter;
 import org.apache.commons.lang3.StringUtils;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Collection;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -125,7 +125,8 @@ public class FilterEntry {
                 return singleToString(value);
             case Integer.MAX_VALUE:
             default:
-                return ((List<?>) value).stream().map(this::singleToString).collect(Collectors.joining(ARG_DELIMITER));
+                return ((Collection<?>) value).stream().map(this::singleToString)
+                        .collect(Collectors.joining(ARG_DELIMITER));
         }
     }
 
@@ -134,7 +135,7 @@ public class FilterEntry {
             throw new IllegalArgumentException("Operand does not accept any value");
         }
         if (StringUtils.isBlank(rawValue) && operand.getArity().equals(Integer.MAX_VALUE)) {
-            throw new IllegalArgumentException("Operand requires a list of values");
+            throw new IllegalArgumentException("Operand requires a collection of values");
         }
     }
 
