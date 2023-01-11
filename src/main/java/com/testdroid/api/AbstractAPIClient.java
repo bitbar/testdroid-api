@@ -125,7 +125,7 @@ public abstract class AbstractAPIClient implements APIClient {
         HttpResponse response;
         //Fix for https://jira.bitbar.com/browse/TD-12086
         //caused by https://github.com/googleapis/google-http-java-client/issues/398
-        //We should used pure Apache Http Client
+        //We should use pure Apache Http Client
         uri = uri.replaceAll("\\+", "%2B");
         try {
             // Call request and parse result

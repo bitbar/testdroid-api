@@ -2,7 +2,6 @@ package com.testdroid.api.model.enums;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.xml.bind.annotation.XmlType;
 import java.time.temporal.ChronoUnit;
 
 /**
