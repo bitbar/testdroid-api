@@ -53,6 +53,8 @@ public class APITestRunConfig extends APIEntity implements Serializable {
 
     private List<APIDevice.OsType> availableOsTypes;
 
+    private boolean biometricInstrumentation;
+
     private APIClientSideTestConfig clientSideTestConfig;
 
     private List<Long> computedDevices;
@@ -237,6 +239,14 @@ public class APITestRunConfig extends APIEntity implements Serializable {
 
     public void setUsedDeviceGroupName(String usedDeviceGroupName) {
         this.usedDeviceGroupName = usedDeviceGroupName;
+    }
+
+    public boolean isBiometricInstrumentationEnabled() {
+        return biometricInstrumentation;
+    }
+
+    public void setBiometricInstrumentation(boolean biometricInstrumentation) {
+        this.biometricInstrumentation = biometricInstrumentation;
     }
 
     public Long getCreditsPrice() {
@@ -522,6 +532,7 @@ public class APITestRunConfig extends APIEntity implements Serializable {
         this.availableDevices = apiTestRunConfig.availableDevices;
         this.availableFrameworks = apiTestRunConfig.availableFrameworks;
         this.availableOsTypes = apiTestRunConfig.availableOsTypes;
+        this.biometricInstrumentation = apiTestRunConfig.biometricInstrumentation;
         this.clientSideTestConfig = apiTestRunConfig.clientSideTestConfig;
         this.creditsPrice = apiTestRunConfig.creditsPrice;
         this.deviceGroupId = apiTestRunConfig.deviceGroupId;
