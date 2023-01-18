@@ -13,6 +13,10 @@ import java.util.GregorianCalendar;
  */
 public class TimeConverter {
 
+    private TimeConverter() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static LocalDateTime toLocalDateTime(Long millis) {
         return millis == null ? null : Instant.ofEpochMilli(millis).atZone(ZoneId.systemDefault()).toLocalDateTime();
     }

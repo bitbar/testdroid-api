@@ -293,7 +293,7 @@ public class APILicense extends APIEntity {
         }
     }
 
-    public static abstract class FeatureLicense {
+    public abstract static class FeatureLicense {
 
         boolean enabled;
 

@@ -9,6 +9,10 @@ import java.util.Locale;
  */
 public class CurrencyFormatter {
 
+    private CurrencyFormatter() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static String format(Long value) {
         return NumberFormat.getCurrencyInstance(Locale.US).format(BigDecimal.valueOf(value, 2));
     }

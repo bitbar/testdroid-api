@@ -18,6 +18,10 @@ import java.util.Properties;
  */
 public class TypeReferenceFactory {
 
+    private TypeReferenceFactory() {
+        throw new IllegalStateException("Utility class");
+    }
+
     private static final Map<Class<? extends APIEntity>, TypeReference<?>> LIST_MAP = new HashMap<>();
 
     static {
