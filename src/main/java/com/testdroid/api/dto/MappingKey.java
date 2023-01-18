@@ -5,7 +5,12 @@ package com.testdroid.api.dto;
  */
 public class MappingKey {
 
+    private MappingKey() {
+        throw new IllegalStateException("Utility class");
+    }
+
     // @formatter:off
+    public static final String ACCEPT = "accept";
     public static final String ACCESS_GROUP_ID = "accessGroupId";
     public static final String ACCOUNT_ID = "accountId";
     public static final String ACCOUNT_ROLE_ID = "accountRoleId";
@@ -36,6 +41,7 @@ public class MappingKey {
     public static final String AVG_WAITING_TIME = "avgWaitingTime";
     public static final String BATTERY_LEVEL = "batteryLevel";
     public static final String BILLABLE = "billable";
+    public static final String BIOMETRIC_INSTRUMENTATION = "biometricInstrumentation";
     public static final String BLUETOOTH_ON = "bluetoothOn";
     public static final String BODY = "body";
     public static final String BRAINTREE_CLIENT_TOKEN = "braintreeClientToken";
@@ -136,8 +142,6 @@ public class MappingKey {
     public static final String GLOBAL = "global";
     public static final String GLOBAL_DEVICE_LIMIT = "globalDeviceLimit";
     public static final String GLOBAL_PROJECT_LIMIT = "globalProjectLimit";
-    public static final String HANDLER_EMAIL = "handlerEmail";
-    public static final String HANDLER_ID = "handlerId";
     public static final String HASH = "hash";
     public static final String HEIGHT = "height";
     public static final String HOST = "host";
@@ -188,19 +192,19 @@ public class MappingKey {
     public static final String MAIN_USER_ID = "mainUserId";
     public static final String MAIN_USER_LAST_NAME = "mainUserLastName";
     public static final String MANUFACTURER = "manufacturer";
+    public static final String MAX_TOTAL = "maxTotal";
     public static final String MFA_CODE = "mfaCode";
     public static final String MFA_ENABLED = "mfaEnabled";
     public static final String MIMETYPE = "mimetype";
+    public static final String MIN_AVAILABLE = "minAvailable";
     public static final String MOCK_LOCATION_ON = "mockLocationOn";
     public static final String MODE = "mode";
     public static final String MONITORING_ON = "monitoringOn";
     public static final String NAME = "name";
     public static final String NEW_PASSWORD = "newPassword";
     public static final String NOTIFICATION_CHANNEL = "channel";
-    public static final String NOTIFICATION_CONTENT = "notificationContent";
     public static final String NOTIFICATION_DESTINATION = "destination";
     public static final String NOTIFICATION_SCOPE = "scope";
-    public static final String NOTIFICATION_SUBJECT = "notificationSubject";
     public static final String NOT_ARCHIVED = "notArchived";
     public static final String ONLINE = "online";
     public static final String ONLY_MAIN_USERS = "onlyMainUsers";
@@ -260,7 +264,6 @@ public class MappingKey {
     public static final String SELECTOR_ID = "selectorId";
     public static final String SELECTOR_IDS_ARR = "selectorIds[]";
     public static final String SENT = "sent";
-    public static final String SENT_TIME = "sentTime";
     public static final String SERIAL_ID = "serialId";
     public static final String SERVICE_ID = "serviceId";
     public static final String SERVICE_IDS = "serviceIds";

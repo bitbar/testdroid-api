@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.testdroid</groupId>
     <artifactId>testdroid-api</artifactId>
-    <version>3.11</version>
+    <version>3.12</version>
     <packaging>jar</packaging>
     <name>Bitbar API v2</name>
     <url>https://github.com/bitbar/testdroid-api</url>
@@ -12,7 +12,7 @@
         <jacoco-maven-plugin.skip>true</jacoco-maven-plugin.skip>
         <!-- disable default deployment -->
         <maven.deploy.skip>true</maven.deploy.skip>
-        <org.springframework.boot.spring-boot-dependencies>2.7.6</org.springframework.boot.spring-boot-dependencies>
+        <org.springframework.boot.spring-boot-dependencies>2.7.7</org.springframework.boot.spring-boot-dependencies>
         <org.apache.commons.collections4.version>4.4</org.apache.commons.collections4.version>
         <org.apache.commons.io.version>2.11.0</org.apache.commons.io.version>
         <commons-text.version>1.10.0</commons-text.version>

@@ -165,6 +165,8 @@ public class APIDeviceSession extends APIEntity implements UiPresentable {
 
     private String uiLink;
 
+    private Boolean biometricInstrumentation;
+
     public APIDeviceSession() {
     }
 
@@ -179,7 +181,7 @@ public class APIDeviceSession extends APIEntity implements UiPresentable {
             String releaseVersion, Integer apiLevel, ExcludeReason excludeReason, Long deviceInstanceId,
             RetryState retryState, Integer autoRetriesLeftCount, Long deviceTime, Long duration, Long projectId,
             String projectName, Long testRunId, String testRunName, Float successRatio, String name,
-            APIDeviceSessionConfig config) {
+            APIDeviceSessionConfig config, Boolean biometricInstrumentation) {
         super(id);
         this.externalId = externalId;
         this.clientSideId = clientSideId;
@@ -217,6 +219,7 @@ public class APIDeviceSession extends APIEntity implements UiPresentable {
         this.successRatio = successRatio;
         this.name = name;
         this.config = config;
+        this.biometricInstrumentation = biometricInstrumentation;
     }
 
     @Override
@@ -509,6 +512,14 @@ public class APIDeviceSession extends APIEntity implements UiPresentable {
         this.clientSideId = clientSideId;
     }
 
+    public Boolean getBiometricInstrumentation() {
+        return biometricInstrumentation;
+    }
+
+    public void setBiometricInstrumentation(Boolean biometricInstrumentation) {
+        this.biometricInstrumentation = biometricInstrumentation;
+    }
+
     @JsonIgnore
     public APIListResource<APIDeviceSessionStep> getDeviceSessionStepsResource() throws APIException {
         return getListResource(createUri(selfURI, "/steps"), APIDeviceSessionStep.class);
@@ -588,5 +599,6 @@ public class APIDeviceSession extends APIEntity implements UiPresentable {
         this.name = apiDeviceSession.name;
         this.config = apiDeviceSession.config;
         this.rowIndex = apiDeviceSession.rowIndex;
+        this.biometricInstrumentation = apiDeviceSession.biometricInstrumentation;
     }
 }

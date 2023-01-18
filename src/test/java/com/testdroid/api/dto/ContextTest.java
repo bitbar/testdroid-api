@@ -18,8 +18,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Tag(UNIT)
 class ContextTest {
 
-    private Context<APIEntity> classUnderTest;
-
     private static Collection<Object[]> data() {
         Object[][] data = new Object[][]{
                 //Count not executed/set we can't relay on it => LIMIT = page_size
@@ -47,9 +45,9 @@ class ContextTest {
     @MethodSource("data")
     @ParameterizedTest
     void compute(int offset, int limit, Long count, Integer expectedMaxResults) {
-        classUnderTest = new Context<>(APIEntity.class, offset, limit, null, null);
-        Optional.ofNullable(count).ifPresent(classUnderTest::setCount);
-        Optional<Integer> optionalMaxResult = classUnderTest.computeMaxResult();
+        Context<APIEntity> context = new Context<>(APIEntity.class, offset, limit, null, null);
+        Optional.ofNullable(count).ifPresent(context::setCount);
+        Optional<Integer> optionalMaxResult = context.computeMaxResult();
         assertThat(optionalMaxResult).isEqualTo(Optional.ofNullable(expectedMaxResults));
     }
 }

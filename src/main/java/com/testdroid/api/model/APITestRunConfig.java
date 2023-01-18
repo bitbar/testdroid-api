@@ -241,7 +241,7 @@ public class APITestRunConfig extends APIEntity implements Serializable {
         this.usedDeviceGroupName = usedDeviceGroupName;
     }
 
-    public boolean isBiometricInstrumentationEnabled() {
+    public boolean isBiometricInstrumentation() {
         return biometricInstrumentation;
     }
 

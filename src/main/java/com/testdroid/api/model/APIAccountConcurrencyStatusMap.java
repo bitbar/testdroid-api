@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.testdroid.api.APIEntity;
 
 import javax.xml.bind.annotation.XmlType;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 
 public class APIAccountConcurrencyStatusMap extends APIEntity {
@@ -18,7 +18,7 @@ public class APIAccountConcurrencyStatusMap extends APIEntity {
 
     private String mainUserEmail;
 
-    private Map<Type, APIAccountConcurrencyStatus> statusMap = new HashMap<>();
+    private Map<Type, APIAccountConcurrencyStatus> statusMap = new EnumMap<>(Type.class);
 
     public APIAccountConcurrencyStatusMap() {
     }
