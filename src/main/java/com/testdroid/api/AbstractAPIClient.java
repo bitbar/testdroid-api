@@ -231,8 +231,7 @@ public abstract class AbstractAPIClient implements APIClient {
         } catch (HttpResponseException ex) {
             throw getAPIException(ex);
         } catch (IOException ex) {
-            throw new APIException(String
-                    .format("Failed to execute API call: %s. Reason: %s", uri, ex.getMessage()), ex);
+            throw new APIException(String.format(FAILED_TO_EXECUTE_API_CALL_WITH_REASON, uri, ex.getMessage()), ex);
         } finally {
             disconnectQuietly(response);
         }
@@ -272,8 +271,7 @@ public abstract class AbstractAPIClient implements APIClient {
         } catch (HttpResponseException ex) {
             throw getAPIException(ex);
         } catch (IOException ex) {
-            throw new APIException(String
-                    .format("Failed to execute API call: %s. Reason: %s", uri, ex.getMessage()), ex);
+            throw new APIException(String.format(FAILED_TO_EXECUTE_API_CALL_WITH_REASON, uri, ex.getMessage()), ex);
         } finally {
             disconnectQuietly(response);
         }

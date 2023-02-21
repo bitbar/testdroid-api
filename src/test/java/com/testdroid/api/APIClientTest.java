@@ -22,8 +22,9 @@ class APIClientTest extends BaseAPIClientTest {
     @ArgumentsSource(APIClientProvider.class)
     void td12086(APIClient apiClient) throws APIException {
         APIUser user = apiClient.me();
-        Exception exception = assertThrows(APIException.class, () ->
-                user.getResource(user.selfURI + "/notifications/channels/SLACK+/scopes", APIEnum.class).getEntity());
+        APIResource<APIEnum> resource = user.getResource(user.selfURI + "/notifications/channels/SLACK+/scopes",
+                APIEnum.class);
+        Exception exception = assertThrows(APIException.class, resource::getEntity);
         assertThat(exception.getMessage()).isEqualTo("Invalid Notification Channel: SLACK+");
     }
 

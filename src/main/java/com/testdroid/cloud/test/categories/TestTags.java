@@ -3,15 +3,19 @@ package com.testdroid.cloud.test.categories;
 /**
  * @author Krzysztof Fonał <krzysztof.fonal@bitbar.com>
  */
-public interface TestTags {
+public class TestTags {
 
-    String UNIT = "unit";
+    private TestTags() {
+        throw new IllegalStateException("Utility class");
+    }
 
-    String API = "api";
+    public static final String UNIT = "unit";
 
-    String INTEGRATION = "integration";
+    public static final String API = "api";
 
-    String API_CLIENT = "api_client";
+    public static final String INTEGRATION = "integration";
 
-    String PORT_FORWARDER_CLIENT = "port_forwarder_client";
+    public static final String API_CLIENT = "api_client";
+
+    public static final String PORT_FORWARDER_CLIENT = "port_forwarder_client";
 }

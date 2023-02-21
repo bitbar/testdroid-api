@@ -47,23 +47,19 @@ public class APIList<T extends APIEntity> extends APIEntity {
     }
 
     public APIList(String requestURL, List<T> data, Integer total, Context<T> ctx) {
-        int offset = ctx.getOffset();
-        int limit = ctx.getLimit();
-        String search = ctx.getSearch();
-        String sort = ctx.getSort().serialize();
         this.total = total;
-        this.offset = offset;
-        this.limit = limit;
-        this.search = search;
-        this.sort = sort;
+        this.offset = ctx.getOffset();
+        this.limit = ctx.getLimit();
+        this.search = ctx.getSearch();
+        this.sort = ctx.getSort().serialize();
         this.data = data;
         this.context = ctx;
         String filter = filterParam(ctx.getFilters());
         if (offset + limit < total) {
-            this.next = getListURL(requestURL, offset + limit, limit, search, sort, filter);
+            this.next = getListURL(requestURL, offset.longValue() + limit, limit, search, sort, filter);
         }
         if (offset - limit >= 0) {
-            this.previous = getListURL(requestURL, offset - limit, limit, search, sort, filter);
+            this.previous = getListURL(requestURL, offset.longValue() - limit, limit, search, sort, filter);
         }
     }
 

@@ -41,7 +41,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
  */
 public class DefaultAPIClient extends AbstractAPIClient {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(APIKeyClient.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DefaultAPIClient.class);
 
     public static final int HTTP_CONNECT_TIMEOUT = 60000;
 

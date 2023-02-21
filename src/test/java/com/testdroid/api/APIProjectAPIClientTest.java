@@ -1,6 +1,7 @@
 package com.testdroid.api;
 
 import com.testdroid.api.model.APIProject;
+import com.testdroid.api.model.APIUser;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
@@ -38,11 +39,10 @@ class APIProjectAPIClientTest extends BaseAPIClientTest {
     @ParameterizedTest
     @ArgumentsSource(BaseAPIClientTest.APIClientProvider.class)
     void deleteProjectTest(APIClient apiClient) throws APIException {
-        APIProject project = apiClient.me().createProject(generateUnique("testProject"));
+        APIUser me = apiClient.me();
+        APIProject project = me.createProject(generateUnique("testProject"));
         project.delete();
-        assertThatThrownBy(() ->
-                apiClient.me().getProject(project.getId()))
-                .isInstanceOf(APIException.class)
+        assertThatThrownBy(() -> me.getProject(project.getId())).isInstanceOf(APIException.class)
                 .hasMessageContaining(String.format("Project with id %d does not exist", project.getId()));
     }
 }
