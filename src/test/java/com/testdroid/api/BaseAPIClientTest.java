@@ -101,7 +101,7 @@ abstract class BaseAPIClientTest {
 
     protected static APIUser create(APIKeyClient adminApiClient) throws APIException {
         Map<String, Object> map = new HashMap<>();
-        map.put(EMAIL, generateUniqueEmail(EMAIL_PATTERN));
+        map.put(EMAIL, generateUniqueEmail());
         APIUser userForTest = adminApiClient.post("/admin/users", map, APIUser.class);
         map.clear();
         map.put(EMAIL, userForTest.getEmail());
@@ -111,8 +111,8 @@ abstract class BaseAPIClientTest {
         return userForTest;
     }
 
-    private static String generateUniqueEmail(String emailPattern) {
-        return String.format(emailPattern, System.currentTimeMillis());
+    private static String generateUniqueEmail() {
+        return String.format(EMAIL_PATTERN, System.currentTimeMillis());
     }
 
     static String generateUnique(String prefix) {
@@ -126,6 +126,7 @@ abstract class BaseAPIClientTest {
     }
 
     static File loadFile(String name) {
-        return new File(BaseAPIClientTest.class.getResource(name).getFile());
+        java.net.URL url = BaseAPIClientTest.class.getResource(name);
+        return new File(Objects.requireNonNull(url).getFile());
     }
 }

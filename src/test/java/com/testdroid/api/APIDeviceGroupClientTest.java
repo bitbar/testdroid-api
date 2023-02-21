@@ -50,12 +50,13 @@ class APIDeviceGroupClientTest extends BaseAPIClientTest {
     void addSelectorTest(APIClient apiClient) throws APIException {
         APIList<APILabelGroup> labelGroups = apiClient.getLabelGroups(new Context<>(APILabelGroup.class)
                 .addFilter(new FilterEntry(DISPLAY_NAME, EQ, "Device groups"))).getEntity();
-        APILabelGroup deviceGroupLabelGroup = labelGroups.getData().stream().findFirst().get();
+        APILabelGroup deviceGroupLabelGroup = labelGroups.getData().stream().findFirst().orElseThrow(APIException::new);
         APIList<APIDeviceProperty> apiDeviceProperties = deviceGroupLabelGroup.getDevicePropertiesResource(new
                 Context<>(APIDeviceProperty.class)
                 .addFilter(new FilterEntry(DISPLAY_NAME, EQ, "Android devices")))
                 .getEntity();
-        APIDeviceProperty androidDevicesLabel = apiDeviceProperties.getData().stream().findFirst().get();
+        APIDeviceProperty androidDevicesLabel = apiDeviceProperties.getData().stream().findFirst()
+                .orElseThrow(APIException::new);
         APIDeviceGroup dynamicAndroidDeviceGroup = apiClient.me()
                 .createDeviceGroup("dynamicAndroidDeviceGroup", ANDROID);
         dynamicAndroidDeviceGroup = dynamicAndroidDeviceGroup.addSelector(androidDevicesLabel);

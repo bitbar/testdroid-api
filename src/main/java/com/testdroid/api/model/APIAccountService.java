@@ -335,7 +335,7 @@ public class APIAccountService extends APIEntity {
 
     @JsonIgnore
     public String getVatPriceString() {
-        float vatPrice = (getPrice() * getVatRate()) / 100;
+        float vatPrice = (getPrice() * getVatRate()) / 100f;
         return String.format(Locale.ENGLISH, "%.2f", vatPrice / 100);
     }
 
@@ -346,7 +346,7 @@ public class APIAccountService extends APIEntity {
 
     @JsonIgnore
     public String getTotalPriceString() {
-        float totalPrice = (getPrice() * (100 + getVatRate())) / 100;
+        float totalPrice = (getPrice() * (100 + getVatRate())) / 100f;
         return String.format(Locale.ENGLISH, "%.2f", totalPrice / 100);
     }
 
