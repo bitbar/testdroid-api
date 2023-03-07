@@ -38,6 +38,7 @@ public class APISmartbearTunnel extends APIEntity {
     public APISmartbearTunnel() {
     }
 
+    @SuppressWarnings("squid:S107")
     public APISmartbearTunnel(
             Boolean active, String externalId, String user, String domain, String state, Date createdAt,
             String tunnelType, String staticServerDirectory, String proxyIp, String proxyPort,

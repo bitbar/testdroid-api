@@ -14,8 +14,6 @@ public class APIListResource<T extends APIEntity> {
 
     private final String resourceURI;
 
-    private APIList<T> entity;
-
     public APIListResource(APIClient client, String resourceURI, Class<T> type) {
         this.client = client;
         this.resourceURI = resourceURI;
@@ -29,7 +27,7 @@ public class APIListResource<T extends APIEntity> {
     }
 
     public APIList<T> getEntity() throws APIException {
-        entity = client.get(resourceURI, context);
+        APIList<T> entity = client.get(resourceURI, context);
         for (APIEntity item : entity.getData()) {
             item.client = this.client;
             item.selfURI = APIEntity.createUri(this.resourceURI, String.format("/%s", item.id));

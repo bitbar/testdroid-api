@@ -13,7 +13,7 @@ public class APIEnum extends APIEntity {
     public APIEnum() {
     }
 
-    public APIEnum(Enum value) {
+    public APIEnum(Enum<?> value) {
         super((long) value.ordinal());
         this.value = value.name();
     }

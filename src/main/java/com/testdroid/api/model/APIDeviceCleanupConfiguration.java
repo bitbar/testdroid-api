@@ -34,6 +34,7 @@ public class APIDeviceCleanupConfiguration extends APIEntity implements Cloneabl
     public APIDeviceCleanupConfiguration() {
     }
 
+    @SuppressWarnings("squid:S107")
     public APIDeviceCleanupConfiguration(
             Long id, String content, Boolean enabled, LocalDateTime createTime, String createdByEmail, Long createdById,
             APIDevice.OsType osType, LocalDateTime lastModificationTime, String discriminator, Boolean global) {

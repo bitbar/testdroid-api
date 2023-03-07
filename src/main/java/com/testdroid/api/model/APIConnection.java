@@ -24,9 +24,6 @@ public class APIConnection extends APIEntity implements Serializable {
 
     private String type;
 
-    @Deprecated
-    private String url;
-
     private Integer port;
 
     private String path;
@@ -40,6 +37,7 @@ public class APIConnection extends APIEntity implements Serializable {
     public APIConnection() {
     }
 
+    @SuppressWarnings("squid:S107")
     public APIConnection(
             Long id, LocalDateTime createTime, LocalDateTime endTime, Long deviceSessionId, String password,
             String type, String urlSchema, String host, Integer port, String path, String externalId) {
@@ -53,7 +51,6 @@ public class APIConnection extends APIEntity implements Serializable {
         this.path = path;
         this.urlSchema = urlSchema;
         this.host = host;
-        this.url = String.format("%s:%d", host, port);
         this.externalId = externalId;
     }
 
@@ -95,14 +92,6 @@ public class APIConnection extends APIEntity implements Serializable {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 
     public String getUrlSchema() {
@@ -153,7 +142,6 @@ public class APIConnection extends APIEntity implements Serializable {
         this.endTime = apiConnection.endTime;
         this.password = apiConnection.password;
         this.type = apiConnection.type;
-        this.url = apiConnection.url;
         this.port = apiConnection.port;
         this.path = apiConnection.path;
         this.urlSchema = apiConnection.urlSchema;

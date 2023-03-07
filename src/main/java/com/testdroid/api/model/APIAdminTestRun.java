@@ -46,6 +46,7 @@ public class APIAdminTestRun extends APIEntity {
     public APIAdminTestRun() {
     }
 
+    @SuppressWarnings("squid:S107")
     public APIAdminTestRun(
             Long id, LocalDateTime createTime, LocalDateTime startTime, LocalDateTime endTime, APITestRun.State state,
             Long startedById, String userName, String projectName, String testRunName, Float successRatio,
@@ -67,6 +68,7 @@ public class APIAdminTestRun extends APIEntity {
         this.frameworkName = frameworkName;
     }
 
+    @SuppressWarnings("squid:S107")
     public APIAdminTestRun(
             Long id, LocalDateTime createTime, LocalDateTime startTime, LocalDateTime endTime, APITestRun.State state,
             Long startedById, String userName, String projectName, String testRunName, Float successRatio,

@@ -73,9 +73,6 @@ public class APITestRun extends APIEntity implements UiPresentable {
 
     private Integer testCaseCount;
 
-    @Deprecated // use deviceCount
-    private Integer totalDeviceCount;
-
     private Integer warningDeviceCount;
 
     private Integer runningDeviceCount;
@@ -107,6 +104,7 @@ public class APITestRun extends APIEntity implements UiPresentable {
     public APITestRun() {
     }
 
+    @SuppressWarnings("squid:S107")
     public APITestRun(
             Long id, Integer number, LocalDateTime createTime, LocalDateTime startTime, String displayName,
             Float executionRatio, Float successRatio, Long startedById, String startedByDisplayName, State state,
@@ -135,7 +133,6 @@ public class APITestRun extends APIEntity implements UiPresentable {
         this.successfulTestCaseCount = successfulTestCaseCount;
         this.failedTestCaseCount = failedTestCaseCount;
         this.executedTestCaseCount = successfulTestCaseCount + failedTestCaseCount;
-        this.totalDeviceCount = deviceCount;
         this.finishedDeviceCount = finishedDeviceCount;
         this.excludedDeviceCount = excludedDeviceCount;
         this.errorsDeviceCount = errorsDeviceCount;
@@ -339,14 +336,6 @@ public class APITestRun extends APIEntity implements UiPresentable {
         this.executedTestCaseCount = executedTestCaseCount;
     }
 
-    public Integer getTotalDeviceCount() {
-        return totalDeviceCount;
-    }
-
-    public void setTotalDeviceCount(Integer totalDeviceCount) {
-        this.totalDeviceCount = totalDeviceCount;
-    }
-
     public Integer getFinishedDeviceCount() {
         return finishedDeviceCount;
     }
@@ -544,9 +533,10 @@ public class APITestRun extends APIEntity implements UiPresentable {
             return;
         }
         try {
-            APITestRunConfig config = OBJECT_MAPPER.readValue(content, APITestRunConfig.class);
-            setConfig(config);
+            APITestRunConfig apiTestRunConfig = OBJECT_MAPPER.readValue(content, APITestRunConfig.class);
+            setConfig(apiTestRunConfig);
         } catch (IOException ignore) {
+            // ignored
         }
     }
 
@@ -573,7 +563,6 @@ public class APITestRun extends APIEntity implements UiPresentable {
         this.testCaseCount = apiTestRun.testCaseCount;
         this.successfulTestCaseCount = apiTestRun.successfulTestCaseCount;
         this.failedTestCaseCount = apiTestRun.failedTestCaseCount;
-        this.totalDeviceCount = apiTestRun.totalDeviceCount;
         this.finishedDeviceCount = apiTestRun.finishedDeviceCount;
         this.excludedDeviceCount = apiTestRun.excludedDeviceCount;
         this.errorsDeviceCount = apiTestRun.errorsDeviceCount;

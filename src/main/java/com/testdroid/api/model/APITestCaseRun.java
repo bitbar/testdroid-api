@@ -49,6 +49,7 @@ public class APITestCaseRun extends APIEntity {
     public APITestCaseRun() {
     }
 
+    @SuppressWarnings("squid:S107")
     public APITestCaseRun(
             Long id, BigDecimal duration, Result result, String errorMessage, String stacktrace,
             LocalDateTime createTime, String className, String methodName, String suiteName) {
@@ -72,14 +73,15 @@ public class APITestCaseRun extends APIEntity {
     }
 
     public void setDuration(String durationString) {
-        BigDecimal result = BigDecimal.ZERO;
+        BigDecimal bigDecimal = BigDecimal.ZERO;
         if (StringUtils.isNotEmpty(durationString)) {
             try {
-                result = new BigDecimal(durationString.replace(",", "."));
+                bigDecimal = new BigDecimal(durationString.replace(",", "."));
             } catch (NumberFormatException ignored) {
+                // ignored
             }
         }
-        duration = result.setScale(2, HALF_UP).doubleValue();
+        duration = bigDecimal.setScale(2, HALF_UP).doubleValue();
     }
 
     public Result getResult() {

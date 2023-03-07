@@ -172,11 +172,11 @@ public abstract class AbstractAPIClient implements APIClient {
                 MultipartFormDataContent.Part filePart = new MultipartFormDataContent.Part("file", fileContent);
                 multipartContent.addPart(filePart);
 
-                for (String name : fileExtraParams.keySet()) {
-                    MultipartFormDataContent.Part part = new MultipartFormDataContent.Part(name,
-                            new ByteArrayContent(null, fileExtraParams.get(name).getBytes()));
+                for (Map.Entry<String, String> entry : fileExtraParams.entrySet()) {
+                    MultipartFormDataContent.Part part = new MultipartFormDataContent.Part(entry.getKey(),
+                            new ByteArrayContent(null, entry.getValue().getBytes()));
                     part.setHeaders(new HttpHeaders().set(
-                            "Content-Disposition", String.format("form-data; name=\"%s\"", name)));
+                            "Content-Disposition", String.format("form-data; name=\"%s\"", entry.getKey())));
                     multipartContent.addPart(part);
                 }
                 content = multipartContent;
@@ -360,8 +360,8 @@ public abstract class AbstractAPIClient implements APIClient {
     }
 
     protected Map<String, Object> fixMapParameters(Map<String, Object> map) {
-        return map.entrySet().stream().collect(toMap(Map.Entry::getKey, p -> p.getValue() == null ? EMPTY :
-                p.getValue() instanceof Enum<?> ? p.getValue().toString() : p.getValue()));
+        return map.entrySet().stream().collect(toMap(Map.Entry::getKey, p -> Optional.ofNullable(p.getValue())
+                .map(v -> v instanceof Enum<?> ? v.toString() : v).orElse(EMPTY)));
     }
 
     protected APIException getAPIException(HttpResponseException ex) {

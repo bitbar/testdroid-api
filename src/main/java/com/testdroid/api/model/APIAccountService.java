@@ -81,6 +81,7 @@ public class APIAccountService extends APIEntity {
     public APIAccountService() {
     }
 
+    @SuppressWarnings("squid:S107")
     public APIAccountService(
             Long accountId, Long activatedById, String activatedByName, boolean active, boolean autoRenew,
             String braintreeId, LocalDateTime createTime, Long deactivatedById, String deactivatedByName,

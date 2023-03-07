@@ -87,6 +87,7 @@ public class APIUserFile extends APIEntity implements Serializable {
         super(id);
     }
 
+    @SuppressWarnings("squid:S107")
     public APIUserFile(
             Long id, String name, LocalDateTime createTime, Long size, State state, String uri,
             String iconUri, String mimetype, Direction direction, InputType inputType, Long userId, String userEmail,
@@ -136,18 +137,6 @@ public class APIUserFile extends APIEntity implements Serializable {
 
     public void setFileProperties(List<APIUserFileProperty> fileProperties) {
         this.fileProperties = fileProperties;
-    }
-
-    private String getFileURI() {
-        return createUri(selfURI, "/file");
-    }
-
-    private String getIconURI() {
-        return createUri(selfURI, "/icon");
-    }
-
-    private String getFileTagsURI() {
-        return createUri(selfURI, "/tags");
     }
 
     public State getState() {
@@ -250,17 +239,17 @@ public class APIUserFile extends APIEntity implements Serializable {
 
     @JsonIgnore
     public InputStream getIcon() throws APIException {
-        return getFile(getIconURI());
+        return getFile(createUri(selfURI, "/icon"));
     }
 
     @JsonIgnore
     public InputStream getFile() throws APIException {
-        return getFile(getFileURI());
+        return getFile(createUri(selfURI, "/file"));
     }
 
     @JsonIgnore
     public APIListResource<APIUserFileTag> getTagsResource() throws APIException {
-        return getListResource(getFileTagsURI(), APIUserFileTag.class);
+        return getListResource(createUri(selfURI, "/tags"), APIUserFileTag.class);
     }
 
     public void delete() throws APIException {

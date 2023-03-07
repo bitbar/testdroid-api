@@ -45,6 +45,7 @@ public class APIDeviceModelPool extends APIEntity {
 
     }
 
+    @SuppressWarnings("squid:S107")
     public APIDeviceModelPool(
             Long id, String name, String osVersion, String location, Boolean enabled, Short numberOfBrowsers,
             Short minAvailable, Short maxTotal, Short running, LocalDateTime createTime,

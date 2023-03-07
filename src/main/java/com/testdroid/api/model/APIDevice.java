@@ -103,8 +103,7 @@ public class APIDevice extends APIEntity {
             return this.isDesktop() ? singletonList(this) : asList(IOS, ANDROID);
         }
 
-        public static final List<APIDevice.OsType> MOBILES = Arrays.asList(APIDevice.OsType.ANDROID,
-                APIDevice.OsType.IOS);
+        public static final List<APIDevice.OsType> MOBILES = List.of(APIDevice.OsType.ANDROID, APIDevice.OsType.IOS);
 
         public static final List<APIDevice.OsType> DESKTOPS = Collections.singletonList(APIDevice.OsType.DESKTOP);
     }
@@ -173,12 +172,13 @@ public class APIDevice extends APIEntity {
     public APIDevice() {
     }
 
+    @SuppressWarnings("squid:S107")
     public APIDevice(
-            Long id, String displayName, String manufacturer, String releaseVersion,
-            Integer apiLevel, Integer creditsPrice, String imagePrefix, Integer imageTop, Integer imageLeft,
-            Integer imageWidth, Integer imageHeight, Integer frameExtraWidth, OsType osType, Platform platform,
-            Boolean online, Boolean locked, Boolean enabled, Long accountId, String mainUserEmail,
-            Integer onlineDevices, Integer availableDevices) {
+            Long id, String displayName, String manufacturer, String releaseVersion, Integer apiLevel,
+            Integer creditsPrice, String imagePrefix, Integer imageTop, Integer imageLeft, Integer imageWidth,
+            Integer imageHeight, Integer frameExtraWidth, OsType osType, Platform platform, Boolean online,
+            Boolean locked, Boolean enabled, Long accountId, String mainUserEmail, Integer onlineDevices,
+            Integer availableDevices) {
         super(id);
         this.displayName = displayName;
         this.manufacturer = manufacturer;

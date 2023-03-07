@@ -137,6 +137,7 @@ public class APIAdminDevice extends APIEntity {
         super(id);
     }
 
+    @SuppressWarnings("squid:S107")
     public APIAdminDevice(
             Long id, String name, String manufacturer, boolean enabled, String serialId, String fingerprint,
             String unlockGesture, String releaseVersion, Integer apiLevel, Long deviceModelId,

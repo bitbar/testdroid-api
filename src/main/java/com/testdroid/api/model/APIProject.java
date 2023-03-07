@@ -41,12 +41,6 @@ public class APIProject extends APIEntity {
 
     private String name;
 
-    @Deprecated // use userEmail
-    private String sharedByEmail;
-
-    @Deprecated // use userId
-    private Long sharedById;
-
     private APITestRunConfig testRunConfig;
 
     private Date createTime;
@@ -72,25 +66,24 @@ public class APIProject extends APIEntity {
     public APIProject() {
     }
 
+    @SuppressWarnings("squid:S107")
     public APIProject(
             Long id, LocalDateTime createTime, LocalDateTime archiveTime, String name, String description,
-            Long sharedById, String sharedByEmail, boolean common, APIArchivingStrategy archivingStrategy,
+            Long userId, String userEmail, boolean common, APIArchivingStrategy archivingStrategy,
             Integer archivingItemCount, Boolean isShared, APIDevice.OsType osType, boolean readOnly) {
         super(id);
         this.createTime = TimeConverter.toDate(createTime);
         this.archiveTime = TimeConverter.toDate(archiveTime);
         this.name = name;
         this.description = description;
-        this.sharedById = sharedById;
-        this.sharedByEmail = sharedByEmail;
         this.common = common;
         this.archivingStrategy = archivingStrategy;
         this.archivingItemCount = archivingItemCount;
         this.isShared = isShared;
         this.osType = osType;
         this.readOnly = readOnly;
-        this.userEmail = sharedByEmail;
-        this.userId = sharedById;
+        this.userEmail = userEmail;
+        this.userId = userId;
     }
 
     public String getName() {
@@ -131,22 +124,6 @@ public class APIProject extends APIEntity {
 
     public void setArchiveTime(Date archiveTime) {
         this.archiveTime = archiveTime;
-    }
-
-    public Long getSharedById() {
-        return sharedById;
-    }
-
-    public void setSharedById(Long sharedById) {
-        this.sharedById = sharedById;
-    }
-
-    public String getSharedByEmail() {
-        return sharedByEmail;
-    }
-
-    public void setSharedByEmail(String sharedByEmail) {
-        this.sharedByEmail = sharedByEmail;
     }
 
     public boolean isShared() {
@@ -277,7 +254,6 @@ public class APIProject extends APIEntity {
         this.description = apiProject.description;
         this.icon = apiProject.icon;
         this.name = apiProject.name;
-        this.sharedById = apiProject.sharedById;
         this.isShared = apiProject.isShared;
         this.isSharedWithCaller = apiProject.isSharedWithCaller;
         this.testRunConfig = apiProject.testRunConfig;

@@ -9,6 +9,7 @@ public class APITunnelSettings implements Serializable {
     private String email;
 
     public APITunnelSettings() {
+        // need for serialization/deserialization
     }
 
     public String getDomain() {

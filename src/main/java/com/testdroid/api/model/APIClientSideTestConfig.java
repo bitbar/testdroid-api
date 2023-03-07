@@ -53,6 +53,7 @@ public class APIClientSideTestConfig implements Serializable {
     }
 
     public APIClientSideTestConfig() {
+        // need for serialization/deserialization
     }
 
     public String getHookURL() {

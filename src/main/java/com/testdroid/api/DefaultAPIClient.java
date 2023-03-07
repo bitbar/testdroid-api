@@ -43,15 +43,25 @@ public class DefaultAPIClient extends AbstractAPIClient {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultAPIClient.class);
 
+    private static final String ACCESS_TOKEN = "access_token";
+
     public static final int HTTP_CONNECT_TIMEOUT = 60000;
 
     public static final int HTTP_READ_TIMEOUT = 60000;
 
     public static final String BITBAR_API_OAUTH2_CLIENT_ID = "testdroid-cloud-api";
 
+    private static final String EXPIRES_IN = "expires_in";
+
     private static final String FAILED_TO_ACQUIRE_ACCESS_TOKEN = "Failed to acquire access token";
 
     private static final String FAILED_TO_ACQUIRE_ACCESS_TOKEN_REASON = "Failed to acquire access token. Reason: %s";
+
+    private static final String FAILED_TO_REFRESH_ACCESS_TOKEN = "Failed to refresh access token";
+
+    private static final String FAILED_TO_REFRESH_ACCESS_TOKEN_REASON = "Failed to refresh access token. Reason: %s";
+
+    private static final String REFRESH_TOKEN = "refresh_token";
 
     protected String accessToken;
 
@@ -118,10 +128,10 @@ public class DefaultAPIClient extends AbstractAPIClient {
 
     @Override
     protected HttpRequestFactory getRequestFactory() throws APIException {
-        String accessToken = getAccessToken();
+        String token = getAccessToken();
         final Credential credential = new Credential.Builder(BearerToken.queryParameterAccessMethod()).build();
-        if (StringUtils.isNotBlank(accessToken)) {
-            credential.setAccessToken(accessToken);
+        if (StringUtils.isNotBlank(token)) {
+            credential.setAccessToken(token);
         }
         return httpTransport.createRequestFactory(credential);
     }
@@ -167,9 +177,9 @@ public class DefaultAPIClient extends AbstractAPIClient {
 
             String responseJson = StringUtils.join(IOUtils.readLines(response.getContent(), UTF_8), "\n");
             Map<String, String> json = fromJson(responseJson, TypeReferenceFactory.getMapTypeReference());
-            accessTokenExpireTime = System.currentTimeMillis() + (Long.parseLong(json.get("expires_in")) * 1000);
-            refreshToken = json.get("refresh_token");
-            return json.get("access_token");
+            accessTokenExpireTime = System.currentTimeMillis() + (Long.parseLong(json.get(EXPIRES_IN)) * 1000);
+            refreshToken = json.get(REFRESH_TOKEN);
+            return json.get(ACCESS_TOKEN);
         } catch (HttpResponseException ex) {
             String message;
             if (StringUtils.isNotBlank(ex.getContent())) {
@@ -199,8 +209,8 @@ public class DefaultAPIClient extends AbstractAPIClient {
             GenericUrl url = new GenericUrl(String.format("%s/oauth/token", cloudURL));
             HashMap<String, Object> data = new HashMap<>();
             data.put("client_id", BITBAR_API_OAUTH2_CLIENT_ID);
-            data.put("grant_type", "refresh_token");
-            data.put("refresh_token", refreshToken);
+            data.put("grant_type", REFRESH_TOKEN);
+            data.put(REFRESH_TOKEN, refreshToken);
             HttpContent content = new UrlEncodedContent(data);
 
             HttpRequest request = httpTransport.createRequestFactory().buildPostRequest(url, content);
@@ -210,16 +220,16 @@ public class DefaultAPIClient extends AbstractAPIClient {
             response = request.execute();
 
             if (response.getStatusCode() != 200) {
-                throw new APIException(response.getStatusCode(), "Failed to refresh access token");
+                throw new APIException(response.getStatusCode(), FAILED_TO_REFRESH_ACCESS_TOKEN);
             }
 
             String jsonContent = StringUtils.join(IOUtils.readLines(response.getContent(), UTF_8), "\n");
             Map<String, String> json = fromJson(jsonContent, TypeReferenceFactory.getMapTypeReference());
-            accessTokenExpireTime = System.currentTimeMillis() + (Long.parseLong(json.get("expires_in")) * 1000);
-            refreshToken = json.get("refresh_token");
-            return json.get("access_token");
+            accessTokenExpireTime = System.currentTimeMillis() + (Long.parseLong(json.get(EXPIRES_IN)) * 1000);
+            refreshToken = json.get(REFRESH_TOKEN);
+            return json.get(ACCESS_TOKEN);
         } catch (IOException ex) {
-            throw new APIException(String.format("Failed to refresh access token. Reason: %s", ex.getMessage()), ex);
+            throw new APIException(String.format(FAILED_TO_REFRESH_ACCESS_TOKEN_REASON, ex.getMessage()), ex);
         } finally {
             disconnectQuietly(response);
         }

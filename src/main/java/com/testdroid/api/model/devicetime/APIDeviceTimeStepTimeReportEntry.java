@@ -21,9 +21,9 @@ public class APIDeviceTimeStepTimeReportEntry extends APIDeviceTimeReportEntry {
 
     }
 
+    @SuppressWarnings("squid:S107")
     public APIDeviceTimeStepTimeReportEntry(
-            Date day,
-            Long deviceTime, Long userId, String userEmail, Long deviceModelId, String deviceModelName,
+            Date day, Long deviceTime, Long userId, String userEmail, Long deviceModelId, String deviceModelName,
             String projectId, String projectName, APIDevice.OsType osType, Long preparationTime, Long waitingTime) {
         super(day, deviceTime, userId, userEmail, deviceModelId, deviceModelName, projectId, projectName, osType);
         this.preparationTime = preparationTime;

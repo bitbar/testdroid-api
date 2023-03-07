@@ -40,8 +40,10 @@ public class APIVisualTestImage extends APIEntity {
         }
     }
 
-    public APIVisualTestImage() {}
+    public APIVisualTestImage() {
+    }
 
+    @SuppressWarnings("squid:S107")
     public APIVisualTestImage(
             String imageName, ImageType imageType, String imageUrl, String imageThumbnailUrl, String comparisonStatus,
             String appUrl, String sessionId, String testUrl, String createdAt) {
