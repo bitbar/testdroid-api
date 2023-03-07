@@ -47,6 +47,7 @@ public class APIActivity extends APIEntity {
     public APIActivity() {
     }
 
+    @SuppressWarnings("squid:S107")
     public APIActivity(
             Long id, LocalDateTime createTime, HttpMethod httpMethod, String userAgent, String parameters, String uri,
             String body, String accept, Long userId, String userEmail, boolean deprecatedResource) {

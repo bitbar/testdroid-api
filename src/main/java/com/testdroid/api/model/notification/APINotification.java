@@ -26,10 +26,10 @@ public class APINotification extends APIEntity {
     public APINotification() {
     }
 
+    @SuppressWarnings("squid:S107")
     public APINotification(
             Long id, String destination, Long userId, String userEmail, Long projectId, String projectName,
-            APINotificationChannel channel,
-            APINotificationScope scope) {
+            APINotificationChannel channel, APINotificationScope scope) {
         super(id);
         this.destination = destination;
         this.userId = userId;

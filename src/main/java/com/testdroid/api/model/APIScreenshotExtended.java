@@ -19,6 +19,7 @@ public class APIScreenshotExtended extends APIScreenshot {
     public APIScreenshotExtended() {
     }
 
+    @SuppressWarnings("squid:S107")
     public APIScreenshotExtended(
             Long id, String name, Boolean fail, Type type, Long timestamp, Long deviceModelId, String displayName,
             String manufacturer, Integer creditsPrice, String imagePrefix, Integer imageTop, Integer imageLeft,

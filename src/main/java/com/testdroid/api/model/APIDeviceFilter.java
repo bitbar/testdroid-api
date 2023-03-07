@@ -23,6 +23,7 @@ public class APIDeviceFilter extends APIEntity {
     public APIDeviceFilter() {
     }
 
+    @SuppressWarnings("squid:S107")
     public APIDeviceFilter(
             Long labelId, String labelName, String labelDisplayName, Long labelGroupId, String labelGroupDisplayName,
             boolean hidden, APIDevice.OsType osType, Long order) {

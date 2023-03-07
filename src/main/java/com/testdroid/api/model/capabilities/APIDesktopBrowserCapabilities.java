@@ -15,6 +15,7 @@ public class APIDesktopBrowserCapabilities extends APIEntity {
     private List<APIDesktopPlatform> platforms = new ArrayList<>();
 
     public APIDesktopBrowserCapabilities() {
+        // need for serialization/deserialization
     }
 
     public List<APIDesktopPlatform> getPlatforms() {

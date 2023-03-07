@@ -18,12 +18,11 @@ public class APIDeviceTimeCountSessionReportEntry extends APIDeviceTimeReportEnt
     private Long countDeviceSessions;
 
     public APIDeviceTimeCountSessionReportEntry() {
-
     }
 
+    @SuppressWarnings("squid:S107")
     public APIDeviceTimeCountSessionReportEntry(
-            Date day,
-            Long deviceTime, Long userId, String userEmail, Long deviceModelId, String deviceModelName,
+            Date day, Long deviceTime, Long userId, String userEmail, Long deviceModelId, String deviceModelName,
             String projectId, String projectName, APIDevice.OsType osType, Long countTestRuns,
             Long countDeviceSessions) {
         super(day, deviceTime, userId, userEmail, deviceModelId, deviceModelName, projectId, projectName, osType);

@@ -36,6 +36,7 @@ public class APIAdminDeviceModel extends APIEntity {
 
     }
 
+    @SuppressWarnings("squid:S107")
     public APIAdminDeviceModel(
             Long id, String name, APIDevice.OsType osType, APIDevice.Platform platform, String location,
             Boolean dedicated, String releaseVersion, Boolean enabled, Integer online, Integer total, Long running,

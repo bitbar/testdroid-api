@@ -5,10 +5,11 @@ package com.testdroid.api;
  */
 public class APIException extends Exception {
 
-    private Integer status;
+    private final Integer status;
 
     public APIException() {
         super();
+        this.status = null;
     }
 
     public APIException(String message) {
@@ -22,6 +23,7 @@ public class APIException extends Exception {
 
     public APIException(Throwable t) {
         super(t);
+        this.status = null;
     }
 
     public APIException(String message, Throwable t) {

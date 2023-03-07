@@ -14,6 +14,8 @@ import java.util.Collections;
  */
 public class MultipartFormDataContent extends AbstractHttpContent {
 
+    private static final String BOUNDARY = "boundary";
+
     private static final String NEWLINE = "\r\n";
 
     private static final String TWO_DASHES = "--";
@@ -24,7 +26,7 @@ public class MultipartFormDataContent extends AbstractHttpContent {
     private ArrayList<Part> parts = new ArrayList<>();
 
     public MultipartFormDataContent() {
-        super(new HttpMediaType("multipart/form-data").setParameter("boundary", "__END_OF_PART__"));
+        super(new HttpMediaType("multipart/form-data").setParameter(BOUNDARY, "__END_OF_PART__"));
     }
 
     public void writeTo(OutputStream out) throws IOException {
@@ -32,7 +34,6 @@ public class MultipartFormDataContent extends AbstractHttpContent {
         String boundary = getBoundary();
 
         HttpHeaders headers;
-        String contentDisposition;
         HttpContent content;
         StreamingContent streamingContent;
         for (Part part : parts) {
@@ -49,7 +50,7 @@ public class MultipartFormDataContent extends AbstractHttpContent {
 
             // Write disposition
             if (part.getName() != null) {
-                contentDisposition = String.format("form-data; name=\"%s\"", part.name);
+                String contentDisposition = String.format("form-data; name=\"%s\"", part.name);
                 // Do we have a filename?
                 // Then add to the content dispos
                 if (part.filename != null) {
@@ -148,7 +149,7 @@ public class MultipartFormDataContent extends AbstractHttpContent {
      * Returns the boundary string to use.
      */
     public final String getBoundary() {
-        return getMediaType().getParameter("boundary");
+        return getMediaType().getParameter(BOUNDARY);
     }
 
     /**
@@ -164,7 +165,7 @@ public class MultipartFormDataContent extends AbstractHttpContent {
      * </p>
      */
     public MultipartFormDataContent setBoundary(String boundary) {
-        getMediaType().setParameter("boundary", Preconditions.checkNotNull(boundary));
+        getMediaType().setParameter(BOUNDARY, Preconditions.checkNotNull(boundary));
         return this;
     }
 

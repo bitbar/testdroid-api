@@ -45,6 +45,7 @@ public class APIAdminInteractiveDeviceSession extends APIEntity {
     public APIAdminInteractiveDeviceSession() {
     }
 
+    @SuppressWarnings("squid:S107")
     public APIAdminInteractiveDeviceSession(
             Long id, LocalDateTime createTime, LocalDateTime startTime, LocalDateTime endTime, String userEmail,
             Long userId, Long duration, String deviceModelName, Long deviceModelId, String deviceName, Long deviceId,

@@ -63,6 +63,7 @@ public class APILicense extends APIEntity {
     public APILicense() {
     }
 
+    @SuppressWarnings("squid:S107")
     public APILicense(
             Long id, Long userId, String userEmail, boolean privateInstance, LocalDateTime activateTime,
             LocalDateTime expireTime, Integer androidDeviceLimit, Boolean androidEnabled, Boolean serverAndroidEnabled,
@@ -92,6 +93,7 @@ public class APILicense extends APIEntity {
         this.status = EnumUtils.getEnum(Status.class, status);
     }
 
+    @SuppressWarnings("squid:S107")
     public APILicense(
             boolean privateInstance, LocalDateTime expireTime, String userEmail, AndroidLicense android, IOSLicense ios,
             RecorderLicense recorder, ServerLicense server, InspectorLicense inspector, BuildLicense build,

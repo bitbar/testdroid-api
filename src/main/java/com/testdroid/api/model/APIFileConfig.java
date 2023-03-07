@@ -17,9 +17,19 @@ public class APIFileConfig extends APIEntity implements Serializable {
 
     @XmlType(namespace = "APIFileConfig")
     public enum Action {
-        COPY_TO_DEVICE,
-        INSTALL,
-        RUN_TEST
+        COPY_TO_DEVICE("data"),
+        INSTALL("app"),
+        RUN_TEST("test");
+
+        private final String fileType;
+
+        Action(String fileType) {
+            this.fileType = fileType;
+        }
+
+        public String getFileType() {
+            return fileType;
+        }
     }
 
     private Action action;

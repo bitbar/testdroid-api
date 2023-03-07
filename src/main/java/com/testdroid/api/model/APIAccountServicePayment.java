@@ -31,6 +31,7 @@ public class APIAccountServicePayment extends APIEntity {
     public APIAccountServicePayment() {
     }
 
+    @SuppressWarnings("squid:S107")
     public APIAccountServicePayment(
             Long id, Long accountId, LocalDateTime startBillingPeriod, LocalDateTime endBillingPeriod, String name,
             Long totalPrice, Long includedTime, Long additionalTime, Long usedTime) {

@@ -58,6 +58,7 @@ public class APIService extends APIEntity {
     public APIService() {
     }
 
+    @SuppressWarnings("squid:S107")
     public APIService(
             Long id, String name, String description, boolean autoRenew, Integer centPrice, Integer includedHours,
             Integer pricePerHour, String externalId, String commonId, LocalDateTime archiveTime, LocalDateTime activateTime,

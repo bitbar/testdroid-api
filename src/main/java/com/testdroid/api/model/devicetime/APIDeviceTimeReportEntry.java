@@ -33,9 +33,9 @@ public abstract class APIDeviceTimeReportEntry extends APIBasicDeviceTime {
 
     }
 
+    @SuppressWarnings("squid:S107")
     APIDeviceTimeReportEntry(
-            Date day,
-            Long deviceTime, Long userId, String userEmail, Long deviceModelId, String deviceModelName,
+            Date day, Long deviceTime, Long userId, String userEmail, Long deviceModelId, String deviceModelName,
             String projectId, String projectName, APIDevice.OsType osType) {
         super(deviceTime);
         this.day = day;

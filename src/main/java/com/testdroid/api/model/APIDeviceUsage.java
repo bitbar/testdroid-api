@@ -17,6 +17,7 @@ public class APIDeviceUsage extends APIEntity {
     public APIDeviceUsage() {
     }
 
+    @SuppressWarnings("squid:S107")
     public APIDeviceUsage(
             Long id, String displayName, String manufacturer, String releaseVersion,
             Integer apiLevel, Integer creditsPrice, String imagePrefix, Integer imageTop, Integer imageLeft,

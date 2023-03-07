@@ -121,9 +121,6 @@ public class APITestRunConfig extends APIEntity implements Serializable {
 
     private boolean useSamples;
 
-    @Deprecated // use deviceGroupId
-    private Long usedDeviceGroupId;
-
     private String usedDeviceGroupName;
 
     private boolean videoRecordingEnabled;
@@ -133,6 +130,7 @@ public class APITestRunConfig extends APIEntity implements Serializable {
     private String withoutAnnotation;
 
     public APITestRunConfig() {
+        // need for serialization/deserialization
     }
 
     public Long getProjectId() {
@@ -220,16 +218,6 @@ public class APITestRunConfig extends APIEntity implements Serializable {
     }
 
     public void setDeviceGroupId(Long deviceGroupId) {
-        this.usedDeviceGroupId = deviceGroupId;
-        this.deviceGroupId = deviceGroupId;
-    }
-
-    public Long getUsedDeviceGroupId() {
-        return usedDeviceGroupId;
-    }
-
-    public void setUsedDeviceGroupId(Long deviceGroupId) {
-        this.usedDeviceGroupId = deviceGroupId;
         this.deviceGroupId = deviceGroupId;
     }
 
@@ -562,7 +550,6 @@ public class APITestRunConfig extends APIEntity implements Serializable {
         this.timeout = apiTestRunConfig.timeout;
         this.tunnelSettings = apiTestRunConfig.tunnelSettings;
         this.useSamples = apiTestRunConfig.useSamples;
-        this.usedDeviceGroupId = apiTestRunConfig.usedDeviceGroupId;
         this.usedDeviceGroupName = apiTestRunConfig.usedDeviceGroupName;
         this.videoRecordingEnabled = apiTestRunConfig.videoRecordingEnabled;
         this.withAnnotation = apiTestRunConfig.withAnnotation;

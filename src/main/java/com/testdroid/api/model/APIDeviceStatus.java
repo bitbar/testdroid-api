@@ -68,6 +68,7 @@ public class APIDeviceStatus extends APIEntity {
     public APIDeviceStatus() {
     }
 
+    @SuppressWarnings("squid:S107")
     public APIDeviceStatus(
             Long id, Long deviceId, String deviceName, APIAdminDevice.ComplexState state, Long clusterId,
             String clusterName, LocalDateTime updateTime, Boolean internetAccess, Boolean monitoringOn,

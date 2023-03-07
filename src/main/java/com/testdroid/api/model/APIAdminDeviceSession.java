@@ -46,11 +46,12 @@ public class APIAdminDeviceSession extends APIEntity {
 
     }
 
+    @SuppressWarnings("squid:S107")
     public APIAdminDeviceSession(
             Long id, LocalDateTime createTime, LocalDateTime startTime, LocalDateTime endTime,
-            String startedByDisplayName, Long projectId,
-            String projectName, Long testRunId, String testRunName, APIDeviceSession.State state, Integer priority,
-            Boolean billable, Long deviceTime, APIDeviceSessionStep.Type currentStepType, String retriedFailReason) {
+            String startedByDisplayName, Long projectId, String projectName, Long testRunId, String testRunName,
+            APIDeviceSession.State state, Integer priority, Boolean billable, Long deviceTime,
+            APIDeviceSessionStep.Type currentStepType, String retriedFailReason) {
         super(id);
         this.createTime = TimeConverter.toDate(createTime);
         this.startTime = TimeConverter.toDate(startTime);

@@ -31,6 +31,7 @@ public class APIProperty extends APIEntity {
     public APIProperty() {
     }
 
+    @SuppressWarnings("squid:S107")
     public APIProperty(
             Long id, String name, String value, String description, Long updatedById, String updatedByDisplayName,
             LocalDateTime updateTime, LocalDateTime fromTime, LocalDateTime toTime) {

@@ -64,6 +64,7 @@ public class APICluster extends APIEntity implements Serializable {
     public APICluster() {
     }
 
+    @SuppressWarnings("squid:S107")
     public APICluster(
             Long id, String name, String url, String jenkinsUrl, String pluginVersion, State state,
             LocalDateTime stateTime, LocalDateTime stateChangeTime, Boolean enabled, Type type, String ipAddress,

@@ -45,6 +45,7 @@ public class APIDeviceStatistic extends APIEntity {
     public APIDeviceStatistic() {
     }
 
+    @SuppressWarnings("squid:S107")
     public APIDeviceStatistic(
             String deviceName, Long usageMillis, Long usageCount, Long totalTests, Long passedTests, Long failedTests,
             Float passedRatio, Float failedRatio, Long failedDevices) {
@@ -52,6 +53,7 @@ public class APIDeviceStatistic extends APIEntity {
                 passedRatio, failedRatio, failedDevices);
     }
 
+    @SuppressWarnings("squid:S107")
     public APIDeviceStatistic(
             APIDevice.OsType osType, String releaseVersion, Long usageMillis, Long usageCount,
             Long totalTests, Long passedTests, Long failedTests, Float passedRatio, Float failedRatio,
@@ -60,6 +62,7 @@ public class APIDeviceStatistic extends APIEntity {
                 passedRatio, failedRatio, failedDevices);
     }
 
+    @SuppressWarnings("squid:S107")
     private APIDeviceStatistic(
             String deviceName, APIDevice.OsType osType, String releaseVersion, Long usageMillis, Long usageCount,
             Long totalTests, Long passedTests, Long failedTests, Float passedRatio, Float failedRatio,

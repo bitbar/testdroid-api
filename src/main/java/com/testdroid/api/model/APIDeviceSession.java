@@ -110,9 +110,6 @@ public class APIDeviceSession extends APIEntity implements UiPresentable {
 
     private State state;
 
-    @Deprecated
-    private Long deviceRunId;
-
     private Integer testCaseAllCount;
 
     private Integer testCaseSuccessCount;
@@ -170,6 +167,7 @@ public class APIDeviceSession extends APIEntity implements UiPresentable {
     public APIDeviceSession() {
     }
 
+    @SuppressWarnings("squid:S107")
     public APIDeviceSession(
             Long id, String externalId, String clientSideId, Long userId, String userEmail, Long accountId,
             APIDeviceSession.Type type, LocalDateTime createTime, LocalDateTime startTime, LocalDateTime installTime,
@@ -199,7 +197,6 @@ public class APIDeviceSession extends APIEntity implements UiPresentable {
         this.timeLimit = timeLimit;
         this.deviceLogFirstTimestamp = deviceLogFirstTimestamp;
         this.state = state;
-        this.deviceRunId = id;
         this.billable = billable;
         this.deviceTime = deviceTime;
         this.excludeReason = excludeReason != null ? excludeReason.getDisplayName() : null;
@@ -318,14 +315,6 @@ public class APIDeviceSession extends APIEntity implements UiPresentable {
 
     public void setState(State state) {
         this.state = state;
-    }
-
-    public Long getDeviceRunId() {
-        return deviceRunId;
-    }
-
-    public void setDeviceRunId(Long deviceRunId) {
-        this.deviceRunId = deviceRunId;
     }
 
     public Integer getTestCaseAllCount() {
@@ -578,7 +567,6 @@ public class APIDeviceSession extends APIEntity implements UiPresentable {
         this.timeLimit = apiDeviceSession.timeLimit;
         this.deviceLogFirstTimestamp = apiDeviceSession.deviceLogFirstTimestamp;
         this.state = apiDeviceSession.state;
-        this.deviceRunId = apiDeviceSession.deviceRunId;
         this.testCaseAllCount = apiDeviceSession.testCaseAllCount;
         this.testCaseSuccessCount = apiDeviceSession.testCaseSuccessCount;
         this.testCasePassedCount = apiDeviceSession.testCasePassedCount;

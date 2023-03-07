@@ -52,6 +52,7 @@ public class APIBillingPeriod extends APIEntity {
     public APIBillingPeriod() {
     }
 
+    @SuppressWarnings("squid:S107")
     public APIBillingPeriod(
             Long billingPeriodId, Long accountServiceId, Long userId, String mail, String plan,
             LocalDateTime startBillingPeriod, LocalDateTime endBillingPeriod,

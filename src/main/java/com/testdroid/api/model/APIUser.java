@@ -6,6 +6,7 @@ import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIException;
 import com.testdroid.api.APIListResource;
 import com.testdroid.api.dto.Context;
+import com.testdroid.api.model.notification.APINotification;
 import com.testdroid.api.util.TimeConverter;
 
 import javax.xml.bind.annotation.XmlType;
@@ -133,6 +134,7 @@ public class APIUser extends APIEntity {
         this.enabled = status == Status.ENABLED;
     }
 
+    @SuppressWarnings("squid:S107")
     public APIUser(
             Long id, Long accountId, String email, String firstName, String lastName, String state,
             String country, String city, String code, String address, String phone, String organization,
@@ -503,6 +505,21 @@ public class APIUser extends APIEntity {
     @JsonIgnore
     public APIUserFile getFile(Long id) throws APIException {
         return getResource(createUri(selfURI, String.format("/files/%s", id)), APIUserFile.class).getEntity();
+    }
+
+    @JsonIgnore
+    public APIListResource<APINotification> getNotificationsResource() throws APIException {
+        return getListResource(getNotificationsURI(), APINotification.class);
+    }
+
+    @JsonIgnore
+    public APIListResource<APINotification> getNotificationsResource(Context<APINotification> context)
+            throws APIException {
+        return getListResource(getNotificationsURI(), context);
+    }
+
+    public APINotification getNotification(Long id) throws APIException {
+        return getResource(getNotificationURI(id), APINotification.class).getEntity();
     }
 
     @JsonIgnore

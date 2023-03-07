@@ -38,6 +38,7 @@ public class APIAdminFrameworkStatistics extends APIEntity {
     public APIAdminFrameworkStatistics() {
     }
 
+    @SuppressWarnings("squid:S107")
     public APIAdminFrameworkStatistics(
             Date day, Long frameworkId, APIDevice.OsType osType, String releaseVersion, String frameworkName,
             APIDeviceSession.State state, Long count, APIDeviceSession.Type type, Long userId, String userEmail,

@@ -31,6 +31,7 @@ public class APIDeviceGroup extends APIEntity {
     public APIDeviceGroup() {
     }
 
+    @SuppressWarnings("squid:S107")
     public APIDeviceGroup(
             Long id, String name, String displayName, APIDevice.OsType osType, Long deviceCount, Long userId,
             String userEmail, boolean isShared) {

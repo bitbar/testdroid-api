@@ -68,6 +68,7 @@ public class APIFramework extends APIEntity {
     public APIFramework() {
     }
 
+    @SuppressWarnings("squid:S107")
     public APIFramework(
             Long id, LocalDateTime createTime, String name, String description, APIDevice.OsType osType,
             String type, Long accountId, String mainUserEmail, String requiredAppExtensions,
