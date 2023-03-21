@@ -255,6 +255,7 @@ public class MappingKey {
     public static final String RUNNING = "running";
     public static final String SAMPLE_APP_ID = "sampleAppId";
     public static final String SAMPLE_TEST_ID = "sampleTestId";
+    public static final String SBID_ID = "sbidId";
     public static final String SCHEDULER = "scheduler";
     public static final String SCOPE = "scope";
     public static final String SCREEN_LOCKED = "screenLocked";
