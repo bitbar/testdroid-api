@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.testdroid</groupId>
     <artifactId>testdroid-api</artifactId>
-    <version>3.16</version>
+    <version>3.17</version>
     <packaging>jar</packaging>
     <name>Bitbar API v2</name>
     <url>https://github.com/bitbar/testdroid-api</url>
@@ -23,6 +23,7 @@
         <jakarta.activation.version>2.1.0</jakarta.activation.version>
         <jakarta.bind.version>2.3.3</jakarta.bind.version>
         <jaxb.version>2.3.3</jaxb.version>
+        <org.reflections.version>0.10.2</org.reflections.version>
     </properties>
     <scm>
         <connection>scm:git:git://github.com:bitbar/testdroid-api.git</connection>
@@ -257,6 +258,11 @@
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-slf4j-impl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.reflections</groupId>
+            <artifactId>reflections</artifactId>
+            <version>${org.reflections.version}</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
