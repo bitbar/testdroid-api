@@ -80,7 +80,6 @@ public class APIAdminDevice extends APIEntity {
         public ComplexState compute(SubState subState) {
             return MAP.get(Pair.of(state, subState));
         }
-
     }
 
     private APICluster cluster;

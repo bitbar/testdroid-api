@@ -11,7 +11,7 @@ import java.util.Objects;
 /**
  * @author Michał Szpruta <michal.szpruta@bitbar.com>
  */
-public class APIDeviceCleanupConfiguration extends APIEntity implements Cloneable {
+public class APIDeviceCleanupConfiguration extends APIEntity {
 
     private String content;
 
@@ -136,11 +136,6 @@ public class APIDeviceCleanupConfiguration extends APIEntity implements Cloneabl
         this.lastModificationTime = deviceCleanupConfiguration.lastModificationTime;
         this.global = deviceCleanupConfiguration.global;
         this.discriminator = deviceCleanupConfiguration.discriminator;
-    }
-
-    @Override
-    public APIDeviceCleanupConfiguration clone() throws CloneNotSupportedException {
-        return (APIDeviceCleanupConfiguration) super.clone();
     }
 
     @Override
