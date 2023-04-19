@@ -44,8 +44,6 @@ public class MappingKey {
     public static final String BIOMETRIC_INSTRUMENTATION = "biometricInstrumentation";
     public static final String BLUETOOTH_ON = "bluetoothOn";
     public static final String BODY = "body";
-    public static final String BRAINTREE_CLIENT_TOKEN = "braintreeClientToken";
-    public static final String BRAINTREE_NONCE = "braintreeNonce";
     public static final String BROWSER_IDS_ARR = "browserIds[]";
     public static final String BROWSER_NAME = "browserName";
     public static final String BROWSER_VERSION = "browserVersion";
