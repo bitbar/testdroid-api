@@ -328,7 +328,7 @@ public abstract class AbstractAPIClient implements APIClient {
 
     private String getAPIResponceContent(InputStream inputStream, TypeReference<?> type) throws APIException {
         try {
-            return IOUtils.toString(inputStream, UTF_8.name());
+            return IOUtils.toString(inputStream, UTF_8);
         } catch (IOException e) {
             throw new APIException(String.format("Failed to parse response as %s", type.getType().getTypeName()));
         }
