@@ -21,7 +21,7 @@
         <dependency-check-maven.version>6.1.1</dependency-check-maven.version>
         <jacoco-maven-plugin.version>0.8.7</jacoco-maven-plugin.version>
         <jakarta.activation.version>2.1.0</jakarta.activation.version>
-        <jakarta.bind.version>2.3.3</jakarta.bind.version>
+        <jakarta.bind.version>4.0.0</jakarta.bind.version>
         <jaxb.version>2.3.3</jaxb.version>
         <org.reflections.version>0.10.2</org.reflections.version>
     </properties>
