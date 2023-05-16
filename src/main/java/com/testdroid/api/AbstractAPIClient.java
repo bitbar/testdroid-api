@@ -58,6 +58,9 @@ public abstract class AbstractAPIClient implements APIClient {
     private static final List<Integer> POSSIBLE_GET_STATUSES = Arrays.asList(SC_OK, SC_ACCEPTED, SC_CREATED,
             SC_NO_CONTENT);
 
+    /**
+     * @throws APIException Overriding classes may throw this exception if they execute some API calls
+     */
     protected HttpRequestFactory getRequestFactory() throws APIException {
         return httpTransport.createRequestFactory();
     }

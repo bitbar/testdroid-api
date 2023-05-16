@@ -31,6 +31,7 @@ import static java.lang.Integer.MAX_VALUE;
 import static java.util.Collections.singletonMap;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.awaitility.Awaitility.await;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 /**
@@ -213,13 +214,11 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
         assertThat(apiTestRun.getState()).isIn(RUNNING, WAITING);
         apiTestRun.requestScreenshotsZip();
         APIUserFile file = apiTestRun.getScreenshotsZip();
-        while (file.getState() != APIUserFile.State.READY) {
-            try {
-                TimeUnit.SECONDS.sleep(3);
-                file.refresh();
-            } catch (InterruptedException ignore) {
-            }
-        }
+        await().atMost(3, TimeUnit.MINUTES).pollInterval(3, TimeUnit.SECONDS)
+                .until(() -> {
+                    file.refresh();
+                    return file.getState() == APIUserFile.State.READY;
+                });
         try (InputStream inputStream = file.getFile()) {
             FileUtils.copyInputStreamToFile(inputStream, Files.createTempFile(null, null).toFile());
         }

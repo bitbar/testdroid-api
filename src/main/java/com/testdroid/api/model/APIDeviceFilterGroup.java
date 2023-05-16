@@ -13,14 +13,17 @@ public class APIDeviceFilterGroup extends APIEntity {
 
     private String name;
 
+    private boolean expanded;
+
     private List<APIDeviceFilter> deviceFilters = new ArrayList<>();
 
     public APIDeviceFilterGroup() {
     }
 
-    public APIDeviceFilterGroup(Long id, String name) {
+    public APIDeviceFilterGroup(Long id, String name, boolean expanded) {
         super(id);
         this.name = name;
+        this.expanded = expanded;
     }
 
     public String getName() {
@@ -29,6 +32,14 @@ public class APIDeviceFilterGroup extends APIEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isExpanded() {
+        return expanded;
+    }
+
+    public void setExpanded(boolean expanded) {
+        this.expanded = expanded;
     }
 
     public List<APIDeviceFilter> getDeviceFilters() {
@@ -46,6 +57,7 @@ public class APIDeviceFilterGroup extends APIEntity {
         APIDeviceFilterGroup apiDeviceFilterGroup = (APIDeviceFilterGroup) from;
         cloneBase(from);
         this.name = apiDeviceFilterGroup.name;
+        this.expanded = apiDeviceFilterGroup.expanded;
         this.deviceFilters = apiDeviceFilterGroup.deviceFilters;
     }
 }
