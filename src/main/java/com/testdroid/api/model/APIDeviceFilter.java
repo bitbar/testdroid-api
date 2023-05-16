@@ -20,18 +20,22 @@ public class APIDeviceFilter extends APIEntity {
     @JsonIgnore
     private String labelGroupDisplayName;
 
+    @JsonIgnore
+    private boolean expanded;
+
     public APIDeviceFilter() {
     }
 
     @SuppressWarnings("squid:S107")
     public APIDeviceFilter(
             Long labelId, String labelName, String labelDisplayName, Long labelGroupId, String labelGroupDisplayName,
-            boolean hidden, APIDevice.OsType osType, Long order) {
+            boolean hidden, boolean expanded, APIDevice.OsType osType, Long order) {
         super(labelId);
         this.parentId = labelGroupId;
         this.name = labelName;
         this.displayName = labelDisplayName;
         this.hidden = hidden;
+        this.expanded = expanded;
         this.osType = osType;
         this.labelGroupDisplayName = labelGroupDisplayName;
     }
@@ -70,6 +74,10 @@ public class APIDeviceFilter extends APIEntity {
 
     public String getLabelGroupDisplayName() {
         return labelGroupDisplayName;
+    }
+
+    public boolean isExpanded() {
+        return expanded;
     }
 
     @Override

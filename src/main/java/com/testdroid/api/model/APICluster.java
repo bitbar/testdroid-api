@@ -53,6 +53,8 @@ public class APICluster extends APIEntity implements Serializable {
 
     private String pluginVersion;
 
+    private String jenkinsVersion;
+
     private Type type = Type.BARE_METAL;
 
     private String ipAddress;
@@ -66,9 +68,9 @@ public class APICluster extends APIEntity implements Serializable {
 
     @SuppressWarnings("squid:S107")
     public APICluster(
-            Long id, String name, String url, String jenkinsUrl, String pluginVersion, State state,
-            LocalDateTime stateTime, LocalDateTime stateChangeTime, Boolean enabled, Type type, String ipAddress,
-            String region, String location) {
+            Long id, String name, String url, String jenkinsUrl, String pluginVersion, String jenkinsVersion,
+            State state, LocalDateTime stateTime, LocalDateTime stateChangeTime, Boolean enabled, Type type,
+            String ipAddress, String region, String location) {
         super(id);
         this.name = name;
         this.url = url;
@@ -78,6 +80,7 @@ public class APICluster extends APIEntity implements Serializable {
         this.stateChangeTime = TimeConverter.toDate(stateChangeTime);
         this.enabled = enabled;
         this.pluginVersion = pluginVersion;
+        this.jenkinsVersion = jenkinsVersion;
         this.type = type;
         this.ipAddress = ipAddress;
         this.region = region;
@@ -117,6 +120,15 @@ public class APICluster extends APIEntity implements Serializable {
 
     public APICluster setPluginVersion(String pluginVersion) {
         this.pluginVersion = pluginVersion;
+        return this;
+    }
+
+    public String getJenkinsVersion() {
+        return jenkinsVersion;
+    }
+
+    public APICluster setJenkinsVersion(String jenkinsVersion) {
+        this.jenkinsVersion = jenkinsVersion;
         return this;
     }
 
@@ -215,6 +227,7 @@ public class APICluster extends APIEntity implements Serializable {
         this.url = apiCluster.url;
         this.jenkinsUrl = apiCluster.jenkinsUrl;
         this.pluginVersion = apiCluster.pluginVersion;
+        this.jenkinsVersion = apiCluster.jenkinsVersion;
         this.type = apiCluster.type;
         this.ipAddress = apiCluster.ipAddress;
         this.region = apiCluster.region;
@@ -242,6 +255,7 @@ public class APICluster extends APIEntity implements Serializable {
                 .append(url, cluster.url)
                 .append(jenkinsUrl, cluster.jenkinsUrl)
                 .append(pluginVersion, cluster.pluginVersion)
+                .append(jenkinsVersion, cluster.jenkinsVersion)
                 .append(type, cluster.type)
                 .append(ipAddress, cluster.ipAddress)
                 .append(region, cluster.region)
@@ -260,6 +274,7 @@ public class APICluster extends APIEntity implements Serializable {
                 .append(url)
                 .append(jenkinsUrl)
                 .append(pluginVersion)
+                .append(jenkinsVersion)
                 .append(type)
                 .append(ipAddress)
                 .append(region)

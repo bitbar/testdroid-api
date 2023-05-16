@@ -165,6 +165,7 @@ public class MappingKey {
     public static final String IP_ADDRESS = "ipAddress";
     public static final String IS_EXCLUDED = "isExcluded";
     public static final String IS_MAIN_USER = "isMainUser";
+    public static final String JENKINS_VERSION = "jenkinsVersion";
     public static final String JOB_CONFIG_ID = "jobConfigId";
     public static final String KEY = "key";
     public static final String LABEL_GROUP_ID = "labelGroupId";
