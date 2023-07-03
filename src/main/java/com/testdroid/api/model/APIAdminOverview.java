@@ -9,15 +9,27 @@ public class APIAdminOverview extends APIEntity {
 
     private Long activeUsersCount;
 
-    private Long inspectorSessionsCount;
+    private Long offlineClusterCount;
 
-    private Long remoteSessionsCount;
+    private Long offlineDeviceCount;
 
-    private Long runningDeviceModelsCount;
+    private Long offlineDeviceModelCount;
+
+    private Long runningInspectorSessionsCount;
 
     private Long runningTestRunsCount;
 
-    private Long waitingDeviceModelsCount;
+    private Long totalClusterCount;
+
+    private Long totalDeviceCount;
+
+    private Long totalDeviceModelCount;
+
+    private Long totalInspectorSessionsCount;
+
+    private Long totalTestRunCount;
+
+    private Long totalUserCount;
 
     private Long waitingTestRunsCount;
 
@@ -25,14 +37,11 @@ public class APIAdminOverview extends APIEntity {
     }
 
     public APIAdminOverview(
-            Long activeUsersCount, Long inspectorSessionsCount, Long remoteSessionsCount, Long runningDeviceModelsCount,
-            Long runningTestRunsCount, Long waitingDeviceModelsCount, Long waitingTestRunsCount) {
+            Long activeUsersCount, Long runningInspectorSessionsCount,
+            Long runningTestRunsCount, Long waitingTestRunsCount) {
         this.activeUsersCount = activeUsersCount;
-        this.inspectorSessionsCount = inspectorSessionsCount;
-        this.remoteSessionsCount = remoteSessionsCount;
-        this.runningDeviceModelsCount = runningDeviceModelsCount;
+        this.runningInspectorSessionsCount = runningInspectorSessionsCount;
         this.runningTestRunsCount = runningTestRunsCount;
-        this.waitingDeviceModelsCount = waitingDeviceModelsCount;
         this.waitingTestRunsCount = waitingTestRunsCount;
     }
 
@@ -40,56 +49,117 @@ public class APIAdminOverview extends APIEntity {
         return activeUsersCount;
     }
 
-    public void setActiveUsersCount(Long activeUsersCount) {
+    public APIAdminOverview withActiveUsersCount(Long activeUsersCount) {
         this.activeUsersCount = activeUsersCount;
+        return this;
     }
 
-    public Long getInspectorSessionsCount() {
-        return inspectorSessionsCount;
+    public Long getOfflineClusterCount() {
+        return offlineClusterCount;
     }
 
-    public void setInspectorSessionsCount(Long inspectorSessionsCount) {
-        this.inspectorSessionsCount = inspectorSessionsCount;
+    public APIAdminOverview withOfflineClusterCount(Long offlineClusterCount) {
+        this.offlineClusterCount = offlineClusterCount;
+        return this;
     }
 
-    public Long getRunningDeviceModelsCount() {
-        return runningDeviceModelsCount;
+    public Long getOfflineDeviceCount() {
+        return offlineDeviceCount;
     }
 
-    public void setRunningDeviceModelsCount(Long runningDeviceModelsCount) {
-        this.runningDeviceModelsCount = runningDeviceModelsCount;
+    public APIAdminOverview withOfflineDeviceCount(Long offlineDeviceCount) {
+        this.offlineDeviceCount = offlineDeviceCount;
+        return this;
+    }
+
+    public Long getOfflineDeviceModelCount() {
+        return offlineDeviceModelCount;
+    }
+
+    public APIAdminOverview withOfflineDeviceModelCount(Long offlineDeviceModelCount) {
+        this.offlineDeviceModelCount = offlineDeviceModelCount;
+        return this;
+    }
+
+    public Long getRunningInspectorSessionsCount() {
+        return runningInspectorSessionsCount;
+    }
+
+    public APIAdminOverview withRunningInspectorSessionsCount(Long runningInspectorSessionsCount) {
+        this.runningInspectorSessionsCount = runningInspectorSessionsCount;
+        return this;
     }
 
     public Long getRunningTestRunsCount() {
         return runningTestRunsCount;
     }
 
-    public void setRunningTestRunsCount(Long runningTestRunsCount) {
+    public APIAdminOverview withRunningTestRunsCount(Long runningTestRunsCount) {
         this.runningTestRunsCount = runningTestRunsCount;
+        return this;
     }
 
-    public Long getWaitingDeviceModelsCount() {
-        return waitingDeviceModelsCount;
+    public Long getTotalClusterCount() {
+        return totalClusterCount;
     }
 
-    public void setWaitingDeviceModelsCount(Long waitingDeviceModelsCount) {
-        this.waitingDeviceModelsCount = waitingDeviceModelsCount;
+    public APIAdminOverview withTotalClusterCount(Long totalClusterCount) {
+        this.totalClusterCount = totalClusterCount;
+        return this;
+    }
+
+    public Long getTotalDeviceCount() {
+        return totalDeviceCount;
+    }
+
+    public APIAdminOverview withTotalDeviceCount(Long totalDeviceCount) {
+        this.totalDeviceCount = totalDeviceCount;
+        return this;
+    }
+
+    public Long getTotalDeviceModelCount() {
+        return totalDeviceModelCount;
+    }
+
+    public APIAdminOverview withTotalDeviceModelCount(Long totalDeviceModelCount) {
+        this.totalDeviceModelCount = totalDeviceModelCount;
+        return this;
+    }
+
+    public Long getTotalInspectorSessionsCount() {
+        return totalInspectorSessionsCount;
+    }
+
+    public APIAdminOverview withTotalInspectorSessionsCount(Long totalInspectorSessionsCount) {
+        this.totalInspectorSessionsCount = totalInspectorSessionsCount;
+        return this;
+    }
+
+    public Long getTotalTestRunCount() {
+        return totalTestRunCount;
+    }
+
+    public APIAdminOverview withTotalTestRunCount(Long totalTestRunCount) {
+        this.totalTestRunCount = totalTestRunCount;
+        return this;
+    }
+
+    public Long getTotalUserCount() {
+        return totalUserCount;
+    }
+
+    public APIAdminOverview withTotalUserCount(Long totalUserCount) {
+        this.totalUserCount = totalUserCount;
+        return this;
     }
 
     public Long getWaitingTestRunsCount() {
         return waitingTestRunsCount;
     }
 
-    public void setWaitingTestRunsCount(Long waitingTestRunsCount) {
+    public APIAdminOverview withWaitingTestRunsCount(Long waitingTestRunsCount) {
         this.waitingTestRunsCount = waitingTestRunsCount;
-    }
-
-    public Long getRemoteSessionsCount() {
-        return remoteSessionsCount;
-    }
-
-    public void setRemoteSessionsCount(Long remoteSessionsCount) {
-        this.remoteSessionsCount = remoteSessionsCount;
+        return this;
     }
 
     @Override
@@ -97,11 +167,17 @@ public class APIAdminOverview extends APIEntity {
         APIAdminOverview apiAdminTestRun = (APIAdminOverview) from;
         cloneBase(from);
         this.activeUsersCount = apiAdminTestRun.activeUsersCount;
-        this.inspectorSessionsCount = apiAdminTestRun.inspectorSessionsCount;
-        this.remoteSessionsCount = apiAdminTestRun.remoteSessionsCount;
+        this.offlineClusterCount = apiAdminTestRun.offlineClusterCount;
+        this.offlineDeviceCount = apiAdminTestRun.offlineDeviceCount;
+        this.offlineDeviceModelCount = apiAdminTestRun.offlineDeviceModelCount;
+        this.runningInspectorSessionsCount = apiAdminTestRun.runningInspectorSessionsCount;
         this.runningTestRunsCount = apiAdminTestRun.runningTestRunsCount;
+        this.totalClusterCount = apiAdminTestRun.totalClusterCount;
+        this.totalDeviceCount = apiAdminTestRun.totalDeviceCount;
+        this.totalDeviceModelCount = apiAdminTestRun.totalDeviceModelCount;
+        this.totalInspectorSessionsCount = apiAdminTestRun.totalInspectorSessionsCount;
+        this.totalTestRunCount = apiAdminTestRun.totalTestRunCount;
+        this.totalUserCount = apiAdminTestRun.totalUserCount;
         this.waitingTestRunsCount = apiAdminTestRun.waitingTestRunsCount;
-        this.runningDeviceModelsCount = apiAdminTestRun.runningDeviceModelsCount;
-        this.waitingDeviceModelsCount = apiAdminTestRun.waitingDeviceModelsCount;
     }
 }
