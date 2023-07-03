@@ -71,24 +71,17 @@ public class APIDeviceSession extends APIEntity implements UiPresentable {
         WARNING;
 
         public boolean isFinished() {
-            switch (this) {
-                case WAITING:
-                case RUNNING:
-                    return false;
-                default:
-                    return true;
-            }
+            return switch (this) {
+                case WAITING, RUNNING -> false;
+                default -> true;
+            };
         }
 
         public boolean isSettable() {
-            switch (this) {
-                case WAITING:
-                case RUNNING:
-                case EXCLUDED:
-                    return false;
-                default:
-                    return true;
-            }
+            return switch (this) {
+                case WAITING, RUNNING, EXCLUDED -> false;
+                default -> true;
+            };
         }
     }
 
