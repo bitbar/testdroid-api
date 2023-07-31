@@ -1,6 +1,8 @@
 package com.testdroid.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.util.TimeConverter;
 
@@ -20,6 +22,12 @@ public class APIAccount extends APIEntity {
 
     private String mainUserEmail;
 
+    @JsonInclude(Include.NON_NULL)
+    private String activeServiceName;
+
+    @JsonInclude(Include.NON_NULL)
+    private Long dedicatedDevicesCount;
+
     public APIAccount() {
     }
 
@@ -31,6 +39,13 @@ public class APIAccount extends APIEntity {
         this.mainUserFirstName = mainUserFirstName;
         this.mainUserLastName = mainUserLastName;
         this.mainUserEmail = mainUserEmail;
+    }
+
+    public APIAccount(
+            Long id, LocalDateTime createTime, String mainUserFirstName, String mainUserLastName, String mainUserEmail,
+            long dedicatedDevicesCount) {
+        this(id, createTime, mainUserFirstName, mainUserLastName, mainUserEmail);
+        this.dedicatedDevicesCount = dedicatedDevicesCount;
     }
 
     public Date getCreateTime() {
@@ -65,6 +80,22 @@ public class APIAccount extends APIEntity {
         this.mainUserEmail = mainUserEmail;
     }
 
+    public String getActiveServiceName() {
+        return activeServiceName;
+    }
+
+    public void setActiveServiceName(String activeServiceName) {
+        this.activeServiceName = activeServiceName;
+    }
+
+    public Long getDedicatedDevicesCount() {
+        return dedicatedDevicesCount;
+    }
+
+    public void setDedicatedDevicesCount(Long dedicatedDevicesCount) {
+        this.dedicatedDevicesCount = dedicatedDevicesCount;
+    }
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
@@ -74,5 +105,7 @@ public class APIAccount extends APIEntity {
         this.mainUserFirstName = account.mainUserFirstName;
         this.mainUserLastName = account.mainUserLastName;
         this.mainUserEmail = account.mainUserEmail;
+        this.activeServiceName = account.activeServiceName;
+        this.dedicatedDevicesCount = account.dedicatedDevicesCount;
     }
 }

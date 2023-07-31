@@ -118,6 +118,8 @@ public class APIAdminDevice extends APIEntity {
 
     private String mainUserEmail;
 
+    private Long mainUserId;
+
     private String location;
 
     private Long testTimeLimit;
@@ -127,6 +129,10 @@ public class APIAdminDevice extends APIEntity {
     private APIDevice.OsType osType;
 
     private APIDevice.Platform platform;
+
+    private Date dedicationEndTime;
+
+    private String comment;
 
     public APIAdminDevice() {
     }
@@ -140,13 +146,14 @@ public class APIAdminDevice extends APIEntity {
     public APIAdminDevice(
             Long id, String name, String manufacturer, boolean enabled, String serialId, String fingerprint,
             String unlockGesture, String releaseVersion, Integer apiLevel, Long deviceModelId,
-            String deviceModelName, ComplexState state, LocalDateTime stateTime,  LocalDateTime stateChangeTime,
+            String deviceModelName, ComplexState state, LocalDateTime stateTime, LocalDateTime stateChangeTime,
             InitStep initStep, String ipAddress, Long clusterId, String clusterName, String clusterUrl,
             String jenkinsUrl, String pluginVersion, String jenkinsVersion, APICluster.State clusterState,
             LocalDateTime clusterStateTime, LocalDateTime clusterStateChangeTime, Boolean clusterEnabled,
             APICluster.Type clusterType, String clusterIpAddress, String clusterRegion, String clusterLocation,
-            LocalDateTime lastOnlineTime, Long accountId, String mainUserEmail, String location, Long testTimeLimit,
-            Boolean locked, APIDevice.OsType osType, APIDevice.Platform platform) {
+            LocalDateTime lastOnlineTime, Long accountId, LocalDateTime dedicationEndTime, String comment,
+            String mainUserEmail, Long mainUserId, String location, Long testTimeLimit, Boolean locked,
+            APIDevice.OsType osType, APIDevice.Platform platform) {
         super(id);
         this.name = name;
         this.manufacturer = manufacturer;
@@ -167,8 +174,11 @@ public class APIAdminDevice extends APIEntity {
                 clusterRegion, clusterLocation);
         this.lastOnlineTime = TimeConverter.toDate(lastOnlineTime);
         this.accountId = accountId;
+        this.dedicationEndTime = TimeConverter.toDate(dedicationEndTime);
+        this.comment = comment;
         this.testTimeLimit = testTimeLimit;
         this.mainUserEmail = mainUserEmail;
+        this.mainUserId = mainUserId;
         this.location = location;
         this.locked = locked;
         this.osType = osType;
@@ -303,12 +313,36 @@ public class APIAdminDevice extends APIEntity {
         this.accountId = accountId;
     }
 
+    public Date getDedicationEndTime() {
+        return dedicationEndTime;
+    }
+
+    public void setDedicationEndTime(Date dedicationEndTime) {
+        this.dedicationEndTime = dedicationEndTime;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
     public String getMainUserEmail() {
         return mainUserEmail;
     }
 
     public void setMainUserEmail(String mainUserEmail) {
         this.mainUserEmail = mainUserEmail;
+    }
+
+    public Long getMainUserId() {
+        return mainUserId;
+    }
+
+    public void setMainUserId(Long mainUserId) {
+        this.mainUserId = mainUserId;
     }
 
     public APIAdminDevice setTestTimeLimit(Long testTimeLimit) {
@@ -386,7 +420,10 @@ public class APIAdminDevice extends APIEntity {
         this.ipAddress = adminDevice.ipAddress;
         this.lastOnlineTime = adminDevice.lastOnlineTime;
         this.accountId = adminDevice.accountId;
+        this.dedicationEndTime = adminDevice.dedicationEndTime;
+        this.comment = adminDevice.comment;
         this.mainUserEmail = adminDevice.mainUserEmail;
+        this.mainUserId = adminDevice.mainUserId;
         this.location = adminDevice.location;
         this.testTimeLimit = adminDevice.testTimeLimit;
         this.locked = adminDevice.locked;
