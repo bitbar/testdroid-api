@@ -61,6 +61,7 @@ public class MappingKey {
     public static final String CLUSTER_ID = "clusterId";
     public static final String CLUSTER_NAME = "clusterName";
     public static final String CODE = "code";
+    public static final String COMMENT = "comment";
     public static final String COMMON = "common";
     public static final String COMMON_ID = "commonId";
     public static final String CONFIRM_PASSWORD = "confirmPassword";
@@ -80,6 +81,7 @@ public class MappingKey {
     public static final String DEACTIVATED_BY_NAME = "deactivatedByName";
     public static final String DEACTIVATE_REASON = "deactivateReason";
     public static final String DEDICATED = "dedicated";
+    public static final String DEDICATION_END_TIME = "dedicationEndTime";
     public static final String DELETE_TIME = "deleteTime";
     public static final String DEPRECATED_RESOURCE = "deprecatedResource";
     public static final String DESCRIPTION = "description";
@@ -208,6 +210,7 @@ public class MappingKey {
     public static final String ONLINE = "online";
     public static final String ONLY_MAIN_USERS = "onlyMainUsers";
     public static final String ONLY_WITH_BROWSERS = "onlyWithBrowsers";
+    public static final String ONLY_WITH_DEDICATED_DEVICES = "onlyWithDedicatedDevices";
     public static final String ONLY_WITH_DISABLED_SERVICES = "onlyWithDisabledServices";
     public static final String ON_DATE = "onDate";
     public static final String ORGANIZATION = "organization";
@@ -334,6 +337,7 @@ public class MappingKey {
     public static final String WIDTH = "width";
     public static final String WITHOUT_PRIORITIES = "withoutPriorities";
     public static final String WITH_DEDICATED = "withDedicated";
+    public static final String WITH_DEDICATED_DEVICES_INFO = "withDedicatedDevicesInfo";
     public static final String WITH_DEVICES = "withDevices";
     public static final String WITH_DISABLED = "withDisabled";
     public static final String WITH_PROPERTIES = "withProperties";

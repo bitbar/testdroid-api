@@ -196,6 +196,7 @@ public class TypeReferenceFactory {
         MAP.put(Properties.class, new TypeReference<Properties>() {});
         MAP.put(String.class, new TypeReference<String>() {});
         MAP.put(APIVisualTestAccess.class, new TypeReference<APIVisualTestAccess>() {});
+        MAP.put(APIVisualTestImage.class, new TypeReference<APIVisualTestImage>() {});
         //@formatter:on
     }
 
