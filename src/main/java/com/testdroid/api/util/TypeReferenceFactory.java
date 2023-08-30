@@ -48,6 +48,7 @@ public class TypeReferenceFactory {
         LIST_MAP.put(APIAdminError.class, new TypeReference<APIList<APIAdminError>>() {});
         LIST_MAP.put(APIAdminFrameworkStatistics.class, new TypeReference<APIList<APIAdminFrameworkStatistics>>() {});
         LIST_MAP.put(APIAdminInteractiveDeviceSession.class, new TypeReference<APIList<APIAdminInteractiveDeviceSession>>() {});
+        LIST_MAP.put(APIAdminTrialStatistics.class, new TypeReference<APIList<APIAdminTrialStatistics>>() {});
         LIST_MAP.put(APIAdminOverview.class, new TypeReference<APIList<APIAdminOverview>>() {});
         LIST_MAP.put(APIAdminTestRun.class, new TypeReference<APIList<APIAdminTestRun>>() {});
         LIST_MAP.put(APIBasicDeviceTime.class, new TypeReference<APIList<APIBasicDeviceTime>>() {});

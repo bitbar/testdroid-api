@@ -144,7 +144,6 @@ public abstract class AbstractAPIClient implements APIClient {
             return response;
         } catch (HttpResponseException ex) {
             throw getAPIException(ex);
-
         } catch (IOException ex) {
             throw new APIException(String.format(FAILED_TO_EXECUTE_API_CALL_WITH_REASON, uri, ex.getMessage()), ex);
         }
@@ -229,7 +228,6 @@ public abstract class AbstractAPIClient implements APIClient {
                 return result;
             } else {
                 return null;
-
             }
         } catch (HttpResponseException ex) {
             throw getAPIException(ex);
