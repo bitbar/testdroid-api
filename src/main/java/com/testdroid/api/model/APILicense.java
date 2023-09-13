@@ -315,7 +315,6 @@ public class APILicense extends APIEntity {
         }
 
         public abstract String generateSignContent();
-
     }
 
     public static class AndroidLicense extends FeatureLicense {

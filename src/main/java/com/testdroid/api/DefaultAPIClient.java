@@ -129,7 +129,7 @@ public class DefaultAPIClient extends AbstractAPIClient {
     @Override
     protected HttpRequestFactory getRequestFactory() throws APIException {
         String token = getAccessToken();
-        final Credential credential = new Credential.Builder(BearerToken.queryParameterAccessMethod()).build();
+        final Credential credential = new Credential.Builder(BearerToken.authorizationHeaderAccessMethod()).build();
         if (StringUtils.isNotBlank(token)) {
             credential.setAccessToken(token);
         }

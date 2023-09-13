@@ -16,6 +16,8 @@ public class APIAccount extends APIEntity {
 
     private Date createTime;
 
+    private Long mainUserId;
+
     private String mainUserFirstName;
 
     private String mainUserLastName;
@@ -32,19 +34,20 @@ public class APIAccount extends APIEntity {
     }
 
     public APIAccount(
-            Long id, LocalDateTime createTime, String mainUserFirstName, String mainUserLastName,
+            Long id, LocalDateTime createTime, Long mainUserId, String mainUserFirstName, String mainUserLastName,
             String mainUserEmail) {
         super(id);
         this.createTime = TimeConverter.toDate(createTime);
+        this.mainUserId = mainUserId;
         this.mainUserFirstName = mainUserFirstName;
         this.mainUserLastName = mainUserLastName;
         this.mainUserEmail = mainUserEmail;
     }
 
     public APIAccount(
-            Long id, LocalDateTime createTime, String mainUserFirstName, String mainUserLastName, String mainUserEmail,
-            long dedicatedDevicesCount) {
-        this(id, createTime, mainUserFirstName, mainUserLastName, mainUserEmail);
+            Long id, LocalDateTime createTime, Long mainUserId, String mainUserFirstName, String mainUserLastName,
+            String mainUserEmail, long dedicatedDevicesCount) {
+        this(id, createTime, mainUserId, mainUserFirstName, mainUserLastName, mainUserEmail);
         this.dedicatedDevicesCount = dedicatedDevicesCount;
     }
 
@@ -54,6 +57,14 @@ public class APIAccount extends APIEntity {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public Long getMainUserId() {
+        return mainUserId;
+    }
+
+    public void setMainUserId(Long mainUserId) {
+        this.mainUserId = mainUserId;
     }
 
     public String getMainUserFirstName() {
@@ -101,6 +112,7 @@ public class APIAccount extends APIEntity {
     protected <T extends APIEntity> void clone(T from) {
         APIAccount account = (APIAccount) from;
         cloneBase(from);
+        this.mainUserId = account.mainUserId;
         this.createTime = account.createTime;
         this.mainUserFirstName = account.mainUserFirstName;
         this.mainUserLastName = account.mainUserLastName;
