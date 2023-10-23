@@ -8,6 +8,7 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.testdroid.api.dto.Context;
+import com.testdroid.api.serialization.level.Log4jLevelModule;
 
 import java.io.File;
 import java.io.InputStream;
@@ -30,9 +31,11 @@ public abstract class APIEntity {
         OBJECT_MAPPER.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
         OBJECT_MAPPER.configure(DeserializationFeature.READ_UNKNOWN_ENUM_VALUES_AS_NULL, true);
         OBJECT_MAPPER.registerModule(new JavaTimeModule());
+        OBJECT_MAPPER.registerModule(new Log4jLevelModule());
         XML_MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         XML_MAPPER.configure(DeserializationFeature.READ_UNKNOWN_ENUM_VALUES_AS_NULL, true);
         XML_MAPPER.registerModule(new JavaTimeModule());
+        XML_MAPPER.registerModule(new Log4jLevelModule());
         XML_MAPPER.configure(WRITE_XML_DECLARATION, true);
         XML_MAPPER.configure(ToXmlGenerator.Feature.WRITE_NULLS_AS_XSI_NIL, true);
     }

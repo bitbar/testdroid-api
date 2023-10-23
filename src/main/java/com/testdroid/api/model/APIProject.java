@@ -7,7 +7,7 @@ import com.testdroid.api.APIListResource;
 import com.testdroid.api.dto.Context;
 import com.testdroid.api.util.TimeConverter;
 
-import javax.xml.bind.annotation.XmlType;
+import jakarta.xml.bind.annotation.XmlType;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;

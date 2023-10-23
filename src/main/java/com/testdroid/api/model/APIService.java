@@ -6,7 +6,7 @@ import com.testdroid.api.formatter.CurrencyFormatter;
 import com.testdroid.api.model.enums.Unit;
 import com.testdroid.api.util.TimeConverter;
 
-import javax.xml.bind.annotation.XmlType;
+import jakarta.xml.bind.annotation.XmlType;
 import java.time.LocalDateTime;
 import java.util.*;
 

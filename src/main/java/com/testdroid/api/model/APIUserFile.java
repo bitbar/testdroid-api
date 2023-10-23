@@ -6,7 +6,7 @@ import com.testdroid.api.APIException;
 import com.testdroid.api.APIListResource;
 import com.testdroid.api.util.TimeConverter;
 
-import javax.xml.bind.annotation.XmlType;
+import jakarta.xml.bind.annotation.XmlType;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.net.URL;
@@ -27,7 +27,7 @@ public class APIUserFile extends APIEntity implements Serializable {
     public static final long VIRUS_SCAN_TIMEOUT_DEFAULT = 5 * 60 * 1000L;
 
     private static final Set<String> VIRUS_SCAN_ACCEPTED_VALUES = Collections.unmodifiableSet(
-            new HashSet<>(Arrays.asList(VirusScanStatus.safe.name(), VirusScanStatus.disabled.name(), null)));
+            new HashSet<>(Arrays.asList(VirusScanStatus.SAFE.value(), VirusScanStatus.DISABLED.value(), null)));
 
     private Date createTime;
 
@@ -266,7 +266,7 @@ public class APIUserFile extends APIEntity implements Serializable {
         while (end > System.currentTimeMillis()) {
             refresh();
             virusScanStatus = getVirusScanStatus();
-            if (VirusScanStatus.infected.name().equals(virusScanStatus)) {
+            if (VirusScanStatus.INFECTED.value().equals(virusScanStatus)) {
                 throw new APIException(400, "File rejected by virus scan");
             } else if (VIRUS_SCAN_ACCEPTED_VALUES.contains(virusScanStatus)) {
                 return this;
@@ -290,7 +290,7 @@ public class APIUserFile extends APIEntity implements Serializable {
                 }
             }
             if (filteredFiles.stream().map(APIUserFile::getVirusScanStatus)
-                    .anyMatch(VirusScanStatus.infected.name()::equals)) {
+                    .anyMatch(VirusScanStatus.INFECTED.value()::equals)) {
                 throw new APIException(400, "File rejected by virus scan");
             }
             if (filteredFiles.stream().map(APIUserFile::getVirusScanStatus)
@@ -304,7 +304,7 @@ public class APIUserFile extends APIEntity implements Serializable {
 
     private String getVirusScanStatus() {
         return getFileProperties().stream()
-                .filter(p -> APIUserFileProperty.Key.virus_scan_status.name().equals(p.getKey()))
+                .filter(p -> APIUserFileProperty.Key.VIRUS_SCAN_STATUS.value().equals(p.getKey()))
                 .map(APIUserFileProperty::getValue).findAny().orElse(null);
     }
 

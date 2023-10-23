@@ -13,24 +13,44 @@ public class APIUserFileProperty extends APIEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     public enum Key {
-        main_activity,
-        min_sdk,
-        package_name,
-        target_package_name,
-        instrumentation_name,
-        bundle_name,
-        bundle_identifier,
-        jar_names,
-        code_signers,
-        virus_scan_status
+        MAIN_ACTIVITY("main_activity"),
+        MIN_SDK("min_sdk"),
+        PACKAGE_NAME("package_name"),
+        TARGET_PACKAGE_NAME("target_package_name"),
+        INSTRUMENTATION_NAME("instrumentation_name"),
+        BUNDLE_NAME("bundle_name"),
+        BUNDLE_IDENTIFIER("bundle_identifier"),
+        JAR_NAMES("jar_names"),
+        CODE_SIGNERS("code_signers"),
+        VIRUS_SCAN_STATUS("virus_scan_status");
+
+        private final String value;
+
+        Key(String value) {
+            this.value = value;
+        }
+
+        public String value() {
+            return value;
+        }
     }
 
     public enum VirusScanStatus {
-        waiting,
-        scanning,
-        infected,
-        safe,
-        disabled
+        WAITING("waiting"),
+        SCANNING("scanning"),
+        INFECTED("infected"),
+        SAFE("safe"),
+        DISABLED("disabled");
+
+        private final String value;
+
+        VirusScanStatus(String value) {
+            this.value = value;
+        }
+
+        public String value() {
+            return value;
+        }
     }
 
     private String key;

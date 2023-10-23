@@ -5,7 +5,7 @@ import com.testdroid.api.APIEntity;
 import com.testdroid.api.util.TimeConverter;
 import org.apache.commons.lang3.tuple.Pair;
 
-import javax.xml.bind.annotation.XmlType;
+import jakarta.xml.bind.annotation.XmlType;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Date;
