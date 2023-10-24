@@ -8,7 +8,7 @@ import com.testdroid.api.UiPresentable;
 import com.testdroid.api.dto.Context;
 import com.testdroid.api.util.TimeConverter;
 
-import javax.xml.bind.annotation.XmlType;
+import jakarta.xml.bind.annotation.XmlType;
 import java.io.File;
 import java.io.InputStream;
 import java.time.LocalDateTime;

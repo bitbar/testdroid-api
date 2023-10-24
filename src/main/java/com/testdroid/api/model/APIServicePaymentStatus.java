@@ -1,6 +1,6 @@
 package com.testdroid.api.model;
 
-import javax.xml.bind.annotation.XmlType;
+import jakarta.xml.bind.annotation.XmlType;
 
 /**
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>

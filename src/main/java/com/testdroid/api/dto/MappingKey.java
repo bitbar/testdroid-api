@@ -133,8 +133,8 @@ public class MappingKey {
     public static final String FINISH_TIME_MS = "finishTimeMS";
     public static final String FIRST_NAME = "firstName";
     public static final String FLASH_ON = "flashOn";
-    public static final String FOR_WHOLE_ACCOUNT = "forWholeAccount";
     public static final String FOR_PROJECTS = "forProjects";
+    public static final String FOR_WHOLE_ACCOUNT = "forWholeAccount";
     public static final String FRAMEWORK_ID = "frameworkId";
     public static final String FRAMEWORK_NAME = "frameworkName";
     public static final String FRAME_EXTRA_WIDTH = "frameExtraWidth";
@@ -182,11 +182,13 @@ public class MappingKey {
     public static final String LAST_NAME = "lastName";
     public static final String LAST_PAYMENT_DATE = "lastPaymentDate";
     public static final String LAST_RETRY_TIME = "lastRetryTime";
+    public static final String LEVEL = "level";
     public static final String LIVE_TESTING_ONLY= "liveTestingOnly";
     public static final String LOCALE_COUNTRY = "localeCountry";
     public static final String LOCATION = "location";
     public static final String LOCATION_SERVICES_ON = "locationServiceOn";
     public static final String LOCKED = "locked";
+    public static final String LOGGER_NAME = "loggerName";
     public static final String MAIL = "mail";
     public static final String MAIN_USER_EMAIL = "mainUserEmail";
     public static final String MAIN_USER_FIRST_NAME = "mainUserFirstName";
@@ -257,7 +259,6 @@ public class MappingKey {
     public static final String RUNNING = "running";
     public static final String SAMPLE_APP_ID = "sampleAppId";
     public static final String SAMPLE_TEST_ID = "sampleTestId";
-    public static final String SBID_ID = "sbidId";
     public static final String SCHEDULER = "scheduler";
     public static final String SCOPE = "scope";
     public static final String SCREEN_LOCKED = "screenLocked";
@@ -336,12 +337,12 @@ public class MappingKey {
     public static final String VIDEO_RECORDING_ENABLED = "videoRecordingEnabled";
     public static final String WIDTH = "width";
     public static final String WITHOUT_PRIORITIES = "withoutPriorities";
+    public static final String WITH_BROWSERS = "withBrowsers";
     public static final String WITH_DEDICATED = "withDedicated";
     public static final String WITH_DEDICATED_DEVICES_INFO = "withDedicatedDevicesInfo";
     public static final String WITH_DEVICES = "withDevices";
     public static final String WITH_DISABLED = "withDisabled";
     public static final String WITH_PROPERTIES = "withProperties";
-    public static final String WITH_BROWSERS = "withBrowsers";
     public static final String WITH_PUBLIC = "withPublic";
     public static final String WITH_ROLE = "withRole";
     public static final String WITH_ROLES = "withRoles";

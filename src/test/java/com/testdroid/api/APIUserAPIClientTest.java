@@ -16,6 +16,7 @@ import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import static com.testdroid.api.dto.MappingKey.*;
@@ -32,7 +33,6 @@ import static java.util.Collections.singletonMap;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 /**
  * @author Damian Sniezek <damian.sniezek@bitbar.com>
@@ -81,7 +81,7 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
         APIUser me = apiClient.me();
         me.uploadFile(File.createTempFile("getFilesDefaultOrderTest", ".tmp"));
         me.uploadFile(File.createTempFile("getFilesDefaultOrderTest", ".tmp"));
-        APIList<APIUserFile> list = me.getListResource("/me/files/", new Context<>(APIUserFile.class, 0, 2, EMPTY,
+        APIList<APIUserFile> list = me.getListResource("/me/files", new Context<>(APIUserFile.class, 0, 2, EMPTY,
                 EMPTY).addFilter(FilterEntry.create(DIRECTION, EQ, APIUserFile.Direction.INPUT.name()))).getEntity();
         assertThat(list.getData().get(0).getId()).isGreaterThan(list.getData().get(1).getId());
     }
@@ -93,24 +93,18 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
         assertThat(apiUserFile.getName()).isEqualTo("BitbarSampleApp.apk");
         assertThat(apiUserFile.isDuplicate()).isFalse();
         HttpResponse httpResponse;
-        //For oAuth2 Authenticated users(DefaultAPIClient) we serve files from backend instead of s3
-        if (!(apiClient instanceof DefaultAPIClient)) {
-            httpResponse = apiClient.getHttpResponse("/me/files/" + apiUserFile.id + "/file", null);
-            assertThat(httpResponse.getHeaders().getFirstHeaderStringValue("x-amz-tagging-count")).isEqualTo("1");
-            assertThat(httpResponse.getHeaders()
-                    .getFirstHeaderStringValue("x-amz-expiration")).contains("rule-id=\"keep 365d\"");
-        }
+        httpResponse = apiClient.getHttpResponse("/me/files/" + apiUserFile.id + "/file", null);
+        assertThat(httpResponse.getHeaders().getFirstHeaderStringValue("x-amz-tagging-count")).isEqualTo("1");
+        assertThat(httpResponse.getHeaders()
+                .getFirstHeaderStringValue("x-amz-expiration")).contains("rule-id=\"keep 365d\"");
         //Verify file duplication
         apiUserFile = apiClient.me().uploadFile(loadFile(APP_PATH));
         assertThat(apiUserFile.getName()).isEqualTo("BitbarSampleApp.apk");
         assertThat(apiUserFile.isDuplicate()).isTrue();
-        //For oAuth2 Authenticated users(DefaultAPIClient) we serve files from backend instead of s3
-        if (!(apiClient instanceof DefaultAPIClient)) {
-            httpResponse = apiClient.getHttpResponse("/me/files/" + apiUserFile.id + "/file", null);
-            assertThat(httpResponse.getHeaders().getFirstHeaderStringValue("x-amz-tagging-count")).isEqualTo("1");
-            assertThat(httpResponse.getHeaders()
-                    .getFirstHeaderStringValue("x-amz-expiration")).contains("rule-id=\"keep 365d\"");
-        }
+        httpResponse = apiClient.getHttpResponse("/me/files/" + apiUserFile.id + "/file", null);
+        assertThat(httpResponse.getHeaders().getFirstHeaderStringValue("x-amz-tagging-count")).isEqualTo("1");
+        assertThat(httpResponse.getHeaders()
+                .getFirstHeaderStringValue("x-amz-expiration")).contains("rule-id=\"keep 365d\"");
     }
 
     @ParameterizedTest
@@ -239,8 +233,10 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
 
         APIUser apiUser2 = create(ADMIN_API_CLIENT);
         TO_BE_DELETED.add(apiUser2);
-        user1.postResource(accessGroup.getSelfURI() + "/users", singletonMap(EMAIL, apiUser2.getEmail()), APIAccessGroup.class);
-        user1.postResource(project.getSelfURI() + "/share", singletonMap(ACCESS_GROUP_ID, accessGroup.getId()), APIList.class);
+        user1.postResource(accessGroup.getSelfURI() + "/users", singletonMap(EMAIL, apiUser2.getEmail()),
+                APIAccessGroup.class);
+        user1.postResource(project.getSelfURI() + "/share", singletonMap(ACCESS_GROUP_ID, accessGroup.getId()),
+                APIList.class);
 
         APIClient apiClient2 = new APIKeyClient(CLOUD_URL, apiUser2.getApiKey());
         apiUser2 = apiClient2.me();
@@ -259,7 +255,12 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
         apiUser2.validateTestRunConfig(config);
         APITestRun apiTestRun = apiUser2.startTestRun(config);
         apiTestRun.abort();
-        assertDoesNotThrow(() -> user1.getFile(apkFile.getId()));
+        // sharing files used for tests is not immediate action, it has to be propagated.
+        await().atMost(1, TimeUnit.MINUTES).pollInterval(3, TimeUnit.SECONDS)
+                .until(() -> {
+                    APIUserFile file = user1.getFile(apkFile.getId());
+                    return Objects.nonNull(file);
+                });
     }
 
 }

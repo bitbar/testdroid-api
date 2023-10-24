@@ -2,7 +2,7 @@ package com.testdroid.api.model;
 
 import org.apache.commons.lang3.EnumUtils;
 
-import javax.xml.bind.annotation.XmlType;
+import jakarta.xml.bind.annotation.XmlType;
 import java.io.Serializable;
 import java.util.Optional;
 
@@ -17,6 +17,8 @@ public class APIClientSideTestConfig implements Serializable {
 
     private String browserName;
 
+    private CapabilitiesSchema capabilitiesSchema;
+
     private String externalId;
 
     private String hookURL;
@@ -29,6 +31,8 @@ public class APIClientSideTestConfig implements Serializable {
 
     private String screenResolution;
 
+    private String seleniumVersion;
+
     private Target target;
 
     private String testName;
@@ -36,6 +40,13 @@ public class APIClientSideTestConfig implements Serializable {
     private String timeZone;
 
     private String version;
+
+    @XmlType(namespace = "APIClientSideTestConfig")
+    public enum CapabilitiesSchema {
+        JSONWP,
+        MIXED,
+        W3C
+    }
 
     @XmlType(namespace = "APIClientSideTestConfig")
     public enum Target {
@@ -150,5 +161,21 @@ public class APIClientSideTestConfig implements Serializable {
 
     public void setOsVersion(String osVersion) {
         this.osVersion = osVersion;
+    }
+
+    public String getSeleniumVersion() {
+        return seleniumVersion;
+    }
+
+    public void setSeleniumVersion(String seleniumVersion) {
+        this.seleniumVersion = seleniumVersion;
+    }
+
+    public CapabilitiesSchema getCapabilitiesSchema() {
+        return capabilitiesSchema;
+    }
+
+    public void setCapabilitiesSchema(CapabilitiesSchema capabilitiesSchema) {
+        this.capabilitiesSchema = capabilitiesSchema;
     }
 }

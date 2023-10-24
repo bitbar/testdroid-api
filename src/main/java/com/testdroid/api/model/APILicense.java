@@ -6,7 +6,7 @@ import com.testdroid.api.util.TimeConverter;
 import org.apache.commons.lang3.EnumUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import javax.xml.bind.annotation.XmlType;
+import jakarta.xml.bind.annotation.XmlType;
 import java.time.LocalDateTime;
 import java.util.Date;
 

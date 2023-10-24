@@ -5,7 +5,7 @@ import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIList;
 import org.apache.commons.lang3.StringUtils;
 
-import javax.xml.bind.annotation.XmlType;
+import jakarta.xml.bind.annotation.XmlType;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;

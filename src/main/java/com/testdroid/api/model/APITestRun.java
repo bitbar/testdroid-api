@@ -9,7 +9,7 @@ import com.testdroid.api.dto.Context;
 import com.testdroid.api.util.TimeConverter;
 import org.apache.commons.lang3.StringUtils;
 
-import javax.xml.bind.annotation.XmlType;
+import jakarta.xml.bind.annotation.XmlType;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Collections;

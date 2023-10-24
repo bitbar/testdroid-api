@@ -46,9 +46,7 @@ abstract class BaseAPIClientTest {
 
     private static APIKeyClient USER_API_KEY_CLIENT;
 
-    private static DefaultAPIClient USER_DEFAULT_CLIENT;
-
-    private static DefaultAPIClient USER_DEFAULT_CLIENT_WITH_PROXY;
+    private static APIKeyClient USER_API_KEY_CLIENT_WITH_PROXY;
 
     protected static List<APIUser> TO_BE_DELETED;
 
@@ -60,13 +58,10 @@ abstract class BaseAPIClientTest {
     static void beforeAll() throws APIException {
         TO_BE_DELETED = new ArrayList<>();
         APIUser apiUser1 = create(ADMIN_API_CLIENT);
-        APIUser apiUser2 = create(ADMIN_API_CLIENT);
         TO_BE_DELETED.add(apiUser1);
-        TO_BE_DELETED.add(apiUser2);
         USER_API_KEY_CLIENT = new APIKeyClient(CLOUD_URL, apiUser1.getApiKey());
-        USER_DEFAULT_CLIENT = new DefaultAPIClient(CLOUD_URL, apiUser2.getEmail(), USER_PASSWORD);
         if (isNoneBlank(PROXY_HOST, PROXY_PORT)) {
-            USER_DEFAULT_CLIENT_WITH_PROXY = createDefaultApiClientWithProxy(new HttpHost(PROXY_HOST, Integer
+            USER_API_KEY_CLIENT_WITH_PROXY = createDefaultApiClientWithProxy(new HttpHost(PROXY_HOST, Integer
                     .parseInt(PROXY_PORT)));
         }
     }
@@ -85,7 +80,7 @@ abstract class BaseAPIClientTest {
 
         @Override
         public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
-            return Stream.of(USER_API_KEY_CLIENT, USER_DEFAULT_CLIENT, USER_DEFAULT_CLIENT_WITH_PROXY).filter
+            return Stream.of(USER_API_KEY_CLIENT, USER_API_KEY_CLIENT_WITH_PROXY).filter
                     (Objects::nonNull).map(Arguments::of);
         }
     }
@@ -119,10 +114,10 @@ abstract class BaseAPIClientTest {
         return String.format("%s%d", prefix, System.currentTimeMillis());
     }
 
-    static DefaultAPIClient createDefaultApiClientWithProxy(HttpHost proxy) throws APIException {
+    static APIKeyClient createDefaultApiClientWithProxy(HttpHost proxy) throws APIException {
         APIUser user = create(ADMIN_API_CLIENT);
         TO_BE_DELETED.add(user);
-        return new DefaultAPIClient(CLOUD_URL, user.getEmail(), USER_PASSWORD, proxy, false);
+        return new APIKeyClient(CLOUD_URL, user.getApiKey(), proxy, false);
     }
 
     static File loadFile(String name) {

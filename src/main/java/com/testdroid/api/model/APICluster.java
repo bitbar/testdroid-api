@@ -7,7 +7,7 @@ import com.testdroid.api.util.TimeConverter;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import javax.xml.bind.annotation.XmlType;
+import jakarta.xml.bind.annotation.XmlType;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
