@@ -32,6 +32,11 @@
         <developerConnection>scm:git:git@github.com:bitbar/testdroid-api.git</developerConnection>
         <url>https://github.com/bitbar/testdroid-api</url>
     </scm>
+    <developers>
+        <developer>
+            <name>SmartBear Software</name>
+        </developer>
+    </developers>
     <licenses>
         <license>
             <name>The Apache Software License, Version 2.0</name>
