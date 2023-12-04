@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.testdroid</groupId>
     <artifactId>testdroid-api</artifactId>
-    <version>3.24</version>
+    <version>3.25</version>
     <packaging>jar</packaging>
     <name>Bitbar API v2</name>
     <url>https://github.com/bitbar/testdroid-api</url>
@@ -20,33 +20,18 @@
         <maven.deploy.skip>true</maven.deploy.skip>
         <org.springframework.boot.spring-boot-dependencies>3.1.2</org.springframework.boot.spring-boot-dependencies>
         <org.apache.commons.collections4.version>4.4</org.apache.commons.collections4.version>
-        <org.apache.commons.io.version>2.14.0</org.apache.commons.io.version>
+        <org.apache.commons.io.version>2.15.0</org.apache.commons.io.version>
         <commons-text.version>1.10.0</commons-text.version>
-        <com.google.http-client>1.43.3</com.google.http-client>
-        <com.google.oauth-client>1.34.1</com.google.oauth-client>
         <dependency-check-maven.version>8.4.0</dependency-check-maven.version>
-        <jacoco-maven-plugin.version>0.8.10</jacoco-maven-plugin.version>
+        <jacoco-maven-plugin.version>0.8.11</jacoco-maven-plugin.version>
         <org.reflections.version>0.10.2</org.reflections.version>
+        <com.squareup.okhttp3.version>4.10.0</com.squareup.okhttp3.version>
     </properties>
     <scm>
         <connection>scm:git:git://github.com:bitbar/testdroid-api.git</connection>
         <developerConnection>scm:git:git@github.com:bitbar/testdroid-api.git</developerConnection>
         <url>https://github.com/bitbar/testdroid-api</url>
     </scm>
-    <developers>
-        <developer>
-            <name>Lukasz Kajda</name>
-        </developer>
-        <developer>
-            <name>Slawomir Pawluk</name>
-        </developer>
-        <developer>
-            <name>Henri Kivela</name>
-        </developer>
-        <developer>
-            <name>Sakari Rautiainen</name>
-        </developer>
-    </developers>
     <licenses>
         <license>
             <name>The Apache Software License, Version 2.0</name>
@@ -220,13 +205,9 @@
     </dependencyManagement>
     <dependencies>
         <dependency>
-            <groupId>org.apache.httpcomponents.client5</groupId>
-            <artifactId>httpclient5</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.google.oauth-client</groupId>
-            <artifactId>google-oauth-client</artifactId>
-            <version>${com.google.oauth-client}</version>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>${com.squareup.okhttp3.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>

@@ -1,43 +1,58 @@
 package com.testdroid.api;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.google.api.client.http.*;
 import com.testdroid.api.dto.Context;
 import com.testdroid.api.dto.MappingKey;
 import com.testdroid.api.dto.Operand;
 import com.testdroid.api.filter.FilterEntry;
-import com.testdroid.api.http.MultipartFormDataContent;
 import com.testdroid.api.model.APIDevice;
 import com.testdroid.api.model.APIDeviceProperty;
 import com.testdroid.api.model.APILabelGroup;
 import com.testdroid.api.model.APIUser;
 import com.testdroid.api.util.TypeReferenceFactory;
+import okhttp3.*;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.io.IOUtils;
-import org.apache.http.HttpStatus;
-import org.apache.http.client.utils.URIBuilder;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URISyntaxException;
+import java.net.Proxy;
+import java.net.URLEncoder;
+import java.security.cert.X509Certificate;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
+import java.util.function.UnaryOperator;
 
 import static com.testdroid.api.APIEntity.OBJECT_MAPPER;
+import static java.net.HttpURLConnection.HTTP_CREATED;
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.util.Arrays.asList;
 import static java.util.Collections.emptyMap;
-import static java.util.stream.Collectors.toMap;
-import static org.apache.commons.lang3.StringUtils.EMPTY;
-import static org.apache.http.HttpStatus.*;
+import static java.util.Optional.ofNullable;
+import static org.apache.commons.lang3.StringUtils.*;
 
 /**
  * @author Michał Szpruta <michal.szpruta@bitbar.com>
  */
 public abstract class AbstractAPIClient implements APIClient {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractAPIClient.class);
+
     protected static final String API_URI = "/api/v2";
 
     protected static final String ACCEPT_HEADER = "application/json";
+
+    protected static final MediaType APPLICATION_JSON = MediaType.get(ACCEPT_HEADER);
+
+    protected static final MediaType FORM_URLENCODED = MediaType.get("application/x-www-form-urlencoded");
 
     protected static final String DEVICES_URI = "/devices";
 
@@ -45,24 +60,43 @@ public abstract class AbstractAPIClient implements APIClient {
 
     private static final String FAILED_TO_EXECUTE_API_CALL_WITH_REASON = "Failed to execute API call: %s. Reason: %s";
 
+    private static final UnaryOperator<String> URL_ENCODE = s -> URLEncoder.encode(s, UTF_8);
+
     protected int clientConnectTimeout = 20000;
 
     protected int clientRequestTimeout = 60000;
 
-    protected HttpTransport httpTransport;
+    protected boolean skipCheckCertificate;
+
+    protected Proxy proxy = Proxy.NO_PROXY;
+
+    protected String proxyUser;
+
+    protected String proxyPassword;
 
     protected String apiURL;
 
-    private static final List<Integer> POSSIBLE_DELETE_STATUSES = Arrays.asList(SC_OK, SC_ACCEPTED, SC_NO_CONTENT);
-
-    private static final List<Integer> POSSIBLE_GET_STATUSES = Arrays.asList(SC_OK, SC_ACCEPTED, SC_CREATED,
-            SC_NO_CONTENT);
-
-    /**
-     * @throws APIException Overriding classes may throw this exception if they execute some API calls
-     */
-    protected HttpRequestFactory getRequestFactory() throws APIException {
-        return httpTransport.createRequestFactory();
+    protected final OkHttpClient getClient() {
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        if (skipCheckCertificate) {
+            configureToIgnoreCertificate(builder);
+        }
+        if (StringUtils.isNoneBlank(proxyUser, proxyPassword)) {
+            builder.proxyAuthenticator((route, response) -> {
+                String credential = Credentials.basic(proxyUser, proxyPassword);
+                return response.request().newBuilder().header("Proxy-Authorization", credential).build();
+            });
+        }
+        return builder
+                .addInterceptor(chain -> chain.proceed(chain.request().newBuilder()
+                        .addHeader("Content-Type", ACCEPT_HEADER)
+                        .addHeader("Accept", ACCEPT_HEADER)
+                        .build()))
+                .addInterceptor(getInterceptor())
+                .proxy(proxy)
+                .connectTimeout(clientConnectTimeout, TimeUnit.MILLISECONDS)
+                .callTimeout(clientRequestTimeout, TimeUnit.MILLISECONDS)
+                .build();
     }
 
     @Override
@@ -90,60 +124,47 @@ public abstract class AbstractAPIClient implements APIClient {
         return getOnce(uri, context, TypeReferenceFactory.getListTypeRef(context.getType()));
     }
 
-    protected abstract HttpHeaders getHttpHeaders();
+    protected abstract Interceptor getInterceptor();
 
     /**
      * Tries to call API once. Returns expected entity or throws exception.
      */
     protected <T extends APIEntity> T getOnce(String uri, Context<?> context, TypeReference<T> type)
             throws APIException {
-        HttpResponse response = getHttpResponse(uri, context);
-        try {
-            T result = fromJson(response.getContent(), type);
+        try (Response response = getHttpResponse(uri, context)) {
+            T result = fromJson(Objects.requireNonNull(response.body()).string(), type);
             result.client = this;
             if (result.selfURI == null) {
                 result.selfURI = uri;
             }
             return result;
-        } catch (IOException ex) {
+        } catch (IOException | RuntimeException ex) {
             throw new APIException(String.format(FAILED_TO_EXECUTE_API_CALL_WITH_REASON, uri, ex.getMessage()), ex);
-        } finally {
-            disconnectQuietly(response);
         }
     }
 
     protected InputStream getStream(String uri) throws APIException {
         try {
-            return getHttpResponse(uri, null).getContent();
-        } catch (IOException ex) {
+            return Objects.requireNonNull(getHttpResponse(uri, null).body()).byteStream();
+        } catch (RuntimeException ex) {
             throw new APIException(String.format(FAILED_TO_EXECUTE_API_CALL_WITH_REASON, uri, ex.getMessage()), ex);
         }
     }
 
     @Override
-    public HttpResponse getHttpResponse(String uri, Context<?> context) throws APIException {
-        // Build request
-        HttpRequestFactory factory = getRequestFactory();
-        HttpRequest request;
-        HttpResponse response;
+    public Response getHttpResponse(String uri, Context<?> context) throws APIException {
         //Fix for https://jira.bitbar.com/browse/TD-12086
         //caused by https://github.com/googleapis/google-http-java-client/issues/398
         //We should use pure Apache Http Client
-        uri = uri.replaceAll("\\+", "%2B");
+        uri = uri.replaceAll("\\+", "%2B"); // TODO check if needed
         try {
-            // Call request and parse result
-            request = factory.buildGetRequest(new GenericUrl(buildUrl(apiURL + uri, context)));
-            request.setHeaders(getHttpHeaders());
-            request.setConnectTimeout(clientConnectTimeout);
-            request.setReadTimeout(clientRequestTimeout);
-
-            response = request.execute();
-            if (!POSSIBLE_GET_STATUSES.contains(response.getStatusCode())) {
-                throw new APIException(response.getStatusCode(), String.format("Failed to execute api call: %s", uri));
+            OkHttpClient client = getClient();
+            Request request = new Request.Builder().url(buildUrl(apiURL + uri, context)).build();
+            Response response = client.newCall(request).execute();
+            if (!response.isSuccessful()) {
+                throw getAPIException(response);
             }
             return response;
-        } catch (HttpResponseException ex) {
-            throw getAPIException(ex);
         } catch (IOException ex) {
             throw new APIException(String.format(FAILED_TO_EXECUTE_API_CALL_WITH_REASON, uri, ex.getMessage()), ex);
         }
@@ -160,82 +181,84 @@ public abstract class AbstractAPIClient implements APIClient {
         if (contentType == null) {
             contentType = ACCEPT_HEADER;
         }
-        HttpRequestFactory factory = getRequestFactory();
-        HttpRequest request;
-        HttpResponse response = null;
-        String resourceUrl = apiURL + uri;
         try {
-            HttpContent content;
-            HttpHeaders headers = getHttpHeaders();
-            if (body instanceof File) {
-                MultipartFormDataContent multipartContent = new MultipartFormDataContent();
-                FileContent fileContent = new FileContent(contentType, (File) body);
-
-                MultipartFormDataContent.Part filePart = new MultipartFormDataContent.Part("file", fileContent);
-                multipartContent.addPart(filePart);
-
-                for (Map.Entry<String, String> entry : fileExtraParams.entrySet()) {
-                    MultipartFormDataContent.Part part = new MultipartFormDataContent.Part(entry.getKey(),
-                            new ByteArrayContent(null, entry.getValue().getBytes()));
-                    part.setHeaders(new HttpHeaders().set(
-                            "Content-Disposition", String.format("form-data; name=\"%s\"", entry.getKey())));
-                    multipartContent.addPart(part);
+            RequestBody requestBody = buildRequestBody(body, fileExtraParams, contentType);
+            OkHttpClient client = getClient();
+            Request request = new Request.Builder().url(apiURL + uri).post(requestBody).build();
+            try (Response response = client.newCall(request).execute()) {
+                if (!response.isSuccessful()) {
+                    throw getAPIException(response);
                 }
-                content = multipartContent;
-            } else if (body instanceof InputStream) {
-                headers.setContentType(contentType);
-                content = new InputStreamContent(contentType, (InputStream) body);
-            } else if (body instanceof APIEntity) {
-                content = new InputStreamContent(contentType, IOUtils
-                        .toInputStream(((APIEntity) body).toJson(), UTF_8));
-            } else if (body instanceof HttpContent) {
-                content = (HttpContent) body;
-            } else if (body instanceof Map) {
-                // Set empty strings for nulls - otherwise it is not passed at all to server and parameters is ignored
-                content = new UrlEncodedContent(fixMapParameters((Map<String, Object>) body));
-            } else if (body == null) {
-                content = null;
-            } else {
-                content = new ByteArrayContent("text/plain", body.toString().getBytes());
-            }
-            request = factory.buildPostRequest(new GenericUrl(resourceUrl), content);
-            request.setHeaders(headers);
-            request.setConnectTimeout(clientConnectTimeout);
-            request.setReadTimeout(clientRequestTimeout);
-
-            // Call request and parse result
-            response = request.execute();
-
-            if (response == null) {
-                throw new APIException("No response from API");
-            }
-
-            if (response.getStatusCode() < SC_OK || response.getStatusCode() >= 300) {
-                throw new APIException(response.getStatusCode(), "Failed to post resource: " + response
-                        .getStatusMessage());
-            }
-
-            if (type != null) {
-                T result = fromJson(response.getContent(), type);
-                result.client = this;
-                if (result.selfURI == null) {
-                    result.selfURI = uri;
-                    // In case of entity creation, we need to update its url
-                    if (response.getStatusCode() == HttpStatus.SC_CREATED && result.getId() != null) {
-                        result.selfURI += String.format("/%s", result.getId());
+                if (type != null) {
+                    T result = fromJson(Objects.requireNonNull(response.body()).string(), type);
+                    result.client = this;
+                    if (result.selfURI == null) {
+                        result.selfURI = uri;
+                        // In case of entity creation, we need to update its url
+                        if (response.code() == HTTP_CREATED && result.getId() != null) {
+                            result.selfURI += String.format("/%s", result.getId());
+                        }
                     }
+                    return result;
+                } else {
+                    return null;
                 }
-                return result;
-            } else {
-                return null;
             }
-        } catch (HttpResponseException ex) {
-            throw getAPIException(ex);
         } catch (IOException ex) {
             throw new APIException(String.format(FAILED_TO_EXECUTE_API_CALL_WITH_REASON, uri, ex.getMessage()), ex);
-        } finally {
-            disconnectQuietly(response);
         }
+    }
+
+    @SuppressWarnings("rawtypes")
+    private RequestBody buildRequestBody(Object body, Map<String, String> fileExtraParams, String contentType)
+            throws IOException {
+        MediaType mediaType = MediaType.parse(contentType);
+        RequestBody requestBody;
+        if (body instanceof File file) {
+            MultipartBody.Builder builder = new MultipartBody.Builder()
+                    .setType(MultipartBody.FORM)
+                    .addFormDataPart("file", file.getName(), RequestBody.create(file, mediaType));
+            for (Map.Entry<String, String> entry : fileExtraParams.entrySet()) {
+                builder.addFormDataPart(entry.getKey(), entry.getValue());
+            }
+            requestBody = builder.build();
+        } else if (body instanceof InputStream inputStream) {
+            requestBody = RequestBody.create(IOUtils.toByteArray(inputStream), mediaType);
+        } else if (body instanceof APIEntity entity) {
+            requestBody = RequestBody.create(OBJECT_MAPPER.writeValueAsString(entity), APPLICATION_JSON);
+        } else if (body instanceof RequestBody) {
+            requestBody = (RequestBody) body;
+        } else if (body instanceof Map map) {
+            requestBody = buildFromMap(map);
+        } else if (body == null) {
+            requestBody = RequestBody.create(EMPTY, null);
+        } else {
+            requestBody = RequestBody.create(body.toString(), mediaType);
+        }
+        return requestBody;
+    }
+
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    protected static RequestBody buildFromMap(Map map) {
+        // a bit retarded, but it is how it works in okhttp - AI generated comment
+        // above comment saved for future generations - it's even more retarded
+        // Set empty strings for nulls - otherwise it is not passed at all to server and parameters is ignored
+        List<String> elements = new ArrayList<>();
+        ((Map<String, Object>) map).forEach((k, v) -> {
+            boolean isArray = isArray(v);
+            boolean isCollection = isCollection(v);
+            if (endsWith(k, "[]") && (isArray || isCollection)) {
+                Collection<Object> multiValues = isArray ? asList((Object[]) v) : (Collection<Object>) v;
+                String key = URL_ENCODE.apply(removeEnd(k, "[]"));
+                multiValues.forEach(val ->
+                        elements.add(String.format("%s[]=%s", key,
+                                ofNullable(val).map(Object::toString).map(URL_ENCODE).orElse(EMPTY))));
+            } else {
+                elements.add(String.format("%s=%s", URL_ENCODE.apply(k),
+                        ofNullable(v).map(Object::toString).map(URL_ENCODE).orElse(EMPTY)));
+            }
+        });
+        return RequestBody.create(String.join("&", elements), FORM_URLENCODED);
     }
 
     @Override
@@ -251,30 +274,14 @@ public abstract class AbstractAPIClient implements APIClient {
     }
 
     protected void deleteOnce(String uri) throws APIException {
-        HttpRequestFactory factory = getRequestFactory();
-        HttpRequest request;
-        HttpResponse response = null;
-        try {
-            request = factory.buildDeleteRequest(new GenericUrl(apiURL + uri));
-            request.setHeaders(getHttpHeaders());
-            request.setConnectTimeout(clientConnectTimeout);
-            request.setReadTimeout(clientRequestTimeout);
-
-            response = request.execute();
-            if (response == null) {
-                throw new APIException("No response from API");
+        OkHttpClient client = getClient();
+        Request request = new Request.Builder().url(apiURL + uri).delete().build();
+        try (Response response = client.newCall(request).execute()) {
+            if (!response.isSuccessful()) {
+                throw getAPIException(response);
             }
-
-            if (!POSSIBLE_DELETE_STATUSES.contains(response.getStatusCode())) {
-                throw new APIException(response.getStatusCode(), "Failed to delete resource: " + response
-                        .getStatusMessage());
-            }
-        } catch (HttpResponseException ex) {
-            throw getAPIException(ex);
         } catch (IOException ex) {
             throw new APIException(String.format(FAILED_TO_EXECUTE_API_CALL_WITH_REASON, uri, ex.getMessage()), ex);
-        } finally {
-            disconnectQuietly(response);
         }
     }
 
@@ -322,16 +329,13 @@ public abstract class AbstractAPIClient implements APIClient {
         try {
             return OBJECT_MAPPER.readValue(inputStream, type);
         } catch (IOException e) {
-            throw new APIException(String.format("Failed to parse response as %s: %s", type.getType().getTypeName(),
-                    getAPIResponceContent(inputStream, type)));
-        }
-    }
-
-    private String getAPIResponceContent(InputStream inputStream, TypeReference<?> type) throws APIException {
-        try {
-            return IOUtils.toString(inputStream, UTF_8);
-        } catch (IOException e) {
-            throw new APIException(String.format("Failed to parse response as %s", type.getType().getTypeName()));
+            try {
+                String content = IOUtils.toString(inputStream, UTF_8);
+                throw new APIException(String.format("Failed to parse response as %s: %s", type.getType().getTypeName(),
+                        content));
+            } catch (IOException ex) {
+                throw new APIException(String.format("Failed to parse response as %s", type.getType().getTypeName()));
+            }
         }
     }
 
@@ -344,62 +348,72 @@ public abstract class AbstractAPIClient implements APIClient {
         }
     }
 
-    protected <T extends APIEntity> String buildUrl(String url, Context<T> context) throws APIException {
-        try {
-            URIBuilder builder = new URIBuilder(url);
-            if (context != null) {
-                for (Map.Entry<String, Collection<Object>> entry : context.build().asMap().entrySet()) {
-                    for (Object value : entry.getValue()) {
-                        builder.addParameter(entry.getKey(), value == null ? EMPTY : value.toString());
-                    }
+    protected <T extends APIEntity> String buildUrl(String url, Context<T> context) {
+        HttpUrl.Builder builder = Objects.requireNonNull(HttpUrl.parse(url)).newBuilder();
+        if (context != null) {
+            for (Map.Entry<String, Collection<Object>> entry : context.build().asMap().entrySet()) {
+                for (Object value : entry.getValue()) {
+                    builder.addQueryParameter(entry.getKey(), value == null ? EMPTY : value.toString());
                 }
             }
-            return builder.build().toString();
-        } catch (URISyntaxException e) {
-            throw new APIException(String.format("Bad URL: %s", e.getMessage()));
         }
+        return builder.build().toString();
     }
 
-    protected Map<String, Object> fixMapParameters(Map<String, Object> map) {
-        return map.entrySet().stream().collect(toMap(Map.Entry::getKey, p -> Optional.ofNullable(p.getValue())
-                .map(v -> v instanceof Enum<?> ? v.toString() : v).orElse(EMPTY)));
-    }
-
-    protected APIException getAPIException(HttpResponseException ex) {
-        if (ex.getContent() == null) {
-            return getNoContentAPIException(ex);
-        }
-        try {
-            APIExceptionMessage exceptionMessage = fromJson(ex.getContent(),
-                    TypeReferenceFactory.getTypeRef(APIExceptionMessage.class));
-            return new APIException(ex.getStatusCode(), exceptionMessage.getMessage(), ex);
-        } catch (APIException e) {
-            return new APIException(ex.getStatusCode(), ex.getMessage());
-        }
-    }
-
-    private APIException getNoContentAPIException(HttpResponseException ex) {
-        String message;
-        switch (ex.getStatusCode()) {
-            case 401:
-                message = "Unauthenticated access";
-                break;
-            case 403:
-                message = "Unauthorized access";
-                break;
-            default:
-                message = String.format("Unknown exception: %s - %s", ex.getStatusCode(), ex.getStatusMessage());
-        }
-        return new APIException(ex.getStatusCode(), message);
-    }
-
-    protected void disconnectQuietly(HttpResponse httpResponse) {
-        if (httpResponse != null) {
+    protected APIException getAPIException(Response response) {
+        String message = response.message();
+        if (Objects.nonNull(response.body())) {
             try {
-                httpResponse.disconnect();
-            } catch (IOException exc) {
-                //ignore
+                APIExceptionMessage exceptionMessage = fromJson(Objects.requireNonNull(response.body()).string(),
+                        TypeReferenceFactory.getTypeRef(APIExceptionMessage.class));
+                message = exceptionMessage.getMessage();
+            } catch (IOException e) {
+                return new APIException(response.code(), "Response has no body", e);
+            } catch (APIException e) {
+                return e;
             }
         }
+        return new APIException(response.code(), message);
+    }
+
+    @SuppressWarnings("all")
+    private OkHttpClient.Builder configureToIgnoreCertificate(OkHttpClient.Builder builder) {
+        LOGGER.warn("Ignore Ssl Certificate");
+        try {
+            final TrustManager[] trustAllCerts = new TrustManager[]{
+                    new X509TrustManager() {
+                        @Override
+                        public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) {
+                        }
+
+                        @Override
+                        public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) {
+                        }
+
+                        @Override
+                        public X509Certificate[] getAcceptedIssuers() {
+                            return new X509Certificate[]{};
+                        }
+                    }
+            };
+            // Install the all-trusting trust manager
+            final SSLContext sslContext = SSLContext.getInstance("SSL");
+            sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
+            // Create a ssl socket factory with our all-trusting manager
+            final SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
+            builder.sslSocketFactory(sslSocketFactory, (X509TrustManager) trustAllCerts[0]);
+            builder.hostnameVerifier((hostname, session) -> true);
+        } catch (Exception e) {
+            LOGGER.warn("Exception while configuring IgnoreSslCertificate", e);
+        }
+        return builder;
+    }
+
+    private static boolean isArray(Object o) {
+        return o != null && o.getClass().isArray();
+    }
+
+    private static boolean isCollection(Object o) {
+        return o != null && Collection.class.isAssignableFrom(o.getClass());
     }
 }

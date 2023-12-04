@@ -1,9 +1,9 @@
 package com.testdroid.api;
 
-import com.google.api.client.http.HttpResponse;
 import com.testdroid.api.dto.Context;
 import com.testdroid.api.filter.FilterEntry;
 import com.testdroid.api.model.*;
+import okhttp3.Response;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -29,6 +29,7 @@ import static com.testdroid.api.model.APIFileConfig.Action.RUN_TEST;
 import static com.testdroid.api.model.APITestRun.State.WAITING;
 import static com.testdroid.cloud.test.categories.TestTags.API_CLIENT;
 import static java.lang.Integer.MAX_VALUE;
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Collections.singletonMap;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -92,19 +93,30 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
         APIUserFile apiUserFile = apiClient.me().uploadFile(loadFile(APP_PATH));
         assertThat(apiUserFile.getName()).isEqualTo("BitbarSampleApp.apk");
         assertThat(apiUserFile.isDuplicate()).isFalse();
-        HttpResponse httpResponse;
+        Response httpResponse;
         httpResponse = apiClient.getHttpResponse("/me/files/" + apiUserFile.id + "/file", null);
-        assertThat(httpResponse.getHeaders().getFirstHeaderStringValue("x-amz-tagging-count")).isEqualTo("1");
-        assertThat(httpResponse.getHeaders()
-                .getFirstHeaderStringValue("x-amz-expiration")).contains("rule-id=\"keep 365d\"");
+        assertThat(httpResponse.headers().get("x-amz-tagging-count")).isEqualTo("1");
+        assertThat(httpResponse.headers().get("x-amz-expiration")).contains("rule-id=\"keep 365d\"");
         //Verify file duplication
         apiUserFile = apiClient.me().uploadFile(loadFile(APP_PATH));
         assertThat(apiUserFile.getName()).isEqualTo("BitbarSampleApp.apk");
         assertThat(apiUserFile.isDuplicate()).isTrue();
         httpResponse = apiClient.getHttpResponse("/me/files/" + apiUserFile.id + "/file", null);
-        assertThat(httpResponse.getHeaders().getFirstHeaderStringValue("x-amz-tagging-count")).isEqualTo("1");
-        assertThat(httpResponse.getHeaders()
-                .getFirstHeaderStringValue("x-amz-expiration")).contains("rule-id=\"keep 365d\"");
+        assertThat(httpResponse.headers().get("x-amz-tagging-count")).isEqualTo("1");
+        assertThat(httpResponse.headers().get("x-amz-expiration")).contains("rule-id=\"keep 365d\"");
+    }
+
+    @ParameterizedTest
+    @ArgumentsSource(APIClientProvider.class)
+    void downloadFileTest(APIClient apiClient) throws APIException, IOException {
+        File source = Files.createTempFile(null, ".txt").toFile();
+        FileUtils.writeStringToFile(source, "test", UTF_8);
+        APIUserFile apiUserFile = apiClient.me().uploadFile(source);
+        File destination = Files.createTempFile(null, null).toFile();
+        try (InputStream inputStream = apiUserFile.getFile()) {
+            FileUtils.copyInputStreamToFile(inputStream, destination);
+        }
+        assertThat(destination).hasSize(apiUserFile.getSize());
     }
 
     @ParameterizedTest

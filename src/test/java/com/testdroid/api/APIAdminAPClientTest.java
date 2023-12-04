@@ -1,8 +1,8 @@
 package com.testdroid.api;
 
-import com.google.api.client.http.HttpResponse;
 import com.testdroid.api.dto.Context;
 import com.testdroid.api.model.APIUserFile;
+import okhttp3.Response;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -23,9 +23,9 @@ class APIAdminAPClientTest extends BaseAPIClientTest {
         APIList<APIUserFile> samples = ADMIN_API_CLIENT.get("/admin/samples", ctx);
         List<APIUserFile> files = samples.getData();
         for (APIUserFile file : files) {
-            HttpResponse httpResponse = ADMIN_API_CLIENT.getHttpResponse("/files/" + file.id + "/file", null);
-            assertThat(httpResponse.getHeaders().getFirstHeaderStringValue("x-amz-tagging-count")).isEqualTo("1");
-            assertThat(httpResponse.getHeaders().getFirstHeaderStringValue("x-amz-expiration")).isNull();
+            Response httpResponse = ADMIN_API_CLIENT.getHttpResponse("/files/" + file.id + "/file", null);
+            assertThat(httpResponse.headers().get("x-amz-tagging-count")).isEqualTo("1");
+            assertThat(httpResponse.headers().get("x-amz-expiration")).isNull();
         }
     }
 
