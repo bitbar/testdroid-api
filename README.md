@@ -1,6 +1,5 @@
 # Bitbar Cloud API Client for Java
 
-[![Language grade](https://img.shields.io/lgtm/grade/java/g/bitbar/testdroid-api.svg)](https://lgtm.com/projects/g/bitbar/testdroid-api/context:java)
 [![Current Release](https://img.shields.io/github/release/bitbar/testdroid-api.svg)](releases)
 [![License](https://img.shields.io/github/license/bitbar/testdroid-api.svg)](LICENSE.md)
 
