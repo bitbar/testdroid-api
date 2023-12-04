@@ -5,7 +5,6 @@ import com.testdroid.api.filter.FilterEntry;
 import com.testdroid.api.model.APIFramework;
 import com.testdroid.api.model.APIUser;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.http.HttpHost;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -13,6 +12,8 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
 
 import java.io.File;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
 import java.util.*;
 import java.util.stream.Stream;
 
@@ -61,8 +62,8 @@ abstract class BaseAPIClientTest {
         TO_BE_DELETED.add(apiUser1);
         USER_API_KEY_CLIENT = new APIKeyClient(CLOUD_URL, apiUser1.getApiKey());
         if (isNoneBlank(PROXY_HOST, PROXY_PORT)) {
-            USER_API_KEY_CLIENT_WITH_PROXY = createDefaultApiClientWithProxy(new HttpHost(PROXY_HOST, Integer
-                    .parseInt(PROXY_PORT)));
+            Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(PROXY_HOST, Integer.parseInt(PROXY_PORT)));
+            USER_API_KEY_CLIENT_WITH_PROXY = createDefaultApiClientWithProxy(proxy);
         }
     }
 
@@ -114,7 +115,7 @@ abstract class BaseAPIClientTest {
         return String.format("%s%d", prefix, System.currentTimeMillis());
     }
 
-    static APIKeyClient createDefaultApiClientWithProxy(HttpHost proxy) throws APIException {
+    static APIKeyClient createDefaultApiClientWithProxy(Proxy proxy) throws APIException {
         APIUser user = create(ADMIN_API_CLIENT);
         TO_BE_DELETED.add(user);
         return new APIKeyClient(CLOUD_URL, user.getApiKey(), proxy, false);

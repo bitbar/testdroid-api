@@ -1,11 +1,11 @@
 package com.testdroid.api;
 
-import com.google.api.client.http.HttpResponse;
 import com.testdroid.api.dto.Context;
 import com.testdroid.api.model.APIDevice;
 import com.testdroid.api.model.APIDeviceProperty;
 import com.testdroid.api.model.APILabelGroup;
 import com.testdroid.api.model.APIUser;
+import okhttp3.Response;
 
 import java.io.File;
 import java.io.InputStream;
@@ -111,6 +111,6 @@ public interface APIClient {
 
     Optional<APIDeviceProperty> findDevicePropertyInLabelGroup(String groupName, String labelName) throws APIException;
 
-    HttpResponse getHttpResponse(String uri, Context<?> context) throws APIException;
+    Response getHttpResponse(String uri, Context<?> context) throws APIException;
 
 }
