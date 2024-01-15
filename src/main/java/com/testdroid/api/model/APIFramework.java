@@ -3,8 +3,8 @@ package com.testdroid.api.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.util.TimeConverter;
-
 import jakarta.xml.bind.annotation.XmlType;
+
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -18,7 +18,7 @@ public class APIFramework extends APIEntity {
         @Deprecated APP_CRAWLER,
         CLIENT_SIDE,
         MANUAL,
-        REMOTE
+        @Deprecated REMOTE
     }
 
     private Long accountId;
@@ -53,6 +53,8 @@ public class APIFramework extends APIEntity {
 
     private Boolean skipQueue;
 
+    private Long queueWait;
+
     private String type;
 
     private Long labelId;
@@ -73,8 +75,8 @@ public class APIFramework extends APIEntity {
             Long id, LocalDateTime createTime, String name, String description, APIDevice.OsType osType,
             String type, Long accountId, String mainUserEmail, String requiredAppExtensions,
             String requiredTestExtensions, String requiredTestFileTags, String documentationUrl, Boolean forProjects,
-            Boolean canRunFromUI, Boolean secured, Boolean retryable, Boolean skipQueue, Boolean skipOlderSdk,
-            Long labelId, String labelName, String icon, Long sampleAppId, Long sampleTestId) {
+            Boolean canRunFromUI, Boolean secured, Boolean retryable, Boolean skipQueue, Long queueWait,
+            Boolean skipOlderSdk, Long labelId, String labelName, String icon, Long sampleAppId, Long sampleTestId) {
         super(id);
         this.createTime = TimeConverter.toDate(createTime);
         this.name = name;
@@ -92,6 +94,7 @@ public class APIFramework extends APIEntity {
         this.secured = secured;
         this.retryable = retryable;
         this.skipQueue = skipQueue;
+        this.queueWait = queueWait;
         this.skipOlderSdk = skipOlderSdk;
         this.labelId = labelId;
         this.labelName = labelName;
@@ -276,6 +279,14 @@ public class APIFramework extends APIEntity {
         this.sampleTest = sampleTest;
     }
 
+    public Long getQueueWait() {
+        return queueWait;
+    }
+
+    public void setQueueWait(Long queueWait) {
+        this.queueWait = queueWait;
+    }
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
@@ -297,6 +308,7 @@ public class APIFramework extends APIEntity {
         this.secured = apiFramework.secured;
         this.retryable = apiFramework.retryable;
         this.skipQueue = apiFramework.skipQueue;
+        this.queueWait = apiFramework.queueWait;
         this.skipOlderSdk = apiFramework.skipOlderSdk;
         this.labelId = apiFramework.labelId;
         this.labelName = apiFramework.labelName;

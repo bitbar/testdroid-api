@@ -13,7 +13,7 @@ Add dependency to your `pom.xml` file:
 <dependency>
   <groupId>com.testdroid</groupId>
   <artifactId>testdroid-api</artifactId>
-  <version>2.XX</version>
+  <version>3.XX</version>
 </dependency>
 ```
 

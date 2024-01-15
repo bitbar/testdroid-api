@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.testdroid.api.APIEntity;
-
 import jakarta.xml.bind.annotation.XmlType;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -87,6 +87,8 @@ public class APITestRunConfig extends APIEntity implements Serializable {
 
     private Integer maxAutoRetriesCount;
 
+    private Long maxWaitTime;
+
     private APIDuration maxTestTimeout;
 
     private APIDevice.OsType osType = APIDevice.OsType.UNDEFINED;
@@ -110,8 +112,6 @@ public class APITestRunConfig extends APIEntity implements Serializable {
     private Long testRunId;
 
     private String testRunName;
-
-    private String testRunNameGrouping;
 
     private List<APITestRunParameter> testRunParameters = new ArrayList<>();
 
@@ -317,6 +317,14 @@ public class APITestRunConfig extends APIEntity implements Serializable {
         this.maxAutoRetriesCount = maxAutoRetriesCount;
     }
 
+    public Long getMaxWaitTime() {
+        return maxWaitTime;
+    }
+
+    public void setMaxWaitTime(Long maxWaitTime) {
+        this.maxWaitTime = maxWaitTime;
+    }
+
     public Long getFrameworkId() {
         return frameworkId;
     }
@@ -491,14 +499,6 @@ public class APITestRunConfig extends APIEntity implements Serializable {
         return getFiles().stream().filter(fc -> fc.getAction() == action).map(APIFileConfig::getFile).findAny();
     }
 
-    public String getTestRunNameGrouping() {
-        return testRunNameGrouping;
-    }
-
-    public void setTestRunNameGrouping(String testRunNameGrouping) {
-        this.testRunNameGrouping = testRunNameGrouping;
-    }
-
     public APITunnelSettings getTunnelSettings() {
         return tunnelSettings;
     }
@@ -534,6 +534,7 @@ public class APITestRunConfig extends APIEntity implements Serializable {
         this.limitationType = apiTestRunConfig.limitationType;
         this.limitationValue = apiTestRunConfig.limitationValue;
         this.maxAutoRetriesCount = apiTestRunConfig.maxAutoRetriesCount;
+        this.maxWaitTime = apiTestRunConfig.maxWaitTime;
         this.osType = apiTestRunConfig.osType;
         this.projectId = apiTestRunConfig.projectId;
         this.projectName = apiTestRunConfig.projectName;
@@ -545,7 +546,6 @@ public class APITestRunConfig extends APIEntity implements Serializable {
         this.statusCode = apiTestRunConfig.statusCode;
         this.testRunId = apiTestRunConfig.testRunId;
         this.testRunName = apiTestRunConfig.testRunName;
-        this.testRunNameGrouping = apiTestRunConfig.testRunNameGrouping;
         this.testRunParameters = apiTestRunConfig.testRunParameters;
         this.timeout = apiTestRunConfig.timeout;
         this.tunnelSettings = apiTestRunConfig.tunnelSettings;

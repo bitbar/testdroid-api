@@ -239,8 +239,8 @@ public class MappingKey {
     public static final String PROJECT_NAME = "projectName";
     public static final String PROPERTY_GROUP_ID = "propertyGroupId";
     public static final String PROPERTY_GROUP_NAME = "propertyGroupName";
-    public static final String QUANTITY = "quantity";
     public static final String QUEUE_SIZE = "queueSize";
+    public static final String QUEUE_WAIT = "queueWait";
     public static final String QUIET_DOWN = "quietDown";
     public static final String READ_ONLY = "readOnly";
     public static final String RECOVERY_KEY = "recoveryKey";

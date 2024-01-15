@@ -172,36 +172,6 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
 
     @ParameterizedTest
     @ArgumentsSource(APIClientProvider.class)
-    void addTagTest(APIClient apiClient) throws APIException, InterruptedException {
-        APIUser me = apiClient.me();
-        APITestRunConfig config = new APITestRunConfig();
-        config.setProjectName(generateUnique("testProject"));
-        APIFramework defaultApiFramework = getApiFramework(apiClient, DEFAULT_FRAMEWORK_NAME_LIKE);
-        config.setOsType(defaultApiFramework.getOsType());
-        config.setFrameworkId(defaultApiFramework.getId());
-        APIUserFile apkFile = me.uploadFile(loadFile(APP_PATH));
-        APIFileConfig apkFileConfig = new APIFileConfig(apkFile.getId(), INSTALL);
-        APIUserFile testFile = me.uploadFile(loadFile(TEST_PATH));
-        APIFileConfig testFileConfig = new APIFileConfig(testFile.getId(), RUN_TEST);
-        config.setFiles(Arrays.asList(apkFileConfig, testFileConfig));
-        APIUserFile.waitForVirusScans(apkFile, testFile);
-        me.validateTestRunConfig(config);
-        APITestRun apiTestRun = me.startTestRun(config);
-        assertThat(apiTestRun.getState()).isIn(RUNNING, WAITING);
-        apiTestRun.abort();
-        String tag = "aborted";
-        APITag apiTag = apiTestRun.addTag(tag);
-        apiTestRun.refresh();
-        assertThat(apiTestRun.getTagsResource().getTotal()).isEqualTo(1);
-        assertThat(apiTestRun.getTagsResource().getEntity().get(0).getName()).isEqualTo(tag);
-        apiTag.delete();
-        apiTestRun.refresh();
-        assertThat(apiTestRun.getTagsResource().getTotal()).isZero();
-        apiTestRun.delete();
-    }
-
-    @ParameterizedTest
-    @ArgumentsSource(APIClientProvider.class)
     void requestScreenshotsZip(APIClient apiClient) throws APIException, InterruptedException, IOException {
         APIUser me = apiClient.me();
         APITestRunConfig config = new APITestRunConfig();

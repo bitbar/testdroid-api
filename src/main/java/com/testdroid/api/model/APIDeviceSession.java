@@ -45,7 +45,7 @@ public class APIDeviceSession extends APIEntity implements UiPresentable {
         AUTOMATIC,
         MANUAL_APP,
         MANUAL_WEB,
-        REMOTE;
+        @Deprecated REMOTE;
 
         public boolean isManual() {
             return this == MANUAL_APP || this == MANUAL_WEB || this == REMOTE;
@@ -147,6 +147,7 @@ public class APIDeviceSession extends APIEntity implements UiPresentable {
 
     private String userEmail;
 
+    @Deprecated
     private Integer rowIndex;
 
     private Long accountId;
