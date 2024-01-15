@@ -45,7 +45,6 @@ public class TypeReferenceFactory {
         LIST_MAP.put(APIAdminDeviceSessionStatistics.class, new TypeReference<APIList<APIAdminDeviceSessionStatistics>>() {});
         LIST_MAP.put(APIAdminDeviceType.class, new TypeReference<APIList<APIAdminDeviceType>>() {});
         LIST_MAP.put(APIAdminEmail.class, new TypeReference<APIList<APIAdminEmail>>() {});
-        LIST_MAP.put(APIAdminError.class, new TypeReference<APIList<APIAdminError>>() {});
         LIST_MAP.put(APIAdminFrameworkStatistics.class, new TypeReference<APIList<APIAdminFrameworkStatistics>>() {});
         LIST_MAP.put(APIAdminInteractiveDeviceSession.class, new TypeReference<APIList<APIAdminInteractiveDeviceSession>>() {});
         LIST_MAP.put(APIAdminTrialStatistics.class, new TypeReference<APIList<APIAdminTrialStatistics>>() {});
@@ -71,7 +70,6 @@ public class TypeReferenceFactory {
         LIST_MAP.put(APIDeviceGroup.class, new TypeReference<APIList<APIDeviceGroup>>() {});
         LIST_MAP.put(APIDeviceModelCriterion.class, new TypeReference<APIList<APIDeviceModelCriterion>>() {});
         LIST_MAP.put(APIDeviceModelPool.class, new TypeReference<APIList<APIDeviceModelPool>>() {});
-        LIST_MAP.put(APIDeviceModelPoolStatistics.class, new TypeReference<APIList<APIDeviceModelPoolStatistics>>() {});
         LIST_MAP.put(APIDevicePicker.class, new TypeReference<APIList<APIDevicePicker>>() {});
         LIST_MAP.put(APIDeviceProperty.class, new TypeReference<APIList<APIDeviceProperty>>() {});
         LIST_MAP.put(APIDeviceSession.class, new TypeReference<APIList<APIDeviceSession>>() {});
@@ -98,12 +96,10 @@ public class TypeReferenceFactory {
         LIST_MAP.put(APIRole.class, new TypeReference<APIList<APIRole>>() {});
         LIST_MAP.put(APIS3Url.class, new TypeReference<APIList<APIS3Url>>() {});
         LIST_MAP.put(APIScreenshot.class, new TypeReference<APIList<APIScreenshot>>() {});
-        LIST_MAP.put(APIScreenshotExtended.class, new TypeReference<APIList<APIScreenshotExtended>>() {});
         LIST_MAP.put(APIService.class, new TypeReference<APIList<APIService>>() {});
         LIST_MAP.put(APISharedResource.class, new TypeReference<APIList<APISharedResource>>() {});
         LIST_MAP.put(APISmartbearTunnel.class, new TypeReference<APIList<APISmartbearTunnel>>() {});
         LIST_MAP.put(APISoftwareVersion.class, new TypeReference<APIList<APISoftwareVersion>>() {});
-        LIST_MAP.put(APITag.class, new TypeReference<APIList<APITag>>() {});
         LIST_MAP.put(APITestCaseRun.class, new TypeReference<APIList<APITestCaseRun>>() {});
         LIST_MAP.put(APITestCaseRunStep.class, new TypeReference<APIList<APITestCaseRunStep>>() {});
         LIST_MAP.put(APITestRun.class, new TypeReference<APIList<APITestRun>>() {});
@@ -162,7 +158,6 @@ public class TypeReferenceFactory {
         MAP.put(APIDeviceGroup.class, new TypeReference<APIDeviceGroup>() {});
         MAP.put(APIDeviceModelCriterion.class, new TypeReference<APIDeviceModelCriterion>() {});
         MAP.put(APIDeviceModelPool.class, new TypeReference<APIDeviceModelPool>() {});
-        MAP.put(APIDeviceModelPoolStatistics.class, new TypeReference<APIDeviceModelPoolStatistics>() {});
         MAP.put(APIDevicePicker.class, new TypeReference<APIDevicePicker>() {});
         MAP.put(APIDeviceProperty.class, new TypeReference<APIDeviceProperty>() {});
         MAP.put(APIDeviceSession.class, new TypeReference<APIDeviceSession>() {});
@@ -183,7 +178,6 @@ public class TypeReferenceFactory {
         MAP.put(APIService.class, new TypeReference<APIService>() {});
         MAP.put(APIServicePaymentStatus.class, new TypeReference<APIServicePaymentStatus>() {});
         MAP.put(APISharedResource.class, new TypeReference<APISharedResource>() {});
-        MAP.put(APITag.class, new TypeReference<APITag>() {});
         MAP.put(APITestRun.class, new TypeReference<APITestRun>() {});
         MAP.put(APITestRunConfig.class, new TypeReference<APITestRunConfig>() {});
         MAP.put(APITestRunDataAvailability.class, new TypeReference<APITestRunDataAvailability>() {});

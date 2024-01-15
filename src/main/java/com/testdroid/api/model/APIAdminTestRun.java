@@ -50,7 +50,8 @@ public class APIAdminTestRun extends APIEntity {
     public APIAdminTestRun(
             Long id, LocalDateTime createTime, LocalDateTime startTime, LocalDateTime endTime, APITestRun.State state,
             Long startedById, String userName, String projectName, String testRunName, Float successRatio,
-            Integer priority, Long projectId, Long duration, Long frameworkId, String frameworkName) {
+            Integer priority, Long projectId, Long duration, APITestRunConfig.Scheduler scheduler, Long frameworkId,
+            String frameworkName) {
         super(id);
         this.createTime = TimeConverter.toDate(createTime);
         this.startTime = TimeConverter.toDate(startTime);
@@ -64,19 +65,9 @@ public class APIAdminTestRun extends APIEntity {
         this.priority = priority;
         this.projectId = projectId;
         this.duration = duration;
+        this.scheduler = scheduler;
         this.frameworkId = frameworkId;
         this.frameworkName = frameworkName;
-    }
-
-    @SuppressWarnings("squid:S107")
-    public APIAdminTestRun(
-            Long id, LocalDateTime createTime, LocalDateTime startTime, LocalDateTime endTime, APITestRun.State state,
-            Long startedById, String userName, String projectName, String testRunName, Float successRatio,
-            Integer priority, Long projectId, Long duration, APITestRunConfig.Scheduler scheduler, Long frameworkId,
-            String frameworkName) {
-        this(id, createTime, startTime, endTime, state, startedById, userName, projectName, testRunName,
-                successRatio, priority, projectId, duration, frameworkId, frameworkName);
-        this.scheduler = scheduler;
     }
 
     public Date getEndTime() {

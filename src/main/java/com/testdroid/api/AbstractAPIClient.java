@@ -95,7 +95,7 @@ public abstract class AbstractAPIClient implements APIClient {
                 .addInterceptor(getInterceptor())
                 .proxy(proxy)
                 .connectTimeout(clientConnectTimeout, TimeUnit.MILLISECONDS)
-                .callTimeout(clientRequestTimeout, TimeUnit.MILLISECONDS)
+                .readTimeout(clientRequestTimeout, TimeUnit.MILLISECONDS)
                 .build();
     }
 
@@ -156,7 +156,7 @@ public abstract class AbstractAPIClient implements APIClient {
         //Fix for https://jira.bitbar.com/browse/TD-12086
         //caused by https://github.com/googleapis/google-http-java-client/issues/398
         //We should use pure Apache Http Client
-        uri = uri.replaceAll("\\+", "%2B"); // TODO check if needed
+        uri = uri.replace("\\+", "%2B"); // TODO check if needed
         try {
             OkHttpClient client = getClient();
             Request request = new Request.Builder().url(buildUrl(apiURL + uri, context)).build();

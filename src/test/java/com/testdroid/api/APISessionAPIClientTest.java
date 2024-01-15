@@ -19,7 +19,7 @@ import static com.testdroid.api.filter.FilterEntry.falseFilterEntry;
 import static com.testdroid.api.filter.FilterEntry.trueFilterEntry;
 import static com.testdroid.api.model.APIDevice.OsType.ANDROID;
 import static com.testdroid.api.model.APIDeviceSession.State.WAITING;
-import static com.testdroid.api.model.APIDeviceSession.Type.REMOTE;
+import static com.testdroid.api.model.APIDeviceSession.Type.MANUAL_APP;
 import static com.testdroid.cloud.test.categories.TestTags.API_CLIENT;
 import static java.util.Collections.singletonMap;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -37,7 +37,7 @@ class APISessionAPIClientTest extends BaseAPIClientTest {
         List<APIDevice> freeAndroidDevices = getFreeTrialAndroidDevices(apiClient);
         assumeTrue(CollectionUtils.isNotEmpty(freeAndroidDevices));
         APIDeviceSessionConfig config = new APIDeviceSessionConfig();
-        config.setType(REMOTE);
+        config.setType(MANUAL_APP);
         config.setDeviceModelId(freeAndroidDevices.get(0).id);
         config.setAdbVersion("1.2.3");
         APIDeviceSession deviceSession = apiClient.post("/me/device-sessions", config, APIDeviceSession.class);

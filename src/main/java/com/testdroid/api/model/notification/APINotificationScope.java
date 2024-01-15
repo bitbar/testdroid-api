@@ -8,10 +8,6 @@ public enum APINotificationScope {
     TEST_RUN,
     TEST_RUN_FAILURE,//Project
     TEST_RUN_SUCCEEDED,//Project
-    MAINTENANCE,
-    MAINTENANCE_RELEASE,//All, User?
-    CUSTOM,//User, Project, All
-    NEWS,
     SYSTEM,
     CHECK,
     PLAN_LIMIT_REACHED,

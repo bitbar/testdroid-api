@@ -17,5 +17,4 @@ public class TestTags {
 
     public static final String API_CLIENT = "api_client";
 
-    public static final String PORT_FORWARDER_CLIENT = "port_forwarder_client";
 }

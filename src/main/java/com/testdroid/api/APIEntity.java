@@ -50,10 +50,10 @@ public abstract class APIEntity {
     @JsonIgnore
     protected Long parentId;
 
-    public APIEntity() {
+    protected APIEntity() {
     }
 
-    public APIEntity(Long id) {
+    protected APIEntity(Long id) {
         this.id = id;
     }
 
