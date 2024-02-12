@@ -46,9 +46,10 @@ public class APIAccount extends APIEntity {
 
     public APIAccount(
             Long id, LocalDateTime createTime, Long mainUserId, String mainUserFirstName, String mainUserLastName,
-            String mainUserEmail, long dedicatedDevicesCount) {
+            String mainUserEmail, long dedicatedDevicesCount, String activeServiceName) {
         this(id, createTime, mainUserId, mainUserFirstName, mainUserLastName, mainUserEmail);
         this.dedicatedDevicesCount = dedicatedDevicesCount;
+        this.activeServiceName = activeServiceName;
     }
 
     public Date getCreateTime() {

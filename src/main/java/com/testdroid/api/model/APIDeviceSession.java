@@ -44,11 +44,10 @@ public class APIDeviceSession extends APIEntity implements UiPresentable {
     public enum Type {
         AUTOMATIC,
         MANUAL_APP,
-        MANUAL_WEB,
-        @Deprecated REMOTE;
+        MANUAL_WEB;
 
         public boolean isManual() {
-            return this == MANUAL_APP || this == MANUAL_WEB || this == REMOTE;
+            return this == MANUAL_APP || this == MANUAL_WEB;
         }
     }
 
