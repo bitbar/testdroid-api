@@ -15,6 +15,7 @@ public class MappingKey {
     public static final String ACCOUNT_ID = "accountId";
     public static final String ACCOUNT_ROLE_ID = "accountRoleId";
     public static final String ACCOUNT_SERVICE_IDS = "accountServiceIds";
+    public static final String ACCOUNT_SERVICE_NAME = "activeServiceName";
     public static final String ACTIVATED = "activated";
     public static final String ACTIVATED_BY_NAME = "activatedByName";
     public static final String ACTIVATE_TIME = "activateTime";
@@ -81,6 +82,7 @@ public class MappingKey {
     public static final String DEACTIVATED_BY_NAME = "deactivatedByName";
     public static final String DEACTIVATE_REASON = "deactivateReason";
     public static final String DEDICATED = "dedicated";
+    public static final String DEDICATED_DEVICES_COUNT = "dedicatedDevicesCount";
     public static final String DEDICATION_END_TIME = "dedicationEndTime";
     public static final String DELETE_TIME = "deleteTime";
     public static final String DEPRECATED_RESOURCE = "deprecatedResource";
@@ -101,7 +103,6 @@ public class MappingKey {
     public static final String DEVICE_MODEL_NAME = "deviceModelName";
     public static final String DEVICE_NAME = "deviceName";
     public static final String DEVICE_RUN_IDS_ARR = "deviceRunIds[]";
-    public static final String DEVICE_SESSION_CREATE_TIME = "deviceSession.createTime";
     public static final String DEVICE_SESSION_ID = "deviceSessionId";
     public static final String DEVICE_SESSION_USER_ID = "deviceSession.userId";
     public static final String DEVICE_TIME = "deviceTime";
@@ -334,7 +335,6 @@ public class MappingKey {
     public static final String USER_NAME = "userName";
     public static final String VALUE = "value";
     public static final String VERSION = "version";
-    public static final String VIDEO_RECORDING_ENABLED = "videoRecordingEnabled";
     public static final String WIDTH = "width";
     public static final String WITHOUT_PRIORITIES = "withoutPriorities";
     public static final String WITH_BROWSERS = "withBrowsers";
