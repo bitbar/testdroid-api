@@ -98,6 +98,7 @@ public class TypeReferenceFactory {
         LIST_MAP.put(APIScreenshot.class, new TypeReference<APIList<APIScreenshot>>() {});
         LIST_MAP.put(APIService.class, new TypeReference<APIList<APIService>>() {});
         LIST_MAP.put(APISharedResource.class, new TypeReference<APIList<APISharedResource>>() {});
+        LIST_MAP.put(APISignalingSession.class, new TypeReference<APIList<APISignalingSession>>() {});
         LIST_MAP.put(APISmartbearTunnel.class, new TypeReference<APIList<APISmartbearTunnel>>() {});
         LIST_MAP.put(APISoftwareVersion.class, new TypeReference<APIList<APISoftwareVersion>>() {});
         LIST_MAP.put(APITestCaseRun.class, new TypeReference<APIList<APITestCaseRun>>() {});
@@ -178,6 +179,7 @@ public class TypeReferenceFactory {
         MAP.put(APIService.class, new TypeReference<APIService>() {});
         MAP.put(APIServicePaymentStatus.class, new TypeReference<APIServicePaymentStatus>() {});
         MAP.put(APISharedResource.class, new TypeReference<APISharedResource>() {});
+        MAP.put(APISignalingSession.class, new TypeReference<APISignalingSession>() {});
         MAP.put(APITestRun.class, new TypeReference<APITestRun>() {});
         MAP.put(APITestRunConfig.class, new TypeReference<APITestRunConfig>() {});
         MAP.put(APITestRunDataAvailability.class, new TypeReference<APITestRunDataAvailability>() {});

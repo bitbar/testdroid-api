@@ -17,6 +17,7 @@ public class MappingKey {
     public static final String ACCOUNT_SERVICE_IDS = "accountServiceIds";
     public static final String ACCOUNT_SERVICE_NAME = "activeServiceName";
     public static final String ACTIVATED = "activated";
+    public static final String ACTIVATED_BY_ID = "activatedById";
     public static final String ACTIVATED_BY_NAME = "activatedByName";
     public static final String ACTIVATE_TIME = "activateTime";
     public static final String ACTIVE = "active";
@@ -45,6 +46,7 @@ public class MappingKey {
     public static final String BIOMETRIC_INSTRUMENTATION = "biometricInstrumentation";
     public static final String BLUETOOTH_ON = "bluetoothOn";
     public static final String BODY = "body";
+    public static final String BRAINTREE_ID = "braintreeId";
     public static final String BROWSER_IDS_ARR = "browserIds[]";
     public static final String BROWSER_NAME = "browserName";
     public static final String BROWSER_VERSION = "browserVersion";
@@ -79,6 +81,7 @@ public class MappingKey {
     public static final String DATA = "data";
     public static final String DAY = "day";
     public static final String DAYS = "days";
+    public static final String DEACTIVATED_BY_ID = "deactivatedById";
     public static final String DEACTIVATED_BY_NAME = "deactivatedByName";
     public static final String DEACTIVATE_REASON = "deactivateReason";
     public static final String DEDICATED = "dedicated";
@@ -131,6 +134,7 @@ public class MappingKey {
     public static final String FILENAME = "filename";
     public static final String FILE_TAGS_ARR = "fileTags[]";
     public static final String FINGERPRINT = "fingerprint";
+    public static final String FINISHED = "finished";
     public static final String FINISH_TIME_MS = "finishTimeMS";
     public static final String FIRST_NAME = "firstName";
     public static final String FLASH_ON = "flashOn";
@@ -182,6 +186,7 @@ public class MappingKey {
     public static final String LAST_MODIFIED_BY = "lastModifiedBy";
     public static final String LAST_NAME = "lastName";
     public static final String LAST_PAYMENT_DATE = "lastPaymentDate";
+    public static final String LAST_PAYMENT_TIME = "lastPaymentTime";
     public static final String LAST_RETRY_TIME = "lastRetryTime";
     public static final String LEVEL = "level";
     public static final String LIVE_TESTING_ONLY= "liveTestingOnly";
@@ -270,6 +275,7 @@ public class MappingKey {
     public static final String SELECTOR_IDS_ARR = "selectorIds[]";
     public static final String SENT = "sent";
     public static final String SERIAL_ID = "serialId";
+    public static final String SERVICE_COUNT = "serviceCount";
     public static final String SERVICE_ID = "serviceId";
     public static final String SERVICE_IDS = "serviceIds";
     public static final String SERVICE_NAME = "serviceName";
