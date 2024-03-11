@@ -7,13 +7,14 @@ import com.testdroid.api.APIListResource;
 import com.testdroid.api.UiPresentable;
 import com.testdroid.api.dto.Context;
 import com.testdroid.api.util.TimeConverter;
+import jakarta.xml.bind.annotation.XmlType;
 import org.apache.commons.lang3.StringUtils;
 
-import jakarta.xml.bind.annotation.XmlType;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Optional;
 
 /**
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
@@ -110,7 +111,7 @@ public class APITestRun extends APIEntity implements UiPresentable {
             Integer finishedDeviceCount, Integer excludedDeviceCount, Integer errorsDeviceCount,
             Integer succeededDeviceCount, Integer runningDeviceCount, Integer warningDeviceCount,
             Integer waitingDeviceCount, Integer abortedDeviceCount, Integer timeoutedDeviceCount, Long frameworkId,
-            String frameworkName, String testRunConfigurationContent) {
+            String frameworkName, Long frameworkQueueWait, String testRunConfigurationContent) {
         super(id);
         this.number = number;
         this.createTime = TimeConverter.toDate(createTime);
@@ -142,7 +143,7 @@ public class APITestRun extends APIEntity implements UiPresentable {
         this.frameworkId = frameworkId;
         this.frameworkName = frameworkName;
         this.deviceCount = deviceCount;
-        mapConfig(testRunConfigurationContent);
+        mapConfig(testRunConfigurationContent, frameworkQueueWait);
     }
 
     public Integer getNumber() {
@@ -499,12 +500,14 @@ public class APITestRun extends APIEntity implements UiPresentable {
     }
 
     @JsonIgnore
-    private void mapConfig(String content) {
+    private void mapConfig(String content, Long frameworkQueueWait) {
         if (StringUtils.isBlank(content)) {
             return;
         }
         try {
             APITestRunConfig apiTestRunConfig = OBJECT_MAPPER.readValue(content, APITestRunConfig.class);
+            apiTestRunConfig.setMaxWaitTime(
+                    Optional.ofNullable(apiTestRunConfig.getMaxWaitTime()).orElse(frameworkQueueWait));
             setConfig(apiTestRunConfig);
         } catch (IOException ignore) {
             // ignored

@@ -54,7 +54,6 @@ public class APIRole extends APIEntity {
         this.expireTime = TimeConverter.toDate(expireTime);
     }
 
-
     // UserRole
     public APIRole(Long parentId, Long id, String name, String addedByEmail) {
         this(id, name);

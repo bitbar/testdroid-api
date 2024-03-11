@@ -41,6 +41,8 @@ public class APIClientSideTestConfig implements Serializable {
 
     private String version;
 
+    private String brokerStepsEndpoint;
+
     @XmlType(namespace = "APIClientSideTestConfig")
     public enum CapabilitiesSchema {
         JSONWP,
@@ -177,5 +179,13 @@ public class APIClientSideTestConfig implements Serializable {
 
     public void setCapabilitiesSchema(CapabilitiesSchema capabilitiesSchema) {
         this.capabilitiesSchema = capabilitiesSchema;
+    }
+
+    public String getBrokerStepsEndpoint() {
+        return brokerStepsEndpoint;
+    }
+
+    public void setBrokerStepsEndpoint(String brokerStepsEndpoint) {
+        this.brokerStepsEndpoint = brokerStepsEndpoint;
     }
 }

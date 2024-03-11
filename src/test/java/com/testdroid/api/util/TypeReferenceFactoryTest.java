@@ -80,6 +80,7 @@ class TypeReferenceFactoryTest {
                     APIService.class,
                     APIServicePaymentStatus.class,
                     APISharedResource.class,
+                    APISignalingSession.class,
                     APITestRun.class,
                     APITestRunConfig.class,
                     APITestRunDataAvailability.class,

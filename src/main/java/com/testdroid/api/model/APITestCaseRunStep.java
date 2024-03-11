@@ -17,6 +17,7 @@ public class APITestCaseRunStep extends APIEntity {
         CLICK,
         CONFIG,
         DRAG,
+        HTTP,
         INPUT,
         NAVIGATION,
         OTHER,
@@ -37,6 +38,18 @@ public class APITestCaseRunStep extends APIEntity {
 
     private Type type;
 
+    private String httpMethod;
+
+    private int responseCode;
+
+    private long timestamp;
+
+    private String requestBody;
+
+    private String responseBody;
+
+    private String uri;
+
     public APITestCaseRunStep() {
     }
 
@@ -48,6 +61,23 @@ public class APITestCaseRunStep extends APIEntity {
         this.errorMessage = errorMessage;
         this.duration = duration;
         this.type = APITestCaseRunStep.Type.valueOf(type.toUpperCase());
+    }
+
+    @SuppressWarnings("squid:S107")
+    public APITestCaseRunStep(
+            Long id, Long duration, String httpMethod, int responseCode, long timestamp, String requestBody,
+            String responseBody, String uri) {
+        super(id);
+        this.description = String.format("%s - %s", httpMethod, uri);
+        this.duration = duration;
+        this.type = Type.HTTP;
+        this.httpMethod = httpMethod;
+        this.responseCode = responseCode;
+        this.timestamp = timestamp;
+        this.requestBody = requestBody;
+        this.responseBody = responseBody;
+        this.uri = uri;
+        this.screenshots = new APIList<>();
     }
 
     public String getDescription() {
@@ -90,6 +120,54 @@ public class APITestCaseRunStep extends APIEntity {
         this.type = type;
     }
 
+    public String getHttpMethod() {
+        return httpMethod;
+    }
+
+    public void setHttpMethod(String httpMethod) {
+        this.httpMethod = httpMethod;
+    }
+
+    public int getResponseCode() {
+        return responseCode;
+    }
+
+    public void setResponseCode(int responseCode) {
+        this.responseCode = responseCode;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public String getRequestBody() {
+        return requestBody;
+    }
+
+    public void setRequestBody(String requestBody) {
+        this.requestBody = requestBody;
+    }
+
+    public String getResponseBody() {
+        return responseBody;
+    }
+
+    public void setResponseBody(String responseBody) {
+        this.responseBody = responseBody;
+    }
+
+    public String getUri() {
+        return uri;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
+    }
+
     public APIList<APIScreenshot> getScreenshots() {
         return screenshots;
     }
@@ -109,6 +187,12 @@ public class APITestCaseRunStep extends APIEntity {
         this.fromActivity = apiTestCaseRunStep.fromActivity;
         this.screenshots = apiTestCaseRunStep.screenshots;
         this.type = apiTestCaseRunStep.type;
+        this.httpMethod = apiTestCaseRunStep.httpMethod;
+        this.responseCode = apiTestCaseRunStep.responseCode;
+        this.timestamp = apiTestCaseRunStep.timestamp;
+        this.requestBody = apiTestCaseRunStep.requestBody;
+        this.responseBody = apiTestCaseRunStep.responseBody;
+        this.uri = apiTestCaseRunStep.uri;
     }
 
 }
