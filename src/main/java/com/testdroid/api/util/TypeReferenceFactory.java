@@ -37,6 +37,7 @@ public class TypeReferenceFactory {
         LIST_MAP.put(APIAccountService.class, new TypeReference<APIList<APIAccountService>>() {});
         LIST_MAP.put(APIAccountServicePayment.class, new TypeReference<APIList<APIAccountServicePayment>>() {});
         LIST_MAP.put(APIActivity.class, new TypeReference<APIList<APIActivity>>() {});
+        LIST_MAP.put(APIAdministrator.class, new TypeReference<APIList<APIAdministrator>>() {});
         LIST_MAP.put(APIAdminDevice.class, new TypeReference<APIList<APIAdminDevice>>() {});
         LIST_MAP.put(APIAdminDeviceModel.class, new TypeReference<APIList<APIAdminDeviceModel>>() {});
         LIST_MAP.put(APIAdminDeviceProblem.class, new TypeReference<APIList<APIAdminDeviceProblem>>() {});
@@ -139,6 +140,7 @@ public class TypeReferenceFactory {
         MAP.put(APIAccountPreference.class, new TypeReference<APIAccountPreference>() {});
         MAP.put(APIAccountService.class, new TypeReference<APIAccountService>() {});
         MAP.put(APIAccountServicePayment.class, new TypeReference<APIAccountServicePayment>() {});
+        MAP.put(APIAdministrator.class, new TypeReference<APIAdministrator>() {});
         MAP.put(APIAdminDevice.class, new TypeReference<APIAdminDevice>() {});
         MAP.put(APIAdminDeviceSessionStatistics.class, new TypeReference<APIAdminDeviceSessionStatistics>() {});
         MAP.put(APIAdminDeviceType.class, new TypeReference<APIAdminDeviceType>() {});

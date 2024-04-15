@@ -45,6 +45,7 @@ class TypeReferenceFactoryTest {
                     APIAdminDeviceSessionStatistics.class,
                     APIAdminDeviceType.class,
                     APIAdminEmail.class,
+                    APIAdministrator.class,
                     APIAdminOverview.class,
                     APIAdminTestRun.class,
                     APIBasicDeviceTime.class,
