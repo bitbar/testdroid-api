@@ -27,6 +27,8 @@ public class Context<T extends APIEntity> {
 
     public static final String FILTER_DELIMITER = ";";
 
+    public static final String FIELDS_REQUEST_PARAM = "fields";
+
     public static final String GROUP_REQUEST_PARAM = "group";
 
     public static final String LIMIT_REQUEST_PARAM = "limit";
@@ -42,6 +44,8 @@ public class Context<T extends APIEntity> {
     private String search;
 
     private APISort sort;
+
+    private List<String> fields = new ArrayList<>();
 
     private List<String> groups = new ArrayList<>();
 
@@ -67,9 +71,10 @@ public class Context<T extends APIEntity> {
         this.sort = APISort.deserialize(sort);
     }
 
+    @SuppressWarnings("squid:S107")
     public Context(
             Class<T> type, int offset, int limit, String search, String sort, List<FilterEntry> filters,
-            List<String> groups) {
+            List<String> groups, List<String> fields) {
         this.offset = offset;
         this.limit = limit;
         this.search = search;
@@ -77,6 +82,7 @@ public class Context<T extends APIEntity> {
         this.sort = APISort.deserialize(sort);
         this.filters = filters;
         this.groups = groups;
+        this.fields = fields;
     }
 
     public int getOffset() {
@@ -141,6 +147,20 @@ public class Context<T extends APIEntity> {
         return this;
     }
 
+    public List<String> getFields() {
+        return fields;
+    }
+
+    public Context<T> setFields(List<String> fields) {
+        this.fields = fields;
+        return this;
+    }
+
+    public Context<T> addField(String field) {
+        this.fields.add(field);
+        return this;
+    }
+
     public List<String> getGroups() {
         return groups;
     }
@@ -187,13 +207,14 @@ public class Context<T extends APIEntity> {
         map.put(SORT_REQUEST_PARAM, sort != null ? sort.serialize() : null);
         map.put(FILTER_REQUEST_PARAM, filters.stream().map(FilterEntry::toString).collect(Collectors.joining(";")));
         map.put(GROUP_REQUEST_PARAM, groups);
+        map.put(FIELDS_REQUEST_PARAM, fields);
         map.putAll(extraParams);
         return map;
     }
 
     public <R extends T> Context<R> as(Class<R> clazz) {
         return new Context<>(clazz, this.offset, this.limit, this.search, this.sort
-                .serialize(), this.filters, this.groups);
+                .serialize(), this.filters, this.groups, this.fields);
     }
 
     private Boolean keyAndOperandEqual(FilterEntry fe, String field, Operand operand) {

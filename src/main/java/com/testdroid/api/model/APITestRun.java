@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -130,7 +131,9 @@ public class APITestRun extends APIEntity implements UiPresentable {
         this.testCaseCount = testCaseCount;
         this.successfulTestCaseCount = successfulTestCaseCount;
         this.failedTestCaseCount = failedTestCaseCount;
-        this.executedTestCaseCount = successfulTestCaseCount + failedTestCaseCount;
+        if (Objects.nonNull(successfulTestCaseCount) && Objects.nonNull(failedTestCaseCount)) {
+            this.executedTestCaseCount = successfulTestCaseCount + failedTestCaseCount;
+        }
         this.finishedDeviceCount = finishedDeviceCount;
         this.excludedDeviceCount = excludedDeviceCount;
         this.errorsDeviceCount = errorsDeviceCount;

@@ -10,6 +10,7 @@ public class MappingKey {
     }
 
     // @formatter:off
+    public static final String ABORTED_DEVICE_COUNT = "abortedDeviceCount";
     public static final String ACCEPT = "accept";
     public static final String ACCESS_GROUP_ID = "accessGroupId";
     public static final String ACCOUNT_ID = "accountId";
@@ -67,6 +68,7 @@ public class MappingKey {
     public static final String COMMENT = "comment";
     public static final String COMMON = "common";
     public static final String COMMON_ID = "commonId";
+    public static final String CONFIG = "config";
     public static final String CONFIRM_PASSWORD = "confirmPassword";
     public static final String CONTENT = "content";
     public static final String COUNT = "count";
@@ -120,6 +122,8 @@ public class MappingKey {
     public static final String ENABLED = "enabled";
     public static final String END_BILLING_PERIOD = "endBillingPeriod";
     public static final String END_TIME = "endTime";
+    public static final String ERRORS_DEVICE_COUNT = "errorsDeviceCount";
+    public static final String EXCLUDED_DEVICE_COUNT = "excludedDeviceCount";
     public static final String EXECUTION_RATIO = "executionRatio";
     public static final String EXPIRATION_DATE = "expirationDate";
     public static final String EXPIRE_TIME = "expireTime";
@@ -129,12 +133,14 @@ public class MappingKey {
     public static final String FAILED_DEVICE_SESSIONS = "failedDeviceSessions";
     public static final String FAILED_RATIO = "failedRatio";
     public static final String FAILED_TESTS = "failedTests";
+    public static final String FAILED_TEST_CASE_COUNT = "failedTestCaseCount";
     public static final String FIELD = "field";
     public static final String FILE = "file";
     public static final String FILENAME = "filename";
     public static final String FILE_TAGS_ARR = "fileTags[]";
     public static final String FINGERPRINT = "fingerprint";
     public static final String FINISHED = "finished";
+    public static final String FINISHED_DEVICE_COUNT = "finishedDeviceCount";
     public static final String FINISH_TIME_MS = "finishTimeMS";
     public static final String FIRST_NAME = "firstName";
     public static final String FLASH_ON = "flashOn";
@@ -142,6 +148,7 @@ public class MappingKey {
     public static final String FOR_WHOLE_ACCOUNT = "forWholeAccount";
     public static final String FRAMEWORK_ID = "frameworkId";
     public static final String FRAMEWORK_NAME = "frameworkName";
+    public static final String FRAMEWORK_QUEUE_WAIT = "frameworkQueueWait";
     public static final String FRAME_EXTRA_WIDTH = "frameExtraWidth";
     public static final String FROM_TIME = "fromTime";
     public static final String GLOBAL = "global";
@@ -170,8 +177,11 @@ public class MappingKey {
     public static final String IOS_ENABLED = "iosEnabled";
     public static final String IOS_PROJECT_LIMIT = "iosProjectLimit";
     public static final String IP_ADDRESS = "ipAddress";
+    public static final String IS_ADMIN = "isAdmin";
+    public static final String IS_ADMIN_READ_ONLY = "isAdminReadOnly";
     public static final String IS_EXCLUDED = "isExcluded";
     public static final String IS_MAIN_USER = "isMainUser";
+    public static final String IS_USER_ADMIN = "isUserAdmin";
     public static final String JENKINS_VERSION = "jenkinsVersion";
     public static final String JOB_CONFIG_ID = "jobConfigId";
     public static final String KEY = "key";
@@ -195,6 +205,7 @@ public class MappingKey {
     public static final String LOCATION_SERVICES_ON = "locationServiceOn";
     public static final String LOCKED = "locked";
     public static final String LOGGER_NAME = "loggerName";
+    public static final String LOGS_FILE_ID = "logsFileId";
     public static final String MAIL = "mail";
     public static final String MAIN_USER_EMAIL = "mainUserEmail";
     public static final String MAIN_USER_FIRST_NAME = "mainUserFirstName";
@@ -215,6 +226,7 @@ public class MappingKey {
     public static final String NOTIFICATION_DESTINATION = "destination";
     public static final String NOTIFICATION_SCOPE = "scope";
     public static final String NOT_ARCHIVED = "notArchived";
+    public static final String NUMBER = "number";
     public static final String ONLINE = "online";
     public static final String ONLY_MAIN_USERS = "onlyMainUsers";
     public static final String ONLY_WITH_BROWSERS = "onlyWithBrowsers";
@@ -263,10 +275,12 @@ public class MappingKey {
     public static final String ROLE_ID = "roleId";
     public static final String ROLE_IDS_ARR = "roleIds[]";
     public static final String RUNNING = "running";
+    public static final String RUNNING_DEVICE_COUNT = "runningDeviceCount";
     public static final String SAMPLE_APP_ID = "sampleAppId";
     public static final String SAMPLE_TEST_ID = "sampleTestId";
     public static final String SCHEDULER = "scheduler";
     public static final String SCOPE = "scope";
+    public static final String SCREENSHOT_FILE_ID = "screenshotsFileId";
     public static final String SCREEN_LOCKED = "screenLocked";
     public static final String SCREEN_RESOLUTION = "screenResolution";
     public static final String SDCARD_PRESENT = "sdcardPresent";
@@ -282,6 +296,7 @@ public class MappingKey {
     public static final String SERVICE_PRICE = "servicePrice";
     public static final String SHARED_BY_EMAIL = "sharedByEmail";
     public static final String SHOW_STATISTICS = "showStatistics";
+    public static final String SIMPLE = "simple";
     public static final String SIZE = "size";
     public static final String SKIP_COMMON_PROJECT = "skipCommonProject";
     public static final String SKIP_OLDER_SDK = "skipOlderSdk";
@@ -289,6 +304,7 @@ public class MappingKey {
     public static final String SKIP_SHARED = "skipShared";
     public static final String SSID = "ssid";
     public static final String STARTED_BY_DISPLAY_NAME = "startedByDisplayName";
+    public static final String STARTED_BY_ID = "startedById";
     public static final String START_BILLING_PERIOD = "startBillingPeriod";
     public static final String START_TIME = "startTime";
     public static final String START_TIME_MS = "startTimeMS";
@@ -300,21 +316,26 @@ public class MappingKey {
     public static final String SUBJECT = "subject";
     public static final String SUBSCRIPTION_END = "subscriptionEnd";
     public static final String SUBSCRIPTION_START = "subscriptionStart";
+    public static final String SUCCEEDED_DEVICE_COUNT = "succeededDeviceCount";
+    public static final String SUCCESSFUL_TEST_CASE_COUNT = "successfulTestCaseCount";
     public static final String SUCCESS_RATIO = "successRatio";
     public static final String SYNC = "sync";
     public static final String TAG = "tag";
     public static final String TAG_ARR = "tag[]";
     public static final String TAKE_TIMESTAMP = "takeTimestamp";
     public static final String TDS_VERSION = "tdsVersion";
+    public static final String TEST_CASE_COUNT = "testCaseCount";
     public static final String TEST_EXECUTING = "testExecuting";
     public static final String TEST_RUN_ID = "testRunId";
     public static final String TEST_RUN_NAME = "testRunName";
     public static final String TEST_TIME_LIMIT = "testTimeLimit";
     public static final String TETHERING_ON = "tetheringOn";
+    public static final String TIMEOUTED_DEVICE_COUNT = "timeoutedDeviceCount";
     public static final String TIMESTAMP = "timestamp";
     public static final String TIME_LIMIT = "timeLimit";
     public static final String TIME_ZONE = "timeZone";
     public static final String TOTAL = "total";
+    public static final String TOTAL_DEVICE_COUNT = "totalDeviceCount";
     public static final String TOTAL_DEVICE_SESSIONS = "totalDeviceSessions";
     public static final String TOTAL_PRICE = "totalPrice";
     public static final String TOTAL_TESTS = "totalTests";
@@ -341,6 +362,8 @@ public class MappingKey {
     public static final String USER_NAME = "userName";
     public static final String VALUE = "value";
     public static final String VERSION = "version";
+    public static final String WAITING_DEVICE_COUNT = "waitingDeviceCount";
+    public static final String WARNING_DEVICE_COUNT = "warningDeviceCount";
     public static final String WIDTH = "width";
     public static final String WITHOUT_PRIORITIES = "withoutPriorities";
     public static final String WITH_BROWSERS = "withBrowsers";

@@ -14,6 +14,8 @@ import java.util.Date;
  */
 public class APIAccount extends APIEntity {
 
+    private String comment;
+
     private Date createTime;
 
     private Long mainUserId;
@@ -34,9 +36,10 @@ public class APIAccount extends APIEntity {
     }
 
     public APIAccount(
-            Long id, LocalDateTime createTime, Long mainUserId, String mainUserFirstName, String mainUserLastName,
-            String mainUserEmail) {
+            Long id, String comment, LocalDateTime createTime, Long mainUserId, String mainUserFirstName,
+            String mainUserLastName, String mainUserEmail) {
         super(id);
+        this.comment = comment;
         this.createTime = TimeConverter.toDate(createTime);
         this.mainUserId = mainUserId;
         this.mainUserFirstName = mainUserFirstName;
@@ -44,12 +47,21 @@ public class APIAccount extends APIEntity {
         this.mainUserEmail = mainUserEmail;
     }
 
+    @SuppressWarnings("squid:S107")
     public APIAccount(
-            Long id, LocalDateTime createTime, Long mainUserId, String mainUserFirstName, String mainUserLastName,
-            String mainUserEmail, long dedicatedDevicesCount, String activeServiceName) {
-        this(id, createTime, mainUserId, mainUserFirstName, mainUserLastName, mainUserEmail);
+            Long id, String comment, LocalDateTime createTime, Long mainUserId, String mainUserFirstName,
+            String mainUserLastName, String mainUserEmail, long dedicatedDevicesCount, String activeServiceName) {
+        this(id, comment, createTime, mainUserId, mainUserFirstName, mainUserLastName, mainUserEmail);
         this.dedicatedDevicesCount = dedicatedDevicesCount;
         this.activeServiceName = activeServiceName;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     public Date getCreateTime() {
@@ -120,5 +132,6 @@ public class APIAccount extends APIEntity {
         this.mainUserEmail = account.mainUserEmail;
         this.activeServiceName = account.activeServiceName;
         this.dedicatedDevicesCount = account.dedicatedDevicesCount;
+        this.comment = account.comment;
     }
 }
