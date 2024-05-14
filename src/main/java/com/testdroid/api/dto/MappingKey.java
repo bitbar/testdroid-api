@@ -366,6 +366,7 @@ public class MappingKey {
     public static final String WARNING_DEVICE_COUNT = "warningDeviceCount";
     public static final String WIDTH = "width";
     public static final String WITHOUT_PRIORITIES = "withoutPriorities";
+    public static final String WITH_ADDRESS = "withAddress";
     public static final String WITH_BROWSERS = "withBrowsers";
     public static final String WITH_DEDICATED = "withDedicated";
     public static final String WITH_DEDICATED_DEVICES_INFO = "withDedicatedDevicesInfo";
@@ -374,12 +375,10 @@ public class MappingKey {
     public static final String WITH_PROPERTIES = "withProperties";
     public static final String WITH_PUBLIC = "withPublic";
     public static final String WITH_ROLE = "withRole";
-    public static final String WITH_ROLES = "withRoles";
     public static final String WITH_SESSIONS_INFO = "withSessionsInfo";
     public static final String WITH_SUPPORTED_CREATORS = "withSupportedCreators";
+    public static final String WITH_USER_INFO = "withUserInfo";
     public static final String WITH_VULNERABLE_DATA = "withVulnerableData";
     public static final String ZIP = "zip";
-
     // @formatter:on
-
 }

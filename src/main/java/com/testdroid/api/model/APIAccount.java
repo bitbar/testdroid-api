@@ -26,6 +26,8 @@ public class APIAccount extends APIEntity {
 
     private String mainUserEmail;
 
+    private String name;
+
     @JsonInclude(Include.NON_NULL)
     private String activeServiceName;
 
@@ -35,10 +37,12 @@ public class APIAccount extends APIEntity {
     public APIAccount() {
     }
 
+    @SuppressWarnings("squid:S107")
     public APIAccount(
-            Long id, String comment, LocalDateTime createTime, Long mainUserId, String mainUserFirstName,
+            Long id, String name, String comment, LocalDateTime createTime, Long mainUserId, String mainUserFirstName,
             String mainUserLastName, String mainUserEmail) {
         super(id);
+        this.name = name;
         this.comment = comment;
         this.createTime = TimeConverter.toDate(createTime);
         this.mainUserId = mainUserId;
@@ -49,9 +53,9 @@ public class APIAccount extends APIEntity {
 
     @SuppressWarnings("squid:S107")
     public APIAccount(
-            Long id, String comment, LocalDateTime createTime, Long mainUserId, String mainUserFirstName,
+            Long id, String name, String comment, LocalDateTime createTime, Long mainUserId, String mainUserFirstName,
             String mainUserLastName, String mainUserEmail, long dedicatedDevicesCount, String activeServiceName) {
-        this(id, comment, createTime, mainUserId, mainUserFirstName, mainUserLastName, mainUserEmail);
+        this(id, name, comment, createTime, mainUserId, mainUserFirstName, mainUserLastName, mainUserEmail);
         this.dedicatedDevicesCount = dedicatedDevicesCount;
         this.activeServiceName = activeServiceName;
     }
@@ -104,6 +108,14 @@ public class APIAccount extends APIEntity {
         this.mainUserEmail = mainUserEmail;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getActiveServiceName() {
         return activeServiceName;
     }
@@ -133,5 +145,6 @@ public class APIAccount extends APIEntity {
         this.activeServiceName = account.activeServiceName;
         this.dedicatedDevicesCount = account.dedicatedDevicesCount;
         this.comment = account.comment;
+        this.name = account.name;
     }
 }

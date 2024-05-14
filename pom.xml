@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.testdroid</groupId>
     <artifactId>testdroid-api</artifactId>
-    <version>3.29</version>
+    <version>3.30</version>
     <packaging>jar</packaging>
     <name>Bitbar API v2</name>
     <url>https://github.com/bitbar/testdroid-api</url>
@@ -18,7 +18,7 @@
         <jacoco-maven-plugin.skip>true</jacoco-maven-plugin.skip>
         <!-- disable default deployment -->
         <maven.deploy.skip>true</maven.deploy.skip>
-        <org.springframework.boot.spring-boot-dependencies>3.2.3</org.springframework.boot.spring-boot-dependencies>
+        <org.springframework.boot.spring-boot-dependencies>3.2.4</org.springframework.boot.spring-boot-dependencies>
         <org.apache.commons.collections4.version>4.4</org.apache.commons.collections4.version>
         <org.apache.commons.io.version>2.16.0</org.apache.commons.io.version>
         <commons-text.version>1.10.0</commons-text.version>
@@ -122,7 +122,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
-                <version>3.1.0</version>
+                <version>3.2.4</version>
                 <executions>
                     <execution>
                         <id>sign-artifacts</id>
