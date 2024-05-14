@@ -58,7 +58,6 @@ public class TypeReferenceFactory {
         LIST_MAP.put(APIBrowser.class, new TypeReference<APIList<APIBrowser>>() {});
         LIST_MAP.put(APICloudInfo.class, new TypeReference<APIList<APICloudInfo>>() {});
         LIST_MAP.put(APICluster.class, new TypeReference<APIList<APICluster>>() {});
-        LIST_MAP.put(APICommand.class, new TypeReference<APIList<APICommand>>() {});
         LIST_MAP.put(APIConnection.class, new TypeReference<APIList<APIConnection>>() {});
         LIST_MAP.put(APIDesktopBrowser.class, new TypeReference<APIList<APIDesktopBrowser>>() {});
         LIST_MAP.put(APIDesktopBrowserCapabilities.class, new TypeReference<APIList<APIDesktopBrowserCapabilities>>() {});
