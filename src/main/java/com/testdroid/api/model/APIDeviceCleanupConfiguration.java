@@ -1,6 +1,7 @@
 package com.testdroid.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.util.TimeConverter;
 
@@ -30,6 +31,10 @@ public class APIDeviceCleanupConfiguration extends APIEntity {
     private Boolean global;
 
     private String discriminator;
+
+    // For cluster use. Not included in hashCode or equals.
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Boolean forceRestore;
 
     public APIDeviceCleanupConfiguration() {
     }
@@ -122,6 +127,14 @@ public class APIDeviceCleanupConfiguration extends APIEntity {
         return discriminator;
     }
 
+    public Boolean getForceRestore() {
+        return forceRestore;
+    }
+
+    public void setForceRestore(Boolean forceRestore) {
+        this.forceRestore = forceRestore;
+    }
+
     @Override
     @JsonIgnore
     public <T extends APIEntity> void clone(T from) {
@@ -136,6 +149,7 @@ public class APIDeviceCleanupConfiguration extends APIEntity {
         this.lastModificationTime = deviceCleanupConfiguration.lastModificationTime;
         this.global = deviceCleanupConfiguration.global;
         this.discriminator = deviceCleanupConfiguration.discriminator;
+        this.forceRestore = deviceCleanupConfiguration.forceRestore;
     }
 
     @Override

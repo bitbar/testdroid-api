@@ -13,11 +13,7 @@ import java.util.List;
  */
 public class APIBillingPeriod extends APIEntity {
 
-    private Long userId;
-
     private Long accountServiceId;
-
-    private String mail;
 
     private Date startBillingPeriod;
 
@@ -54,7 +50,7 @@ public class APIBillingPeriod extends APIEntity {
 
     @SuppressWarnings("squid:S107")
     public APIBillingPeriod(
-            Long billingPeriodId, Long accountServiceId, Long userId, String mail, String plan,
+            Long billingPeriodId, Long accountServiceId, String plan,
             LocalDateTime startBillingPeriod, LocalDateTime endBillingPeriod,
             LocalDateTime subscriptionStart, LocalDateTime subscriptionEnd,
             Long additionalHours, Long servicePrice, Long additionalHoursPrice,
@@ -62,8 +58,6 @@ public class APIBillingPeriod extends APIEntity {
             LocalDateTime lastPaymentDate, LocalDateTime createTime, APIPaymentMethod paymentMethod) {
         super(billingPeriodId);
         this.accountServiceId = accountServiceId;
-        this.userId = userId;
-        this.mail = mail;
         this.plan = plan;
         this.additionalHours = additionalHours;
         this.totalPrice = servicePrice + additionalHoursPrice;
@@ -92,14 +86,6 @@ public class APIBillingPeriod extends APIEntity {
             return APIBillingPeriodType.CANCEL;
         }
         return APIBillingPeriodType.CHARGE;
-    }
-
-    public String getMail() {
-        return mail;
-    }
-
-    public void setMail(String mail) {
-        this.mail = mail;
     }
 
     public Date getStartBillingPeriod() {
@@ -140,14 +126,6 @@ public class APIBillingPeriod extends APIEntity {
 
     public void setTotalPrice(Long totalPrice) {
         this.totalPrice = totalPrice;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
     }
 
     public Date getSubscriptionStart() {
@@ -242,8 +220,6 @@ public class APIBillingPeriod extends APIEntity {
     protected <T extends APIEntity> void clone(T from) {
         APIBillingPeriod period = (APIBillingPeriod) from;
         cloneBase(from);
-        this.userId = period.userId;
-        this.mail = period.mail;
         this.startBillingPeriod = period.startBillingPeriod;
         this.endBillingPeriod = period.endBillingPeriod;
         this.plan = period.plan;

@@ -19,7 +19,7 @@ import static java.util.Collections.singletonList;
 public enum APIPaymentMethod {
 
     PAYPAL(emptyMap()),
-    BRAINTREE(createBraintreeMapping()),
+    BRAINTREE(emptyMap()),
     STRIPE(createStripeMapping()),
     INVOICE(createInvoiceMapping()),
     PROMOTION(emptyMap()),
@@ -34,15 +34,6 @@ public enum APIPaymentMethod {
                 asList(TRUE, FALSE, FALSE, FALSE), asList(CREATE, ACTIVATE),
                 asList(TRUE, TRUE, FALSE, FALSE), asList(CREATE, ACTIVATE, CANCEL),
                 asList(FALSE, TRUE, TRUE, FALSE), asList(ACTIVATE, CANCEL)
-        );
-    }
-
-    private static Map<List<Boolean>, List<PlanOperation>> createBraintreeMapping() {
-        return Map.of(
-                asList(TRUE, FALSE, FALSE, TRUE), asList(CREATE, ACTIVATE),
-                asList(FALSE, TRUE, FALSE, TRUE), singletonList(CANCEL),
-                asList(FALSE, TRUE, FALSE, FALSE), singletonList(CANCEL),
-                asList(TRUE, TRUE, FALSE, TRUE), asList(CREATE, ACTIVATE, CANCEL)
         );
     }
 

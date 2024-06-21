@@ -23,6 +23,8 @@ public class APIFramework extends APIEntity {
 
     private Long accountId;
 
+    private String accountName;
+
     private Boolean canRunFromUI;
 
     private Date createTime = new Date();
@@ -30,8 +32,6 @@ public class APIFramework extends APIEntity {
     private String description;
 
     private Boolean forProjects;
-
-    private String mainUserEmail;
 
     private String name;
 
@@ -73,7 +73,7 @@ public class APIFramework extends APIEntity {
     @SuppressWarnings("squid:S107")
     public APIFramework(
             Long id, LocalDateTime createTime, String name, String description, APIDevice.OsType osType,
-            String type, Long accountId, String mainUserEmail, String requiredAppExtensions,
+            String type, Long accountId, String accountName, String requiredAppExtensions,
             String requiredTestExtensions, String requiredTestFileTags, String documentationUrl, Boolean forProjects,
             Boolean canRunFromUI, Boolean secured, Boolean retryable, Boolean skipQueue, Long queueWait,
             Boolean skipOlderSdk, Long labelId, String labelName, String icon, Long sampleAppId, Long sampleTestId) {
@@ -84,7 +84,7 @@ public class APIFramework extends APIEntity {
         this.osType = osType;
         this.type = type;
         this.accountId = accountId;
-        this.mainUserEmail = mainUserEmail;
+        this.accountName = accountName;
         this.requiredAppExtensions = requiredAppExtensions;
         this.requiredTestExtensions = requiredTestExtensions;
         this.requiredTestFileTags = requiredTestFileTags;
@@ -199,12 +199,12 @@ public class APIFramework extends APIEntity {
         this.canRunFromUI = canRunFromUI;
     }
 
-    public String getMainUserEmail() {
-        return mainUserEmail;
+    public String getAccountName() {
+        return accountName;
     }
 
-    public void setMainUserEmail(String mainUserEmail) {
-        this.mainUserEmail = mainUserEmail;
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
     }
 
     public Boolean getSecured() {
@@ -298,7 +298,7 @@ public class APIFramework extends APIEntity {
         this.osType = apiFramework.osType;
         this.type = apiFramework.type;
         this.accountId = apiFramework.accountId;
-        this.mainUserEmail = apiFramework.mainUserEmail;
+        this.accountName = apiFramework.accountName;
         this.requiredAppExtensions = apiFramework.requiredAppExtensions;
         this.requiredTestExtensions = apiFramework.requiredTestExtensions;
         this.requiredTestFileTags = apiFramework.requiredTestFileTags;

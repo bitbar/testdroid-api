@@ -18,15 +18,9 @@ public class APIAccount extends APIEntity {
 
     private Date createTime;
 
-    private Long mainUserId;
-
-    private String mainUserFirstName;
-
-    private String mainUserLastName;
-
-    private String mainUserEmail;
-
     private String name;
+
+    private String userName;
 
     @JsonInclude(Include.NON_NULL)
     private String activeServiceName;
@@ -37,25 +31,18 @@ public class APIAccount extends APIEntity {
     public APIAccount() {
     }
 
-    @SuppressWarnings("squid:S107")
-    public APIAccount(
-            Long id, String name, String comment, LocalDateTime createTime, Long mainUserId, String mainUserFirstName,
-            String mainUserLastName, String mainUserEmail) {
+    public APIAccount(Long id, String name, String userName, String comment, LocalDateTime createTime) {
         super(id);
         this.name = name;
+        this.userName = userName;
         this.comment = comment;
         this.createTime = TimeConverter.toDate(createTime);
-        this.mainUserId = mainUserId;
-        this.mainUserFirstName = mainUserFirstName;
-        this.mainUserLastName = mainUserLastName;
-        this.mainUserEmail = mainUserEmail;
     }
 
-    @SuppressWarnings("squid:S107")
     public APIAccount(
-            Long id, String name, String comment, LocalDateTime createTime, Long mainUserId, String mainUserFirstName,
-            String mainUserLastName, String mainUserEmail, long dedicatedDevicesCount, String activeServiceName) {
-        this(id, name, comment, createTime, mainUserId, mainUserFirstName, mainUserLastName, mainUserEmail);
+            Long id, String name, String userName, String comment, LocalDateTime createTime, long dedicatedDevicesCount,
+            String activeServiceName) {
+        this(id, name, userName, comment, createTime);
         this.dedicatedDevicesCount = dedicatedDevicesCount;
         this.activeServiceName = activeServiceName;
     }
@@ -76,44 +63,20 @@ public class APIAccount extends APIEntity {
         this.createTime = createTime;
     }
 
-    public Long getMainUserId() {
-        return mainUserId;
-    }
-
-    public void setMainUserId(Long mainUserId) {
-        this.mainUserId = mainUserId;
-    }
-
-    public String getMainUserFirstName() {
-        return mainUserFirstName;
-    }
-
-    public void setMainUserFirstName(String mainUserFirstName) {
-        this.mainUserFirstName = mainUserFirstName;
-    }
-
-    public String getMainUserLastName() {
-        return mainUserLastName;
-    }
-
-    public void setMainUserLastName(String mainUserLastName) {
-        this.mainUserLastName = mainUserLastName;
-    }
-
-    public String getMainUserEmail() {
-        return mainUserEmail;
-    }
-
-    public void setMainUserEmail(String mainUserEmail) {
-        this.mainUserEmail = mainUserEmail;
-    }
-
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getActiveServiceName() {
@@ -137,14 +100,11 @@ public class APIAccount extends APIEntity {
     protected <T extends APIEntity> void clone(T from) {
         APIAccount account = (APIAccount) from;
         cloneBase(from);
-        this.mainUserId = account.mainUserId;
         this.createTime = account.createTime;
-        this.mainUserFirstName = account.mainUserFirstName;
-        this.mainUserLastName = account.mainUserLastName;
-        this.mainUserEmail = account.mainUserEmail;
         this.activeServiceName = account.activeServiceName;
         this.dedicatedDevicesCount = account.dedicatedDevicesCount;
         this.comment = account.comment;
         this.name = account.name;
+        this.userName = account.userName;
     }
 }

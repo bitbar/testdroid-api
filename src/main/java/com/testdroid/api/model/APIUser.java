@@ -8,11 +8,14 @@ import com.testdroid.api.APIListResource;
 import com.testdroid.api.dto.Context;
 import com.testdroid.api.model.notification.APINotification;
 import com.testdroid.api.util.TimeConverter;
-
 import jakarta.xml.bind.annotation.XmlType;
+
 import java.io.File;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static com.testdroid.api.dto.MappingKey.*;
 import static java.util.Collections.emptyMap;
@@ -57,13 +60,15 @@ public class APIUser extends APIEntity {
         }
     }
 
-    private List<Long> serviceIds;
-
     private Long accountId;
+
+    private String accountName;
 
     private List<Long> accountServiceIds;
 
     private String address;
+
+    private String apiKey;
 
     private String city;
 
@@ -73,31 +78,39 @@ public class APIUser extends APIEntity {
 
     private Date createTime;
 
+    private String createdByEmail;
+
+    private Long createdById;
+
     private Date deleteTime;
 
     private String email;
 
     private Boolean enabled;
 
-    private Boolean isMainUser;
+    private String firstName;
 
-    private Date lastLoginTime;
+    private Boolean isAccountOwner;
 
     private Date lastLaunchedTestTime;
 
-    private String mainUserEmail;
-
-    private Long mainUserId;
-
-    private String firstName;
+    private Date lastLoginTime;
 
     private String lastName;
+
+    private String mfaQRCodeUrl;
+
+    private MfaStatus mfaStatus;
 
     private String organization;
 
     private String phone;
 
+    private String registrationIP;
+
     private List<APIRole> roles;
+
+    private List<Long> serviceIds;
 
     private String state;
 
@@ -105,19 +118,7 @@ public class APIUser extends APIEntity {
 
     private String timeZone;
 
-    private String apiKey;
-
-    private Long createdById;
-
-    private String createdByEmail;
-
-    private String mfaQRCodeUrl;
-
-    private MfaStatus mfaStatus;
-
-    private String registrationIP;
-
-    private Collection<APIUser> accountOwners;
+    private String userAccountName;
 
     public APIUser() {
     }
@@ -136,12 +137,11 @@ public class APIUser extends APIEntity {
 
     @SuppressWarnings("squid:S107")
     public APIUser(
-            Long id, Long accountId, String email, String firstName, String lastName, String state,
-            String country, String city, String code, String address, String phone, String organization,
-            String timeZone, LocalDateTime createTime, LocalDateTime deleteTime, LocalDateTime lastLoginTime,
-            LocalDateTime lastLaunchedTestTime, Boolean isMainUser, Long mainUserId, String mainUserEmail,
-            String apiKey, Status status, Long createdById, String createdByEmail, MfaStatus mfaStatus,
-            String registrationIP) {
+            Long id, Long accountId, String accountName, String userAccountName, String email, String firstName,
+            String lastName, String state, String country, String city, String code, String address, String phone,
+            String organization, String timeZone, LocalDateTime createTime, LocalDateTime deleteTime,
+            LocalDateTime lastLoginTime, LocalDateTime lastLaunchedTestTime, Boolean isAccountOwner, String apiKey,
+            Status status, Long createdById, String createdByEmail, MfaStatus mfaStatus, String registrationIP) {
         this(id, email, firstName, lastName, createTime, deleteTime, status);
         this.state = state;
         this.country = country;
@@ -154,9 +154,9 @@ public class APIUser extends APIEntity {
         this.lastLoginTime = TimeConverter.toDate(lastLoginTime);
         this.lastLaunchedTestTime = TimeConverter.toDate(lastLaunchedTestTime);
         this.accountId = accountId;
-        this.isMainUser = isMainUser;
-        this.mainUserId = mainUserId;
-        this.mainUserEmail = mainUserEmail;
+        this.accountName = accountName;
+        this.userAccountName = userAccountName;
+        this.isAccountOwner = isAccountOwner;
         this.apiKey = apiKey;
         this.createdById = createdById;
         this.createdByEmail = createdByEmail;
@@ -262,12 +262,12 @@ public class APIUser extends APIEntity {
         this.enabled = enabled;
     }
 
-    public Boolean getIsMainUser() {
-        return isMainUser;
+    public Boolean getIsAccountOwner() {
+        return isAccountOwner;
     }
 
-    public void setIsMainUser(Boolean isMainUser) {
-        this.isMainUser = isMainUser;
+    public void setIsAccountOwner(Boolean accountOwner) {
+        isAccountOwner = accountOwner;
     }
 
     public List<APIRole> getRoles() {
@@ -309,22 +309,6 @@ public class APIUser extends APIEntity {
 
     public void setLastLaunchedTestTime(Date lastLaunchedTestTime) {
         this.lastLaunchedTestTime = lastLaunchedTestTime;
-    }
-
-    public Long getMainUserId() {
-        return mainUserId;
-    }
-
-    public void setMainUserId(Long mainUserId) {
-        this.mainUserId = mainUserId;
-    }
-
-    public String getMainUserEmail() {
-        return mainUserEmail;
-    }
-
-    public void setMainUserEmail(String mainUserEmail) {
-        this.mainUserEmail = mainUserEmail;
     }
 
     public Long getCreatedById() {
@@ -373,6 +357,14 @@ public class APIUser extends APIEntity {
 
     public void setAccountId(Long accountId) {
         this.accountId = accountId;
+    }
+
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
     }
 
     public String getApiKey() {
@@ -431,12 +423,12 @@ public class APIUser extends APIEntity {
         this.registrationIP = registrationIP;
     }
 
-    public void setAccountOwners(Collection<APIUser> accountOwners) {
-        this.accountOwners = accountOwners;
+    public String getUserAccountName() {
+        return userAccountName;
     }
 
-    public Collection<APIUser> getAccountOwners() {
-        return accountOwners;
+    public void setUserAccountName(String userAccountName) {
+        this.userAccountName = userAccountName;
     }
 
     private Map<String, Object> getUpdateUserParams() {
@@ -586,14 +578,14 @@ public class APIUser extends APIEntity {
         this.timeZone = apiUser.timeZone;
         this.createTime = apiUser.createTime;
         this.deleteTime = apiUser.deleteTime;
-        this.isMainUser = apiUser.isMainUser;
+        this.isAccountOwner = apiUser.isAccountOwner;
         this.status = apiUser.status;
         this.lastLoginTime = apiUser.lastLoginTime;
         this.lastLaunchedTestTime = apiUser.lastLaunchedTestTime;
-        this.mainUserId = apiUser.mainUserId;
-        this.mainUserEmail = apiUser.mainUserEmail;
         this.enabled = apiUser.enabled;
         this.accountId = apiUser.accountId;
+        this.accountName = apiUser.accountName;
+        this.userAccountName = apiUser.userAccountName;
         this.apiKey = apiUser.apiKey;
         this.createdById = apiUser.createdById;
         this.createdByEmail = apiUser.createdByEmail;
@@ -602,6 +594,5 @@ public class APIUser extends APIEntity {
         this.mfaStatus = apiUser.mfaStatus;
         this.mfaQRCodeUrl = apiUser.mfaQRCodeUrl;
         this.registrationIP = apiUser.registrationIP;
-        this.accountOwners = apiUser.accountOwners;
     }
 }
