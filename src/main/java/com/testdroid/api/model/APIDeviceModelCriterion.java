@@ -2,10 +2,8 @@ package com.testdroid.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
-import com.testdroid.api.util.TimeConverter;
 
 import jakarta.xml.bind.annotation.XmlType;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -40,10 +38,10 @@ public class APIDeviceModelCriterion extends APIEntity {
     }
 
     public APIDeviceModelCriterion(
-            Long id, LocalDateTime createTime, Field field, Long labelGroupId, String labelGroupName,
+            Long id, Date createTime, Field field, Long labelGroupId, String labelGroupName,
             String labelGroupDisplayName) {
         super(id);
-        this.createTime = TimeConverter.toDate(createTime);
+        this.createTime = createTime;
         this.field = field;
         this.labelGroupId = labelGroupId;
         this.labelGroupName = labelGroupName;

@@ -5,8 +5,8 @@ import com.testdroid.api.APIEntity;
 import com.testdroid.api.model.enums.APIPaymentMethod;
 import com.testdroid.api.model.enums.Unit;
 import com.testdroid.api.util.TimeConverter;
-
 import jakarta.xml.bind.annotation.XmlType;
+
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Locale;
@@ -27,6 +27,8 @@ public class APIAccountService extends APIEntity {
     }
 
     private Long accountId;
+
+    private String accountName;
 
     private Long activatedById;
 
@@ -66,10 +68,6 @@ public class APIAccountService extends APIEntity {
 
     private Integer unitCount;
 
-    private String userEmail;
-
-    private Long userId;
-
     private Integer vatRate;
 
     private DeactivateReason deactivateReason;
@@ -83,14 +81,15 @@ public class APIAccountService extends APIEntity {
 
     @SuppressWarnings("squid:S107")
     public APIAccountService(
-            Long accountId, Long activatedById, String activatedByName, boolean active, boolean autoRenew,
-            String braintreeId, LocalDateTime createTime, Long deactivatedById, String deactivatedByName,
-            LocalDateTime endTime, boolean finished, Long id, LocalDateTime lastPaymentTime,
-            APIPaymentMethod paymentMethod, Integer price, Long serviceId, LocalDateTime startTime,
-            String userEmail, Long userId, Integer vatRate, Unit unit, Integer unitCount, Integer serviceCount,
-            String serviceName, DeactivateReason deactivateReason, APIService.ChargeType chargeType) {
+            Long accountId, String accountName, Long activatedById, String activatedByName, boolean active,
+            boolean autoRenew, String braintreeId, LocalDateTime createTime, Long deactivatedById,
+            String deactivatedByName, LocalDateTime endTime, boolean finished, Long id, LocalDateTime lastPaymentTime,
+            APIPaymentMethod paymentMethod, Integer price, Long serviceId, LocalDateTime startTime, Integer vatRate,
+            Unit unit, Integer unitCount, Integer serviceCount, String serviceName, DeactivateReason deactivateReason,
+            APIService.ChargeType chargeType) {
         super(id);
         this.accountId = accountId;
+        this.accountName = accountName;
         this.activatedById = activatedById;
         this.activatedByName = activatedByName;
         this.active = active;
@@ -106,8 +105,6 @@ public class APIAccountService extends APIEntity {
         this.price = price;
         this.serviceId = serviceId;
         this.startTime = TimeConverter.toDate(startTime);
-        this.userEmail = userEmail;
-        this.userId = userId;
         this.vatRate = vatRate;
         this.unit = unit;
         this.unitCount = unitCount;
@@ -123,6 +120,14 @@ public class APIAccountService extends APIEntity {
 
     public void setAccountId(Long accountId) {
         this.accountId = accountId;
+    }
+
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
     }
 
     public Long getActivatedById() {
@@ -241,22 +246,6 @@ public class APIAccountService extends APIEntity {
         this.braintreeId = braintreeId;
     }
 
-    public String getUserEmail() {
-        return userEmail;
-    }
-
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
     public Unit getUnit() {
         return unit;
     }
@@ -357,6 +346,7 @@ public class APIAccountService extends APIEntity {
         APIAccountService accountService = (APIAccountService) from;
         cloneBase(from);
         this.accountId = accountService.accountId;
+        this.accountName = accountService.accountName;
         this.active = accountService.active;
         this.finished = accountService.finished;
         this.autoRenew = accountService.autoRenew;
@@ -376,7 +366,6 @@ public class APIAccountService extends APIEntity {
         this.unitCount = accountService.unitCount;
         this.serviceCount = accountService.serviceCount;
         this.serviceName = accountService.serviceName;
-        this.userId = accountService.userId;
         this.braintreeId = accountService.braintreeId;
         this.deactivateReason = accountService.deactivateReason;
         this.chargeType = accountService.chargeType;

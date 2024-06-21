@@ -16,24 +16,13 @@ public class APIAccountConcurrencyStatusMap extends APIEntity {
         MANUAL
     }
 
-    private String mainUserEmail;
-
     private Map<Type, APIAccountConcurrencyStatus> statusMap = new EnumMap<>(Type.class);
 
     public APIAccountConcurrencyStatusMap() {
     }
 
-    public APIAccountConcurrencyStatusMap(Long accountId, String mainUserEmail) {
+    public APIAccountConcurrencyStatusMap(Long accountId) {
         super(accountId);
-        this.mainUserEmail = mainUserEmail;
-    }
-
-    public String getMainUserEmail() {
-        return mainUserEmail;
-    }
-
-    public void setMainUserEmail(String mainUserEmail) {
-        this.mainUserEmail = mainUserEmail;
     }
 
     @JsonAnyGetter

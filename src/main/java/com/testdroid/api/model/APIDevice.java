@@ -6,10 +6,8 @@ import com.testdroid.api.APIList;
 import org.apache.commons.lang3.StringUtils;
 
 import jakarta.xml.bind.annotation.XmlType;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+
+import java.util.*;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
@@ -148,7 +146,7 @@ public class APIDevice extends APIEntity {
 
     private Long accountId;
 
-    private String mainUserEmail;
+    private String accountName;
 
     private APIList<APIDeviceProperty> properties;
 
@@ -169,6 +167,9 @@ public class APIDevice extends APIEntity {
     @JsonIgnore
     private Integer availableDevices;
 
+    @Deprecated
+    private String mainUserEmail;
+
     public APIDevice() {
     }
 
@@ -177,7 +178,7 @@ public class APIDevice extends APIEntity {
             Long id, String displayName, String manufacturer, String releaseVersion, Integer apiLevel,
             Integer creditsPrice, String imagePrefix, Integer imageTop, Integer imageLeft, Integer imageWidth,
             Integer imageHeight, Integer frameExtraWidth, OsType osType, Platform platform, Boolean online,
-            Boolean locked, Boolean enabled, Long accountId, String mainUserEmail, Integer onlineDevices,
+            Boolean locked, Boolean enabled, Long accountId, String accountName, Integer onlineDevices,
             Integer availableDevices) {
         super(id);
         this.displayName = displayName;
@@ -196,9 +197,12 @@ public class APIDevice extends APIEntity {
         this.online = online;
         this.enabled = enabled;
         this.accountId = accountId;
-        this.mainUserEmail = mainUserEmail;
+        this.accountName = accountName;
         this.onlineDevices = onlineDevices;
         this.availableDevices = availableDevices;
+        if (Objects.nonNull(accountId)) {
+            this.mainUserEmail = "TheFieldIsDeprecated@smartbear.com";
+        }
     }
 
     public String getDisplayName() {
@@ -345,12 +349,12 @@ public class APIDevice extends APIEntity {
         this.accountId = accountId;
     }
 
-    public String getMainUserEmail() {
-        return mainUserEmail;
+    public String getAccountName() {
+        return accountName;
     }
 
-    public void setMainUserEmail(String mainUserEmail) {
-        this.mainUserEmail = mainUserEmail;
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
     }
 
     public APIList<APIDeviceProperty> getProperties() {
@@ -427,6 +431,14 @@ public class APIDevice extends APIEntity {
         return availableDevices;
     }
 
+    public String getMainUserEmail() {
+        return mainUserEmail;
+    }
+
+    public void setMainUserEmail(String mainUserEmail) {
+        this.mainUserEmail = mainUserEmail;
+    }
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
@@ -452,6 +464,7 @@ public class APIDevice extends APIEntity {
         this.locked = apiDevice.locked;
         this.enabled = apiDevice.enabled;
         this.accountId = apiDevice.accountId;
+        this.accountName = apiDevice.accountName;
         this.mainUserEmail = apiDevice.mainUserEmail;
         this.deviceGroupOrigin = apiDevice.deviceGroupOrigin;
         this.properties = apiDevice.properties;

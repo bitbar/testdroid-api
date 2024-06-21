@@ -3,9 +3,9 @@ package com.testdroid.api.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.util.TimeConverter;
+import jakarta.xml.bind.annotation.XmlType;
 import org.apache.commons.lang3.tuple.Pair;
 
-import jakarta.xml.bind.annotation.XmlType;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Date;
@@ -116,9 +116,7 @@ public class APIAdminDevice extends APIEntity {
 
     private Long accountId;
 
-    private String mainUserEmail;
-
-    private Long mainUserId;
+    private String accountName;
 
     private String location;
 
@@ -134,6 +132,8 @@ public class APIAdminDevice extends APIEntity {
 
     private String comment;
 
+    private boolean forceRestore;
+
     public APIAdminDevice() {
     }
 
@@ -145,15 +145,15 @@ public class APIAdminDevice extends APIEntity {
     @SuppressWarnings("squid:S107")
     public APIAdminDevice(
             Long id, String name, String manufacturer, boolean enabled, String serialId, String fingerprint,
-            String unlockGesture, String releaseVersion, Integer apiLevel, Long deviceModelId,
-            String deviceModelName, ComplexState state, LocalDateTime stateTime, LocalDateTime stateChangeTime,
-            InitStep initStep, String ipAddress, Long clusterId, String clusterName, String clusterUrl,
-            String jenkinsUrl, String pluginVersion, String jenkinsVersion, APICluster.State clusterState,
-            LocalDateTime clusterStateTime, LocalDateTime clusterStateChangeTime, Boolean clusterEnabled,
-            APICluster.Type clusterType, String clusterIpAddress, String clusterRegion, String clusterLocation,
-            LocalDateTime lastOnlineTime, Long accountId, LocalDateTime dedicationEndTime, String comment,
-            String mainUserEmail, Long mainUserId, String location, Long testTimeLimit, Boolean locked,
-            APIDevice.OsType osType, APIDevice.Platform platform) {
+            String unlockGesture, String releaseVersion, Integer apiLevel, Long deviceModelId, String deviceModelName,
+            ComplexState state, LocalDateTime stateTime, LocalDateTime stateChangeTime, InitStep initStep,
+            String ipAddress, Long clusterId, String clusterName, String clusterUrl, String jenkinsUrl,
+            String pluginVersion, String jenkinsVersion, APICluster.State clusterState, LocalDateTime clusterStateTime,
+            LocalDateTime clusterStateChangeTime, Boolean clusterEnabled, APICluster.Type clusterType,
+            String clusterIpAddress, String clusterRegion, String clusterLocation, LocalDateTime lastOnlineTime,
+            Long accountId, String accountName, LocalDateTime dedicationEndTime, String comment, String location,
+            Long testTimeLimit, Boolean locked, APIDevice.OsType osType, APIDevice.Platform platform,
+            Boolean forceRestore) {
         super(id);
         this.name = name;
         this.manufacturer = manufacturer;
@@ -174,15 +174,15 @@ public class APIAdminDevice extends APIEntity {
                 clusterRegion, clusterLocation);
         this.lastOnlineTime = TimeConverter.toDate(lastOnlineTime);
         this.accountId = accountId;
+        this.accountName = accountName;
         this.dedicationEndTime = TimeConverter.toDate(dedicationEndTime);
         this.comment = comment;
         this.testTimeLimit = testTimeLimit;
-        this.mainUserEmail = mainUserEmail;
-        this.mainUserId = mainUserId;
         this.location = location;
         this.locked = locked;
         this.osType = osType;
         this.platform = platform;
+        this.forceRestore = forceRestore;
     }
 
     public String getName() {
@@ -313,6 +313,14 @@ public class APIAdminDevice extends APIEntity {
         this.accountId = accountId;
     }
 
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
+    }
+
     public Date getDedicationEndTime() {
         return dedicationEndTime;
     }
@@ -327,22 +335,6 @@ public class APIAdminDevice extends APIEntity {
 
     public void setComment(String comment) {
         this.comment = comment;
-    }
-
-    public String getMainUserEmail() {
-        return mainUserEmail;
-    }
-
-    public void setMainUserEmail(String mainUserEmail) {
-        this.mainUserEmail = mainUserEmail;
-    }
-
-    public Long getMainUserId() {
-        return mainUserId;
-    }
-
-    public void setMainUserId(Long mainUserId) {
-        this.mainUserId = mainUserId;
     }
 
     public APIAdminDevice setTestTimeLimit(Long testTimeLimit) {
@@ -398,6 +390,14 @@ public class APIAdminDevice extends APIEntity {
         this.manufacturer = manufacturer;
     }
 
+    public boolean isForceRestore() {
+        return forceRestore;
+    }
+
+    public void setForceRestore(boolean forceRestore) {
+        this.forceRestore = forceRestore;
+    }
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
@@ -420,14 +420,14 @@ public class APIAdminDevice extends APIEntity {
         this.ipAddress = adminDevice.ipAddress;
         this.lastOnlineTime = adminDevice.lastOnlineTime;
         this.accountId = adminDevice.accountId;
+        this.accountName = adminDevice.accountName;
         this.dedicationEndTime = adminDevice.dedicationEndTime;
         this.comment = adminDevice.comment;
-        this.mainUserEmail = adminDevice.mainUserEmail;
-        this.mainUserId = adminDevice.mainUserId;
         this.location = adminDevice.location;
         this.testTimeLimit = adminDevice.testTimeLimit;
         this.locked = adminDevice.locked;
         this.osType = adminDevice.osType;
         this.platform = adminDevice.platform;
+        this.forceRestore = adminDevice.forceRestore;
     }
 }

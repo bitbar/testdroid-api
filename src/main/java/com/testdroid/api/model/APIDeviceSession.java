@@ -7,8 +7,8 @@ import com.testdroid.api.APIListResource;
 import com.testdroid.api.UiPresentable;
 import com.testdroid.api.dto.Context;
 import com.testdroid.api.util.TimeConverter;
-
 import jakarta.xml.bind.annotation.XmlType;
+
 import java.io.File;
 import java.io.InputStream;
 import java.time.LocalDateTime;
@@ -38,6 +38,22 @@ public class APIDeviceSession extends APIEntity implements UiPresentable {
         public String getDisplayName() {
             return displayName;
         }
+    }
+
+    @XmlType(namespace = "APIDeviceSession")
+    public enum FinishReason {
+        CHANGE_DEVICE,
+        EXCLUDED,
+        GRANT_REJECTED,
+        INACTIVITY,
+        LOGOUT,
+        PLAN_CHANGE,
+        SUCCESS,
+        TEST_ERROR,
+        TIMEOUT,
+        UNKNOWN,
+        USER_ACTION,
+        WEBSOCKET_CLOSED,
     }
 
     @XmlType(namespace = "APIDeviceSession")
