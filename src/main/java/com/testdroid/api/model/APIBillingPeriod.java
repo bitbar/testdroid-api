@@ -13,6 +13,10 @@ import java.util.List;
  */
 public class APIBillingPeriod extends APIEntity {
 
+    private Long accountId;
+
+    private String accountName;
+
     private Long accountServiceId;
 
     private Date startBillingPeriod;
@@ -55,7 +59,8 @@ public class APIBillingPeriod extends APIEntity {
             LocalDateTime subscriptionStart, LocalDateTime subscriptionEnd,
             Long additionalHours, Long servicePrice, Long additionalHoursPrice,
             LocalDateTime paymentDate, LocalDateTime additionalHoursPaymentDate,
-            LocalDateTime lastPaymentDate, LocalDateTime createTime, APIPaymentMethod paymentMethod) {
+            LocalDateTime lastPaymentDate, LocalDateTime createTime, APIPaymentMethod paymentMethod,
+            Long accountId, String accountName) {
         super(billingPeriodId);
         this.accountServiceId = accountServiceId;
         this.plan = plan;
@@ -72,6 +77,8 @@ public class APIBillingPeriod extends APIEntity {
         this.paymentMethod = paymentMethod;
         this.createTime = TimeConverter.toDate(createTime);
         this.apiBillingPeriodType = type(startBillingPeriod, endBillingPeriod, subscriptionStart, subscriptionEnd);
+        this.setAccountId(accountId);
+        this.setAccountName(accountName);
     }
 
     private static APIBillingPeriodType type(
@@ -216,6 +223,22 @@ public class APIBillingPeriod extends APIEntity {
         this.usages = usages;
     }
 
+    public Long getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(Long accountId) {
+        this.accountId = accountId;
+    }
+
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
+    }
+
     @Override
     protected <T extends APIEntity> void clone(T from) {
         APIBillingPeriod period = (APIBillingPeriod) from;
@@ -234,5 +257,7 @@ public class APIBillingPeriod extends APIEntity {
         this.apiBillingPeriodType = period.apiBillingPeriodType;
         this.accountServiceId = period.accountServiceId;
         this.usages = period.usages;
+        this.accountId = period.accountId;
+        this.accountName = period.accountName;
     }
 }

@@ -339,6 +339,7 @@ public class MappingKey {
     public static final String TEST_EXECUTING = "testExecuting";
     public static final String TEST_RUN_ID = "testRunId";
     public static final String TEST_RUN_NAME = "testRunName";
+    public static final String TEST_TIMEOUT = "testTimeout";
     public static final String TEST_TIME_LIMIT = "testTimeLimit";
     public static final String TETHERING_ON = "tetheringOn";
     public static final String TIME_LIMIT = "timeLimit";
@@ -377,7 +378,6 @@ public class MappingKey {
     public static final String WAITING_DEVICE_COUNT = "waitingDeviceCount";
     public static final String WARNING_DEVICE_COUNT = "warningDeviceCount";
     public static final String WIDTH = "width";
-    public static final String WITH_ADDRESS = "withAddress";
     public static final String WITH_BROWSERS = "withBrowsers";
     public static final String WITH_DEDICATED = "withDedicated";
     public static final String WITH_DEDICATED_DEVICES_INFO = "withDedicatedDevicesInfo";

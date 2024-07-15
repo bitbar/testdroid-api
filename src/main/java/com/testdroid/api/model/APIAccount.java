@@ -23,6 +23,9 @@ public class APIAccount extends APIEntity {
     private String userName;
 
     @JsonInclude(Include.NON_NULL)
+    private APIInvoiceDetails invoiceDetails;
+
+    @JsonInclude(Include.NON_NULL)
     private String activeServiceName;
 
     @JsonInclude(Include.NON_NULL)
@@ -95,6 +98,14 @@ public class APIAccount extends APIEntity {
         this.dedicatedDevicesCount = dedicatedDevicesCount;
     }
 
+    public APIInvoiceDetails getInvoiceDetails() {
+        return invoiceDetails;
+    }
+
+    public void setInvoiceDetails(APIInvoiceDetails invoiceDetails) {
+        this.invoiceDetails = invoiceDetails;
+    }
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
@@ -106,5 +117,6 @@ public class APIAccount extends APIEntity {
         this.comment = account.comment;
         this.name = account.name;
         this.userName = account.userName;
+        this.invoiceDetails = account.invoiceDetails;
     }
 }

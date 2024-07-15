@@ -24,6 +24,8 @@ public class APIRole extends APIEntity {
 
     private boolean valueCalculated;
 
+    private boolean userRole;
+
     public APIRole() {
     }
 
@@ -59,6 +61,7 @@ public class APIRole extends APIEntity {
         this(id, name);
         this.parentId = parentId;
         this.addedByEmail = addedByEmail;
+        this.userRole = true;
     }
 
     public String getName() {
@@ -101,6 +104,14 @@ public class APIRole extends APIEntity {
         this.valueCalculated = valueCalculated;
     }
 
+    public boolean isUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(boolean userRole) {
+        this.userRole = userRole;
+    }
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
@@ -111,6 +122,7 @@ public class APIRole extends APIEntity {
         this.addedByEmail = apiRole.addedByEmail;
         this.value = apiRole.value;
         this.valueCalculated = apiRole.valueCalculated;
+        this.userRole = apiRole.userRole;
     }
 
     @Override
