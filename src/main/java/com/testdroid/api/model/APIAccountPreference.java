@@ -3,6 +3,7 @@ package com.testdroid.api.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,9 +14,14 @@ import java.util.Objects;
  */
 public class APIAccountPreference extends APIEntity implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private List<String> allowedFileExtensions = new ArrayList<>();
+
+    private Long testTimeout;
+
+    private Long defaultTestTimeout;
 
     public List<String> getAllowedFileExtensions() {
         return allowedFileExtensions;
@@ -23,6 +29,24 @@ public class APIAccountPreference extends APIEntity implements Serializable {
 
     public APIAccountPreference setAllowedFileExtensions(List<String> allowedFileExtensions) {
         this.allowedFileExtensions = allowedFileExtensions;
+        return this;
+    }
+
+    public Long getTestTimeout() {
+        return testTimeout;
+    }
+
+    public APIAccountPreference setTestTimeout(Long testTimeout) {
+        this.testTimeout = testTimeout;
+        return this;
+    }
+
+    public Long getDefaultTestTimeout() {
+        return defaultTestTimeout;
+    }
+
+    public APIAccountPreference setDefaultTestTimeout(Long defaultTestTimeout) {
+        this.defaultTestTimeout = defaultTestTimeout;
         return this;
     }
 
@@ -38,6 +62,8 @@ public class APIAccountPreference extends APIEntity implements Serializable {
         APIAccountPreference prototype = (APIAccountPreference) from;
         cloneBase(from);
         this.allowedFileExtensions = prototype.allowedFileExtensions;
+        this.testTimeout = prototype.testTimeout;
+        this.defaultTestTimeout = prototype.defaultTestTimeout;
     }
 
     @Override
@@ -45,15 +71,16 @@ public class APIAccountPreference extends APIEntity implements Serializable {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof APIAccountPreference that)) {
             return false;
         }
-        APIAccountPreference that = (APIAccountPreference) o;
-        return allowedFileExtensions.equals(that.allowedFileExtensions);
+        return Objects.equals(allowedFileExtensions, that.allowedFileExtensions)
+                && Objects.equals(testTimeout, that.testTimeout)
+                && Objects.equals(defaultTestTimeout, that.defaultTestTimeout);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(allowedFileExtensions);
+        return Objects.hash(allowedFileExtensions, testTimeout, defaultTestTimeout);
     }
 }

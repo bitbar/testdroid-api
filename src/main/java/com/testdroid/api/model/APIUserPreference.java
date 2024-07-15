@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.testdroid.api.APIEntity;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -13,15 +14,12 @@ import java.util.Objects;
 @JsonIgnoreProperties(value = {"id"})
 public class APIUserPreference extends APIEntity implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private Long httpSessionMaxInactiveInterval;
 
-    private Long testTimeout;
-
     private Long defaultHttpSessionMaxInactiveInterval;
-
-    private Long defaultTestTimeout;
 
     public void setHttpSessionMaxInactiveInterval(Long httpSessionMaxInactiveInterval) {
         this.httpSessionMaxInactiveInterval = httpSessionMaxInactiveInterval;
@@ -29,22 +27,6 @@ public class APIUserPreference extends APIEntity implements Serializable {
 
     public Long getHttpSessionMaxInactiveInterval() {
         return httpSessionMaxInactiveInterval;
-    }
-
-    public void setTestTimeout(Long testTimeout) {
-        this.testTimeout = testTimeout;
-    }
-
-    public Long getTestTimeout() {
-        return testTimeout;
-    }
-
-    public void setDefaultTestTimeout(Long defaultTestTimeout) {
-        this.defaultTestTimeout = defaultTestTimeout;
-    }
-
-    public Long getDefaultTestTimeout() {
-        return defaultTestTimeout;
     }
 
     public void setDefaultHttpSessionMaxInactiveInterval(Long defaultHttpSessionMaxInactiveInterval) {
@@ -61,7 +43,6 @@ public class APIUserPreference extends APIEntity implements Serializable {
         APIUserPreference prototype = (APIUserPreference) from;
         cloneBase(from);
         this.httpSessionMaxInactiveInterval = prototype.httpSessionMaxInactiveInterval;
-        this.testTimeout = prototype.testTimeout;
     }
 
     @Override
@@ -73,12 +54,11 @@ public class APIUserPreference extends APIEntity implements Serializable {
             return false;
         }
         APIUserPreference that = (APIUserPreference) o;
-        return Objects.equals(httpSessionMaxInactiveInterval, that.httpSessionMaxInactiveInterval) &&
-                Objects.equals(testTimeout, that.testTimeout);
+        return Objects.equals(httpSessionMaxInactiveInterval, that.httpSessionMaxInactiveInterval);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(httpSessionMaxInactiveInterval, testTimeout);
+        return Objects.hash(httpSessionMaxInactiveInterval);
     }
 }

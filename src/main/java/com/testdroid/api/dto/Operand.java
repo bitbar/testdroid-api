@@ -10,6 +10,7 @@ public enum Operand {
     BEFORE(2),
     ON(2),
     EQ(2),
+    NOTEQ(2),
     CONTAINS(2),
     LIKE(2),
     NOTLIKE(2),
