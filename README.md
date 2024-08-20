@@ -17,7 +17,7 @@ Add dependency to your `pom.xml` file:
 </dependency>
 ```
 
-Replace `2.XX` with some [released version](https://github.com/bitbar/testdroid-api/releases).
+Replace `3.XX` with some [released version](https://github.com/bitbar/testdroid-api/releases).
 
 ## Authors
 

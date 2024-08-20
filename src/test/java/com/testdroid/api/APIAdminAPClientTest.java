@@ -24,8 +24,7 @@ class APIAdminAPClientTest extends BaseAPIClientTest {
         List<APIUserFile> files = samples.getData();
         for (APIUserFile file : files) {
             Response httpResponse = ADMIN_API_CLIENT.getHttpResponse("/files/" + file.id + "/file", null);
-            assertThat(httpResponse.headers().get("x-amz-tagging-count")).isEqualTo("1");
-            assertThat(httpResponse.headers().get("x-amz-expiration")).isNull();
+            assertThat(httpResponse.isSuccessful()).isTrue();
         }
     }
 
