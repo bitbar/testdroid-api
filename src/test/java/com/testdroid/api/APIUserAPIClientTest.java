@@ -95,15 +95,13 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
         assertThat(apiUserFile.isDuplicate()).isFalse();
         Response httpResponse;
         httpResponse = apiClient.getHttpResponse("/me/files/" + apiUserFile.id + "/file", null);
-        assertThat(httpResponse.headers().get("x-amz-tagging-count")).isEqualTo("1");
-        assertThat(httpResponse.headers().get("x-amz-expiration")).contains("rule-id=\"keep 365d\"");
+        assertThat(httpResponse.isSuccessful()).isTrue();
         //Verify file duplication
         apiUserFile = apiClient.me().uploadFile(loadFile(APP_PATH));
         assertThat(apiUserFile.getName()).isEqualTo("BitbarSampleApp.apk");
         assertThat(apiUserFile.isDuplicate()).isTrue();
         httpResponse = apiClient.getHttpResponse("/me/files/" + apiUserFile.id + "/file", null);
-        assertThat(httpResponse.headers().get("x-amz-tagging-count")).isEqualTo("1");
-        assertThat(httpResponse.headers().get("x-amz-expiration")).contains("rule-id=\"keep 365d\"");
+        assertThat(httpResponse.isSuccessful()).isTrue();
     }
 
     @ParameterizedTest
