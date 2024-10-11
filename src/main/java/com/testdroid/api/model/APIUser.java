@@ -123,16 +123,9 @@ public class APIUser extends APIEntity {
     public APIUser() {
     }
 
-    public APIUser(
-            Long id, String email, String firstName, String lastName, LocalDateTime createTime, LocalDateTime deleteTime, Status status) {
+    public APIUser(Long id, String email) {
         super(id);
         this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.createTime = TimeConverter.toDate(createTime);
-        this.deleteTime = TimeConverter.toDate(deleteTime);
-        this.status = status;
-        this.enabled = status == Status.ENABLED;
     }
 
     @SuppressWarnings("squid:S107")
@@ -142,7 +135,13 @@ public class APIUser extends APIEntity {
             String organization, String timeZone, LocalDateTime createTime, LocalDateTime deleteTime,
             LocalDateTime lastLoginTime, LocalDateTime lastLaunchedTestTime, Boolean isAccountOwner, String apiKey,
             Status status, Long createdById, String createdByEmail, MfaStatus mfaStatus, String registrationIP) {
-        this(id, email, firstName, lastName, createTime, deleteTime, status);
+        this(id, email);
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.createTime = TimeConverter.toDate(createTime);
+        this.deleteTime = TimeConverter.toDate(deleteTime);
+        this.status = status;
+        this.enabled = status == Status.ENABLED;
         this.state = state;
         this.country = country;
         this.city = city;
