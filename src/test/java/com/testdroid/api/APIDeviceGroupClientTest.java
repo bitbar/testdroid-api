@@ -36,8 +36,10 @@ class APIDeviceGroupClientTest extends BaseAPIClientTest {
     @ArgumentsSource(APIClientProvider.class)
     void addDeviceTest(APIClient apiClient) throws APIException {
         APIDeviceGroup deviceGroup = apiClient.me().createDeviceGroup("iosDevicesGroup", IOS);
-        APIList<APIDevice> devicesList = apiClient.getDevices(new Context<>(APIDevice.class)
-                .addFilter(new FilterEntry(OS_TYPE, EQ, IOS.name()))).getEntity();
+        Context<APIDevice> ctx = new Context<>(APIDevice.class)
+                .addFilter(new FilterEntry(OS_TYPE, EQ, IOS.name()))
+                .setLimit(Integer.MAX_VALUE);
+        APIList<APIDevice> devicesList = apiClient.getDevices(ctx).getEntity();
         for (APIDevice device : devicesList.getData()) {
             deviceGroup.addDevice(device);
         }

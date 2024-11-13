@@ -7,6 +7,7 @@ import com.testdroid.api.model.APIUser;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
@@ -22,6 +23,7 @@ import static com.testdroid.api.dto.Operand.EQ;
 import static com.testdroid.api.dto.Operand.LIKE;
 import static com.testdroid.api.filter.FilterEntry.trueFilterEntry;
 import static com.testdroid.api.model.APIDevice.OsType.ANDROID;
+import static com.testdroid.cloud.test.categories.TestTags.API_CLIENT;
 import static java.lang.Integer.MAX_VALUE;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.apache.commons.lang3.StringUtils.isNoneBlank;
@@ -29,6 +31,7 @@ import static org.apache.commons.lang3.StringUtils.isNoneBlank;
 /**
  * @author Damian Sniezek <damian.sniezek@bitbar.com>
  */
+@Tag(API_CLIENT)
 abstract class BaseAPIClientTest {
 
     static final String APP_PATH = "/fixtures/BitbarSampleApp.apk";

@@ -43,6 +43,8 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
 
     private static final String DEFAULT_FRAMEWORK_NAME_LIKE = "%Android Instrumentation%";
 
+    private static final long VIRUS_SCAN_WAIT_TIME = 10 * 60 * 1000L;
+
     @ParameterizedTest
     @ArgumentsSource(APIClientProvider.class)
     void getDevicesTest(APIClient apiClient) throws APIException {
@@ -80,11 +82,13 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
     @ArgumentsSource(APIClientProvider.class)
     void getFilesDefaultOrderTest(APIClient apiClient) throws APIException, IOException {
         APIUser me = apiClient.me();
-        me.uploadFile(File.createTempFile("getFilesDefaultOrderTest", ".tmp"));
-        me.uploadFile(File.createTempFile("getFilesDefaultOrderTest", ".tmp"));
+        APIUserFile file1 = me.uploadFile(File.createTempFile("getFilesDefaultOrderTest", ".tmp"));
+        APIUserFile file2 = me.uploadFile(File.createTempFile("getFilesDefaultOrderTest", ".tmp"));
         APIList<APIUserFile> list = me.getListResource("/me/files", new Context<>(APIUserFile.class, 0, 2, EMPTY,
                 EMPTY).addFilter(FilterEntry.create(DIRECTION, EQ, APIUserFile.Direction.INPUT.name()))).getEntity();
         assertThat(list.getData().get(0).getId()).isGreaterThan(list.getData().get(1).getId());
+        file1.delete();
+        file2.delete();
     }
 
     @ParameterizedTest
@@ -115,6 +119,7 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
             FileUtils.copyInputStreamToFile(inputStream, destination);
         }
         assertThat(destination).hasSize(apiUserFile.getSize());
+        apiUserFile.delete();
     }
 
     @ParameterizedTest
@@ -160,7 +165,7 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
         APIUserFile testFile = me.uploadFile(loadFile(TEST_PATH));
         APIFileConfig testFileConfig = new APIFileConfig(testFile.getId(), RUN_TEST);
         config.setFiles(Arrays.asList(apkFileConfig, testFileConfig));
-        APIUserFile.waitForVirusScans(apkFile, testFile);
+        APIUserFile.waitForVirusScans(VIRUS_SCAN_WAIT_TIME, apkFile, testFile);
         me.validateTestRunConfig(config);
         APITestRun apiTestRun = me.startTestRun(config);
         assertThat(apiTestRun.getState()).isIn(RUNNING, WAITING);
@@ -182,7 +187,7 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
         APIUserFile testFile = me.uploadFile(loadFile(TEST_PATH));
         APIFileConfig testFileConfig = new APIFileConfig(testFile.getId(), RUN_TEST);
         config.setFiles(Arrays.asList(apkFileConfig, testFileConfig));
-        APIUserFile.waitForVirusScans(apkFile, testFile);
+        APIUserFile.waitForVirusScans(VIRUS_SCAN_WAIT_TIME, apkFile, testFile);
         me.validateTestRunConfig(config);
         APITestRun apiTestRun = me.startTestRun(config);
         assertThat(apiTestRun.getState()).isIn(RUNNING, WAITING);
@@ -231,7 +236,7 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
         APIUserFile testFile = apiUser2.uploadFile(loadFile(TEST_PATH));
         APIFileConfig testFileConfig = new APIFileConfig(testFile.getId(), RUN_TEST);
         config.setFiles(Arrays.asList(apkFileConfig, testFileConfig));
-        APIUserFile.waitForVirusScans(apkFile, testFile);
+        APIUserFile.waitForVirusScans(VIRUS_SCAN_WAIT_TIME, apkFile, testFile);
         apiUser2.validateTestRunConfig(config);
         APITestRun apiTestRun = apiUser2.startTestRun(config);
         apiTestRun.abort();

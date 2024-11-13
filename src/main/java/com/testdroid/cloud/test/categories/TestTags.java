@@ -17,4 +17,6 @@ public class TestTags {
 
     public static final String API_CLIENT = "api_client";
 
+    public static final String LOCAL = "local";
+
 }

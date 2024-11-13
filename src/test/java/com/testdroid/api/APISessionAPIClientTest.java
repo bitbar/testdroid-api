@@ -51,9 +51,9 @@ class APISessionAPIClientTest extends BaseAPIClientTest {
                 .addFilter(trueFilterEntry(ONLINE))
                 .addFilter(falseFilterEntry(LOCKED))
                 .addFilter(trueFilterEntry(ENABLED));
-        apiClient.findDevicePropertyInLabelGroup("device-groups", "trial-devices").ifPresent(val -> ctx.setExtraParams(
-                new HashSetValuedHashMap<>(singletonMap(LABEL_IDS_ARR, val.getId()))
-        ));
+        apiClient.findDevicePropertyInLabelGroup("device-groups", "device-groups-trial-devices")
+                .ifPresent(val -> ctx.setExtraParams(
+                        new HashSetValuedHashMap<>(singletonMap(LABEL_IDS_ARR, val.getId()))));
         ctx.setLimit(0);
         return apiClient.getDevices(ctx).getEntity().getData();
     }
