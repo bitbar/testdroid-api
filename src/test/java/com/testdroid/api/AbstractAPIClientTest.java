@@ -2,6 +2,7 @@ package com.testdroid.api;
 
 import okio.BufferedSink;
 import okio.Okio;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -12,8 +13,10 @@ import java.util.Map;
 
 import static com.testdroid.api.model.APIDevice.OsType.ANDROID;
 import static com.testdroid.api.model.APIDevice.OsType.DESKTOP;
+import static com.testdroid.cloud.test.categories.TestTags.UNIT;
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Tag(UNIT)
 class AbstractAPIClientTest {
 
     @Test
