@@ -15,8 +15,6 @@ import java.util.*;
  */
 public class APIService extends APIEntity {
 
-    private boolean autoRenew;
-
     private String externalId;
 
     private String commonId;
@@ -60,13 +58,12 @@ public class APIService extends APIEntity {
 
     @SuppressWarnings("squid:S107")
     public APIService(
-            Long id, String name, String description, boolean autoRenew, Integer centPrice, Integer includedHours,
+            Long id, String name, String description, Integer centPrice, Integer includedHours,
             Integer pricePerHour, String externalId, String commonId, LocalDateTime archiveTime, LocalDateTime activateTime,
             boolean activated, boolean customPlan, ChargeType chargeType, Unit unit, String features) {
         super(id);
         this.name = name;
         this.description = description;
-        this.autoRenew = autoRenew;
         this.centPrice = centPrice;
         this.includedHours = includedHours;
         this.pricePerHour = pricePerHour;
@@ -79,14 +76,6 @@ public class APIService extends APIEntity {
         this.unit = unit;
         this.commonId = commonId;
         this.features = features;
-    }
-
-    public boolean isAutoRenew() {
-        return autoRenew;
-    }
-
-    public void setAutoRenew(boolean autoRenew) {
-        this.autoRenew = autoRenew;
     }
 
     public Integer getCentPrice() {
@@ -104,7 +93,6 @@ public class APIService extends APIEntity {
         this.name = apiService.name;
         this.description = apiService.description;
         this.features = apiService.features;
-        this.autoRenew = apiService.autoRenew;
         this.centPrice = apiService.centPrice;
         this.externalId = apiService.externalId;
         this.commonId = apiService.commonId;

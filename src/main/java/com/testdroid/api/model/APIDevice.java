@@ -3,9 +3,8 @@ package com.testdroid.api.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIList;
-import org.apache.commons.lang3.StringUtils;
-
 import jakarta.xml.bind.annotation.XmlType;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
 
@@ -27,7 +26,6 @@ public class APIDevice extends APIEntity {
 
     public enum Creator {
         MANUAL,
-        ROBOT,
         AUTOMATIC
     }
 
@@ -160,7 +158,9 @@ public class APIDevice extends APIEntity {
 
     private APIDeviceAvailability availability;
 
-    // Technical fields to calculate others
+    @JsonIgnore
+    private String location;
+
     @JsonIgnore
     private Integer onlineDevices;
 
@@ -178,7 +178,7 @@ public class APIDevice extends APIEntity {
             Long id, String displayName, String manufacturer, String releaseVersion, Integer apiLevel,
             Integer creditsPrice, String imagePrefix, Integer imageTop, Integer imageLeft, Integer imageWidth,
             Integer imageHeight, Integer frameExtraWidth, OsType osType, Platform platform, Boolean online,
-            Boolean locked, Boolean enabled, Long accountId, String accountName, Integer onlineDevices,
+            Boolean locked, Boolean enabled, String location, Long accountId, String accountName, Integer onlineDevices,
             Integer availableDevices) {
         super(id);
         this.displayName = displayName;
@@ -196,6 +196,7 @@ public class APIDevice extends APIEntity {
         this.locked = locked;
         this.online = online;
         this.enabled = enabled;
+        this.location = location;
         this.accountId = accountId;
         this.accountName = accountName;
         this.onlineDevices = onlineDevices;
@@ -421,12 +422,18 @@ public class APIDevice extends APIEntity {
         this.availability = availability;
     }
 
-    @JsonIgnore
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
     public Integer getOnlineDevices() {
         return onlineDevices;
     }
 
-    @JsonIgnore
     public Integer getAvailableDevices() {
         return availableDevices;
     }
@@ -474,5 +481,6 @@ public class APIDevice extends APIEntity {
         this.availability = apiDevice.availability;
         this.onlineDevices = apiDevice.onlineDevices;
         this.availableDevices = apiDevice.availableDevices;
+        this.location = apiDevice.location;
     }
 }

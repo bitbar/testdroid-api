@@ -36,8 +36,6 @@ public class APIAccountService extends APIEntity {
 
     private boolean active;
 
-    private boolean autoRenew;
-
     private String braintreeId;
 
     private Date createTime;
@@ -82,7 +80,7 @@ public class APIAccountService extends APIEntity {
     @SuppressWarnings("squid:S107")
     public APIAccountService(
             Long accountId, String accountName, Long activatedById, String activatedByName, boolean active,
-            boolean autoRenew, String braintreeId, LocalDateTime createTime, Long deactivatedById,
+            String braintreeId, LocalDateTime createTime, Long deactivatedById,
             String deactivatedByName, LocalDateTime endTime, boolean finished, Long id, LocalDateTime lastPaymentTime,
             APIPaymentMethod paymentMethod, Integer price, Long serviceId, LocalDateTime startTime, Integer vatRate,
             Unit unit, Integer unitCount, Integer serviceCount, String serviceName, DeactivateReason deactivateReason,
@@ -93,7 +91,6 @@ public class APIAccountService extends APIEntity {
         this.activatedById = activatedById;
         this.activatedByName = activatedByName;
         this.active = active;
-        this.autoRenew = autoRenew;
         this.braintreeId = braintreeId;
         this.createTime = TimeConverter.toDate(createTime);
         this.deactivatedById = deactivatedById;
@@ -230,14 +227,6 @@ public class APIAccountService extends APIEntity {
         this.price = price;
     }
 
-    public boolean isAutoRenew() {
-        return autoRenew;
-    }
-
-    public void setAutoRenew(boolean autoRenew) {
-        this.autoRenew = autoRenew;
-    }
-
     public String getBraintreeId() {
         return braintreeId;
     }
@@ -319,11 +308,6 @@ public class APIAccountService extends APIEntity {
     }
 
     @JsonIgnore
-    public Integer getPayUnitCount() {
-        return autoRenew ? unitCount : unitCount * serviceCount;
-    }
-
-    @JsonIgnore
     public String getVatPriceString() {
         float vatPrice = (getPrice() * getVatRate()) / 100f;
         return String.format(Locale.ENGLISH, "%.2f", vatPrice / 100);
@@ -349,7 +333,6 @@ public class APIAccountService extends APIEntity {
         this.accountName = accountService.accountName;
         this.active = accountService.active;
         this.finished = accountService.finished;
-        this.autoRenew = accountService.autoRenew;
         this.price = accountService.price;
         this.activatedById = accountService.activatedById;
         this.activatedByName = accountService.activatedByName;
