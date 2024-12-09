@@ -22,6 +22,8 @@ public class APIAdminDeviceModel extends APIEntity {
 
     private Boolean enabled;
 
+    private Integer creditsPrice;
+
     private APIDevice.OsType osType;
 
     private APIDevice.Platform platform;
@@ -33,14 +35,13 @@ public class APIAdminDeviceModel extends APIEntity {
     private String releaseVersion;
 
     public APIAdminDeviceModel() {
-
     }
 
     @SuppressWarnings("squid:S107")
     public APIAdminDeviceModel(
             Long id, String name, APIDevice.OsType osType, APIDevice.Platform platform, String location,
-            Boolean dedicated, String releaseVersion, Boolean enabled, Integer online, Integer total, Long running,
-            Long queueSize, Double avgWaitingTime) {
+            Boolean dedicated, String releaseVersion, Boolean enabled, Integer creditsPrice, Integer online,
+            Integer total, Long running, Long queueSize, Double avgWaitingTime) {
         super(id);
         this.name = name;
         this.osType = osType;
@@ -49,30 +50,12 @@ public class APIAdminDeviceModel extends APIEntity {
         this.dedicated = dedicated;
         this.releaseVersion = releaseVersion;
         this.enabled = enabled;
+        this.creditsPrice = creditsPrice;
         this.online = online;
         this.total = total;
         this.running = running;
         this.queueSize = queueSize;
         this.avgWaitingTime = avgWaitingTime != null ? avgWaitingTime.longValue() : 0;
-    }
-
-    @Override
-    @JsonIgnore
-    protected <T extends APIEntity> void clone(T from) {
-        APIAdminDeviceModel model = (APIAdminDeviceModel) from;
-        cloneBase(from);
-        this.name = model.name;
-        this.osType = model.osType;
-        this.platform = model.platform;
-        this.location = model.location;
-        this.dedicated = model.dedicated;
-        this.releaseVersion = model.releaseVersion;
-        this.enabled = model.enabled;
-        this.online = model.online;
-        this.total = model.total;
-        this.running = model.running;
-        this.queueSize = model.queueSize;
-        this.avgWaitingTime = model.avgWaitingTime;
     }
 
     public String getName() {
@@ -169,5 +152,33 @@ public class APIAdminDeviceModel extends APIEntity {
 
     public void setReleaseVersion(String releaseVersion) {
         this.releaseVersion = releaseVersion;
+    }
+
+    public Integer getCreditsPrice() {
+        return creditsPrice;
+    }
+
+    public void setCreditsPrice(Integer creditsPrice) {
+        this.creditsPrice = creditsPrice;
+    }
+
+    @Override
+    @JsonIgnore
+    protected <T extends APIEntity> void clone(T from) {
+        APIAdminDeviceModel model = (APIAdminDeviceModel) from;
+        cloneBase(from);
+        this.name = model.name;
+        this.osType = model.osType;
+        this.platform = model.platform;
+        this.location = model.location;
+        this.dedicated = model.dedicated;
+        this.releaseVersion = model.releaseVersion;
+        this.enabled = model.enabled;
+        this.creditsPrice = model.creditsPrice;
+        this.online = model.online;
+        this.total = model.total;
+        this.running = model.running;
+        this.queueSize = model.queueSize;
+        this.avgWaitingTime = model.avgWaitingTime;
     }
 }

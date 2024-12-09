@@ -42,7 +42,6 @@ public class MappingKey {
     public static final String ARCHIVING_ITEM_COUNT = "archivingItemCount";
     public static final String ARCHIVING_STRATEGY = "archivingStrategy";
     public static final String ASL_ON = "aslOn";
-    public static final String AUTO_RENEW = "autoRenew";
     public static final String AVG_WAITING_TIME = "avgWaitingTime";
     public static final String BATTERY_LEVEL = "batteryLevel";
     public static final String BILLABLE = "billable";

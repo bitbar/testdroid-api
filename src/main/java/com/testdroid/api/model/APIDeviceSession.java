@@ -188,7 +188,7 @@ public class APIDeviceSession extends APIEntity implements UiPresentable {
             String releaseVersion, Integer apiLevel, ExcludeReason excludeReason, Long deviceInstanceId,
             RetryState retryState, Integer autoRetriesLeftCount, Long deviceTime, Long duration, Long projectId,
             String projectName, Long testRunId, String testRunName, Float successRatio, String name,
-            APIDeviceSessionConfig config, Boolean biometricInstrumentation) {
+            APIDeviceSessionConfig config, Boolean biometricInstrumentation, String location) {
         super(id);
         this.externalId = externalId;
         this.clientSideId = clientSideId;
@@ -202,7 +202,7 @@ public class APIDeviceSession extends APIEntity implements UiPresentable {
         this.endTime = TimeConverter.toDate(endTime);
         this.device = new APIDevice(deviceModelId, displayName, deviceManufacturer, releaseVersion,
                 apiLevel, creditsPrice, imagePrefix, imageTop, imageLeft, imageWidth, imageHeight, frameExtraWidth,
-                osType, platform, null, locked, enabled, null, null, null, null);
+                osType, platform, null, locked, enabled, location, null, null, null, null);
         this.timeLimit = timeLimit;
         this.deviceLogFirstTimestamp = deviceLogFirstTimestamp;
         this.state = state;
