@@ -34,6 +34,8 @@ public class APIAdminDeviceModel extends APIEntity {
 
     private String releaseVersion;
 
+    private Boolean freeTrial;
+
     public APIAdminDeviceModel() {
     }
 
@@ -41,7 +43,7 @@ public class APIAdminDeviceModel extends APIEntity {
     public APIAdminDeviceModel(
             Long id, String name, APIDevice.OsType osType, APIDevice.Platform platform, String location,
             Boolean dedicated, String releaseVersion, Boolean enabled, Integer creditsPrice, Integer online,
-            Integer total, Long running, Long queueSize, Double avgWaitingTime) {
+            Integer total, Long running, Long queueSize, Double avgWaitingTime, Boolean freeTrial) {
         super(id);
         this.name = name;
         this.osType = osType;
@@ -56,6 +58,7 @@ public class APIAdminDeviceModel extends APIEntity {
         this.running = running;
         this.queueSize = queueSize;
         this.avgWaitingTime = avgWaitingTime != null ? avgWaitingTime.longValue() : 0;
+        this.freeTrial = freeTrial;
     }
 
     public String getName() {
@@ -162,6 +165,14 @@ public class APIAdminDeviceModel extends APIEntity {
         this.creditsPrice = creditsPrice;
     }
 
+    public Boolean getFreeTrial() {
+        return freeTrial;
+    }
+
+    public void setFreeTrial(Boolean freeTrial) {
+        this.freeTrial = freeTrial;
+    }
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
@@ -180,5 +191,6 @@ public class APIAdminDeviceModel extends APIEntity {
         this.running = model.running;
         this.queueSize = model.queueSize;
         this.avgWaitingTime = model.avgWaitingTime;
+        this.freeTrial = model.freeTrial;
     }
 }

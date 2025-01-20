@@ -3,7 +3,6 @@ package com.testdroid.api;
 import com.testdroid.api.dto.Context;
 import com.testdroid.api.filter.FilterEntry;
 import com.testdroid.api.model.APIUser;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -15,6 +14,7 @@ import static com.testdroid.api.dto.MappingKey.ID;
 import static com.testdroid.api.dto.MappingKey.NAME;
 import static com.testdroid.api.dto.Operand.EQ;
 import static com.testdroid.api.dto.Operand.IN;
+import static com.testdroid.api.util.RandomUtils.RSU;
 import static com.testdroid.cloud.test.categories.TestTags.UNIT;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -29,7 +29,7 @@ class APIListTest {
 
     private static final String FORMAT = "%s?offset=%s&limit=%s&search=%s&sort=%s&filter=%s";
 
-    private static final String SEARCH = RandomStringUtils.randomAlphanumeric(30);
+    private static final String SEARCH = RSU.nextAlphanumeric(30);
 
     private static final APISort SORT_EMPTY = APISort.deserialize(EMPTY);
 

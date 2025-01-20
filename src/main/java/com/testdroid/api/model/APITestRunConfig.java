@@ -97,8 +97,6 @@ public class APITestRunConfig extends APIEntity implements Serializable {
 
     private String projectName;
 
-    private boolean resignFiles;
-
     private boolean runAvailable;
 
     private Scheduler scheduler = Scheduler.PARALLEL;
@@ -447,14 +445,6 @@ public class APITestRunConfig extends APIEntity implements Serializable {
         this.statusCode = statusCode;
     }
 
-    public boolean isResignFiles() {
-        return resignFiles;
-    }
-
-    public void setResignFiles(boolean resignFiles) {
-        this.resignFiles = resignFiles;
-    }
-
     public boolean isLoadedPrevious() {
         return loadedPrevious;
     }
@@ -538,7 +528,6 @@ public class APITestRunConfig extends APIEntity implements Serializable {
         this.osType = apiTestRunConfig.osType;
         this.projectId = apiTestRunConfig.projectId;
         this.projectName = apiTestRunConfig.projectName;
-        this.resignFiles = apiTestRunConfig.resignFiles;
         this.runAvailable = apiTestRunConfig.runAvailable;
         this.scheduler = apiTestRunConfig.scheduler;
         this.screenshotDir = apiTestRunConfig.screenshotDir;
