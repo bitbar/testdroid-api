@@ -159,6 +159,7 @@ public class MappingKey {
     public static final String FRAMEWORK_ID = "frameworkId";
     public static final String FRAMEWORK_NAME = "frameworkName";
     public static final String FRAMEWORK_QUEUE_WAIT = "frameworkQueueWait";
+    public static final String FREE_TRIAL = "freeTrial";
     public static final String FROM_TIME = "fromTime";
     public static final String GLOBAL = "global";
     public static final String GLOBAL_DEVICE_LIMIT = "globalDeviceLimit";
@@ -347,7 +348,6 @@ public class MappingKey {
     public static final String TIMESTAMP = "timestamp";
     public static final String TO_TIME = "toTime";
     public static final String TOTAL = "total";
-    public static final String TOTAL_DEVICE_COUNT = "totalDeviceCount";
     public static final String TOTAL_DEVICE_SESSIONS = "totalDeviceSessions";
     public static final String TOTAL_PRICE = "totalPrice";
     public static final String TOTAL_TESTS = "totalTests";

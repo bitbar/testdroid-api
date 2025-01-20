@@ -4,7 +4,6 @@ import com.testdroid.api.dto.Context;
 import com.testdroid.api.filter.FilterEntry;
 import com.testdroid.api.model.APIFramework;
 import com.testdroid.api.model.APIUser;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Tag;
@@ -23,6 +22,7 @@ import static com.testdroid.api.dto.Operand.EQ;
 import static com.testdroid.api.dto.Operand.LIKE;
 import static com.testdroid.api.filter.FilterEntry.trueFilterEntry;
 import static com.testdroid.api.model.APIDevice.OsType.ANDROID;
+import static com.testdroid.api.util.RandomUtils.RSU;
 import static com.testdroid.cloud.test.categories.TestTags.API_CLIENT;
 import static java.lang.Integer.MAX_VALUE;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
@@ -56,7 +56,7 @@ abstract class BaseAPIClientTest {
 
     static final String TEST_PATH = "/fixtures/BitbarSampleAppTest.apk";
 
-    private static final String USER_PASSWORD = RandomStringUtils.randomAlphanumeric(20);
+    private static final String USER_PASSWORD = RSU.nextAlphanumeric(20);
 
     @BeforeAll
     static void beforeAll() throws APIException {

@@ -104,6 +104,12 @@ public class APIDevice extends APIEntity {
         public static final List<APIDevice.OsType> DESKTOPS = Collections.singletonList(APIDevice.OsType.DESKTOP);
     }
 
+    public enum LockReason {
+        TESTING,
+        CLEANING,
+        NOT_OPERATIONAL
+    }
+
     private Integer creditsPrice;
 
     private String displayName;
@@ -169,6 +175,8 @@ public class APIDevice extends APIEntity {
 
     @Deprecated
     private String mainUserEmail;
+
+    private LockReason lockReason;
 
     public APIDevice() {
     }
@@ -446,6 +454,14 @@ public class APIDevice extends APIEntity {
         this.mainUserEmail = mainUserEmail;
     }
 
+    public LockReason getLockReason() {
+        return lockReason;
+    }
+
+    public void setLockReason(LockReason lockReason) {
+        this.lockReason = lockReason;
+    }
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
@@ -482,5 +498,6 @@ public class APIDevice extends APIEntity {
         this.onlineDevices = apiDevice.onlineDevices;
         this.availableDevices = apiDevice.availableDevices;
         this.location = apiDevice.location;
+        this.lockReason = apiDevice.lockReason;
     }
 }
