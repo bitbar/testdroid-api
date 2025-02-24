@@ -5,14 +5,13 @@ import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIException;
 import com.testdroid.api.APIListResource;
 import com.testdroid.api.util.TimeConverter;
-
 import jakarta.xml.bind.annotation.XmlType;
+
 import java.io.InputStream;
 import java.io.Serializable;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static com.testdroid.api.model.APIUserFileProperty.VirusScanStatus;
 
@@ -282,7 +281,7 @@ public class APIUserFile extends APIEntity implements Serializable {
 
     public static void waitForVirusScans(long timeout, APIUserFile... files) throws APIException, InterruptedException {
         long end = System.currentTimeMillis() + timeout;
-        List<APIUserFile> filteredFiles = Arrays.stream(files).filter(Objects::nonNull).collect(Collectors.toList());
+        List<APIUserFile> filteredFiles = Arrays.stream(files).filter(Objects::nonNull).toList();
         while (end > System.currentTimeMillis()) {
             for (APIUserFile file : filteredFiles) {
                 if (!VIRUS_SCAN_ACCEPTED_VALUES.contains(file.getVirusScanStatus())) {
