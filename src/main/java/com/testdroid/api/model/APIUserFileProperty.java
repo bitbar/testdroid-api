@@ -21,7 +21,6 @@ public class APIUserFileProperty extends APIEntity implements Serializable {
         BUNDLE_NAME("bundle_name"),
         BUNDLE_IDENTIFIER("bundle_identifier"),
         JAR_NAMES("jar_names"),
-        CODE_SIGNERS("code_signers"), // TODO: Remove in 3.39
         VIRUS_SCAN_STATUS("virus_scan_status");
 
         private final String value;

@@ -313,6 +313,8 @@ public class MappingKey {
     public static final String SKIP_OLDER_SDK = "skipOlderSdk";
     public static final String SKIP_QUEUE = "skipQueue";
     public static final String SKIP_SHARED = "skipShared";
+    public static final String SLM_LICENSE_ID = "slmLicenseId";
+    public static final String SLM_ORGANIZATION_ID = "slmOrganizationId";
     public static final String SSID = "ssid";
     public static final String START_BILLING_PERIOD = "startBillingPeriod";
     public static final String START_TIME = "startTime";

@@ -74,6 +74,8 @@ public class APIAccountService extends APIEntity {
 
     private String subscriptionManagementURL;
 
+    private String slmLicenseId;
+
     public APIAccountService() {
     }
 
@@ -84,7 +86,7 @@ public class APIAccountService extends APIEntity {
             String deactivatedByName, LocalDateTime endTime, boolean finished, Long id, LocalDateTime lastPaymentTime,
             APIPaymentMethod paymentMethod, Integer price, Long serviceId, LocalDateTime startTime, Integer vatRate,
             Unit unit, Integer unitCount, Integer serviceCount, String serviceName, DeactivateReason deactivateReason,
-            APIService.ChargeType chargeType) {
+            APIService.ChargeType chargeType, String slmLicenseId) {
         super(id);
         this.accountId = accountId;
         this.accountName = accountName;
@@ -109,6 +111,7 @@ public class APIAccountService extends APIEntity {
         this.serviceName = serviceName;
         this.deactivateReason = deactivateReason;
         this.chargeType = chargeType;
+        this.slmLicenseId = slmLicenseId;
     }
 
     public Long getAccountId() {
@@ -307,6 +310,14 @@ public class APIAccountService extends APIEntity {
         return subscriptionManagementURL;
     }
 
+    public String getSlmLicenseId() {
+        return slmLicenseId;
+    }
+
+    public void setSlmLicenseId(String slmLicenseId) {
+        this.slmLicenseId = slmLicenseId;
+    }
+
     @JsonIgnore
     public String getVatPriceString() {
         float vatPrice = (getPrice() * getVatRate()) / 100f;
@@ -353,6 +364,7 @@ public class APIAccountService extends APIEntity {
         this.deactivateReason = accountService.deactivateReason;
         this.chargeType = accountService.chargeType;
         this.subscriptionManagementURL = accountService.subscriptionManagementURL;
+        this.slmLicenseId = accountService.slmLicenseId;
     }
 
     public boolean isActiveAt(Date date) {

@@ -31,21 +31,27 @@ public class APIAccount extends APIEntity {
     @JsonInclude(Include.NON_NULL)
     private Long dedicatedDevicesCount;
 
+    private String slmOrganizationId;
+
     public APIAccount() {
     }
 
-    public APIAccount(Long id, String name, String userName, String comment, LocalDateTime createTime) {
+    public APIAccount(
+            Long id, String slmOrganizationId, String name, String userName, String comment, LocalDateTime createTime) {
         super(id);
+        this.slmOrganizationId = slmOrganizationId;
         this.name = name;
         this.userName = userName;
         this.comment = comment;
         this.createTime = TimeConverter.toDate(createTime);
     }
 
+    @SuppressWarnings("squid:S107")
     public APIAccount(
-            Long id, String name, String userName, String comment, LocalDateTime createTime, long dedicatedDevicesCount,
+            Long id, String slmOrganizationId, String name, String userName, String comment, LocalDateTime createTime,
+            long dedicatedDevicesCount,
             String activeServiceName) {
-        this(id, name, userName, comment, createTime);
+        this(id, slmOrganizationId, name, userName, comment, createTime);
         this.dedicatedDevicesCount = dedicatedDevicesCount;
         this.activeServiceName = activeServiceName;
     }
@@ -106,6 +112,14 @@ public class APIAccount extends APIEntity {
         this.invoiceDetails = invoiceDetails;
     }
 
+    public String getSlmOrganizationId() {
+        return slmOrganizationId;
+    }
+
+    public void setSlmOrganizationId(String slmOrganizationId) {
+        this.slmOrganizationId = slmOrganizationId;
+    }
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
@@ -118,5 +132,6 @@ public class APIAccount extends APIEntity {
         this.name = account.name;
         this.userName = account.userName;
         this.invoiceDetails = account.invoiceDetails;
+        this.slmOrganizationId = account.slmOrganizationId;
     }
 }

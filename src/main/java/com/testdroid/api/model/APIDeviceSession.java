@@ -162,9 +162,6 @@ public class APIDeviceSession extends APIEntity implements UiPresentable {
 
     private String userEmail;
 
-    @Deprecated
-    private Integer rowIndex;
-
     private Long accountId;
 
     private APIDeviceSessionConfig config;
@@ -478,14 +475,6 @@ public class APIDeviceSession extends APIEntity implements UiPresentable {
         this.userEmail = userEmail;
     }
 
-    public Integer getRowIndex() {
-        return rowIndex;
-    }
-
-    public void setRowIndex(Integer rowIndex) {
-        this.rowIndex = rowIndex;
-    }
-
     public Long getAccountId() {
         return accountId;
     }
@@ -595,7 +584,6 @@ public class APIDeviceSession extends APIEntity implements UiPresentable {
         this.successRatio = apiDeviceSession.successRatio;
         this.name = apiDeviceSession.name;
         this.config = apiDeviceSession.config;
-        this.rowIndex = apiDeviceSession.rowIndex;
         this.biometricInstrumentation = apiDeviceSession.biometricInstrumentation;
     }
 }
