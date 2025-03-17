@@ -134,6 +134,8 @@ public class APIAdminDevice extends APIEntity {
 
     private boolean forceRestore;
 
+    private boolean ownerHasAccountService;
+
     public APIAdminDevice() {
     }
 
@@ -398,6 +400,14 @@ public class APIAdminDevice extends APIEntity {
         this.forceRestore = forceRestore;
     }
 
+    public boolean isOwnerHasAccountService() {
+        return ownerHasAccountService;
+    }
+
+    public void setOwnerHasAccountService(boolean ownerHasAccountService) {
+        this.ownerHasAccountService = ownerHasAccountService;
+    }
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
@@ -429,5 +439,6 @@ public class APIAdminDevice extends APIEntity {
         this.osType = adminDevice.osType;
         this.platform = adminDevice.platform;
         this.forceRestore = adminDevice.forceRestore;
+        this.ownerHasAccountService = adminDevice.ownerHasAccountService;
     }
 }

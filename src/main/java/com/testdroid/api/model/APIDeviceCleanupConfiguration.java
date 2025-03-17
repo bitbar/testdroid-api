@@ -22,15 +22,17 @@ public class APIDeviceCleanupConfiguration extends APIEntity {
 
     private Long createdById;
 
-    private APIDevice.OsType osType = APIDevice.OsType.ANDROID;
+    private String description;
 
-    private Date lastModificationTime;
+    private String discriminator;
 
     private Boolean enabled;
 
     private Boolean global;
 
-    private String discriminator;
+    private Date lastModificationTime;
+
+    private APIDevice.OsType osType = APIDevice.OsType.ANDROID;
 
     // For cluster use. Not included in hashCode or equals.
     @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -42,7 +44,8 @@ public class APIDeviceCleanupConfiguration extends APIEntity {
     @SuppressWarnings("squid:S107")
     public APIDeviceCleanupConfiguration(
             Long id, String content, Boolean enabled, LocalDateTime createTime, String createdByEmail, Long createdById,
-            APIDevice.OsType osType, LocalDateTime lastModificationTime, String discriminator, Boolean global) {
+            APIDevice.OsType osType, LocalDateTime lastModificationTime, String discriminator, Boolean global,
+            String description) {
         super(id);
         this.content = content;
         this.enabled = enabled;
@@ -53,6 +56,7 @@ public class APIDeviceCleanupConfiguration extends APIEntity {
         this.lastModificationTime = TimeConverter.toDate(lastModificationTime);
         this.global = global;
         this.discriminator = discriminator;
+        this.description = description;
     }
 
     public String getContent() {
@@ -135,6 +139,14 @@ public class APIDeviceCleanupConfiguration extends APIEntity {
         this.forceRestore = forceRestore;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     @JsonIgnore
     public <T extends APIEntity> void clone(T from) {
@@ -150,6 +162,7 @@ public class APIDeviceCleanupConfiguration extends APIEntity {
         this.global = deviceCleanupConfiguration.global;
         this.discriminator = deviceCleanupConfiguration.discriminator;
         this.forceRestore = deviceCleanupConfiguration.forceRestore;
+        this.description = deviceCleanupConfiguration.description;
     }
 
     @Override
@@ -169,13 +182,14 @@ public class APIDeviceCleanupConfiguration extends APIEntity {
                 Objects.equals(lastModificationTime, that.lastModificationTime) &&
                 Objects.equals(enabled, that.enabled) &&
                 Objects.equals(global, that.global) &&
-                Objects.equals(discriminator, that.discriminator);
+                Objects.equals(discriminator, that.discriminator) &&
+                Objects.equals(description, that.description);
     }
 
     @Override
     public int hashCode() {
         return Objects
                 .hash(content, createTime, createdByEmail, createdById, osType, lastModificationTime, enabled,
-                        global, discriminator);
+                        global, discriminator, description);
     }
 }
