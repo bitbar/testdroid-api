@@ -21,7 +21,7 @@
         <org.springframework.boot.spring-boot-dependencies>3.4.3</org.springframework.boot.spring-boot-dependencies>
         <org.apache.commons.collections4.version>4.4</org.apache.commons.collections4.version>
         <org.apache.commons.io.version>2.18.0</org.apache.commons.io.version>
-        <commons-text.version>1.10.0</commons-text.version>
+        <commons-text.version>1.13.1</commons-text.version>
         <dependency-check-maven.version>12.1.0</dependency-check-maven.version>
         <jacoco-maven-plugin.version>0.8.12</jacoco-maven-plugin.version>
         <org.reflections.version>0.10.2</org.reflections.version>
