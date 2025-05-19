@@ -12,6 +12,7 @@ import java.util.Date;
  */
 public class APIAdminInteractiveDeviceSession extends APIEntity {
 
+    @Deprecated
     private Boolean billable;
 
     private Long deviceId;

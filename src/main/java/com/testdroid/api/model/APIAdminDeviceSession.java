@@ -12,6 +12,7 @@ import java.util.Date;
  */
 public class APIAdminDeviceSession extends APIEntity {
 
+    @Deprecated
     private Boolean billable;
 
     private Date createTime;

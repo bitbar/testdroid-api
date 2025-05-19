@@ -5,8 +5,8 @@ import com.testdroid.api.APIEntity;
 import com.testdroid.api.formatter.CurrencyFormatter;
 import com.testdroid.api.model.enums.Unit;
 import com.testdroid.api.util.TimeConverter;
-
 import jakarta.xml.bind.annotation.XmlType;
+
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -21,8 +21,10 @@ public class APIService extends APIEntity {
 
     private Integer centPrice;
 
+    @Deprecated
     private Integer includedHours;
 
+    @Deprecated
     private Integer pricePerHour;
 
     private String description;
@@ -39,6 +41,7 @@ public class APIService extends APIEntity {
 
     private boolean customPlan;
 
+    @Deprecated
     private ChargeType chargeType;
 
     private List<APIRole> roles = new ArrayList<>();
