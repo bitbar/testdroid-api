@@ -34,10 +34,6 @@ import static org.apache.commons.lang3.StringUtils.isNoneBlank;
 @Tag(API_CLIENT)
 abstract class BaseAPIClientTest {
 
-    static final String APP_PATH = "/fixtures/BitbarSampleApp.apk";
-
-    protected static final String CLOUD_URL = System.getenv("CLOUD_URL");
-
     private static final String ADMIN_API_KEY = System.getenv("ADMIN_API_KEY");
 
     private static final String EMAIL_PATTERN = System.getenv("EMAIL_PATTERN");
@@ -46,17 +42,21 @@ abstract class BaseAPIClientTest {
 
     private static final String PROXY_PORT = System.getenv("API_CLIENT_TEST_PROXY_PORT");
 
-    static final APIKeyClient ADMIN_API_CLIENT = new APIKeyClient(CLOUD_URL, ADMIN_API_KEY, true);
+    private static final String USER_PASSWORD = RSU.nextAlphanumeric(20);
+
+    protected static final String APP_PATH = "/fixtures/BitbarSampleApp.apk";
+
+    protected static final String CLOUD_URL = System.getenv("CLOUD_URL");
+
+    protected static final APIKeyClient ADMIN_API_CLIENT = new APIKeyClient(CLOUD_URL, ADMIN_API_KEY, true);
+
+    protected static final String TEST_PATH = "/fixtures/BitbarSampleAppTest.apk";
 
     private static APIKeyClient USER_API_KEY_CLIENT;
 
     private static APIKeyClient USER_API_KEY_CLIENT_WITH_PROXY;
 
     protected static List<APIUser> TO_BE_DELETED;
-
-    static final String TEST_PATH = "/fixtures/BitbarSampleAppTest.apk";
-
-    private static final String USER_PASSWORD = RSU.nextAlphanumeric(20);
 
     @BeforeAll
     static void beforeAll() throws APIException {
@@ -80,7 +80,7 @@ abstract class BaseAPIClientTest {
         }
     }
 
-    static class APIClientProvider implements ArgumentsProvider {
+    protected static class APIClientProvider implements ArgumentsProvider {
 
         @Override
         public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
@@ -89,7 +89,7 @@ abstract class BaseAPIClientTest {
         }
     }
 
-    APIFramework getApiFramework(APIClient apiClient, String frameworkNameLike) throws APIException {
+    protected APIFramework getApiFramework(APIClient apiClient, String frameworkNameLike) throws APIException {
         Context<APIFramework> context = new Context<>(APIFramework.class, 0, MAX_VALUE, EMPTY, EMPTY);
         context.addFilter(new FilterEntry(OS_TYPE, EQ, ANDROID.name()));
         context.addFilter(trueFilterEntry(FOR_PROJECTS));
@@ -110,22 +110,23 @@ abstract class BaseAPIClientTest {
         return userForTest;
     }
 
-    private static String generateUniqueEmail() {
-        return String.format(EMAIL_PATTERN, System.currentTimeMillis());
-    }
-
-    static String generateUnique(String prefix) {
+    protected static String generateUnique(String prefix) {
         return String.format("%s%d", prefix, System.currentTimeMillis());
     }
 
-    static APIKeyClient createDefaultApiClientWithProxy(Proxy proxy) throws APIException {
+    protected static APIKeyClient createDefaultApiClientWithProxy(Proxy proxy) throws APIException {
         APIUser user = create(ADMIN_API_CLIENT);
         TO_BE_DELETED.add(user);
         return new APIKeyClient(CLOUD_URL, user.getApiKey(), proxy, false);
     }
 
-    static File loadFile(String name) {
+    protected static File loadFile(String name) {
         java.net.URL url = BaseAPIClientTest.class.getResource(name);
         return new File(Objects.requireNonNull(url).getFile());
     }
+
+    private static String generateUniqueEmail() {
+        return String.format(EMAIL_PATTERN, System.currentTimeMillis());
+    }
+
 }

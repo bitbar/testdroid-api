@@ -128,6 +128,7 @@ public class APIDeviceSession extends APIEntity implements UiPresentable {
 
     private Integer testCaseSkippedCount;
 
+    @Deprecated
     private Boolean billable;
 
     private String excludeReason;

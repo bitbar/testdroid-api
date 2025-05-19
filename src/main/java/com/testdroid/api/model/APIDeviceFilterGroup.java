@@ -15,14 +15,17 @@ public class APIDeviceFilterGroup extends APIEntity {
 
     private boolean expanded;
 
+    private boolean hidden;
+
     private List<APIDeviceFilter> deviceFilters = new ArrayList<>();
 
     public APIDeviceFilterGroup() {
     }
 
-    public APIDeviceFilterGroup(Long id, String name, boolean expanded) {
+    public APIDeviceFilterGroup(Long id, String name, boolean hidden, boolean expanded) {
         super(id);
         this.name = name;
+        this.hidden = hidden;
         this.expanded = expanded;
     }
 
@@ -42,6 +45,14 @@ public class APIDeviceFilterGroup extends APIEntity {
         this.expanded = expanded;
     }
 
+    public boolean isHidden() {
+        return hidden;
+    }
+
+    public void setHidden(boolean hidden) {
+        this.hidden = hidden;
+    }
+
     public List<APIDeviceFilter> getDeviceFilters() {
         return deviceFilters;
     }
@@ -57,6 +68,7 @@ public class APIDeviceFilterGroup extends APIEntity {
         APIDeviceFilterGroup apiDeviceFilterGroup = (APIDeviceFilterGroup) from;
         cloneBase(from);
         this.name = apiDeviceFilterGroup.name;
+        this.hidden = apiDeviceFilterGroup.hidden;
         this.expanded = apiDeviceFilterGroup.expanded;
         this.deviceFilters = apiDeviceFilterGroup.deviceFilters;
     }

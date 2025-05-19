@@ -43,8 +43,6 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
 
     private static final String DEFAULT_FRAMEWORK_NAME_LIKE = "%Android Instrumentation%";
 
-    private static final long VIRUS_SCAN_WAIT_TIME = 10 * 60 * 1000L;
-
     @ParameterizedTest
     @ArgumentsSource(APIClientProvider.class)
     void getDevicesTest(APIClient apiClient) throws APIException {
@@ -165,7 +163,6 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
         APIUserFile testFile = me.uploadFile(loadFile(TEST_PATH));
         APIFileConfig testFileConfig = new APIFileConfig(testFile.getId(), RUN_TEST);
         config.setFiles(Arrays.asList(apkFileConfig, testFileConfig));
-        APIUserFile.waitForVirusScans(VIRUS_SCAN_WAIT_TIME, apkFile, testFile);
         me.validateTestRunConfig(config);
         APITestRun apiTestRun = me.startTestRun(config);
         assertThat(apiTestRun.getState()).isIn(RUNNING, WAITING);
@@ -187,7 +184,6 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
         APIUserFile testFile = me.uploadFile(loadFile(TEST_PATH));
         APIFileConfig testFileConfig = new APIFileConfig(testFile.getId(), RUN_TEST);
         config.setFiles(Arrays.asList(apkFileConfig, testFileConfig));
-        APIUserFile.waitForVirusScans(VIRUS_SCAN_WAIT_TIME, apkFile, testFile);
         me.validateTestRunConfig(config);
         APITestRun apiTestRun = me.startTestRun(config);
         assertThat(apiTestRun.getState()).isIn(RUNNING, WAITING);
@@ -236,7 +232,6 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
         APIUserFile testFile = apiUser2.uploadFile(loadFile(TEST_PATH));
         APIFileConfig testFileConfig = new APIFileConfig(testFile.getId(), RUN_TEST);
         config.setFiles(Arrays.asList(apkFileConfig, testFileConfig));
-        APIUserFile.waitForVirusScans(VIRUS_SCAN_WAIT_TIME, apkFile, testFile);
         apiUser2.validateTestRunConfig(config);
         APITestRun apiTestRun = apiUser2.startTestRun(config);
         apiTestRun.abort();

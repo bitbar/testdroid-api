@@ -70,6 +70,7 @@ public class APIAccountService extends APIEntity {
 
     private DeactivateReason deactivateReason;
 
+    @Deprecated
     private APIService.ChargeType chargeType;
 
     private String subscriptionManagementURL;

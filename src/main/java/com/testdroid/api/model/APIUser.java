@@ -44,22 +44,6 @@ public class APIUser extends APIEntity {
         }
     }
 
-    public enum MfaStatus {
-        VERIFICATION_NEED("Verification needed"),
-        DISABLED("Disabled"),
-        ENABLED("Enabled");
-
-        private final String displayName;
-
-        MfaStatus(String displayName) {
-            this.displayName = displayName;
-        }
-
-        public String getDisplayName() {
-            return displayName;
-        }
-    }
-
     private Long accountId;
 
     private String accountName;
@@ -98,10 +82,6 @@ public class APIUser extends APIEntity {
 
     private String lastName;
 
-    private String mfaQRCodeUrl;
-
-    private MfaStatus mfaStatus;
-
     private String organization;
 
     private String phone;
@@ -134,7 +114,7 @@ public class APIUser extends APIEntity {
             String lastName, String state, String country, String city, String code, String address, String phone,
             String organization, String timeZone, LocalDateTime createTime, LocalDateTime deleteTime,
             LocalDateTime lastLoginTime, LocalDateTime lastLaunchedTestTime, Boolean isAccountOwner, String apiKey,
-            Status status, Long createdById, String createdByEmail, MfaStatus mfaStatus, String registrationIP) {
+            Status status, Long createdById, String createdByEmail, String registrationIP) {
         this(id, email);
         this.firstName = firstName;
         this.lastName = lastName;
@@ -159,7 +139,6 @@ public class APIUser extends APIEntity {
         this.apiKey = apiKey;
         this.createdById = createdById;
         this.createdByEmail = createdByEmail;
-        this.mfaStatus = mfaStatus;
         this.registrationIP = registrationIP;
         this.selfURI = String.format("/users/%s", id);
     }
@@ -398,22 +377,6 @@ public class APIUser extends APIEntity {
         this.accountServiceIds = accountServiceIds;
     }
 
-    public void setMfaQRCodeUrl(String mfaQRCodeUrl) {
-        this.mfaQRCodeUrl = mfaQRCodeUrl;
-    }
-
-    public String getMfaQRCodeUrl() {
-        return mfaQRCodeUrl;
-    }
-
-    public MfaStatus getMfaStatus() {
-        return mfaStatus;
-    }
-
-    public void setMfaStatus(MfaStatus mfaStatus) {
-        this.mfaStatus = mfaStatus;
-    }
-
     public String getRegistrationIP() {
         return registrationIP;
     }
@@ -590,8 +553,6 @@ public class APIUser extends APIEntity {
         this.createdByEmail = apiUser.createdByEmail;
         this.serviceIds = apiUser.serviceIds;
         this.accountServiceIds = apiUser.accountServiceIds;
-        this.mfaStatus = apiUser.mfaStatus;
-        this.mfaQRCodeUrl = apiUser.mfaQRCodeUrl;
         this.registrationIP = apiUser.registrationIP;
     }
 }

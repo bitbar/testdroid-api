@@ -19,4 +19,6 @@ public class TestTags {
 
     public static final String LOCAL = "local";
 
+    public static final String PAYMENTS = "payments";
+
 }

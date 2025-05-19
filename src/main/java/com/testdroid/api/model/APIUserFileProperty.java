@@ -2,6 +2,7 @@ package com.testdroid.api.model;
 
 import com.testdroid.api.APIEntity;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -10,6 +11,7 @@ import java.io.Serializable;
  */
 public class APIUserFileProperty extends APIEntity implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     public enum Key {

@@ -44,7 +44,6 @@ public class MappingKey {
     public static final String ASL_ON = "aslOn";
     public static final String AVG_WAITING_TIME = "avgWaitingTime";
     public static final String BATTERY_LEVEL = "batteryLevel";
-    public static final String BILLABLE = "billable";
     public static final String BILLING_PERIOD_ID = "billingPeriodId";
     public static final String BIOMETRIC_INSTRUMENTATION = "biometricInstrumentation";
     public static final String BLUETOOTH_ON = "bluetoothOn";
@@ -59,7 +58,6 @@ public class MappingKey {
     public static final String CARD_NUMBER = "cardNumber";
     public static final String CENT_PRICE = "centPrice";
     public static final String CHANNEL = "channel";
-    public static final String CHARGE_TYPE = "chargeType";
     public static final String CITY = "city";
     public static final String CLIENT_SIDE_ID = "clientSideId";
     public static final String CLOSE_TIME = "closeTime";
@@ -180,7 +178,6 @@ public class MappingKey {
     public static final String INCLUDE_DEVICE_GROUPS = "includeDeviceGroups";
     public static final String INCLUDE_DEVICES = "includeDevices";
     public static final String INCLUDE_FRAMEWORKS = "includeFrameworks";
-    public static final String INCLUDED_HOURS = "includedHours";
     public static final String INIT_STEP = "initStep";
     public static final String INPUT_TYPE = "inputType";
     public static final String INSPECTOR_ENABLED = "inspectorEnabled";
@@ -222,8 +219,6 @@ public class MappingKey {
     public static final String LOGS_FILE_ID = "logsFileId";
     public static final String MANUFACTURER = "manufacturer";
     public static final String MAX_TOTAL = "maxTotal";
-    public static final String MFA_CODE = "mfaCode";
-    public static final String MFA_ENABLED = "mfaEnabled";
     public static final String MIMETYPE = "mimetype";
     public static final String MIN_AVAILABLE = "minAvailable";
     public static final String MOCK_LOCATION_ON = "mockLocationOn";
@@ -257,7 +252,6 @@ public class MappingKey {
     public static final String PLUGIN_VERSION = "pluginVersion";
     public static final String PORT = "port";
     public static final String PRICE = "price";
-    public static final String PRICE_PER_HOUR = "pricePerHour";
     public static final String PRIORITY = "priority";
     public static final String PRIVATE_INSTANCE = "privateInstance";
     public static final String PROJECT_ID = "projectId";

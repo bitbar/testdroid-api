@@ -94,6 +94,7 @@ public class APITestRun extends APIEntity implements UiPresentable {
 
     private Integer deviceCount;
 
+    @Deprecated
     private boolean billable;
 
     private String message;
