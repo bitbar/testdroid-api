@@ -128,6 +128,9 @@ public class APIDeviceSession extends APIEntity implements UiPresentable {
 
     private Integer testCaseSkippedCount;
 
+    /**
+     * @deprecated all sessions are billable, so this field should not be used anymore.
+     */
     @Deprecated
     private Boolean billable;
 

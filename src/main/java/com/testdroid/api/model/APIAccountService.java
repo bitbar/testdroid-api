@@ -70,6 +70,9 @@ public class APIAccountService extends APIEntity {
 
     private DeactivateReason deactivateReason;
 
+    /**
+     * @deprecated we have only CONCURRENCY charge type now, so this field should not be used anymore.
+     */
     @Deprecated
     private APIService.ChargeType chargeType;
 

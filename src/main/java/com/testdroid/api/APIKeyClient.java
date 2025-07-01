@@ -20,12 +20,14 @@ public class APIKeyClient extends AbstractAPIClient {
     }
 
     public APIKeyClient(String cloudURL, String apiKey, boolean skipCheckCertificate) {
+        super();
         this.apiURL = StringUtils.removeEnd(cloudURL, "/") + API_URI;
         this.apiKey = apiKey;
         this.skipCheckCertificate = skipCheckCertificate;
     }
 
     public APIKeyClient(String cloudURL, String apiKey, Proxy proxy, boolean skipCheckCertificate) {
+        super();
         this.apiURL = StringUtils.removeEnd(cloudURL, "/") + API_URI;
         this.apiKey = apiKey;
         this.skipCheckCertificate = skipCheckCertificate;
@@ -43,6 +45,7 @@ public class APIKeyClient extends AbstractAPIClient {
     protected Interceptor getInterceptor() {
         return chain -> chain.proceed(chain.request().newBuilder()
                 .addHeader("Authorization", Credentials.basic(apiKey, EMPTY))
+                .addHeader("User-Agent", userAgentHeader)
                 .build());
     }
 }
