@@ -21,9 +21,15 @@ public class APIService extends APIEntity {
 
     private Integer centPrice;
 
+    /**
+     * @deprecated we have only CONCURRENCY charge type now, so this field should not be used anymore.
+     */
     @Deprecated
     private Integer includedHours;
 
+    /**
+     * @deprecated we have only CONCURRENCY charge type now, so this field should not be used anymore.
+     */
     @Deprecated
     private Integer pricePerHour;
 
@@ -41,6 +47,9 @@ public class APIService extends APIEntity {
 
     private boolean customPlan;
 
+    /**
+     * @deprecated we have only CONCURRENCY charge type now, so this field should not be used anymore.
+     */
     @Deprecated
     private ChargeType chargeType;
 

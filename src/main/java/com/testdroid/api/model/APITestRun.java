@@ -94,6 +94,9 @@ public class APITestRun extends APIEntity implements UiPresentable {
 
     private Integer deviceCount;
 
+    /**
+     * @deprecated all sessions are billable, so this field should not be used anymore.
+     */
     @Deprecated
     private boolean billable;
 

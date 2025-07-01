@@ -52,21 +52,21 @@ abstract class BaseAPIClientTest {
 
     protected static final String TEST_PATH = "/fixtures/BitbarSampleAppTest.apk";
 
-    private static APIKeyClient USER_API_KEY_CLIENT;
+    private static APIKeyClient userApiKeyClient;
 
-    private static APIKeyClient USER_API_KEY_CLIENT_WITH_PROXY;
+    private static APIKeyClient userApiKeyClientWithProxy;
 
-    protected static List<APIUser> TO_BE_DELETED;
+    protected static List<APIUser> toBeDeleted;
 
     @BeforeAll
     static void beforeAll() throws APIException {
-        TO_BE_DELETED = new ArrayList<>();
+        toBeDeleted = new ArrayList<>();
         APIUser apiUser1 = create(ADMIN_API_CLIENT);
-        TO_BE_DELETED.add(apiUser1);
-        USER_API_KEY_CLIENT = new APIKeyClient(CLOUD_URL, apiUser1.getApiKey());
+        toBeDeleted.add(apiUser1);
+        userApiKeyClient = new APIKeyClient(CLOUD_URL, apiUser1.getApiKey());
         if (isNoneBlank(PROXY_HOST, PROXY_PORT)) {
             Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(PROXY_HOST, Integer.parseInt(PROXY_PORT)));
-            USER_API_KEY_CLIENT_WITH_PROXY = createDefaultApiClientWithProxy(proxy);
+            userApiKeyClientWithProxy = createDefaultApiClientWithProxy(proxy);
         }
     }
 
@@ -75,7 +75,7 @@ abstract class BaseAPIClientTest {
         String deleteUrl = "%s/delete";
         Map<String, Object> map = new HashMap<>();
         map.put(PASSWORD, USER_PASSWORD);
-        for (APIUser toBeDeleted : TO_BE_DELETED) {
+        for (APIUser toBeDeleted : toBeDeleted) {
             ADMIN_API_CLIENT.post(String.format(deleteUrl, toBeDeleted.getSelfURI()), map, APIUser.class);
         }
     }
@@ -84,7 +84,7 @@ abstract class BaseAPIClientTest {
 
         @Override
         public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
-            return Stream.of(USER_API_KEY_CLIENT, USER_API_KEY_CLIENT_WITH_PROXY).filter
+            return Stream.of(userApiKeyClient, userApiKeyClientWithProxy).filter
                     (Objects::nonNull).map(Arguments::of);
         }
     }
@@ -116,7 +116,7 @@ abstract class BaseAPIClientTest {
 
     protected static APIKeyClient createDefaultApiClientWithProxy(Proxy proxy) throws APIException {
         APIUser user = create(ADMIN_API_CLIENT);
-        TO_BE_DELETED.add(user);
+        toBeDeleted.add(user);
         return new APIKeyClient(CLOUD_URL, user.getApiKey(), proxy, false);
     }
 

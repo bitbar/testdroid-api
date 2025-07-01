@@ -173,6 +173,9 @@ public class APIDevice extends APIEntity {
     @JsonIgnore
     private Integer availableDevices;
 
+    /**
+     * @deprecated with support for multi account owners it does not make sense anymore
+     */
     @Deprecated
     private String mainUserEmail;
 

@@ -12,6 +12,9 @@ import java.util.Date;
  */
 public class APIAdminInteractiveDeviceSession extends APIEntity {
 
+    /**
+     * @deprecated all sessions are billable, so this field should not be used anymore.
+     */
     @Deprecated
     private Boolean billable;
 

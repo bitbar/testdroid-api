@@ -62,6 +62,8 @@ public abstract class AbstractAPIClient implements APIClient {
 
     private static final UnaryOperator<String> URL_ENCODE = s -> URLEncoder.encode(s, UTF_8);
 
+    protected final String userAgentHeader;
+
     protected int clientConnectTimeout = 20000;
 
     protected int clientRequestTimeout = 60000;
@@ -75,6 +77,12 @@ public abstract class AbstractAPIClient implements APIClient {
     protected String proxyPassword;
 
     protected String apiURL;
+
+    protected AbstractAPIClient() {
+        String implementationVersion = this.getClass().getPackage().getImplementationVersion();
+        this.userAgentHeader = "Bitbar Cloud API Client for Java v%s"
+                .formatted(Optional.ofNullable(implementationVersion).orElse("N/A"));
+    }
 
     protected final OkHttpClient getClient() {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();

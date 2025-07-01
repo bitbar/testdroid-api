@@ -151,7 +151,7 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
 
     @ParameterizedTest
     @ArgumentsSource(APIClientProvider.class)
-    void startTestRunTest(APIClient apiClient) throws APIException, InterruptedException {
+    void startTestRunTest(APIClient apiClient) throws APIException {
         APIUser me = apiClient.me();
         APITestRunConfig config = new APITestRunConfig();
         config.setProjectName(generateUnique("testProject"));
@@ -172,7 +172,7 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
 
     @ParameterizedTest
     @ArgumentsSource(APIClientProvider.class)
-    void requestScreenshotsZip(APIClient apiClient) throws APIException, InterruptedException, IOException {
+    void requestScreenshotsZip(APIClient apiClient) throws APIException, IOException {
         APIUser me = apiClient.me();
         APITestRunConfig config = new APITestRunConfig();
         config.setProjectName(generateUnique("testProject"));
@@ -203,7 +203,7 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
     @Tag("SDCC-2690")
     @ParameterizedTest
     @ArgumentsSource(APIClientProvider.class)
-    void projectSharingTest(APIClient apiClient) throws APIException, InterruptedException {
+    void projectSharingTest(APIClient apiClient) throws APIException {
         APIUser user1 = apiClient.me();
         String projectName = generateUnique("sharedProject");
         APIProject project = user1.createProject(projectName);
@@ -213,7 +213,7 @@ class APIUserAPIClientTest extends BaseAPIClientTest {
         APIAccessGroup accessGroup = user1.postResource("/me/access-groups", data, APIAccessGroup.class);
 
         APIUser apiUser2 = create(ADMIN_API_CLIENT);
-        TO_BE_DELETED.add(apiUser2);
+        toBeDeleted.add(apiUser2);
         user1.postResource(accessGroup.getSelfURI() + "/users", singletonMap(EMAIL, apiUser2.getEmail()),
                 APIAccessGroup.class);
         user1.postResource(project.getSelfURI() + "/share", singletonMap(ACCESS_GROUP_ID, accessGroup.getId()),
