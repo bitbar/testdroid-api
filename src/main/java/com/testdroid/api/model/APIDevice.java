@@ -164,7 +164,6 @@ public class APIDevice extends APIEntity {
 
     private APIDeviceAvailability availability;
 
-    @JsonIgnore
     private String location;
 
     @JsonIgnore
