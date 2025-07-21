@@ -128,12 +128,6 @@ public class APIDeviceSession extends APIEntity implements UiPresentable {
 
     private Integer testCaseSkippedCount;
 
-    /**
-     * @deprecated all sessions are billable, so this field should not be used anymore.
-     */
-    @Deprecated
-    private Boolean billable;
-
     private String excludeReason;
 
     private Long deviceInstanceId;
@@ -142,6 +136,7 @@ public class APIDeviceSession extends APIEntity implements UiPresentable {
 
     private Integer autoRetriesLeftCount;
 
+    @Deprecated
     private Long deviceTime;
 
     private Long duration;
@@ -182,14 +177,14 @@ public class APIDeviceSession extends APIEntity implements UiPresentable {
             Long id, String externalId, String clientSideId, Long userId, String userEmail, Long accountId,
             APIDeviceSession.Type type, LocalDateTime createTime, LocalDateTime startTime, LocalDateTime installTime,
             LocalDateTime endTime, Long timeLimit, Long deviceLogFirstTimestamp, APIDeviceSession.State state,
-            Integer testCasePassedCount, Integer testCaseFailedCount, Integer testCaseSkippedCount, Boolean billable,
-            Long deviceModelId, String displayName, String deviceManufacturer, Integer creditsPrice, String imagePrefix,
-            Integer imageTop, Integer imageLeft, Integer imageWidth, Integer imageHeight, Integer frameExtraWidth,
+            Integer testCasePassedCount, Integer testCaseFailedCount, Integer testCaseSkippedCount, Long deviceModelId,
+            String displayName, String deviceManufacturer, Integer creditsPrice, String imagePrefix, Integer imageTop,
+            Integer imageLeft, Integer imageWidth, Integer imageHeight, Integer frameExtraWidth,
             APIDevice.OsType osType, APIDevice.Platform platform, Boolean locked, Boolean enabled,
             String releaseVersion, Integer apiLevel, ExcludeReason excludeReason, Long deviceInstanceId,
-            RetryState retryState, Integer autoRetriesLeftCount, Long deviceTime, Long duration, Long projectId,
-            String projectName, Long testRunId, String testRunName, Float successRatio, String name,
-            APIDeviceSessionConfig config, Boolean biometricInstrumentation, String location) {
+            RetryState retryState, Integer autoRetriesLeftCount, Long duration, Long projectId, String projectName,
+            Long testRunId, String testRunName, Float successRatio, String name, APIDeviceSessionConfig config,
+            Boolean biometricInstrumentation, String location) {
         super(id);
         this.externalId = externalId;
         this.clientSideId = clientSideId;
@@ -207,8 +202,7 @@ public class APIDeviceSession extends APIEntity implements UiPresentable {
         this.timeLimit = timeLimit;
         this.deviceLogFirstTimestamp = deviceLogFirstTimestamp;
         this.state = state;
-        this.billable = billable;
-        this.deviceTime = deviceTime;
+        this.deviceTime = duration;
         this.excludeReason = excludeReason != null ? excludeReason.getDisplayName() : null;
         this.testCaseAllCount = testCasePassedCount + testCaseFailedCount + testCaseSkippedCount;
         this.testCaseSuccessCount = testCasePassedCount + testCaseFailedCount;
@@ -365,14 +359,6 @@ public class APIDeviceSession extends APIEntity implements UiPresentable {
 
     public void setTestCaseSkippedCount(Integer testCaseSkippedCount) {
         this.testCaseSkippedCount = testCaseSkippedCount;
-    }
-
-    public Boolean getBillable() {
-        return billable;
-    }
-
-    public void setBillable(Boolean billable) {
-        this.billable = billable;
     }
 
     public String getExcludeReason() {
@@ -574,7 +560,6 @@ public class APIDeviceSession extends APIEntity implements UiPresentable {
         this.testCasePassedCount = apiDeviceSession.testCasePassedCount;
         this.testCaseFailedCount = apiDeviceSession.testCaseFailedCount;
         this.testCaseSkippedCount = apiDeviceSession.testCaseSkippedCount;
-        this.billable = apiDeviceSession.billable;
         this.excludeReason = apiDeviceSession.excludeReason;
         this.deviceInstanceId = apiDeviceSession.deviceInstanceId;
         this.retryState = apiDeviceSession.retryState;

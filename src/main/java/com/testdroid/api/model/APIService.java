@@ -25,13 +25,7 @@ public class APIService extends APIEntity {
      * @deprecated we have only CONCURRENCY charge type now, so this field should not be used anymore.
      */
     @Deprecated
-    private Integer includedHours;
-
-    /**
-     * @deprecated we have only CONCURRENCY charge type now, so this field should not be used anymore.
-     */
-    @Deprecated
-    private Integer pricePerHour;
+    private Integer includedHours = 0;
 
     private String description;
 
@@ -51,7 +45,7 @@ public class APIService extends APIEntity {
      * @deprecated we have only CONCURRENCY charge type now, so this field should not be used anymore.
      */
     @Deprecated
-    private ChargeType chargeType;
+    private ChargeType chargeType = ChargeType.CONCURRENCY;
 
     private List<APIRole> roles = new ArrayList<>();
 
@@ -70,21 +64,18 @@ public class APIService extends APIEntity {
 
     @SuppressWarnings("squid:S107")
     public APIService(
-            Long id, String name, String description, Integer centPrice, Integer includedHours,
-            Integer pricePerHour, String externalId, String commonId, LocalDateTime archiveTime, LocalDateTime activateTime,
-            boolean activated, boolean customPlan, ChargeType chargeType, Unit unit, String features) {
+            Long id, String name, String description, Integer centPrice, String externalId,
+            String commonId, LocalDateTime archiveTime, LocalDateTime activateTime, boolean activated,
+            boolean customPlan, Unit unit, String features) {
         super(id);
         this.name = name;
         this.description = description;
         this.centPrice = centPrice;
-        this.includedHours = includedHours;
-        this.pricePerHour = pricePerHour;
         this.externalId = externalId;
         this.archiveTime = TimeConverter.toDate(archiveTime);
         this.activateTime = TimeConverter.toDate(activateTime);
         this.activated = activated;
         this.customPlan = customPlan;
-        this.chargeType = chargeType;
         this.unit = unit;
         this.commonId = commonId;
         this.features = features;
@@ -108,13 +99,10 @@ public class APIService extends APIEntity {
         this.centPrice = apiService.centPrice;
         this.externalId = apiService.externalId;
         this.commonId = apiService.commonId;
-        this.includedHours = apiService.includedHours;
-        this.pricePerHour = apiService.pricePerHour;
         this.archiveTime = apiService.archiveTime;
         this.activateTime = apiService.activateTime;
         this.activated = apiService.activated;
         this.customPlan = apiService.customPlan;
-        this.chargeType = apiService.chargeType;
         this.unit = apiService.unit;
     }
 
@@ -152,14 +140,6 @@ public class APIService extends APIEntity {
 
     public void setIncludedHours(Integer includedHours) {
         this.includedHours = includedHours;
-    }
-
-    public Integer getPricePerHour() {
-        return pricePerHour;
-    }
-
-    public void setPricePerHour(Integer pricePerHour) {
-        this.pricePerHour = pricePerHour;
     }
 
     public Date getArchiveTime() {

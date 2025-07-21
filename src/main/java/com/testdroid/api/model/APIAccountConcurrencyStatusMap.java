@@ -13,7 +13,8 @@ public class APIAccountConcurrencyStatusMap extends APIEntity {
     @XmlType(namespace = "APIAccountConcurrencyStatusMap")
     public enum Type {
         AUTOMATIC,
-        MANUAL
+        MANUAL,
+        DEDICATED
     }
 
     private Map<Type, APIAccountConcurrencyStatus> statusMap = new EnumMap<>(Type.class);

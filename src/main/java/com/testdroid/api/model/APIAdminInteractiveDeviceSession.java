@@ -12,12 +12,6 @@ import java.util.Date;
  */
 public class APIAdminInteractiveDeviceSession extends APIEntity {
 
-    /**
-     * @deprecated all sessions are billable, so this field should not be used anymore.
-     */
-    @Deprecated
-    private Boolean billable;
-
     private Long deviceId;
 
     private Long deviceModelId;
@@ -42,6 +36,7 @@ public class APIAdminInteractiveDeviceSession extends APIEntity {
 
     private Long userId;
 
+    @Deprecated
     private Long deviceTime;
 
     private APIDeviceSession.Type type;
@@ -53,7 +48,7 @@ public class APIAdminInteractiveDeviceSession extends APIEntity {
     public APIAdminInteractiveDeviceSession(
             Long id, LocalDateTime createTime, LocalDateTime startTime, LocalDateTime endTime, String userEmail,
             Long userId, Long duration, String deviceModelName, Long deviceModelId, String deviceName, Long deviceId,
-            APIDeviceSession.State state, Boolean billable, Long deviceTime, APIDeviceSession.Type type) {
+            APIDeviceSession.State state, APIDeviceSession.Type type) {
         super(id);
         this.createTime = TimeConverter.toDate(createTime);
         this.startTime = TimeConverter.toDate(startTime);
@@ -66,17 +61,8 @@ public class APIAdminInteractiveDeviceSession extends APIEntity {
         this.deviceName = deviceName;
         this.deviceId = deviceId;
         this.state = state;
-        this.billable = billable;
-        this.deviceTime = deviceTime;
+        this.deviceTime = duration;
         this.type = type;
-    }
-
-    public Boolean getBillable() {
-        return billable;
-    }
-
-    public void setBillable(Boolean billable) {
-        this.billable = billable;
     }
 
     public Long getDeviceId() {
@@ -208,7 +194,6 @@ public class APIAdminInteractiveDeviceSession extends APIEntity {
         this.deviceId = interactiveDeviceSession.deviceId;
         this.state = interactiveDeviceSession.state;
         this.errorMessage = interactiveDeviceSession.errorMessage;
-        this.billable = interactiveDeviceSession.billable;
         this.deviceTime = interactiveDeviceSession.deviceTime;
         this.type = interactiveDeviceSession.type;
     }

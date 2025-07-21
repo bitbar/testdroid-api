@@ -12,7 +12,7 @@ public class ClientSideReadyMessage implements Serializable {
 
     public static final String BROWSER_VERSION = "browserVersion";
 
-    public static final String PLATFORM = "platform";
+    public static final String PLATFORM_NAME = "platformName";
 
     private String address;
 

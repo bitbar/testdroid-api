@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.testdroid.api.APIEntity;
 import jakarta.xml.bind.annotation.XmlType;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,7 @@ public class APITestRunConfig extends APIEntity implements Serializable {
 
     public static final String SCREENSHOT_DIR = "/sdcard/test-screenshots";
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @XmlType(namespace = "APITestRunConfig")
@@ -45,11 +47,11 @@ public class APITestRunConfig extends APIEntity implements Serializable {
 
     private String applicationUsername;
 
-    private List<APIDeviceGroup> availableDeviceGroups;
+    private transient List<APIDeviceGroup> availableDeviceGroups;
 
-    private List<APIDevice> availableDevices;
+    private transient List<APIDevice> availableDevices;
 
-    private List<APIFramework> availableFrameworks;
+    private transient List<APIFramework> availableFrameworks;
 
     private List<APIDevice.OsType> availableOsTypes;
 
@@ -367,7 +369,6 @@ public class APITestRunConfig extends APIEntity implements Serializable {
         return files;
     }
 
-    //TODO maybe we should handle all Collections in that way
     @JsonSetter(nulls = Nulls.AS_EMPTY)
     public void setFiles(List<APIFileConfig> files) {
         this.files = files;

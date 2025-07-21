@@ -20,11 +20,16 @@ public class APIUserDeviceTime extends APIEntity {
 
     private Long userId;
 
+    @Deprecated
     private Long freeTime;
 
+    @Deprecated
     private Long billableTime;
 
+    @Deprecated
     private Long deviceTime;
+
+    private Long duration;
 
     private APIDeviceSession.Type type;
 
@@ -33,15 +38,16 @@ public class APIUserDeviceTime extends APIEntity {
     }
 
     public APIUserDeviceTime(
-            LocalDateTime createTime, LocalDateTime endTime, String userName, Long userId, Long freeTime,
-            Long billableTime, APIDeviceSession.Type type) {
+            LocalDateTime createTime, LocalDateTime endTime, String userName, Long userId, Long duration,
+            APIDeviceSession.Type type) {
         this.createTime = TimeConverter.toDate(createTime);
         this.endTime = TimeConverter.toDate(endTime);
         this.userName = userName;
         this.userId = userId;
-        this.freeTime = freeTime;
-        this.billableTime = billableTime;
-        this.deviceTime = freeTime + billableTime;
+        this.freeTime = 0L;
+        this.billableTime = duration;
+        this.deviceTime = duration;
+        this.duration = duration;
         this.type = type;
     }
 
@@ -121,5 +127,13 @@ public class APIUserDeviceTime extends APIEntity {
 
     public void setBillableTime(Long billableTime) {
         this.billableTime = billableTime;
+    }
+
+    public Long getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Long duration) {
+        this.duration = duration;
     }
 }

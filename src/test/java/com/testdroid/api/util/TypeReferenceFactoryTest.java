@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.testdroid.api.*;
 import com.testdroid.api.model.*;
 import com.testdroid.api.model.capabilities.APIDesktopBrowserCapabilities;
-import com.testdroid.api.model.devicetime.APIBasicDeviceTime;
 import com.testdroid.api.model.notification.APINotification;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -42,13 +41,11 @@ class TypeReferenceFactoryTest {
                     APIAccountService.class,
                     APIAccountServicePayment.class,
                     APIAdminDevice.class,
-                    APIAdminDeviceSessionStatistics.class,
                     APIAdminDeviceType.class,
                     APIAdminEmail.class,
                     APIAdministrator.class,
                     APIAdminOverview.class,
                     APIAdminTestRun.class,
-                    APIBasicDeviceTime.class,
                     APIBillingPeriod.class,
                     APIBillingPeriodUsage.class,
                     APIBrowser.class,

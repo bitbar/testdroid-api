@@ -74,7 +74,7 @@ public class APIAccountService extends APIEntity {
      * @deprecated we have only CONCURRENCY charge type now, so this field should not be used anymore.
      */
     @Deprecated
-    private APIService.ChargeType chargeType;
+    private APIService.ChargeType chargeType = APIService.ChargeType.CONCURRENCY;
 
     private String subscriptionManagementURL;
 
@@ -90,7 +90,7 @@ public class APIAccountService extends APIEntity {
             String deactivatedByName, LocalDateTime endTime, boolean finished, Long id, LocalDateTime lastPaymentTime,
             APIPaymentMethod paymentMethod, Integer price, Long serviceId, LocalDateTime startTime, Integer vatRate,
             Unit unit, Integer unitCount, Integer serviceCount, String serviceName, DeactivateReason deactivateReason,
-            APIService.ChargeType chargeType, String slmLicenseId) {
+            String slmLicenseId) {
         super(id);
         this.accountId = accountId;
         this.accountName = accountName;
@@ -114,7 +114,6 @@ public class APIAccountService extends APIEntity {
         this.serviceCount = serviceCount;
         this.serviceName = serviceName;
         this.deactivateReason = deactivateReason;
-        this.chargeType = chargeType;
         this.slmLicenseId = slmLicenseId;
     }
 
@@ -366,7 +365,6 @@ public class APIAccountService extends APIEntity {
         this.serviceName = accountService.serviceName;
         this.braintreeId = accountService.braintreeId;
         this.deactivateReason = accountService.deactivateReason;
-        this.chargeType = accountService.chargeType;
         this.subscriptionManagementURL = accountService.subscriptionManagementURL;
         this.slmLicenseId = accountService.slmLicenseId;
     }

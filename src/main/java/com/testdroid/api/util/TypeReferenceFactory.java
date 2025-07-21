@@ -6,10 +6,6 @@ import com.testdroid.api.model.*;
 import com.testdroid.api.model.capabilities.APIDesktopBrowser;
 import com.testdroid.api.model.capabilities.APIDesktopBrowserCapabilities;
 import com.testdroid.api.model.capabilities.APIDesktopPlatform;
-import com.testdroid.api.model.devicetime.APIBasicDeviceTime;
-import com.testdroid.api.model.devicetime.APIDeviceTimeCountSessionReportEntry;
-import com.testdroid.api.model.devicetime.APIDeviceTimeReportEntry;
-import com.testdroid.api.model.devicetime.APIDeviceTimeStepTimeReportEntry;
 import com.testdroid.api.model.notification.APINotification;
 import com.testdroid.api.model.notification.APIVisualTestImage;
 
@@ -43,7 +39,6 @@ public class TypeReferenceFactory {
         LIST_MAP.put(APIAdminDeviceProblem.class, new TypeReference<APIList<APIAdminDeviceProblem>>() {});
         LIST_MAP.put(APIAdminDeviceProblemPair.class, new TypeReference<APIList<APIAdminDeviceProblemPair>>() {});
         LIST_MAP.put(APIAdminDeviceSession.class, new TypeReference<APIList<APIAdminDeviceSession>>() {});
-        LIST_MAP.put(APIAdminDeviceSessionStatistics.class, new TypeReference<APIList<APIAdminDeviceSessionStatistics>>() {});
         LIST_MAP.put(APIAdminDeviceType.class, new TypeReference<APIList<APIAdminDeviceType>>() {});
         LIST_MAP.put(APIAdminEmail.class, new TypeReference<APIList<APIAdminEmail>>() {});
         LIST_MAP.put(APIAdminFrameworkStatistics.class, new TypeReference<APIList<APIAdminFrameworkStatistics>>() {});
@@ -51,7 +46,6 @@ public class TypeReferenceFactory {
         LIST_MAP.put(APIAdminTrialStatistics.class, new TypeReference<APIList<APIAdminTrialStatistics>>() {});
         LIST_MAP.put(APIAdminOverview.class, new TypeReference<APIList<APIAdminOverview>>() {});
         LIST_MAP.put(APIAdminTestRun.class, new TypeReference<APIList<APIAdminTestRun>>() {});
-        LIST_MAP.put(APIBasicDeviceTime.class, new TypeReference<APIList<APIBasicDeviceTime>>() {});
         LIST_MAP.put(APIBillingPeriod.class, new TypeReference<APIList<APIBillingPeriod>>() {});
         LIST_MAP.put(APIBillingPeriodUsage.class, new TypeReference<APIList<APIBillingPeriodUsage>>() {});
         LIST_MAP.put(APIBrokerHub.class, new TypeReference<APIList<APIBrokerHub>>() {});
@@ -78,9 +72,6 @@ public class TypeReferenceFactory {
         LIST_MAP.put(APIDeviceSessionStep.class, new TypeReference<APIList<APIDeviceSessionStep>>() {});
         LIST_MAP.put(APIDeviceStatistic.class, new TypeReference<APIList<APIDeviceStatistic>>() {});
         LIST_MAP.put(APIDeviceStatus.class, new TypeReference<APIList<APIDeviceStatus>>() {});
-        LIST_MAP.put(APIDeviceTimeCountSessionReportEntry.class, new TypeReference<APIList<APIDeviceTimeCountSessionReportEntry>>() {});
-        LIST_MAP.put(APIDeviceTimeReportEntry.class, new TypeReference<APIList<APIDeviceTimeReportEntry>>() {});
-        LIST_MAP.put(APIDeviceTimeStepTimeReportEntry.class, new TypeReference<APIList<APIDeviceTimeStepTimeReportEntry>>() {});
         LIST_MAP.put(APIDeviceUsage.class, new TypeReference<APIList<APIDeviceUsage>>() {});
         LIST_MAP.put(APIEnum.class, new TypeReference<APIList<APIEnum>>() {});
         LIST_MAP.put(APIFileConfig.class, new TypeReference<APIList<APIFileConfig>>() {});
@@ -142,12 +133,10 @@ public class TypeReferenceFactory {
         MAP.put(APIAccountServicePayment.class, new TypeReference<APIAccountServicePayment>() {});
         MAP.put(APIAdministrator.class, new TypeReference<APIAdministrator>() {});
         MAP.put(APIAdminDevice.class, new TypeReference<APIAdminDevice>() {});
-        MAP.put(APIAdminDeviceSessionStatistics.class, new TypeReference<APIAdminDeviceSessionStatistics>() {});
         MAP.put(APIAdminDeviceType.class, new TypeReference<APIAdminDeviceType>() {});
         MAP.put(APIAdminEmail.class, new TypeReference<APIAdminEmail>() {});
         MAP.put(APIAdminOverview.class, new TypeReference<APIAdminOverview>() {});
         MAP.put(APIAdminTestRun.class, new TypeReference<APIAdminTestRun>() {});
-        MAP.put(APIBasicDeviceTime.class, new TypeReference<APIBasicDeviceTime>() {});
         MAP.put(APIBillingPeriod.class, new TypeReference<APIBillingPeriod>() {});
         MAP.put(APIBillingPeriodUsage.class, new TypeReference<APIBillingPeriodUsage>() {});
         MAP.put(APIBrowser.class, new TypeReference<APIBrowser>() {});
