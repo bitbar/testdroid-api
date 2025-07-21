@@ -4,20 +4,17 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIList;
 import com.testdroid.api.util.TimeConverter;
+import jakarta.xml.bind.annotation.XmlType;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import jakarta.xml.bind.annotation.XmlType;
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
  */
-public class APICluster extends APIEntity implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class APICluster extends APIEntity {
 
     @XmlType(namespace = "APICluster", name = "APIClusterState")
     public enum State {

@@ -16,6 +16,7 @@ public class APIUserDeviceTimeSummary extends APIEntity {
 
     private Long automaticDeviceTime;
 
+    @Deprecated
     private Long freeDeviceTime;
 
     private Long periodStart;
@@ -26,12 +27,11 @@ public class APIUserDeviceTimeSummary extends APIEntity {
 
     }
 
-    public APIUserDeviceTimeSummary(
-            Long inspectorDeviceTime, Long automaticDeviceTime, Long freeDeviceTime) {
-        this.totalDeviceTime = inspectorDeviceTime + automaticDeviceTime + freeDeviceTime;
+    public APIUserDeviceTimeSummary(Long inspectorDeviceTime, Long automaticDeviceTime) {
+        this.totalDeviceTime = inspectorDeviceTime + automaticDeviceTime;
         this.inspectorDeviceTime = inspectorDeviceTime;
         this.automaticDeviceTime = automaticDeviceTime;
-        this.freeDeviceTime = freeDeviceTime;
+        this.freeDeviceTime = 0L;
     }
 
     public Long getTotalDeviceTime() {

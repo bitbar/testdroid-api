@@ -11,19 +11,24 @@ public class APIBillingPeriodUsage extends APIEntity {
 
     private APIDevice.OsType osType;
 
+    @Deprecated
     private long billableSeconds;
 
+    @Deprecated
     private long nonBillableSeconds;
+
+    private long duration;
 
     public APIBillingPeriodUsage() {
     }
 
     public APIBillingPeriodUsage(
-            APIDeviceSession.Type type, APIDevice.OsType osType, long billableSeconds, long nonBillableSeconds) {
+            APIDeviceSession.Type type, APIDevice.OsType osType, long duration) {
         this.type = type;
         this.osType = osType;
-        this.billableSeconds = billableSeconds;
-        this.nonBillableSeconds = nonBillableSeconds;
+        this.duration = duration;
+        this.billableSeconds = duration / 1000;
+        this.nonBillableSeconds = 0L;
     }
 
     public APIDeviceSession.Type getType() {
@@ -66,5 +71,6 @@ public class APIBillingPeriodUsage extends APIEntity {
         this.osType = original.osType;
         this.billableSeconds = original.billableSeconds;
         this.nonBillableSeconds = original.nonBillableSeconds;
+        this.duration = original.duration;
     }
 }

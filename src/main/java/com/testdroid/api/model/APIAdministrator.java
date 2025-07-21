@@ -28,13 +28,15 @@ public class APIAdministrator extends APIEntity {
 
     private boolean isUserAdmin;
 
+    private boolean isSuperAdmin;
+
     public APIAdministrator() {
     }
 
     @SuppressWarnings("squid:S107")
     public APIAdministrator(
             Long id, String email, APIUser.Status status, LocalDateTime createTime, LocalDateTime deleteTime,
-            boolean isAdmin, boolean isAdminReadOnly, boolean isUserAdmin) {
+            boolean isAdmin, boolean isAdminReadOnly, boolean isUserAdmin, boolean isSuperAdmin) {
         super(id);
         this.email = email;
         this.status = status;
@@ -43,6 +45,7 @@ public class APIAdministrator extends APIEntity {
         this.isAdmin = isAdmin;
         this.isAdminReadOnly = isAdminReadOnly;
         this.isUserAdmin = isUserAdmin;
+        this.isSuperAdmin = isSuperAdmin;
     }
 
     public String getEmail() {
@@ -104,6 +107,15 @@ public class APIAdministrator extends APIEntity {
         isUserAdmin = userAdmin;
     }
 
+    @JsonProperty("isSuperAdmin")
+    public boolean isSuperAdmin() {
+        return isSuperAdmin;
+    }
+
+    public void setSuperAdmin(boolean superAdmin) {
+        isSuperAdmin = superAdmin;
+    }
+
     @Override
     protected <T extends APIEntity> void clone(T from) {
         APIAdministrator original = (APIAdministrator) from;
@@ -115,5 +127,6 @@ public class APIAdministrator extends APIEntity {
         this.isAdmin = original.isAdmin;
         this.isAdminReadOnly = original.isAdminReadOnly;
         this.isUserAdmin = original.isUserAdmin;
+        this.isSuperAdmin = original.isSuperAdmin;
     }
 }

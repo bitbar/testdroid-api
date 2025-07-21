@@ -12,16 +12,11 @@ import java.util.Date;
  */
 public class APIAdminDeviceSession extends APIEntity {
 
-    /**
-     * @deprecated all sessions are billable, so this field should not be used anymore.
-     */
-    @Deprecated
-    private Boolean billable;
-
     private Date createTime;
 
     private APIDeviceSessionStep.Type currentStepType;
 
+    @Deprecated
     private Long deviceTime;
 
     private Date endTime;
@@ -46,6 +41,8 @@ public class APIAdminDeviceSession extends APIEntity {
 
     private String retriedFailReason;
 
+    private Long duration;
+
     public APIAdminDeviceSession() {
 
     }
@@ -54,8 +51,8 @@ public class APIAdminDeviceSession extends APIEntity {
     public APIAdminDeviceSession(
             Long id, LocalDateTime createTime, LocalDateTime startTime, LocalDateTime endTime,
             String startedByDisplayName, Long projectId, String projectName, Long testRunId, String testRunName,
-            APIDeviceSession.State state, Integer priority, Boolean billable, Long deviceTime,
-            APIDeviceSessionStep.Type currentStepType, String retriedFailReason) {
+            APIDeviceSession.State state, Integer priority, Long duration, APIDeviceSessionStep.Type currentStepType,
+            String retriedFailReason) {
         super(id);
         this.createTime = TimeConverter.toDate(createTime);
         this.startTime = TimeConverter.toDate(startTime);
@@ -67,8 +64,8 @@ public class APIAdminDeviceSession extends APIEntity {
         this.testRunName = testRunName;
         this.state = state;
         this.priority = priority;
-        this.billable = billable;
-        this.deviceTime = deviceTime;
+        this.deviceTime = duration;
+        this.duration = duration;
         this.currentStepType = currentStepType;
         this.retriedFailReason = retriedFailReason;
     }
@@ -153,20 +150,20 @@ public class APIAdminDeviceSession extends APIEntity {
         this.priority = priority;
     }
 
-    public Boolean getBillable() {
-        return billable;
-    }
-
-    public void setBillable(Boolean billable) {
-        this.billable = billable;
-    }
-
     public Long getDeviceTime() {
         return deviceTime;
     }
 
     public void setDeviceTime(Long deviceTime) {
         this.deviceTime = deviceTime;
+    }
+
+    public Long getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Long duration) {
+        this.duration = duration;
     }
 
     public Date getCreateTime() {
@@ -207,8 +204,8 @@ public class APIAdminDeviceSession extends APIEntity {
         this.errorMessage = apiAdminDeviceSession.errorMessage;
         this.state = apiAdminDeviceSession.state;
         this.priority = apiAdminDeviceSession.priority;
-        this.billable = apiAdminDeviceSession.billable;
         this.deviceTime = apiAdminDeviceSession.deviceTime;
+        this.duration = apiAdminDeviceSession.duration;
         this.currentStepType = apiAdminDeviceSession.currentStepType;
         this.retriedFailReason = apiAdminDeviceSession.retriedFailReason;
     }

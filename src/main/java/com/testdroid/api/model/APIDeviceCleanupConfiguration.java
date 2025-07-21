@@ -24,13 +24,13 @@ public class APIDeviceCleanupConfiguration extends APIEntity {
 
     private String description;
 
-    private String discriminator;
-
     private Boolean enabled;
 
     private Boolean global;
 
     private Date lastModificationTime;
+
+    private String name;
 
     private APIDevice.OsType osType = APIDevice.OsType.ANDROID;
 
@@ -44,7 +44,7 @@ public class APIDeviceCleanupConfiguration extends APIEntity {
     @SuppressWarnings("squid:S107")
     public APIDeviceCleanupConfiguration(
             Long id, String content, Boolean enabled, LocalDateTime createTime, String createdByEmail, Long createdById,
-            APIDevice.OsType osType, LocalDateTime lastModificationTime, String discriminator, Boolean global,
+            APIDevice.OsType osType, LocalDateTime lastModificationTime, String name, Boolean global,
             String description) {
         super(id);
         this.content = content;
@@ -55,7 +55,7 @@ public class APIDeviceCleanupConfiguration extends APIEntity {
         this.osType = osType;
         this.lastModificationTime = TimeConverter.toDate(lastModificationTime);
         this.global = global;
-        this.discriminator = discriminator;
+        this.name = name;
         this.description = description;
     }
 
@@ -123,12 +123,21 @@ public class APIDeviceCleanupConfiguration extends APIEntity {
         this.global = global;
     }
 
+    /**
+     * @deprecated use {@link #setName(String)} instead.
+     */
+    @Deprecated
     public void setDiscriminator(String discriminator) {
-        this.discriminator = discriminator;
+        this.name = discriminator;
     }
 
+
+    /**
+     * @deprecated use {@link #getName()} instead.
+     */
+    @Deprecated
     public String getDiscriminator() {
-        return discriminator;
+        return name;
     }
 
     public Boolean getForceRestore() {
@@ -147,6 +156,14 @@ public class APIDeviceCleanupConfiguration extends APIEntity {
         this.description = description;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @Override
     @JsonIgnore
     public <T extends APIEntity> void clone(T from) {
@@ -160,9 +177,9 @@ public class APIDeviceCleanupConfiguration extends APIEntity {
         this.createdById = deviceCleanupConfiguration.createdById;
         this.lastModificationTime = deviceCleanupConfiguration.lastModificationTime;
         this.global = deviceCleanupConfiguration.global;
-        this.discriminator = deviceCleanupConfiguration.discriminator;
         this.forceRestore = deviceCleanupConfiguration.forceRestore;
         this.description = deviceCleanupConfiguration.description;
+        this.name = deviceCleanupConfiguration.name;
     }
 
     @Override
@@ -182,7 +199,7 @@ public class APIDeviceCleanupConfiguration extends APIEntity {
                 Objects.equals(lastModificationTime, that.lastModificationTime) &&
                 Objects.equals(enabled, that.enabled) &&
                 Objects.equals(global, that.global) &&
-                Objects.equals(discriminator, that.discriminator) &&
+                Objects.equals(name, that.name) &&
                 Objects.equals(description, that.description);
     }
 
@@ -190,6 +207,6 @@ public class APIDeviceCleanupConfiguration extends APIEntity {
     public int hashCode() {
         return Objects
                 .hash(content, createTime, createdByEmail, createdById, osType, lastModificationTime, enabled,
-                        global, discriminator, description);
+                        global, name, description);
     }
 }

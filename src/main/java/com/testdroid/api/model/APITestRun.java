@@ -94,12 +94,6 @@ public class APITestRun extends APIEntity implements UiPresentable {
 
     private Integer deviceCount;
 
-    /**
-     * @deprecated all sessions are billable, so this field should not be used anymore.
-     */
-    @Deprecated
-    private boolean billable;
-
     private String message;
 
     private String uiLink;
@@ -413,14 +407,6 @@ public class APITestRun extends APIEntity implements UiPresentable {
         this.deviceCount = deviceCount;
     }
 
-    public boolean isBillable() {
-        return billable;
-    }
-
-    public void setBillable(boolean billable) {
-        this.billable = billable;
-    }
-
     public String getProjectName() {
         return projectName;
     }
@@ -557,7 +543,6 @@ public class APITestRun extends APIEntity implements UiPresentable {
         this.frameworkName = apiTestRun.frameworkName;
         this.projectName = apiTestRun.projectName;
         this.deviceCount = apiTestRun.deviceCount;
-        this.billable = apiTestRun.billable;
         this.message = apiTestRun.message;
         this.uiLink = apiTestRun.uiLink;
     }

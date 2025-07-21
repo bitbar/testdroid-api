@@ -3,6 +3,8 @@ package com.testdroid.api.model;
 import org.apache.commons.lang3.EnumUtils;
 
 import jakarta.xml.bind.annotation.XmlType;
+
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Optional;
 
@@ -11,6 +13,7 @@ import java.util.Optional;
  */
 public class APIClientSideTestConfig implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private String appiumVersion;
@@ -45,7 +48,7 @@ public class APIClientSideTestConfig implements Serializable {
 
     @XmlType(namespace = "APIClientSideTestConfig")
     public enum CapabilitiesSchema {
-        JSONWP,
+        @Deprecated JSONWP,
         MIXED,
         W3C
     }

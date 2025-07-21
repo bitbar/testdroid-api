@@ -193,6 +193,7 @@ public class MappingKey {
     public static final String IS_ADMIN_READ_ONLY = "isAdminReadOnly";
     public static final String IS_EXCLUDED = "isExcluded";
     public static final String IS_MAIN_USER = "isMainUser";
+    public static final String IS_SUPER_ADMIN = "isSuperAdmin";
     public static final String IS_USER_ADMIN = "isUserAdmin";
     public static final String JENKINS_VERSION = "jenkinsVersion";
     public static final String JOB_CONFIG_ID = "jobConfigId";

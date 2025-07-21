@@ -1,6 +1,8 @@
 package com.testdroid.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.util.List;
 
@@ -74,5 +76,29 @@ public class APIAccountConcurrencyStatus {
         this.accountConcurrency = origin.accountConcurrency;
         this.usedBy = origin.usedBy;
         this.unlimitedConcurrency = origin.unlimitedConcurrency;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        APIAccountConcurrencyStatus that = (APIAccountConcurrencyStatus) o;
+
+        return new EqualsBuilder().append(accountConcurrency, that.accountConcurrency)
+                .append(runningSessions, that.runningSessions).append(sessions, that.sessions)
+                .append(unlimitedConcurrency, that.unlimitedConcurrency).append(usedBy, that.usedBy)
+                .append(waitingSessions, that.waitingSessions).isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37).append(accountConcurrency).append(runningSessions).append(sessions)
+                .append(unlimitedConcurrency).append(usedBy).append(waitingSessions).toHashCode();
     }
 }
