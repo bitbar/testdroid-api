@@ -10,5 +10,6 @@ public enum APINotificationScope {
     TEST_RUN_SUCCEEDED,//Project
     SYSTEM,
     CHECK,
+    @Deprecated
     PLAN_INVOICE
 }

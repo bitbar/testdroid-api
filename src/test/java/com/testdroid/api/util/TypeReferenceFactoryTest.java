@@ -140,6 +140,8 @@ class TypeReferenceFactoryTest {
             assertThat(result).withFailMessage(clazz.getSimpleName() + " not in the map").isNotNull();
             assertThat(result.getType().getTypeName())
                     .isEqualTo(String.format("%s<%s>", APISimpleList.class.getName(), clazz.getName()));
+        } else if (clazz == APIAccountUsage.class) {
+            assertThat(result).isNotNull();
         } else {
             assertThat(result).isNull();
         }

@@ -3,6 +3,7 @@ package com.testdroid.api.model;
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.util.TimeConverter;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -12,6 +13,7 @@ import java.util.Date;
  */
 public class APIConnection extends APIEntity implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private Date createTime;

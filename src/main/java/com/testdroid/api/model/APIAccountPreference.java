@@ -21,33 +21,40 @@ public class APIAccountPreference extends APIEntity implements Serializable {
 
     private Long testTimeout;
 
+    private Long dedicatedDevicesTestTimeout;
+
     private Long defaultTestTimeout;
 
     public List<String> getAllowedFileExtensions() {
         return allowedFileExtensions;
     }
 
-    public APIAccountPreference setAllowedFileExtensions(List<String> allowedFileExtensions) {
+    public void setAllowedFileExtensions(List<String> allowedFileExtensions) {
         this.allowedFileExtensions = allowedFileExtensions;
-        return this;
     }
 
     public Long getTestTimeout() {
         return testTimeout;
     }
 
-    public APIAccountPreference setTestTimeout(Long testTimeout) {
+    public void setTestTimeout(Long testTimeout) {
         this.testTimeout = testTimeout;
-        return this;
+    }
+
+    public Long getDedicatedDevicesTestTimeout() {
+        return dedicatedDevicesTestTimeout;
+    }
+
+    public void setDedicatedDevicesTestTimeout(Long dedicatedDevicesTestTimeout) {
+        this.dedicatedDevicesTestTimeout = dedicatedDevicesTestTimeout;
     }
 
     public Long getDefaultTestTimeout() {
         return defaultTestTimeout;
     }
 
-    public APIAccountPreference setDefaultTestTimeout(Long defaultTestTimeout) {
+    public void setDefaultTestTimeout(Long defaultTestTimeout) {
         this.defaultTestTimeout = defaultTestTimeout;
-        return this;
     }
 
     @Override
@@ -63,6 +70,7 @@ public class APIAccountPreference extends APIEntity implements Serializable {
         cloneBase(from);
         this.allowedFileExtensions = prototype.allowedFileExtensions;
         this.testTimeout = prototype.testTimeout;
+        this.dedicatedDevicesTestTimeout = prototype.dedicatedDevicesTestTimeout;
         this.defaultTestTimeout = prototype.defaultTestTimeout;
     }
 
@@ -76,11 +84,12 @@ public class APIAccountPreference extends APIEntity implements Serializable {
         }
         return Objects.equals(allowedFileExtensions, that.allowedFileExtensions)
                 && Objects.equals(testTimeout, that.testTimeout)
+                && Objects.equals(dedicatedDevicesTestTimeout, that.dedicatedDevicesTestTimeout)
                 && Objects.equals(defaultTestTimeout, that.defaultTestTimeout);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(allowedFileExtensions, testTimeout, defaultTestTimeout);
+        return Objects.hash(allowedFileExtensions, testTimeout, dedicatedDevicesTestTimeout, defaultTestTimeout);
     }
 }
