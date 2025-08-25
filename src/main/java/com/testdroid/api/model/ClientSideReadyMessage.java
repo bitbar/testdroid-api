@@ -1,5 +1,6 @@
 package com.testdroid.api.model;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Map;
 
@@ -8,6 +9,7 @@ import java.util.Map;
  */
 public class ClientSideReadyMessage implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     public static final String BROWSER_VERSION = "browserVersion";

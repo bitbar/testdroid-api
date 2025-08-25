@@ -1,5 +1,6 @@
 package com.testdroid.api.model;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
@@ -9,6 +10,7 @@ import java.util.Objects;
  */
 public class APIDuration implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private ChronoUnit unit;

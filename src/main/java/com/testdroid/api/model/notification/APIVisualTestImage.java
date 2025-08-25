@@ -12,7 +12,7 @@ import java.util.Objects;
  */
 public class APIVisualTestImage extends APIEntity {
 
-    private enum ImageType {
+    public enum ImageType {
 
         FULL_PAGE("fullpage"),
         VIEWPORT("viewport"),

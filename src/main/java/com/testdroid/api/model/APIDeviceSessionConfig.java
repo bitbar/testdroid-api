@@ -3,6 +3,7 @@ package com.testdroid.api.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -10,6 +11,7 @@ import java.io.Serializable;
  */
 public class APIDeviceSessionConfig extends APIEntity implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private String adbVersion;

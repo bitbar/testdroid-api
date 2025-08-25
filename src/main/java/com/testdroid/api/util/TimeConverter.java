@@ -76,5 +76,4 @@ public class TimeConverter {
                 .truncatedTo(ChronoUnit.DAYS)
                 .toInstant().toEpochMilli();
     }
-
 }
