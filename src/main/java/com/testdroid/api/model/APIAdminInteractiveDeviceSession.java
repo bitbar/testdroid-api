@@ -36,9 +36,6 @@ public class APIAdminInteractiveDeviceSession extends APIEntity {
 
     private Long userId;
 
-    @Deprecated
-    private Long deviceTime;
-
     private APIDeviceSession.Type type;
 
     public APIAdminInteractiveDeviceSession() {
@@ -61,7 +58,6 @@ public class APIAdminInteractiveDeviceSession extends APIEntity {
         this.deviceName = deviceName;
         this.deviceId = deviceId;
         this.state = state;
-        this.deviceTime = duration;
         this.type = type;
     }
 
@@ -153,14 +149,6 @@ public class APIAdminInteractiveDeviceSession extends APIEntity {
         this.userId = userId;
     }
 
-    public Long getDeviceTime() {
-        return deviceTime;
-    }
-
-    public void setDeviceTime(Long deviceTime) {
-        this.deviceTime = deviceTime;
-    }
-
     public APIDeviceSession.Type getType() {
         return type;
     }
@@ -194,7 +182,6 @@ public class APIAdminInteractiveDeviceSession extends APIEntity {
         this.deviceId = interactiveDeviceSession.deviceId;
         this.state = interactiveDeviceSession.state;
         this.errorMessage = interactiveDeviceSession.errorMessage;
-        this.deviceTime = interactiveDeviceSession.deviceTime;
         this.type = interactiveDeviceSession.type;
     }
 }

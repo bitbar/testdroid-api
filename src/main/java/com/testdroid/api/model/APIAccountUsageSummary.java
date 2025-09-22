@@ -1,10 +1,15 @@
 package com.testdroid.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.testdroid.api.APIEntity;
+
+import static com.testdroid.api.dto.MappingKey.ID;
+import static com.testdroid.api.dto.MappingKey.SELF_URI;
 
 /**
  * @author Michał Szpruta <michal.szpruta@smartbear.com>
  */
+@JsonIgnoreProperties(value = {ID, SELF_URI})
 public class APIAccountUsageSummary extends APIEntity {
 
     private Long deviceModelsCount;
@@ -20,6 +25,8 @@ public class APIAccountUsageSummary extends APIEntity {
     private Long tunnelEnabledCount;
 
     private Long usersCount;
+
+    private APIAccountUsageSummary previous;
 
     public APIAccountUsageSummary() {
     }
@@ -92,6 +99,14 @@ public class APIAccountUsageSummary extends APIEntity {
         this.usersCount = usersCount;
     }
 
+    public APIAccountUsageSummary getPrevious() {
+        return previous;
+    }
+
+    public void setPrevious(APIAccountUsageSummary previous) {
+        this.previous = previous;
+    }
+
     @Override
     protected <T extends APIEntity> void clone(T from) {
         APIAccountUsageSummary original = (APIAccountUsageSummary) from;
@@ -103,5 +118,6 @@ public class APIAccountUsageSummary extends APIEntity {
         this.osVersionsCount = original.osVersionsCount;
         this.projectsCount = original.projectsCount;
         this.usersCount = original.usersCount;
+        this.previous = original.previous;
     }
 }

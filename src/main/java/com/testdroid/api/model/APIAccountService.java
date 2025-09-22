@@ -70,12 +70,6 @@ public class APIAccountService extends APIEntity {
 
     private DeactivateReason deactivateReason;
 
-    /**
-     * @deprecated we have only CONCURRENCY charge type now, so this field should not be used anymore.
-     */
-    @Deprecated
-    private APIService.ChargeType chargeType = APIService.ChargeType.CONCURRENCY;
-
     private String subscriptionManagementURL;
 
     private String slmLicenseId;
@@ -295,14 +289,6 @@ public class APIAccountService extends APIEntity {
 
     public void setDeactivateReason(DeactivateReason deactivateReason) {
         this.deactivateReason = deactivateReason;
-    }
-
-    public APIService.ChargeType getChargeType() {
-        return chargeType;
-    }
-
-    public void setChargeType(APIService.ChargeType chargeType) {
-        this.chargeType = chargeType;
     }
 
     public void setSubscriptionManagementURL(String subscriptionManagementURL) {

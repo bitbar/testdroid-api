@@ -136,9 +136,6 @@ public class APIDeviceSession extends APIEntity implements UiPresentable {
 
     private Integer autoRetriesLeftCount;
 
-    @Deprecated
-    private Long deviceTime;
-
     private Long duration;
 
     private Long testRunId;
@@ -202,7 +199,6 @@ public class APIDeviceSession extends APIEntity implements UiPresentable {
         this.timeLimit = timeLimit;
         this.deviceLogFirstTimestamp = deviceLogFirstTimestamp;
         this.state = state;
-        this.deviceTime = duration;
         this.excludeReason = excludeReason != null ? excludeReason.getDisplayName() : null;
         this.testCaseAllCount = testCasePassedCount + testCaseFailedCount + testCaseSkippedCount;
         this.testCaseSuccessCount = testCasePassedCount + testCaseFailedCount;
@@ -393,14 +389,6 @@ public class APIDeviceSession extends APIEntity implements UiPresentable {
         this.autoRetriesLeftCount = autoRetriesLeftCount;
     }
 
-    public Long getDeviceTime() {
-        return deviceTime;
-    }
-
-    public void setDeviceTime(Long deviceTime) {
-        this.deviceTime = deviceTime;
-    }
-
     public Long getDuration() {
         return duration;
     }
@@ -564,7 +552,6 @@ public class APIDeviceSession extends APIEntity implements UiPresentable {
         this.deviceInstanceId = apiDeviceSession.deviceInstanceId;
         this.retryState = apiDeviceSession.retryState;
         this.autoRetriesLeftCount = apiDeviceSession.autoRetriesLeftCount;
-        this.deviceTime = apiDeviceSession.deviceTime;
         this.duration = apiDeviceSession.duration;
         this.testRunId = apiDeviceSession.testRunId;
         this.testRunName = apiDeviceSession.testRunName;

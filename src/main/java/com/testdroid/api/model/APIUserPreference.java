@@ -8,10 +8,12 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 
+import static com.testdroid.api.dto.MappingKey.ID;
+
 /**
  * @author Damian Sniezek <damian.sniezek@bitbar.com>
  */
-@JsonIgnoreProperties(value = {"id"})
+@JsonIgnoreProperties(ID)
 public class APIUserPreference extends APIEntity implements Serializable {
 
     @Serial

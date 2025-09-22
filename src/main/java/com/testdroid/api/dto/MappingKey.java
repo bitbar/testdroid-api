@@ -87,8 +87,11 @@ public class MappingKey {
     public static final String DEACTIVATED_BY_NAME = "deactivatedByName";
     public static final String DEACTIVATE_REASON = "deactivateReason";
     public static final String DEDICATED = "dedicated";
+    public static final String DEDICATED_DEVICES_CONCURRENCY = "dedicatedDevicesConcurrency";
     public static final String DEDICATED_DEVICES_COUNT = "dedicatedDevicesCount";
+    public static final String DEDICATED_DEVICES_RATIO = "dedicatedDevicesRatio";
     public static final String DEDICATED_DEVICES_TEST_TIMEOUT = "dedicatedDevicesTestTimeout";
+    public static final String DEDICATED_DEVICES_USAGE = "dedicatedDevicesUsage";
     public static final String DEDICATION_END_TIME = "dedicationEndTime";
     public static final String DELETE_TIME = "deleteTime";
     public static final String DEPRECATED_RESOURCE = "deprecatedResource";
@@ -118,7 +121,6 @@ public class MappingKey {
     public static final String DEVICE_TIME_ZONE = "deviceTimeZone";
     public static final String DEVICE_TYPE_ID = "deviceTypeId";
     public static final String DIRECTION = "direction";
-    public static final String DISCRIMINATOR = "discriminator";
     public static final String DISPLAY_NAME = "displayName";
     public static final String DOCUMENTATION_URL = "documentationUrl";
     public static final String DURATION = "duration";
@@ -261,6 +263,9 @@ public class MappingKey {
     public static final String PROPERTY_GROUP_ID = "propertyGroupId";
     public static final String PROPERTY_GROUP_NAME = "propertyGroupName";
     public static final String PROPERTY_ID = "propertyId";
+    public static final String PUBLIC_DEVICES_CONCURRENCY = "publicDevicesConcurrency";
+    public static final String PUBLIC_DEVICES_RATIO = "publicDevicesRatio";
+    public static final String PUBLIC_DEVICES_USAGE = "publicDevicesUsage";
     public static final String QUEUE_SIZE = "queueSize";
     public static final String QUEUE_WAIT = "queueWait";
     public static final String QUIET_DOWN = "quietDown";
@@ -294,6 +299,7 @@ public class MappingKey {
     public static final String SECURED = "secured";
     public static final String SELECTOR_ID = "selectorId";
     public static final String SELECTOR_IDS_ARR = "selectorIds[]";
+    public static final String SELF_URI = "selfURI";
     public static final String SENT = "sent";
     public static final String SERIAL_ID = "serialId";
     public static final String SERVICE_COUNT = "serviceCount";

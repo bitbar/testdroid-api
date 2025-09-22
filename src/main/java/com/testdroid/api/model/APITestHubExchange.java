@@ -9,7 +9,7 @@ import static com.testdroid.api.dto.MappingKey.ID;
 /**
  * @author Michał Szpruta <michal.szpruta@smartbear.com>
  */
-@JsonIgnoreProperties(value = ID)
+@JsonIgnoreProperties(ID)
 public class APITestHubExchange extends APIEntity {
 
     private String integration;

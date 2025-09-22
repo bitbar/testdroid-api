@@ -4,10 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.testdroid.api.APIEntity;
 
+import static com.testdroid.api.dto.MappingKey.ID;
+
 /**
  * @author Adrian Zybala <adrian.zybala@bitbar.com>
  */
-@JsonIgnoreProperties("id")
+@JsonIgnoreProperties(ID)
 public class APIUserDeviceTimeSummary extends APIEntity {
 
     private Long totalDeviceTime;
@@ -15,9 +17,6 @@ public class APIUserDeviceTimeSummary extends APIEntity {
     private Long inspectorDeviceTime;
 
     private Long automaticDeviceTime;
-
-    @Deprecated
-    private Long freeDeviceTime;
 
     private Long periodStart;
 
@@ -31,7 +30,6 @@ public class APIUserDeviceTimeSummary extends APIEntity {
         this.totalDeviceTime = inspectorDeviceTime + automaticDeviceTime;
         this.inspectorDeviceTime = inspectorDeviceTime;
         this.automaticDeviceTime = automaticDeviceTime;
-        this.freeDeviceTime = 0L;
     }
 
     public Long getTotalDeviceTime() {
@@ -74,14 +72,6 @@ public class APIUserDeviceTimeSummary extends APIEntity {
         this.periodStart = periodStart;
     }
 
-    public Long getFreeDeviceTime() {
-        return freeDeviceTime;
-    }
-
-    public void setFreeDeviceTime(Long freeDeviceTime) {
-        this.freeDeviceTime = freeDeviceTime;
-    }
-
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
@@ -90,7 +80,6 @@ public class APIUserDeviceTimeSummary extends APIEntity {
         this.totalDeviceTime = apiUserDeviceTimeSummary.totalDeviceTime;
         this.inspectorDeviceTime = apiUserDeviceTimeSummary.inspectorDeviceTime;
         this.automaticDeviceTime = apiUserDeviceTimeSummary.automaticDeviceTime;
-        this.freeDeviceTime = apiUserDeviceTimeSummary.freeDeviceTime;
         this.periodStart = apiUserDeviceTimeSummary.periodStart;
         this.periodEnd = apiUserDeviceTimeSummary.periodEnd;
     }

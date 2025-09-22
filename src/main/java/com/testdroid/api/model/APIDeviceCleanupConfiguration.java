@@ -123,23 +123,6 @@ public class APIDeviceCleanupConfiguration extends APIEntity {
         this.global = global;
     }
 
-    /**
-     * @deprecated use {@link #setName(String)} instead.
-     */
-    @Deprecated
-    public void setDiscriminator(String discriminator) {
-        this.name = discriminator;
-    }
-
-
-    /**
-     * @deprecated use {@link #getName()} instead.
-     */
-    @Deprecated
-    public String getDiscriminator() {
-        return name;
-    }
-
     public Boolean getForceRestore() {
         return forceRestore;
     }

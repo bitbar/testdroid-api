@@ -12,12 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.testdroid.api.dto.Context.*;
+import static com.testdroid.api.dto.MappingKey.ID;
 import static java.util.stream.Collectors.joining;
 
 /**
  * @author Łukasz Kajda <lukasz.kajda@bitbar.com>
  */
-@JsonIgnoreProperties(value = {"id"})
+@JsonIgnoreProperties(ID)
 public class APIList<T extends APIEntity> extends APIEntity {
 
     @XmlElementWrapper
