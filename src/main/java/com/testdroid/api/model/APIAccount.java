@@ -33,9 +33,28 @@ public class APIAccount extends APIEntity {
 
     private String slmOrganizationId;
 
+    @JsonInclude(Include.NON_NULL)
+    private Long publicDevicesUsage;
+
+    @JsonInclude(Include.NON_NULL)
+    private Long publicDevicesConcurrency;
+
+    @JsonInclude(Include.NON_NULL)
+    private Float publicDevicesRatio;
+
+    @JsonInclude(Include.NON_NULL)
+    private Long dedicatedDevicesUsage;
+
+    @JsonInclude(Include.NON_NULL)
+    private Long dedicatedDevicesConcurrency;
+
+    @JsonInclude(Include.NON_NULL)
+    private Float dedicatedDevicesRatio;
+
     public APIAccount() {
     }
 
+    @SuppressWarnings("squid:S107")
     public APIAccount(
             Long id, String slmOrganizationId, String name, String userName, String comment, LocalDateTime createTime) {
         super(id);
@@ -49,9 +68,25 @@ public class APIAccount extends APIEntity {
     @SuppressWarnings("squid:S107")
     public APIAccount(
             Long id, String slmOrganizationId, String name, String userName, String comment, LocalDateTime createTime,
-            long dedicatedDevicesCount,
-            String activeServiceName) {
+            Long publicDevicesUsage, Long publicDevicesConcurrency, Float publicDevicesRatio,
+            Long dedicatedDevicesUsage, Long dedicatedDevicesConcurrency, Float dedicatedDevicesRatio) {
         this(id, slmOrganizationId, name, userName, comment, createTime);
+        this.publicDevicesUsage = publicDevicesUsage;
+        this.publicDevicesConcurrency = publicDevicesConcurrency;
+        this.publicDevicesRatio = publicDevicesRatio;
+        this.dedicatedDevicesUsage = dedicatedDevicesUsage;
+        this.dedicatedDevicesConcurrency = dedicatedDevicesConcurrency;
+        this.dedicatedDevicesRatio = dedicatedDevicesRatio;
+    }
+
+    @SuppressWarnings("squid:S107")
+    public APIAccount(
+            Long id, String slmOrganizationId, String name, String userName, String comment, LocalDateTime createTime,
+            Long publicDevicesUsage, Long publicDevicesConcurrency, Float publicDevicesRatio,
+            Long dedicatedDevicesUsage, Long dedicatedDevicesConcurrency, Float dedicatedDevicesRatio,
+            long dedicatedDevicesCount, String activeServiceName) {
+        this(id, slmOrganizationId, name, userName, comment, createTime, publicDevicesUsage, publicDevicesConcurrency,
+                publicDevicesRatio, dedicatedDevicesUsage, dedicatedDevicesConcurrency, dedicatedDevicesRatio);
         this.dedicatedDevicesCount = dedicatedDevicesCount;
         this.activeServiceName = activeServiceName;
     }
@@ -120,6 +155,54 @@ public class APIAccount extends APIEntity {
         this.slmOrganizationId = slmOrganizationId;
     }
 
+    public Long getPublicDevicesUsage() {
+        return publicDevicesUsage;
+    }
+
+    public void setPublicDevicesUsage(Long publicDevicesUsage) {
+        this.publicDevicesUsage = publicDevicesUsage;
+    }
+
+    public Long getPublicDevicesConcurrency() {
+        return publicDevicesConcurrency;
+    }
+
+    public void setPublicDevicesConcurrency(Long publicDevicesConcurrency) {
+        this.publicDevicesConcurrency = publicDevicesConcurrency;
+    }
+
+    public Float getPublicDevicesRatio() {
+        return publicDevicesRatio;
+    }
+
+    public void setPublicDevicesRatio(Float publicDevicesRatio) {
+        this.publicDevicesRatio = publicDevicesRatio;
+    }
+
+    public Long getDedicatedDevicesUsage() {
+        return dedicatedDevicesUsage;
+    }
+
+    public void setDedicatedDevicesUsage(Long dedicatedDevicesUsage) {
+        this.dedicatedDevicesUsage = dedicatedDevicesUsage;
+    }
+
+    public Long getDedicatedDevicesConcurrency() {
+        return dedicatedDevicesConcurrency;
+    }
+
+    public void setDedicatedDevicesConcurrency(Long dedicatedDevicesConcurrency) {
+        this.dedicatedDevicesConcurrency = dedicatedDevicesConcurrency;
+    }
+
+    public Float getDedicatedDevicesRatio() {
+        return dedicatedDevicesRatio;
+    }
+
+    public void setDedicatedDevicesRatio(Float dedicatedDevicesRatio) {
+        this.dedicatedDevicesRatio = dedicatedDevicesRatio;
+    }
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
@@ -133,5 +216,11 @@ public class APIAccount extends APIEntity {
         this.userName = account.userName;
         this.invoiceDetails = account.invoiceDetails;
         this.slmOrganizationId = account.slmOrganizationId;
+        this.publicDevicesUsage = account.publicDevicesUsage;
+        this.publicDevicesConcurrency = account.publicDevicesConcurrency;
+        this.publicDevicesRatio = account.publicDevicesRatio;
+        this.dedicatedDevicesUsage = account.dedicatedDevicesUsage;
+        this.dedicatedDevicesConcurrency = account.dedicatedDevicesConcurrency;
+        this.dedicatedDevicesRatio = account.dedicatedDevicesRatio;
     }
 }

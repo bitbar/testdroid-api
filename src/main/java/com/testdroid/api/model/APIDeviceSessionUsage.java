@@ -1,20 +1,33 @@
 package com.testdroid.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.util.TimeConverter;
+import jakarta.xml.bind.annotation.XmlType;
 
 import java.time.LocalDateTime;
 import java.util.Date;
 
+import static com.testdroid.api.dto.MappingKey.ID;
+import static com.testdroid.api.dto.MappingKey.SELF_URI;
+
 /**
- * @author Adrian Zybala <adrian.zybala@bitbar.com>
+ * @author Michał Szpruta <michal.szpruta@smartbear.com>
  */
-public class APIUserDeviceTime extends APIEntity {
+@JsonIgnoreProperties(value = {ID, SELF_URI})
+public class APIDeviceSessionUsage extends APIEntity {
+
+    @XmlType(namespace = "APIDeviceSessionUsage")
+    public enum Type {
+        AUTOMATIC,
+        MANUAL,
+        DEDICATED_AUTOMATIC,
+        DEDICATED_MANUAL,
+        REPORT
+    }
 
     private Date createTime;
-
-    private Date endTime;
 
     private String userName;
 
@@ -22,17 +35,16 @@ public class APIUserDeviceTime extends APIEntity {
 
     private Long duration;
 
-    private APIDeviceSession.Type type;
+    private APIDeviceSessionUsage.Type type;
 
-    public APIUserDeviceTime() {
+    public APIDeviceSessionUsage() {
 
     }
 
-    public APIUserDeviceTime(
-            LocalDateTime createTime, LocalDateTime endTime, String userName, Long userId, Long duration,
-            APIDeviceSession.Type type) {
+    public APIDeviceSessionUsage(
+            LocalDateTime createTime, String userName, Long userId, Long duration,
+            APIDeviceSessionUsage.Type type) {
         this.createTime = TimeConverter.toDate(createTime);
-        this.endTime = TimeConverter.toDate(endTime);
         this.userName = userName;
         this.userId = userId;
         this.duration = duration;
@@ -42,13 +54,13 @@ public class APIUserDeviceTime extends APIEntity {
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
-        APIUserDeviceTime apiUserDeviceTime = (APIUserDeviceTime) from;
+        APIDeviceSessionUsage original = (APIDeviceSessionUsage) from;
         cloneBase(from);
-        this.createTime = apiUserDeviceTime.createTime;
-        this.endTime = apiUserDeviceTime.endTime;
-        this.userName = apiUserDeviceTime.userName;
-        this.userId = apiUserDeviceTime.userId;
-        this.type = apiUserDeviceTime.type;
+        this.createTime = original.createTime;
+        this.userName = original.userName;
+        this.userId = original.userId;
+        this.duration = original.duration;
+        this.type = original.type;
     }
 
     public Date getCreateTime() {
@@ -57,14 +69,6 @@ public class APIUserDeviceTime extends APIEntity {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
-    }
-
-    public Date getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
     }
 
     public String getUserName() {
@@ -83,11 +87,11 @@ public class APIUserDeviceTime extends APIEntity {
         this.userId = userId;
     }
 
-    public APIDeviceSession.Type getType() {
+    public APIDeviceSessionUsage.Type getType() {
         return type;
     }
 
-    public void setType(APIDeviceSession.Type type) {
+    public void setType(APIDeviceSessionUsage.Type type) {
         this.type = type;
     }
 

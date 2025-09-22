@@ -16,9 +16,6 @@ public class APIAdminDeviceSession extends APIEntity {
 
     private APIDeviceSessionStep.Type currentStepType;
 
-    @Deprecated
-    private Long deviceTime;
-
     private Date endTime;
 
     private String errorMessage;
@@ -64,7 +61,6 @@ public class APIAdminDeviceSession extends APIEntity {
         this.testRunName = testRunName;
         this.state = state;
         this.priority = priority;
-        this.deviceTime = duration;
         this.duration = duration;
         this.currentStepType = currentStepType;
         this.retriedFailReason = retriedFailReason;
@@ -150,14 +146,6 @@ public class APIAdminDeviceSession extends APIEntity {
         this.priority = priority;
     }
 
-    public Long getDeviceTime() {
-        return deviceTime;
-    }
-
-    public void setDeviceTime(Long deviceTime) {
-        this.deviceTime = deviceTime;
-    }
-
     public Long getDuration() {
         return duration;
     }
@@ -204,7 +192,6 @@ public class APIAdminDeviceSession extends APIEntity {
         this.errorMessage = apiAdminDeviceSession.errorMessage;
         this.state = apiAdminDeviceSession.state;
         this.priority = apiAdminDeviceSession.priority;
-        this.deviceTime = apiAdminDeviceSession.deviceTime;
         this.duration = apiAdminDeviceSession.duration;
         this.currentStepType = apiAdminDeviceSession.currentStepType;
         this.retriedFailReason = apiAdminDeviceSession.retriedFailReason;

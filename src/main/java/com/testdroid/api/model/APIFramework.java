@@ -15,10 +15,8 @@ public class APIFramework extends APIEntity {
 
     @XmlType(namespace = "APIFramework")
     public enum Type {
-        @Deprecated APP_CRAWLER,
         CLIENT_SIDE,
         MANUAL,
-        @Deprecated REMOTE
     }
 
     private Long accountId;

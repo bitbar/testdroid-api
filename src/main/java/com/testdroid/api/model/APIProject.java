@@ -37,8 +37,6 @@ public class APIProject extends APIEntity {
 
     private String description;
 
-    private byte[] icon;
-
     private String name;
 
     private APITestRunConfig testRunConfig;
@@ -252,7 +250,6 @@ public class APIProject extends APIEntity {
         this.createTime = apiProject.createTime;
         this.archiveTime = apiProject.archiveTime;
         this.description = apiProject.description;
-        this.icon = apiProject.icon;
         this.name = apiProject.name;
         this.isShared = apiProject.isShared;
         this.isSharedWithCaller = apiProject.isSharedWithCaller;

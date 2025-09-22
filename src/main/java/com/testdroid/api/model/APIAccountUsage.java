@@ -1,5 +1,6 @@
 package com.testdroid.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.testdroid.api.APIEntity;
 import jakarta.xml.bind.annotation.XmlType;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -9,9 +10,13 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
+import static com.testdroid.api.dto.MappingKey.ID;
+import static com.testdroid.api.dto.MappingKey.SELF_URI;
+
 /**
  * @author Michał Szpruta <michal.szpruta@smartbear.com>
  */
+@JsonIgnoreProperties(value = {ID, SELF_URI})
 public class APIAccountUsage extends APIEntity {
 
     private long timestamp;

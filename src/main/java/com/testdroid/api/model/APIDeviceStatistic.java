@@ -11,7 +11,7 @@ import static com.testdroid.api.dto.MappingKey.ID;
 /**
  * @author Michał Szpruta <michal.szpruta@smartbear.com>
  */
-@JsonIgnoreProperties(value = {ID})
+@JsonIgnoreProperties(ID)
 public class APIDeviceStatistic extends APIEntity {
 
     @XmlType(namespace = "APIDeviceStatistic")

@@ -5,7 +5,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.List;
 
-@JsonIgnoreProperties(value = {"id", "selfURI"})
+import static com.testdroid.api.dto.MappingKey.ID;
+import static com.testdroid.api.dto.MappingKey.SELF_URI;
+
+@JsonIgnoreProperties(value = {ID, SELF_URI})
 public class APISimpleList<T extends APIEntity> extends APIEntity {
 
     private List<T> data;

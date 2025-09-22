@@ -21,12 +21,6 @@ public class APIService extends APIEntity {
 
     private Integer centPrice;
 
-    /**
-     * @deprecated we have only CONCURRENCY charge type now, so this field should not be used anymore.
-     */
-    @Deprecated
-    private Integer includedHours = 0;
-
     private String description;
 
     private String features;
@@ -40,12 +34,6 @@ public class APIService extends APIEntity {
     private boolean activated;
 
     private boolean customPlan;
-
-    /**
-     * @deprecated we have only CONCURRENCY charge type now, so this field should not be used anymore.
-     */
-    @Deprecated
-    private ChargeType chargeType = ChargeType.CONCURRENCY;
 
     private List<APIRole> roles = new ArrayList<>();
 
@@ -134,14 +122,6 @@ public class APIService extends APIEntity {
         return CurrencyFormatter.format(centPrice.longValue());
     }
 
-    public Integer getIncludedHours() {
-        return includedHours;
-    }
-
-    public void setIncludedHours(Integer includedHours) {
-        this.includedHours = includedHours;
-    }
-
     public Date getArchiveTime() {
         return archiveTime;
     }
@@ -164,14 +144,6 @@ public class APIService extends APIEntity {
 
     public void setCustomPlan(boolean customPlan) {
         this.customPlan = customPlan;
-    }
-
-    public ChargeType getChargeType() {
-        return chargeType;
-    }
-
-    public void setChargeType(ChargeType chargeType) {
-        this.chargeType = chargeType;
     }
 
     public List<APIRole> getRoles() {

@@ -2,41 +2,15 @@ package com.testdroid.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
-import com.testdroid.api.APIList;
-
-import jakarta.xml.bind.annotation.XmlType;
 
 /**
  * @author Slawomir Pawluk <slawomir.pawluk@bitbar.com>
  */
 public class APITestCaseRunStep extends APIEntity {
 
-    @XmlType(namespace = "APITestCaseRunStep")
-    public enum Type {
-        ASSERTION,
-        CLICK,
-        CONFIG,
-        DRAG,
-        HTTP,
-        INPUT,
-        NAVIGATION,
-        OTHER,
-        SCROLL,
-        UTIL,
-        WAIT
-    }
-
     private String description;
 
     private Long duration;
-
-    private String errorMessage;
-
-    private String fromActivity;
-
-    private APIList<APIScreenshot> screenshots;
-
-    private Type type;
 
     private String httpMethod;
 
@@ -53,16 +27,6 @@ public class APITestCaseRunStep extends APIEntity {
     public APITestCaseRunStep() {
     }
 
-    public APITestCaseRunStep(
-            Long id, String description, String fromActivity, String errorMessage, Long duration, String type) {
-        super(id);
-        this.description = description;
-        this.fromActivity = fromActivity;
-        this.errorMessage = errorMessage;
-        this.duration = duration;
-        this.type = APITestCaseRunStep.Type.valueOf(type.toUpperCase());
-    }
-
     @SuppressWarnings("squid:S107")
     public APITestCaseRunStep(
             Long id, Long duration, String httpMethod, int responseCode, long timestamp, String requestBody,
@@ -70,14 +34,12 @@ public class APITestCaseRunStep extends APIEntity {
         super(id);
         this.description = String.format("%s - %s", httpMethod, uri);
         this.duration = duration;
-        this.type = Type.HTTP;
         this.httpMethod = httpMethod;
         this.responseCode = responseCode;
         this.timestamp = timestamp;
         this.requestBody = requestBody;
         this.responseBody = responseBody;
         this.uri = uri;
-        this.screenshots = new APIList<>();
     }
 
     public String getDescription() {
@@ -88,36 +50,12 @@ public class APITestCaseRunStep extends APIEntity {
         this.description = description;
     }
 
-    public String getFromActivity() {
-        return fromActivity;
-    }
-
-    public void setFromActivity(String fromActivity) {
-        this.fromActivity = fromActivity;
-    }
-
-    public String getErrorMessage() {
-        return errorMessage;
-    }
-
-    public void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
-    }
-
     public Long getDuration() {
         return duration;
     }
 
     public void setDuration(Long duration) {
         this.duration = duration;
-    }
-
-    public Type getType() {
-        return type;
-    }
-
-    public void setType(Type type) {
-        this.type = type;
     }
 
     public String getHttpMethod() {
@@ -168,14 +106,6 @@ public class APITestCaseRunStep extends APIEntity {
         this.uri = uri;
     }
 
-    public APIList<APIScreenshot> getScreenshots() {
-        return screenshots;
-    }
-
-    public void setScreenshots(APIList<APIScreenshot> screenshots) {
-        this.screenshots = screenshots;
-    }
-
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
@@ -183,10 +113,6 @@ public class APITestCaseRunStep extends APIEntity {
         cloneBase(from);
         this.description = apiTestCaseRunStep.description;
         this.duration = apiTestCaseRunStep.duration;
-        this.errorMessage = apiTestCaseRunStep.errorMessage;
-        this.fromActivity = apiTestCaseRunStep.fromActivity;
-        this.screenshots = apiTestCaseRunStep.screenshots;
-        this.type = apiTestCaseRunStep.type;
         this.httpMethod = apiTestCaseRunStep.httpMethod;
         this.responseCode = apiTestCaseRunStep.responseCode;
         this.timestamp = apiTestCaseRunStep.timestamp;

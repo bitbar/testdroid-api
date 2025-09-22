@@ -8,7 +8,10 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import jakarta.xml.bind.annotation.XmlType;
 
-@JsonIgnoreProperties(value = {"id", "selfURI"})
+import static com.testdroid.api.dto.MappingKey.ID;
+import static com.testdroid.api.dto.MappingKey.SELF_URI;
+
+@JsonIgnoreProperties(value = {ID, SELF_URI})
 public class APIBrokerHub extends APIEntity {
 
     @XmlType(namespace = "APIBrokerHub")
