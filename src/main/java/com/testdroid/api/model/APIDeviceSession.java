@@ -100,71 +100,73 @@ public class APIDeviceSession extends APIEntity implements UiPresentable {
         }
     }
 
+    private Long accountId;
+
+    private Integer autoRetriesLeftCount;
+
+    private Boolean biometricInstrumentation;
+
+    private String clientSideId;
+
+    private APIDeviceSessionConfig config;
+
     private Date createTime;
 
     private APIDevice device;
 
-    private Date endTime;
+    private Long deviceInstanceId;
 
     private Long deviceLogFirstTimestamp;
 
-    private Date startTime;
+    private Long duration;
+
+    private Date endTime;
+
+    private String excludeReason;
+
+    private String externalId;
 
     private Date installTime;
+
+    private String name;
+
+    private Long projectId;
+
+    private String projectName;
+
+    private Boolean retryable;
+
+    private RetryState retryState;
+
+    private Date startTime;
+
+    private State state;
+
+    private Float successRatio;
+
+    private Integer testCaseAllCount;
+
+    private Integer testCaseFailedCount;
+
+    private Integer testCasePassedCount;
+
+    private Integer testCaseSkippedCount;
+
+    private Integer testCaseSuccessCount;
+
+    private Long testRunId;
+
+    private String testRunName;
 
     private Long timeLimit;
 
     private Type type;
 
-    private State state;
-
-    private Integer testCaseAllCount;
-
-    private Integer testCaseSuccessCount;
-
-    private Integer testCasePassedCount;
-
-    private Integer testCaseFailedCount;
-
-    private Integer testCaseSkippedCount;
-
-    private String excludeReason;
-
-    private Long deviceInstanceId;
-
-    private RetryState retryState;
-
-    private Integer autoRetriesLeftCount;
-
-    private Long duration;
-
-    private Long testRunId;
-
-    private Long projectId;
-
-    private Float successRatio;
-
-    private String projectName;
-
-    private String testRunName;
-
-    private String name;
-
-    private String externalId;
-
-    private String clientSideId;
-
-    private Long userId;
+    private String uiLink;
 
     private String userEmail;
 
-    private Long accountId;
-
-    private APIDeviceSessionConfig config;
-
-    private String uiLink;
-
-    private Boolean biometricInstrumentation;
+    private Long userId;
 
     public APIDeviceSession() {
     }
@@ -181,7 +183,7 @@ public class APIDeviceSession extends APIEntity implements UiPresentable {
             String releaseVersion, Integer apiLevel, ExcludeReason excludeReason, Long deviceInstanceId,
             RetryState retryState, Integer autoRetriesLeftCount, Long duration, Long projectId, String projectName,
             Long testRunId, String testRunName, Float successRatio, String name, APIDeviceSessionConfig config,
-            Boolean biometricInstrumentation, String location) {
+            Boolean biometricInstrumentation, String location, Boolean retryable) {
         super(id);
         this.externalId = externalId;
         this.clientSideId = clientSideId;
@@ -217,6 +219,7 @@ public class APIDeviceSession extends APIEntity implements UiPresentable {
         this.name = name;
         this.config = config;
         this.biometricInstrumentation = biometricInstrumentation;
+        this.retryable = retryable;
     }
 
     @Override
@@ -485,6 +488,14 @@ public class APIDeviceSession extends APIEntity implements UiPresentable {
         this.biometricInstrumentation = biometricInstrumentation;
     }
 
+    public Boolean isRetryable() {
+        return retryable;
+    }
+
+    public void setRetryable(Boolean retryable) {
+        this.retryable = retryable;
+    }
+
     @JsonIgnore
     public APIListResource<APIDeviceSessionStep> getDeviceSessionStepsResource() throws APIException {
         return getListResource(createUri(selfURI, "/steps"), APIDeviceSessionStep.class);
@@ -561,5 +572,6 @@ public class APIDeviceSession extends APIEntity implements UiPresentable {
         this.name = apiDeviceSession.name;
         this.config = apiDeviceSession.config;
         this.biometricInstrumentation = apiDeviceSession.biometricInstrumentation;
+        this.retryable = apiDeviceSession.retryable;
     }
 }

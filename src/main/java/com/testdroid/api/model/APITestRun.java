@@ -30,11 +30,13 @@ public class APITestRun extends APIEntity implements UiPresentable {
         FINISHED
     }
 
+    private Integer abortedDeviceCount;
+
     private APITestRunConfig config;
 
     private Date createTime;
 
-    private Date startTime;
+    private Integer deviceCount;
 
     private String displayName;
 
@@ -42,21 +44,37 @@ public class APITestRun extends APIEntity implements UiPresentable {
 
     private Integer excludedDeviceCount;
 
+    private Integer executedTestCaseCount;
+
     private Float executionRatio;
+
+    private Integer failedTestCaseCount;
 
     private Integer finishedDeviceCount;
 
+    private Long frameworkId;
+
+    private String frameworkName;
+
     private Long logsFileId;
 
-    private Integer number;
+    private String message;
 
-    private Integer rowIndex;
+    private Integer number;
 
     private Long projectId;
 
     private String projectName;
 
+    private Boolean retryable;
+
+    private Integer rowIndex;
+
+    private Integer runningDeviceCount;
+
     private Long screenshotsFileId;
+
+    private Date startTime;
 
     private String startedByDisplayName;
 
@@ -64,39 +82,23 @@ public class APITestRun extends APIEntity implements UiPresentable {
 
     private State state;
 
+    private Integer succeededDeviceCount;
+
     private Float successRatio;
 
     private Integer successfulTestCaseCount;
 
-    private Integer failedTestCaseCount;
-
-    private Integer executedTestCaseCount;
-
     private Integer testCaseCount;
-
-    private Integer warningDeviceCount;
-
-    private Integer runningDeviceCount;
-
-    private Integer succeededDeviceCount;
-
-    private Integer waitingDeviceCount;
-
-    private Integer abortedDeviceCount;
 
     private Integer timeoutedDeviceCount;
 
+    private String uiLink;
+
     private Long userId;
 
-    private Long frameworkId;
+    private Integer waitingDeviceCount;
 
-    private String frameworkName;
-
-    private Integer deviceCount;
-
-    private String message;
-
-    private String uiLink;
+    private Integer warningDeviceCount;
 
     public APITestRun() {
     }
@@ -110,7 +112,7 @@ public class APITestRun extends APIEntity implements UiPresentable {
             Integer finishedDeviceCount, Integer excludedDeviceCount, Integer errorsDeviceCount,
             Integer succeededDeviceCount, Integer runningDeviceCount, Integer warningDeviceCount,
             Integer waitingDeviceCount, Integer abortedDeviceCount, Integer timeoutedDeviceCount, Long frameworkId,
-            String frameworkName, Long frameworkQueueWait, String testRunConfigurationContent) {
+            String frameworkName, Long frameworkQueueWait, Boolean retryable, String testRunConfigurationContent) {
         super(id);
         this.number = number;
         this.createTime = TimeConverter.toDate(createTime);
@@ -144,6 +146,7 @@ public class APITestRun extends APIEntity implements UiPresentable {
         this.frameworkId = frameworkId;
         this.frameworkName = frameworkName;
         this.deviceCount = deviceCount;
+        this.retryable = retryable;
         mapConfig(testRunConfigurationContent, frameworkQueueWait);
     }
 
@@ -439,6 +442,14 @@ public class APITestRun extends APIEntity implements UiPresentable {
         return message;
     }
 
+    public Boolean isRetryable() {
+        return retryable;
+    }
+
+    public void setRetryable(Boolean retryable) {
+        this.retryable = retryable;
+    }
+
     @Override
     public String getUiLink() {
         return uiLink;
@@ -545,5 +556,6 @@ public class APITestRun extends APIEntity implements UiPresentable {
         this.deviceCount = apiTestRun.deviceCount;
         this.message = apiTestRun.message;
         this.uiLink = apiTestRun.uiLink;
+        this.retryable = apiTestRun.retryable;
     }
 }

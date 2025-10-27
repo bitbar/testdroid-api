@@ -72,6 +72,7 @@ public class TypeReferenceFactory {
         LIST_MAP.put(APIDeviceSessionStep.class, new TypeReference<APIList<APIDeviceSessionStep>>() {});
         LIST_MAP.put(APIDeviceSessionUsage.class, new TypeReference<APIList<APIDeviceSessionUsage>>() {});
         LIST_MAP.put(APIDeviceSessionUsageSummary.class, new TypeReference<APIList<APIDeviceSessionUsageSummary>>() {});
+        LIST_MAP.put(APIDeviceSessionUserUsage.class, new TypeReference<APIList<APIDeviceSessionUserUsage>>() {});
         LIST_MAP.put(APIAccountUsage.class, new TypeReference<APIList<APIAccountUsage>>() {});
         LIST_MAP.put(APIAccountUsageSummary.class, new TypeReference<APIList<APIAccountUsageSummary>>() {});
         LIST_MAP.put(APIDeviceStatistic.class, new TypeReference<APIList<APIDeviceStatistic>>() {});
@@ -161,6 +162,7 @@ public class TypeReferenceFactory {
         MAP.put(APIDeviceSessionStep.class, new TypeReference<APIDeviceSessionStep>() {});
         MAP.put(APIDeviceSessionUsage.class, new TypeReference<APIDeviceSessionUsage>() {});
         MAP.put(APIDeviceSessionUsageSummary.class, new TypeReference<APIDeviceSessionUsageSummary>() {});
+        MAP.put(APIDeviceSessionUserUsage.class, new TypeReference<APIDeviceSessionUserUsage>() {});
         MAP.put(APIAccountUsage.class, new TypeReference<APIAccountUsage>() {});
         MAP.put(APIAccountUsageSummary.class, new TypeReference<APIAccountUsageSummary>() {});
         MAP.put(APIExceptionMessage.class, new TypeReference<APIExceptionMessage>() {});
