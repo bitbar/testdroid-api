@@ -37,18 +37,24 @@ public class APIDeviceSessionUsage extends APIEntity {
 
     private APIDeviceSessionUsage.Type type;
 
+    private String deviceModelName;
+
+    private String osVersion;
+
     public APIDeviceSessionUsage() {
 
     }
 
     public APIDeviceSessionUsage(
             LocalDateTime createTime, String userName, Long userId, Long duration,
-            APIDeviceSessionUsage.Type type) {
+            APIDeviceSessionUsage.Type type, String deviceModelName, String osVersion) {
         this.createTime = TimeConverter.toDate(createTime);
         this.userName = userName;
         this.userId = userId;
         this.duration = duration;
         this.type = type;
+        this.deviceModelName = deviceModelName;
+        this.osVersion = osVersion;
     }
 
     @Override
@@ -61,6 +67,8 @@ public class APIDeviceSessionUsage extends APIEntity {
         this.userId = original.userId;
         this.duration = original.duration;
         this.type = original.type;
+        this.deviceModelName = original.deviceModelName;
+        this.osVersion = original.osVersion;
     }
 
     public Date getCreateTime() {
@@ -101,5 +109,21 @@ public class APIDeviceSessionUsage extends APIEntity {
 
     public void setDuration(Long duration) {
         this.duration = duration;
+    }
+
+    public String getDeviceModelName() {
+        return deviceModelName;
+    }
+
+    public void setDeviceModelName(String deviceModelName) {
+        this.deviceModelName = deviceModelName;
+    }
+
+    public String getOsVersion() {
+        return osVersion;
+    }
+
+    public void setOsVersion(String osVersion) {
+        this.osVersion = osVersion;
     }
 }

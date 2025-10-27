@@ -101,6 +101,7 @@ public class MappingKey {
     public static final String DESKTOP_PROJECT_LIMIT = "desktopProjectLimit";
     public static final String DESTINATION = "destination";
     public static final String DEVICE_CLEANUP_CONFIGURATION_ID = "deviceCleanupConfigurationId";
+    public static final String DEVICES = "devices";
     public static final String DEVICE_COUNT = "deviceCount";
     public static final String DEVICE_DOT_ARCHIVE_TIME = "device.archiveTime";
     public static final String DEVICE_DOT_DISPLAY_NAME = "device.displayName";
@@ -241,6 +242,8 @@ public class MappingKey {
     public static final String ORGANIZATION = "organization";
     public static final String ORIGINAL_NAME = "originalName";
     public static final String OS_TYPE = "osType";
+    public static final String OS_VERSION = "osVersion";
+    public static final String OS_VERSIONS = "osVersions";
     public static final String PAID = "paid";
     public static final String PARAMETERS = "parameters";
     public static final String PARTICIPANT_ID = "participantId";
@@ -307,6 +310,8 @@ public class MappingKey {
     public static final String SERVICE_IDS = "serviceIds";
     public static final String SERVICE_NAME = "serviceName";
     public static final String SERVICE_PRICE = "servicePrice";
+    public static final String SESSIONS = "sessions";
+    public static final String SESSION_SHARE = "sessionShare";
     public static final String SESSION_TYPE = "sessionType";
     public static final String SHARED_BY_EMAIL = "sharedByEmail";
     public static final String SHOW_STATISTICS = "showStatistics";
