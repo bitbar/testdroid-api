@@ -173,6 +173,7 @@ public class MappingKey {
     public static final String HTTP_METHOD = "httpMethod";
     public static final String ICON = "icon";
     public static final String ID = "id";
+    public static final String IMAGE_CORNER_RADIUS = "imageCornerRadius";
     public static final String IMAGE_HEIGHT = "imageHeight";
     public static final String IMAGE_LEFT = "imageLeft";
     public static final String IMAGE_PREFIX = "imagePrefix";

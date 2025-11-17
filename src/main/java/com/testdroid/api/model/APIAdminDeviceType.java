@@ -19,13 +19,15 @@ public class APIAdminDeviceType extends APIEntity {
 
     private Integer imageWidth;
 
+    private Integer imageCornerRadius;
+
     public APIAdminDeviceType() {
 
     }
 
     public APIAdminDeviceType(
             Long id, Integer frameExtraWidth, Integer imageHeight, Integer imageLeft, String imagePrefix,
-            Integer imageTop, Integer imageWidth) {
+            Integer imageTop, Integer imageWidth, Integer imageCornerRadius) {
         super(id);
         this.frameExtraWidth = frameExtraWidth;
         this.imageHeight = imageHeight;
@@ -33,6 +35,7 @@ public class APIAdminDeviceType extends APIEntity {
         this.imagePrefix = imagePrefix;
         this.imageTop = imageTop;
         this.imageWidth = imageWidth;
+        this.imageCornerRadius = imageCornerRadius;
     }
 
     @Override
@@ -45,6 +48,7 @@ public class APIAdminDeviceType extends APIEntity {
         this.imagePrefix = deviceType.imagePrefix;
         this.imageTop = deviceType.imageTop;
         this.imageWidth = deviceType.imageWidth;
+        this.imageCornerRadius = deviceType.imageCornerRadius;
     }
 
     public String getImagePrefix() {
@@ -93,5 +97,13 @@ public class APIAdminDeviceType extends APIEntity {
 
     public void setImageWidth(Integer imageWidth) {
         this.imageWidth = imageWidth;
+    }
+
+    public Integer getImageCornerRadius() {
+        return imageCornerRadius;
+    }
+
+    public void setImageCornerRadius(Integer imageCornerRadius) {
+        this.imageCornerRadius = imageCornerRadius;
     }
 }

@@ -116,8 +116,6 @@ public class APIDeviceSession extends APIEntity implements UiPresentable {
 
     private Long deviceInstanceId;
 
-    private Long deviceLogFirstTimestamp;
-
     private Long duration;
 
     private Date endTime;
@@ -175,10 +173,10 @@ public class APIDeviceSession extends APIEntity implements UiPresentable {
     public APIDeviceSession(
             Long id, String externalId, String clientSideId, Long userId, String userEmail, Long accountId,
             APIDeviceSession.Type type, LocalDateTime createTime, LocalDateTime startTime, LocalDateTime installTime,
-            LocalDateTime endTime, Long timeLimit, Long deviceLogFirstTimestamp, APIDeviceSession.State state,
-            Integer testCasePassedCount, Integer testCaseFailedCount, Integer testCaseSkippedCount, Long deviceModelId,
-            String displayName, String deviceManufacturer, Integer creditsPrice, String imagePrefix, Integer imageTop,
-            Integer imageLeft, Integer imageWidth, Integer imageHeight, Integer frameExtraWidth,
+            LocalDateTime endTime, Long timeLimit, APIDeviceSession.State state, Integer testCasePassedCount,
+            Integer testCaseFailedCount, Integer testCaseSkippedCount, Long deviceModelId, String displayName,
+            String deviceManufacturer, Integer creditsPrice, String imagePrefix, Integer imageTop, Integer imageLeft,
+            Integer imageWidth, Integer imageHeight, Integer imageCornerRadius, Integer frameExtraWidth,
             APIDevice.OsType osType, APIDevice.Platform platform, Boolean locked, Boolean enabled,
             String releaseVersion, Integer apiLevel, ExcludeReason excludeReason, Long deviceInstanceId,
             RetryState retryState, Integer autoRetriesLeftCount, Long duration, Long projectId, String projectName,
@@ -196,10 +194,9 @@ public class APIDeviceSession extends APIEntity implements UiPresentable {
         this.installTime = TimeConverter.toDate(installTime);
         this.endTime = TimeConverter.toDate(endTime);
         this.device = new APIDevice(deviceModelId, displayName, deviceManufacturer, releaseVersion,
-                apiLevel, creditsPrice, imagePrefix, imageTop, imageLeft, imageWidth, imageHeight, frameExtraWidth,
-                osType, platform, null, locked, enabled, location, null, null, null, null);
+                apiLevel, creditsPrice, imagePrefix, imageTop, imageLeft, imageWidth, imageHeight, imageCornerRadius,
+                frameExtraWidth, osType, platform, null, locked, enabled, location, null, null, null, null);
         this.timeLimit = timeLimit;
-        this.deviceLogFirstTimestamp = deviceLogFirstTimestamp;
         this.state = state;
         this.excludeReason = excludeReason != null ? excludeReason.getDisplayName() : null;
         this.testCaseAllCount = testCasePassedCount + testCaseFailedCount + testCaseSkippedCount;
@@ -302,14 +299,6 @@ public class APIDeviceSession extends APIEntity implements UiPresentable {
 
     public void setInstallTime(Date installTime) {
         this.installTime = installTime;
-    }
-
-    public Long getDeviceLogFirstTimestamp() {
-        return deviceLogFirstTimestamp;
-    }
-
-    public void setDeviceLogFirstTimestamp(Long deviceLogFirstTimestamp) {
-        this.deviceLogFirstTimestamp = deviceLogFirstTimestamp;
     }
 
     public State getState() {
@@ -552,7 +541,6 @@ public class APIDeviceSession extends APIEntity implements UiPresentable {
         this.type = apiDeviceSession.type;
         this.device = apiDeviceSession.device;
         this.timeLimit = apiDeviceSession.timeLimit;
-        this.deviceLogFirstTimestamp = apiDeviceSession.deviceLogFirstTimestamp;
         this.state = apiDeviceSession.state;
         this.testCaseAllCount = apiDeviceSession.testCaseAllCount;
         this.testCaseSuccessCount = apiDeviceSession.testCaseSuccessCount;

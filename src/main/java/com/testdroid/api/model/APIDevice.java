@@ -134,6 +134,8 @@ public class APIDevice extends APIEntity {
 
     private Integer imageWidth;
 
+    private Integer imageCornerRadius;
+
     private String manufacturer;
 
     private Boolean locked;
@@ -187,9 +189,9 @@ public class APIDevice extends APIEntity {
     public APIDevice(
             Long id, String displayName, String manufacturer, String releaseVersion, Integer apiLevel,
             Integer creditsPrice, String imagePrefix, Integer imageTop, Integer imageLeft, Integer imageWidth,
-            Integer imageHeight, Integer frameExtraWidth, OsType osType, Platform platform, Boolean online,
-            Boolean locked, Boolean enabled, String location, Long accountId, String accountName, Integer onlineDevices,
-            Integer availableDevices) {
+            Integer imageHeight, Integer imageCornerRadius, Integer frameExtraWidth, OsType osType, Platform platform,
+            Boolean online, Boolean locked, Boolean enabled, String location, Long accountId, String accountName,
+            Integer onlineDevices, Integer availableDevices) {
         super(id);
         this.displayName = displayName;
         this.manufacturer = manufacturer;
@@ -200,6 +202,7 @@ public class APIDevice extends APIEntity {
         this.imageLeft = imageLeft;
         this.imageWidth = imageWidth;
         this.imageHeight = imageHeight;
+        this.imageCornerRadius = imageCornerRadius;
         this.frameExtraWidth = frameExtraWidth;
         this.osType = osType;
         this.platform = platform;
@@ -278,6 +281,14 @@ public class APIDevice extends APIEntity {
 
     public void setImageHeight(Integer imageHeight) {
         this.imageHeight = imageHeight;
+    }
+
+    public Integer getImageCornerRadius() {
+        return imageCornerRadius;
+    }
+
+    public void setImageCornerRadius(Integer imageCornerRadius) {
+        this.imageCornerRadius = imageCornerRadius;
     }
 
     public Integer getFrameExtraWidth() {
@@ -482,6 +493,7 @@ public class APIDevice extends APIEntity {
         this.imagePrefix = apiDevice.imagePrefix;
         this.imageTop = apiDevice.imageTop;
         this.imageWidth = apiDevice.imageWidth;
+        this.imageCornerRadius = apiDevice.imageCornerRadius;
         this.osType = apiDevice.osType;
         this.platform = apiDevice.platform;
         this.softwareVersion = apiDevice.softwareVersion;

@@ -13,34 +13,56 @@ import static com.testdroid.api.dto.MappingKey.SELF_URI;
 @JsonIgnoreProperties(value = {ID, SELF_URI})
 public class APIDeviceSessionUserUsage extends APIEntity {
 
-    private String userName;
-
-    private Long userId;
+    private long devices;
 
     private Long duration;
-
-    private long sessions;
-
-    private long devices;
 
     private long osVersions;
 
     private double sessionShare;
+
+    private long sessions;
+
+    private Long userId;
+
+    private String userName;
+
+    private Long startedById;
+
+    private String startedByName;
 
     public APIDeviceSessionUserUsage() {
 
     }
 
     public APIDeviceSessionUserUsage(
-            Long userId, String userName, Long duration, long sessions, long devices, long osVersions,
-            double sessionShare) {
+            Long userId, String userName, Long startedById, String startedByName, Long duration,
+            long sessions, long devices, long osVersions, double sessionShare) {
         this.userId = userId;
         this.userName = userName;
+        this.startedById = startedById;
+        this.startedByName = startedByName;
         this.duration = duration;
         this.sessions = sessions;
         this.devices = devices;
         this.osVersions = osVersions;
         this.sessionShare = sessionShare;
+    }
+
+    @Override
+    @JsonIgnore
+    protected <T extends APIEntity> void clone(T from) {
+        APIDeviceSessionUserUsage original = (APIDeviceSessionUserUsage) from;
+        cloneBase(from);
+        this.userId = original.userId;
+        this.userName = original.userName;
+        this.duration = original.duration;
+        this.sessions = original.sessions;
+        this.devices = original.devices;
+        this.osVersions = original.osVersions;
+        this.sessionShare = original.sessionShare;
+        this.startedByName = original.startedByName;
+        this.startedById = original.startedById;
     }
 
     public String getUserName() {
@@ -99,17 +121,19 @@ public class APIDeviceSessionUserUsage extends APIEntity {
         this.sessionShare = sessionShare;
     }
 
-    @Override
-    @JsonIgnore
-    protected <T extends APIEntity> void clone(T from) {
-        APIDeviceSessionUserUsage original = (APIDeviceSessionUserUsage) from;
-        cloneBase(from);
-        this.userId = original.userId;
-        this.userName = original.userName;
-        this.duration = original.duration;
-        this.sessions = original.sessions;
-        this.devices = original.devices;
-        this.osVersions = original.osVersions;
-        this.sessionShare = original.sessionShare;
+    public Long getStartedById() {
+        return startedById;
+    }
+
+    public void setStartedById(Long startedById) {
+        this.startedById = startedById;
+    }
+
+    public String getStartedByName() {
+        return startedByName;
+    }
+
+    public void setStartedByName(String startedByName) {
+        this.startedByName = startedByName;
     }
 }

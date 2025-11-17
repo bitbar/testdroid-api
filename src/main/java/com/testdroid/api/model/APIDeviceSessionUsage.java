@@ -29,28 +29,34 @@ public class APIDeviceSessionUsage extends APIEntity {
 
     private Date createTime;
 
-    private String userName;
-
-    private Long userId;
+    private String deviceModelName;
 
     private Long duration;
 
+    private String osVersion;
+
+    private Long startedById;
+
+    private String startedByName;
+
     private APIDeviceSessionUsage.Type type;
 
-    private String deviceModelName;
+    private Long userId;
 
-    private String osVersion;
+    private String userName;
 
     public APIDeviceSessionUsage() {
 
     }
 
     public APIDeviceSessionUsage(
-            LocalDateTime createTime, String userName, Long userId, Long duration,
-            APIDeviceSessionUsage.Type type, String deviceModelName, String osVersion) {
+            LocalDateTime createTime, String userName, Long userId, String startedByName, Long startedById,
+            Long duration, APIDeviceSessionUsage.Type type, String deviceModelName, String osVersion) {
         this.createTime = TimeConverter.toDate(createTime);
         this.userName = userName;
         this.userId = userId;
+        this.startedByName = startedByName;
+        this.startedById = startedById;
         this.duration = duration;
         this.type = type;
         this.deviceModelName = deviceModelName;
@@ -69,6 +75,8 @@ public class APIDeviceSessionUsage extends APIEntity {
         this.type = original.type;
         this.deviceModelName = original.deviceModelName;
         this.osVersion = original.osVersion;
+        this.startedByName = original.startedByName;
+        this.startedById = original.startedById;
     }
 
     public Date getCreateTime() {
@@ -125,5 +133,21 @@ public class APIDeviceSessionUsage extends APIEntity {
 
     public void setOsVersion(String osVersion) {
         this.osVersion = osVersion;
+    }
+
+    public String getStartedByName() {
+        return startedByName;
+    }
+
+    public void setStartedByName(String startedByName) {
+        this.startedByName = startedByName;
+    }
+
+    public Long getStartedById() {
+        return startedById;
+    }
+
+    public void setStartedById(Long startedById) {
+        this.startedById = startedById;
     }
 }
