@@ -23,7 +23,7 @@
         <org.apache.commons.collections4.version>4.5.0</org.apache.commons.collections4.version>
         <org.apache.commons.commons-rng-simple.version>1.6</org.apache.commons.commons-rng-simple.version>
         <org.apache.commons.commons-text.version>1.14.0</org.apache.commons.commons-text.version>
-        <org.apache.commons.io.version>2.20.0</org.apache.commons.io.version>
+        <org.apache.commons.io.version>2.21.0</org.apache.commons.io.version>
         <dependency-check-maven.version>12.1.8</dependency-check-maven.version>
         <jacoco-maven-plugin.version>0.8.14</jacoco-maven-plugin.version>
         <org.reflections.version>0.10.2</org.reflections.version>
