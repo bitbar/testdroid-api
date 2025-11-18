@@ -30,7 +30,7 @@
         <okhttp.version>4.12.0</okhttp.version>
         <org.apache.maven.plugins.maven-compiler-plugin>3.14.1</org.apache.maven.plugins.maven-compiler-plugin>
         <org.apache.maven.plugins.maven-surefire-plugin>3.5.4</org.apache.maven.plugins.maven-surefire-plugin>
-        <org.apache.maven.plugins.maven-jar-plugin>3.4.2</org.apache.maven.plugins.maven-jar-plugin>
+        <org.apache.maven.plugins.maven-jar-plugin>3.5.0</org.apache.maven.plugins.maven-jar-plugin>
         <org.apache.maven.plugins.maven-gpg-plugin>3.2.8</org.apache.maven.plugins.maven-gpg-plugin>
         <org.apache.maven.plugins.maven-javadoc-plugin>3.12.0</org.apache.maven.plugins.maven-javadoc-plugin>
         <org.sonatype.central.central-publishing-maven-plugin>0.9.0</org.sonatype.central.central-publishing-maven-plugin>
