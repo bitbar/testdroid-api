@@ -35,6 +35,7 @@ public class APIDeviceSessionUserUsage extends APIEntity {
 
     }
 
+    @SuppressWarnings("squid:S107")
     public APIDeviceSessionUserUsage(
             Long userId, String userName, Long startedById, String startedByName, Long duration,
             long sessions, long devices, long osVersions, double sessionShare) {
