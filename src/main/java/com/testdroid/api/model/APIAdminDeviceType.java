@@ -25,6 +25,7 @@ public class APIAdminDeviceType extends APIEntity {
 
     }
 
+    @SuppressWarnings("squid:S107")
     public APIAdminDeviceType(
             Long id, Integer frameExtraWidth, Integer imageHeight, Integer imageLeft, String imagePrefix,
             Integer imageTop, Integer imageWidth, Integer imageCornerRadius) {
