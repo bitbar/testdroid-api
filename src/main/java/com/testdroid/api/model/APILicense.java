@@ -3,12 +3,13 @@ package com.testdroid.api.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.util.TimeConverter;
+import jakarta.xml.bind.annotation.XmlType;
 import org.apache.commons.lang3.EnumUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import jakarta.xml.bind.annotation.XmlType;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.Optional;
 
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 
@@ -46,6 +47,8 @@ public class APILicense extends APIEntity {
 
     private boolean privateInstance;
 
+    private boolean legacy;
+
     private Long userId;
 
     private RecorderLicense recorder;
@@ -65,30 +68,26 @@ public class APILicense extends APIEntity {
 
     @SuppressWarnings("squid:S107")
     public APILicense(
-            Long id, Long userId, String userEmail, boolean privateInstance, LocalDateTime activateTime,
-            LocalDateTime expireTime, Integer androidDeviceLimit, Boolean androidEnabled, Boolean serverAndroidEnabled,
-            Boolean uiautomatorEnabled, Boolean recorderEnabled, Integer iosProjectLimit, Boolean serverIosEnabled,
-            Integer recorderLimit, Boolean ctsEnabled, Integer androidProjectLimit, Boolean serverEnabled,
-            Boolean inspectorEnabled, Boolean iosEnabled, Integer iosDeviceLimit, LocalDateTime closeTime,
-            String status, Boolean buildEnabled, Integer buildLimit, Boolean desktopEnabled,
-            Integer desktopDeviceLimit, Integer desktopProjectLimit, Integer globalDeviceLimit,
-            Integer globalProjectLimit) {
+            Long id, Long userId, String userEmail, boolean privateInstance, boolean legacy, LocalDateTime activateTime,
+            LocalDateTime expireTime, Integer androidDeviceLimit, Boolean androidEnabled, Boolean iosEnabled,
+            Integer iosDeviceLimit, LocalDateTime closeTime, String status, Boolean desktopEnabled,
+            Integer desktopDeviceLimit) {
         super(id);
         this.privateInstance = privateInstance;
+        this.legacy = legacy;
         this.activateTime = TimeConverter.toDate(activateTime);
         this.expireTime = TimeConverter.toDate(expireTime);
         this.userEmail = userEmail;
         this.userId = userId;
-        this.android = new AndroidLicense(androidDeviceLimit, androidProjectLimit,
-                new AndroidLicense.CTSLicense(ctsEnabled), new AndroidLicense.UIAutomatorLicense(uiautomatorEnabled),
-                androidEnabled);
-        this.ios = new IOSLicense(iosDeviceLimit, iosProjectLimit, iosEnabled);
-        this.build = new BuildLicense(buildLimit, buildEnabled);
-        this.recorder = new RecorderLicense(recorderLimit, recorderEnabled);
-        this.server = new ServerLicense(serverAndroidEnabled, serverIosEnabled, serverEnabled);
-        this.inspector = new InspectorLicense(inspectorEnabled);
-        this.desktop = new DesktopLicense(desktopDeviceLimit, desktopProjectLimit, desktopEnabled);
-        this.global = new GlobalLicense(globalDeviceLimit, globalProjectLimit);
+        this.android = new AndroidLicense(androidDeviceLimit, null,
+                new AndroidLicense.CTSLicense(true), new AndroidLicense.UIAutomatorLicense(true), androidEnabled);
+        this.ios = new IOSLicense(iosDeviceLimit, null, iosEnabled);
+        this.build = new BuildLicense(null, true);
+        this.recorder = new RecorderLicense(null, true);
+        this.server = new ServerLicense(true, true, true);
+        this.inspector = new InspectorLicense(true);
+        this.desktop = new DesktopLicense(desktopDeviceLimit, null, desktopEnabled);
+        this.global = new GlobalLicense(null, null);
         this.closeTime = TimeConverter.toDate(closeTime);
         this.status = EnumUtils.getEnum(Status.class, status);
     }
@@ -109,6 +108,16 @@ public class APILicense extends APIEntity {
         this.build = build;
         this.desktop = desktop;
         this.global = global;
+    }
+
+    public APILicense(
+            boolean privateInstance, LocalDateTime expireTime, AndroidLicense android, IOSLicense ios,
+            DesktopLicense desktop) {
+        this.privateInstance = privateInstance;
+        this.expireTime = TimeConverter.toDate(expireTime);
+        this.android = android;
+        this.ios = ios;
+        this.desktop = desktop;
     }
 
     private static String getTextValue(Integer i) {
@@ -249,10 +258,23 @@ public class APILicense extends APIEntity {
         this.global = global;
     }
 
+    public boolean isLegacy() {
+        return legacy;
+    }
+
+    public void setLegacy(boolean legacy) {
+        this.legacy = legacy;
+    }
+
     public String generateSignContent() {
         return StringUtils.joinWith(":", getTextValue(privateInstance), userEmail,
-                StringUtils.join(android.generateSignContent(), ios.generateSignContent(),
-                        recorder.generateSignContent(), server.generateSignContent()));
+                StringUtils.join(
+                        Optional.ofNullable(android).map(AndroidLicense::generateSignContent).orElse(EMPTY),
+                        Optional.ofNullable(ios).map(IOSLicense::generateSignContent).orElse(EMPTY),
+                        Optional.ofNullable(recorder).map(RecorderLicense::generateSignContent).orElse(EMPTY),
+                        Optional.ofNullable(server).map(ServerLicense::generateSignContent).orElse(EMPTY)
+                )
+        );
     }
 
     public static class GlobalLicense {
@@ -330,6 +352,11 @@ public class APILicense extends APIEntity {
         public AndroidLicense() {
         }
 
+        public AndroidLicense(boolean enabled, Integer deviceLimit) {
+            super(enabled);
+            this.deviceLimit = deviceLimit;
+        }
+
         public AndroidLicense(
                 Integer deviceLimit, Integer projectLimit, CTSLicense cts, UIAutomatorLicense uiAutomator,
                 boolean enabled) {
@@ -382,8 +409,10 @@ public class APILicense extends APIEntity {
 
         @Override
         public String generateSignContent() {
-            return StringUtils.join(getTextValue(enabled), getTextValue(projectLimit),
-                    getTextValue(deviceLimit), cts.generateSignContent(), uiAutomator.generateSignContent());
+            return StringUtils.join(getTextValue(enabled), getTextValue(projectLimit), getTextValue(deviceLimit),
+                    Optional.ofNullable(cts).map(CTSLicense::generateSignContent).orElse(EMPTY),
+                    Optional.ofNullable(uiAutomator).map(UIAutomatorLicense::generateSignContent).orElse(EMPTY)
+            );
         }
 
         public static class CTSLicense extends FeatureLicense {
@@ -458,6 +487,11 @@ public class APILicense extends APIEntity {
         public IOSLicense() {
         }
 
+        public IOSLicense(boolean enabled, Integer deviceLimit) {
+            super(enabled);
+            this.deviceLimit = deviceLimit;
+        }
+
         public IOSLicense(Integer deviceLimit, Integer projectLimit, boolean enabled) {
             super(enabled);
             this.deviceLimit = deviceLimit;
@@ -502,6 +536,11 @@ public class APILicense extends APIEntity {
         private Integer projectLimit;
 
         public DesktopLicense() {
+        }
+
+        public DesktopLicense(boolean enabled, Integer deviceLimit) {
+            super(enabled);
+            this.deviceLimit = deviceLimit;
         }
 
         public DesktopLicense(Integer deviceLimit, Integer projectLimit, boolean enabled) {
