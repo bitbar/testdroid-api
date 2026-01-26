@@ -9,6 +9,7 @@ public class MappingKey {
     }
 
     // @formatter:off
+    public static final String ABORT_TIME = "abortTime";
     public static final String ABORTED_DEVICE_COUNT = "abortedDeviceCount";
     public static final String ACCEPT = "accept";
     public static final String ACCESS_GROUP_ID = "accessGroupId";
@@ -33,7 +34,6 @@ public class MappingKey {
     public static final String ALWAYS_VALID = "alwaysValid";
     public static final String ANDROID_DEVICE_LIMIT = "androidDeviceLimit";
     public static final String ANDROID_ENABLED = "androidEnabled";
-    public static final String ANDROID_PROJECT_LIMIT = "androidProjectLimit";
     public static final String API_KEY = "apiKey";
     public static final String API_LEVEL = "apiLevel";
     public static final String ARCHITECTURE = "architecture";
@@ -98,7 +98,6 @@ public class MappingKey {
     public static final String DESCRIPTION = "description";
     public static final String DESKTOP_DEVICE_LIMIT = "desktopDeviceLimit";
     public static final String DESKTOP_ENABLED = "desktopEnabled";
-    public static final String DESKTOP_PROJECT_LIMIT = "desktopProjectLimit";
     public static final String DESTINATION = "destination";
     public static final String DEVICE_CLEANUP_CONFIGURATION_ID = "deviceCleanupConfigurationId";
     public static final String DEVICES = "devices";
@@ -163,8 +162,6 @@ public class MappingKey {
     public static final String FREE_TRIAL = "freeTrial";
     public static final String FROM_TIME = "fromTime";
     public static final String GLOBAL = "global";
-    public static final String GLOBAL_DEVICE_LIMIT = "globalDeviceLimit";
-    public static final String GLOBAL_PROJECT_LIMIT = "globalProjectLimit";
     public static final String GROUPING = "grouping";
     public static final String GROUP_ID = "groupId";
     public static final String HASH = "hash";
@@ -184,14 +181,12 @@ public class MappingKey {
     public static final String INCLUDE_FRAMEWORKS = "includeFrameworks";
     public static final String INIT_STEP = "initStep";
     public static final String INPUT_TYPE = "inputType";
-    public static final String INSPECTOR_ENABLED = "inspectorEnabled";
     public static final String INSTALL_URL = "installUrl";
     public static final String INTERNAL_STORAGE = "internalStorage";
     public static final String INTERNET_ACCESS = "internetAccess";
     public static final String IN_USE = "inUse";
     public static final String IOS_DEVICE_LIMIT = "iosDeviceLimit";
     public static final String IOS_ENABLED = "iosEnabled";
-    public static final String IOS_PROJECT_LIMIT = "iosProjectLimit";
     public static final String IP_ADDRESS = "ipAddress";
     public static final String IS_ACCOUNT_OWNER = "isAccountOwner";
     public static final String IS_ADMIN = "isAdmin";
@@ -216,6 +211,7 @@ public class MappingKey {
     public static final String LAST_PAYMENT_DATE = "lastPaymentDate";
     public static final String LAST_PAYMENT_TIME = "lastPaymentTime";
     public static final String LAST_RETRY_TIME = "lastRetryTime";
+    public static final String LEGACY = "legacy";
     public static final String LEVEL = "level";
     public static final String LIVE_TESTING_ONLY= "liveTestingOnly";
     public static final String LOCATION = "location";

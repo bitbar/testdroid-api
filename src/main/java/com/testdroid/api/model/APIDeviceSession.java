@@ -120,6 +120,8 @@ public class APIDeviceSession extends APIEntity implements UiPresentable {
 
     private Date endTime;
 
+    private Date abortTime;
+
     private String excludeReason;
 
     private String externalId;
@@ -173,15 +175,15 @@ public class APIDeviceSession extends APIEntity implements UiPresentable {
     public APIDeviceSession(
             Long id, String externalId, String clientSideId, Long userId, String userEmail, Long accountId,
             APIDeviceSession.Type type, LocalDateTime createTime, LocalDateTime startTime, LocalDateTime installTime,
-            LocalDateTime endTime, Long timeLimit, APIDeviceSession.State state, Integer testCasePassedCount,
-            Integer testCaseFailedCount, Integer testCaseSkippedCount, Long deviceModelId, String displayName,
-            String deviceManufacturer, Integer creditsPrice, String imagePrefix, Integer imageTop, Integer imageLeft,
-            Integer imageWidth, Integer imageHeight, Integer imageCornerRadius, Integer frameExtraWidth,
-            APIDevice.OsType osType, APIDevice.Platform platform, Boolean locked, Boolean enabled,
-            String releaseVersion, Integer apiLevel, ExcludeReason excludeReason, Long deviceInstanceId,
-            RetryState retryState, Integer autoRetriesLeftCount, Long duration, Long projectId, String projectName,
-            Long testRunId, String testRunName, Float successRatio, String name, APIDeviceSessionConfig config,
-            Boolean biometricInstrumentation, String location, Boolean retryable) {
+            LocalDateTime endTime, LocalDateTime abortTime, Long timeLimit, APIDeviceSession.State state,
+            Integer testCasePassedCount, Integer testCaseFailedCount, Integer testCaseSkippedCount, Long deviceModelId,
+            String displayName, String deviceManufacturer, Integer creditsPrice, String imagePrefix, Integer imageTop,
+            Integer imageLeft, Integer imageWidth, Integer imageHeight, Integer imageCornerRadius,
+            Integer frameExtraWidth, APIDevice.OsType osType, APIDevice.Platform platform, Boolean locked,
+            Boolean enabled, String releaseVersion, Integer apiLevel, ExcludeReason excludeReason,
+            Long deviceInstanceId, RetryState retryState, Integer autoRetriesLeftCount, Long duration, Long projectId,
+            String projectName, Long testRunId, String testRunName, Float successRatio, String name,
+            APIDeviceSessionConfig config, Boolean biometricInstrumentation, String location, Boolean retryable) {
         super(id);
         this.externalId = externalId;
         this.clientSideId = clientSideId;
@@ -193,6 +195,7 @@ public class APIDeviceSession extends APIEntity implements UiPresentable {
         this.startTime = TimeConverter.toDate(startTime);
         this.installTime = TimeConverter.toDate(installTime);
         this.endTime = TimeConverter.toDate(endTime);
+        this.abortTime = TimeConverter.toDate(abortTime);
         this.device = new APIDevice(deviceModelId, displayName, deviceManufacturer, releaseVersion,
                 apiLevel, creditsPrice, imagePrefix, imageTop, imageLeft, imageWidth, imageHeight, imageCornerRadius,
                 frameExtraWidth, osType, platform, null, locked, enabled, location, null, null, null, null);
@@ -273,8 +276,16 @@ public class APIDeviceSession extends APIEntity implements UiPresentable {
         return endTime;
     }
 
+    public Date getAbortTime() {
+        return abortTime;
+    }
+
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
+    }
+
+    public void setAbortTime(Date abortTime) {
+        this.abortTime = abortTime;
     }
 
     public Long getTimeLimit() {
@@ -538,6 +549,7 @@ public class APIDeviceSession extends APIEntity implements UiPresentable {
         this.startTime = apiDeviceSession.startTime;
         this.installTime = apiDeviceSession.installTime;
         this.endTime = apiDeviceSession.endTime;
+        this.abortTime = apiDeviceSession.abortTime;
         this.type = apiDeviceSession.type;
         this.device = apiDeviceSession.device;
         this.timeLimit = apiDeviceSession.timeLimit;
