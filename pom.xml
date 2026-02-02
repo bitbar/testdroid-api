@@ -28,7 +28,7 @@
         <jacoco-maven-plugin.version>0.8.14</jacoco-maven-plugin.version>
         <org.reflections.version>0.10.2</org.reflections.version>
         <okhttp.version>4.12.0</okhttp.version>
-        <org.apache.maven.plugins.maven-compiler-plugin>3.14.1</org.apache.maven.plugins.maven-compiler-plugin>
+        <org.apache.maven.plugins.maven-compiler-plugin>3.15.0</org.apache.maven.plugins.maven-compiler-plugin>
         <org.apache.maven.plugins.maven-surefire-plugin>3.5.4</org.apache.maven.plugins.maven-surefire-plugin>
         <org.apache.maven.plugins.maven-jar-plugin>3.5.0</org.apache.maven.plugins.maven-jar-plugin>
         <org.apache.maven.plugins.maven-gpg-plugin>3.2.8</org.apache.maven.plugins.maven-gpg-plugin>
