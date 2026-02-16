@@ -19,7 +19,7 @@
         <jacoco-maven-plugin.skip>true</jacoco-maven-plugin.skip>
         <!-- disable default deployment -->
         <maven.deploy.skip>true</maven.deploy.skip>
-        <org.springframework.boot.spring-boot-dependencies>3.5.10</org.springframework.boot.spring-boot-dependencies>
+        <org.springframework.boot.spring-boot-dependencies>4.0.2</org.springframework.boot.spring-boot-dependencies>
         <org.apache.commons.collections4.version>4.5.0</org.apache.commons.collections4.version>
         <org.apache.commons.commons-rng-simple.version>1.6</org.apache.commons.commons-rng-simple.version>
         <org.apache.commons.commons-text.version>1.15.0</org.apache.commons.commons-text.version>
