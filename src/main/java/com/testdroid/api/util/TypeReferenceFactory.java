@@ -105,8 +105,6 @@ public class TypeReferenceFactory {
         LIST_MAP.put(APITestRunDataAvailability.class, new TypeReference<APIList<APITestRunDataAvailability>>() {});
         LIST_MAP.put(APITestRunParameter.class, new TypeReference<APIList<APITestRunParameter>>() {});
         LIST_MAP.put(APIUser.class, new TypeReference<APIList<APIUser>>() {});
-        LIST_MAP.put(APIUserDeviceTime.class, new TypeReference<APIList<APIUserDeviceTime>>() {});
-        LIST_MAP.put(APIUserDeviceTimeSummary.class, new TypeReference<APIList<APIUserDeviceTimeSummary>>() {});
         LIST_MAP.put(APIUserFile.class, new TypeReference<APIList<APIUserFile>>() {});
         LIST_MAP.put(APIUserFileProperty.class, new TypeReference<APIList<APIUserFileProperty>>() {});
         LIST_MAP.put(APIUserFileTag.class, new TypeReference<APIList<APIUserFileTag>>() {});
@@ -188,7 +186,6 @@ public class TypeReferenceFactory {
         MAP.put(APITestRunDataAvailability.class, new TypeReference<APITestRunDataAvailability>() {});
         MAP.put(APITestRunParameter.class, new TypeReference<APITestRunParameter>() {});
         MAP.put(APIUser.class, new TypeReference<APIUser>() {});
-        MAP.put(APIUserDeviceTimeSummary.class, new TypeReference<APIUserDeviceTimeSummary>() {});
         MAP.put(APIUserFile.class, new TypeReference<APIUserFile>() {});
         MAP.put(APIUserFileProperty.class, new TypeReference<APIUserFileProperty>() {});
         MAP.put(APIUserPreference.class, new TypeReference<APIUserPreference>() {});

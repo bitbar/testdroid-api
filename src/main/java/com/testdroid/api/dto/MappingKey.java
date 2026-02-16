@@ -36,7 +36,6 @@ public class MappingKey {
     public static final String ANDROID_ENABLED = "androidEnabled";
     public static final String API_KEY = "apiKey";
     public static final String API_LEVEL = "apiLevel";
-    public static final String ARCHITECTURE = "architecture";
     public static final String ARCHIVE_TIME = "archiveTime";
     public static final String ARCHIVING_ITEM_COUNT = "archivingItemCount";
     public static final String ARCHIVING_STRATEGY = "archivingStrategy";
@@ -48,11 +47,9 @@ public class MappingKey {
     public static final String BLUETOOTH_ON = "bluetoothOn";
     public static final String BODY = "body";
     public static final String BRAINTREE_ID = "braintreeId";
-    public static final String BROWSER_IDS_ARR = "browserIds[]";
+    public static final String BROWSERS_MATCHED = "browsersMatched";
     public static final String BROWSER_NAME = "browserName";
     public static final String BROWSER_VERSION = "browserVersion";
-    public static final String BUILD_ENABLED = "buildEnabled";
-    public static final String BUILD_LIMIT = "buildLimit";
     public static final String CAN_RUN_FROM_UI = "canRunFromUI";
     public static final String CARD_NUMBER = "cardNumber";
     public static final String CENT_PRICE = "centPrice";
@@ -181,7 +178,6 @@ public class MappingKey {
     public static final String INCLUDE_FRAMEWORKS = "includeFrameworks";
     public static final String INIT_STEP = "initStep";
     public static final String INPUT_TYPE = "inputType";
-    public static final String INSTALL_URL = "installUrl";
     public static final String INTERNAL_STORAGE = "internalStorage";
     public static final String INTERNET_ACCESS = "internetAccess";
     public static final String IN_USE = "inUse";

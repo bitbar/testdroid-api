@@ -234,8 +234,8 @@ public abstract class AbstractAPIClient implements APIClient {
             requestBody = RequestBody.create(IOUtils.toByteArray(inputStream), mediaType);
         } else if (body instanceof APIEntity entity) {
             requestBody = RequestBody.create(OBJECT_MAPPER.writeValueAsString(entity), APPLICATION_JSON);
-        } else if (body instanceof RequestBody) {
-            requestBody = (RequestBody) body;
+        } else if (body instanceof RequestBody rb) {
+            requestBody = rb;
         } else if (body instanceof Map map) {
             requestBody = buildFromMap(map);
         } else if (body == null) {

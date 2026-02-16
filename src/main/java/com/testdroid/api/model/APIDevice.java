@@ -177,7 +177,7 @@ public class APIDevice extends APIEntity {
     /**
      * @deprecated with support for multi account owners it does not make sense anymore
      */
-    @Deprecated
+    @Deprecated(forRemoval = true)
     private String mainUserEmail;
 
     private LockReason lockReason;

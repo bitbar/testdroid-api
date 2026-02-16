@@ -15,25 +15,15 @@ public class APIBrowser extends APIEntity {
 
     private APIDevice.OsType osType;
 
-    private String architecture;
-
-    private String installUrl;
-
-    private Boolean install;
-
     public APIBrowser() {
     }
 
-    public APIBrowser(
-            Long id, String name, String displayName, String version, APIDevice.OsType osType, String architecture,
-            String installUrl) {
+    public APIBrowser(Long id, String name, String displayName, String version, APIDevice.OsType osType) {
         super(id);
         this.name = name;
         this.displayName = displayName;
         this.version = version;
         this.osType = osType;
-        this.architecture = architecture;
-        this.installUrl = installUrl;
     }
 
     public String getName() {
@@ -68,30 +58,6 @@ public class APIBrowser extends APIEntity {
         this.osType = osType;
     }
 
-    public String getInstallUrl() {
-        return installUrl;
-    }
-
-    public void setInstallUrl(String installUrl) {
-        this.installUrl = installUrl;
-    }
-
-    public String getArchitecture() {
-        return architecture;
-    }
-
-    public void setArchitecture(String architecture) {
-        this.architecture = architecture;
-    }
-
-    public Boolean getInstall() {
-        return install;
-    }
-
-    public void setInstall(Boolean install) {
-        this.install = install;
-    }
-
     @Override
     protected <T extends APIEntity> void clone(T from) {
         APIBrowser original = (APIBrowser) from;
@@ -100,8 +66,5 @@ public class APIBrowser extends APIEntity {
         this.displayName = original.displayName;
         this.version = original.version;
         this.osType = original.osType;
-        this.architecture = original.architecture;
-        this.installUrl = original.installUrl;
-        this.install = original.install;
     }
 }
