@@ -84,7 +84,6 @@ class TypeReferenceFactoryTest {
                     APITestRunDataAvailability.class,
                     APITestRunParameter.class,
                     APIUser.class,
-                    APIUserDeviceTimeSummary.class,
                     APIUserFile.class,
                     APIUserFileProperty.class,
                     APIUserPreference.class,
