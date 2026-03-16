@@ -7,7 +7,6 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
 import static com.testdroid.api.dto.MappingKey.ID;
@@ -39,22 +38,15 @@ public class APIAccountUsage extends APIEntity {
 
     @XmlType(namespace = "APIAccountUsage")
     public enum Grouping {
-        HOUR("yyyy-MM-dd HH:00:00", ChronoUnit.HOURS),
-        DAY("yyyy-MM-dd", ChronoUnit.DAYS),
-        WEEK("yyyy-MM-dd", ChronoUnit.WEEKS),
-        MONTH("yyyy-MM", ChronoUnit.MONTHS);
-
-        private final DateTimeFormatter dateFormatter;
+        HOUR(ChronoUnit.HOURS),
+        DAY(ChronoUnit.DAYS),
+        WEEK(ChronoUnit.WEEKS),
+        MONTH(ChronoUnit.MONTHS);
 
         private final ChronoUnit chronoUnit;
 
-        Grouping(String datePattern, ChronoUnit chronoUnit) {
-            this.dateFormatter = DateTimeFormatter.ofPattern(datePattern);
+        Grouping(ChronoUnit chronoUnit) {
             this.chronoUnit = chronoUnit;
-        }
-
-        public DateTimeFormatter getDateFormatter() {
-            return dateFormatter;
         }
 
         public ChronoUnit getChronoUnit() {
