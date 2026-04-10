@@ -15,7 +15,7 @@ node('linux && maven && gpg') {
                     ],
                     userRemoteConfigs: [
                             [
-                                    credentialsId: 'f652697e-beb7-4724-b1b5-4913a2bf45f5',
+                                    credentialsId: Github.credentialsId,
                                     url          : 'git@github.com:bitbar/testdroid-api.git'
                             ]
                     ]
