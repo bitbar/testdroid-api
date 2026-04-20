@@ -59,6 +59,15 @@ class ActionParsingTest {
                   "text": "recorder test"
                 }
                 """, ActionType.TYPE},
+                {"""
+                {
+                  "id": "fe64df95-9b71-4d25-8f4d-faf686f568fe",
+                  "type": "wait",
+                  "createTime": 1771933413487,
+                  "updatedTime": 1771933414158,
+                  "duration": 432
+                }
+                """, ActionType.WAIT},
         };
         return Arrays.asList(data);
     }

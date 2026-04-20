@@ -95,6 +95,8 @@ public class APITestRunConfig extends APIEntity implements Serializable {
 
     private APIDevice.OsType osType = APIDevice.OsType.UNDEFINED;
 
+    private String projectDescription;
+
     private Long projectId;
 
     private String projectName;
@@ -498,6 +500,14 @@ public class APITestRunConfig extends APIEntity implements Serializable {
         this.tunnelSettings = tunnelSettings;
     }
 
+    public String getProjectDescription() {
+        return projectDescription;
+    }
+
+    public void setProjectDescription(String projectDescription) {
+        this.projectDescription = projectDescription;
+    }
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
@@ -527,6 +537,7 @@ public class APITestRunConfig extends APIEntity implements Serializable {
         this.maxAutoRetriesCount = apiTestRunConfig.maxAutoRetriesCount;
         this.maxWaitTime = apiTestRunConfig.maxWaitTime;
         this.osType = apiTestRunConfig.osType;
+        this.projectDescription = apiTestRunConfig.projectDescription;
         this.projectId = apiTestRunConfig.projectId;
         this.projectName = apiTestRunConfig.projectName;
         this.runAvailable = apiTestRunConfig.runAvailable;

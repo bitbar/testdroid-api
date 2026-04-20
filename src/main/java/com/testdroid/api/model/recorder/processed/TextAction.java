@@ -13,9 +13,21 @@ public class TextAction implements RecordedAction {
 
     private String selectorType;
 
+    private long createTime;
+
     @Override
     public ActionType getType() {
         return ActionType.TYPE;
+    }
+
+    @Override
+    public void setCreateTime(long createTime) {
+        this.createTime = createTime;
+    }
+
+    @Override
+    public long getCreateTime() {
+        return createTime;
     }
 
     @Override
@@ -46,5 +58,10 @@ public class TextAction implements RecordedAction {
     public TextAction withText(String text) {
         this.text = text;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "Executed text action";
     }
 }

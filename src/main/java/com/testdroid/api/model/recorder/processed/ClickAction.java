@@ -15,9 +15,21 @@ public class ClickAction implements RecordedAction {
 
     private String selectorType;
 
+    private long createTime;
+
     @Override
     public ActionType getType() {
         return ActionType.CLICK;
+    }
+
+    @Override
+    public void setCreateTime(long createTime) {
+        this.createTime = createTime;
+    }
+
+    @Override
+    public long getCreateTime() {
+        return createTime;
     }
 
     @Override
@@ -57,5 +69,10 @@ public class ClickAction implements RecordedAction {
     public ClickAction withY(double y) {
         this.y = y;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "Executed click action";
     }
 }
