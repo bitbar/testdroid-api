@@ -15,9 +15,21 @@ public class SwipeAction implements RecordedAction {
 
     private double endY;
 
+    private long createTime;
+
     @Override
     public ActionType getType() {
         return ActionType.SWIPE;
+    }
+
+    @Override
+    public void setCreateTime(long createTime) {
+        this.createTime = createTime;
+    }
+
+    @Override
+    public long getCreateTime() {
+        return createTime;
     }
 
     public double getStartX() {
@@ -54,5 +66,10 @@ public class SwipeAction implements RecordedAction {
     public SwipeAction withEndY(double endY) {
         this.endY = endY;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "Executed swipe action";
     }
 }

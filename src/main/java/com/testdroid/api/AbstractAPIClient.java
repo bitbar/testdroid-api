@@ -161,10 +161,6 @@ public abstract class AbstractAPIClient implements APIClient {
 
     @Override
     public Response getHttpResponse(String uri, Context<?> context) throws APIException {
-        //Fix for https://jira.bitbar.com/browse/TD-12086
-        //caused by https://github.com/googleapis/google-http-java-client/issues/398
-        //We should use pure Apache Http Client
-        uri = uri.replace("\\+", "%2B"); // TODO check if needed
         try {
             OkHttpClient client = getClient();
             Request request = new Request.Builder().url(buildUrl(apiURL + uri, context)).build();

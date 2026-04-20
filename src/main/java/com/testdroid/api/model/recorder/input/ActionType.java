@@ -15,7 +15,8 @@ public enum ActionType {
     HARDWARE_BUTTON,
     DOUBLE_SWIPE,
     PINCH,
-    ROTATE;
+    ROTATE,
+    WAIT;
 
     @JsonCreator
     public static ActionType fromString(String key) {

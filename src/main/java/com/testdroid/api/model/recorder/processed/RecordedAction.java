@@ -16,10 +16,16 @@ import com.testdroid.api.model.recorder.input.ActionType;
         @JsonSubTypes.Type(value = SwipeAction.class, name = "swipe"),
         @JsonSubTypes.Type(value = ClickAction.class, name = "click"),
         @JsonSubTypes.Type(value = TextAction.class, name = "type"),
+        @JsonSubTypes.Type(value = WaitAction.class, name = "wait"),
 })
+@SuppressWarnings("javaarchitecture:S7027")
 public interface RecordedAction {
 
     ActionType getType();
+
+    void setCreateTime(long createTime);
+
+    long getCreateTime();
 
     default boolean isSelectorBased() {
         return false;

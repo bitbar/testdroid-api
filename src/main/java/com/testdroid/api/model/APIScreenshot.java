@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testdroid.api.APIEntity;
 import com.testdroid.api.APIException;
 
-import jakarta.xml.bind.annotation.XmlType;
 import java.io.InputStream;
 
 /**
@@ -13,19 +12,9 @@ import java.io.InputStream;
  */
 public class APIScreenshot extends APIEntity {
 
-    @XmlType(namespace = "APIScreenshot")
-    public enum Type {
-        LANDSCAPE,
-        PORTRAIT
-    }
-
-    private Boolean fail;
-
     private String originalName;
 
     private Long takeTimestamp;
-
-    private Type type;
 
     public APIScreenshot() {
     }
@@ -34,11 +23,9 @@ public class APIScreenshot extends APIEntity {
         this.originalName = originalName;
     }
 
-    public APIScreenshot(Long id, String originalName, Boolean fail, Type type, Long takeTimestamp) {
+    public APIScreenshot(Long id, String originalName, Long takeTimestamp) {
         super(id);
         this.originalName = originalName;
-        this.fail = fail;
-        this.type = type;
         this.takeTimestamp = takeTimestamp;
     }
 
@@ -48,22 +35,6 @@ public class APIScreenshot extends APIEntity {
 
     public void setOriginalName(String originalName) {
         this.originalName = originalName;
-    }
-
-    public Boolean isFail() {
-        return fail;
-    }
-
-    public void setFail(Boolean fail) {
-        this.fail = fail;
-    }
-
-    public Type getType() {
-        return type;
-    }
-
-    public void setType(Type type) {
-        this.type = type;
     }
 
     public Long getTakeTimestamp() {
@@ -84,9 +55,7 @@ public class APIScreenshot extends APIEntity {
     protected <T extends APIEntity> void clone(T from) {
         APIScreenshot apiScreenshot = (APIScreenshot) from;
         cloneBase(from);
-        this.fail = apiScreenshot.fail;
         this.originalName = apiScreenshot.originalName;
-        this.type = apiScreenshot.type;
         this.takeTimestamp = apiScreenshot.takeTimestamp;
     }
 
