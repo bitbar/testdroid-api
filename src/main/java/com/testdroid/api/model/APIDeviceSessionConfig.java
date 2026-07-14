@@ -20,6 +20,8 @@ public class APIDeviceSessionConfig extends APIEntity implements Serializable {
 
     private String browserVersion;
 
+    private String cloudVersion;
+
     private Long deviceModelId;
 
     private String screenResolution;
@@ -70,6 +72,14 @@ public class APIDeviceSessionConfig extends APIEntity implements Serializable {
         this.browserVersion = browserVersion;
     }
 
+    public String getCloudVersion() {
+        return cloudVersion;
+    }
+
+    public void setCloudVersion(String cloudVersion) {
+        this.cloudVersion = cloudVersion;
+    }
+
     public String getScreenResolution() {
         return screenResolution;
     }
@@ -102,6 +112,7 @@ public class APIDeviceSessionConfig extends APIEntity implements Serializable {
         this.adbVersion = prototype.adbVersion;
         this.browserName = prototype.browserName;
         this.browserVersion = prototype.browserVersion;
+        this.cloudVersion = prototype.cloudVersion;
         this.deviceModelId = prototype.deviceModelId;
         this.screenResolution = prototype.screenResolution;
         this.tunnelSettings = prototype.tunnelSettings;

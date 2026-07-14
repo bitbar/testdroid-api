@@ -6,7 +6,6 @@ import com.testdroid.api.util.TimeConverter;
 
 import java.time.LocalDateTime;
 import java.util.Date;
-import java.util.List;
 
 /**
  * @author Damian Sniezek <damian.sniezek@bitbar.com>
@@ -46,8 +45,6 @@ public class APIBillingPeriod extends APIEntity {
     private APIPaymentMethod paymentMethod;
 
     private APIBillingPeriodType apiBillingPeriodType;
-
-    private List<APIBillingPeriodUsage> usages;
 
     public APIBillingPeriod() {
     }
@@ -215,14 +212,6 @@ public class APIBillingPeriod extends APIEntity {
         this.accountServiceId = accountServiceId;
     }
 
-    public List<APIBillingPeriodUsage> getUsages() {
-        return usages;
-    }
-
-    public void setUsages(List<APIBillingPeriodUsage> usages) {
-        this.usages = usages;
-    }
-
     public Long getAccountId() {
         return accountId;
     }
@@ -256,7 +245,6 @@ public class APIBillingPeriod extends APIEntity {
         this.createTime = period.createTime;
         this.apiBillingPeriodType = period.apiBillingPeriodType;
         this.accountServiceId = period.accountServiceId;
-        this.usages = period.usages;
         this.accountId = period.accountId;
         this.accountName = period.accountName;
     }

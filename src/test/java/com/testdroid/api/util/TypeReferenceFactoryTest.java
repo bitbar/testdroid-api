@@ -47,7 +47,6 @@ class TypeReferenceFactoryTest {
                     APIAdminOverview.class,
                     APIAdminTestRun.class,
                     APIBillingPeriod.class,
-                    APIBillingPeriodUsage.class,
                     APIBrowser.class,
                     APICloudInfo.class,
                     APICluster.class,

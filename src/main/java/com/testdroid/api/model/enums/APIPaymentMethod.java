@@ -17,12 +17,9 @@ import static java.util.Collections.singletonList;
  * Mapping is (isServiceIdPresent, isOldAccountServiceIdPresent, isNewAccountServiceIdPresent, isCallByUser)
  */
 public enum APIPaymentMethod {
-
-    PAYPAL(emptyMap()),
     BRAINTREE(emptyMap()),
     STRIPE(createStripeMapping()),
     INVOICE(createInvoiceMapping()),
-    PROMOTION(emptyMap()),
     AWS(emptyMap());
 
     private static Map<List<Boolean>, List<PlanOperation>> createInvoiceMapping() {

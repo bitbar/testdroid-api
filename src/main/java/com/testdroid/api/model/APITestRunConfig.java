@@ -131,6 +131,8 @@ public class APITestRunConfig extends APIEntity implements Serializable {
 
     private String withoutAnnotation;
 
+    private String cloudVersion;
+
     public APITestRunConfig() {
         // need for serialization/deserialization
     }
@@ -508,6 +510,14 @@ public class APITestRunConfig extends APIEntity implements Serializable {
         this.projectDescription = projectDescription;
     }
 
+    public String getCloudVersion() {
+        return cloudVersion;
+    }
+
+    public void setCloudVersion(String cloudVersion) {
+        this.cloudVersion = cloudVersion;
+    }
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
@@ -523,6 +533,7 @@ public class APITestRunConfig extends APIEntity implements Serializable {
         this.availableOsTypes = apiTestRunConfig.availableOsTypes;
         this.biometricInstrumentation = apiTestRunConfig.biometricInstrumentation;
         this.clientSideTestConfig = apiTestRunConfig.clientSideTestConfig;
+        this.cloudVersion = apiTestRunConfig.cloudVersion;
         this.creditsPrice = apiTestRunConfig.creditsPrice;
         this.deviceGroupId = apiTestRunConfig.deviceGroupId;
         this.deviceIds = apiTestRunConfig.deviceIds;

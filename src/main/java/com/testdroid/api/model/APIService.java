@@ -17,8 +17,6 @@ public class APIService extends APIEntity {
 
     private String externalId;
 
-    private String commonId;
-
     private Integer centPrice;
 
     private String description;
@@ -52,9 +50,8 @@ public class APIService extends APIEntity {
 
     @SuppressWarnings("squid:S107")
     public APIService(
-            Long id, String name, String description, Integer centPrice, String externalId,
-            String commonId, LocalDateTime archiveTime, LocalDateTime activateTime, boolean activated,
-            boolean customPlan, Unit unit, String features) {
+            Long id, String name, String description, Integer centPrice, String externalId, LocalDateTime archiveTime,
+            LocalDateTime activateTime, boolean activated, boolean customPlan, Unit unit, String features) {
         super(id);
         this.name = name;
         this.description = description;
@@ -65,7 +62,6 @@ public class APIService extends APIEntity {
         this.activated = activated;
         this.customPlan = customPlan;
         this.unit = unit;
-        this.commonId = commonId;
         this.features = features;
     }
 
@@ -86,7 +82,6 @@ public class APIService extends APIEntity {
         this.features = apiService.features;
         this.centPrice = apiService.centPrice;
         this.externalId = apiService.externalId;
-        this.commonId = apiService.commonId;
         this.archiveTime = apiService.archiveTime;
         this.activateTime = apiService.activateTime;
         this.activated = apiService.activated;
@@ -172,14 +167,6 @@ public class APIService extends APIEntity {
 
     public Set<Integer> getDefaultConcurrences() {
         return defaultConcurrences;
-    }
-
-    public String getCommonId() {
-        return commonId;
-    }
-
-    public void setCommonId(String commonId) {
-        this.commonId = commonId;
     }
 
     public void setDefaultConcurrences(Set<Integer> defaultAvailableConcurrences) {

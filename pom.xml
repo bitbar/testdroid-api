@@ -3,15 +3,15 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.testdroid</groupId>
     <artifactId>testdroid-api</artifactId>
-    <version>3.53.0</version>
+    <version>3.55.0</version>
     <packaging>jar</packaging>
     <name>Bitbar API v2</name>
     <url>https://github.com/bitbar/testdroid-api</url>
     <description>Bitbar Cloud API Client for Java</description>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.build.source>17</project.build.source>
-        <project.build.target>17</project.build.target>
+        <project.build.source>21</project.build.source>
+        <project.build.target>21</project.build.target>
 
         <test.skipUnit>false</test.skipUnit>
         <test.skipAPIClient>true</test.skipAPIClient>
@@ -19,7 +19,7 @@
         <jacoco-maven-plugin.skip>true</jacoco-maven-plugin.skip>
         <!-- disable default deployment -->
         <maven.deploy.skip>true</maven.deploy.skip>
-        <org.springframework.boot.spring-boot-dependencies>3.5.11</org.springframework.boot.spring-boot-dependencies>
+        <org.springframework.boot.spring-boot-dependencies>3.5.15</org.springframework.boot.spring-boot-dependencies>
         <org.apache.commons.collections4.version>4.5.0</org.apache.commons.collections4.version>
         <org.apache.commons.commons-rng-simple.version>1.7</org.apache.commons.commons-rng-simple.version>
         <org.apache.commons.commons-text.version>1.15.0</org.apache.commons.commons-text.version>

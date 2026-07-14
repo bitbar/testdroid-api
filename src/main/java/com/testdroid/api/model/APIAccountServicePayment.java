@@ -22,28 +22,18 @@ public class APIAccountServicePayment extends APIEntity {
 
     private Long totalPrice;
 
-    private Long includedTime;
-
-    private Long additionalTime;
-
-    private Long usedTime;
-
     public APIAccountServicePayment() {
     }
 
-    @SuppressWarnings("squid:S107")
     public APIAccountServicePayment(
             Long id, Long accountId, LocalDateTime startBillingPeriod, LocalDateTime endBillingPeriod, String name,
-            Long totalPrice, Long includedTime, Long additionalTime, Long usedTime) {
+            Long totalPrice) {
         super(id);
         this.accountId = accountId;
         this.startBillingPeriod = TimeConverter.toDate(startBillingPeriod);
         this.endBillingPeriod = TimeConverter.toDate(endBillingPeriod);
         this.name = name;
         this.totalPrice = totalPrice;
-        this.includedTime = includedTime;
-        this.additionalTime = additionalTime;
-        this.usedTime = usedTime;
     }
 
     public Long getAccountId() {
@@ -87,27 +77,15 @@ public class APIAccountServicePayment extends APIEntity {
     }
 
     public Long getAdditionalTime() {
-        return additionalTime;
-    }
-
-    public void setAdditionalTime(Long additionalTime) {
-        this.additionalTime = additionalTime;
+        return 0L;
     }
 
     public Long getIncludedTime() {
-        return includedTime;
-    }
-
-    public void setIncludedTime(Long includedTime) {
-        this.includedTime = includedTime;
+        return 0L;
     }
 
     public Long getUsedTime() {
-        return usedTime;
-    }
-
-    public void setUsedTime(Long usedTime) {
-        this.usedTime = usedTime;
+        return 0L;
     }
 
     @JsonIgnore
@@ -120,8 +98,5 @@ public class APIAccountServicePayment extends APIEntity {
         this.endBillingPeriod = payment.endBillingPeriod;
         this.name = payment.name;
         this.totalPrice = payment.totalPrice;
-        this.includedTime = payment.includedTime;
-        this.additionalTime = payment.additionalTime;
-        this.usedTime = payment.usedTime;
     }
 }

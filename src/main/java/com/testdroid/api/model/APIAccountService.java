@@ -9,7 +9,6 @@ import jakarta.xml.bind.annotation.XmlType;
 
 import java.time.LocalDateTime;
 import java.util.Date;
-import java.util.Locale;
 
 /**
  * @author Michał Szpruta <michal.szpruta@bitbar.com>
@@ -66,8 +65,6 @@ public class APIAccountService extends APIEntity {
 
     private Integer unitCount;
 
-    private Integer vatRate;
-
     private DeactivateReason deactivateReason;
 
     private String subscriptionManagementURL;
@@ -82,7 +79,7 @@ public class APIAccountService extends APIEntity {
             Long accountId, String accountName, Long activatedById, String activatedByName, boolean active,
             String braintreeId, LocalDateTime createTime, Long deactivatedById,
             String deactivatedByName, LocalDateTime endTime, boolean finished, Long id, LocalDateTime lastPaymentTime,
-            APIPaymentMethod paymentMethod, Integer price, Long serviceId, LocalDateTime startTime, Integer vatRate,
+            APIPaymentMethod paymentMethod, Integer price, Long serviceId, LocalDateTime startTime,
             Unit unit, Integer unitCount, Integer serviceCount, String serviceName, DeactivateReason deactivateReason,
             String slmLicenseId) {
         super(id);
@@ -102,7 +99,6 @@ public class APIAccountService extends APIEntity {
         this.price = price;
         this.serviceId = serviceId;
         this.startTime = TimeConverter.toDate(startTime);
-        this.vatRate = vatRate;
         this.unit = unit;
         this.unitCount = unitCount;
         this.serviceCount = serviceCount;
@@ -200,11 +196,7 @@ public class APIAccountService extends APIEntity {
     }
 
     public Integer getVatRate() {
-        return vatRate;
-    }
-
-    public void setVatRate(Integer vatRate) {
-        this.vatRate = vatRate;
+        return 0;
     }
 
     public boolean isActive() {
@@ -216,7 +208,7 @@ public class APIAccountService extends APIEntity {
     }
 
     public Integer getTotal() {
-        return (price * (100 + vatRate)) / 100;
+        return price;
     }
 
     public Integer getPrice() {
@@ -308,23 +300,6 @@ public class APIAccountService extends APIEntity {
     }
 
     @JsonIgnore
-    public String getVatPriceString() {
-        float vatPrice = (getPrice() * getVatRate()) / 100f;
-        return String.format(Locale.ENGLISH, "%.2f", vatPrice / 100);
-    }
-
-    @JsonIgnore
-    public String getNetPriceString() {
-        return String.format(Locale.ENGLISH, "%.2f", ((float) getPrice()) / 100);
-    }
-
-    @JsonIgnore
-    public String getTotalPriceString() {
-        float totalPrice = (getPrice() * (100 + getVatRate())) / 100f;
-        return String.format(Locale.ENGLISH, "%.2f", totalPrice / 100);
-    }
-
-    @JsonIgnore
     @Override
     public <T extends APIEntity> void clone(T from) {
         APIAccountService accountService = (APIAccountService) from;
@@ -344,7 +319,6 @@ public class APIAccountService extends APIEntity {
         this.paymentMethod = accountService.paymentMethod;
         this.serviceId = accountService.serviceId;
         this.startTime = accountService.startTime;
-        this.vatRate = accountService.vatRate;
         this.unit = accountService.unit;
         this.unitCount = accountService.unitCount;
         this.serviceCount = accountService.serviceCount;

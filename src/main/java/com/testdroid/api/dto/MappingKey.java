@@ -63,7 +63,6 @@ public class MappingKey {
     public static final String CODE = "code";
     public static final String COMMENT = "comment";
     public static final String COMMON = "common";
-    public static final String COMMON_ID = "commonId";
     public static final String CONFIG = "config";
     public static final String CONFIRM_PASSWORD = "confirmPassword";
     public static final String CONNECTION_ID = "connectionId";

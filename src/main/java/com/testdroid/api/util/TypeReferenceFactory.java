@@ -47,7 +47,6 @@ public class TypeReferenceFactory {
         LIST_MAP.put(APIAdminOverview.class, new TypeReference<APIList<APIAdminOverview>>() {});
         LIST_MAP.put(APIAdminTestRun.class, new TypeReference<APIList<APIAdminTestRun>>() {});
         LIST_MAP.put(APIBillingPeriod.class, new TypeReference<APIList<APIBillingPeriod>>() {});
-        LIST_MAP.put(APIBillingPeriodUsage.class, new TypeReference<APIList<APIBillingPeriodUsage>>() {});
         LIST_MAP.put(APIBrokerHub.class, new TypeReference<APIList<APIBrokerHub>>() {});
         LIST_MAP.put(APIBrowser.class, new TypeReference<APIList<APIBrowser>>() {});
         LIST_MAP.put(APICloudInfo.class, new TypeReference<APIList<APICloudInfo>>() {});
@@ -142,7 +141,6 @@ public class TypeReferenceFactory {
         MAP.put(APIAdminOverview.class, new TypeReference<APIAdminOverview>() {});
         MAP.put(APIAdminTestRun.class, new TypeReference<APIAdminTestRun>() {});
         MAP.put(APIBillingPeriod.class, new TypeReference<APIBillingPeriod>() {});
-        MAP.put(APIBillingPeriodUsage.class, new TypeReference<APIBillingPeriodUsage>() {});
         MAP.put(APIBrowser.class, new TypeReference<APIBrowser>() {});
         MAP.put(APICloudInfo.class, new TypeReference<APICloudInfo>() {});
         MAP.put(APICluster.class, new TypeReference<APICluster>() {});
