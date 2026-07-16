@@ -29,7 +29,7 @@ node('linux && maven && gpg') {
                     sh('gpg --export -a "Info Bitbar" > /tmp/gpg/pub.key')
                 }
             }
-            docker.image("maven:3.9.8-eclipse-temurin-17").inside("-u 0:0 -v /home/testdroid/.m2:/root/.m2 -v /tmp/gpg:/gpg") {
+            docker.image("maven:3.9.16-eclipse-temurin-21-noble").inside("-u 0:0 -v /home/testdroid/.m2:/root/.m2 -v /tmp/gpg:/gpg") {
 
                 stage('Deploy') {
                     wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
