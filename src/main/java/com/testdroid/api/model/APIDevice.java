@@ -174,12 +174,6 @@ public class APIDevice extends APIEntity {
     @JsonIgnore
     private Integer availableDevices;
 
-    /**
-     * @deprecated with support for multi account owners it does not make sense anymore
-     */
-    @Deprecated(forRemoval = true)
-    private String mainUserEmail;
-
     private LockReason lockReason;
 
     public APIDevice() {
@@ -214,9 +208,6 @@ public class APIDevice extends APIEntity {
         this.accountName = accountName;
         this.onlineDevices = onlineDevices;
         this.availableDevices = availableDevices;
-        if (Objects.nonNull(accountId)) {
-            this.mainUserEmail = "TheFieldIsDeprecated@smartbear.com";
-        }
     }
 
     public String getDisplayName() {
@@ -459,14 +450,6 @@ public class APIDevice extends APIEntity {
         return availableDevices;
     }
 
-    public String getMainUserEmail() {
-        return mainUserEmail;
-    }
-
-    public void setMainUserEmail(String mainUserEmail) {
-        this.mainUserEmail = mainUserEmail;
-    }
-
     public LockReason getLockReason() {
         return lockReason;
     }
@@ -502,7 +485,6 @@ public class APIDevice extends APIEntity {
         this.enabled = apiDevice.enabled;
         this.accountId = apiDevice.accountId;
         this.accountName = apiDevice.accountName;
-        this.mainUserEmail = apiDevice.mainUserEmail;
         this.deviceGroupOrigin = apiDevice.deviceGroupOrigin;
         this.properties = apiDevice.properties;
         this.browsers = apiDevice.browsers;

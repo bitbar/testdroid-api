@@ -15,6 +15,8 @@ public class TextAction implements RecordedAction {
 
     private long createTime;
 
+    private String elementId;
+
     @Override
     public ActionType getType() {
         return ActionType.TYPE;
@@ -45,6 +47,10 @@ public class TextAction implements RecordedAction {
         return selectorType;
     }
 
+    public String getElementId() {
+        return elementId;
+    }
+
     public TextAction withSelector(String selector, String selectorType) {
         this.selectorValue = selector;
         this.selectorType = selectorType;
@@ -57,6 +63,11 @@ public class TextAction implements RecordedAction {
 
     public TextAction withText(String text) {
         this.text = text;
+        return this;
+    }
+
+    public TextAction withElementId(String elementId) {
+        this.elementId = elementId;
         return this;
     }
 
