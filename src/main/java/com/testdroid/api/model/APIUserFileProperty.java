@@ -18,7 +18,6 @@ public class APIUserFileProperty extends APIEntity implements Serializable {
         MAIN_ACTIVITY("main_activity"),
         MIN_SDK("min_sdk"),
         PACKAGE_NAME("package_name"),
-        TARGET_PACKAGE_NAME("target_package_name"),
         INSTRUMENTATION_NAME("instrumentation_name"),
         BUNDLE_NAME("bundle_name"),
         BUNDLE_IDENTIFIER("bundle_identifier"),
