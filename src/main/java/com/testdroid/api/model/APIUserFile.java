@@ -71,7 +71,8 @@ public class APIUserFile extends APIEntity implements Serializable {
     @XmlType(namespace = "APIUserFile", name = "APIUserFileState")
     public enum State {
         PREPARING,
-        READY
+        READY,
+        FAILED
     }
 
     public APIUserFile() {
