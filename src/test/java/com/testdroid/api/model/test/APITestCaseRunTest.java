@@ -9,7 +9,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.Collection;
 import java.util.List;
 
-import static com.testdroid.api.dto.MappingKey.UNIT;
+import static com.testdroid.cloud.test.categories.TestTags.UNIT;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.assertj.core.api.Assertions.assertThat;
 
