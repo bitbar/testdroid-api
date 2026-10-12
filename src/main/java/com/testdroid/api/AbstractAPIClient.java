@@ -218,26 +218,24 @@ public abstract class AbstractAPIClient implements APIClient {
             throws IOException {
         MediaType mediaType = MediaType.parse(contentType);
         RequestBody requestBody;
-        if (body instanceof File file) {
-            MultipartBody.Builder builder = new MultipartBody.Builder()
-                    .setType(MultipartBody.FORM)
-                    .addFormDataPart("file", file.getName(), RequestBody.create(file, mediaType));
-            for (Map.Entry<String, String> entry : fileExtraParams.entrySet()) {
-                builder.addFormDataPart(entry.getKey(), entry.getValue());
+        switch (body) {
+            case File file -> {
+                MultipartBody.Builder builder = new MultipartBody.Builder()
+                        .setType(MultipartBody.FORM)
+                        .addFormDataPart("file", file.getName(), RequestBody.create(file, mediaType));
+                for (Map.Entry<String, String> entry : fileExtraParams.entrySet()) {
+                    builder.addFormDataPart(entry.getKey(), entry.getValue());
+                }
+                requestBody = builder.build();
             }
-            requestBody = builder.build();
-        } else if (body instanceof InputStream inputStream) {
-            requestBody = RequestBody.create(IOUtils.toByteArray(inputStream), mediaType);
-        } else if (body instanceof APIEntity entity) {
-            requestBody = RequestBody.create(OBJECT_MAPPER.writeValueAsString(entity), APPLICATION_JSON);
-        } else if (body instanceof RequestBody rb) {
-            requestBody = rb;
-        } else if (body instanceof Map map) {
-            requestBody = buildFromMap(map);
-        } else if (body == null) {
-            requestBody = RequestBody.create(EMPTY, null);
-        } else {
-            requestBody = RequestBody.create(body.toString(), mediaType);
+            case InputStream inputStream ->
+                    requestBody = RequestBody.create(IOUtils.toByteArray(inputStream), mediaType);
+            case APIEntity entity ->
+                    requestBody = RequestBody.create(OBJECT_MAPPER.writeValueAsString(entity), APPLICATION_JSON);
+            case RequestBody rb -> requestBody = rb;
+            case Map map -> requestBody = buildFromMap(map);
+            case null -> requestBody = RequestBody.create(EMPTY, null);
+            default -> requestBody = RequestBody.create(body.toString(), mediaType);
         }
         return requestBody;
     }
@@ -324,7 +322,7 @@ public abstract class AbstractAPIClient implements APIClient {
         if (CollectionUtils.isNotEmpty(labelGroups)) {
             Context<APIDeviceProperty> lCtx = new Context<>(APIDeviceProperty.class);
             lCtx.addFilter(new FilterEntry(MappingKey.NAME, Operand.EQ, labelName));
-            result = labelGroups.get(0).getDevicePropertiesResource(lCtx).getEntity().getData().stream().findFirst();
+            result = labelGroups.getFirst().getDevicePropertiesResource(lCtx).getEntity().getData().stream().findFirst();
         }
         return result;
     }

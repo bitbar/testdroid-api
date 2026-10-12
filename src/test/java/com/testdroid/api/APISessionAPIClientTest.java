@@ -38,7 +38,7 @@ class APISessionAPIClientTest extends BaseAPIClientTest {
         assumeTrue(CollectionUtils.isNotEmpty(freeAndroidDevices));
         APIDeviceSessionConfig config = new APIDeviceSessionConfig();
         config.setType(MANUAL_APP);
-        config.setDeviceModelId(freeAndroidDevices.get(0).id);
+        config.setDeviceModelId(freeAndroidDevices.getFirst().id);
         config.setAdbVersion("1.2.3");
         APIDeviceSession deviceSession = apiClient.post("/me/device-sessions", config, APIDeviceSession.class);
         assertThat(deviceSession.getState()).isEqualTo(WAITING);

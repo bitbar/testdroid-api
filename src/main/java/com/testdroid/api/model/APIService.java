@@ -195,10 +195,9 @@ public class APIService extends APIEntity {
         if (this == object) {
             return true;
         }
-        if (!(object instanceof APIService)) {
+        if (!(object instanceof APIService other)) {
             return false;
         }
-        APIService other = (APIService) object;
         return (this.id != null || other.id == null) && (this.id == null || this.id.equals(other.id));
     }
 }

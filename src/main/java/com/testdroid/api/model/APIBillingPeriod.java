@@ -44,8 +44,6 @@ public class APIBillingPeriod extends APIEntity {
 
     private APIPaymentMethod paymentMethod;
 
-    private APIBillingPeriodType apiBillingPeriodType;
-
     public APIBillingPeriod() {
     }
 
@@ -53,7 +51,6 @@ public class APIBillingPeriod extends APIEntity {
     public APIBillingPeriod(
             Long billingPeriodId, Long accountServiceId, String plan,
             LocalDateTime startBillingPeriod, LocalDateTime endBillingPeriod,
-            LocalDateTime subscriptionStart, LocalDateTime subscriptionEnd,
             Long additionalHours, Long servicePrice, Long additionalHoursPrice,
             LocalDateTime paymentDate, LocalDateTime additionalHoursPaymentDate,
             LocalDateTime lastPaymentDate, LocalDateTime createTime, APIPaymentMethod paymentMethod,
@@ -63,33 +60,20 @@ public class APIBillingPeriod extends APIEntity {
         this.plan = plan;
         this.additionalHours = additionalHours;
         this.totalPrice = servicePrice + additionalHoursPrice;
-        this.startBillingPeriod = TimeConverter.toDate(startBillingPeriod);
-        this.endBillingPeriod = TimeConverter.toDate(endBillingPeriod);
-        this.subscriptionStart = TimeConverter.toDate(subscriptionStart);
-        this.subscriptionEnd = TimeConverter.toDate(subscriptionEnd);
+        Date start = TimeConverter.toDate(startBillingPeriod);
+        Date end = TimeConverter.toDate(endBillingPeriod);
+        this.startBillingPeriod = start;
+        this.endBillingPeriod = end;
+        this.subscriptionStart = start;
+        this.subscriptionEnd = end;
         this.servicePrice = servicePrice;
         this.additionalHoursPrice = additionalHoursPrice;
         this.paid = paymentDate != null && additionalHoursPaymentDate != null;
         this.lastPaymentDate = TimeConverter.toDate(lastPaymentDate);
         this.paymentMethod = paymentMethod;
         this.createTime = TimeConverter.toDate(createTime);
-        this.apiBillingPeriodType = type(startBillingPeriod, endBillingPeriod, subscriptionStart, subscriptionEnd);
         this.setAccountId(accountId);
         this.setAccountName(accountName);
-    }
-
-    private static APIBillingPeriodType type(
-            LocalDateTime startBillingPeriod, LocalDateTime endBillingPeriod, LocalDateTime subscriptionStart,
-            LocalDateTime subscriptionEnd) {
-        if (startBillingPeriod == null && endBillingPeriod == null
-                && subscriptionStart != null && subscriptionEnd != null) {
-            return APIBillingPeriodType.BUY;
-        }
-        if (startBillingPeriod != null && endBillingPeriod != null
-                && subscriptionStart == null && subscriptionEnd == null) {
-            return APIBillingPeriodType.CANCEL;
-        }
-        return APIBillingPeriodType.CHARGE;
     }
 
     public Date getStartBillingPeriod() {
@@ -196,12 +180,9 @@ public class APIBillingPeriod extends APIEntity {
         this.createTime = createTime;
     }
 
+    @Deprecated(forRemoval = true, since = "3.58")
     public APIBillingPeriodType getApiBillingPeriodType() {
-        return apiBillingPeriodType;
-    }
-
-    public void setApiBillingPeriodType(APIBillingPeriodType apiBillingPeriodType) {
-        this.apiBillingPeriodType = apiBillingPeriodType;
+        return APIBillingPeriodType.CHARGE;
     }
 
     public Long getAccountServiceId() {
@@ -234,6 +215,8 @@ public class APIBillingPeriod extends APIEntity {
         cloneBase(from);
         this.startBillingPeriod = period.startBillingPeriod;
         this.endBillingPeriod = period.endBillingPeriod;
+        this.subscriptionStart = period.subscriptionStart;
+        this.subscriptionEnd = period.subscriptionEnd;
         this.plan = period.plan;
         this.additionalHours = period.additionalHours;
         this.totalPrice = period.totalPrice;
@@ -243,7 +226,6 @@ public class APIBillingPeriod extends APIEntity {
         this.lastPaymentDate = period.lastPaymentDate;
         this.paymentMethod = period.paymentMethod;
         this.createTime = period.createTime;
-        this.apiBillingPeriodType = period.apiBillingPeriodType;
         this.accountServiceId = period.accountServiceId;
         this.accountId = period.accountId;
         this.accountName = period.accountName;

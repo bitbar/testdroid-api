@@ -237,11 +237,9 @@ public class APICluster extends APIEntity {
             return true;
         }
 
-        if (!(o instanceof APICluster)) {
+        if (!(o instanceof APICluster cluster)) {
             return false;
         }
-
-        APICluster cluster = (APICluster) o;
 
         return new EqualsBuilder()
                 .append(enabled, cluster.enabled)
