@@ -118,16 +118,12 @@ public class FilterEntry {
     //private methods
 
     private String valueToString(Object value) {
-        switch (operand.getArity()) {
-            case 1:
-                return null;
-            case 2:
-                return singleToString(value);
-            case Integer.MAX_VALUE:
-            default:
-                return ((Collection<?>) value).stream().map(this::singleToString)
-                        .collect(Collectors.joining(ARG_DELIMITER));
-        }
+        return switch (operand.getArity()) {
+            case 1 -> null;
+            case 2 -> singleToString(value);
+            default -> ((Collection<?>) value).stream().map(this::singleToString)
+                    .collect(Collectors.joining(ARG_DELIMITER));
+        };
     }
 
     private void validate() {
