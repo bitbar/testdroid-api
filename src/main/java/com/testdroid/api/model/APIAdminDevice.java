@@ -138,6 +138,8 @@ public class APIAdminDevice extends APIEntity {
 
     private boolean browsersMatched;
 
+    private boolean mdmEnabled;
+
     public APIAdminDevice() {
     }
 
@@ -157,7 +159,7 @@ public class APIAdminDevice extends APIEntity {
             String clusterIpAddress, String clusterRegion, String clusterLocation, LocalDateTime lastOnlineTime,
             Long accountId, String accountName, LocalDateTime dedicationEndTime, String comment, String location,
             Long testTimeLimit, Boolean locked, APIDevice.OsType osType, APIDevice.Platform platform,
-            Boolean forceRestore, boolean browsersMatched) {
+            Boolean forceRestore, boolean browsersMatched, boolean mdmEnabled) {
         super(id);
         this.name = name;
         this.manufacturer = manufacturer;
@@ -188,6 +190,7 @@ public class APIAdminDevice extends APIEntity {
         this.platform = platform;
         this.forceRestore = forceRestore;
         this.browsersMatched = browsersMatched;
+        this.mdmEnabled = mdmEnabled;
     }
 
     public String getName() {
@@ -419,6 +422,14 @@ public class APIAdminDevice extends APIEntity {
         this.browsersMatched = browsersMatched;
     }
 
+    public boolean isMdmEnabled() {
+        return mdmEnabled;
+    }
+
+    public void setMdmEnabled(boolean mdmEnabled) {
+        this.mdmEnabled = mdmEnabled;
+    }
+
     @Override
     @JsonIgnore
     protected <T extends APIEntity> void clone(T from) {
@@ -452,5 +463,6 @@ public class APIAdminDevice extends APIEntity {
         this.forceRestore = adminDevice.forceRestore;
         this.ownerHasAccountService = adminDevice.ownerHasAccountService;
         this.browsersMatched = adminDevice.browsersMatched;
+        this.mdmEnabled = adminDevice.mdmEnabled;
     }
 }
