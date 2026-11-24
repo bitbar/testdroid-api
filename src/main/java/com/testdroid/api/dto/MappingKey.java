@@ -216,6 +216,7 @@ public class MappingKey {
     public static final String LOGS_FILE_ID = "logsFileId";
     public static final String MANUFACTURER = "manufacturer";
     public static final String MAX_TOTAL = "maxTotal";
+    public static final String MDM_ENABLED = "mdmEnabled";
     public static final String MIMETYPE = "mimetype";
     public static final String MIN_AVAILABLE = "minAvailable";
     public static final String MOCK_LOCATION_ON = "mockLocationOn";
